@@ -29,18 +29,18 @@ export default {
   },
   actions: {
     async fetchTemplates({ commit }) {
-      let res = await axios.get('/api/templates');
+      let res = await axios.get('/templates');
       commit('FETCHED_TEMPLATES', res.data);
       return res;
     },
     async fetchTemplate({ commit }, id) {
-      let res = await axios.get(`/api/templates/${id}`);
+      let res = await axios.get(`/templates/${id}`);
       commit('FETCHED_TEMPLATE', { id, template: res.data });
       return res;
     },
     async createTemplate({ commit, rootState }) {
       let config = rootState.editor.config;
-      let res = await axios.post(`/api/templates/${config.name}`, {
+      let res = await axios.post(`/templates/${config.name}`, {
         yaml: yaml.safeDump(config)
       });
       if (res.data.created) {
@@ -50,7 +50,7 @@ export default {
       return false;
     },
     async deleteTemplate({ commit }, id) {
-      let res = await axios.delete(`/api/templates/${id}`);
+      let res = await axios.delete(`/templates/${id}`);
       if (res.status === 200) {
         commit('DELETED_TEMPLATE', id);
         return true;

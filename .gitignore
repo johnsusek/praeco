@@ -23,4 +23,4 @@ yarn-error.log*
 *.sln
 *.sw*
 
-/src/defaultConfig.json
+praeco.config.json

@@ -16,11 +16,11 @@ export default {
   },
   actions: {
     async fetchVersion({ commit }) {
-      let res = await axios.get('/api/');
+      let res = await axios.get('/');
       commit('FETCHED_VERSION', res.data);
     },
     async fetchStatus({ commit }) {
-      let res = await axios.get('/api/status');
+      let res = await axios.get('/status');
       commit('FETCHED_STATUS', res.data);
     }
   }

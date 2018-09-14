@@ -32,12 +32,12 @@ export default {
   },
   actions: {
     async fetchRules({ commit }) {
-      let res = await axios.get('/api/rules');
+      let res = await axios.get('/rules');
       commit('FETCHED_RULES', res.data);
       return res;
     },
     async fetchRule({ commit }, id) {
-      let res = await axios.get(`/api/rules/${id}`);
+      let res = await axios.get(`/rules/${id}`);
       commit('FETCHED_RULE', { id, rule: res.data });
       return res;
     },
@@ -52,7 +52,7 @@ export default {
       config.alert_text = formattedText.alertText;
       config.alert_text_args = formattedText.alertArgs;
 
-      let res = await axios.post(`/api/rules/${config.name}`, {
+      let res = await axios.post(`/rules/${config.name}`, {
         yaml: yaml.safeDump(config)
       });
       if (res.data.created) {
@@ -62,7 +62,7 @@ export default {
       return false;
     },
     async deleteRule({ commit }, id) {
-      let res = await axios.delete(`/api/rules/${id}`);
+      let res = await axios.delete(`/rules/${id}`);
       if (res.status === 200) {
         commit('DELETED_RULE', id);
         return true;

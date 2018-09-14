@@ -8,15 +8,5 @@ module.exports = {
         'element-ui/lib/locale/lang/en'
       )
     ]
-  },
-  devServer: {
-    proxy: {
-      '/api/*': {
-        target: 'http://localhost:3030/',
-        pathRewrite: {
-          '/api': ''
-        }
-      }
-    }
   }
 };

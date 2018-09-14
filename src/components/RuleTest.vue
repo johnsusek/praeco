@@ -14,7 +14,7 @@
         show-icon>
         This rule will have triggered
         <strong>{{ test.hits }}</strong> time(s)
-        over the last day.
+        over the last 30 days.
       </el-alert>
 
       <el-alert
@@ -39,7 +39,7 @@
 
       <h2>Preview</h2>
 
-      <el-table v-if="testResults[0]" :data="Object.entries(testResults[0]).sort()">
+      <el-table v-if="result" :data="Object.entries(result).sort()">
         <el-table-column label="Term" prop="0" width="200" />
         <el-table-column label="Value" prop="1" />
       </el-table>
@@ -100,8 +100,8 @@ export default {
       }
       return this.test.terms.slice(0).sort();
     },
-    testResults() {
-      return this.test.results.map(r => r._source);
+    result() {
+      return this.test && this.test.result;
     }
   },
   methods: {

@@ -1,19 +1,19 @@
 import axios from 'axios';
 import yaml from 'js-yaml';
-import defaultConfig from '../defaultConfig.json';
+import appConfig from '../../praeco.config.json';
 
 export default {
   namespaced: true,
   state: {
-    config: defaultConfig,
+    config: appConfig.defaultRule,
     test: null
   },
   mutations: {
     CONFIG_LOAD(state, config) {
-      state.config = { ...defaultConfig, ...config };
+      state.config = { ...appConfig.defaultRule, ...config };
     },
     CONFIG_RESET(state) {
-      state.config = defaultConfig;
+      state.config = appConfig.defaultRule;
     },
     CLEAR_TEST_RESULT(state) {
       state.test = null;
@@ -27,14 +27,13 @@ export default {
       commit('CLEAR_TEST_RESULT');
 
       try {
-        let res = await axios.post('/api/test', {
+        let res = await axios.post('/test', {
           rule: yaml.safeDump(state.config),
           options: {
-            testType: 'all',
-            days: 1,
+            testType: 'countOnly',
+            days: 30,
             alert: false,
-            format: 'json',
-            maxResults: 1
+            format: 'json'
           }
         });
 
