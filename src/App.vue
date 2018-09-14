@@ -1,29 +1,76 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <el-container id="app">
+    <el-header>
+      <div id="nav">
+        <el-row>
+          <el-col :span="12">
+            <router-link to="/">
+              <img alt="praeco" src="@/assets/logo.png">
+            </router-link>
+          </el-col>
+          <el-col :span="12" align="right">
+            <p>
+              elastalert v{{ $store.state.server.version }}
+              status: {{ $store.state.server.status }}
+            </p>
+          </el-col>
+        </el-row>
+      </div>
+    </el-header>
+
+    <el-container>
+      <el-aside width="200px">
+        <el-menu :router="true">
+          <el-menu-item index="/templates">
+            <i class="el-icon-document" />
+            <span>Templates</span>
+          </el-menu-item>
+          <el-menu-item index="/rules">
+            <i class="el-icon-tickets" />
+            <span>Rules</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
+      <el-main>
+        <router-view :key="$route.fullPath" />
+      </el-main>
+    </el-container>
+
+  </el-container>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+export default {
+  mounted() {
+    this.$store.dispatch('server/fetchVersion');
+    this.$store.dispatch('server/fetchStatus');
   }
+};
+</script>
+
+<style lang="scss">
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+#app,
+.el-aside > .el-menu,
+.el-main > section {
+  height: 100%;
+}
+
+.el-header img {
+  height: 46px;
+  width: auto;
+  opacity: 0.5;
+}
+
+body > section > section > .el-main {
+  padding: 0;
+}
+
+.el-header {
+  background: #ddd;
+  height: initial !important;
 }
 </style>

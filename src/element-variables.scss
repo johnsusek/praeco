@@ -1,0 +1,39 @@
+$--color-primary: #157ce7;
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import '~element-ui/packages/theme-chalk/src/index';
+
+.el-form--label-top .el-form-item__label {
+  padding: 0;
+}
+
+.el-form-item__content > label {
+  display: block;
+  color: #86898f;
+  line-height: 1.3;
+  font-size: 12px;
+  padding-top: 8px;
+}
+
+.el-alert {
+  margin-bottom: 10px;
+}
+
+.el-dialog__body {
+  padding-top: 0;
+}
+
+pre {
+  word-break: break-word;
+  white-space: pre-wrap;
+  margin: 0;
+  font-size: 12px;
+  background: #ddd;
+  padding: 10px;
+  border: 1px solid #ccc;
+  color: #444;
+}
+
+h1 {
+  margin: 0;
+}
