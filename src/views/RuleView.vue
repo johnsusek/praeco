@@ -1,15 +1,20 @@
 <template>
   <div>
+    <h1>{{ rule.name }}</h1>
     <div>This rule is currently running and sending alerts:</div>
     <br>
     <vue-json-pretty :data="$store.state.rules.rules[id]" />
     <br>
 
-    <router-link :to="{ name: 'ruleedit', params: { template: id } }">
+    <router-link :to="{
+      name: 'ruleconfigbuilder',
+      params: { action: 'edit', template: id } }">
       <el-button type="info">Edit</el-button>
     </router-link>
 
-    <router-link :to="{ name: 'ruledupe', params: { template: id } }">
+    <router-link :to="{
+      name: 'ruleconfigbuilder',
+      params: { action: 'add' }, query: { prefill: id, prefillType: 'rule' } }">
       <el-button type="info">Duplicate</el-button>
     </router-link>
 
@@ -25,6 +30,11 @@ export default {
     VueJsonPretty
   },
   props: ['id'],
+  computed: {
+    rule() {
+      return this.$store.state.rules.rules[this.id] || {};
+    }
+  },
   mounted() {
     this.$store.dispatch('rules/fetchRule', this.id);
   },

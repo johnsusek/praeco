@@ -19,7 +19,7 @@
     </el-header>
 
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="auto">
         <el-menu :router="true">
           <el-menu-item index="/templates">
             <i class="el-icon-document" />
@@ -72,5 +72,9 @@ body > section > section > .el-main {
 .el-header {
   background: #ddd;
   height: initial !important;
+}
+
+.el-container > aside {
+  max-width: 200px;
 }
 </style>

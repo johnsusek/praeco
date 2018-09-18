@@ -1,6 +1,6 @@
 import format from 'string-format';
 
-export function formatAlertText(text) {
+export function htmlToConfigFormat(text) {
   let el = document.createElement('html');
   el.innerHTML = text;
 
@@ -50,7 +50,10 @@ export function formatAlertText(text) {
   return { alertText, alertArgs };
 }
 
-export function unformatAlertText(text, args) {
+export function configFormatToHtml(text, args) {
+  if (!text) text = '';
+  if (!args) args = [];
+
   // found a newline, place next line into a div...
   text = text.replace(/\n/g, '<br>');
 

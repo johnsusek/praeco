@@ -8,5 +8,10 @@ module.exports = {
         'element-ui/lib/locale/lang/en'
       )
     ]
+  },
+  devServer: {
+    host: '0.0.0.0',
+    hot: true,
+    disableHostCheck: true
   }
 };

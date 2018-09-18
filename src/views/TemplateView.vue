@@ -1,21 +1,29 @@
 <template>
   <div>
+    <h1>{{ template.name }}</h1>
     <div>This template is ready to be used as a base for a rule:</div>
     <br>
-    <vue-json-pretty :data="$store.state.templates.templates[id]" />
+    <vue-json-pretty :data="template" />
     <br>
 
-    <router-link :to="{ name: 'ruleadd', params: { template: id } }">
+    <router-link :to="{
+      name: 'ruleconfigbuilder',
+      params: { action: 'add' }, query: { prefill: id, prefillType: 'template' }
+    }">
       <el-button type="primary">
         Create rule from template
       </el-button>
     </router-link>
 
-    <router-link :to="{ name: 'templateedit', params: { template: id } }">
+    <router-link :to="{
+      name: 'templateconfigbuilder',
+      params: { action: 'edit', template: id } }">
       <el-button type="info">Edit</el-button>
     </router-link>
 
-    <router-link :to="{ name: 'templateadd', params: { template: id } }">
+    <router-link :to="{
+      name: 'templateconfigbuilder',
+      params: { action: 'add' }, query: { prefill: id, prefillType: 'template' } }">
       <el-button type="info">Duplicate</el-button>
     </router-link>
 
@@ -33,6 +41,11 @@ export default {
     VueJsonPretty
   },
   props: ['id'],
+  computed: {
+    template() {
+      return this.$store.state.templates.templates[this.id] || {};
+    }
+  },
   mounted() {
     this.$store.dispatch('templates/fetchTemplate', this.id);
   },

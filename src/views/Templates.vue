@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="auto">
       <el-menu :router="true" :default-active="$route.fullPath">
         <el-menu-item class="primary" index="/template/add">Add template...</el-menu-item>
         <el-menu-item

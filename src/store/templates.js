@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
+import { htmlToConfigFormat, configFormatToHtml } from '../lib/alertText';
 
 export default {
   namespaced: true,
@@ -18,6 +19,8 @@ export default {
     FETCHED_TEMPLATE(state, { id, template }) {
       try {
         let doc = yaml.safeLoad(template, 'utf8');
+        doc.alert_subject = configFormatToHtml(doc.alert_subject, doc.alert_subject_args);
+        doc.alert_text = configFormatToHtml(doc.alert_text, doc.alert_text_args);
         Vue.set(state.templates, id, doc);
       } catch (e) {
         console.log(e);
@@ -38,16 +41,24 @@ export default {
       commit('FETCHED_TEMPLATE', { id, template: res.data });
       return res;
     },
-    async createTemplate({ commit, rootState }) {
-      let config = rootState.editor.config;
+    async createTemplate({ commit }, config) {
+      let formattedSubject = htmlToConfigFormat(config.alert_subject);
+      config.alert_subject = formattedSubject.alertText;
+      config.alert_subject_args = formattedSubject.alertArgs;
+
+      let formattedText = htmlToConfigFormat(config.alert_text);
+      config.alert_text = formattedText.alertText;
+      config.alert_text_args = formattedText.alertArgs;
+
       let res = await axios.post(`/templates/${config.name}`, {
         yaml: yaml.safeDump(config)
       });
+
       if (res.data.created) {
         commit('FETCHED_TEMPLATE', { id: config.name, template: config });
-        return true;
       }
-      return false;
+
+      return res.data;
     },
     async deleteTemplate({ commit }, id) {
       let res = await axios.delete(`/templates/${id}`);

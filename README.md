@@ -3,7 +3,7 @@
 Praeco is a GUI client for elastalert.
 
 - Uses [bitsensor's elastalert API](https://github.com/bitsensor/elastalert) to manage rules.
-- Rename praeco.config.json.default to praeco.config.json before running and update as needed.
+- Rename praeco.config.js.default to praeco.config.js before running and update as needed.
 
 ## Screenshots
 
