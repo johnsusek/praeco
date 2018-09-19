@@ -8,7 +8,8 @@
       type="info">
       <i class="el-icon-loading" />
     </el-alert>
-
+    Fields available for subject/body:
+    {{ fields }}
     <template v-if="previewAlertResult.subject">
       <h6>Subject</h6>
       <pre>{{ previewAlertResult.subject }}</pre>
@@ -22,6 +23,11 @@
 
 <script>
 export default {
-  props: ['previewAlertResult', 'remoteValidating']
+  props: ['previewAlertResult', 'remoteValidating', 'previewResult'],
+  computed: {
+    fields() {
+      return this.previewResult.terms && this.previewResult.terms.slice(0).sort();
+    }
+  }
 };
 </script>

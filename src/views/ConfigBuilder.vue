@@ -29,6 +29,7 @@
         <el-col :span="12">
           <el-button
             v-show="currentStep !== 'settings'"
+            plain
             @click="back">
             Back
           </el-button>
@@ -38,13 +39,14 @@
         <el-col :span="12" align="right">
           <el-button
             v-show="showNextButton"
+            plain
             type="primary"
             @click="testRuleSoFar">
             Next
           </el-button>
 
           <span v-show="currentStep === 'save'">
-            <el-button type="primary" @click="saveConfig">Save</el-button>
+            <el-button plain type="primary" @click="saveConfig">Save</el-button>
           </span>
         </el-col>
       </el-row>
@@ -72,7 +74,7 @@
       <h2><i v-if="currentStep === 'alert'" class="el-icon-d-arrow-right" />Alert</h2>
       <SidebarAlert
         v-if="currentStep === 'alert'"
-        v-bind="{ previewAlertResult, remoteValidating }" />
+        v-bind="{ previewAlertResult, remoteValidating, previewResult }" />
 
       <h2><i v-if="currentStep === 'save'" class="el-icon-d-arrow-right" />Save</h2>
       <SidebarSave
@@ -378,7 +380,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .button-row {
   border-top: 1px solid #e6e6e6;
   margin-top: 20px;

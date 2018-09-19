@@ -1,45 +1,40 @@
 <template>
   <div>
-    <h1>{{ template.name }}</h1>
-    <div>This template is ready to be used as a base for a rule:</div>
-    <br>
-    <vue-json-pretty :data="template" />
-    <br>
+    <h1><i class="el-icon-document" /> {{ template.name }}</h1>
 
-    <router-link :to="{
-      name: 'ruleconfigbuilder',
-      params: { action: 'add' }, query: { prefill: id, prefillType: 'template' }
-    }">
-      <el-button type="primary">
-        Create rule from template
+    <el-row>
+      <router-link :to="{
+        name: 'ruleconfigbuilder',
+        params: { action: 'add' }, query: { prefill: id, prefillType: 'template' }
+      }">
+        <el-button icon="el-icon-plus" plain type="primary">
+          Create rule from template
+        </el-button>
+      </router-link>
+
+      <router-link :to="{
+        name: 'templateconfigbuilder',
+        params: { action: 'edit', template: id } }">
+        <el-button icon="el-icon-edit" plain type="info">Edit</el-button>
+      </router-link>
+
+      <router-link :to="{
+        name: 'templateconfigbuilder',
+        params: { action: 'add' }, query: { prefill: id, prefillType: 'template' } }">
+        <el-button plain type="info">Duplicate</el-button>
+      </router-link>
+
+      <el-button icon="el-icon-delete" plain type="danger" @click="handleDelete">
+        Delete...
       </el-button>
-    </router-link>
+    </el-row>
 
-    <router-link :to="{
-      name: 'templateconfigbuilder',
-      params: { action: 'edit', template: id } }">
-      <el-button type="info">Edit</el-button>
-    </router-link>
-
-    <router-link :to="{
-      name: 'templateconfigbuilder',
-      params: { action: 'add' }, query: { prefill: id, prefillType: 'template' } }">
-      <el-button type="info">Duplicate</el-button>
-    </router-link>
-
-    <el-button type="danger" @click="handleDelete">
-      Delete...
-    </el-button>
+    <ConfigView :config="template" />
   </div>
 </template>
 
 <script>
-import VueJsonPretty from 'vue-json-pretty';
-
 export default {
-  components: {
-    VueJsonPretty
-  },
   props: ['id'],
   computed: {
     template() {
@@ -73,7 +68,11 @@ export default {
 </script>
 
 <style scoped>
-.el-button {
+.el-row {
+  margin-bottom: 20px;
+}
+
+.el-row .el-button {
   margin-right: 10px;
 }
 </style>

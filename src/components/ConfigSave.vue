@@ -1,6 +1,9 @@
 <template>
   <div>
-    <vue-json-pretty :data="config" style="overflow-wrap: break-word;" />
+    <br>
+    <ConfigViewSettings :config="config" />
+    <ConfigViewQuery :config="config" />
+    <ConfigViewAlert :config="config" />
   </div>
 </template>
 

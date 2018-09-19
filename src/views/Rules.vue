@@ -3,7 +3,7 @@
     <el-aside width="auto">
       <el-menu :router="true" :default-active="$route.fullPath">
         <el-menu-item
-          v-for="rule in Object.keys($store.state.rules.rules)"
+          v-for="rule in Object.keys($store.state.rules.rules).sort()"
           :key="rule"
           :index="`/rules/${rule}`">
           {{ rule }}
@@ -23,3 +23,4 @@ export default {
   }
 };
 </script>
+

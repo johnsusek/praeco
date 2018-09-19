@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
+  <el-form ref="form" :rules="rules" :model="config" label-position="top" @submit.native.prevent>
     <el-form-item label="Re-alert minutes">
       <el-input-number v-model="config.realert.minutes" />
       <label v-if="config.realert.minutes === 0">
@@ -18,7 +18,7 @@
       <el-checkbox-group v-model="config.alert">
         <el-checkbox label="slack" border>Slack</el-checkbox>
         <el-checkbox label="email" border>Email</el-checkbox>
-        <el-checkbox label="http" border>HTTP</el-checkbox>
+        <el-checkbox label="post" border>HTTP</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -97,7 +97,7 @@
       </el-form-item>
     </el-card>
 
-    <el-card v-if="config.alert.includes('http')" header="HTTP options" shadow="never">
+    <el-card v-if="config.alert.includes('post')" header="HTTP options" shadow="never">
       <el-form-item label="HTTP POST URL" prop="http_post_url" required>
         <el-input v-model="config.http_post_url" />
         <label>JSON results will be POSTed to this URL</label>
@@ -115,7 +115,25 @@ export default {
   },
   props: ['fields', 'prefill'],
   data() {
+    let validateSlackDestination = (rule, value, callback) => {
+      if (value.length < 2) {
+        callback(new Error('Please enter a @username or #channel'));
+      } else if (!value.startsWith('@') && !value.startsWith('#')) {
+        callback(new Error('Please enter a @username or #channel'));
+      } else {
+        callback();
+      }
+    };
+
     return {
+      rules: {
+        slack_channel_override: [
+          {
+            validator: validateSlackDestination,
+            trigger: 'change'
+          }
+        ]
+      },
       config: {
         alert: [],
         realert: {}
@@ -123,12 +141,6 @@ export default {
     };
   },
   watch: {
-    'config.alert_subject': function() {
-      this.$emit('preview', this.config);
-    },
-    'config.alert_text': function() {
-      this.$emit('preview', this.config);
-    },
     prefill() {
       this.config = this.prefill;
     }

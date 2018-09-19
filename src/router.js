@@ -24,7 +24,7 @@ export default new Router({
       component: Rules,
       children: [
         {
-          path: '/rule/:action/:rule?',
+          path: '/rule/:action/:template?',
           props: route => ({ ...route.params, ...route.query, type: 'rule' }),
           name: 'ruleconfigbuilder',
           component: ConfigBuilder

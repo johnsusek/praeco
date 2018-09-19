@@ -4,7 +4,7 @@
       <el-input v-model="config.filter[0].query.query_string.query" spellcheck="false" />
     </el-form-item>
 
-    <el-button type="info" @click="$emit('preview', config)">Preview</el-button>
+    <el-button plain type="info" @click="$emit('preview', config)">Preview</el-button>
   </el-form>
 </template>
 
