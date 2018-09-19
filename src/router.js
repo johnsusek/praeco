@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Errors from './views/Errors.vue';
 import Rules from './views/Rules.vue';
 import RuleView from './views/RuleView.vue';
 import Templates from './views/Templates.vue';
@@ -17,6 +18,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/errors',
+      name: 'errors',
+      component: Errors
     },
     {
       path: '/rules',

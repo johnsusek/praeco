@@ -29,6 +29,10 @@
             <i class="el-icon-tickets" />
             <span>Rules</span>
           </el-menu-item>
+          <el-menu-item index="/errors">
+            <i class="el-icon-warning" />
+            <span>Errors</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>

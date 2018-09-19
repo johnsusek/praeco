@@ -1,6 +1,14 @@
 <template>
   <div>
-    <h1><i class="el-icon-tickets" /> {{ rule.name }}</h1>
+    <h1>
+      <i class="el-icon-tickets" />
+      {{ rule.name }}
+    </h1>
+
+    <el-row class="tag-row">
+      <el-tag v-if="rule.is_enabled" type="success">Enabled</el-tag>
+      <el-tag v-else type="warning">Disabled</el-tag>
+    </el-row>
 
     <el-row class="button-row">
       <router-link :to="{
@@ -15,7 +23,13 @@
         <el-button plain type="info">Duplicate</el-button>
       </router-link>
 
-      <el-button icon="el-icon-delete" plain type="danger" @click="handleDelete">Delete...</el-button>
+      <el-button
+        icon="el-icon-delete"
+        plain
+        type="danger"
+        @click="handleDelete">
+        Delete...
+      </el-button>
     </el-row>
 
     <el-tabs type="card" >
@@ -181,5 +195,13 @@ export default {
 
 .button-row .el-button {
   margin-right: 10px;
+}
+
+.tag-row {
+  margin-bottom: 10px;
+}
+
+.tag-row .el-tag {
+  margin-right: 5px;
 }
 </style>

@@ -2,7 +2,11 @@
   <el-container>
     <el-aside width="auto">
       <el-menu :router="true" :default-active="$route.fullPath">
-        <el-menu-item class="primary" index="/template/add">Add template...</el-menu-item>
+        <router-link to="/template/add">
+          <el-button plain style="margin: 10px">
+            Add template...
+          </el-button>
+        </router-link>
         <el-menu-item
           v-for="template in Object.keys($store.state.templates.templates)"
           :key="template"
@@ -24,3 +28,4 @@ export default {
   }
 };
 </script>
+

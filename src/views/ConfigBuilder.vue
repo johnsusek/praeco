@@ -190,7 +190,7 @@ export default {
       return yaml.safeDump(this.config);
     },
     pageTitle() {
-      return `${this.action[0].toUpperCase()}${this.action.slice(1)} ${this.type}`;
+      return `${this.capitalize(this.action)} ${this.type}`;
     },
     showNextButton() {
       if (this.currentStep === 'save') return false;
@@ -237,6 +237,11 @@ export default {
     }
   },
   methods: {
+    capitalize(str) {
+      if (str.length) {
+        return str[0].toUpperCase() + str.slice(1);
+      }
+    },
     async preview(config) {
       this.previewResult = null;
       this.previewError = '';
@@ -346,6 +351,7 @@ export default {
           name: this.type === 'template' ? 'templateview' : 'ruleview',
           params: { id: this.config.name }
         });
+        this.$message.success(`${this.capitalize(this.type)} saved`);
       } else {
         this.saveError = res.toString();
       }
