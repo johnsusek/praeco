@@ -1,22 +1,9 @@
 import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
-import networkError from '../lib/networkError.js';
-import { htmlToConfigFormat, configFormatToHtml } from '../lib/alertText';
-
-function formatConfig(config) {
-  let formattedSubject = htmlToConfigFormat(config.alert_subject);
-  config.alert_subject = formattedSubject.alertText;
-  config.alert_subject_args = formattedSubject.alertArgs;
-
-  let formattedText = htmlToConfigFormat(config.alert_text);
-  config.alert_text = formattedText.alertText;
-  config.alert_text_args = formattedText.alertArgs;
-
-  config.__praeco_query_builder = JSON.stringify(config.__praeco_query_builder);
-
-  return config;
-}
+import networkError from '../lib/networkError';
+import { configFormatToHtml } from '../lib/alertText';
+import { formatConfig } from '../lib/formatConfig';
 
 export default {
   namespaced: true,

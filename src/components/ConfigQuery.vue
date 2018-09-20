@@ -12,8 +12,8 @@
 
     <el-form-item label="Query builder">
       <vue-query-builder
-        v-if="config.queryBuilder.query"
-        v-model="config.queryBuilder.query"
+        v-if="config.__praeco_query_builder.query"
+        v-model="config.__praeco_query_builder.query"
         :rules="rules"
         :labels="labels"
         :styled="false" />
@@ -69,7 +69,7 @@ export default {
         textInputPlaceholder: 'value'
       },
       config: {
-        queryBuilder: {},
+        __praeco_query_builder: {},
         filter: [
           {
             query: {
@@ -111,11 +111,11 @@ export default {
     }
   },
   watch: {
-    'config.queryBuilder': {
+    'config.__praeco_query_builder': {
       immediate: true,
       deep: true,
       handler() {
-        let query = this.config.queryBuilder.query;
+        let query = this.config.__praeco_query_builder.query;
         if (query) {
           this.config.filter[0].query.query_string.query = luceneSyntaxFromQueryBuilder(query);
           this.preview();
@@ -128,9 +128,14 @@ export default {
   },
   mounted() {
     if (this.queryBuilderQuery.query) {
-      Vue.set(this.config, 'queryBuilder', this.queryBuilderQuery);
+      Vue.set(this.config, '__praeco_query_builder', this.queryBuilderQuery);
     } else {
-      Vue.set(this.config, 'queryBuilder', { query: { logicalOperator: 'All' } });
+      Vue.set(this.config, '__praeco_query_builder', {
+        query: {
+          logicalOperator: 'All',
+          children: []
+        }
+      });
     }
   },
   methods: {

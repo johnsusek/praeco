@@ -2,7 +2,8 @@ import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import networkError from '../lib/networkError.js';
-import { htmlToConfigFormat, configFormatToHtml } from '../lib/alertText';
+import { configFormatToHtml } from '../lib/alertText';
+import { formatConfig } from '../lib/formatConfig';
 
 export default {
   namespaced: true,
@@ -51,24 +52,13 @@ export default {
         networkError(error);
       }
     },
-    async createTemplate({ commit }, config) {
-      let formattedSubject = htmlToConfigFormat(config.alert_subject);
-      config.alert_subject = formattedSubject.alertText;
-      config.alert_subject_args = formattedSubject.alertArgs;
+    async createTemplate(context, config) {
+      config = formatConfig(config);
 
-      let formattedText = htmlToConfigFormat(config.alert_text);
-      config.alert_text = formattedText.alertText;
-      config.alert_text_args = formattedText.alertArgs;
-
-      config.__praeco_query_builder = JSON.stringify(config.__praeco_query_builder);
       try {
         let res = await axios.post(`/templates/${config.name}`, {
           yaml: yaml.safeDump(config)
         });
-
-        if (res.data.created) {
-          commit('FETCHED_TEMPLATE', { id: config.name, template: config });
-        }
 
         return res.data;
       } catch (error) {
