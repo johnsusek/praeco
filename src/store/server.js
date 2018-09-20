@@ -1,4 +1,5 @@
 import axios from 'axios';
+import networkError from '../lib/networkError.js';
 
 export default {
   namespaced: true,
@@ -16,12 +17,20 @@ export default {
   },
   actions: {
     async fetchVersion({ commit }) {
-      let res = await axios.get('/');
-      commit('FETCHED_VERSION', res.data);
+      try {
+        let res = await axios.get('/');
+        commit('FETCHED_VERSION', res.data);
+      } catch (error) {
+        networkError(error);
+      }
     },
     async fetchStatus({ commit }) {
-      let res = await axios.get('/status');
-      commit('FETCHED_STATUS', res.data);
+      try {
+        let res = await axios.get('/status');
+        commit('FETCHED_STATUS', res.data);
+      } catch (error) {
+        networkError(error);
+      }
     }
   }
 };

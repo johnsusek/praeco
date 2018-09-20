@@ -1,8 +1,12 @@
 <template>
   <el-card shadow="never" header="Alerts">
     <DefinitionTable>
-      <TableRow :value="config.alert_subject" name="Subject" />
-      <TableRow :value="config.alert_text" name="Text" />
+      <TableRow name="Subject">
+        <span v-html="config.alert_subject" />
+      </TableRow>
+      <TableRow name="Text">
+        <span v-html="config.alert_text" />
+      </TableRow>
       <TableRow :value="config.alert_text_type" name="alert_text_type" />
       <TableRow name="Re-alert">
         <Time :time="config.realert" />

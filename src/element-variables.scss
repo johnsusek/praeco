@@ -58,6 +58,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   border-bottom: 1px solid #ebeef5;
 }
 
+.el-row > .el-tag {
+  margin: 0 5px 5px 0;
+}
+
 pre {
   word-break: break-word;
   white-space: pre-wrap;

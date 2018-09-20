@@ -14,7 +14,7 @@
       </label>
     </el-form-item>
 
-    <el-form-item label="Type" prop="alert">
+    <el-form-item label="Type" prop="alert" required>
       <el-checkbox-group v-model="config.alert">
         <el-checkbox label="slack" border>Slack</el-checkbox>
         <el-checkbox label="email" border>Email</el-checkbox>

@@ -11,16 +11,19 @@
         :action="action" />
 
       <ConfigQuery
-        v-show="currentStep === 'query'"
+        v-if="currentStep === 'query'"
         ref="query"
         :prefill="config"
+        :action="action"
+        :fields="mappingFields"
+        :query-builder-query="config.__praeco_query_builder"
         @preview="preview" />
 
       <ConfigAlert
         v-show="currentStep === 'alert'"
         ref="alert"
         :prefill="config"
-        :fields="mappingFields" />
+        :fields="Object.keys(mappingFields)" />
 
       <ConfigSave v-show="currentStep === 'save'" :config="config"/>
 
@@ -68,7 +71,7 @@
 
       <h2><i v-if="currentStep === 'query'" class="el-icon-d-arrow-right" />Query</h2>
       <SidebarQuery
-        v-if="currentStep === 'query'"
+        v-if="currentStep === 'query' || currentStep === 'alert'"
         v-bind="{ previewLoading, previewResult, previewError, remoteValidating }" />
 
       <h2><i v-if="currentStep === 'alert'" class="el-icon-d-arrow-right" />Alert</h2>
@@ -79,8 +82,7 @@
       <h2><i v-if="currentStep === 'save'" class="el-icon-d-arrow-right" />Save</h2>
       <SidebarSave
         v-if="currentStep === 'save'"
-        :save-error="saveError"
-        :config-dump="configDump" />
+        :save-error="saveError" />
     </el-col>
   </el-row>
 </template>
@@ -107,13 +109,13 @@ function buildMappingFields(mapping) {
     .map(m => m.mappings)
     .forEach(mping => {
       Object.values(mping).forEach(mp => {
-        Object.keys(mp.properties).forEach(prop => {
-          fields[prop] = true;
+        Object.entries(mp.properties).forEach(prop => {
+          fields[prop[0]] = prop[1];
         });
       });
     });
 
-  return Object.keys(fields);
+  return fields;
 }
 
 function formatIndex(index) {
@@ -160,6 +162,8 @@ export default {
       mappingFields: [],
 
       config: {
+        __praeco_query_builder: {},
+
         is_enabled: true,
         filter: [
           {
@@ -190,7 +194,7 @@ export default {
       return yaml.safeDump(this.config);
     },
     pageTitle() {
-      return `${this.capitalize(this.action)} ${this.type}`;
+      return `${this.capitalize(this.action)} ${this.type} "${this.config.name}"`;
     },
     showNextButton() {
       if (this.currentStep === 'save') return false;

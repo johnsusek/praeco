@@ -24,6 +24,22 @@
       </router-link>
 
       <el-button
+        v-if="rule.is_enabled"
+        plain
+        type="warning"
+        @click="handleDisable">
+        Disable...
+      </el-button>
+
+      <el-button
+        v-if="!rule.is_enabled"
+        plain
+        type="success"
+        @click="handleEnable">
+        Enable...
+      </el-button>
+
+      <el-button
         icon="el-icon-delete"
         plain
         type="danger"
@@ -109,12 +125,9 @@
 
 <script>
 import axios from 'axios';
-import VueJsonPretty from 'vue-json-pretty';
+import networkError from '../lib/networkError.js';
 
 export default {
-  components: {
-    VueJsonPretty
-  },
   props: ['id'],
   data() {
     return {
@@ -130,9 +143,13 @@ export default {
   },
   mounted() {
     this.$store.dispatch('rules/fetchRule', this.id);
-    this.getQueryLog();
-    this.getAlertLog();
-    this.getSilenceLog();
+    try {
+      this.getQueryLog();
+      this.getAlertLog();
+      this.getSilenceLog();
+    } catch (error) {
+      console.log('caught outer');
+    }
   },
   methods: {
     uppercase(str) {
@@ -148,7 +165,9 @@ export default {
           params: { rule_name: this.id }
         });
         this.queryLog = res.data.hits;
-      } catch (error) {}
+      } catch (error) {
+        networkError(error);
+      }
     },
     async getAlertLog() {
       try {
@@ -156,7 +175,9 @@ export default {
           params: { rule_name: this.id }
         });
         this.alertLog = res.data.hits;
-      } catch (error) {}
+      } catch (error) {
+        networkError(error);
+      }
     },
     async getSilenceLog() {
       try {
@@ -164,7 +185,9 @@ export default {
           params: { rule_name: this.id }
         });
         this.silenceLog = res.data.hits;
-      } catch (error) {}
+      } catch (error) {
+        networkError(error);
+      }
     },
     handleDelete() {
       this.$confirm('Are you sure you want to delete this rule?', 'Confirm', {
@@ -183,6 +206,48 @@ export default {
           }
         })
         .catch(() => {});
+    },
+    handleDisable() {
+      this.$confirm(
+        'Are you sure you want to disable this rule? This may take a few minutes to take effect, depending on elastalert settings.',
+        'Confirm',
+        {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }
+      )
+        .then(async () => {
+          let disabled = await this.$store.dispatch('rules/disableRule', this.rule);
+          if (disabled) {
+            this.$message({
+              type: 'success',
+              message: 'Rule disabled'
+            });
+          }
+        })
+        .catch(() => {});
+    },
+    handleEnable() {
+      this.$confirm(
+        'Are you sure you want to enable this rule? This may take a few minutes to take effect, depending on elastalert settings.',
+        'Confirm',
+        {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }
+      )
+        .then(async () => {
+          let enabled = await this.$store.dispatch('rules/enableRule', this.rule);
+          if (enabled) {
+            this.$message({
+              type: 'success',
+              message: 'Rule enabled'
+            });
+          }
+        })
+        .catch(() => {});
     }
   }
 };
@@ -193,7 +258,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.button-row .el-button {
+.button-row a .el-button {
   margin-right: 10px;
 }
 

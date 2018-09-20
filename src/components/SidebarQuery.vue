@@ -9,13 +9,20 @@
       <i class="el-icon-loading" />
     </el-alert>
 
-    <div v-if="previewLoading">Preview loading...</div>
+    <el-alert
+      v-if="previewLoading"
+      :closable="false"
+      class="el-alert-loading"
+      title="Preview loading..."
+      type="info">
+      <i class="el-icon-loading" />
+    </el-alert>
+
     <div v-if="previewResult && previewResult.success">
       <el-alert
         :closable="false"
         type="info"
-        title=""
-        show-icon>
+        title="">
         This query returned
         <strong>{{ previewResult.hits || 0 }}</strong> results
         over the last 30 days.

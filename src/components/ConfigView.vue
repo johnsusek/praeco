@@ -11,12 +11,7 @@
 </template>
 
 <script>
-import VueJsonPretty from 'vue-json-pretty';
-
 export default {
-  components: {
-    VueJsonPretty
-  },
   props: ['config']
 };
 </script>

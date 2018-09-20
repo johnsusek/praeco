@@ -10,8 +10,8 @@
           </el-col>
           <el-col :span="12" align="right">
             <p>
-              elastalert v{{ $store.state.server.version }}
-              status: {{ $store.state.server.status }}
+              elastalert v{{ $store.state.server.version || '?' }}
+              status: {{ $store.state.server.status || '?' }}
             </p>
           </el-col>
         </el-row>

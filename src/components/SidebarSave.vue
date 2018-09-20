@@ -7,13 +7,11 @@
       title="Save failed"
       type="error"
       show-icon />
-
-    <pre>{{ configDump }}</pre>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['configDump', 'saveError']
+  props: ['saveError']
 };
 </script>

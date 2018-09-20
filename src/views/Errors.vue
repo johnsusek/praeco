@@ -17,6 +17,7 @@
 
 <script>
 import axios from 'axios';
+import networkError from '../lib/networkError.js';
 
 export default {
   data() {
@@ -38,7 +39,9 @@ export default {
       try {
         let res = await axios.get('/metadata/elastalert_error');
         this.errorLog = res.data.hits;
-      } catch (error) {}
+      } catch (error) {
+        networkError(error);
+      }
     }
   }
 };
