@@ -1,0 +1,11 @@
+{
+  "apiBaseUrl": "http://localhost:3030/",
+
+  "hidePreconfiguredFields": [
+    "slack_webhook_url",
+    "smtp_host",
+    "smtp_port",
+    "from_addr",
+    "email_reply_to"
+  ]
+}

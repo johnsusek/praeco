@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import config from '../../praeco.config.js';
-
 export default {
   props: [
     'value',
@@ -32,7 +30,7 @@ export default {
   ],
   computed: {
     hidePreconfiguredFields() {
-      return config.hidePreconfiguredFields;
+      return this.$store.state.config.config.hidePreconfiguredFields;
     },
     type() {
       return this.$route.meta.type;

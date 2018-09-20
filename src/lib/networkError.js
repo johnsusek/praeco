@@ -1,10 +1,11 @@
 import { Notification } from 'element-ui';
-import config from '../../praeco.config.js';
+import store from '../store';
 
 export default function notifyError(error) {
+  let baseUrl = store.state.config.config.apiBaseUrl;
   Notification.error({
     message: error.toString(),
-    title: `Cannot connect to API ${config.apiBaseUrl}`,
+    title: `Cannot connect to API ${baseUrl}`,
     duration: 0
   });
 }

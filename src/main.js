@@ -17,12 +17,9 @@ import ConfigViewAlert from './components/ConfigViewAlert';
 import PraecoFormItem from './components/PraecoFormItem';
 import router from './router';
 import store from './store';
-import config from '../praeco.config.js';
 
 Vue.use(ElementUI, { locale, size: 'mini' });
 Vue.config.productionTip = false;
-
-axios.defaults.baseURL = config.apiBaseUrl;
 
 Vue.component('vue-json-pretty', VueJsonPretty);
 Vue.component('ConfigView', ConfigView);
@@ -34,8 +31,27 @@ Vue.component('ConfigViewQuery', ConfigViewQuery);
 Vue.component('ConfigViewAlert', ConfigViewAlert);
 Vue.component('PraecoFormItem', PraecoFormItem);
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app');
+// First get the config from the server
+// In development this will be in /public and served by webpack
+// In prod it is linked into the docker container
+axios
+  .get('/praeco.config.json')
+  .then(res => {
+    let config = res.data;
+
+    // put the config into the store for use elsewhere in the app
+    store.commit('config/SET_CONFIG', config);
+
+    // then set the axios default to the api
+    axios.defaults.baseURL = config.apiBaseUrl;
+
+    // then start the app
+    new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount('#app');
+  })
+  .catch(() => {
+    alert('praeco.config.json missing');
+  });

@@ -19,6 +19,7 @@ module.exports = {
     camelcase: 'off',
     'prefer-const': 'off',
     'no-console': 'off',
+    'no-alert': 'off',
     'prefer-const': 'off',
     'comma-dangle': 'off',
     'prefer-destructuring': 'off',
