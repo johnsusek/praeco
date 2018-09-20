@@ -14,6 +14,7 @@ import ConfigView from './components/ConfigView.vue';
 import ConfigViewSettings from './components/ConfigViewSettings';
 import ConfigViewQuery from './components/ConfigViewQuery';
 import ConfigViewAlert from './components/ConfigViewAlert';
+import PraecoFormItem from './components/PraecoFormItem';
 import router from './router';
 import store from './store';
 import config from '../praeco.config.js';
@@ -31,6 +32,7 @@ Vue.component('Time', Time);
 Vue.component('ConfigViewSettings', ConfigViewSettings);
 Vue.component('ConfigViewQuery', ConfigViewQuery);
 Vue.component('ConfigViewAlert', ConfigViewAlert);
+Vue.component('PraecoFormItem', PraecoFormItem);
 
 new Vue({
   router,

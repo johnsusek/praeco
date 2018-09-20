@@ -1,3 +1,11 @@
 export default {
-  apiBaseUrl: 'http://localhost:3030/'
+  // URL to bitsensor elastalert api
+  // https://github.com/bitsensor/elastalert
+  apiBaseUrl: 'http://localhost:3030/',
+
+  // If any of these fields have already been preconfigured in a template
+  // don't show them when adding/editing a rule, since normal users
+  // usually won't know these details
+  // e.g. smtp_host or slack_webhook_url
+  hidePreconfiguredFields: []
 };

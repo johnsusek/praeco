@@ -184,15 +184,14 @@ export default {
           minutes: 5
         },
         slack_username_override: 'Praeco',
+        smtp_host: 'localhost',
+        smtp_port: 25,
 
         type: 'any'
       }
     };
   },
   computed: {
-    configDump() {
-      return yaml.safeDump(this.config);
-    },
     pageTitle() {
       return `${this.capitalize(this.action)} ${this.type} "${this.config.name}"`;
     },

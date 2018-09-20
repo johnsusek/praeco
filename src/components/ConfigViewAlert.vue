@@ -28,6 +28,10 @@
         <TableRow :value="config.email" name="To" />
         <TableRow :value="config.cc" name="CC" />
         <TableRow :value="config.bcc" name="BCC" />
+        <TableRow :value="config.smtp_host" name="SMTP host" />
+        <TableRow :value="config.smtp_port" name="SMTP port" />
+        <TableRow :value="config.from_addr" name="From address" />
+        <TableRow :value="config.email_reply_to" name="Reply to" />
       </DefinitionTable>
     </template>
     <template v-if="alert.includes('post')">

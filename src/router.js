@@ -33,7 +33,8 @@ export default new Router({
           path: '/rule/:action/:template?',
           props: route => ({ ...route.params, ...route.query, type: 'rule' }),
           name: 'ruleconfigbuilder',
-          component: ConfigBuilder
+          component: ConfigBuilder,
+          meta: { type: 'rule' }
         },
         {
           path: '/rules/:id',
@@ -52,7 +53,8 @@ export default new Router({
           path: '/template/:action/:template?',
           props: route => ({ ...route.params, ...route.query, type: 'template' }),
           name: 'templateconfigbuilder',
-          component: ConfigBuilder
+          component: ConfigBuilder,
+          meta: { type: 'template' }
         },
         {
           path: '/templates/:id',

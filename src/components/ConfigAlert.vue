@@ -59,9 +59,13 @@
     </el-form-item>
 
     <el-card v-if="config.alert.includes('slack')" header="Slack options" shadow="never">
-      <el-form-item label="Slack webhook URL" prop="slack_webhook_url" required>
+      <praeco-form-item
+        :value="config.slack_webhook_url"
+        label="Slack webhook URL"
+        prop="slack_webhook_url"
+        required>
         <el-input v-model="config.slack_webhook_url" />
-      </el-form-item>
+      </praeco-form-item>
 
       <el-form-item label="Slack channel or username" prop="slack_channel_override" required>
         <el-input v-model="config.slack_channel_override" />
@@ -83,18 +87,54 @@
     </el-card>
 
     <el-card v-if="config.alert.includes('email')" header="Email options" shadow="never">
+      <praeco-form-item :value="config.smtp_host" label="SMTP host" prop="smtp_host" required>
+        <el-input v-model="config.smtp_host" />
+        <label>The SMTP host to use</label>
+      </praeco-form-item>
+
+      <praeco-form-item :value="config.smtp_port" label="SMTP port" prop="smtp_port" required>
+        <el-input-number v-model="config.smtp_port" />
+        <label>The SMTP port to use</label>
+      </praeco-form-item>
+
       <el-form-item label="To" prop="email" required>
         <el-input v-model="config.email" />
         <label>Comma separated list of email addresses</label>
       </el-form-item>
+
       <el-form-item label="CC" prop="cc">
         <el-input v-model="config.cc" />
         <label>Comma separated list of email addresses</label>
       </el-form-item>
+
       <el-form-item label="BCC" prop="bcc">
         <el-input v-model="config.bcc" />
         <label>Comma separated list of email addresses</label>
       </el-form-item>
+
+      <praeco-form-item
+        :value="config.from_addr"
+        label="From address"
+        prop="from_addr">
+        <el-input v-model="config.from_addr" />
+        <label>
+          This sets the From header in the email.
+          By default, the from address is ElastAlert@
+          and the domain will be set by the smtp server.
+        </label>
+      </praeco-form-item>
+
+      <praeco-form-item
+        :value="config.email_reply_to"
+        label="Reply to"
+        prop="email_reply_to">
+        <el-input v-model="config.email_reply_to" />
+        <label>
+          This sets the Reply-To header in the email.
+          By default, the from address is ElastAlert@ and the
+          domain will be set by the smtp server.
+        </label>
+      </praeco-form-item>
     </el-card>
 
     <el-card v-if="config.alert.includes('post')" header="HTTP options" shadow="never">
@@ -109,22 +149,22 @@
 <script>
 import At from 'vue-at';
 
+let validateSlackDestination = (rule, value, callback) => {
+  if (value.length < 2) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else if (!value.startsWith('@') && !value.startsWith('#')) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else {
+    callback();
+  }
+};
+
 export default {
   components: {
     At
   },
   props: ['fields', 'prefill'],
   data() {
-    let validateSlackDestination = (rule, value, callback) => {
-      if (value.length < 2) {
-        callback(new Error('Please enter a @username or #channel'));
-      } else if (!value.startsWith('@') && !value.startsWith('#')) {
-        callback(new Error('Please enter a @username or #channel'));
-      } else {
-        callback();
-      }
-    };
-
     return {
       rules: {
         slack_channel_override: [
