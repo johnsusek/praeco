@@ -370,6 +370,7 @@ export default {
         let res = await axios.get(`/mapping/${formattedIndex}`);
 
         if (res.data.error) {
+          this.mappingLoaded = false;
           this.mappingError = res.data.error.msg;
           return false;
         }

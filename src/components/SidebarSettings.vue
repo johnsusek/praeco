@@ -1,22 +1,6 @@
 <template>
   <div>
     <el-alert
-      v-if="mappingLoaded === false"
-      :description="mappingError"
-      :closable="false"
-      title="Get mapping failed. Make sure the index exists"
-      type="error"
-      show-icon />
-
-    <el-alert
-      v-if="remoteValid === false"
-      :description="remoteError"
-      :closable="false"
-      title="Remote validation failed"
-      type="error"
-      show-icon />
-
-    <el-alert
       v-if="mappingLoading"
       :closable="false"
       class="el-alert-loading"
@@ -24,6 +8,14 @@
       type="info">
       <i class="el-icon-loading" />
     </el-alert>
+
+    <el-alert
+      v-if="mappingLoaded === false"
+      :description="mappingError"
+      :closable="false"
+      title="Get mapping failed. Make sure the index exists"
+      type="error"
+      show-icon />
 
     <el-alert
       v-if="mappingLoaded"
@@ -40,6 +32,14 @@
       type="info">
       <i class="el-icon-loading" />
     </el-alert>
+
+    <el-alert
+      v-if="remoteValid === false"
+      :description="remoteError"
+      :closable="false"
+      title="Remote validation failed"
+      type="error"
+      show-icon />
 
     <el-alert
       v-if="remoteValid"
