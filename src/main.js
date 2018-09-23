@@ -3,6 +3,8 @@ import ElementUI from 'element-ui';
 import axios from 'axios';
 import VueJsonPretty from 'vue-json-pretty';
 import locale from 'element-ui/lib/locale/lang/en';
+import ECharts from 'vue-echarts/components/ECharts.vue';
+import 'echarts/lib/chart/bar.js';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
 import './element-variables.scss';
@@ -15,12 +17,14 @@ import ConfigViewSettings from './components/ConfigViewSettings';
 import ConfigViewQuery from './components/ConfigViewQuery';
 import ConfigViewAlert from './components/ConfigViewAlert';
 import PraecoFormItem from './components/PraecoFormItem';
+import ExpandableAlert from './components/ExpandableAlert';
 import router from './router';
 import store from './store';
 
 Vue.use(ElementUI, { locale, size: 'mini' });
 Vue.config.productionTip = false;
 
+Vue.component('v-chart', ECharts);
 Vue.component('vue-json-pretty', VueJsonPretty);
 Vue.component('ConfigView', ConfigView);
 Vue.component('DefinitionTable', DefinitionTable);
@@ -30,6 +34,7 @@ Vue.component('ConfigViewSettings', ConfigViewSettings);
 Vue.component('ConfigViewQuery', ConfigViewQuery);
 Vue.component('ConfigViewAlert', ConfigViewAlert);
 Vue.component('PraecoFormItem', PraecoFormItem);
+Vue.component('ExpandableAlert', ExpandableAlert);
 
 // First get the config from the server
 // In development this will be in /public and served by webpack

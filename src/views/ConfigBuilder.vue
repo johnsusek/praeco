@@ -14,6 +14,7 @@
         v-if="currentStep === 'query'"
         ref="query"
         :prefill="config"
+        :index="formattedIndex"
         :action="action"
         :fields="mappingFields"
         :query-builder-query="config.__praeco_query_builder"
@@ -83,6 +84,8 @@
       <SidebarSave
         v-if="currentStep === 'save'"
         :save-error="saveError" />
+
+        <!-- <vue-json-pretty :data="config" /> -->
     </el-col>
   </el-row>
 </template>
@@ -149,7 +152,7 @@ export default {
       saveError: '',
 
       previewLoading: false,
-      previewError: '',
+      previewError: null,
       previewResult: null,
 
       remoteValidating: false,
@@ -192,6 +195,15 @@ export default {
     };
   },
   computed: {
+    formattedIndex() {
+      let formattedIndex = this.config.index;
+
+      if (this.config.use_strftime_index) {
+        formattedIndex = formatIndex(this.config.index);
+      }
+
+      return formattedIndex;
+    },
     pageTitle() {
       return `${this.capitalize(this.action)} ${this.type} "${this.config.name}"`;
     },
@@ -247,23 +259,24 @@ export default {
     },
     async preview(config) {
       this.previewResult = null;
-      this.previewError = '';
+      this.previewError = null;
       this.previewLoading = true;
 
       try {
         let res = await axios.post('/test', {
           rule: yaml.safeDump({ ...this.config, ...config }),
           options: {
-            testType: 'countOnly',
+            testType: 'all',
             days: 1,
             alert: false,
-            format: 'json'
+            format: 'json',
+            maxResults: 1
           }
         });
         this.previewResult = res.data;
         return true;
       } catch (error) {
-        this.previewError = error.toString();
+        this.previewError = error.response.data;
         return false;
       } finally {
         this.previewLoading = false;

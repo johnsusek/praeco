@@ -13,5 +13,6 @@ module.exports = {
     host: '0.0.0.0',
     hot: true,
     disableHostCheck: true
-  }
+  },
+  transpileDependencies: [/\bvue-echarts\b/, /\bresize-detector\b/]
 };

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h1>
-      <i class="el-icon-tickets" />
-      {{ rule.name }}
-    </h1>
+    <h1>{{ rule.name }}</h1>
 
     <el-row class="tag-row">
       <el-tag v-if="rule.is_enabled" type="success">Enabled</el-tag>
@@ -143,13 +140,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch('rules/fetchRule', this.id);
-    try {
-      this.getQueryLog();
-      this.getAlertLog();
-      this.getSilenceLog();
-    } catch (error) {
-      console.log('caught outer');
-    }
+    this.getQueryLog();
+    this.getAlertLog();
+    this.getSilenceLog();
   },
   methods: {
     uppercase(str) {

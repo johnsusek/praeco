@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1><i class="el-icon-document" /> {{ template.name }}</h1>
+    <h1>{{ template.name }}</h1>
 
     <el-row>
       <router-link :to="{
