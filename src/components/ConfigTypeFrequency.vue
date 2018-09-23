@@ -24,13 +24,31 @@
     />
 
     <el-form-item label="Frequency visualizer" >
-      <v-chart :options="chart.area" auto-resize style="width: 100%; min-height 400x;" />
+      <v-chart
+        :options="chart.area"
+        auto-resize
+        style="width: 100%; min-height 400x;"
+        @click="chartClick" />
       <el-row class="chart-controls">
         <el-col :span="24" align="right">
           <label>Chart timespan</label>
           <ElastalertTimePicker v-model="chartTimespan" />
         </el-col>
       </el-row>
+    </el-form-item>
+
+    <el-form-item
+      v-loading="eventsLoading"
+      :label="`Event viewer (${events.length})`">
+      <el-table v-if="events.length" :data="events">
+        <el-table-column
+          v-for="col in Object.keys(events[0]).sort()"
+          :key="col"
+          :label="col"
+          :prop="col"
+          show-overflow-tooltip
+        />
+      </el-table>
     </el-form-item>
   </div>
 </template>
@@ -67,6 +85,8 @@ export default {
   props: ['config', 'index', 'query'],
   data() {
     return {
+      events: [],
+      eventsLoading: false,
       chartTimespan: { hours: 24 },
       previewError: '',
       chart: {
@@ -103,7 +123,8 @@ export default {
           series: [
             {
               name: 'Events',
-              type: 'line',
+              type: 'bar',
+              barCategoryGap: '0',
               smooth: true,
               symbol: 'none',
               sampling: 'average',
@@ -198,8 +219,47 @@ export default {
     this.fetchData();
   },
   methods: {
+    chartClick(params) {
+      this.fetchEvents(this.chart.area.xAxis.data[params.dataIndex]);
+    },
     numEventsChange(e) {
       this.config.num_events = e.target.value;
+    },
+    async fetchEvents(from) {
+      this.eventsLoading = true;
+
+      let to = intervalFromTimeframe(this.config.timeframe);
+      let query = {
+        query: {
+          bool: {
+            must: [
+              {
+                query_string: this.query.query_string
+              },
+              {
+                range: {
+                  '@timestamp': {
+                    gte: from,
+                    lte: `${from}||+${to}`
+                  }
+                }
+              }
+            ]
+          }
+        },
+        sort: [{ '@timestamp': { order: 'asc' } }],
+        size: 1000
+      };
+
+      let res = await axios.post(`/search/${this.index}`, query);
+
+      if (res.data.hits) {
+        this.events = res.data.hits.hits.map(h => h._source);
+      } else {
+        this.events = [];
+      }
+
+      this.eventsLoading = false;
     },
     fetchData: debounce(async function() {
       let query = {
@@ -241,6 +301,7 @@ export default {
 
         this.chart.area.xAxis.data = x;
         this.chart.area.series[0].data = y;
+        this.events = [];
       }
     }, 500)
   }

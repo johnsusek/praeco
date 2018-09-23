@@ -39,7 +39,7 @@ export default {
         this.num = ev.target.value;
       }
     },
-    emitNumInput() {
+    emitValue() {
       this.$emit('input', { [this.unit]: this.num });
     }
   }
