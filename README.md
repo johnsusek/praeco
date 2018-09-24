@@ -4,11 +4,12 @@ Praeco is a GUI for elastalert, using [bitsensor's elastalert API](https://githu
 
 ## Configuration
 
-- Copy `praeco.config.json.default` to `public/praeco.config.json` before running and update its contents as needed.
+- Set up the elastalert API from the instructions on the [github repo](https://github.com/bitsensor/elastalert#docker-installation).
+- Copy `praeco.config.json.default` to `public/praeco.config.json` and update apiBaseUrl to point to your API instance.
 
 ## Running
 
-A docker container is provided if you just want to run the app.
+For just running the app, use the official docker image:
 
 ```
 docker run -v `pwd`/public/praeco.config.js:/var/www/html/praeco.config.js -it -p 8080:80 servercentral/praeco
@@ -16,7 +17,7 @@ docker run -v `pwd`/public/praeco.config.js:/var/www/html/praeco.config.js -it -
 
 ## Developing
 
-If you want to develop for praeco, run the built it development server.
+If you want to develop for praeco, run the built it development server:
 
 ```
 npm install
@@ -25,7 +26,7 @@ npm run serve
 
 ## Building
 
-To build your own docker container from local changes.
+To build your own docker container from local changes:
 
 ```
 docker build -t praeco .
