@@ -1,5 +1,7 @@
 <template>
   <div>
+    <br>
+
     <el-form-item label="Field" required>
       <el-select
         v-model="config.compare_key"

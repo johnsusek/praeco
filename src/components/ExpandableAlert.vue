@@ -8,17 +8,17 @@
     <div>
       <el-button
         v-if="!showDetails"
+        :type="type === 'error' ? 'danger' : type"
         plain
-        type="danger"
         icon="el-icon-arrow-right"
         @click="showDetails = true">
         Details
       </el-button>
       <el-button
         v-if="showDetails"
+        :type="type === 'error' ? 'danger' : type"
         plain
         icon="el-icon-arrow-down"
-        type="danger"
         @click="showDetails = false">
         Details
       </el-button>

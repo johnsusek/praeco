@@ -68,7 +68,7 @@
       </label>
       <label v-if="config.type === 'frequency'">
         This rule matches when there are at least a certain number of
-        events in a given time frame. This may be counted on a per-query_key basis.
+        events in a given time frame. This may be counted on a per-"query key" basis.
       </label>
 
       <ConfigTypeBlacklist
@@ -85,6 +85,8 @@
         v-if="config.type === 'frequency'"
         :config="config"
         :index="index"
+        :fields="fields"
+        :types="types"
         :query="config.filter[0].query" />
     </el-card>
 
@@ -109,7 +111,7 @@ export default {
     ConfigTypeWhitelist,
     ConfigTypeFrequency
   },
-  props: ['prefill', 'fields', 'queryBuilderQuery', 'action', 'index'],
+  props: ['prefill', 'fields', 'types', 'queryBuilderQuery', 'action', 'index'],
   data() {
     return {
       labels: {
@@ -176,15 +178,13 @@ export default {
         if (this.config.type !== 'whitelist') {
           delete this.config.whitelist;
           delete this.config.ignore_null;
-        } else {
-          Vue.set(this.config, 'ignore_null', false);
-        }
+        } else if (!this.config.ignore_null) Vue.set(this.config, 'ignore_null', false);
         if (this.config.type !== 'frequency') {
           delete this.config.num_events;
           delete this.config.timeframe;
         } else {
-          Vue.set(this.config, 'num_events', 1);
-          Vue.set(this.config, 'timeframe', { minutes: 5 });
+          if (!this.config.num_events) Vue.set(this.config, 'num_events', 1);
+          if (!this.config.timeframe) Vue.set(this.config, 'timeframe', { minutes: 5 });
         }
       }
     },
@@ -224,6 +224,7 @@ export default {
 
     async validate() {
       try {
+        await this.$refs.formFreq.validate();
         await this.$refs.form.validate();
         return this.config;
       } catch (error) {

@@ -14,9 +14,10 @@
         v-if="currentStep === 'query'"
         ref="query"
         :prefill="config"
-        :index="formattedIndex"
+        :index="wildcardIndex"
         :action="action"
         :fields="mappingFields"
+        :types="mappingTypes"
         :query-builder-query="config.__praeco_query_builder"
         @preview="preview" />
 
@@ -34,6 +35,7 @@
           <el-button
             v-show="currentStep !== 'settings'"
             plain
+            size="small"
             @click="back">
             Back
           </el-button>
@@ -44,13 +46,21 @@
           <el-button
             v-show="showNextButton"
             plain
+            size="small"
             type="primary"
-            @click="testRuleSoFar">
+            @click="handleClickNext">
             Next
+
           </el-button>
 
           <span v-show="currentStep === 'save'">
-            <el-button plain type="primary" @click="saveConfig">Save</el-button>
+            <el-button
+              plain
+              size="small"
+              type="primary"
+              @click="saveConfig">
+              Save
+            </el-button>
           </span>
         </el-col>
       </el-row>
@@ -60,7 +70,6 @@
     <el-col :span="12">
       <h2><i v-if="currentStep === 'settings'" class="el-icon-d-arrow-right" />Settings</h2>
       <SidebarSettings
-        v-if="currentStep === 'settings'"
         v-bind="{
           mappingLoaded,
           mappingError,
@@ -72,13 +81,14 @@
 
       <h2><i v-if="currentStep === 'query'" class="el-icon-d-arrow-right" />Query</h2>
       <SidebarQuery
-        v-if="currentStep === 'query' || currentStep === 'alert'"
-        v-bind="{ previewLoading, previewResult, previewError, remoteValidating }" />
+        v-if="currentStep !== 'settings'"
+        v-bind="{ previewLoading, previewResult, previewError, config }" />
 
       <h2><i v-if="currentStep === 'alert'" class="el-icon-d-arrow-right" />Alert</h2>
+
       <SidebarAlert
-        v-if="currentStep === 'alert'"
-        v-bind="{ previewAlertResult, remoteValidating, previewResult }" />
+        v-if="currentStep !== 'settings' && currentStep !== 'query'"
+        v-bind="{ renderedAlertResult, previewResult }" />
 
       <h2><i v-if="currentStep === 'save'" class="el-icon-d-arrow-right" />Save</h2>
       <SidebarSave
@@ -119,6 +129,20 @@ function buildMappingFields(mapping) {
     });
 
   return fields;
+}
+
+function buildMappingTypes(mapping) {
+  let types = {};
+
+  Object.values(mapping)
+    .map(m => m.mappings)
+    .forEach(m =>
+      Object.keys(m).forEach(k => {
+        types[k] = true;
+      })
+    );
+
+  return Object.keys(types).sort();
 }
 
 function formatIndex(index) {
@@ -163,6 +187,7 @@ export default {
       mappingLoaded: null,
       mappingError: '',
       mappingFields: [],
+      mappingTypes: [],
 
       config: {
         __praeco_query_builder: {},
@@ -204,6 +229,15 @@ export default {
 
       return formattedIndex;
     },
+    wildcardIndex() {
+      let formattedIndex = this.config.index;
+
+      if (this.config.use_strftime_index) {
+        formattedIndex = formattedIndex.replace(/%[Ymd]/g, '*');
+      }
+
+      return formattedIndex;
+    },
     pageTitle() {
       return `${this.capitalize(this.action)} ${this.type} "${this.config.name}"`;
     },
@@ -212,7 +246,7 @@ export default {
       if (this.currentStep === 'query' && !this.previewResult) return false;
       return true;
     },
-    previewAlertResult() {
+    renderedAlertResult() {
       let previewResult = this.previewResult || { result: {} };
 
       let preformSubject = htmlToConfigFormat(this.config.alert_subject);
@@ -266,7 +300,7 @@ export default {
         let res = await axios.post('/test', {
           rule: yaml.safeDump({ ...this.config, ...config }),
           options: {
-            testType: 'all',
+            testType: 'countOnly',
             days: 1,
             alert: false,
             format: 'json',
@@ -276,14 +310,18 @@ export default {
         this.previewResult = res.data;
         return true;
       } catch (error) {
-        this.previewError = error.response.data;
+        if (error.response && error.response.data) {
+          this.previewError = error.response.data;
+        } else {
+          this.previewError = 'Query error.';
+        }
         return false;
       } finally {
         this.previewLoading = false;
       }
     },
-    async testRuleSoFar() {
-      this.remoteValid = null;
+    async handleClickNext() {
+      window.scrollTo({ top: 0 });
 
       if (this.currentStep === 'settings') {
         let settingsConfig = await this.$refs.settings.validate();
@@ -313,6 +351,7 @@ export default {
         }
       }
 
+      this.remoteValid = null;
       this.remoteValidating = true;
       this.remoteValid = await this.remoteValidation();
       this.remoteValidating = false;
@@ -322,6 +361,8 @@ export default {
       }
     },
     back() {
+      window.scrollTo({ top: 0 });
+
       if (this.currentStep === 'query') {
         this.currentStep = 'settings';
       } else if (this.currentStep === 'alert') {
@@ -344,7 +385,7 @@ export default {
         await axios.post('/test', {
           rule: yaml.safeDump(this.config),
           options: {
-            testType: 'countOnly',
+            testType: 'schemaOnly',
             days: 1,
             alert: false,
             format: 'json'
@@ -389,6 +430,7 @@ export default {
         }
 
         this.mappingFields = buildMappingFields(res.data);
+        this.mappingTypes = buildMappingTypes(res.data);
         this.mappingLoaded = true;
         return true;
       } catch (error) {
@@ -404,6 +446,15 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+  border-top: 1px solid #ddd;
+  padding-top: 22px;
+}
+
+h2:first-child {
+  border-top: 0;
+}
+
 .button-row {
   border-top: 1px solid #e6e6e6;
   margin-top: 20px;

@@ -28,7 +28,7 @@
       v-if="remoteValidating"
       :closable="false"
       class="el-alert-loading"
-      title="Validating..."
+      title="Validating schema..."
       type="info">
       <i class="el-icon-loading" />
     </el-alert>
