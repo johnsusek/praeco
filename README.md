@@ -17,7 +17,7 @@ docker run -v `pwd`/public/praeco.config.js:/var/www/html/praeco.config.js -it -
 
 ## Developing
 
-If you want to develop for praeco, run the built it development server:
+If you instead want to develop for praeco, run the built it development server:
 
 ```
 npm install

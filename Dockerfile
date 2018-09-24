@@ -13,7 +13,7 @@ WORKDIR /tmp/nginx/praeco
 
 COPY . .
 
-RUN npm install
+RUN npm install --quiet
 RUN npm run build
 
 RUN cp -r dist/* /var/www/html
@@ -21,4 +21,4 @@ RUN cp -r dist/* /var/www/html
 RUN chown nginx:nginx /var/www/html
 
 EXPOSE 8080
-ENTRYPOINT ["nginx", "-g", "daemon: off;"]
+CMD ["nginx", "-g", "daemon off;"]
