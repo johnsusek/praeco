@@ -12,7 +12,7 @@ Praeco is a GUI for elastalert, using [bitsensor's elastalert API](https://githu
 For just running the app, use the official docker image:
 
 ```
-docker run -v `pwd`/public/praeco.config.js:/var/www/html/praeco.config.js -it -p 8080:80 servercentral/praeco
+docker run -v ${PWD}/public/praeco.config.json:/var/www/html/praeco.config.json -it -p 8080:80 servercentral/praeco
 ```
 
 ## Developing

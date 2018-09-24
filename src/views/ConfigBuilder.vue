@@ -139,8 +139,7 @@ function buildMappingTypes(mapping) {
     .forEach(m =>
       Object.keys(m).forEach(k => {
         types[k] = true;
-      })
-    );
+      }));
 
   return Object.keys(types).sort();
 }
@@ -192,7 +191,7 @@ export default {
       config: {
         __praeco_query_builder: {},
 
-        is_enabled: true,
+        is_enabled: false,
         filter: [
           {
             query: {

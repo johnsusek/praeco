@@ -90,8 +90,7 @@
         :query="config.filter[0].query" />
     </el-card>
 
-
-    <vue-json-pretty :data="config" />
+    <!-- <vue-json-pretty :data="config" /> -->
   </el-form>
 </template>
 
@@ -224,7 +223,6 @@ export default {
 
     async validate() {
       try {
-        await this.$refs.formFreq.validate();
         await this.$refs.form.validate();
         return this.config;
       } catch (error) {

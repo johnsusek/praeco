@@ -13,7 +13,7 @@ WORKDIR /tmp/nginx/praeco
 
 COPY . .
 
-RUN npm install --quiet
+RUN npm install --silent
 RUN npm run build
 
 RUN cp -r dist/* /var/www/html
