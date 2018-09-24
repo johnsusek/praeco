@@ -1,10 +1,8 @@
 import Vue from 'vue';
-import ElementUI from 'element-ui';
+import ElementUI, { Notification } from 'element-ui';
 import axios from 'axios';
 import VueJsonPretty from 'vue-json-pretty';
 import locale from 'element-ui/lib/locale/lang/en';
-import ECharts from 'vue-echarts/components/ECharts.vue';
-import 'echarts/lib/chart/bar.js';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
 import './element-variables.scss';
@@ -21,8 +19,18 @@ import ExpandableAlert from './components/ExpandableAlert';
 import router from './router';
 import store from './store';
 
+let ECharts = require('vue-echarts');
+
 Vue.use(ElementUI, { locale, size: 'mini' });
 Vue.config.productionTip = false;
+Vue.config.errorHandler = function(err, vm, info) {
+  console.error(err, vm, info);
+  Notification.error({
+    message: err.toString(),
+    title: 'Internal error',
+    duration: 0
+  });
+};
 
 Vue.component('v-chart', ECharts);
 Vue.component('vue-json-pretty', VueJsonPretty);
