@@ -123,27 +123,30 @@ h6 {
   color: #86898f;
 }
 
-.el-input-readonly.el-textarea.is-disabled .el-textarea__inner {
-  color: #656565;
-  background: #eee;
-  border: none;
-  resize: none;
-  height: auto;
-  min-height: auto;
-  font-weight: 600;
-  font-family: monospace;
-  font-size: 16px;
-  border-radius: 0;
-  padding-top: 5px;
-  padding-left: 20px;
-}
-
 .vue-query-builder {
   color: #606266;
 
+  > .vqb-group > .vqb-group-heading {
+    background: #f5f7fa;
+    padding: 10px 20px;
+    margin: -20px -20px 0;
+  }
+
+  > .vqb-group > .vqb-group-body > .rule-actions {
+    background: #f5f7fa;
+    padding: 0 20px 15px;
+    margin: 0 -20px 20px -20px;
+  }
+
+  .vqb-group .vqb-group > .vqb-group-body > .rule-actions {
+    background: #f5f7fa;
+    padding: 0 20px 15px;
+    margin: 0 -10px 20px -10px;
+  }
+
   .vqb-group-body .vqb-group-heading {
     padding: 10px;
-    background: #f4f4f5;
+    background: #f5f7fa;
   }
 
   .vqb-group-body .vqb-group-heading {
@@ -151,16 +154,7 @@ h6 {
   }
 
   .vqb-group-body .vqb-group-body {
-    padding: 20px 10px 10px;
-  }
-
-  .vqb-group .vqb-group {
-    border-radius: 4px;
-    border: 1px solid #bbb;
-  }
-
-  .vqb-group .vqb-group .vqb-group-body {
-    padding-bottom: 0;
+    padding: 00px 10px 10px;
   }
 
   .vqb-group .vqb-group {
@@ -189,11 +183,9 @@ h6 {
   }
 
   .vqb-rule {
-    background: #f4f4f5;
+    background: #f5f7fa;
     padding: 10px;
     margin: 10px 0;
-    border-radius: 4px;
-    border: 1px solid #bbb;
     border-left: 3px solid #189acc;
 
     > div {
@@ -241,4 +233,8 @@ h6 {
   select {
     max-width: 100%;
   }
+}
+
+.el-card__header .el-button--text {
+  padding: 0;
 }

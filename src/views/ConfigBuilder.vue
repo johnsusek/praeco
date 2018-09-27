@@ -14,11 +14,17 @@
         v-if="currentStep === 'query'"
         ref="query"
         :prefill="config"
+        :fields="mappingFields"
+        :query-builder-query="config.__praeco_query_builder"
+        @preview="preview" />
+
+      <ConfigMatch
+        v-if="currentStep === 'match'"
+        ref="match"
+        :prefill="config"
         :index="wildcardIndex"
-        :action="action"
         :fields="mappingFields"
         :types="mappingTypes"
-        :query-builder-query="config.__praeco_query_builder"
         @preview="preview" />
 
       <ConfigAlert
@@ -70,6 +76,7 @@
     <el-col :span="12">
       <h2><i v-if="currentStep === 'settings'" class="el-icon-d-arrow-right" />Settings</h2>
       <SidebarSettings
+        v-if="currentStep === 'settings'"
         v-bind="{
           mappingLoaded,
           mappingError,
@@ -79,15 +86,22 @@
           remoteValidating
       }" />
 
-      <h2><i v-if="currentStep === 'query'" class="el-icon-d-arrow-right" />Query</h2>
+      <h2><i v-if="currentStep === 'query'" class="el-icon-d-arrow-right" />Search</h2>
       <SidebarQuery
         v-if="currentStep !== 'settings'"
+        :show-preview="currentStep === 'query'"
         v-bind="{ previewLoading, previewResult, previewError, config }" />
+
+      <h2><i v-if="currentStep === 'match'" class="el-icon-d-arrow-right" />Match</h2>
+      <SidebarMatch
+        v-if="currentStep !== 'settings'"
+        :show-test="currentStep === 'query' || currentStep === 'match'"
+        v-bind="{ config }" />
 
       <h2><i v-if="currentStep === 'alert'" class="el-icon-d-arrow-right" />Alert</h2>
 
       <SidebarAlert
-        v-if="currentStep !== 'settings' && currentStep !== 'query'"
+        v-if="currentStep === 'alert' && currentStep === 'save'"
         v-bind="{ renderedAlertResult, previewResult }" />
 
       <h2><i v-if="currentStep === 'save'" class="el-icon-d-arrow-right" />Save</h2>
@@ -108,10 +122,12 @@ import format from 'string-format';
 import { htmlToConfigFormat } from '../lib/alertText';
 import ConfigSettings from '../components/ConfigSettings.vue';
 import ConfigQuery from '../components/ConfigQuery.vue';
+import ConfigMatch from '../components/ConfigMatch.vue';
 import ConfigAlert from '../components/ConfigAlert.vue';
 import ConfigSave from '../components/ConfigSave.vue';
 import SidebarSettings from '../components/SidebarSettings.vue';
 import SidebarQuery from '../components/SidebarQuery.vue';
+import SidebarMatch from '../components/SidebarMatch.vue';
 import SidebarAlert from '../components/SidebarAlert.vue';
 import SidebarSave from '../components/SidebarSave.vue';
 
@@ -159,10 +175,12 @@ export default {
   components: {
     ConfigSettings,
     ConfigQuery,
+    ConfigMatch,
     ConfigAlert,
     ConfigSave,
     SidebarSettings,
     SidebarQuery,
+    SidebarMatch,
     SidebarAlert,
     SidebarSave
   },
@@ -335,6 +353,12 @@ export default {
           return;
         }
         this.config = { ...this.config, ...queryConfig };
+      } else if (this.currentStep === 'match') {
+        let matchConfig = await this.$refs.match.validate();
+        if (!matchConfig) {
+          return;
+        }
+        this.config = { ...this.config, ...matchConfig };
       } else if (this.currentStep === 'alert') {
         let alertConfig = await this.$refs.alert.validate();
         if (!alertConfig) {
@@ -346,7 +370,7 @@ export default {
       if (this.currentStep === 'settings') {
         this.mappingLoaded = null;
         this.mappingLoading = true;
-        if (!await this.getMapping()) {
+        if (!(await this.getMapping())) {
           return false;
         }
       }
@@ -365,8 +389,10 @@ export default {
 
       if (this.currentStep === 'query') {
         this.currentStep = 'settings';
-      } else if (this.currentStep === 'alert') {
+      } else if (this.currentStep === 'match') {
         this.currentStep = 'query';
+      } else if (this.currentStep === 'alert') {
+        this.currentStep = 'match';
       } else if (this.currentStep === 'save') {
         this.currentStep = 'alert';
       }
@@ -375,6 +401,8 @@ export default {
       if (this.currentStep === 'settings') {
         this.currentStep = 'query';
       } else if (this.currentStep === 'query') {
+        this.currentStep = 'match';
+      } else if (this.currentStep === 'match') {
         this.currentStep = 'alert';
       } else if (this.currentStep === 'alert') {
         this.currentStep = 'save';
@@ -453,10 +481,11 @@ h2 {
 
 h2:first-child {
   border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .button-row {
-  border-top: 1px solid #e6e6e6;
   margin-top: 20px;
   padding-top: 20px;
 }
