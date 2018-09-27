@@ -15,9 +15,11 @@ For just running the app, use the official docker image:
 docker run -v ${PWD}/public/praeco.config.json:/var/www/html/praeco.config.json -it -p 8080:80 servercentral/praeco
 ```
 
+Praeco should now be available on http://127.0.0.1:8080
+
 ## Developing
 
-If you instead want to develop for praeco, run the built it development server:
+If you instead want to develop for praeco, run the built-in development server:
 
 ```
 npm install

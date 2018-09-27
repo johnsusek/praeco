@@ -1,4 +1,5 @@
 {
   "apiBaseUrl": "http://localhost:3030/",
+  "apiWsBaseUrl": "ws://localhost:3333/",
   "hidePreconfiguredFields": []
 }

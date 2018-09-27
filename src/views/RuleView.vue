@@ -52,7 +52,7 @@
       </el-tab-pane>
 
       <el-tab-pane label="Alert log">
-        <el-table :data="alertLog">
+        <el-table :data="alertLog" empty-text="">
           <el-table-column label="Alert sent" width="100">
             <span slot-scope="scope">
               <el-tag v-if="scope.row.alert_sent" type="success">Sent</el-tag>
@@ -80,7 +80,7 @@
       </el-tab-pane>
 
       <el-tab-pane label="Query log">
-        <el-table :data="queryLog">
+        <el-table :data="queryLog" empty-text="">
           <el-table-column label="Start time" width="170">
             <span slot-scope="scope">
               {{ shortDate(scope.row.starttime) }}
@@ -102,7 +102,7 @@
           show-icon
           title="Matches are silenced when you've already
           been alerted within the rule's re-alert timeframe." />
-        <el-table :data="silenceLog">
+        <el-table :data="silenceLog" empty-text="">
           <el-table-column label="Until" width="170">
             <span slot-scope="scope">
               {{ shortDate(scope.row.until) }}
@@ -157,7 +157,15 @@ export default {
         let res = await axios.get('/metadata/elastalert_status', {
           params: { rule_name: this.id }
         });
-        this.queryLog = res.data.hits;
+        if (res.data.error) {
+          this.$notify.error({
+            message: res.data.error.message,
+            title: 'Cannot connect to ES',
+            duration: 0
+          });
+        } else {
+          this.queryLog = res.data.hits;
+        }
       } catch (error) {
         networkError(error);
       }
@@ -167,7 +175,15 @@ export default {
         let res = await axios.get('/metadata/elastalert', {
           params: { rule_name: this.id }
         });
-        this.alertLog = res.data.hits;
+        if (res.data.error) {
+          this.$notify.error({
+            message: res.data.error.message,
+            title: 'Cannot connect to ES',
+            duration: 0
+          });
+        } else {
+          this.alertLog = res.data.hits;
+        }
       } catch (error) {
         networkError(error);
       }
@@ -177,7 +193,15 @@ export default {
         let res = await axios.get('/metadata/silence', {
           params: { rule_name: this.id }
         });
-        this.silenceLog = res.data.hits;
+        if (res.data.error) {
+          this.$notify.error({
+            message: res.data.error.message,
+            title: 'Cannot connect to ES',
+            duration: 0
+          });
+        } else {
+          this.silenceLog = res.data.hits;
+        }
       } catch (error) {
         networkError(error);
       }

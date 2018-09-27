@@ -24,7 +24,6 @@
       </el-button>
       <pre v-if="showDetails">{{ contents.trim() }}</pre>
     </div>
-
   </el-alert>
 </template>
 

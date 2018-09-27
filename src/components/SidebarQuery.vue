@@ -14,7 +14,7 @@
       v-if="previewLoading"
       :closable="false"
       class="el-alert-loading"
-      title="Testing query..."
+      title="Previewing query..."
       type="info">
       <i class="el-icon-loading" />
     </el-alert>
@@ -53,6 +53,8 @@
       class="el-alert-loading"
       type="info">
       <i class="el-icon-loading" />
+      <br><br>
+      <el-button type="info" plain @click="cancelTestRun">Cancel</el-button>
     </el-alert>
 
     <template v-if="!testRunLoading">
@@ -94,9 +96,40 @@ export default {
       testRunLoading: false
     };
   },
+  destroyed() {
+    this.$disconnect();
+  },
+  mounted() {
+    this.$options.sockets.onmessage = ev => {
+      let payload = JSON.parse(ev.data);
+      if (payload.event === 'progress') {
+        if (payload.data.startsWith('INFO:elastalert:')) {
+          this.messages.push(payload.data);
+        } else {
+          this.debugMessages.push(payload.data);
+          this.testRunError = this.debugMessages.join('\n');
+        }
+      } else if (payload.event === 'result') {
+        try {
+          this.testRunResult = JSON.parse(payload.data);
+        } catch (error) {
+          this.testRunError = payload.data;
+        }
+        this.testRunLoading = false;
+      } else if (payload.event === 'done') {
+        this.testRunLoading = false;
+      }
+    };
+  },
   methods: {
+    cancelTestRun() {
+      this.$disconnect();
+      this.testRunLoading = false;
+    },
     testStream() {
-      let rule = encodeURIComponent(yaml.safeDump(this.config));
+      this.$connect();
+
+      let rule = yaml.safeDump(this.config);
 
       this.testRunLoading = true;
       this.testRunResult = '';
@@ -104,7 +137,6 @@ export default {
       this.messages = [];
       this.messages.push('Starting test run...');
 
-      let url = this.$store.state.config.config.apiBaseUrl;
       let options = {
         testType: 'all',
         days: 1,
@@ -112,29 +144,10 @@ export default {
         format: 'json',
         maxResults: 1
       };
-      let evtSource = new EventSource(`${url}test_stream?options=${JSON.stringify(options)}&rule=${rule}`);
 
-      evtSource.addEventListener('done', () => {
-        this.testRunLoading = false;
-        evtSource.close();
-      });
-
-      evtSource.addEventListener('result', e => {
-        try {
-          this.testRunResult = JSON.parse(e.data);
-        } catch (error) {
-          this.testRunError = e.data;
-        }
-      });
-
-      evtSource.addEventListener('progress', e => {
-        if (e.data.startsWith('INFO:elastalert:')) {
-          this.messages.push(e.data);
-        } else {
-          this.debugMessages.push(e.data);
-          this.testRunError = this.debugMessages.join('\n');
-        }
-      });
+      this.$socket.onopen = () => {
+        this.$socket.sendObj({ rule, options });
+      };
     }
   }
 };

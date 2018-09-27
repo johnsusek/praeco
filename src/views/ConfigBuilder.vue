@@ -211,6 +211,7 @@ export default {
           minutes: 5
         },
         slack_username_override: 'Praeco',
+        slack_emoji_override: ':postal_horn:',
         smtp_host: 'localhost',
         smtp_port: 25,
 

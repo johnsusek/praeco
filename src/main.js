@@ -2,10 +2,13 @@ import Vue from 'vue';
 import ElementUI, { Notification } from 'element-ui';
 import axios from 'axios';
 import VueJsonPretty from 'vue-json-pretty';
+import VueNativeSock from 'vue-native-websocket';
+
 import locale from 'element-ui/lib/locale/lang/en';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
 import './element-variables.scss';
+
 import App from './App.vue';
 import DefinitionTable from './components/DefinitionTable';
 import TableRow from './components/TableRow';
@@ -22,7 +25,9 @@ import store from './store';
 let ECharts = require('vue-echarts');
 
 Vue.use(ElementUI, { locale, size: 'mini' });
+
 Vue.config.productionTip = false;
+
 Vue.config.errorHandler = function(err, vm, info) {
   console.error(err, vm, info);
   Notification.error({
@@ -57,6 +62,11 @@ axios
 
     // then set the axios default to the api
     axios.defaults.baseURL = config.apiBaseUrl;
+
+    Vue.use(VueNativeSock, `${config.apiWsBaseUrl}test`, {
+      connectManually: true,
+      format: 'json'
+    });
 
     // then start the app
     new Vue({
