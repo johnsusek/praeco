@@ -76,7 +76,7 @@
     <el-col :span="12">
       <h2><i v-if="currentStep === 'settings'" class="el-icon-d-arrow-right" />Settings</h2>
       <SidebarSettings
-        v-if="currentStep === 'settings'"
+        :show-mapping-validation="currentStep === 'settings'"
         v-bind="{
           mappingLoaded,
           mappingError,
