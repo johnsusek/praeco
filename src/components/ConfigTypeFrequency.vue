@@ -12,7 +12,7 @@
     </el-form-item>
 
     <el-form-item label="Timeframe" props="timeframe" required>
-      <ElastalertTimePicker v-model="config.timeframe" @input="updateTimeframe" />
+      <ElastalertTimePicker v-model="config.timeframe" @input="updateChart" />
       <label>The time that the number of events must occur within.</label>
     </el-form-item>
 
@@ -145,31 +145,10 @@ import Vue from 'vue';
 import axios from 'axios';
 import debounce from 'debounce';
 import 'echarts/lib/chart/bar.js';
-import ElastalertTimePicker from './ElastalertTimePicker';
-
-function intervalFromTimeframe(timeframe) {
-  let interval = Object.values(timeframe)[0];
-  let unit = Object.keys(timeframe)[0];
-
-  if (unit === 'seconds') {
-    interval += 's';
-  } else if (unit === 'minutes') {
-    interval += 'm';
-  } else if (unit === 'hours') {
-    interval += 'h';
-  } else if (unit === 'days') {
-    interval += 'd';
-  } else if (unit === 'weeks') {
-    interval += 'w';
-  }
-
-  return interval;
-}
+import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
+import chartOptions from '../lib/chartOptions';
 
 export default {
-  components: {
-    ElastalertTimePicker
-  },
   props: ['config', 'index', 'query', 'fields', 'types'],
   data() {
     return {
@@ -180,55 +159,37 @@ export default {
       chartSearchError: '',
       chart: {
         area: {
+          title: Object.assign({}, chartOptions.title),
+          tooltip: Object.assign({}, chartOptions.tooltip),
+          xAxis: Object.assign({}, chartOptions.xAxis),
+          yAxis: Object.assign({}, chartOptions.yAxis),
+          animation: false,
           grid: {
             top: 60,
             bottom: 15,
             left: 50,
             right: 0
           },
-          animation: false,
-          tooltip: {
-            trigger: 'axis',
-            position(pt) {
-              return [pt[0], '10%'];
-            }
-          },
-          title: {
-            left: 'center',
-            text: ''
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: [],
-            axisLabel: {
-              show: false
-            }
-          },
-          yAxis: {
-            type: 'value',
-            boundaryGap: [0, '100%']
-          },
           series: [
             {
               name: 'Events',
               type: 'bar',
               barCategoryGap: '0',
-              smooth: true,
               symbol: 'none',
-              sampling: 'average',
               itemStyle: {
-                color: 'rgb(255, 0, 0)'
+                color: '#333'
               },
               areaStyle: {
-                color: 'rgb(255, 0, 0)'
+                color: '#333'
               },
               data: [],
               markLine: {
+                silent: true,
                 lineStyle: {
-                  color: 'rgb(0, 37, 255)',
+                  color: '#ff0000',
                   type: 'solid'
                 },
+                animation: false,
                 symbol: 'none',
                 data: [
                   {
@@ -279,10 +240,6 @@ export default {
       this.showAdvanced = !this.showAdvanced;
     },
     updateChart() {
-      this.chart.area.title.text = this.chartTitle;
-      this.fetchData();
-    },
-    updateTimeframe() {
       this.chart.area.title.text = this.chartTitle;
       this.fetchData();
     },
@@ -392,10 +349,6 @@ export default {
 .chart-controls {
   label {
     margin-right: 15px;
-  }
-
-  .el-col:first-child {
-    padding-left: 100px;
   }
 }
 </style>

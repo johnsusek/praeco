@@ -71,7 +71,7 @@ export default {
         matchType: 'Match type',
         matchTypeAll: 'All',
         matchTypeAny: 'Any',
-        addRule: 'Add rule',
+        addRule: 'Add term',
         removeRule: '&times;',
         addGroup: 'Add group',
         removeGroup: '&times;',

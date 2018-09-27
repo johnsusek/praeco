@@ -86,7 +86,7 @@ export default {
           delete this.config.timeframe;
         } else {
           if (!this.config.num_events) Vue.set(this.config, 'num_events', 1);
-          if (!this.config.timeframe) Vue.set(this.config, 'timeframe', { minutes: 5 });
+          if (!this.config.timeframe) Vue.set(this.config, 'timeframe', { minutes: 10 });
         }
       }
     },

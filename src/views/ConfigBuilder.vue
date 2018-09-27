@@ -56,7 +56,6 @@
             type="primary"
             @click="handleClickNext">
             Next
-
           </el-button>
 
           <span v-show="currentStep === 'save'">
@@ -90,6 +89,8 @@
       <SidebarQuery
         v-if="currentStep !== 'settings'"
         :show-preview="currentStep === 'query'"
+        :index="wildcardIndex"
+        :query="config.filter[0].query.query_string.query"
         v-bind="{ previewLoading, previewResult, previewError, config }" />
 
       <h2><i v-if="currentStep === 'match'" class="el-icon-d-arrow-right" />Match</h2>
@@ -226,7 +227,7 @@ export default {
         alert_text_args: [],
         alert_text_type: 'alert_text_only',
         realert: {
-          minutes: 5
+          minutes: 10
         },
         slack_username_override: 'Praeco',
         slack_emoji_override: ':postal_horn:',

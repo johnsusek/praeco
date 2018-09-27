@@ -1,6 +1,12 @@
 <template>
   <div>
-    <pre>{{ config.filter[0].query.query_string.query }}</pre>
+    <pre>{{ query }}</pre>
+
+    <ESChart
+      :timeframe="{ hours: 24 }"
+      :bucket="{ minutes: 10 }"
+      :query="query"
+      :index="index" />
 
     <ExpandableAlert
       v-if="previewError"
@@ -40,10 +46,7 @@
 
 <script>
 export default {
-  props: ['showPreview', 'previewResult', 'previewError', 'previewLoading', 'config'],
-  destroyed() {
-    this.$disconnect();
-  }
+  props: ['showPreview', 'previewResult', 'previewError', 'previewLoading', 'query', 'index']
 };
 </script>
 
@@ -52,6 +55,9 @@ pre {
   margin: 10px 0;
   border: 0;
   border-left: 3px solid #189acc;
+  background: #f5f7fa;
+  font-weight: bold;
+  font-size: 15px;
 }
 </style>
 

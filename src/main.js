@@ -19,6 +19,8 @@ import ConfigViewQuery from './components/ConfigViewQuery';
 import ConfigViewAlert from './components/ConfigViewAlert';
 import PraecoFormItem from './components/PraecoFormItem';
 import ExpandableAlert from './components/ExpandableAlert';
+import ESChart from './components/ESChart';
+import ElastalertTimePicker from './components/ElastalertTimePicker';
 import router from './router';
 import store from './store';
 
@@ -48,6 +50,8 @@ Vue.component('ConfigViewQuery', ConfigViewQuery);
 Vue.component('ConfigViewAlert', ConfigViewAlert);
 Vue.component('PraecoFormItem', PraecoFormItem);
 Vue.component('ExpandableAlert', ExpandableAlert);
+Vue.component('ESChart', ESChart);
+Vue.component('ElastalertTimePicker', ElastalertTimePicker);
 
 // First get the config from the server
 // In development this will be in /public and served by webpack
