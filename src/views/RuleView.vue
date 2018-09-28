@@ -64,6 +64,7 @@
 
     <br>
 
+
     <el-tabs type="card" >
       <el-tab-pane label="Overview">
         <ConfigView :config="rule" />
@@ -135,16 +136,27 @@
           <el-table-column label="Exponent" prop="exponent" />
         </el-table>
       </el-tab-pane>
+
+      <el-tab-pane v-if="yaml" label="YAML">
+        <prism language="javascript">{{ yaml }}</prism>
+      </el-tab-pane>
     </el-tabs>
+
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
 import axios from 'axios';
+import yaml from 'js-yaml';
+import Prism from 'vue-prism-component';
 import networkError from '../lib/networkError.js';
+import { formatConfig } from '../lib/formatConfig';
 
 export default {
+  components: {
+    Prism
+  },
   props: ['id'],
   data() {
     return {
@@ -158,6 +170,11 @@ export default {
   computed: {
     rule() {
       return this.$store.state.rules.rules[this.id] || {};
+    },
+    yaml() {
+      if (!this.rule.name) return false;
+      let conf = formatConfig(this.rule);
+      return yaml.safeDump(conf);
     }
   },
   async mounted() {

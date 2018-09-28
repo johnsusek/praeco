@@ -3,12 +3,12 @@ import ElementUI, { Notification } from 'element-ui';
 import axios from 'axios';
 import VueJsonPretty from 'vue-json-pretty';
 import VueNativeSock from 'vue-native-websocket';
-
+import 'prismjs';
+import 'prismjs/themes/prism.css';
 import locale from 'element-ui/lib/locale/lang/en';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
 import './element-variables.scss';
-
 import App from './App.vue';
 import DefinitionTable from './components/DefinitionTable';
 import TableRow from './components/TableRow';
