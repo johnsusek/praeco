@@ -4,8 +4,8 @@
       <el-switch ref="is_enabled" v-model="config.is_enabled" />
     </el-form-item>
 
-    <el-form-item label="Name" prop="name" required>
-      <el-input ref="name" v-model="config.name" :disabled="action === 'edit'" spellcheck="false"/>
+    <el-form-item v-if="action !== 'edit'" label="Name" prop="name" required>
+      <el-input ref="name" v-model="config.name" spellcheck="false"/>
     </el-form-item>
 
     <el-form-item label="Description" prop="description">

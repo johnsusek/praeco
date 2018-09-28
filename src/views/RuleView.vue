@@ -2,7 +2,7 @@
   <div>
     <div v-show="showRename" >
       <el-row :gutter="10">
-        <el-col :span="4">
+        <el-col :span="6">
           <el-input
             ref="rename"
             v-model="newName"
@@ -11,7 +11,7 @@
             autoselect
             @keyup.enter.native="rename" />
         </el-col>
-        <el-col :span="20">
+        <el-col :span="18">
           <el-button size="large" type="primary" @click="rename">Save</el-button>
           <el-button size="large" @click="showRename = false">Cancel</el-button>
         </el-col>

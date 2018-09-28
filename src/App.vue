@@ -81,6 +81,6 @@ body > section > section > .el-main {
 }
 
 .el-container > aside {
-  max-width: 200px;
+  max-width: 300px;
 }
 </style>

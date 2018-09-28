@@ -41,29 +41,6 @@
     </el-form-item>
 
     <el-form-item
-      v-if="config.alert.includes('slack') || config.alert.includes('email')"
-      label="Include in body">
-      <el-row>
-        <el-col :span="13">
-          <el-select v-model="config.alert_text_type" class="el-select-wide">
-            <el-option
-              label="Body text only"
-              value="alert_text_only" />
-            <el-option
-              label="Body text, trigger details"
-              value="exclude_fields" />
-            <el-option
-              label="Body text, trigger details, top counts, fields values"
-              value="default" />
-            <el-option
-              label="Aggregation summary only"
-              value="aggregation_summary_only" />
-          </el-select>
-        </el-col>
-      </el-row>
-    </el-form-item>
-
-    <el-form-item
       v-if="(config.alert.includes('slack') ||
         config.alert.includes('email')) &&
       config.alert_text_type !== 'aggregation_summary_only'"
@@ -81,6 +58,25 @@
         <div contenteditable />
         <label>Insert fields by typing '%' followed by the field name</label>
       </at>
+    </el-form-item>
+
+    <el-form-item
+      v-if="config.alert.includes('slack') || config.alert.includes('email')"
+      required
+      label="Include in body">
+      <el-row>
+        <el-radio-group v-model="attach">
+          <el-radio value="alert_text_only" label="alert_text_only" border>
+            Body text only
+          </el-radio>
+          <el-radio value="exclude_fields" label="exclude_fields" border>
+            Include trigger details &amp; top counts
+          </el-radio>
+          <el-radio value="default" label="default" border>
+            Include trigger details &amp; top counts &amp; field values
+          </el-radio>
+        </el-radio-group>
+      </el-row>
     </el-form-item>
 
     <el-card v-if="config.alert.includes('slack')" header="Slack options" shadow="never">
@@ -192,6 +188,7 @@ export default {
   props: ['fields', 'prefill'],
   data() {
     return {
+      attach: '',
       rules: {
         slack_channel_override: [
           {
@@ -201,32 +198,44 @@ export default {
         ]
       },
       config: {
-        alert_text_type: '',
         alert: [],
         realert: {}
       }
     };
   },
+  computed: {
+    alertTextType() {
+      if (this.attach === 'default') {
+        return undefined;
+      }
+      return this.attach;
+    }
+  },
   watch: {
     prefill() {
-      // Default alert text type = no value set
-      if (!this.config.alert_text_type) {
-        Vue.set(this.config, 'alert_text_type', 'default');
-      }
-
       this.config = this.prefill;
+    },
+    attach: {
+      handler() {
+        if (this.alertTextType) {
+          Vue.set(this.config, 'alert_text_type', this.alertTextType);
+        } else {
+          Vue.delete(this.config, 'alert_text_type');
+        }
+      }
+    }
+  },
+  mounted() {
+    if (this.prefill.alert_text_type) {
+      this.attach = this.prefill.alert_text_type;
+    } else {
+      this.attach = 'default';
     }
   },
   methods: {
     async validate() {
       try {
         await this.$refs.form.validate();
-
-        // Default alert text type = no value set
-        if (!this.config.alert_text_type === 'default') {
-          Vue.delete(this.config, 'alert_text_type');
-        }
-
         return this.config;
       } catch (error) {
         return false;
@@ -235,7 +244,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .el-tag {

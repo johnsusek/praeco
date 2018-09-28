@@ -103,7 +103,7 @@
 
       <SidebarAlert
         v-if="currentStep === 'alert'"
-        v-bind="{ renderedAlertResult, previewResult }" />
+        v-bind="{ renderedAlertResult, alertType: config.alert_text_type }" />
 
       <h2><i v-if="currentStep === 'save'" class="el-icon-d-arrow-right" />Save</h2>
       <SidebarSave
@@ -225,7 +225,6 @@ export default {
         alert_subject_args: [],
         alert_text: '',
         alert_text_args: [],
-        alert_text_type: 'alert_text_only',
         realert: {
           minutes: 10
         },
