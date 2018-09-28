@@ -3,6 +3,7 @@
     <br>
     <ConfigViewSettings :config="config" />
     <ConfigViewQuery :config="config" />
+    <ConfigViewMatch :config="config" />
     <ConfigViewAlert :config="config" />
   </div>
 </template>

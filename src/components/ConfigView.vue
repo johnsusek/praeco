@@ -1,13 +1,17 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :lg="12">
-      <ConfigViewSettings :config="config" />
-      <ConfigViewQuery :config="config" />
-    </el-col>
-    <el-col :lg="12">
-      <ConfigViewAlert :config="config" />
-    </el-col>
-  </el-row>
+  <div>
+    <el-row :gutter="20">
+      <el-col :lg="12">
+        <ConfigViewSettings :config="config" />
+        <ConfigViewMatch :config="config" />
+      </el-col>
+      <el-col :lg="12">
+        <ConfigViewAlert :config="config" />
+      </el-col>
+    </el-row>
+
+    <ConfigViewQuery :config="config" />
+  </div>
 </template>
 
 <script>
