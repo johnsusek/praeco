@@ -41,11 +41,16 @@
 
       <div v-loading="eventsLoading">
         <el-table v-if="events.length" :data="events">
+          <!--
+            This contains the only logstash specific
+            code in the app - to widen the 'message' column
+          -->
           <el-table-column
             v-for="col in Object.keys(events[0]).sort()"
             :key="col"
             :label="col"
             :prop="col"
+            :width="col === 'message' && events[0].type === 'syslog' ? 500 : ''"
             show-overflow-tooltip
           />
         </el-table>
@@ -91,10 +96,10 @@ export default {
             barCategoryGap: '0',
             symbol: 'none',
             itemStyle: {
-              color: '#8f18cc'
+              color: '#333'
             },
             areaStyle: {
-              color: '#8f18cc'
+              color: '#333'
             },
             data: []
           }
