@@ -1,7 +1,7 @@
 let textStyle = {
   fontSize: 13,
   fontWeight: '500',
-  fontFamily: 'Helvetica, Arial, sans-serif',
+  fontFamily: '"Helvetica Neue", Arial, sans-serif',
   color: '#606266'
 };
 

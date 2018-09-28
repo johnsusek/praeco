@@ -1,5 +1,6 @@
 {
-  "apiBaseUrl": "http://localhost:3030/",
-  "apiWsBaseUrl": "ws://localhost:3333/",
+  "appUrl": "http://your-praeco-installation:8080",
+  "apiBaseUrl": "http://your-elastalert-installation:3030",
+  "apiWsBaseUrl": "ws://your-elastalert-installation:3333",
   "hidePreconfiguredFields": []
 }

@@ -231,7 +231,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .praeco-chart {
   position: relative;
 

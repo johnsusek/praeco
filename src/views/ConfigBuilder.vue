@@ -230,6 +230,7 @@ export default {
         },
         slack_username_override: 'Praeco',
         slack_emoji_override: ':postal_horn:',
+        slack_title_link: '',
         smtp_host: 'localhost',
         smtp_port: 25,
 
@@ -302,6 +303,12 @@ export default {
       }
       Vue.set(this.config, 'name', `New ${this.type}`);
     }
+
+    Vue.set(
+      this.config,
+      'slack_title_link',
+      `${this.$store.state.config.config.appUrl}/rules/${encodeURIComponent(this.config.name)}`
+    );
   },
   methods: {
     capitalize(str) {
