@@ -42,7 +42,32 @@
 
     <el-form-item
       v-if="config.alert.includes('slack') || config.alert.includes('email')"
-      label="Body"
+      label="Include in body">
+      <el-row>
+        <el-col :span="13">
+          <el-select v-model="config.alert_text_type" class="el-select-wide">
+            <el-option
+              label="Body text only"
+              value="alert_text_only" />
+            <el-option
+              label="Body text, trigger details"
+              value="exclude_fields" />
+            <el-option
+              label="Body text, trigger details, top counts, fields values"
+              value="default" />
+            <el-option
+              label="Aggregation summary only"
+              value="aggregation_summary_only" />
+          </el-select>
+        </el-col>
+      </el-row>
+    </el-form-item>
+
+    <el-form-item
+      v-if="(config.alert.includes('slack') ||
+        config.alert.includes('email')) &&
+      config.alert_text_type !== 'aggregation_summary_only'"
+      label="Body text"
       prop="alert_text"
       required>
       <at
@@ -147,6 +172,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import At from 'vue-at';
 
 let validateSlackDestination = (rule, value, callback) => {
@@ -175,6 +201,7 @@ export default {
         ]
       },
       config: {
+        alert_text_type: '',
         alert: [],
         realert: {}
       }
@@ -182,6 +209,11 @@ export default {
   },
   watch: {
     prefill() {
+      // Default alert text type = no value set
+      if (!this.config.alert_text_type) {
+        Vue.set(this.config, 'alert_text_type', 'default');
+      }
+
       this.config = this.prefill;
     }
   },
@@ -189,6 +221,12 @@ export default {
     async validate() {
       try {
         await this.$refs.form.validate();
+
+        // Default alert text type = no value set
+        if (!this.config.alert_text_type === 'default') {
+          Vue.delete(this.config, 'alert_text_type');
+        }
+
         return this.config;
       } catch (error) {
         return false;
@@ -248,7 +286,7 @@ export default {
   background: red;
 }
 
-.el-radio__input.is-checked + .el-radio__label,
+.slack-danger .el-radio__input.is-checked + .el-radio__label,
 .slack-danger {
   color: red !important;
   border-color: red !important;

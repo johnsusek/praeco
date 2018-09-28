@@ -7,6 +7,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   padding: 0;
 }
 
+.el-select-wide {
+  width: 100%;
+}
+
 .el-select + label,
 .el-form-item__content > label {
   display: block;
@@ -14,6 +18,18 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   line-height: 1.3;
   font-size: 12px;
   padding-top: 7px;
+}
+
+.el-notification {
+  width: auto;
+}
+
+.el-input--large {
+  font-size: 16px;
+}
+
+.el-notification__content {
+  width: 500px;
 }
 
 .el-alert {
@@ -237,4 +253,9 @@ h6 {
 
 .el-card__header .el-button--text {
   padding: 0;
+}
+
+.el-row a + a,
+.el-row a + .el-button {
+  margin-left: 10px;
 }

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
+import cloneDeep from 'lodash.clonedeep';
 import networkError from '../lib/networkError';
 import { configFormatToHtml } from '../lib/alertText';
 import { formatConfig } from '../lib/formatConfig';
@@ -55,17 +56,55 @@ export default {
         networkError(error);
       }
     },
-    async createRule(context, config) {
-      config = formatConfig(config);
+    async renameRule({ dispatch, state }, { oldName, newName }) {
+      if (oldName === newName) return;
+
+      let oldRule = state.rules[oldName];
+      let newRule = cloneDeep(oldRule);
+      newRule.name = newName;
 
       try {
-        let res = await axios.post(`/rules/${config.name}`, {
-          yaml: yaml.safeDump(config)
+        let res = await dispatch('createRule', newRule);
+        if (res) {
+          await dispatch('deleteRule', oldName);
+          return newName;
+        }
+      } catch (error) {
+        networkError(error);
+      }
+    },
+    async duplicateRule({ dispatch, state }, { name }) {
+      let rule = state.rules[name];
+      let newRule = cloneDeep(rule);
+      newRule.is_enabled = false;
+
+      let i = 1;
+      while (state.rules[`${newRule.name} (${i})`]) {
+        i++;
+      }
+      newRule.name += ` (${i})`;
+
+      try {
+        let res = await dispatch('createRule', newRule);
+        if (res) {
+          return newRule.name;
+        }
+      } catch (error) {
+        networkError(error);
+      }
+    },
+    async createRule(context, config) {
+      let conf = formatConfig(config);
+
+      try {
+        let res = await axios.post(`/rules/${conf.name}`, {
+          yaml: yaml.safeDump(conf)
         });
 
         return res.data;
       } catch (error) {
         networkError(error);
+        throw error;
       }
     },
     async deleteRule({ commit }, id) {
@@ -81,16 +120,16 @@ export default {
       }
     },
     async disableRule({ commit }, config) {
-      config = formatConfig(config);
-      config.is_enabled = false;
+      let conf = formatConfig(config);
+      conf.is_enabled = false;
 
       try {
-        let res = await axios.post(`/rules/${config.name}`, {
-          yaml: yaml.safeDump(config)
+        let res = await axios.post(`/rules/${conf.name}`, {
+          yaml: yaml.safeDump(conf)
         });
 
         if (res.data.created) {
-          commit('UPDATED_RULE', { id: config.name, rule: config });
+          commit('UPDATED_RULE', { id: conf.name, rule: conf });
           return true;
         }
 
@@ -100,16 +139,16 @@ export default {
       }
     },
     async enableRule({ commit }, config) {
-      config = formatConfig(config);
-      config.is_enabled = true;
+      let conf = formatConfig(config);
+      conf.is_enabled = true;
 
       try {
-        let res = await axios.post(`/rules/${config.name}`, {
-          yaml: yaml.safeDump(config)
+        let res = await axios.post(`/rules/${conf.name}`, {
+          yaml: yaml.safeDump(conf)
         });
 
         if (res.data.created) {
-          commit('UPDATED_RULE', { id: config.name, rule: config });
+          commit('UPDATED_RULE', { id: conf.name, rule: conf });
           return true;
         }
 

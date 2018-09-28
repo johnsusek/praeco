@@ -1,24 +1,41 @@
 <template>
   <div>
-    <h1>{{ rule.name }}</h1>
+    <div v-show="showRename" >
+      <el-row :gutter="10">
+        <el-col :span="4">
+          <el-input
+            ref="rename"
+            v-model="newName"
+            size="large"
+            autofocus
+            autoselect
+            @keyup.enter.native="rename" />
+        </el-col>
+        <el-col :span="20">
+          <el-button size="large" type="primary" @click="rename">Save</el-button>
+          <el-button size="large" @click="showRename = false">Cancel</el-button>
+        </el-col>
+      </el-row>
+      <br>
+    </div>
+
+    <h1 v-show="!showRename">{{ rule.name }}</h1>
 
     <el-row class="tag-row">
       <el-tag v-if="rule.is_enabled" type="success">Enabled</el-tag>
       <el-tag v-else type="warning">Disabled</el-tag>
     </el-row>
 
-    <el-row class="button-row">
+    <el-row>
       <router-link :to="{
         name: 'ruleconfigbuilder',
         params: { action: 'edit', template: id } }">
         <el-button icon="el-icon-edit" plain type="info">Edit</el-button>
       </router-link>
 
-      <router-link :to="{
-        name: 'ruleconfigbuilder',
-        params: { action: 'add' }, query: { prefill: id, prefillType: 'rule' } }">
-        <el-button plain type="info">Duplicate</el-button>
-      </router-link>
+      <el-button plain type="info" @click="showRenameInput">Rename</el-button>
+
+      <el-button plain type="info" @click="duplicate">Duplicate</el-button>
 
       <el-button
         v-if="rule.is_enabled"
@@ -44,6 +61,8 @@
         Delete...
       </el-button>
     </el-row>
+
+    <br>
 
     <el-tabs type="card" >
       <el-tab-pane label="Overview">
@@ -121,6 +140,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 import networkError from '../lib/networkError.js';
 
@@ -128,6 +148,8 @@ export default {
   props: ['id'],
   data() {
     return {
+      showRename: false,
+      newName: '',
       queryLog: [],
       alertLog: [],
       silenceLog: []
@@ -138,13 +160,38 @@ export default {
       return this.$store.state.rules.rules[this.id] || {};
     }
   },
-  mounted() {
-    this.$store.dispatch('rules/fetchRule', this.id);
+  async mounted() {
+    await this.$store.dispatch('rules/fetchRule', this.id);
+    this.newName = this.rule.name;
     this.getQueryLog();
     this.getAlertLog();
     this.getSilenceLog();
   },
   methods: {
+    showRenameInput() {
+      this.showRename = true;
+      Vue.nextTick(() => {
+        this.$refs.rename.$el.querySelector('input').focus();
+        this.$refs.rename.$el.querySelector('input').select();
+      });
+    },
+    async rename() {
+      let res = await this.$store.dispatch('rules/renameRule', {
+        oldName: this.rule.name,
+        newName: this.newName.trim()
+      });
+      if (res) {
+        this.$router.replace(`/rules/${res}`);
+      }
+    },
+    async duplicate() {
+      let res = await this.$store.dispatch('rules/duplicateRule', {
+        name: this.rule.name
+      });
+      if (res) {
+        this.$router.replace(`/rules/${res}`);
+      }
+    },
     uppercase(str) {
       return str[0].toUpperCase() + str.slice(1);
     },
@@ -159,8 +206,8 @@ export default {
         });
         if (res.data.error) {
           this.$notify.error({
-            message: res.data.error.message,
-            title: 'Cannot connect to ES',
+            message: res.data.error.msg,
+            title: 'Elasticsearch error',
             duration: 0
           });
         } else {
@@ -177,8 +224,8 @@ export default {
         });
         if (res.data.error) {
           this.$notify.error({
-            message: res.data.error.message,
-            title: 'Cannot connect to ES',
+            message: res.data.error.msg,
+            title: 'Elasticsearch error',
             duration: 0
           });
         } else {
@@ -195,8 +242,8 @@ export default {
         });
         if (res.data.error) {
           this.$notify.error({
-            message: res.data.error.message,
-            title: 'Cannot connect to ES',
+            message: res.data.error.msg,
+            title: 'Elasticsearch error',
             duration: 0
           });
         } else {
@@ -271,14 +318,6 @@ export default {
 </script>
 
 <style scoped>
-.button-row {
-  margin-bottom: 20px;
-}
-
-.button-row a .el-button {
-  margin-right: 10px;
-}
-
 .tag-row {
   margin-bottom: 10px;
 }

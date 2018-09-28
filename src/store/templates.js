@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
+import cloneDeep from 'lodash.clonedeep';
 import networkError from '../lib/networkError.js';
 import { configFormatToHtml } from '../lib/alertText';
 import { formatConfig } from '../lib/formatConfig';
@@ -48,6 +49,42 @@ export default {
         let res = await axios.get(`/templates/${id}`);
         commit('FETCHED_TEMPLATE', { id, template: res.data });
         return res;
+      } catch (error) {
+        networkError(error);
+      }
+    },
+    async renameTemplate({ dispatch, state }, { oldName, newName }) {
+      if (oldName === newName) return;
+
+      let oldTemplate = state.templates[oldName];
+      let newTemplate = cloneDeep(oldTemplate);
+      newTemplate.name = newName;
+
+      try {
+        let res = await dispatch('createTemplate', newTemplate);
+        if (res) {
+          await dispatch('deleteTemplate', oldName);
+          return newName;
+        }
+      } catch (error) {
+        networkError(error);
+      }
+    },
+    async duplicateTemplate({ dispatch, state }, { name }) {
+      let rule = state.templates[name];
+      let newTemplate = cloneDeep(rule);
+
+      let i = 1;
+      while (state.templates[`${newTemplate.name} (${i})`]) {
+        i++;
+      }
+      newTemplate.name += ` (${i})`;
+
+      try {
+        let res = await dispatch('createTemplate', newTemplate);
+        if (res) {
+          return newTemplate.name;
+        }
       } catch (error) {
         networkError(error);
       }

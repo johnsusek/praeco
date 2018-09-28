@@ -87,7 +87,7 @@
 
       <h2><i v-if="currentStep === 'query'" class="el-icon-d-arrow-right" />Search</h2>
       <SidebarQuery
-        v-if="currentStep !== 'settings'"
+        v-if="currentStep === 'query'"
         :show-preview="currentStep === 'query'"
         :index="wildcardIndex"
         :query="config.filter[0].query.query_string.query"
@@ -95,14 +95,14 @@
 
       <h2><i v-if="currentStep === 'match'" class="el-icon-d-arrow-right" />Match</h2>
       <SidebarMatch
-        v-if="currentStep !== 'settings'"
+        v-if="currentStep === 'match'"
         :show-test="currentStep === 'query' || currentStep === 'match'"
         v-bind="{ config }" />
 
       <h2><i v-if="currentStep === 'alert'" class="el-icon-d-arrow-right" />Alert</h2>
 
       <SidebarAlert
-        v-if="currentStep === 'alert' && currentStep === 'save'"
+        v-if="currentStep === 'alert'"
         v-bind="{ renderedAlertResult, previewResult }" />
 
       <h2><i v-if="currentStep === 'save'" class="el-icon-d-arrow-right" />Save</h2>
@@ -326,7 +326,13 @@ export default {
             maxResults: 1
           }
         });
-        this.previewResult = res.data;
+
+        if (!res.data) {
+          this.previewError =
+            'Error testing rule, there may be a bad key or value in your rule file.';
+        } else {
+          this.previewResult = res.data;
+        }
         return true;
       } catch (error) {
         if (error.response && error.response.data) {
