@@ -110,7 +110,7 @@
         v-if="currentStep === 'save'"
         :save-error="saveError" />
 
-        <!-- <vue-json-pretty :data="config" /> -->
+      <vue-json-pretty :data="config" />
     </el-col>
   </el-row>
 </template>
@@ -262,7 +262,7 @@ export default {
     },
     showNextButton() {
       if (this.currentStep === 'save') return false;
-      if (this.currentStep === 'query' && !this.previewResult) return false;
+      if (this.currentStep === 'query' && this.previewError) return false;
       return true;
     },
     renderedAlertResult() {
@@ -382,12 +382,15 @@ export default {
         }
       }
 
-      this.remoteValid = null;
-      this.remoteValidating = true;
-      this.remoteValid = await this.remoteValidation();
-      this.remoteValidating = false;
-
-      if (this.remoteValid) {
+      if (this.currentStep !== 'settings') {
+        this.remoteValid = null;
+        this.remoteValidating = true;
+        this.remoteValid = await this.remoteValidation();
+        this.remoteValidating = false;
+        if (this.remoteValid) {
+          this.next();
+        }
+      } else {
         this.next();
       }
     },

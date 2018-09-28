@@ -15,7 +15,7 @@
         v-if="mappingLoaded === false"
         :description="mappingError"
         :closable="false"
-        title="Get mapping failed. Make sure the index exists"
+        title="Get mapping failed. Make sure the index exists."
         type="error"
         show-icon />
 
