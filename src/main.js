@@ -10,9 +10,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
 import './element-variables.scss';
 import App from './App.vue';
-import DefinitionTable from './components/DefinitionTable';
 import TableRow from './components/TableRow';
 import Time from './components/Time';
+import DefinitionTable from './components/DefinitionTable';
 import ConfigView from './components/ConfigView.vue';
 import ConfigViewSettings from './components/ConfigViewSettings';
 import ConfigViewQuery from './components/ConfigViewQuery';
@@ -24,6 +24,7 @@ import ESChart from './components/ESChart';
 import ElastalertTimePicker from './components/ElastalertTimePicker';
 import router from './router';
 import store from './store';
+import { initLogging, logger } from './lib/logger.js';
 
 let ECharts = require('vue-echarts');
 
@@ -32,6 +33,7 @@ Vue.use(ElementUI, { locale, size: 'mini' });
 Vue.config.productionTip = false;
 
 Vue.config.errorHandler = function(err, vm, info) {
+  logger().error({ error: err });
   console.error(err, vm, info);
   Notification.error({
     message: err.toString(),
@@ -65,6 +67,8 @@ axios
 
     // put the config into the store for use elsewhere in the app
     store.commit('config/SET_CONFIG', config);
+
+    initLogging();
 
     // then set the axios default to the api
     axios.defaults.baseURL = config.apiBaseUrl;

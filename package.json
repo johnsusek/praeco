@@ -10,7 +10,9 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "@browser-bunyan/server-stream": "^1.3.0",
     "axios": "^0.18.0",
+    "browser-bunyan": "^1.4.0",
     "debounce": "^1.2.0",
     "echarts": "4.1.0",
     "element-ui": "^2.4.6",

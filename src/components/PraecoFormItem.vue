@@ -1,6 +1,6 @@
 <template>
   <el-form-item
-    v-show="!value || !hidePreconfiguredFields.includes(prop) || type === 'template'"
+    v-show="(!value && !hidePreconfiguredFields.includes(prop)) || type === 'template'"
     :label="label"
     :prop="prop"
     :required="required"

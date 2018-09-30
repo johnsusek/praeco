@@ -167,7 +167,7 @@ export default {
             ]
           }
         },
-        sort: [{ '@timestamp': { order: 'asc' } }],
+        sort: [{ '@timestamp': { order: 'desc' } }],
         size: 1000
       };
 

@@ -45,8 +45,7 @@
         config.alert.includes('email')) &&
       config.alert_text_type !== 'aggregation_summary_only'"
       label="Body text"
-      prop="alert_text"
-      required>
+      prop="alert_text">
       <at
         v-model="config.alert_text"
         :members="fields"
@@ -88,17 +87,17 @@
         <el-input v-model="config.slack_webhook_url" />
       </praeco-form-item>
 
-      <el-form-item label="Slack channel or username" prop="slack_channel_override" required>
+      <el-form-item label="Channel or username" prop="slack_channel_override" required>
         <el-input v-model="config.slack_channel_override" />
         <label>The @username or #channel to send the alert</label>
       </el-form-item>
 
-      <el-form-item label="Slack post as" prop="slack_username_override" required>
+      <praeco-form-item label="Post as" prop="slack_username_override" required>
         <el-input v-model="config.slack_username_override" />
         <label>This is the username that will appear in Slack for the alert</label>
-      </el-form-item>
+      </praeco-form-item>
 
-      <el-form-item label="Slack message color" prop="slack_msg_color" required>
+      <el-form-item label="Message color" prop="slack_msg_color" required>
         <el-radio-group v-model="config.slack_msg_color">
           <el-radio label="danger" border class="slack-danger">Danger</el-radio>
           <el-radio label="warning" border class="slack-warning">Warning</el-radio>

@@ -120,6 +120,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import format from 'string-format';
+import { logger } from '@/lib/logger.js';
 import { htmlToConfigFormat } from '../lib/alertText';
 import ConfigSettings from '../components/ConfigSettings.vue';
 import ConfigQuery from '../components/ConfigQuery.vue';
@@ -341,6 +342,8 @@ export default {
         }
         return true;
       } catch (error) {
+        logger().error({ error });
+
         if (error.response && error.response.data) {
           this.previewError = error.response.data;
         } else {
@@ -437,6 +440,7 @@ export default {
         });
         return true;
       } catch (error) {
+        logger.error(error);
         this.remoteError = error.toString();
         return false;
       }

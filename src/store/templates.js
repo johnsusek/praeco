@@ -2,6 +2,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import cloneDeep from 'lodash.clonedeep';
+import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
 import { configFormatToHtml } from '../lib/alertText';
 import { formatConfig } from '../lib/formatConfig';
@@ -26,8 +27,9 @@ export default {
         doc.alert_text = configFormatToHtml(doc.alert_text, doc.alert_text_args);
         doc.__praeco_query_builder = JSON.parse(doc.__praeco_query_builder || '{}');
         Vue.set(state.templates, id, doc);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        logger().error({ error });
+        console.log(error);
       }
     },
     DELETED_TEMPLATE(state, id) {

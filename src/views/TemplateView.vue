@@ -45,7 +45,7 @@
       </el-button>
     </el-row>
 
-    <ConfigView :config="template" />
+    <ConfigView :config="template" type="template" />
   </div>
 </template>
 

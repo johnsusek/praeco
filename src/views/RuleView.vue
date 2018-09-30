@@ -150,6 +150,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import Prism from 'vue-prism-component';
+import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
 import { formatConfig } from '../lib/formatConfig';
 
@@ -227,6 +228,7 @@ export default {
             title: 'Elasticsearch error',
             duration: 0
           });
+          logger().error({ error: res.data.error });
         } else {
           this.queryLog = res.data.hits;
         }
@@ -245,6 +247,7 @@ export default {
             title: 'Elasticsearch error',
             duration: 0
           });
+          logger().error({ error: res.data.error });
         } else {
           this.alertLog = res.data.hits;
         }
@@ -263,6 +266,7 @@ export default {
             title: 'Elasticsearch error',
             duration: 0
           });
+          logger().error({ error: res.data.error });
         } else {
           this.silenceLog = res.data.hits;
         }

@@ -52,6 +52,7 @@
 
 <script>
 import yaml from 'js-yaml';
+import { logger } from '@/lib/logger.js';
 
 export default {
   props: ['showTest', 'config'],
@@ -81,6 +82,7 @@ export default {
         try {
           this.testRunResult = JSON.parse(payload.data);
         } catch (error) {
+          logger().error({ error: payload.data });
           this.testRunError = payload.data;
         }
         this.testRunLoading = false;

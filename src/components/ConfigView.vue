@@ -10,13 +10,13 @@
       </el-col>
     </el-row>
 
-    <ConfigViewQuery :config="config" />
+    <ConfigViewQuery :config="config" :show-chart="type !== 'template'" />
   </div>
 </template>
 
 <script>
 export default {
-  props: ['config']
+  props: ['config', 'type']
 };
 </script>
 

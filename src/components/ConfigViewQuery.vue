@@ -6,6 +6,7 @@
     </DefinitionTable>
 
     <ESChart
+      v-if="showChart"
       :timeframe="{ hours: 24 }"
       :bucket="{ minutes: 10 }"
       :query="query"
@@ -15,7 +16,7 @@
 
 <script>
 export default {
-  props: ['config'],
+  props: ['config', 'showChart'],
   computed: {
     query() {
       if (
