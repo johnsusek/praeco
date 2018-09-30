@@ -8,6 +8,7 @@ import 'prismjs/themes/prism.css';
 import locale from 'element-ui/lib/locale/lang/en';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
+import EventTable from '@/components/EventTable';
 import './element-variables.scss';
 import App from './App.vue';
 import TableRow from './components/TableRow';
@@ -54,6 +55,7 @@ Vue.component('ConfigViewMatch', ConfigViewMatch);
 Vue.component('ConfigViewAlert', ConfigViewAlert);
 Vue.component('PraecoFormItem', PraecoFormItem);
 Vue.component('ExpandableAlert', ExpandableAlert);
+Vue.component('EventTable', EventTable);
 Vue.component('ESChart', ESChart);
 Vue.component('ElastalertTimePicker', ElastalertTimePicker);
 
