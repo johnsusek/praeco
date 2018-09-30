@@ -29,7 +29,6 @@ export default {
         Vue.set(state.rules, id, doc);
       } catch (error) {
         logger().error({ error });
-        console.log(error);
       }
     },
     UPDATED_RULE(state, { id, rule }) {

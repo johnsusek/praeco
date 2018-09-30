@@ -33,7 +33,7 @@ Vue.use(ElementUI, { locale, size: 'mini' });
 Vue.config.productionTip = false;
 
 Vue.config.errorHandler = function(err, vm, info) {
-  logger().error({ error: err });
+  logger().error(err);
   console.error(err, vm, info);
   Notification.error({
     message: err.toString(),
@@ -73,7 +73,7 @@ axios
     // then set the axios default to the api
     axios.defaults.baseURL = config.apiBaseUrl;
 
-    Vue.use(VueNativeSock, `${config.apiWsBaseUrl}test`, {
+    Vue.use(VueNativeSock, `${config.apiWsBaseUrl}/test`, {
       connectManually: true,
       format: 'json'
     });

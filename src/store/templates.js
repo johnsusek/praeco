@@ -29,7 +29,6 @@ export default {
         Vue.set(state.templates, id, doc);
       } catch (error) {
         logger().error({ error });
-        console.log(error);
       }
     },
     DELETED_TEMPLATE(state, id) {

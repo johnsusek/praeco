@@ -215,6 +215,7 @@ export default {
       this.config = this.prefill;
     },
     attach: {
+      initial: true,
       handler() {
         if (this.alertTextType) {
           Vue.set(this.config, 'alert_text_type', this.alertTextType);
@@ -222,12 +223,22 @@ export default {
           Vue.delete(this.config, 'alert_text_type');
         }
       }
+    },
+    'prefill.alert_text_type': {
+      initial: true,
+      handler() {
+        if (this.prefill.alert_text_type) {
+          this.attach = this.prefill.alert_text_type;
+          Vue.set(this.config, 'alert_text_type', this.alertTextType);
+        } else {
+          this.attach = 'default';
+          Vue.delete(this.config, 'alert_text_type');
+        }
+      }
     }
   },
   mounted() {
-    if (this.prefill.alert_text_type) {
-      this.attach = this.prefill.alert_text_type;
-    } else {
+    if (!this.prefill.alert_text_type) {
       this.attach = 'default';
     }
   },

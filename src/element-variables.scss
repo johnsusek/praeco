@@ -259,3 +259,9 @@ h6 {
 .el-row a + .el-button {
   margin-left: 10px;
 }
+
+.vjs__tree .vjs__value__boolean,
+.vjs__tree .vjs__value__number,
+.vjs__tree .vjs__value__string {
+  color: inherit;
+}

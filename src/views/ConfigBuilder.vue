@@ -31,7 +31,7 @@
         v-show="currentStep === 'alert'"
         ref="alert"
         :prefill="config"
-        :fields="Object.keys(mappingFields)" />
+        :fields="fields" />
 
       <ConfigSave v-show="currentStep === 'save'" :config="config"/>
 
@@ -120,6 +120,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import format from 'string-format';
+import get from 'lodash.get';
 import { logger } from '@/lib/logger.js';
 import { htmlToConfigFormat } from '../lib/alertText';
 import ConfigSettings from '../components/ConfigSettings.vue';
@@ -240,6 +241,22 @@ export default {
     };
   },
   computed: {
+    fields() {
+      let fields = [];
+
+      // Handle JSON fields with dot notation
+      Object.entries(this.mappingFields).forEach(([field, mapping]) => {
+        if (mapping.properties) {
+          Object.entries(mapping.properties).forEach(([f]) => {
+            fields.push(`${field}.${f}`);
+          });
+        } else {
+          fields.push(field);
+        }
+      });
+
+      return fields;
+    },
     formattedIndex() {
       let formattedIndex = this.config.index;
 
@@ -270,11 +287,11 @@ export default {
       let previewResult = this.previewResult || { result: {} };
 
       let preformSubject = htmlToConfigFormat(this.config.alert_subject);
-      preformSubject.alertArgs = preformSubject.alertArgs.map(a => previewResult.result[a]);
+      preformSubject.alertArgs = preformSubject.alertArgs.map(a => get(previewResult.result, a) || '<MISSING VALUE>');
       let formattedSubject = format(preformSubject.alertText, ...preformSubject.alertArgs);
 
       let preformBody = htmlToConfigFormat(this.config.alert_text);
-      preformBody.alertArgs = preformBody.alertArgs.map(a => previewResult.result[a]);
+      preformBody.alertArgs = preformBody.alertArgs.map(a => get(previewResult.result, a) || '<MISSING VALUE>');
       let formattedBody = format(preformBody.alertText, ...preformBody.alertArgs);
 
       return {

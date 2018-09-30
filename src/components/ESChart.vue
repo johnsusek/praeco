@@ -51,8 +51,15 @@
             :label="col"
             :prop="col"
             :width="col === 'message' && events[0].type === 'syslog' ? 500 : ''"
-            show-overflow-tooltip
-          />
+            show-overflow-tooltip>
+            <template slot-scope="scope">
+              <vue-json-pretty
+                v-if="typeof scope.row[col] === 'object'"
+                :data="scope.row[col]"
+                :deep="0" />
+              <template v-else>{{ scope.row[col] }}</template>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
     </div>
