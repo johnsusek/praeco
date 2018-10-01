@@ -20,20 +20,7 @@
 
     <el-container>
       <el-aside width="auto">
-        <el-menu :router="true">
-          <el-menu-item index="/templates">
-            <i class="el-icon-document" />
-            <span>Templates</span>
-          </el-menu-item>
-          <el-menu-item index="/rules">
-            <i class="el-icon-tickets" />
-            <span>Rules</span>
-          </el-menu-item>
-          <el-menu-item index="/errors">
-            <i class="el-icon-warning" />
-            <span>Errors</span>
-          </el-menu-item>
-        </el-menu>
+        <NavTree />
       </el-aside>
       <el-main>
         <router-view :key="$route.fullPath" />
@@ -53,6 +40,11 @@ export default {
 </script>
 
 <style lang="scss">
+html,
+body {
+  height: 100%;
+}
+
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
@@ -71,8 +63,8 @@ body {
   opacity: 0.5;
 }
 
-body > section > section > .el-main {
-  padding: 0;
+body > section > section > .el-aside {
+  padding: 22px 0 20px 10px;
 }
 
 .el-header {

@@ -13,6 +13,7 @@ import './element-variables.scss';
 import App from './App.vue';
 import TableRow from './components/TableRow';
 import Time from './components/Time';
+import NavTree from './components/NavTree';
 import DefinitionTable from './components/DefinitionTable';
 import ConfigView from './components/ConfigView.vue';
 import ConfigViewSettings from './components/ConfigViewSettings';
@@ -46,6 +47,7 @@ Vue.config.errorHandler = function(err, vm, info) {
 Vue.component('v-chart', ECharts);
 Vue.component('vue-json-pretty', VueJsonPretty);
 Vue.component('ConfigView', ConfigView);
+Vue.component('NavTree', NavTree);
 Vue.component('DefinitionTable', DefinitionTable);
 Vue.component('TableRow', TableRow);
 Vue.component('Time', Time);

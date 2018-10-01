@@ -1,5 +1,5 @@
 <template>
-  <el-main>
+  <div>
     <h1>Errors</h1>
 
     <el-table v-loading="loading" :data="errorLog" empty-text=" ">
@@ -12,7 +12,7 @@
         </span>
       </el-table-column>
     </el-table>
-  </el-main>
+  </div>
 </template>
 
 <script>

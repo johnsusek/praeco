@@ -66,7 +66,7 @@ export default {
 
       try {
         let res = await dispatch('createRule', newRule);
-        if (res) {
+        if (res && !res.error) {
           await dispatch('deleteRule', oldName);
           return newName;
         }
@@ -87,7 +87,7 @@ export default {
 
       try {
         let res = await dispatch('createRule', newRule);
-        if (res) {
+        if (res && !res.error) {
           return newRule.name;
         }
       } catch (error) {

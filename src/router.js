@@ -2,9 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Errors from './views/Errors.vue';
-import Rules from './views/Rules.vue';
 import RuleView from './views/RuleView.vue';
-import Templates from './views/Templates.vue';
 import TemplateView from './views/TemplateView.vue';
 import ConfigBuilder from './views/ConfigBuilder.vue';
 
@@ -25,44 +23,30 @@ export default new Router({
       component: Errors
     },
     {
-      path: '/rules',
-      name: 'rules',
-      component: Rules,
-      children: [
-        {
-          path: '/rule/:action/:template?',
-          props: route => ({ ...route.params, ...route.query, type: 'rule' }),
-          name: 'ruleconfigbuilder',
-          component: ConfigBuilder,
-          meta: { type: 'rule' }
-        },
-        {
-          path: '/rules/:id',
-          name: 'ruleview',
-          props: true,
-          component: RuleView
-        }
-      ]
+      path: '/rule/:action/:template?',
+      props: route => ({ ...route.params, ...route.query, type: 'rule' }),
+      name: 'ruleconfigbuilder',
+      component: ConfigBuilder,
+      meta: { type: 'rule' }
     },
     {
-      path: '/templates',
-      name: 'templates',
-      component: Templates,
-      children: [
-        {
-          path: '/template/:action/:template?',
-          props: route => ({ ...route.params, ...route.query, type: 'template' }),
-          name: 'templateconfigbuilder',
-          component: ConfigBuilder,
-          meta: { type: 'template' }
-        },
-        {
-          path: '/templates/:id',
-          name: 'templateview',
-          props: true,
-          component: TemplateView
-        }
-      ]
+      path: '/rules/:id',
+      name: 'ruleview',
+      props: true,
+      component: RuleView
+    },
+    {
+      path: '/template/:action/:template?',
+      props: route => ({ ...route.params, ...route.query, type: 'template' }),
+      name: 'templateconfigbuilder',
+      component: ConfigBuilder,
+      meta: { type: 'template' }
+    },
+    {
+      path: '/templates/:id',
+      name: 'templateview',
+      props: true,
+      component: TemplateView
     }
   ]
 });
