@@ -32,9 +32,11 @@ export default {
       });
     },
 
-    FETCHED_CONFIG(state, { path, config, type }) {
+    /*eslint-disable */
+    FETCHED_CONFIG(state, { path, config, type, isYaml = true }) {
+      /* eslint-enable */
       try {
-        let conf = yaml.safeLoad(config, 'utf8');
+        let conf = isYaml ? yaml.safeLoad(config, 'utf8') : config;
 
         // The config from the server has yaml formatted alert subject/text
         // We need it in html so convert it here. When saving the config,
@@ -163,7 +165,7 @@ export default {
     },
 
     /*eslint-disable */
-    async createConfig({ commit }, { config, type, overwrite, createPath }) {
+    async createConfig({ commit, dispatch, state }, { config, type, overwrite, createPath }) {
       /* eslint-enable */
       let conf = formatConfig(config);
 
@@ -177,40 +179,44 @@ export default {
       // We don't want to actually save this internal value to the rule file
       delete conf.__praeco_full_path;
 
+      if (overwrite) {
+        return dispatch('createConfigFinal', { type, path, conf });
+      }
+
       try {
         // Before creating the config at this path, we check to make sure
         // it doesn't already exist
         let res = await axios.get(`/${type}/${path}`);
-        if (res.data && !overwrite) {
+        if (res.data) {
           return { error: 'A rule by that name already exists at that path' };
         }
       } catch (error) {
         // 404 on this file, which means it is safe to save
         // because no file exists here
-        try {
-          let res = await axios.post(`/${type}/${path}`, {
-            yaml: yaml.safeDump(conf)
-          });
-          commit('FETCHED_CONFIG', { path, config: conf, type });
-          return res.data;
-        } catch (err) {
-          networkError(err);
-        }
+        return dispatch('createConfigFinal', { type, path, conf });
       }
+    },
 
-      // Endpoint returned a file at this path already
-      // only overwrite if overwrite = true
-      if (overwrite) {
-        try {
-          let res = await axios.post(`/${type}/${path}`, {
-            yaml: yaml.safeDump(conf)
-          });
+    async createConfigFinal({ commit, state }, { type, path, conf }) {
+      try {
+        let res = await axios.post(`/${type}/${path}`, {
+          yaml: yaml.safeDump(conf)
+        });
 
-          commit('FETCHED_CONFIG', { path, config: conf, type });
-          return res.data;
-        } catch (err) {
-          networkError(err);
+        if (!res.data.created) {
+          logger().error({ ...res.data });
         }
+
+        commit('FETCHED_CONFIG', {
+          isYaml: false,
+          path,
+          config: conf,
+          type
+        });
+
+        return state[type][path];
+      } catch (err) {
+        return networkError(err);
       }
     },
 

@@ -21,4 +21,6 @@ export default function notifyError(error) {
     title: `Cannot connect to API ${baseUrl}`,
     duration: 0
   });
+
+  return error;
 }

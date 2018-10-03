@@ -32,7 +32,7 @@
 
       <router-link :to="{
         name: 'templateconfigbuilder',
-        params: { action: 'edit', template: id } }">
+        params: { action: 'edit', path: id } }">
         <el-button type="primary" icon="el-icon-edit" plain>Edit</el-button>
       </router-link>
 
@@ -104,7 +104,9 @@ export default {
       if (newPath) {
         this.$router.replace(`/templates/${newPath}?refreshTree`);
       } else {
-        this.$message.warning('Could not move the template. Perhaps a rule with the same name already exists at this location?');
+        this.$message.warning(
+          'Could not move the template. Perhaps a rule with the same name already exists at this location?'
+        );
       }
     },
 
@@ -128,7 +130,9 @@ export default {
       if (res) {
         this.$router.replace(`/templates/${res}?refreshTree`);
       } else {
-        this.$message.warning('Could not rename the template. Perhaps a rule already exists with that name?');
+        this.$message.warning(
+          'Could not rename the template. Perhaps a rule already exists with that name?'
+        );
       }
     },
 

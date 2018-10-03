@@ -198,7 +198,7 @@ export default {
     SidebarAlert,
     SidebarSave
   },
-  props: ['template', 'action', 'prefill', 'type', 'prefillType'],
+  props: ['path', 'action', 'prefill', 'type', 'prefillType'],
   data() {
     return {
       // settings, query, alert, or save
@@ -316,17 +316,17 @@ export default {
     }
   },
   async mounted() {
-    if (this.action === 'edit' && this.template) {
+    if (this.action === 'edit' && this.path) {
       // First we get the prefill from the store
       await this.$store.dispatch('configs/fetchConfig', {
-        path: this.template,
+        path: this.path,
         type: `${this.type}s`
       });
 
       // and merge it into the config we are working on
       this.config = {
         ...this.config,
-        ...this.$store.state.configs[`${this.type}s`][this.prefill]
+        ...this.$store.state.configs[`${this.type}s`][this.path]
       };
     } else if (this.action === 'add' && this.prefill) {
       // First we get the prefill from the store
@@ -494,13 +494,14 @@ export default {
       let res = await this.$store.dispatch('configs/createConfig', {
         config: this.config,
         type: `${this.type}s`,
-        createPath
+        createPath,
+        overwrite: this.action === 'edit'
       });
 
-      if (res.created) {
+      if (res && res.__praeco_full_path) {
         this.$router.push({
           name: this.type === 'template' ? 'templateview' : 'ruleview',
-          params: { id: this.config.name },
+          params: { id: res.__praeco_full_path },
           query: { refreshTree: true }
         });
         this.$message.success(`${changeCase.titleCase(this.type)} saved`);

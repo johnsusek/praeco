@@ -42,7 +42,7 @@ export default new Router({
       props: route => ({ ...route.params, ...route.query })
     },
     {
-      path: '/rule/:action/:template?',
+      path: '/rule/:action/:path?',
       props: route => ({ ...route.params, ...route.query, type: 'rule' }),
       name: 'ruleconfigbuilder',
       component: ConfigBuilder,
@@ -55,7 +55,7 @@ export default new Router({
       component: RuleView
     },
     {
-      path: '/template/:action/:template?',
+      path: '/template/:action/:path?',
       props: route => ({ ...route.params, ...route.query, type: 'template' }),
       name: 'templateconfigbuilder',
       component: ConfigBuilder,
