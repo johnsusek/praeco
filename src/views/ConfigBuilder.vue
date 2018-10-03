@@ -481,20 +481,18 @@ export default {
     },
     async saveConfig() {
       this.saveError = '';
-      let createPath;
+      let rootPath = false;
 
       if (this.action === 'add' && this.prefillType === 'template') {
         // If type is add, and prefillType is template, we just
         // put the config into the root rules folder
-        createPath = '/';
+        rootPath = true;
       }
 
-      // For other types/prefillTypes, createPath will be undefined so the store
-      // will just use __praeco_full_path from the config when creating
       let res = await this.$store.dispatch('configs/createConfig', {
         config: this.config,
         type: `${this.type}s`,
-        createPath,
+        rootPath,
         overwrite: this.action === 'edit'
       });
 

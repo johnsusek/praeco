@@ -38,15 +38,17 @@ export default {
       try {
         let conf = isYaml ? yaml.safeLoad(config, 'utf8') : config;
 
-        // The config from the server has yaml formatted alert subject/text
-        // We need it in html so convert it here. When saving the config,
-        // it will be converted back to yaml format.
-        conf.alert_subject = configFormatToHtml(conf.alert_subject, conf.alert_subject_args);
-        conf.alert_text = configFormatToHtml(conf.alert_text, conf.alert_text_args);
+        if (isYaml) {
+          // The config from the server has yaml formatted alert subject/text
+          // We need it in html so convert it here. When saving the config,
+          // it will be converted back to yaml format.
+          conf.alert_subject = configFormatToHtml(conf.alert_subject, conf.alert_subject_args);
+          conf.alert_text = configFormatToHtml(conf.alert_text, conf.alert_text_args);
 
-        // The configuration for the querybuilder widget that we saved to the rule
-        // gets parsed here for use later.
-        conf.__praeco_query_builder = JSON.parse(conf.__praeco_query_builder || '{}');
+          // The configuration for the querybuilder widget that we saved to the rule
+          // gets parsed here for use later.
+          conf.__praeco_query_builder = JSON.parse(conf.__praeco_query_builder || '{}');
+        }
 
         // The rule name is only for display, for actually referring to the rule
         // in our store we use the full path. We need that path saved as
@@ -165,12 +167,19 @@ export default {
     },
 
     /*eslint-disable */
-    async createConfig({ commit, dispatch, state }, { config, type, overwrite, createPath }) {
+    async createConfig({ dispatch }, { config, type, overwrite, rootPath }) {
       /* eslint-enable */
       let conf = formatConfig(config);
 
-      // Replace the template name in the path with the new name
-      let fullPath = createPath || conf.__praeco_full_path || '';
+      let fullPath;
+      if (rootPath) {
+        fullPath = '';
+      } else if (conf.__praeco_full_path) {
+        fullPath = conf.__praeco_full_path;
+      } else {
+        fullPath = '';
+      }
+
       let path = fullPath.split('/');
       path.pop();
       path.push(config.name);
