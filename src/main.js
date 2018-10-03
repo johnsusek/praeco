@@ -5,9 +5,14 @@ import VueJsonPretty from 'vue-json-pretty';
 import VueNativeSock from 'vue-native-websocket';
 import 'prismjs';
 import 'prismjs/themes/prism.css';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faFolder, faFolderOpen, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import locale from 'element-ui/lib/locale/lang/en';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
+import Treeselect from '@riophae/vue-treeselect';
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import EventTable from '@/components/EventTable';
 import './element-variables.scss';
 import App from './App.vue';
@@ -23,12 +28,15 @@ import ConfigViewAlert from './components/ConfigViewAlert';
 import PraecoFormItem from './components/PraecoFormItem';
 import ExpandableAlert from './components/ExpandableAlert';
 import ESChart from './components/ESChart';
+import FolderTree from './components/FolderTree';
 import ElastalertTimePicker from './components/ElastalertTimePicker';
 import router from './router';
 import store from './store';
 import { initLogging, logger } from './lib/logger.js';
 
 let ECharts = require('vue-echarts');
+
+library.add(faFolder, faFolderOpen, faExclamationCircle);
 
 Vue.use(ElementUI, { locale, size: 'mini' });
 
@@ -44,6 +52,7 @@ Vue.config.errorHandler = function(err, vm, info) {
   });
 };
 
+Vue.component('icon', FontAwesomeIcon);
 Vue.component('v-chart', ECharts);
 Vue.component('vue-json-pretty', VueJsonPretty);
 Vue.component('ConfigView', ConfigView);
@@ -51,6 +60,7 @@ Vue.component('NavTree', NavTree);
 Vue.component('DefinitionTable', DefinitionTable);
 Vue.component('TableRow', TableRow);
 Vue.component('Time', Time);
+Vue.component('Treeselect', Treeselect);
 Vue.component('ConfigViewSettings', ConfigViewSettings);
 Vue.component('ConfigViewQuery', ConfigViewQuery);
 Vue.component('ConfigViewMatch', ConfigViewMatch);
@@ -59,6 +69,7 @@ Vue.component('PraecoFormItem', PraecoFormItem);
 Vue.component('ExpandableAlert', ExpandableAlert);
 Vue.component('EventTable', EventTable);
 Vue.component('ESChart', ESChart);
+Vue.component('FolderTree', FolderTree);
 Vue.component('ElastalertTimePicker', ElastalertTimePicker);
 
 // First get the config from the server
