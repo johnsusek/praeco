@@ -1,83 +1,66 @@
 <template>
-  <div>
-    <treeselect
-      ref="tree"
-      v-model="value"
-      :multiple="false"
-      :clearable="false"
-      :searchable="true"
-      :always-open="true"
-      :max-height="99999"
-      :load-options="loadOptions"
-      :options="options"
-      placeholder="Filter..."
-      no-children-text="No rules"
-      @select="handleSelect"
-      @click.native="handleClick" />
-  </div>
+  <treeselect
+    ref="tree"
+    v-model="value"
+    :multiple="false"
+    :clearable="false"
+    :searchable="true"
+    :always-open="true"
+    :max-height="99999"
+    :load-options="loadOptions"
+    :options="options"
+    placeholder="Filter..."
+    @select="handleSelect"
+    @click.native="handleClick">
+    <label
+      slot="option-label"
+      slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
+      :class="labelClassName">
+      <span v-if="node.id === '_errors'">
+        <icon icon="exclamation-circle" />
+      </span>
+      <span v-if="node.children !== undefined">
+        <icon :icon="node.isExpanded ? 'folder-open' : 'folder'" />
+      </span>
+      {{ node.label }}
+    </label>
+  </treeselect>
 </template>
 
 <script>
 import Vue from 'vue';
-import Treeselect from '@riophae/vue-treeselect';
-import axios from 'axios';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
-
-function buildRuleNodes(rules, parentNode) {
-  return rules.sort().map(rule => ({
-    id: `${parentNode ? `${parentNode.id}/` : ''}${rule}`,
-    label: rule,
-    isRule: true
-  }));
-}
-
-function buildTemplateNodes(rules, parentNode) {
-  return rules.sort().map(rule => ({
-    id: `${parentNode ? `${parentNode.id}/` : ''}${rule}`,
-    label: rule,
-    isTemplate: true
-  }));
-}
-
-function buildDirectoryNodes(directories, parentNode) {
-  return directories.sort().map(directory => ({
-    id: `${parentNode ? `${parentNode.id}/` : ''}${directory}`,
-    label: directory,
-    isDirectory: true,
-    children: null
-  }));
-}
-
-function triggerMouseEvent(node, eventType) {
-  let clickEvent = document.createEvent('MouseEvents');
-  clickEvent.initEvent(eventType, true, true);
-  node.dispatchEvent(clickEvent);
-}
-
-function expandNode(id) {
-  let targetNode = document.querySelector(`[data-id="${id}"] .vue-treeselect__option-arrow-container`);
-  if (targetNode) {
-    triggerMouseEvent(targetNode, 'mousedown');
-  }
-}
-
-function selectNode(id) {
-  let targetNode = document.querySelector(`[data-id="${id}"] .vue-treeselect__label-container`);
-  if (targetNode) {
-    triggerMouseEvent(targetNode, 'mouseover');
-    triggerMouseEvent(targetNode, 'mousedown');
-    triggerMouseEvent(targetNode, 'mouseup');
-    triggerMouseEvent(targetNode, 'click');
-  }
-}
+import { selectNode, expandNode, loadChildrenOptions } from '@/lib/tree';
 
 export default {
-  components: { Treeselect },
   data() {
     return {
       expanded: [],
       value: null,
-      options: [
+      options: []
+    };
+  },
+  watch: {
+    $route: {
+      initial: true,
+      handler(to) {
+        if (to.query.refreshTree !== undefined) {
+          // TODO: addthis.$route.path to expanded so current folder
+          // and its parent
+          // is always expanded on load
+          this.resetTree();
+          this.loadExpanded();
+        }
+      }
+    }
+  },
+  mounted() {
+    this.resetTree();
+    this.expanded = JSON.parse(localStorage.getItem('expandedNavTreeKeys')) || [];
+    this.loadExpanded();
+  },
+  methods: {
+    resetTree() {
+      this.options = [
         {
           id: '_rules',
           label: 'Rules',
@@ -92,19 +75,40 @@ export default {
           id: '_errors',
           label: 'Errors'
         }
-      ]
-    };
-  },
-  mounted() {
-    this.expanded = JSON.parse(localStorage.getItem('expandedNavTreeKeys')) || [];
-    this.loadExpanded();
-  },
-  methods: {
+      ];
+    },
     loadExpanded() {
       Vue.nextTick(() => {
         this.$refs.tree.traverseAllNodesByIndex(node => {
           if (node.isBranch && !node.isExpanded && this.expanded.includes(node.id)) {
             expandNode(node.id);
+          }
+
+          // If we are looking at an item in the tree (noticed from the URL)
+          // then make sure it is visible in the tree by expanding its parent
+          // and also expand itself if it is a folder
+          let pathFromRoute = decodeURIComponent(this.$route.path).replace(
+            /\/?templates\/?|\/?rules\/?|\/?folders\/?/g,
+            ''
+          );
+          if (pathFromRoute === node.id) {
+            // Expand the parent so this is actually visible
+            expandNode(node.parentNode.id);
+            node.parentNode.isExpanded = true;
+            // Expand ourself in case we are a folder
+            expandNode(node.id);
+            // Make sure we are highlighted since we are selected node
+            selectNode(node.id);
+          }
+
+          // If we are a selected folder, make sure parent is expanded
+          let parentPathFromRoute = pathFromRoute.split('/');
+          parentPathFromRoute.pop();
+          parentPathFromRoute = parentPathFromRoute.join('/');
+          if (parentPathFromRoute === node.id) {
+            // Expand the parent so this is actually visible
+            expandNode(node.parentNode.id);
+            node.parentNode.isExpanded = true;
           }
 
           if (node.raw.isRule) {
@@ -113,6 +117,13 @@ export default {
             }
           } else if (node.raw.isTemplate) {
             if (`/templates/${node.id}` === decodeURIComponent(this.$route.path)) {
+              selectNode(node.id);
+            }
+          } else if (node.raw.isDirectory) {
+            if (
+              `/folders/${node.raw.directoryType}/${node.id}` ===
+              decodeURIComponent(this.$route.path)
+            ) {
               selectNode(node.id);
             }
           } else if (node.id === '_errors') {
@@ -133,80 +144,40 @@ export default {
       });
       localStorage.setItem('expandedNavTreeKeys', JSON.stringify(this.expanded));
     },
-    handleClick() {
+    handleClick(e) {
+      if (e.synthetic) return;
       this.saveExpanded();
     },
-    handleSelect(node, two) {
-      this.saveExpanded();
+    handleSelect(node) {
       if (node.children === undefined) {
         if (node.id === '_errors') {
-          this.$router.replace({ name: 'errors' });
+          this.$router.push('/errors');
         } else if (node.isTemplate) {
-          this.$router.replace({
+          this.$router.push({
             name: 'templateview',
             params: { id: node.id }
           });
         } else {
-          this.$router.replace({
+          this.$router.push({
             name: 'ruleview',
             params: { id: node.id }
           });
         }
+      } else if (node.isDirectory) {
+        this.$router.push({
+          name: 'folder',
+          params: { type: node.directoryType, path: node.id }
+        });
+      } else if (node.id === '_templates') {
+        this.$router.push('/templates');
+      } else if (node.id === '_rules') {
+        this.$router.push('/rules');
       }
     },
-    async loadOptions({ action, parentNode, callback }) {
-      if (action === 'LOAD_CHILDREN_OPTIONS') {
-        if (parentNode.id === '_rules') {
-          // Load rules
-          let res = await axios.get('/rules');
-          let rules = buildRuleNodes(res.data.rules);
-          let directories = buildDirectoryNodes(res.data.directories);
-          parentNode.children = [...directories, ...rules];
-        } else if (parentNode.id === '_templates') {
-          // Load templates into parentNode
-          let res = await axios.get('/templates');
-          let templates = buildTemplateNodes(res.data.templates);
-          let directories = buildDirectoryNodes(res.data.directories);
-          parentNode.children = [...directories, ...templates];
-        } else if (parentNode.id === '_errors') {
-          // Route to errors page
-        } else if (parentNode.isTemplate) {
-          let res = await axios.get('/templates', { params: { path: parentNode.id } });
-          let templates = buildRuleNodes(res.data.templates, parentNode);
-          let directories = buildDirectoryNodes(res.data.directories, parentNode);
-          parentNode.children = [...directories, ...templates];
-        } else {
-          let res = await axios.get('/rules', { params: { path: parentNode.id } });
-          let rules = buildRuleNodes(res.data.rules, parentNode);
-          let directories = buildDirectoryNodes(res.data.directories, parentNode);
-          parentNode.children = [...directories, ...rules];
-        }
-      }
+    async loadOptions(context) {
+      await loadChildrenOptions(context);
       this.loadExpanded();
-      callback();
     }
   }
 };
 </script>
-
-<style>
-.vue-treeselect__control {
-  display: none;
-}
-
-.vue-treeselect__menu {
-  padding: 0;
-  border: 0;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  position: inherit;
-}
-
-.vue-treeselect__menu-container {
-  position: inherit;
-}
-
-.vue-treeselect__label {
-  color: inherit;
-}
-</style>

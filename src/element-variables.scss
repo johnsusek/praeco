@@ -256,7 +256,8 @@ h6 {
 }
 
 .el-row a + a,
-.el-row a + .el-button {
+.el-row a + .el-button,
+.el-row .el-button + a {
   margin-left: 10px;
 }
 
@@ -264,4 +265,36 @@ h6 {
 .vjs__tree .vjs__value__number,
 .vjs__tree .vjs__value__string {
   color: inherit;
+}
+
+.vue-treeselect__control {
+  display: none;
+}
+
+.vue-treeselect__menu {
+  padding: 0;
+  border: 0;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  position: inherit;
+}
+
+.vue-treeselect__menu-container {
+  position: inherit;
+}
+
+.vue-treeselect__label {
+  color: inherit;
+}
+
+.vue-treeselect__icon-container {
+  display: none;
+}
+
+.vue-treeselect__no-children-tip-text {
+  display: none;
+}
+
+.svg-inline--fa {
+  filter: opacity(0.4);
 }
