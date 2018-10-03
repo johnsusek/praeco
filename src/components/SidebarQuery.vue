@@ -37,7 +37,7 @@
       <br>
 
       <el-table v-if="previewResult.result" :data="Object.entries(previewResult.result).sort()">
-        <el-table-column label="Field" prop="0" width="120" />
+        <el-table-column label="Field" prop="0" width="160" />
         <el-table-column label="Value" prop="1">
           <template slot-scope="scope">
             <vue-json-pretty

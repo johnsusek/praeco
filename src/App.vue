@@ -19,7 +19,7 @@
     </el-header>
 
     <el-container>
-      <el-aside width="auto">
+      <el-aside width="200px">
         <NavTree />
       </el-aside>
       <el-main>

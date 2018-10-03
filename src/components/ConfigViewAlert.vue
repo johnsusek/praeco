@@ -19,7 +19,6 @@
         <TableRow :value="config.slack_msg_color" name="Message color" />
         <TableRow :value="config.slack_username_override" name="Post as" />
         <TableRow :value="config.slack_emoji_override" name="Emoji" />
-        <TableRow :value="config.slack_webhook_url" name="Webhook URL" />
       </DefinitionTable>
     </template>
     <template v-if="alert.includes('email')">

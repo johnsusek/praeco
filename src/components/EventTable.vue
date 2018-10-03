@@ -1,9 +1,9 @@
 <template>
   <el-table v-if="events.length" :data="events">
     <!--
-            This contains the only logstash specific
-            code in the app - to widen the 'message' column
-          -->
+      This contains the only logstash specific
+      code in the app - to widen the 'message' column
+    -->
     <el-table-column
       v-for="col in Object.keys(events[0]).sort()"
       :key="col"

@@ -97,6 +97,7 @@ export default {
             node.parentNode.isExpanded = true;
             // Expand ourself in case we are a folder
             expandNode(node.id);
+            node.isExpanded = true;
             // Make sure we are highlighted since we are selected node
             selectNode(node.id);
           }

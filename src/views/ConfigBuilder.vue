@@ -63,6 +63,7 @@
               plain
               size="small"
               type="primary"
+              class="praeco-config-save"
               @click="saveConfig">
               Save
             </el-button>
@@ -110,7 +111,7 @@
         v-if="currentStep === 'save'"
         :save-error="saveError" />
 
-      <vue-json-pretty :data="config" />
+        <!-- <vue-json-pretty :data="config" /> -->
     </el-col>
   </el-row>
 </template>
@@ -121,6 +122,7 @@ import axios from 'axios';
 import yaml from 'js-yaml';
 import format from 'string-format';
 import get from 'lodash.get';
+import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import { htmlToConfigFormat } from '../lib/alertText';
 import ConfigSettings from '../components/ConfigSettings.vue';
@@ -169,7 +171,13 @@ function formatIndex(index) {
 
   formattedIndex = formattedIndex.replace('%Y', now.getFullYear());
   formattedIndex = formattedIndex.replace('%m', (now.getMonth() + 1).toString().padStart(2, 0));
-  formattedIndex = formattedIndex.replace('%d', now.getDate());
+  formattedIndex = formattedIndex.replace(
+    '%d',
+    now
+      .getDate()
+      .toString()
+      .padStart(2, 0)
+  );
 
   return formattedIndex;
 }
@@ -276,7 +284,11 @@ export default {
       return formattedIndex;
     },
     pageTitle() {
-      return `${this.capitalize(this.action)} ${this.type} "${this.config.name}"`;
+      let title = `${changeCase.titleCase(this.action)} ${this.type}`;
+      if (this.action === 'edit') {
+        title += ` ${this.config.name}`;
+      }
+      return title;
     },
     showNextButton() {
       if (this.currentStep === 'save') return false;
@@ -302,24 +314,31 @@ export default {
   },
   async mounted() {
     if (this.action === 'edit' && this.template) {
-      let action = this.type === 'template' ? 'configs/fetchConfig' : 'configs/fetchRule';
+      // First we get the prefill from the store
+      await this.$store.dispatch('configs/fetchConfig', {
+        path: this.template,
+        type: `${this.type}s`
+      });
 
-      await this.$store.dispatch(action, this.template);
-      if (this.type === 'template') {
-        this.config = { ...this.config, ...this.$store.state.configs.templates[this.template] };
-      } else {
-        this.config = { ...this.config, ...this.$store.state.configs.rules[this.template] };
-      }
+      // and merge it into the config we are working on
+      this.config = {
+        ...this.config,
+        ...this.$store.state.configs[`${this.type}s`][this.prefill]
+      };
     } else if (this.action === 'add' && this.prefill) {
-      let action = this.prefillType === 'template' ? 'configs/fetchConfig' : 'configs/fetchRule';
+      // First we get the prefill from the store
+      await this.$store.dispatch('configs/fetchConfig', {
+        path: this.prefill,
+        type: `${this.prefillType}s`
+      });
 
-      await this.$store.dispatch(action, this.prefill);
-      if (this.prefillType === 'template') {
-        this.config = { ...this.config, ...this.$store.state.configs.templates[this.prefill] };
-      } else {
-        this.config = { ...this.config, ...this.$store.state.configs.rules[this.prefill] };
-      }
-      Vue.set(this.config, 'name', `New ${this.type}`);
+      // and merge it into the config we are working on
+      this.config = {
+        ...this.config,
+        ...this.$store.state.configs[`${this.prefillType}s`][this.prefill]
+      };
+
+      Vue.set(this.config, 'name', 'New rule');
     }
 
     Vue.set(
@@ -329,11 +348,6 @@ export default {
     );
   },
   methods: {
-    capitalize(str) {
-      if (str.length) {
-        return str[0].toUpperCase() + str.slice(1);
-      }
-    },
     async preview(config) {
       this.previewResult = null;
       this.previewError = null;
@@ -465,15 +479,18 @@ export default {
     async saveConfig() {
       this.saveError = '';
 
-      let action = this.type === 'template' ? 'configs/createTemplate' : 'configs/createRule';
-      let res = await this.$store.dispatch(action, this.config);
+      let res = await this.$store.dispatch('configs/createConfig', {
+        config: this.config,
+        type: `${this.type}s`
+      });
 
       if (res.created) {
         this.$router.push({
           name: this.type === 'template' ? 'templateview' : 'ruleview',
-          params: { id: this.config.name }
+          params: { id: this.config.name },
+          query: { refreshTree: true }
         });
-        this.$message.success(`${this.capitalize(this.type)} saved`);
+        this.$message.success(`${changeCase.titleCase(this.type)} saved`);
       } else {
         this.saveError = res.toString();
       }

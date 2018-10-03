@@ -161,17 +161,24 @@ export default {
       }
     },
 
-    async createConfig(context, { config, type }) {
+    async createConfig({ commit }, { config, type }) {
       let conf = formatConfig(config);
+
+      // Replace the template name in the path with the new name
+      let path = conf.__praeco_full_path.split('/');
+      path.pop();
+      path.push(config.name);
+      path = path.join('/');
 
       // We don't want to actually save this internal value to the rule file
       delete conf.__praeco_full_path;
 
       try {
-        let res = await axios.post(`/${type}/${config.__praeco_full_path}`, {
+        let res = await axios.post(`/${type}/${path}`, {
           yaml: yaml.safeDump(conf)
         });
 
+        commit('FETCHED_CONFIG', { path, config: conf, type });
         return res.data;
       } catch (error) {
         networkError(error);
