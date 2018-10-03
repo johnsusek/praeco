@@ -7,6 +7,9 @@
       <ConfigSettings
         v-show="currentStep === 'settings'"
         ref="settings"
+        :type="type"
+        :prefill-path="prefill"
+        :prefill-type="prefillType"
         :prefill="config"
         :action="action" />
 
@@ -478,10 +481,20 @@ export default {
     },
     async saveConfig() {
       this.saveError = '';
+      let createPath;
 
+      if (this.action === 'add' && this.prefillType === 'template') {
+        // If type is add, and prefillType is template, we just
+        // put the config into the root rules folder
+        createPath = '/';
+      }
+
+      // For other types/prefillTypes, createPath will be undefined so the store
+      // will just use __praeco_full_path from the config when creating
       let res = await this.$store.dispatch('configs/createConfig', {
         config: this.config,
-        type: `${this.type}s`
+        type: `${this.type}s`,
+        createPath
       });
 
       if (res.created) {
@@ -492,7 +505,7 @@ export default {
         });
         this.$message.success(`${changeCase.titleCase(this.type)} saved`);
       } else {
-        this.saveError = res.toString();
+        this.saveError = res;
       }
     },
     async getMapping() {

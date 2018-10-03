@@ -2,7 +2,7 @@
   <div>
     <el-alert
       v-if="saveError"
-      :description="saveError"
+      :description="description"
       :closable="false"
       title="Save failed"
       type="error"
@@ -12,6 +12,14 @@
 
 <script>
 export default {
-  props: ['saveError']
+  props: ['saveError'],
+  computed: {
+    description() {
+      if (this.saveError.error) {
+        return this.saveError.error;
+      }
+      return this.saveError;
+    }
+  }
 };
 </script>

@@ -220,7 +220,7 @@ export default {
       if (newPath) {
         this.$router.replace(`/rules/${newPath}?refreshTree`);
       } else {
-        this.$message.warning('Could not move the rule. Perhaps you are trying to move to the same folder?');
+        this.$message.warning('Could not move the rule. Perhaps a rule with the same name already exists at this location?');
       }
     },
 
@@ -244,7 +244,7 @@ export default {
       if (res) {
         this.$router.replace(`/rules/${res}?refreshTree`);
       } else {
-        this.$message.warning('Could not rename the rule. Perhaps you are using the same name?');
+        this.$message.warning('Could not rename the rule. Perhaps a rule already exists with that name?');
       }
     },
 

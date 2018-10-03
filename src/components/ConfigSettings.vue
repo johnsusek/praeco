@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
+  <el-form ref="form" :rules="rules" :model="config" label-position="top" @submit.native.prevent>
     <el-form-item label="Enabled" prop="is_enabled">
       <el-switch ref="is_enabled" v-model="config.is_enabled" />
     </el-form-item>
@@ -32,10 +32,14 @@
 
 <script>
 export default {
-  props: ['prefill', 'action'],
+  props: ['prefill', 'prefillPath', 'prefillType', 'action', 'type'],
+
   data() {
     return {
-      config: {}
+      config: {},
+      rules: {
+        name: [{ validator: this.validateName }]
+      }
     };
   },
   watch: {
@@ -44,6 +48,28 @@ export default {
     }
   },
   methods: {
+    validateName(rule, value, callback) {
+      let path = this.prefillPath || '';
+
+      // If the prefill type is template, and the type is rule, use root for prefillpath
+      if (this.type === 'rule' && this.prefillType === 'template') {
+        path = '';
+      }
+
+      path = path.split('/');
+      path.pop();
+      path.push(value);
+      path = path.join('/');
+
+      let configs = Object.keys(this.$store.state.configs[`${this.type}s`]);
+
+      if (configs.includes(path)) {
+        callback(new Error(`A ${this.type} by that name already exists`));
+      } else {
+        callback();
+      }
+    },
+
     async validate() {
       try {
         await this.$refs.form.validate();
