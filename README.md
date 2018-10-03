@@ -33,3 +33,12 @@ To build your own docker container from local changes:
 ```
 docker build -t praeco .
 ```
+
+<br><br>
+
+<h3 align="center">Sponsored by</h3>
+<p align="center">
+  <a href="https://www.servercentral.com" target="_blank">
+    <img src="https://user-images.githubusercontent.com/611996/46423453-2a632900-c6fc-11e8-9332-01ad945089b8.png" height="42" width="auto" />
+  </a>
+</p>
