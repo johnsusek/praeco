@@ -302,22 +302,22 @@ export default {
   },
   async mounted() {
     if (this.action === 'edit' && this.template) {
-      let action = this.type === 'template' ? 'templates/fetchTemplate' : 'rules/fetchRule';
+      let action = this.type === 'template' ? 'configs/fetchConfig' : 'configs/fetchRule';
 
       await this.$store.dispatch(action, this.template);
       if (this.type === 'template') {
-        this.config = { ...this.config, ...this.$store.state.templates.templates[this.template] };
+        this.config = { ...this.config, ...this.$store.state.configs.templates[this.template] };
       } else {
-        this.config = { ...this.config, ...this.$store.state.rules.rules[this.template] };
+        this.config = { ...this.config, ...this.$store.state.configs.rules[this.template] };
       }
     } else if (this.action === 'add' && this.prefill) {
-      let action = this.prefillType === 'template' ? 'templates/fetchTemplate' : 'rules/fetchRule';
+      let action = this.prefillType === 'template' ? 'configs/fetchConfig' : 'configs/fetchRule';
 
       await this.$store.dispatch(action, this.prefill);
       if (this.prefillType === 'template') {
-        this.config = { ...this.config, ...this.$store.state.templates.templates[this.prefill] };
+        this.config = { ...this.config, ...this.$store.state.configs.templates[this.prefill] };
       } else {
-        this.config = { ...this.config, ...this.$store.state.rules.rules[this.prefill] };
+        this.config = { ...this.config, ...this.$store.state.configs.rules[this.prefill] };
       }
       Vue.set(this.config, 'name', `New ${this.type}`);
     }
@@ -465,7 +465,7 @@ export default {
     async saveConfig() {
       this.saveError = '';
 
-      let action = this.type === 'template' ? 'templates/createTemplate' : 'rules/createRule';
+      let action = this.type === 'template' ? 'configs/createTemplate' : 'configs/createRule';
       let res = await this.$store.dispatch(action, this.config);
 
       if (res.created) {

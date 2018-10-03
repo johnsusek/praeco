@@ -33,17 +33,33 @@
       <router-link :to="{
         name: 'templateconfigbuilder',
         params: { action: 'edit', template: id } }">
-        <el-button icon="el-icon-edit" plain type="info">Edit</el-button>
+        <el-button type="primary" icon="el-icon-edit" plain>Edit</el-button>
       </router-link>
-
-      <el-button plain type="info" @click="duplicate">Duplicate</el-button>
 
       <el-button plain type="info" @click="showRenameInput">Rename</el-button>
 
-      <el-button icon="el-icon-delete" plain type="danger" @click="handleDelete">
+      <el-button plain type="info" @click="duplicate">Duplicate</el-button>
+
+      <el-button plain type="info" @click="showMoveDialog">Move</el-button>
+
+      <el-button icon="el-icon-delete" plain type="danger" @click="showDeleteConfirm">
         Delete...
       </el-button>
     </el-row>
+
+    <el-dialog
+      :visible.sync="moveVisible"
+      title="Move"
+      width="40%"
+      @close="moveVisible = false">
+      <div>
+        <FolderTree v-model="moveDest" type="templates" />
+      </div>
+      <span slot="footer">
+        <el-button @click="moveVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="move">Move template</el-button>
+      </span>
+    </el-dialog>
 
     <ConfigView :config="template" type="template" />
   </div>
@@ -56,20 +72,66 @@ export default {
   props: ['id'],
   data() {
     return {
+      moveVisible: false,
+      moveDest: '',
       showRename: false,
       newName: ''
     };
   },
   computed: {
     template() {
-      return this.$store.state.templates.templates[this.id] || {};
+      return this.$store.state.configs.templates[this.id] || {};
     }
   },
   async mounted() {
-    await this.$store.dispatch('templates/fetchTemplate', this.id);
+    await this.$store.dispatch('configs/fetchConfig', { path: this.id, type: 'templates' });
     this.newName = this.template.name;
   },
   methods: {
+    //
+    // Move
+    //
+
+    async move() {
+      let newPath = await this.$store.dispatch('configs/moveConfig', {
+        oldConfig: this.template,
+        newPath: this.moveDest.replace(/_templates/, ''),
+        type: 'templates'
+      });
+
+      // This action returns the new path, so if it does (will return falsey if not)
+      // then route to it.
+      if (newPath) {
+        this.$router.replace(`/templates/${newPath}?refreshTree`);
+      } else {
+        this.$message.warning('Could not move the template. Perhaps you are trying to move to the same folder?');
+      }
+    },
+
+    showMoveDialog() {
+      this.moveDest = '';
+      this.moveVisible = true;
+    },
+
+    //
+    // Rename
+    //
+
+    async rename() {
+      let res = await this.$store.dispatch('configs/renameConfig', {
+        config: this.template,
+        newName: this.newName.trim(),
+        type: 'templates'
+      });
+
+      // This action will return the new name back at us if it worked
+      if (res) {
+        this.$router.replace(`/templates/${res}?refreshTree`);
+      } else {
+        this.$message.warning('Could not rename the template. Perhaps you are using the same name?');
+      }
+    },
+
     showRenameInput() {
       this.showRename = true;
       Vue.nextTick(() => {
@@ -77,40 +139,55 @@ export default {
         this.$refs.rename.$el.querySelector('input').select();
       });
     },
-    async rename() {
-      let res = await this.$store.dispatch('templates/renameTemplate', {
-        oldName: this.template.name,
-        newName: this.newName.trim()
-      });
-      if (res) {
-        this.$router.replace(`/templates/${res}`);
-      }
-    },
+
+    //
+    // Duplicate
+    //
+
     async duplicate() {
-      let res = await this.$store.dispatch('templates/duplicateTemplate', {
-        name: this.template.name
+      let path = await this.$store.dispatch('configs/duplicateConfig', {
+        config: this.template,
+        type: 'templates'
       });
-      if (res) {
-        this.$router.replace(`/templates/${res}`);
+
+      // This action returns the path of the new template
+      if (path) {
+        this.$router.replace(`/templates/${path}?refreshTree`);
+      } else {
+        this.$message.warning('Could not duplicate the template.');
       }
     },
-    handleDelete() {
+
+    //
+    // Delete
+    //
+
+    showDeleteConfirm() {
       this.$confirm('Are you sure you want to delete this template?', 'Confirm', {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
         type: 'warning'
       })
-        .then(async () => {
-          let deleted = await this.$store.dispatch('templates/deleteTemplate', this.id);
-          if (deleted) {
-            this.$message({
-              type: 'success',
-              message: 'Template deleted'
-            });
-            this.$router.push({ name: 'templates' });
-          }
-        })
+        .then(this.delete)
         .catch(() => {});
+    },
+
+    async delete() {
+      let deleted = await this.$store.dispatch('configs/deleteConfig', {
+        path: this.id,
+        type: 'templates'
+      });
+
+      // This action will return true/false depending on if the delete worked
+      if (deleted) {
+        this.$message({
+          type: 'success',
+          message: 'Template deleted'
+        });
+        this.$router.push('/templates?refreshTree');
+      } else {
+        this.$message.warning('Could not delete the template.');
+      }
     }
   }
 };
@@ -121,4 +198,3 @@ export default {
   margin-bottom: 20px;
 }
 </style>
-

@@ -27,16 +27,6 @@
     </el-row>
 
     <el-row>
-      <router-link :to="{
-        name: 'ruleconfigbuilder',
-        params: { action: 'edit', template: id } }">
-        <el-button icon="el-icon-edit" plain type="info">Edit</el-button>
-      </router-link>
-
-      <el-button plain type="info" @click="showRenameInput">Rename</el-button>
-
-      <el-button plain type="info" @click="duplicate">Duplicate</el-button>
-
       <el-button
         v-if="rule.is_enabled"
         plain
@@ -53,17 +43,42 @@
         Enable...
       </el-button>
 
+      <router-link :to="{
+        name: 'ruleconfigbuilder',
+        params: { action: 'edit', template: id } }">
+        <el-button icon="el-icon-edit" plain type="primary">Edit</el-button>
+      </router-link>
+
+      <el-button plain type="info" @click="showRenameInput">Rename</el-button>
+
+      <el-button plain type="info" @click="duplicate">Duplicate</el-button>
+
+      <el-button plain type="info" @click="showMoveDialog">Move</el-button>
+
       <el-button
         icon="el-icon-delete"
         plain
         type="danger"
-        @click="handleDelete">
+        @click="showDeleteConfirm">
         Delete...
       </el-button>
+
+      <el-dialog
+        :visible.sync="moveVisible"
+        title="Move"
+        width="40%"
+        @close="moveVisible = false">
+        <div>
+          <FolderTree v-model="moveDest" type="rules" />
+        </div>
+        <span slot="footer">
+          <el-button @click="moveVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="move">Move rule</el-button>
+        </span>
+      </el-dialog>
     </el-row>
 
     <br>
-
 
     <el-tabs type="card" >
       <el-tab-pane label="Overview">
@@ -91,7 +106,7 @@
           </el-table-column>
           <el-table-column label="Alert type" width="100">
             <span slot-scope="scope">
-              {{ uppercase(scope.row.alert_info && scope.row.alert_info.type) }}
+              {{ titleCase(scope.row.alert_info && scope.row.alert_info.type) }}
             </span>
           </el-table-column>
           <el-table-column label="Exception" prop="alert_exception" />
@@ -150,6 +165,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import Prism from 'vue-prism-component';
+import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
 import { formatConfig } from '../lib/formatConfig';
@@ -161,6 +177,8 @@ export default {
   props: ['id'],
   data() {
     return {
+      moveVisible: false,
+      moveDest: '',
       showRename: false,
       newName: '',
       queryLog: [],
@@ -170,7 +188,7 @@ export default {
   },
   computed: {
     rule() {
-      return this.$store.state.rules.rules[this.id] || {};
+      return this.$store.state.configs.rules[this.id] || {};
     },
     yaml() {
       if (!this.rule.name) return false;
@@ -179,13 +197,57 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch('rules/fetchRule', this.id);
+    await this.$store.dispatch('configs/fetchConfig', { path: this.id, type: 'rules' });
     this.newName = this.rule.name;
     this.getQueryLog();
     this.getAlertLog();
     this.getSilenceLog();
   },
   methods: {
+    //
+    // Move
+    //
+
+    async move() {
+      let newPath = await this.$store.dispatch('configs/moveConfig', {
+        oldConfig: this.rule,
+        newPath: this.moveDest.replace(/_rules/, ''),
+        type: 'rules'
+      });
+
+      // This action returns the new path, so if it does (will return falsey if not)
+      // then route to it.
+      if (newPath) {
+        this.$router.replace(`/rules/${newPath}?refreshTree`);
+      } else {
+        this.$message.warning('Could not move the rule. Perhaps you are trying to move to the same folder?');
+      }
+    },
+
+    showMoveDialog() {
+      this.moveDest = '';
+      this.moveVisible = true;
+    },
+
+    //
+    // Rename
+    //
+
+    async rename() {
+      let res = await this.$store.dispatch('configs/renameConfig', {
+        config: this.rule,
+        newName: this.newName.trim(),
+        type: 'rules'
+      });
+
+      // This action will return the new name back at us if it worked
+      if (res) {
+        this.$router.replace(`/rules/${res}?refreshTree`);
+      } else {
+        this.$message.warning('Could not rename the rule. Perhaps you are using the same name?');
+      }
+    },
+
     showRenameInput() {
       this.showRename = true;
       Vue.nextTick(() => {
@@ -193,30 +255,112 @@ export default {
         this.$refs.rename.$el.querySelector('input').select();
       });
     },
-    async rename() {
-      let res = await this.$store.dispatch('rules/renameRule', {
-        oldName: this.rule.name,
-        newName: this.newName.trim()
-      });
-      if (res) {
-        this.$router.replace(`/rules/${res}`);
-      }
-    },
+
+    //
+    // Duplicate
+    //
+
     async duplicate() {
-      let res = await this.$store.dispatch('rules/duplicateRule', {
-        name: this.rule.name
+      let path = await this.$store.dispatch('configs/duplicateConfig', {
+        config: this.rule,
+        type: 'rules'
       });
-      if (res) {
-        this.$router.replace(`/rules/${res}`);
+
+      // This action returns the path of the new rule
+      if (path) {
+        this.$router.replace(`/rules/${path}?refreshTree`);
+      } else {
+        this.$message.warning('Could not duplicate the rule.');
       }
     },
-    uppercase(str) {
-      return str[0].toUpperCase() + str.slice(1);
+
+    //
+    // Delete
+    //
+
+    showDeleteConfirm() {
+      this.$confirm('Are you sure you want to delete this rule?', 'Confirm', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      })
+        .then(this.delete)
+        .catch(() => {});
     },
-    shortDate(rawDate) {
-      let [date, time] = new Date(rawDate).toLocaleString('en-US').split(', ');
-      return `${date} ${time}`;
+
+    async delete() {
+      let deleted = await this.$store.dispatch('configs/deleteConfig', {
+        path: this.id,
+        type: 'rules'
+      });
+
+      // This action will return true/false depending on if the delete worked
+      if (deleted) {
+        this.$message({
+          type: 'success',
+          message: 'Rule deleted'
+        });
+        this.$router.push('/rules?refreshTree');
+      } else {
+        this.$message.warning('Could not delete the rule.');
+      }
     },
+
+    //
+    // Disable
+    //
+
+    handleDisable() {
+      this.$confirm(
+        'Are you sure you want to disable this rule? This may take a few minutes to take effect, depending on elastalert settings.',
+        'Confirm',
+        {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }
+      )
+        .then(async () => {
+          let disabled = await this.$store.dispatch('configs/disableRule', this.rule);
+          if (disabled) {
+            this.$message({
+              type: 'success',
+              message: 'Rule disabled'
+            });
+          }
+        })
+        .catch(() => {});
+    },
+
+    //
+    // Enable
+    //
+
+    handleEnable() {
+      this.$confirm(
+        'Are you sure you want to enable this rule? This may take a few minutes to take effect, depending on elastalert settings.',
+        'Confirm',
+        {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }
+      )
+        .then(async () => {
+          let enabled = await this.$store.dispatch('configs/enableRule', this.rule);
+          if (enabled) {
+            this.$message({
+              type: 'success',
+              message: 'Rule enabled'
+            });
+          }
+        })
+        .catch(() => {});
+    },
+
+    //
+    // Query log
+    //
     async getQueryLog() {
       try {
         let res = await axios.get('/metadata/elastalert_status', {
@@ -236,6 +380,10 @@ export default {
         networkError(error);
       }
     },
+
+    //
+    // Alert log
+    //
     async getAlertLog() {
       try {
         let res = await axios.get('/metadata/elastalert', {
@@ -255,6 +403,10 @@ export default {
         networkError(error);
       }
     },
+
+    //
+    // Silence log
+    //
     async getSilenceLog() {
       try {
         let res = await axios.get('/metadata/silence', {
@@ -274,65 +426,14 @@ export default {
         networkError(error);
       }
     },
-    handleDelete() {
-      this.$confirm('Are you sure you want to delete this rule?', 'Confirm', {
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel',
-        type: 'warning'
-      })
-        .then(async () => {
-          let deleted = await this.$store.dispatch('rules/deleteRule', this.id);
-          if (deleted) {
-            this.$message({
-              type: 'success',
-              message: 'Rule deleted'
-            });
-            this.$router.push({ name: 'rules' });
-          }
-        })
-        .catch(() => {});
+
+    titleCase(val) {
+      return changeCase.titleCase(val);
     },
-    handleDisable() {
-      this.$confirm(
-        'Are you sure you want to disable this rule? This may take a few minutes to take effect, depending on elastalert settings.',
-        'Confirm',
-        {
-          confirmButtonText: 'Confirm',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }
-      )
-        .then(async () => {
-          let disabled = await this.$store.dispatch('rules/disableRule', this.rule);
-          if (disabled) {
-            this.$message({
-              type: 'success',
-              message: 'Rule disabled'
-            });
-          }
-        })
-        .catch(() => {});
-    },
-    handleEnable() {
-      this.$confirm(
-        'Are you sure you want to enable this rule? This may take a few minutes to take effect, depending on elastalert settings.',
-        'Confirm',
-        {
-          confirmButtonText: 'Confirm',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }
-      )
-        .then(async () => {
-          let enabled = await this.$store.dispatch('rules/enableRule', this.rule);
-          if (enabled) {
-            this.$message({
-              type: 'success',
-              message: 'Rule enabled'
-            });
-          }
-        })
-        .catch(() => {});
+
+    shortDate(rawDate) {
+      let [date, time] = new Date(rawDate).toLocaleString('en-US').split(', ');
+      return `${date} ${time}`;
     }
   }
 };
