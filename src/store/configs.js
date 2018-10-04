@@ -256,7 +256,7 @@ export default {
       conf.is_enabled = false;
 
       try {
-        let res = await axios.post(`/rules/${conf.name}`, {
+        let res = await axios.post(`/rules/${conf.__praeco_full_path}`, {
           yaml: yaml.safeDump(conf)
         });
 
@@ -279,7 +279,7 @@ export default {
       conf.is_enabled = true;
 
       try {
-        let res = await axios.post(`/rules/${conf.name}`, {
+        let res = await axios.post(`/rules/${conf.__praeco_full_path}`, {
           yaml: yaml.safeDump(conf)
         });
 

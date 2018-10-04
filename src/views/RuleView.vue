@@ -19,12 +19,14 @@
       <br>
     </div>
 
-    <h1 v-show="!showRename">{{ rule.name }}</h1>
-
-    <el-row class="tag-row">
-      <el-tag v-if="rule.is_enabled" type="success">Enabled</el-tag>
+    <h1 v-show="!showRename">
+      {{ rule.name }}
+      <el-tag v-if="rule.is_enabled" type="success">
+        <Bulb success />
+        Enabled
+      </el-tag>
       <el-tag v-else type="warning">Disabled</el-tag>
-    </el-row>
+    </h1>
 
     <el-row>
       <el-button
@@ -220,7 +222,9 @@ export default {
       if (newPath) {
         this.$router.replace(`/rules/${newPath}?refreshTree`);
       } else {
-        this.$message.warning('Could not move the rule. Perhaps a rule with the same name already exists at this location?');
+        this.$message.warning(
+          'Could not move the rule. Perhaps a rule with the same name already exists at this location?'
+        );
       }
     },
 
@@ -244,7 +248,9 @@ export default {
       if (res) {
         this.$router.replace(`/rules/${res}?refreshTree`);
       } else {
-        this.$message.warning('Could not rename the rule. Perhaps a rule already exists with that name?');
+        this.$message.warning(
+          'Could not rename the rule. Perhaps a rule already exists with that name?'
+        );
       }
     },
 
@@ -440,11 +446,8 @@ export default {
 </script>
 
 <style scoped>
-.tag-row {
-  margin-bottom: 10px;
-}
-
-.tag-row .el-tag {
-  margin-right: 5px;
+h1 .el-tag {
+  position: relative;
+  top: -3px;
 }
 </style>
