@@ -1,0 +1,37 @@
+pipeline:
+  build:
+    image: registry.servercentral.com/drone-plugins/builder 
+    pull: true
+    environment:
+      - HARNESS_OPTIONS=j9:c
+      - PROJECT_NAME=servercentral/praeco
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  tagandpublish:
+    image: registry.servercentral.com/drone-plugins/tagandpublish
+    pull: true
+    environment:
+      - PROJECT_NAME=servercentral/praeco
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    when:
+      event: [ push, tag, deployment ]
+
+  hubpublish:
+    image: plugins/docker
+    repo: servercentral/praeco
+    tags: latest
+    secrets: [ docker_username, docker_password ]
+
+  deployment:
+    image: registry.servercentral.com/drone-plugins/awxdeployment
+    pull: true
+    environment:
+      - PROJECT_PLAYBOOK=playbooks/public-docker-cluster/praeco.yml
+    volumes:
+      - /etc/tower/tower_cli.cfg:/etc/tower/tower_cli.cfg
+    when:
+      event: push
+      branch: master 
+      status: success
