@@ -26,7 +26,9 @@ export default {
             path: `${this.path}/${value}`,
             type: this.type
           });
-          this.$router.push(`/folders/${this.type}/${this.path}/${value}?refreshTree`);
+          this.$router.push(`/folders/${this.type}/${this.path}/${value}`, {
+            query: { refreshTree: true }
+          });
         })
         .catch(() => {});
     },
@@ -39,9 +41,11 @@ export default {
           path.pop();
 
           if (path.length) {
-            this.$router.push(`/folders/${this.type}/${path.join('/')}?refreshTree`);
+            this.$router.push(`/folders/${this.type}/${path.join('/')}`, {
+              query: { refreshTree: true }
+            });
           } else {
-            this.$router.push(`/${this.type}?refreshTree`);
+            this.$router.push(`/${this.type}`, { query: { refreshTree: true } });
           }
         }
       } catch (error) {

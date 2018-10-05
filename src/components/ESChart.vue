@@ -133,6 +133,8 @@ export default {
       this.fetchData();
     },
     async fetchEvents(from) {
+      if (!this.index) return;
+
       this.eventsLoading = true;
 
       let to = intervalFromTimeframe(this.interval);
@@ -169,6 +171,8 @@ export default {
       this.eventsLoading = false;
     },
     fetchData: debounce(async function() {
+      if (!this.index) return;
+
       let query = {
         query: {
           bool: {

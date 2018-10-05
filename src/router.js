@@ -51,7 +51,7 @@ export default new Router({
     {
       path: '/rules/:id',
       name: 'ruleview',
-      props: true,
+      props: route => ({ ...route.params, ...route.query }),
       component: RuleView
     },
     {
@@ -64,7 +64,7 @@ export default new Router({
     {
       path: '/templates/:id',
       name: 'templateview',
-      props: true,
+      props: route => ({ ...route.params, ...route.query }),
       component: TemplateView
     }
   ]

@@ -111,13 +111,22 @@
 
       <h2>
         <i v-if="currentStep === 'save'" class="el-icon-d-arrow-right" />
-        Save
+        <el-row>
+          <el-col :span="12">
+            Save
+          </el-col>
+          <el-col :span="12" align="right">
+            <el-button v-if="!showYaml" type="text" @click="showYaml = true">Show YAML</el-button>
+            <el-button v-if="showYaml" type="text" @click="showYaml = false">Hide YAML</el-button>
+          </el-col>
+        </el-row>
+
       </h2>
       <SidebarSave
         v-if="currentStep === 'save'"
         :save-error="saveError" />
 
-        <!-- <vue-json-pretty :data="config" /> -->
+      <prism v-if="showYaml" language="javascript">{{ yaml }}</prism>
     </el-col>
   </el-row>
 </template>
@@ -130,6 +139,7 @@ import format from 'string-format';
 import get from 'lodash.get';
 import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
+import { formatConfig } from '../lib/formatConfig';
 import { htmlToConfigFormat } from '../lib/alertText';
 import ConfigSettings from '../components/ConfigSettings.vue';
 import ConfigQuery from '../components/ConfigQuery.vue';
@@ -204,6 +214,8 @@ export default {
   props: ['path', 'action', 'prefill', 'type', 'prefillType'],
   data() {
     return {
+      showYaml: false,
+
       // settings, query, alert, or save
       currentStep: 'settings',
 
@@ -255,6 +267,22 @@ export default {
     };
   },
   computed: {
+    yaml() {
+      let config = {};
+
+      // Sort the keys in the object so it appears alphabetically
+      // in the UI
+      Object.keys(this.config)
+        .sort()
+        .forEach(v => {
+          config[v] = this.config[v];
+        });
+
+      if (!this.config.name) return false;
+
+      let conf = formatConfig(config);
+      return yaml.safeDump(conf);
+    },
     fields() {
       let fields = [];
 

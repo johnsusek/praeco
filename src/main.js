@@ -3,6 +3,7 @@ import ElementUI, { Notification } from 'element-ui';
 import axios from 'axios';
 import VueJsonPretty from 'vue-json-pretty';
 import VueNativeSock from 'vue-native-websocket';
+import Prism from 'vue-prism-component';
 import 'prismjs';
 import 'prismjs/themes/prism.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -15,6 +16,7 @@ import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import EventTable from '@/components/EventTable';
 import './element-variables.scss';
+
 import App from './App.vue';
 import TableRow from './components/TableRow';
 import Time from './components/Time';
@@ -56,6 +58,7 @@ Vue.config.errorHandler = function(err, vm, info) {
 Vue.component('icon', FontAwesomeIcon);
 Vue.component('v-chart', ECharts);
 Vue.component('vue-json-pretty', VueJsonPretty);
+Vue.component('prism', Prism);
 Vue.component('ConfigView', ConfigView);
 Vue.component('NavTree', NavTree);
 Vue.component('DefinitionTable', DefinitionTable);

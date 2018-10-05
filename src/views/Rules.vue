@@ -18,7 +18,7 @@ export default {
       })
         .then(async ({ value }) => {
           await this.$store.dispatch('configs/createFolder', { path: value, type: 'rules' });
-          this.$router.push(`/folders/rules/${value}?refreshTree`);
+          this.$router.push(`/folders/rules/${value}`, { query: { refreshTree: true } });
         })
         .catch(() => {});
     }

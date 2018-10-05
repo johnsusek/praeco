@@ -255,6 +255,8 @@ export default {
       this.fetchEvents(this.chart.area.xAxis.data[params.dataIndex]);
     },
     async fetchEvents(from) {
+      if (!this.index) return;
+
       this.eventsLoading = true;
 
       let to = intervalFromTimeframe(this.config.timeframe);
@@ -291,6 +293,8 @@ export default {
       this.eventsLoading = false;
     },
     fetchData: debounce(async function() {
+      if (!this.index) return;
+
       let query = {
         query: {
           bool: {

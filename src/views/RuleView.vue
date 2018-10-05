@@ -166,16 +166,12 @@
 import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
-import Prism from 'vue-prism-component';
 import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
 import { formatConfig } from '../lib/formatConfig';
 
 export default {
-  components: {
-    Prism
-  },
   props: ['id'],
   data() {
     return {
@@ -220,11 +216,9 @@ export default {
       // This action returns the new path, so if it does (will return falsey if not)
       // then route to it.
       if (newPath) {
-        this.$router.replace(`/rules/${newPath}?refreshTree`);
+        this.$router.push(`/rules/${newPath}`, { query: { refreshTree: true } });
       } else {
-        this.$message.warning(
-          'Could not move the rule. Perhaps a rule with the same name already exists at this location?'
-        );
+        this.$message.warning('Could not move the rule. Perhaps a rule with the same name already exists at this location?');
       }
     },
 
@@ -246,11 +240,9 @@ export default {
 
       // This action will return the new name back at us if it worked
       if (res) {
-        this.$router.replace(`/rules/${res}?refreshTree`);
+        this.$router.push(`/rules/${res}`, { query: { refreshTree: true } });
       } else {
-        this.$message.warning(
-          'Could not rename the rule. Perhaps a rule already exists with that name?'
-        );
+        this.$message.warning('Could not rename the rule. Perhaps a rule already exists with that name?');
       }
     },
 
@@ -274,7 +266,7 @@ export default {
 
       // This action returns the path of the new rule
       if (path) {
-        this.$router.replace(`/rules/${path}?refreshTree`);
+        this.$router.push(`/rules/${path}`, { query: { refreshTree: true } });
       } else {
         this.$message.warning('Could not duplicate the rule.');
       }
@@ -306,7 +298,7 @@ export default {
           type: 'success',
           message: 'Rule deleted'
         });
-        this.$router.push('/rules?refreshTree');
+        this.$router.push('/rules', { query: { refreshTree: true } });
       } else {
         this.$message.warning('Could not delete the rule.');
       }
