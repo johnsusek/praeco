@@ -301,6 +301,7 @@ export default {
               {
                 range: {
                   '@timestamp': {
+                    lte: 'now',
                     gte: `now-${intervalFromTimeframe(this.chartTimespan)}`
                   }
                 }
