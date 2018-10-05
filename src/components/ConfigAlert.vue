@@ -89,7 +89,7 @@
 
       <el-form-item label="Channel or username" prop="slack_channel_override" required>
         <el-input v-model="config.slack_channel_override" />
-        <label>The @username or #channel to send the alert</label>
+        <label>The @username or #channel to send the alert. Tip: Create new channels for your alerts, to have fine-grained control of Slack notifications.</label>
       </el-form-item>
 
       <praeco-form-item label="Post as" prop="slack_username_override" required>

@@ -20,6 +20,7 @@
     "axios": "^0.18.0",
     "browser-bunyan": "^1.4.0",
     "change-case": "^3.0.2",
+    "comma-number": "^2.0.0",
     "debounce": "^1.2.0",
     "echarts": "4.1.0",
     "element-ui": "^2.4.6",
