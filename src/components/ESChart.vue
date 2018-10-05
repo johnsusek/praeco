@@ -47,16 +47,20 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 import debounce from 'debounce';
 import 'echarts/lib/chart/bar.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
 
+const CancelToken = axios.CancelToken;
+
 export default {
-  props: ['index', 'query', 'bucket', 'timeframe'],
+  props: ['index', 'query', 'bucket', 'timeframe', 'markLine'],
   data() {
     return {
+      source: null,
       events: [],
       eventsLoading: false,
       searchError: '',
@@ -88,7 +92,8 @@ export default {
             areaStyle: {
               color: '#333'
             },
-            data: []
+            data: [],
+            markLine: {}
           }
         ]
       }
@@ -107,6 +112,15 @@ export default {
   watch: {
     query() {
       this.updateChart();
+    },
+    markLine() {
+      Vue.set(this.chart.series[0], 'markLine', this.markLine);
+    },
+    bucket(val) {
+      if (val) {
+        this.interval = val;
+        this.updateChart();
+      }
     }
   },
   mounted() {
@@ -120,6 +134,10 @@ export default {
       this.interval = this.bucket;
     } else {
       this.interval = { minutes: 10 };
+    }
+
+    if (this.markLine) {
+      this.chart.series[0].markLine = this.markLine;
     }
 
     this.updateChart();
@@ -204,21 +222,39 @@ export default {
       this.loading = true;
       this.searchError = '';
 
-      let res = await axios.post(`/search/${this.index}`, query);
+      let res;
 
-      if (res.data.error) {
-        this.searchError = res.data.error.msg;
-      } else {
-        let x = res.data.aggregations.by_minute.buckets.map(r => r.key_as_string);
-        let y = res.data.aggregations.by_minute.buckets.map(r => r.doc_count);
-
-        this.chart.xAxis.data = x;
-        this.chart.series[0].data = y;
-        this.events = [];
-
-        this.loading = false;
+      // Cancel any currently running requests
+      if (this.source) {
+        this.source.cancel();
       }
-    }, 400)
+
+      try {
+        this.source = CancelToken.source();
+        res = await axios.post(`/search/${this.index}`, query, { cancelToken: this.source.token });
+      } catch (error) {
+        if (!axios.isCancel(error)) {
+          console.error(error);
+        }
+      } finally {
+        this.source = null;
+      }
+
+      if (res && res.data) {
+        if (res.data.error) {
+          this.searchError = res.data.error.msg;
+        } else {
+          let x = res.data.aggregations.by_minute.buckets.map(r => r.key_as_string);
+          let y = res.data.aggregations.by_minute.buckets.map(r => r.doc_count);
+
+          this.chart.xAxis.data = x;
+          this.chart.series[0].data = y;
+          this.events = [];
+
+          this.loading = false;
+        }
+      }
+    }, 800)
   }
 };
 </script>

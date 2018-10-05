@@ -100,8 +100,9 @@
       <h2><i v-if="currentStep === 'match'" class="el-icon-d-arrow-right" />Match</h2>
       <SidebarMatch
         v-if="currentStep === 'match'"
+        ref="sidebarMatch"
         :show-test="currentStep === 'query' || currentStep === 'match'"
-        v-bind="{ config }" />
+        v-bind="{ config }"
         @validateMatchForTest="validateMatchForTest" />
 
       <h2><i v-if="currentStep === 'alert'" class="el-icon-d-arrow-right" />Alert</h2>
@@ -152,6 +153,8 @@ import SidebarQuery from '../components/SidebarQuery.vue';
 import SidebarMatch from '../components/SidebarMatch.vue';
 import SidebarAlert from '../components/SidebarAlert.vue';
 import SidebarSave from '../components/SidebarSave.vue';
+
+const CancelToken = axios.CancelToken;
 
 function buildMappingFields(mapping) {
   let fields = {};
@@ -215,6 +218,7 @@ export default {
   props: ['path', 'action', 'prefill', 'type', 'prefillType'],
   data() {
     return {
+      source: null,
       showYaml: false,
 
       // settings, query, alert, or save
@@ -396,16 +400,43 @@ export default {
       this.previewLoading = true;
 
       try {
-        let res = await axios.post('/test', {
-          rule: yaml.safeDump({ ...this.config, ...config }),
-          options: {
-            testType: 'countOnly',
-            days: 1,
-            alert: false,
-            format: 'json',
-            maxResults: 1
+        // Cancel any currently running requests
+        if (this.source) {
+          this.source.cancel();
+        }
+
+        let res;
+
+        // Cancel any currently running requests
+        if (this.source) {
+          this.source.cancel();
+        }
+
+        try {
+          this.source = CancelToken.source();
+          res = await axios.post(
+            '/test',
+            {
+              rule: yaml.safeDump({ ...this.config, ...config }),
+              options: {
+                testType: 'countOnly',
+                days: 1,
+                alert: false,
+                format: 'json',
+                maxResults: 1
+              }
+            },
+            {
+              cancelToken: this.source.token
+            }
+          );
+        } catch (error) {
+          if (!axios.isCancel(error)) {
+            console.error(error);
           }
-        });
+        } finally {
+          this.source = null;
+        }
 
         if (!res.data) {
           this.previewError =
@@ -416,11 +447,8 @@ export default {
         return true;
       } catch (error) {
         logger().error({ error });
-
         if (error.response && error.response.data) {
           this.previewError = error.response.data;
-        } else {
-          this.previewError = 'Query error.';
         }
         return false;
       } finally {
