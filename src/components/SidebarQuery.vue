@@ -29,7 +29,7 @@
         :closable="false"
         title="">
         This query returned
-        <strong>{{ previewResult.hits || 0 }}</strong> results
+        <strong>{{ commaNumber(previewResult.hits) || 0 }}</strong> results
         over the last day.
         <span v-if="previewResult.hits">A sample result is below.</span>
       </div>
@@ -52,8 +52,15 @@
 </template>
 
 <script>
+import commaNumber from 'comma-number';
+
 export default {
-  props: ['showPreview', 'previewResult', 'previewError', 'previewLoading', 'query', 'index']
+  props: ['showPreview', 'previewResult', 'previewError', 'previewLoading', 'query', 'index'],
+  methods: {
+    commaNumber(val) {
+      return commaNumber(val);
+    }
+  }
 };
 </script>
 

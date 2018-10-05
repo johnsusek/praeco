@@ -12,7 +12,7 @@
     </el-form-item>
 
     <el-form-item label="Timeframe" props="timeframe" required>
-      <ElastalertTimePicker v-model="config.timeframe" @input="updateChart" />
+      <ElastalertTimePicker v-model="config.timeframe" />
       <label>The time that the number of events must occur within.</label>
     </el-form-item>
 
@@ -101,125 +101,59 @@
     <hr>
 
     <el-form-item label="Frequency visualizer" >
-      <ExpandableAlert
-        v-if="chartSearchError"
-        :contents="chartSearchError"
-        title="Preview error"
-        type="error"
-      />
-
-      <v-chart
-        :options="chart.area"
-        auto-resize
-        style="width: 100%; min-height 400x;"
-        @click="handleClickChart" />
-
-      <el-row class="chart-controls">
-        <el-col :span="24" align="right">
-          <label>Chart timespan</label>
-          <ElastalertTimePicker v-model="chartTimespan" @input="updateChart" />
-        </el-col>
-      </el-row>
+      <ESChart
+        :mark-line="markLine"
+        :timeframe="{ hours: 24 }"
+        :bucket="config.timeframe"
+        :query="query.query_string.query"
+        :index="wildcardIndex" />
     </el-form-item>
-
-    <div v-loading="eventsLoading">
-      <el-form-item
-        v-if="events.length"
-        :label="eventsLoading ? '' : `Event viewer (${events.length})`">
-        <EventTable :events="events" />
-      </el-form-item>
-    </div>
   </el-form>
 </template>
 
 <script>
 import Vue from 'vue';
-import axios from 'axios';
-import debounce from 'debounce';
-import 'echarts/lib/chart/bar.js';
-import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
-import chartOptions from '../lib/chartOptions';
 
 export default {
   props: ['config', 'index', 'query', 'fields', 'types'],
   data() {
     return {
       showAdvanced: false,
-      events: [],
-      eventsLoading: false,
-      chartTimespan: { hours: 24 },
-      chartSearchError: '',
-      chart: {
-        area: {
-          title: Object.assign({}, chartOptions.title),
-          tooltip: Object.assign({}, chartOptions.tooltip),
-          xAxis: Object.assign({}, chartOptions.xAxis),
-          yAxis: Object.assign({}, chartOptions.yAxis),
-          animation: false,
-          grid: {
-            top: 60,
-            bottom: 15,
-            left: 50,
-            right: 0
-          },
-          series: [
-            {
-              name: 'Events',
-              type: 'bar',
-              barCategoryGap: '0',
-              symbol: 'none',
-              itemStyle: {
-                color: '#333'
-              },
-              areaStyle: {
-                color: '#333'
-              },
-              data: [],
-              markLine: {
-                silent: true,
-                lineStyle: {
-                  color: '#ff0000',
-                  type: 'solid'
-                },
-                animation: false,
-                symbol: 'none',
-                data: [
-                  {
-                    name: 'Alert level',
-                    yAxis: this.config.num_events
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
+      markLine: {}
     };
   },
   computed: {
-    chartTitle() {
-      let title = this.query.query_string.query;
-      title += '\n';
-      title += this.index;
-      title += '\n';
-      title += Object.values(this.config.timeframe)[0];
-      title += ' ';
-      title += Object.keys(this.config.timeframe)[0].slice(0, -1);
-      title += ' buckets over last ';
-      title += intervalFromTimeframe(this.chartTimespan);
-      return title;
-    }
-  },
-  watch: {
-    'query.query_string.query': function() {
-      this.updateChart();
+    wildcardIndex() {
+      let formattedIndex = this.config.index;
+
+      if (this.config.use_strftime_index) {
+        formattedIndex = formattedIndex.replace(/%[Ymd]/g, '*');
+      }
+
+      return formattedIndex;
     }
   },
   mounted() {
-    this.chart.area.title.text = this.chartTitle;
-    this.fetchData();
+    this.updateMarkLine();
   },
   methods: {
+    updateMarkLine() {
+      this.markLine = {
+        silent: true,
+        lineStyle: {
+          color: '#ff0000',
+          type: 'solid'
+        },
+        animation: false,
+        symbol: 'none',
+        data: [
+          {
+            name: 'Alert level',
+            yAxis: this.config.num_events
+          }
+        ]
+      };
+    },
     async validate() {
       try {
         await this.$refs.form.validate();
@@ -230,10 +164,6 @@ export default {
     },
     toggleAdvanced() {
       this.showAdvanced = !this.showAdvanced;
-    },
-    updateChart() {
-      this.chart.area.title.text = this.chartTitle;
-      this.fetchData();
     },
     updateQueryKey(val) {
       if (val === '') {
@@ -248,96 +178,9 @@ export default {
       }
     },
     updateNumEvents(e) {
-      this.chart.area.series[0].markLine.data[0].yAxis = e.target.value;
       this.config.num_events = e.target.value;
-    },
-    handleClickChart(params) {
-      this.fetchEvents(this.chart.area.xAxis.data[params.dataIndex]);
-    },
-    async fetchEvents(from) {
-      if (!this.index) return;
-
-      this.eventsLoading = true;
-
-      let to = intervalFromTimeframe(this.config.timeframe);
-      let query = {
-        query: {
-          bool: {
-            must: [
-              {
-                query_string: this.query.query_string
-              },
-              {
-                range: {
-                  '@timestamp': {
-                    gte: from,
-                    lte: `${from}||+${to}`
-                  }
-                }
-              }
-            ]
-          }
-        },
-        sort: [{ '@timestamp': { order: 'asc' } }],
-        size: 1000
-      };
-
-      let res = await axios.post(`/search/${this.index}`, query);
-
-      if (res.data.hits) {
-        this.events = res.data.hits.hits.map(h => h._source);
-      } else {
-        this.events = [];
-      }
-
-      this.eventsLoading = false;
-    },
-    fetchData: debounce(async function() {
-      if (!this.index) return;
-
-      let query = {
-        query: {
-          bool: {
-            must: [
-              {
-                query_string: this.query.query_string
-              },
-              {
-                range: {
-                  '@timestamp': {
-                    lte: 'now',
-                    gte: `now-${intervalFromTimeframe(this.chartTimespan)}`
-                  }
-                }
-              }
-            ]
-          }
-        },
-        aggs: {
-          by_minute: {
-            date_histogram: {
-              field: '@timestamp',
-              interval: intervalFromTimeframe(this.config.timeframe)
-            }
-          }
-        }
-      };
-
-      this.chartSearchError = '';
-
-      let res = await axios.post(`/search/${this.index}`, query);
-
-      if (res.data.error) {
-        this.chartSearchError = res.data.error.msg;
-      } else {
-        let x = res.data.aggregations.by_minute.buckets.map(r => r.key_as_string);
-        let y = res.data.aggregations.by_minute.buckets.map(r => r.doc_count);
-
-        this.chart.area.xAxis.data = x;
-        this.chart.area.series[0].data = y;
-        this.events = [];
-      }
-    }, 400)
+      this.updateMarkLine();
+    }
   }
 };
 </script>
