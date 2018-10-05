@@ -35,7 +35,8 @@ export function triggerMouseEvent(node, eventType) {
 }
 
 export function expandNode(id) {
-  let targetNode = document.querySelector(`[data-id="${id}"] .vue-treeselect__option-arrow-container`);
+  let selector = `[data-id="${id}"] .vue-treeselect__option-arrow-container`;
+  let targetNode = document.querySelector(selector);
   if (targetNode) {
     triggerMouseEvent(targetNode, 'mousedown');
   }

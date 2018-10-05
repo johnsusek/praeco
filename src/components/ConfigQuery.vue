@@ -35,7 +35,9 @@
           <br>
           Lucene regular expression engine is not Perl-compatible
           but supports a smaller range of operators.
-          <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-regexp-query.html#regexp-syntax" target="_blank">[?]</a>
+          <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-regexp-query.html#regexp-syntax" target="_blank">
+            [?]
+          </a>
         </el-alert>
 
         <br>

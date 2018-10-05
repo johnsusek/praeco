@@ -218,9 +218,8 @@ export default {
       if (newPath) {
         this.$router.push({ path: `/rules/${newPath}`, query: { refreshTree: true } });
       } else {
-        this.$message.warning(
-          'Could not move the rule. Perhaps a rule with the same name already exists at this location?'
-        );
+        this.$message.warning(`Could not move the rule. Perhaps a rule with 
+                              the same name already exists at this location?`);
       }
     },
 
@@ -244,9 +243,8 @@ export default {
       if (res) {
         this.$router.push({ path: `/rules/${res}`, query: { refreshTree: true } });
       } else {
-        this.$message.warning(
-          'Could not rename the rule. Perhaps a rule already exists with that name?'
-        );
+        this.$message.warning(`Could not rename the rule. Perhaps a rule
+                              already exists with that name?`);
       }
     },
 
@@ -317,7 +315,8 @@ export default {
 
     handleDisable() {
       this.$confirm(
-        'Are you sure you want to disable this rule? This may take a few minutes to take effect, depending on elastalert settings.',
+        `Are you sure you want to disable this rule? This may take a
+        few minutes to take effect, depending on elastalert settings.`,
         'Confirm',
         {
           confirmButtonText: 'Confirm',
@@ -343,7 +342,8 @@ export default {
 
     handleEnable() {
       this.$confirm(
-        'Are you sure you want to enable this rule? This may take a few minutes to take effect, depending on elastalert settings.',
+        `Are you sure you want to enable this rule? This may take a 
+        few minutes to take effect, depending on elastalert settings.`,
         'Confirm',
         {
           confirmButtonText: 'Confirm',

@@ -104,7 +104,8 @@ export default {
       if (newPath) {
         this.$router.push({ path: `/templates/${newPath}`, query: { refreshTree: true } });
       } else {
-        this.$message.warning('Could not move the template. Perhaps a rule with the same name already exists at this location?');
+        this.$message.warning(`Could not move the template. Perhaps a rule
+                               with the same name already exists at this location?`);
       }
     },
 
@@ -128,7 +129,8 @@ export default {
       if (res) {
         this.$router.push({ path: `/templates/${res}`, query: { refreshTree: true } });
       } else {
-        this.$message.warning('Could not rename the template. Perhaps a rule already exists with that name?');
+        this.$message.warning(`Could not rename the template. Perhaps a rule 
+                               already exists with that name?`);
       }
     },
 

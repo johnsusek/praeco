@@ -8,7 +8,10 @@ describe('App test', () => {
     cy.get('.vue-treeselect__option[data-id="_errors"]').click();
     cy.contains('.cell', '2018');
 
-    cy.get('.vue-treeselect__option[data-id="_templates"] .vue-treeselect__option-arrow-container').click();
+    let selector =
+      '.vue-treeselect__option[data-id="_templates"] .vue-treeselect__option-arrow-container';
+
+    cy.get(selector).click();
     cy.contains('.vue-treeselect__label', 'Default');
 
     cy.get('.vue-treeselect__option[data-id="Default"]').click();

@@ -112,16 +112,19 @@
         v-bind="{ renderedAlertResult, alertType: config.alert_text_type }" />
 
       <h2>
-        <i v-if="currentStep === 'save'" class="el-icon-d-arrow-right" />
-        <el-row>
-          <el-col :span="12">
+        <i v-if="currentStep === 'save'" />
+        <el-container style="align-items: center">
+          <div v-if="currentStep === 'save'">
+            <i class="el-icon-d-arrow-right" />
+          </div>
+          <div style="flex-grow: 1">
             Save
-          </el-col>
-          <el-col :span="12" align="right">
+          </div>
+          <div>
             <el-button v-if="!showYaml" type="text" @click="showYaml = true">Show YAML</el-button>
             <el-button v-if="showYaml" type="text" @click="showYaml = false">Hide YAML</el-button>
-          </el-col>
-        </el-row>
+          </div>
+        </el-container>
 
       </h2>
       <SidebarSave
@@ -338,11 +341,15 @@ export default {
       let previewResult = this.previewResult || { result: {} };
 
       let preformSubject = htmlToConfigFormat(this.config.alert_subject);
-      preformSubject.alertArgs = preformSubject.alertArgs.map(a => get(previewResult.result, a) || '<MISSING VALUE>');
-      let formattedSubject = format(preformSubject.alertText, ...preformSubject.alertArgs);
-
       let preformBody = htmlToConfigFormat(this.config.alert_text);
-      preformBody.alertArgs = preformBody.alertArgs.map(a => get(previewResult.result, a) || '<MISSING VALUE>');
+
+      preformSubject.alertArgs =
+        preformSubject.alertArgs.map(a => get(previewResult.result, a) || '<MISSING VALUE>');
+
+      preformBody.alertArgs =
+        preformBody.alertArgs.map(a => get(previewResult.result, a) || '<MISSING VALUE>');
+
+      let formattedSubject = format(preformSubject.alertText, ...preformSubject.alertArgs);
       let formattedBody = format(preformBody.alertText, ...preformBody.alertArgs);
 
       return {
