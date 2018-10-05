@@ -22,7 +22,7 @@ export default {
       })
         .then(async ({ value }) => {
           await this.$store.dispatch('configs/createFolder', { path: value, type: 'templates' });
-          this.$router.push(`/folders/templates/${value}`, { query: { refreshTree: true } });
+          this.$router.push({ path: `/folders/templates/${value}`, query: { refreshTree: true } });
         })
         .catch(() => {});
     }

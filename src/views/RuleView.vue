@@ -216,9 +216,11 @@ export default {
       // This action returns the new path, so if it does (will return falsey if not)
       // then route to it.
       if (newPath) {
-        this.$router.push(`/rules/${newPath}`, { query: { refreshTree: true } });
+        this.$router.push({ path: `/rules/${newPath}`, query: { refreshTree: true } });
       } else {
-        this.$message.warning('Could not move the rule. Perhaps a rule with the same name already exists at this location?');
+        this.$message.warning(
+          'Could not move the rule. Perhaps a rule with the same name already exists at this location?'
+        );
       }
     },
 
@@ -240,9 +242,11 @@ export default {
 
       // This action will return the new name back at us if it worked
       if (res) {
-        this.$router.push(`/rules/${res}`, { query: { refreshTree: true } });
+        this.$router.push({ path: `/rules/${res}`, query: { refreshTree: true } });
       } else {
-        this.$message.warning('Could not rename the rule. Perhaps a rule already exists with that name?');
+        this.$message.warning(
+          'Could not rename the rule. Perhaps a rule already exists with that name?'
+        );
       }
     },
 
@@ -266,7 +270,10 @@ export default {
 
       // This action returns the path of the new rule
       if (path) {
-        this.$router.push(`/rules/${path}`, { query: { refreshTree: true } });
+        this.$router.push({
+          path: `/rules/${encodeURIComponent(path)}`,
+          query: { refreshTree: true }
+        });
       } else {
         this.$message.warning('Could not duplicate the rule.');
       }
@@ -298,7 +305,7 @@ export default {
           type: 'success',
           message: 'Rule deleted'
         });
-        this.$router.push('/rules', { query: { refreshTree: true } });
+        this.$router.push({ path: '/rules', query: { refreshTree: true } });
       } else {
         this.$message.warning('Could not delete the rule.');
       }

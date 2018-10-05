@@ -102,7 +102,7 @@ export default {
       // This action returns the new path, so if it does (will return falsey if not)
       // then route to it.
       if (newPath) {
-        this.$router.push(`/templates/${newPath}`, { query: { refreshTree: true } });
+        this.$router.push({ path: `/templates/${newPath}`, query: { refreshTree: true } });
       } else {
         this.$message.warning('Could not move the template. Perhaps a rule with the same name already exists at this location?');
       }
@@ -126,7 +126,7 @@ export default {
 
       // This action will return the new name back at us if it worked
       if (res) {
-        this.$router.push(`/templates/${res}`, { query: { refreshTree: true } });
+        this.$router.push({ path: `/templates/${res}`, query: { refreshTree: true } });
       } else {
         this.$message.warning('Could not rename the template. Perhaps a rule already exists with that name?');
       }
@@ -152,7 +152,10 @@ export default {
 
       // This action returns the path of the new template
       if (path) {
-        this.$router.push(`/templates/${path}`, { query: { refreshTree: true } });
+        this.$router.push({
+          path: `/templates/${encodeURIComponent(path)}`,
+          query: { refreshTree: true }
+        });
       } else {
         this.$message.warning('Could not duplicate the template.');
       }
@@ -184,7 +187,7 @@ export default {
           type: 'success',
           message: 'Template deleted'
         });
-        this.$router.push('/templates', { query: { refreshTree: true } });
+        this.$router.push({ path: '/templates', query: { refreshTree: true } });
       } else {
         this.$message.warning('Could not delete the template.');
       }
