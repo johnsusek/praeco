@@ -29,16 +29,19 @@
 
       <ConfigTypeBlacklist
         v-if="config.type === 'blacklist'"
+        ref="blacklist"
         :config="config"
         :fields="fields" />
 
       <ConfigTypeWhitelist
         v-if="config.type === 'whitelist'"
+        ref="whitelist"
         :config="config"
         :fields="fields" />
 
       <ConfigTypeFrequency
         v-if="config.type === 'frequency'"
+        ref="freq"
         :config="config"
         :index="index"
         :fields="fields"
@@ -73,17 +76,24 @@ export default {
     'config.type': {
       immediate: true,
       handler() {
+        // When switching between match types, we want to clear
+        // any config items that might have been set for the old selection
         if (this.config.type !== 'blacklist') {
-          delete this.config.compare_key;
-          delete this.config.blacklist;
+          Vue.delete(this.config, 'compare_key');
+          Vue.delete(this.config, 'blacklist');
         }
         if (this.config.type !== 'whitelist') {
-          delete this.config.whitelist;
-          delete this.config.ignore_null;
+          Vue.delete(this.config, 'whitelist');
+          Vue.delete(this.config, 'ignore_null');
         } else if (!this.config.ignore_null) Vue.set(this.config, 'ignore_null', false);
         if (this.config.type !== 'frequency') {
-          delete this.config.num_events;
-          delete this.config.timeframe;
+          Vue.delete(this.config, 'num_events');
+          Vue.delete(this.config, 'timeframe');
+          Vue.delete(this.config, 'terms_size');
+          Vue.delete(this.config, 'use_count_query');
+          Vue.delete(this.config, 'use_terms_query');
+          Vue.delete(this.config, 'query_key');
+          Vue.delete(this.config, 'doc_type');
         } else {
           if (!this.config.num_events) Vue.set(this.config, 'num_events', 1);
           if (!this.config.timeframe) Vue.set(this.config, 'timeframe', { minutes: 10 });
@@ -104,6 +114,15 @@ export default {
 
     async validate() {
       try {
+        if (this.$refs.freq) {
+          await this.$refs.freq.$refs.form.validate();
+        }
+        if (this.$refs.blacklist) {
+          await this.$refs.blacklist.$refs.form.validate();
+        }
+        if (this.$refs.whitelist) {
+          await this.$refs.whitelist.$refs.form.validate();
+        }
         await this.$refs.form.validate();
         return this.config;
       } catch (error) {
