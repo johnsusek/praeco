@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
     <br>
 
-    <el-form-item label="Field" required>
+    <el-form-item label="Field" prop="compare_key" required>
       <el-select
         v-model="config.compare_key"
         filterable
@@ -16,7 +16,7 @@
       <label>The name of the field to use to compare to the blacklist.</label>
     </el-form-item>
 
-    <el-form-item label="Blacklist" required>
+    <el-form-item label="Blacklist" prop="blacklist" required>
       <template>
         <el-form-item
           v-for="(entry, index) in config.blacklist"
@@ -43,7 +43,7 @@
         <el-button @click="addEntry">Add blacklist keyword</el-button>
       </template>
     </el-form-item>
-  </div>
+  </el-form>
 </template>
 
 <script>

@@ -157,7 +157,6 @@ export default {
           this.testRunError = payload.data;
         } finally {
           this.testRunLoading = false;
-
           this.$disconnect();
         }
       } else if (payload.event === 'stats') {
@@ -184,6 +183,9 @@ export default {
       this.$disconnect();
     },
     testStream() {
+      this.$emit('validateMatchForTest');
+    },
+    runTest() {
       this.$connect();
 
       let rule = yaml.safeDump(this.config);

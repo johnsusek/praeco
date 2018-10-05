@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
     <br>
 
-    <el-form-item label="Field" required>
+    <el-form-item label="Field" prop="compare_key" required>
       <el-select
         v-model="config.compare_key"
         filterable
@@ -16,7 +16,7 @@
       <label>The name of the field to use to compare to the whitelist.</label>
     </el-form-item>
 
-    <el-form-item label="Whitelist" required>
+    <el-form-item label="Whitelist" prop="whitelist" required>
       <template>
         <el-form-item
           v-for="(entry, index) in config.whitelist"
@@ -48,7 +48,7 @@
       <el-switch v-model="config.ignore_null" />
       <label>If set, events without the selected field will not match.</label>
     </el-form-item>
-  </div>
+  </el-form>
 </template>
 
 <script>

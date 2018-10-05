@@ -102,6 +102,7 @@
         v-if="currentStep === 'match'"
         :show-test="currentStep === 'query' || currentStep === 'match'"
         v-bind="{ config }" />
+        @validateMatchForTest="validateMatchForTest" />
 
       <h2><i v-if="currentStep === 'alert'" class="el-icon-d-arrow-right" />Alert</h2>
 
@@ -382,6 +383,13 @@ export default {
     );
   },
   methods: {
+    async validateMatchForTest() {
+      let matchConfig = await this.$refs.match.validate();
+      if (!matchConfig) {
+        return;
+      }
+      this.$refs.sidebarMatch.runTest();
+    },
     async preview(config) {
       this.previewResult = null;
       this.previewError = null;
