@@ -4,6 +4,8 @@ pipeline:
     repo: servercentral/praeco
     tags: latest
     secrets: [ docker_username, docker_password ]
+    when:
+      branch: master
 
   deployment:
     image: registry.servercentral.com/drone-plugins/awxdeployment
