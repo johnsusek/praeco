@@ -134,6 +134,8 @@ export default {
     }
   },
   mounted() {
+    if (!this.config.num_events) Vue.set(this.config, 'num_events', 1);
+    if (!this.config.timeframe) Vue.set(this.config, 'timeframe', { minutes: 10 });
     this.updateMarkLine();
   },
   methods: {
@@ -150,7 +152,7 @@ export default {
           {
             name: 'Alert level',
             yAxis: this.config.num_events
-          }
+          },
         ]
       };
     },
@@ -184,11 +186,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.chart-controls {
-  label {
-    margin-right: 15px;
-  }
-}
-</style>
