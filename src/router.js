@@ -2,6 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Errors from './views/Errors.vue';
+import Alerts from './views/Alerts.vue';
+import Silences from './views/Silences.vue';
+import Queries from './views/Queries.vue';
 import Folder from './views/Folder.vue';
 import Templates from './views/Templates.vue';
 import Rules from './views/Rules.vue';
@@ -24,6 +27,21 @@ export default new Router({
       path: '/errors',
       name: 'errors',
       component: Errors
+    },
+    {
+      path: '/alerts',
+      name: 'alerts',
+      component: Alerts
+    },
+    {
+      path: '/queries',
+      name: 'Queries',
+      component: Queries
+    },
+    {
+      path: '/silences',
+      name: 'silences',
+      component: Silences
     },
     {
       path: '/templates',
