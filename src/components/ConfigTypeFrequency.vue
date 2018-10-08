@@ -1,18 +1,19 @@
 <template>
-  <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
+  <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
     <br>
 
-    <el-form-item label="Number of events" prop="num_events" required>
-      <el-input-number
+    <el-form-item label="Number of events" prop="numEvents" required>
+      <el-input
         :min="1"
         :controls="false"
-        v-model="config.num_events"
-        @keyup.native="updateNumEvents"/>
+        v-model="form.numEvents"
+        type="number"
+        @input="updateMarkLine" />
       <label>The number of events which will trigger an alert, inclusive.</label>
     </el-form-item>
 
     <el-form-item label="Timeframe" props="timeframe" required>
-      <ElastalertTimePicker v-model="config.timeframe" />
+      <ElastalertTimePicker v-model="form.timeframe" />
       <label>The time that the number of events must occur within.</label>
     </el-form-item>
 
@@ -30,18 +31,24 @@
 
     <template v-if="showAdvanced">
       <el-form-item label="Use count query">
-        <el-switch v-model="config.use_count_query" />
+        <el-switch
+          :disabled="form.useTermsQuery"
+          v-model="form.useCountQuery"
+          @input="updateCountQuery" />
         <label>
           If true, ElastAlert will poll Elasticsearch using the count api,
           and not download all of the matching documents.
           This is useful is you care only about numbers and not the actual data.
           It should also be used if you expect a large number of query hits, in the order of
-          tens of thousands or more. "Doc type" must be set to use this.
+          tens of thousands or more.
         </label>
       </el-form-item>
 
       <el-form-item label="Use terms query">
-        <el-switch v-model="config.use_terms_query" @input="updateTermsSize" />
+        <el-switch
+          :disabled="form.useCountQuery"
+          v-model="form.useTermsQuery"
+          @input="updateTermsQuery" />
         <label>
           If true, ElastAlert will make an aggregation query against Elasticsearch
           to get counts of documents matching each unique value of "query key". This
@@ -50,20 +57,43 @@
         </label>
       </el-form-item>
 
-      <el-form-item v-if="config.use_terms_query" label="Terms size">
-        <el-input-number :min="1" v-model="config.terms_size" />
+      <el-form-item v-if="form.useTermsQuery" label="Terms size">
+        <el-input v-model="form.termsSize" type="number" />
         <label>
           When used with "use terms query", this is the maximum number of terms returned
           per query. Default is 50.
         </label>
       </el-form-item>
 
-      <el-form-item :required="config.use_terms_query" prop="query_key" label="Query key">
+      <el-form-item
+        v-if="form.useCountQuery || form.useTermsQuery"
+        required
+        label="Doc type"
+        prop="docType">
         <el-select
-          v-model="config.query_key"
+          v-model="form.docType"
           filterable
           clearable
-          placeholder="Field"
+          placeholder=""
+          @input="updateDocType">
+          <el-option
+            v-for="type in types"
+            :key="type"
+            :label="type"
+            :value="type"/>
+        </el-select>
+        <label>
+          Specify the _type of document to search for.
+          This must be present if "use count query" or "use terms query" is set.
+        </label>
+      </el-form-item>
+
+      <el-form-item :required="form.useTermsQuery" prop="queryKey" label="Query key">
+        <el-select
+          v-model="form.queryKey"
+          filterable
+          clearable
+          placeholder=""
           @input="updateQueryKey">
           <el-option
             v-for="field in Object.keys(fields)"
@@ -78,24 +108,6 @@
           <a href="https://github.com/Yelp/elastalert/blob/master/docs/source/ruletypes.rst#query_key" target="_blank">[?]</a>
         </label>
       </el-form-item>
-
-      <el-form-item
-        v-if="config.use_count_query || config.use_terms_query"
-        label="Doc type"
-        prop="doc_type"
-        required>
-        <el-select v-model="config.doc_type" placeholder="">
-          <el-option
-            v-for="type in types"
-            :key="type"
-            :label="type"
-            :value="type"/>
-        </el-select>
-        <label>
-          Specify the _type of document to search for.
-          This must be present if "use count query" or "use terms query" is set.
-        </label>
-      </el-form-item>
     </template>
 
     <hr>
@@ -104,8 +116,8 @@
       <ESChart
         :mark-line="markLine"
         :timeframe="{ hours: 24 }"
-        :bucket="config.timeframe"
-        :query="query.query_string.query"
+        :bucket="form.timeframe"
+        :query="query"
         :index="wildcardIndex" />
     </el-form-item>
   </el-form>
@@ -113,31 +125,82 @@
 
 <script>
 import Vue from 'vue';
+import { validateForm } from '@/mixins/validateForm';
 
 export default {
-  props: ['config', 'index', 'query', 'fields', 'types'],
+  mixins: [validateForm],
+
+  props: [
+    'index',
+    'strftime',
+    'timeframe',
+    'useCountQuery',
+    'useTermsQuery',
+    'termsSize',
+    'queryKey',
+    'docType',
+    'query',
+    'fields',
+    'types',
+    'numEvents'
+  ],
+
   data() {
     return {
       showAdvanced: false,
-      markLine: {}
+      markLine: {},
+      form: {}
     };
   },
+
   computed: {
     wildcardIndex() {
-      let formattedIndex = this.config.index;
+      let formattedIndex = this.index;
 
-      if (this.config.use_strftime_index) {
+      if (this.strftime) {
         formattedIndex = formattedIndex.replace(/%[Ymd]/g, '*');
       }
 
       return formattedIndex;
     }
   },
+
   mounted() {
-    if (!this.config.num_events) Vue.set(this.config, 'num_events', 1);
-    if (!this.config.timeframe) Vue.set(this.config, 'timeframe', { minutes: 10 });
+    if (this.numEvents) {
+      Vue.set(this.form, 'numEvents', this.numEvents);
+    } else {
+      Vue.set(this.form, 'numEvents', 1);
+    }
+
+    if (this.timeframe) {
+      Vue.set(this.form, 'timeframe', this.timeframe);
+    } else {
+      Vue.set(this.form, 'timeframe', { minutes: 10 });
+    }
+
+    if (this.useCountQuery) {
+      Vue.set(this.form, 'useCountQuery', this.useCountQuery);
+    }
+
+    if (this.useTermsQuery) {
+      Vue.set(this.form, 'useTermsQuery', this.useTermsQuery);
+    }
+
+    if (this.termsSize) {
+      Vue.set(this.form, 'termsSize', this.termsSize);
+    }
+
+    if (this.queryKey) {
+      Vue.set(this.form, 'queryKey', this.queryKey);
+    }
+
+    if (this.docType) {
+      Vue.set(this.form, 'docType', this.docType);
+    }
+
     this.updateMarkLine();
   },
+
   methods: {
     updateMarkLine() {
       this.markLine = {
@@ -151,37 +214,44 @@ export default {
         data: [
           {
             name: 'Alert level',
-            yAxis: this.config.num_events
+            yAxis: this.form.numEvents
           },
         ]
       };
     },
-    async validate() {
-      try {
-        await this.$refs.form.validate();
-        return this.config;
-      } catch (error) {
-        return false;
-      }
-    },
+
     toggleAdvanced() {
       this.showAdvanced = !this.showAdvanced;
     },
+
+    updateDocType(val) {
+      if (val === '') {
+        Vue.delete(this.form, 'docType');
+      }
+    },
+
     updateQueryKey(val) {
       if (val === '') {
-        Vue.delete(this.config, 'query_key');
+        Vue.delete(this.form, 'queryKey');
       }
     },
+
+    updateCountQuery(val) {
+      if (!val) {
+        Vue.delete(this.form, 'useCountQuery');
+      }
+    },
+
+    updateTermsQuery(val) {
+      if (!val) {
+        Vue.delete(this.form, 'useTermsQuery');
+      }
+    },
+
     updateTermsSize(val) {
-      if (val) {
-        Vue.set(this.config, 'terms_size', 50);
-      } else {
-        delete this.config.terms_size;
+      if (!val) {
+        Vue.delete(this.form, 'termsSize');
       }
-    },
-    updateNumEvents(e) {
-      this.config.num_events = e.target.value;
-      this.updateMarkLine();
     }
   }
 };

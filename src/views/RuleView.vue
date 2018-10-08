@@ -29,6 +29,18 @@
     </h1>
 
     <el-row>
+      <router-link :to="{
+        name: 'ruleconfigbuilder',
+        params: { action: 'edit', path: id } }">
+        <el-button icon="el-icon-edit" plain type="primary">Edit</el-button>
+      </router-link>
+
+      <el-button plain type="info" @click="showRenameInput">Rename</el-button>
+
+      <el-button plain type="info" @click="duplicate">Duplicate</el-button>
+
+      <el-button plain type="info" @click="showMoveDialog">Move</el-button>
+
       <el-button
         v-if="rule.is_enabled"
         plain
@@ -44,18 +56,6 @@
         @click="handleEnable">
         Enable...
       </el-button>
-
-      <router-link :to="{
-        name: 'ruleconfigbuilder',
-        params: { action: 'edit', path: id } }">
-        <el-button icon="el-icon-edit" plain type="primary">Edit</el-button>
-      </router-link>
-
-      <el-button plain type="info" @click="showRenameInput">Rename</el-button>
-
-      <el-button plain type="info" @click="duplicate">Duplicate</el-button>
-
-      <el-button plain type="info" @click="showMoveDialog">Move</el-button>
 
       <el-button
         icon="el-icon-delete"

@@ -1,14 +1,12 @@
 <template>
   <span>
     <el-input-number
-      :value="Object.values(value)[0]"
       v-model="num"
       :min="1"
       @input.native="emitNumKeyup"
       @input="emitValue"
     />
     <el-select
-      :value="Object.keys(value)[0]"
       v-model="unit"
       @input="emitValue">
       <el-option :label="`Second`+plural()" value="seconds" />
@@ -33,9 +31,19 @@ export default {
   },
   data() {
     return {
-      num: Object.values(this.value)[0],
-      unit: Object.keys(this.value)[0]
+      num: 0,
+      unit: ''
     };
+  },
+  watch: {
+    value() {
+      this.num = Object.values(this.value)[0];
+      this.unit = Object.keys(this.value)[0];
+    }
+  },
+  mounted() {
+    this.num = Object.values(this.value)[0];
+    this.unit = Object.keys(this.value)[0];
   },
   methods: {
     plural() {

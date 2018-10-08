@@ -388,3 +388,8 @@ h6 {
 .m-w-xs {
   margin-left: 5px;
 }
+
+.el-input__inner[type='number'] {
+  width: 110px;
+  text-align: center;
+}

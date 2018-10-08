@@ -60,7 +60,6 @@ const CancelToken = axios.CancelToken;
 
 function getColorForIndex(index, data, spikeHeight) {
   if (!data[index] || !data[index - 1]) {
-    console.warn(data);
     return;
   }
 
@@ -84,8 +83,8 @@ export default {
       events: [],
       eventsLoading: false,
       searchError: '',
-      interval: null,
-      timespan: null,
+      interval: { minutes: 20 },
+      timespan: { hours: 24 },
       loading: false,
       chart: {
         title: Object.assign({}, chartOptions.title),
@@ -140,8 +139,8 @@ export default {
         Vue.set(this.chart.series[0], 'markLine', {});
       }
     },
-    spikeHeight(val) {
-      this.addSpikes(val);
+    spikeHeight() {
+      this.addSpikes();
     },
     bucket(val) {
       if (val) {
@@ -153,22 +152,10 @@ export default {
   mounted() {
     if (this.timeframe) {
       this.timespan = this.timeframe;
-    } else {
-      this.timespan = { hours: 24 };
     }
 
     if (this.bucket) {
       this.interval = this.bucket;
-    } else {
-      this.interval = { minutes: 10 };
-    }
-
-    if (this.markLine) {
-      this.chart.series[0].markLine = this.markLine;
-    }
-
-    if (this.spikeHeight) {
-      this.setTooltipSpike();
     }
 
     this.updateChart();
@@ -204,12 +191,12 @@ export default {
         this.chart.series[0].tooltip.formatter = this.tooltipFormatter;
       }
     },
-    addSpikes(val) {
+    addSpikes() {
       // Set the bars blue or red depending on the spike height
       this.chart.series[0].data = this.chart.series[0].data.map((yy, i) => ({
         value: yy.value,
         itemStyle: {
-          color: getColorForIndex(i, this.chart.series[0].data, val)
+          color: getColorForIndex(i, this.chart.series[0].data, this.spikeHeight)
         }
       }));
     },
@@ -266,6 +253,7 @@ export default {
     },
     fetchData: debounce(async function() {
       if (!this.index) return;
+      if (!Object.keys(this.timespan)[0]) return;
 
       let query = {
         query: {
@@ -335,9 +323,25 @@ export default {
           y.pop();
           y.shift();
 
+
           this.chart.xAxis.data = x;
           this.chart.series[0].data = y;
+
           this.events = [];
+
+          // Charts can have one or more marklines on their main axis,
+          // passed in as a prop to this component.
+          // We'll want to redraw it now that new data has arrived.
+          if (this.markLine) {
+            this.chart.series[0].markLine = this.markLine;
+          }
+
+          // It the spikeHeight prop is set, we'll want to add the tooltip
+          // and colored bars for it
+          if (this.spikeHeight) {
+            this.setTooltipSpike();
+            this.addSpikes();
+          }
 
           this.loading = false;
         }
