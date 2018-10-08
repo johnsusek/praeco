@@ -1,6 +1,9 @@
 <template>
   <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
     <br>
+    <el-form-item v-show="false" prop="filter[0].query.query_string.query" required>
+      <el-input v-model="config.filter[0].query.query_string.query" />
+    </el-form-item>
 
     <el-card>
       <div slot="header">

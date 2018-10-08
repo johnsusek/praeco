@@ -10,6 +10,7 @@
     <div class="praeco-chart">
       <v-chart
         v-loading="loading"
+        ref="chart"
         :options="chart"
         auto-resize
         @click="handleClickChart" />
@@ -51,13 +52,32 @@ import Vue from 'vue';
 import axios from 'axios';
 import debounce from 'debounce';
 import 'echarts/lib/chart/bar.js';
+import { logger } from '@/lib/logger.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
 
 const CancelToken = axios.CancelToken;
 
+function getColorForIndex(index, data, spikeHeight) {
+  if (!data[index] || !data[index - 1]) {
+    console.warn(data);
+    return;
+  }
+
+  let val = data[index].value;
+  let preVal = data[index - 1].value;
+
+  if (val / preVal > spikeHeight) {
+    return '#fc8a00';
+  } else if (preVal / val > spikeHeight) {
+    return '#157ce7';
+  }
+
+  return '#333';
+}
+
 export default {
-  props: ['index', 'query', 'bucket', 'timeframe', 'markLine'],
+  props: ['index', 'query', 'bucket', 'timeframe', 'markLine', 'tooltipFormatter', 'spikeHeight'],
   data() {
     return {
       source: null,
@@ -114,7 +134,14 @@ export default {
       this.updateChart();
     },
     markLine() {
-      Vue.set(this.chart.series[0], 'markLine', this.markLine);
+      if (this.markLine.data) {
+        Vue.set(this.chart.series[0], 'markLine', this.markLine);
+      } else {
+        Vue.set(this.chart.series[0], 'markLine', {});
+      }
+    },
+    spikeHeight(val) {
+      this.addSpikes(val);
     },
     bucket(val) {
       if (val) {
@@ -140,11 +167,54 @@ export default {
       this.chart.series[0].markLine = this.markLine;
     }
 
+    if (this.spikeHeight) {
+      this.setTooltipSpike();
+    }
+
     this.updateChart();
   },
   methods: {
+    setTooltipSpike() {
+      Vue.set(this.chart.tooltip, 'formatter', (options) => {
+        let {
+          dataIndex,
+          data,
+        } = options[0];
+
+        let event = this.chart.xAxis.data[dataIndex];
+        let preVal = this.chart.series[0].data[dataIndex > 0 ? (dataIndex - 1) : dataIndex].value;
+        let val = this.chart.series[0].data[dataIndex].value;
+        let spike = val / preVal;
+
+        if (spike.toFixed(1) === '1.0') {
+          return `${event.value} <br> ${data.value} Events`;
+        }
+
+        let spikeVal = spike;
+        if (spike < 1) {
+          spikeVal = preVal / val;
+        }
+
+        return `${event.value} <br> 
+              ${data.value} Events - Spike ${spike > 1 ? 'up' : 'down'} 
+              ${spikeVal.toFixed(1)}`;
+      });
+
+      if (this.chart.series[0].tooltip) {
+        this.chart.series[0].tooltip.formatter = this.tooltipFormatter;
+      }
+    },
+    addSpikes(val) {
+      // Set the bars blue or red depending on the spike height
+      this.chart.series[0].data = this.chart.series[0].data.map((yy, i) => ({
+        value: yy.value,
+        itemStyle: {
+          color: getColorForIndex(i, this.chart.series[0].data, val)
+        }
+      }));
+    },
     handleClickChart(params) {
-      this.fetchEvents(this.chart.xAxis.data[params.dataIndex]);
+      this.fetchEvents(this.chart.xAxis.data[params.dataIndex].value);
     },
     updateChart() {
       this.chart.title.text = this.title;
@@ -154,7 +224,6 @@ export default {
       if (!this.index) return;
 
       this.eventsLoading = true;
-
       let to = intervalFromTimeframe(this.interval);
       let query = {
         query: {
@@ -180,7 +249,14 @@ export default {
 
       let res = await axios.post(`/search/${this.index}`, query);
 
-      if (res.data.hits) {
+      if (res.data.error) {
+        this.$notify.error({
+          message: res.data.error.msg,
+          title: 'Elasticsearch error',
+          duration: 0
+        });
+        logger().error({ error: res.data.error });
+      } else if (res.data.hits) {
         this.events = res.data.hits.hits.map(h => h._source);
       } else {
         this.events = [];
@@ -244,8 +320,20 @@ export default {
         if (res.data.error) {
           this.searchError = res.data.error.msg;
         } else {
-          let x = res.data.aggregations.by_minute.buckets.map(r => r.key_as_string);
-          let y = res.data.aggregations.by_minute.buckets.map(r => r.doc_count);
+          let x = res.data.aggregations.by_minute.buckets.map(r => ({
+            value: r.key_as_string,
+          }));
+
+          let y = res.data.aggregations.by_minute.buckets.map((r, i) => ({
+            value: r.doc_count,
+          }));
+
+          // Remove the first and last values because they will contain
+          // partial data
+          x.pop();
+          x.shift();
+          y.pop();
+          y.shift();
 
           this.chart.xAxis.data = x;
           this.chart.series[0].data = y;

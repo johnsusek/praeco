@@ -1,5 +1,11 @@
 <template>
   <el-form ref="form" :rules="rules" :model="config" label-position="top" @submit.native.prevent>
+    <p v-if="action === 'add'" >
+      Enter a name and choose an index to begin.
+      If you are unsure of what index to use, try one of the suggestions.
+      On the next step you'll be able to build a query against the data in this index.
+    </p>
+
     <el-form-item label="Enabled" prop="is_enabled">
       <el-switch ref="is_enabled" v-model="config.is_enabled" />
     </el-form-item>
@@ -17,6 +23,15 @@
       <label>
         The index to use, e.g. logstash-* or logstash-%Y.%m.%d
         [<a href="https://elastalert.readthedocs.io/en/latest/ruletypes.html#index" target="_blank">?</a>]
+        <br>
+        <span v-if="suggestions.length">
+          <br>
+          Suggestions:
+          <span v-for="(suggestion, i) in suggestions" :key="suggestion">
+            <el-button type="text" @click="useSuggestion(suggestion)">{{ suggestion }}</el-button>
+            <span v-if="i !== suggestions.length - 1">, </span>
+          </span>
+        </span>
       </label>
     </el-form-item>
 
@@ -31,23 +46,54 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import axios from 'axios';
+import { logger } from '@/lib/logger.js';
+
 export default {
   props: ['prefill', 'prefillPath', 'prefillType', 'action', 'type'],
 
   data() {
     return {
+      indices: [],
       config: {},
       rules: {
         name: [{ validator: this.validateName }]
       }
     };
   },
+  computed: {
+    suggestions() {
+      let indices = {};
+      this.indices.forEach(item => {
+        let parts = item.split(/-/);
+        if (parts[0].startsWith('.')) return;
+        if (parts.length > 1) {
+          indices[`${parts[0]}-*`] = true;
+        } else {
+          indices[parts[0]] = true;
+        }
+      });
+      return Object.keys(indices);
+    }
+  },
   watch: {
     prefill() {
       this.config = this.prefill;
     }
   },
+  async mounted() {
+    try {
+      let res = await axios.get('/indices');
+      this.indices = res.data.sort();
+    } catch (error) {
+      logger().error(error);
+    }
+  },
   methods: {
+    useSuggestion(suggestion) {
+      Vue.set(this.config, 'index', suggestion);
+    },
     validateName(rule, value, callback) {
       let path = this.prefillPath || '';
 

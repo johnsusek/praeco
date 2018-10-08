@@ -43,6 +43,6 @@ export default {
     axisLabel: textStyle,
     offset: 8,
     type: 'value',
-    boundaryGap: [0, '30%']
+    boundaryGap: [0, '90%']
   }
 };

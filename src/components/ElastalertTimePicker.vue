@@ -22,7 +22,15 @@
 
 <script>
 export default {
-  props: ['value'],
+  props: {
+    value: {
+      type: Object,
+      required: true,
+      default () {
+        return { minutes: 20 };
+      }
+    }
+  },
   data() {
     return {
       num: Object.values(this.value)[0],

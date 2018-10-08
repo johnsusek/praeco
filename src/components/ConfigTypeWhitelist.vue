@@ -56,6 +56,11 @@ import Vue from 'vue';
 
 export default {
   props: ['config', 'fields'],
+
+  mounted() {
+    if (!this.config.ignore_null) Vue.set(this.config, 'ignore_null', false);
+  },
+
   methods: {
     removeEntry(item) {
       let index = this.config.whitelist.indexOf(item);
@@ -63,12 +68,13 @@ export default {
         this.config.whitelist.splice(index, 1);
       }
     },
+
     addEntry() {
       if (!this.config.whitelist) {
         Vue.set(this.config, 'whitelist', []);
       }
       this.config.whitelist.push('');
     }
-  }
+  },
 };
 </script>

@@ -18,6 +18,7 @@ import EventTable from '@/components/EventTable';
 import './element-variables.scss';
 
 import App from './App.vue';
+import PraecoInputNumber from './components/PraecoInputNumber';
 import TableRow from './components/TableRow';
 import Time from './components/Time';
 import NavTree from './components/NavTree';
@@ -65,6 +66,7 @@ Vue.component('DefinitionTable', DefinitionTable);
 Vue.component('TableRow', TableRow);
 Vue.component('Time', Time);
 Vue.component('Treeselect', Treeselect);
+Vue.component('PraecoInputNumber', PraecoInputNumber);
 Vue.component('ConfigViewSettings', ConfigViewSettings);
 Vue.component('Bulb', Bulb);
 Vue.component('ConfigViewQuery', ConfigViewQuery);
