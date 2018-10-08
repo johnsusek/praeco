@@ -2,6 +2,9 @@ const webpack = require('webpack');
 
 module.exports = {
   configureWebpack: {
+    performance: {
+      hints: false
+    },
     plugins: [
       new webpack.NormalModuleReplacementPlugin(
         /element-ui[/\\]lib[/\\]locale[/\\]lang[/\\]zh-CN/,
