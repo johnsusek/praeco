@@ -9,12 +9,12 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-import './style/element.scss';
 import './style/style.scss';
+import './style/spacing.scss';
 import './style/tree.scss';
 import './style/icons.scss';
-import './style/spacing.scss';
 import './style/query-builder.scss';
+import './style/element.scss';
 
 Vue.config.productionTip = false;
 

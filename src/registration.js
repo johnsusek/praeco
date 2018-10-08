@@ -1,11 +1,11 @@
 import Vue from 'vue';
 
 import Bulb from '@/components/Bulb';
-import ConfigView from '@/components/ConfigView.vue';
-import ConfigViewAlert from '@/components/ConfigViewAlert';
-import ConfigViewMatch from '@/components/ConfigViewMatch';
-import ConfigViewQuery from '@/components/ConfigViewQuery';
-import ConfigViewSettings from '@/components/ConfigViewSettings';
+import ConfigViewAlert from '@/components/config/view/ConfigViewAlert';
+import ConfigViewQuery from '@/components/config/view/ConfigViewQuery';
+import ConfigViewSettings from '@/components/config/view/ConfigViewSettings';
+import ConfigView from '@/components/config/view/ConfigView.vue';
+import ConfigViewMatch from '@/components/config/view/ConfigViewMatch';
 import DefinitionTable from '@/components/DefinitionTable';
 import ElastalertTimePicker from '@/components/ElastalertTimePicker';
 import ESChart from '@/components/ESChart';
@@ -15,7 +15,7 @@ import FolderTree from '@/components/FolderTree';
 import NavTree from '@/components/NavTree';
 import PraecoFormItem from '@/components/PraecoFormItem';
 import TableRow from '@/components/TableRow';
-import Time from '@/components/Time';
+import ElastalertTimeView from '@/components/ElastalertTimeView';
 
 Vue.component('Bulb', Bulb);
 Vue.component('ConfigView', ConfigView);
@@ -32,4 +32,4 @@ Vue.component('FolderTree', FolderTree);
 Vue.component('NavTree', NavTree);
 Vue.component('PraecoFormItem', PraecoFormItem);
 Vue.component('TableRow', TableRow);
-Vue.component('Time', Time);
+Vue.component('ElastalertTimeView', ElastalertTimeView);

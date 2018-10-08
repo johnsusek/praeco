@@ -144,18 +144,18 @@ import format from 'string-format';
 import get from 'lodash.get';
 import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
+import SidebarSettings from '@/components/sidebar/SidebarSettings.vue';
+import SidebarQuery from '@/components/sidebar/SidebarQuery.vue';
+import SidebarMatch from '@/components/sidebar/SidebarMatch.vue';
+import SidebarAlert from '@/components/sidebar/SidebarAlert.vue';
+import SidebarSave from '@/components/sidebar/SidebarSave.vue';
+import ConfigSettings from '@/components/config/ConfigSettings.vue';
+import ConfigQuery from '@/components/config/ConfigQuery.vue';
+import ConfigAlert from '@/components/config/ConfigAlert.vue';
+import ConfigSave from '@/components/config/ConfigSave.vue';
+import ConfigMatch from '@/components/config/match/ConfigMatch.vue';
 import { formatConfig } from '../lib/formatConfig';
 import { htmlToConfigFormat } from '../lib/alertText';
-import ConfigSettings from '../components/ConfigSettings.vue';
-import ConfigQuery from '../components/ConfigQuery.vue';
-import ConfigMatch from '../components/ConfigMatch.vue';
-import ConfigAlert from '../components/ConfigAlert.vue';
-import ConfigSave from '../components/ConfigSave.vue';
-import SidebarSettings from '../components/SidebarSettings.vue';
-import SidebarQuery from '../components/SidebarQuery.vue';
-import SidebarMatch from '../components/SidebarMatch.vue';
-import SidebarAlert from '../components/SidebarAlert.vue';
-import SidebarSave from '../components/SidebarSave.vue';
 
 const CancelToken = axios.CancelToken;
 

@@ -9,9 +9,10 @@
       </TableRow>
       <TableRow :value="config.alert_text_type" name="alert_text_type" />
       <TableRow name="Re-alert">
-        <Time :time="config.realert" />
+        <ElastalertTimeView :time="config.realert" />
       </TableRow>
     </DefinitionTable>
+
     <template v-if="alert.includes('slack')">
       <h5>Slack</h5>
       <DefinitionTable>
@@ -21,6 +22,7 @@
         <TableRow :value="config.slack_emoji_override" name="Emoji" />
       </DefinitionTable>
     </template>
+
     <template v-if="alert.includes('email')">
       <h5>Email</h5>
       <DefinitionTable>
@@ -33,6 +35,7 @@
         <TableRow :value="config.email_reply_to" name="Reply to" />
       </DefinitionTable>
     </template>
+
     <template v-if="alert.includes('post')">
       <h5>HTTP POST</h5>
       <DefinitionTable>

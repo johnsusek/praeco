@@ -37,7 +37,7 @@
         "spike height" times larger or smaller than during the previous time period.
       </label>
 
-      <ConfigTypeBlacklist
+      <ConfigMatchBlacklist
         v-if="config.type === 'blacklist'"
         ref="blacklist"
         :blacklist="config.blacklist"
@@ -45,7 +45,7 @@
         :fields="fields"
         @input="updateBlacklistConfig" />
 
-      <ConfigTypeWhitelist
+      <ConfigMatchWhitelist
         v-if="config.type === 'whitelist'"
         ref="whitelist"
         :whitelist="config.whitelist"
@@ -54,7 +54,7 @@
         :fields="fields"
         @input="updateWhitelistConfig" />
 
-      <ConfigTypeChange
+      <ConfigMatchChange
         v-if="config.type === 'change'"
         ref="change"
         :fields="fields"
@@ -64,7 +64,7 @@
         :timeframe="config.timeframe"
         @input="updateChangeConfig" />
 
-      <ConfigTypeFrequency
+      <ConfigMatchFrequency
         v-if="config.type === 'frequency'"
         ref="freq"
         :query="config.filter[0].query.query_string.query"
@@ -81,7 +81,7 @@
         :use-terms-query="config.use_terms_query"
         @input="updateFrequencyConfig" />
 
-      <ConfigTypeSpike
+      <ConfigMatchSpike
         v-if="config.type === 'spike'"
         ref="spike"
         :index="index"
@@ -102,19 +102,19 @@
 <script>
 import Vue from 'vue';
 import debounce from 'debounce';
-import ConfigTypeBlacklist from './ConfigTypeBlacklist';
-import ConfigTypeWhitelist from './ConfigTypeWhitelist';
-import ConfigTypeFrequency from './ConfigTypeFrequency';
-import ConfigTypeSpike from './ConfigTypeSpike';
-import ConfigTypeChange from './ConfigTypeChange';
+import ConfigMatchBlacklist from '@/components/config/match/ConfigMatchBlacklist';
+import ConfigMatchWhitelist from '@/components/config/match/ConfigMatchWhitelist';
+import ConfigMatchFrequency from '@/components/config/match/ConfigMatchFrequency';
+import ConfigMatchSpike from '@/components/config/match/ConfigMatchSpike';
+import ConfigMatchChange from '@/components/config/match/ConfigMatchChange';
 
 export default {
   components: {
-    ConfigTypeBlacklist,
-    ConfigTypeWhitelist,
-    ConfigTypeFrequency,
-    ConfigTypeSpike,
-    ConfigTypeChange
+    ConfigMatchBlacklist,
+    ConfigMatchWhitelist,
+    ConfigMatchFrequency,
+    ConfigMatchSpike,
+    ConfigMatchChange
   },
 
   props: ['prefill', 'fields', 'types', 'index'],
@@ -332,21 +332,34 @@ export default {
     async validate() {
       try {
         if (this.$refs.freq) {
-          await this.$refs.freq.validate();
+          if (!await this.$refs.freq.validate()) {
+            return false;
+          }
         }
         if (this.$refs.spike) {
-          await this.$refs.spike.validate();
+          if (!await this.$refs.spike.validate()) {
+            return false;
+          }
         }
         if (this.$refs.blacklist) {
-          await this.$refs.blacklist.validate();
+          if (!await this.$refs.blacklist.validate()) {
+            return false;
+          }
         }
         if (this.$refs.whitelist) {
-          await this.$refs.whitelist.validate();
+          if (!await this.$refs.whitelist.validate()) {
+            return false;
+          }
         }
         if (this.$refs.change) {
-          await this.$refs.change.validate();
+          if (!await this.$refs.change.validate()) {
+            return false;
+          }
         }
-        await this.$refs.form.validate();
+
+        if (!await this.$refs.form.validate()) {
+          return false;
+        }
 
         return this.config;
       } catch (error) {

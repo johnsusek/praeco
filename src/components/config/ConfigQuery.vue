@@ -62,7 +62,7 @@
 import Vue from 'vue';
 import VueQueryBuilder from 'vue-query-builder';
 import debounce from 'debounce';
-import { luceneSyntaxFromQueryBuilder } from '../lib/luceneSyntaxBuilder.js';
+import { luceneSyntaxFromQueryBuilder } from '@/lib/luceneSyntaxBuilder.js';
 
 export default {
   components: {
