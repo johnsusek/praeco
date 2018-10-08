@@ -390,7 +390,9 @@ export default {
     Vue.set(
       this.config,
       'slack_title_link',
-      `${this.$store.state.config.config.appUrl}/rules/${encodeURIComponent(this.config.name)}`
+      `${this.$store.state.config.config.appUrl}
+       /rules/
+       ${encodeURIComponent(this.config.__praeco_full_path)}`
     );
   },
   methods: {
