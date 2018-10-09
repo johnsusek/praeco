@@ -387,12 +387,13 @@ export default {
       Vue.set(this.config, 'name', 'New rule');
     }
 
+    let appUrl = this.$store.state.config.config.appUrl;
+    let encodedPath = encodeURIComponent(this.config.__praeco_full_path);
+
     Vue.set(
       this.config,
       'slack_title_link',
-      `${this.$store.state.config.config.appUrl}
-       /rules/
-       ${encodeURIComponent(this.config.__praeco_full_path)}`
+      `${appUrl}/rules/${encodedPath}`
     );
   },
   methods: {

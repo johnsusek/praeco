@@ -21,7 +21,7 @@
 
     <h1 v-show="!showRename">
       {{ rule.name }}
-      <el-tag v-if="rule.is_enabled" type="success">
+      <el-tag v-if="rule.is_enabled" type="success" class="m-w-xs">
         <Bulb success />
         Enabled
       </el-tag>
