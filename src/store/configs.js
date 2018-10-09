@@ -17,19 +17,26 @@ export default {
     rules: {
       // 'zzz/ruleName': { ...config... },
       // 'zzz/ddd/otherRuleName': { ...config... }
+    },
+    tree: {
+      templates: [],
+      rules: []
     }
   },
   mutations: {
-    FETCHED_CONFIGS(state, { configs, path, type }) {
+    FETCHED_CONFIGS(state, { paths, type }) {
       // Configs are stored with their full path as their key
-      configs[type].forEach(name => {
-        let fullPath = `${path ? `${path}/` : ''}${name}`;
-        if (!state[type][fullPath]) {
+      paths.forEach(path => {
+        if (!state[type][path]) {
           // Since we are just getting a list of configs without their
           // details, we set to an empty object in the store
-          Vue.set(state[type], fullPath, {});
+          Vue.set(state[type], path, {});
         }
       });
+    },
+
+    FETCHED_CONFIGS_TREE(state, { paths, type }) {
+      Vue.set(state.tree, type, paths);
     },
 
     /*eslint-disable */
@@ -84,10 +91,16 @@ export default {
       }
     },
 
-    async renameConfig({ dispatch }, { config, type, newName }) {
+    async renameConfig({ dispatch, state }, { config, type, newName }) {
       // Rename is similar to move, except the path is the same,
       // so our param is just the new name
       if (config.name === newName) return;
+
+      // If a config with the same name exists somewhere, return false
+      let takenNames = state.tree[type].map(c => c.split('/').pop()).filter(c => c !== '');
+      if (takenNames.includes(newName)) {
+        return;
+      }
 
       let newConfig = cloneDeep(config);
 
