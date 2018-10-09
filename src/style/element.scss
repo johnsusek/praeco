@@ -156,3 +156,9 @@
 .el-card__header .el-button--text {
   padding: 0;
 }
+
+.el-button .el-icon-arrow-up,
+.el-button .el-icon-arrow-down {
+  position: relative;
+  top: 1px;
+}

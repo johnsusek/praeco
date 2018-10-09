@@ -51,13 +51,18 @@
         Disable...
       </el-button>
 
-      <el-popover :disabled="!!silenceNotice" v-model="silencePopoverVisible">
+      <el-popover
+        v-if="rule.is_enabled"
+        :disabled="!!silenceNotice"
+        v-model="silencePopoverVisible">
         <span slot="reference">
           <el-button
             :disabled="!!silenceNotice"
             plain
             type="warning">
-            Silence...
+            Silence
+            <i v-if="!silencePopoverVisible" class="el-icon-arrow-down el-icon-right" />
+            <i v-if="silencePopoverVisible" class="el-icon-arrow-up el-icon-right" />
           </el-button>
         </span>
         <template>
@@ -77,7 +82,6 @@
           </el-button>
         </template>
       </el-popover>
-
 
       <el-button
         v-if="!rule.is_enabled"
@@ -228,7 +232,6 @@ export default {
       return yaml.safeDump(conf);
     },
     silenceNotice() {
-      console.log('computed silenceNotice');
       if (!this.silenceLog[0]) {
         return;
       }
