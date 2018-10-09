@@ -6,6 +6,7 @@
       title="Matches are silenced when you've already
           been alerted within the rule's re-alert timeframe." />
     <el-table :data="silenceLog" empty-text="">
+      <el-table-column label="Rule" prop="rule_name" />
       <el-table-column label="Until" width="170">
         <span slot-scope="scope">
           {{ shortDate(scope.row.until) }}

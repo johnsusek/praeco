@@ -287,6 +287,23 @@ export default {
       }
     },
 
+    async silenceRule({ commit }, { path, unit, duration }) {
+      try {
+        let res = await axios.post(`/silence/${path}`, {
+          unit,
+          duration
+        });
+
+        if (res.data.startsWith('INFO:elastalert:Success')) {
+          return true;
+        }
+
+        return false;
+      } catch (error) {
+        networkError(error);
+      }
+    },
+
     async enableRule({ commit }, config) {
       let conf = formatConfig(config);
       conf.is_enabled = true;

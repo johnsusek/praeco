@@ -145,8 +145,10 @@
 // Buttons
 //
 
+.el-row > span + .el-button,
 .el-row a + a,
 .el-row a + .el-button,
+.el-row .el-button + span,
 .el-row .el-button + a {
   margin-left: 10px;
 }

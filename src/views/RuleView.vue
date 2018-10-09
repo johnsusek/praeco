@@ -28,6 +28,8 @@
       <el-tag v-else type="warning">Disabled</el-tag>
     </h1>
 
+    <el-alert v-if="silenceNotice" :closable="false" :title="silenceNotice" show-icon type="info" />
+
     <el-row>
       <router-link :to="{
         name: 'ruleconfigbuilder',
@@ -48,6 +50,34 @@
         @click="handleDisable">
         Disable...
       </el-button>
+
+      <el-popover :disabled="!!silenceNotice" v-model="silencePopoverVisible">
+        <span slot="reference">
+          <el-button
+            :disabled="!!silenceNotice"
+            plain
+            type="warning">
+            Silence...
+          </el-button>
+        </span>
+        <template>
+          <el-row type="flex" justify="space-around">
+            <el-col :span="24" align="center">
+              <el-button @click="handleSilence('minutes', 5)">5 minutes</el-button>
+              <el-button @click="handleSilence('hour', 1)">1 hour</el-button>
+              <el-button @click="handleSilence('day', 1)">1 day</el-button>
+            </el-col>
+          </el-row>
+          <hr>
+          <ElastalertTimePicker v-model="silenceTime" />
+          <el-button
+            class="m-w-sm"
+            @click="handleSilence(Object.keys(silenceTime)[0], Object.values(silenceTime)[0])">
+            Silence
+          </el-button>
+        </template>
+      </el-popover>
+
 
       <el-button
         v-if="!rule.is_enabled"
@@ -166,6 +196,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
+import moment from 'moment';
 import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
@@ -175,6 +206,9 @@ export default {
   props: ['id'],
   data() {
     return {
+      silencePopoverVisible: false,
+      now: new Date(),
+      silenceTime: { hours: 2 },
       moveVisible: false,
       moveDest: '',
       showRename: false,
@@ -192,6 +226,19 @@ export default {
       if (!this.rule.name) return false;
       let conf = formatConfig(this.rule);
       return yaml.safeDump(conf);
+    },
+    silenceNotice() {
+      console.log('computed silenceNotice');
+      if (!this.silenceLog[0]) {
+        return;
+      }
+
+      let silencedDate = new Date(this.silenceLog[0].until);
+
+      if (this.now < silencedDate) {
+        let formattedSilencedDate = moment(silencedDate).format('MMMM Do YYYY, h:mm:ss A');
+        return `Rule silenced until ${formattedSilencedDate}`;
+      }
     }
   },
   async mounted() {
@@ -200,6 +247,10 @@ export default {
     this.getQueryLog();
     this.getAlertLog();
     this.getSilenceLog();
+
+    setInterval(() => {
+      this.now = new Date();
+    }, 1000);
   },
   methods: {
     //
@@ -334,6 +385,36 @@ export default {
           }
         })
         .catch(() => {});
+    },
+
+    //
+    // Silence
+    //
+
+    async handleSilence(unit, duration) {
+      this.silencePopoverVisible = false;
+
+      let silenced = await this.$store.dispatch('configs/silenceRule', {
+        path: this.id,
+        unit,
+        duration
+      });
+
+      setTimeout(() => {
+        this.getSilenceLog();
+      }, 1000);
+
+      if (silenced) {
+        this.$message({
+          type: 'success',
+          message: 'Rule silenced'
+        });
+      } else {
+        this.$message({
+          type: 'error',
+          message: 'There was an error silencing the rule.'
+        });
+      }
     },
 
     //

@@ -27,6 +27,7 @@
     "js-yaml": "^3.12.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
+    "moment": "^2.22.2",
     "normalize.css": "^8.0.0",
     "prismjs": "^1.15.0",
     "string-format": "^2.0.0",
