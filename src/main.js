@@ -19,6 +19,8 @@ import './style/element.scss';
 Vue.config.productionTip = false;
 
 Vue.config.errorHandler = function(err, vm, info) {
+  if (vm.$vnode.tag.endsWith('query-builder-rule')) return;
+
   logger().error(err);
 
   console.error(err, vm, info);

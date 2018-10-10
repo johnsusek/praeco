@@ -1,8 +1,8 @@
 <template>
   <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
     <br>
-    <el-form-item v-show="false" prop="filter[0].query.query_string.query" required>
-      <el-input v-model="config.filter[0].query.query_string.query" />
+    <el-form-item v-show="true" prop="filter[0].query.query_string.query" required>
+      <el-input v-model="config.filter[0].query.query_string.query" type="textarea" @input="handleQueryChange" />
     </el-form-item>
 
     <el-card>
@@ -47,14 +47,16 @@
       </div>
 
       <vue-query-builder
-        v-if="config.__praeco_query_builder.query"
-        v-model="config.__praeco_query_builder.query"
+        ref="vqb"
+        :max-depth="2"
         :rules="rules"
         :labels="labels"
-        :styled="false" />
+        :styled="false"
+        @input="vqbInput" />
     </el-card>
 
-    <!-- <vue-json-pretty :data="config" /> -->
+    <vue-json-pretty :data="parsedQuery" />
+    <vue-json-pretty v-if="$refs.vqb" :data="$refs.vqb.query" />
   </el-form>
 </template>
 
@@ -62,7 +64,9 @@
 import Vue from 'vue';
 import VueQueryBuilder from 'vue-query-builder';
 import debounce from 'debounce';
+import parser from 'lucene-query-parser';
 import { luceneSyntaxFromQueryBuilder } from '@/lib/luceneSyntaxBuilder.js';
+
 
 export default {
   components: {
@@ -71,6 +75,8 @@ export default {
   props: ['prefill', 'fields', 'queryBuilderQuery'],
   data() {
     return {
+      children: [],
+      parsedQuery: {},
       helpVisible: false,
       labels: {
         matchType: 'Match type',
@@ -123,39 +129,116 @@ export default {
       });
 
       return rules;
-    }
+    },
   },
   watch: {
-    'config.__praeco_query_builder': {
-      immediate: true,
-      deep: true,
-      handler() {
-        let query = this.config.__praeco_query_builder.query;
-        if (query) {
-          this.config.filter[0].query.query_string.query = luceneSyntaxFromQueryBuilder(query);
-          this.preview();
-        }
-      }
-    },
     prefill() {
       this.config = this.prefill;
     }
   },
   mounted() {
     this.config = this.prefill;
-
-    if (this.queryBuilderQuery.query) {
-      Vue.set(this.config, '__praeco_query_builder', this.queryBuilderQuery);
-    } else {
-      Vue.set(this.config, '__praeco_query_builder', {
-        query: {
-          logicalOperator: 'All',
-          children: []
-        }
-      });
-    }
+    this.handleQueryChange(this.config.filter[0].query.query_string.query);
   },
   methods: {
+    buildNodesStart(left, operator, right) {
+      this.parsedQuery = {
+        logicalOperator: operator === 'AND' ? 'All' : 'Any',
+        children: []
+      };
+      this.buildNodes(left, operator, right);
+
+      let listener = this.$refs.vqb.$listeners.input;
+      this.$refs.vqb.$off('input');
+
+      this.$refs.vqb.query = this.parsedQuery;
+
+      setTimeout(() => {
+        this.$refs.vqb.$on('input', listener);
+      }, 100);
+    },
+
+    buildNodes(left, operator, right, parent) {
+      if (right && right.left && right.operator && right.right) {
+        if (right.left.field && right.right.field) {
+          let group = {
+            type: 'query-builder-group',
+            query: {
+              logicalOperator: right.operator === 'AND' ? 'All' : 'Any',
+              children: []
+            }
+          };
+
+          this.parsedQuery.children.push(group);
+          this.buildNodes(right.left, right.operator, right.right, group.query.children);
+        } else {
+          this.buildNodes(right.left, right.operator, right.right);
+        }
+      }
+
+      if (left && left.left && left.operator && left.right) {
+        if (left.left.field && left.right.field) {
+          let group = {
+            type: 'query-builder-group',
+            query: {
+              logicalOperator: left.operator === 'AND' ? 'All' : 'Any',
+              children: []
+            }
+          };
+
+          this.parsedQuery.children.push(group);
+          this.buildNodes(left.left, left.operator, left.right, group.query.children);
+        } else {
+          this.buildNodes(left.left, left.operator, left.right);
+        }
+      }
+
+      // Leafs
+      if (right && right.term && right.field) {
+        let pushTarget = parent || this.parsedQuery.children;
+        pushTarget.push({
+          type: 'query-builder-rule',
+          query: {
+            rule: right.field,
+            selectedOperator: 'contains',
+            selectedOperand: right.field,
+            value: right.term
+          }
+        });
+      }
+
+      if (left && left.term && left.field) {
+        let pushTarget = parent || this.parsedQuery.children;
+        pushTarget.push({
+          type: 'query-builder-rule',
+          query: {
+            rule: left.field,
+            selectedOperator: 'contains',
+            selectedOperand: left.field,
+            value: left.term
+          }
+        });
+      }
+    },
+
+    handleQueryChange(query) {
+      try {
+        let parsed = parser.parse(query);
+        if (parsed && parsed.left && parsed.operator && parsed.right) {
+          this.buildNodesStart(parsed.left, parsed.operator, parsed.right);
+          this.preview();
+        }
+      } catch (error) {}
+    },
+
+    vqbInput(input) {
+      console.log('INPUT FIRED VQB', input);
+      if (input) {
+        this.config.filter[0].query.query_string.query = luceneSyntaxFromQueryBuilder(input);
+        this.preview();
+      }
+    },
+
     preview: debounce(function() {
       this.$emit('preview', this.config);
     }, 500),
