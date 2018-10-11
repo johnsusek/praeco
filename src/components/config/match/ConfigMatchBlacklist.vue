@@ -1,7 +1,5 @@
 <template>
   <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
-    <br>
-
     <el-form-item label="Field" prop="compareKey" required>
       <el-select
         v-model="form.compareKey"
@@ -53,14 +51,7 @@ import { validateForm } from '@/mixins/validateForm';
 export default {
   mixins: [validateForm],
 
-
   props: ['fields', 'compareKey', 'blacklist'],
-
-  data() {
-    return {
-      form: {}
-    };
-  },
 
   mounted() {
     if (this.compareKey) {

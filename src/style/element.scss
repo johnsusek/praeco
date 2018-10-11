@@ -25,6 +25,7 @@
 
 .el-form--label-top .el-form-item__label {
   padding: 0;
+  font-weight: bold;
 }
 
 //
@@ -161,4 +162,28 @@
 .el-button .el-icon-arrow-down {
   position: relative;
   top: 1px;
+}
+
+//
+// Collapse
+//
+
+.el-collapse-item__header {
+  font-size: 16px;
+}
+
+.el-collapse-item .el-form-item:last-child {
+  margin-bottom: 0;
+}
+
+.el-collapse-item__content {
+  padding-bottom: 20px;
+}
+
+//
+// Tabs
+//
+
+.el-tabs--border-card.border-card-plain {
+  box-shadow: none;
 }

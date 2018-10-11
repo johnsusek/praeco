@@ -287,7 +287,7 @@ export default {
       }
     },
 
-    async silenceRule({ commit }, { path, unit, duration }) {
+    async silenceRule(context, { path, unit, duration }) {
       try {
         let res = await axios.post(`/silence/${path}`, {
           unit,

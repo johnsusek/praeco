@@ -1,5 +1,7 @@
 # praeco
 
+⚠️ Praeco is currently an alpha and should not to be used on production systems. Please create a github issue if you are having trouble installing.
+
 Praeco is a GUI for elastalert, using [bitsensor's elastalert API](https://github.com/bitsensor/elastalert) to manage rules.
 
 ![](https://user-images.githubusercontent.com/611996/46428598-0575b280-c70a-11e8-8ba2-bdcd9932380b.png)

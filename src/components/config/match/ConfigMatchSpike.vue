@@ -1,9 +1,7 @@
 <template>
   <el-form ref="form" :model="form" :rules="rules" label-position="top" @submit.native.prevent>
-    <br>
-
     <el-form-item label="Spike height" prop="spikeHeight" required>
-      <el-input v-model="form.spikeHeight" type="number" />
+      <el-input v-model="form.spikeHeight" type="number" @input="updateSpikeHeight" />
       <label>
         The ratio of number of events in the last "timeframe" to the previous
         "timeframe" that when hit will trigger an alert.
@@ -11,7 +9,7 @@
     </el-form-item>
 
     <el-form-item label="Timeframe" prop="timeframe" required>
-      <ElastalertTimePicker v-model="form.timeframe" />
+      <ElastalertTimePicker v-model="form.timeframe" @input="(t) => $emit('updateTimeframe', t)" />
       <label>
         The rule will average out the rate of events over this time period.
         For example, 1 hour means that the ‘current’ window will span from
@@ -81,9 +79,7 @@
       </el-form-item>
     </template>
 
-    <hr>
-
-    <el-form-item label="Frequency visualizer" >
+    <!-- <el-form-item label="Frequency visualizer" >
       <ESChart
         :spike-height="form.spikeHeight"
         :mark-line="markLine"
@@ -91,7 +87,7 @@
         :bucket="form.timeframe"
         :query="query"
         :index="wildcardIndex" />
-    </el-form-item>
+    </el-form-item> -->
   </el-form>
 </template>
 
@@ -115,7 +111,6 @@ export default {
 
   data() {
     return {
-      form: {},
       useThresholdRef: false,
       useThresholdCur: false,
       showAdvanced: false,
@@ -165,6 +160,7 @@ export default {
     if (this.timeframe) {
       Vue.set(this.form, 'timeframe', this.timeframe);
     } else {
+      console.log('no timeframe set in props, setting to 15', this.timeframe);
       Vue.set(this.form, 'timeframe', { minutes: 15 });
     }
 
@@ -180,6 +176,10 @@ export default {
   },
 
   methods: {
+    updateSpikeHeight(val) {
+      console.log('emitting updateSpikeHeight');
+      this.$emit('updateSpikeHeight', val);
+    },
     toggleThresholdRef(val) {
       if (val === false) {
         Vue.delete(this.form, 'thresholdRef');
@@ -237,7 +237,7 @@ export default {
         });
       }
 
-      this.markLine = {
+      this.$emit('updateMarkLine', {
         silent: true,
         lineStyle: {
           color: 'green',
@@ -246,7 +246,7 @@ export default {
         animation: false,
         symbol: 'none',
         data
-      };
+      });
     },
 
     toggleAdvanced() {

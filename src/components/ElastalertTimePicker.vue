@@ -25,22 +25,28 @@ export default {
       type: Object,
       required: true,
       default () {
-        return { minutes: 20 };
+        return { minutes: 999 };
       }
     }
   },
   data() {
     return {
       currentValue: {
-        num: 20,
+        num: 888,
         unit: 'minutes'
       }
     };
   },
-  mounted() {
-    if (Object.values(this.value)[0] && Object.keys(this.value)[0]) {
-      this.currentValue.num = Object.values(this.value)[0];
-      this.currentValue.unit = Object.keys(this.value)[0];
+  watch: {
+    value: {
+      initial: true,
+      deep: true,
+      handler() {
+        if (Object.values(this.value)[0] && Object.keys(this.value)[0]) {
+          this.currentValue.num = Object.values(this.value)[0];
+          this.currentValue.unit = Object.keys(this.value)[0];
+        }
+      }
     }
   },
   methods: {

@@ -1,7 +1,5 @@
 <template>
   <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
-    <br>
-
     <el-form-item label="Compare key(s)" prop="compareKey" required>
       <el-select
         v-model="form.compareKey"
@@ -69,7 +67,6 @@ export default {
   data() {
     return {
       useTimeframe: false,
-      form: {}
     };
   },
 

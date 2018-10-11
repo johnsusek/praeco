@@ -78,7 +78,7 @@ function luceneSyntaxFromQueryBuilderGroup(group) {
   // {
   //   type: "query-builder-group",
   //   query: {
-  //     logicalOperator: "All",
+  //     logicalOperator: "all",
   //     children: [
   //       {
   //         type: "query-builder-rule",
@@ -107,7 +107,8 @@ function luceneSyntaxFromQueryBuilderGroup(group) {
   });
 
   // and add AND or OR after each rule string
-  if (group.query.logicalOperator === 'All') {
+  console.log(group.query.logicalOperator);
+  if (group.query.logicalOperator === 'all') {
     mainString += childRules.join(' AND ');
   } else {
     mainString += childRules.join(' OR ');
@@ -132,7 +133,7 @@ export function luceneSyntaxFromQueryBuilder(query) {
     });
   }
 
-  if (query.logicalOperator === 'All') {
+  if (query.logicalOperator === 'all') {
     queryString += queryStrings.join(' AND ');
   } else {
     queryString += queryStrings.join(' OR ');

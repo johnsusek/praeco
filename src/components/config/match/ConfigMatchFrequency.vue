@@ -1,19 +1,17 @@
 <template>
   <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
-    <br>
-
     <el-form-item label="Number of events" prop="numEvents" required>
       <el-input
-        :min="1"
         :controls="false"
         v-model="form.numEvents"
+        min="1"
         type="number"
         @input="updateMarkLine" />
       <label>The number of events which will trigger an alert, inclusive.</label>
     </el-form-item>
 
     <el-form-item label="Timeframe" props="timeframe" required>
-      <ElastalertTimePicker v-model="form.timeframe" />
+      <ElastalertTimePicker v-model="form.timeframe" @input="(t) => $emit('updateTimeframe', t)" />
       <label>The time that the number of events must occur within.</label>
     </el-form-item>
 
@@ -67,9 +65,9 @@
 
       <el-form-item
         v-if="form.useCountQuery || form.useTermsQuery"
-        required
         label="Doc type"
-        prop="docType">
+        prop="docType"
+        required>
         <el-select
           v-model="form.docType"
           filterable
@@ -110,16 +108,16 @@
       </el-form-item>
     </template>
 
-    <hr>
+    <!-- <hr> -->
 
-    <el-form-item label="Frequency visualizer" >
-      <ESChart
+    <!-- <el-form-item label="Frequency visualizer" > -->
+    <!-- <ESChart
         :mark-line="markLine"
         :timeframe="{ hours: 24 }"
         :bucket="form.timeframe"
         :query="query"
-        :index="wildcardIndex" />
-    </el-form-item>
+        :index="wildcardIndex" /> -->
+    <!-- </el-form-item> -->
   </el-form>
 </template>
 
@@ -148,8 +146,7 @@ export default {
   data() {
     return {
       showAdvanced: false,
-      markLine: {},
-      form: {}
+      markLine: {}
     };
   },
 
@@ -203,7 +200,8 @@ export default {
 
   methods: {
     updateMarkLine() {
-      this.markLine = {
+      console.log('emitting updateMarkline');
+      this.$emit('updateMarkLine', {
         silent: true,
         lineStyle: {
           color: '#ff0000',
@@ -217,7 +215,23 @@ export default {
             yAxis: this.form.numEvents
           },
         ]
-      };
+      });
+
+      // this.markLine = {
+      //   silent: true,
+      //   lineStyle: {
+      //     color: '#ff0000',
+      //     type: 'solid'
+      //   },
+      //   animation: false,
+      //   symbol: 'none',
+      //   data: [
+      //     {
+      //       name: 'Alert level',
+      //       yAxis: this.form.numEvents
+      //     },
+      //   ]
+      // };
     },
 
     toggleAdvanced() {

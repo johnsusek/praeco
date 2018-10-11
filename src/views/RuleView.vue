@@ -453,7 +453,7 @@ export default {
     async getQueryLog() {
       try {
         let res = await axios.get('/metadata/elastalert_status', {
-          params: { rule_name: this.id }
+          params: { rule_name: this.rule.name }
         });
         if (res.data.error) {
           this.$notify.error({
@@ -476,7 +476,7 @@ export default {
     async getAlertLog() {
       try {
         let res = await axios.get('/metadata/elastalert', {
-          params: { rule_name: this.id }
+          params: { rule_name: this.rule.name }
         });
         if (res.data.error) {
           this.$notify.error({
@@ -499,7 +499,7 @@ export default {
     async getSilenceLog() {
       try {
         let res = await axios.get('/metadata/silence', {
-          params: { rule_name: this.id }
+          params: { rule_name: this.rule.name }
         });
         if (res.data.error) {
           this.$notify.error({

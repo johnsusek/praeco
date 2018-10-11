@@ -4,7 +4,9 @@
 
     <ESChart
       :timeframe="{ hours: 24 }"
-      :bucket="{ minutes: 10 }"
+      :bucket="timeframe || { minutes: 10 }"
+      :mark-line="markLine"
+      :spike-height="spikeHeight"
       :query="query"
       :index="index" />
 
@@ -55,7 +57,17 @@
 import commaNumber from 'comma-number';
 
 export default {
-  props: ['showPreview', 'previewResult', 'previewError', 'previewLoading', 'query', 'index'],
+  props: [
+    'showPreview',
+    'previewResult',
+    'previewError',
+    'previewLoading',
+    'query',
+    'index',
+    'markLine',
+    'timeframe',
+    'spikeHeight'
+  ],
   methods: {
     commaNumber(val) {
       return commaNumber(val);

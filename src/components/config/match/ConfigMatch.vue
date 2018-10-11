@@ -1,9 +1,10 @@
 <template>
-  <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
-    <br>
-
-    <el-card header="Match type">
-      <el-select v-model="config.type" placeholder="Select">
+  <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
+    <div :class="{ 'm-s-med': form.type !== 'any' }">
+      <el-select
+        v-model="form.type"
+        placeholder="Select"
+        size="medium">
         <el-option key="any" label="Any" value="any" />
         <el-option key="blacklist" label="Blacklist" value="blacklist" />
         <el-option key="whitelist" label="Whitelist" value="whitelist" />
@@ -12,101 +13,105 @@
         <el-option key="spike" label="Spike" value="spike" />
       </el-select>
 
-      <label v-if="config.type === 'any'">
+      <label v-if="form.type === 'any'">
         The "any" rule will match everything.
         Every hit that the query returns will generate an alert.
       </label>
-      <label v-if="config.type === 'change'">
+      <label v-if="form.type === 'change'">
         This rule will monitor a certain field and match if that field changes.
         The field must change with respect to the last event with the same query key.
       </label>
-      <label v-if="config.type === 'blacklist'">
+      <label v-if="form.type === 'blacklist'">
         The blacklist rule will check a certain field against a
         blacklist, and match if it is in the blacklist.
       </label>
-      <label v-if="config.type === 'whitelist'">
+      <label v-if="form.type === 'whitelist'">
         This rule will compare a certain field to a whitelist,
         and match if the list does not contain the term.
       </label>
-      <label v-if="config.type === 'frequency'">
+      <label v-if="form.type === 'frequency'">
         This rule matches when there are at least a certain number of
         events in a given time frame. This may be counted on a per-"query key" basis.
       </label>
-      <label v-if="config.type === 'spike'">
+      <label v-if="form.type === 'spike'">
         This rule matches when the volume of events during a given time period is
         "spike height" times larger or smaller than during the previous time period.
       </label>
+    </div>
 
-      <ConfigMatchBlacklist
-        v-if="config.type === 'blacklist'"
-        ref="blacklist"
-        :blacklist="config.blacklist"
-        :compare-key="config.compare_key"
-        :fields="fields"
-        @input="updateBlacklistConfig" />
+    <ConfigMatchBlacklist
+      v-if="form.type === 'blacklist'"
+      ref="blacklist"
+      :blacklist="form.blacklist"
+      :compare-key="form.compareKey"
+      :fields="fields"
+      @input="updateBlacklistConfig" />
 
-      <ConfigMatchWhitelist
-        v-if="config.type === 'whitelist'"
-        ref="whitelist"
-        :whitelist="config.whitelist"
-        :compare-key="config.compare_key"
-        :ignore-null="config.ignore_null"
-        :fields="fields"
-        @input="updateWhitelistConfig" />
+    <ConfigMatchWhitelist
+      v-if="form.type === 'whitelist'"
+      ref="whitelist"
+      :whitelist="form.whitelist"
+      :compare-key="form.compareKey"
+      :ignore-null="form.ignoreNull"
+      :fields="fields"
+      @input="updateWhitelistConfig" />
 
-      <ConfigMatchChange
-        v-if="config.type === 'change'"
-        ref="change"
-        :fields="fields"
-        :compare-key="config.compare_key"
-        :ignore-null="config.ignore_null"
-        :query-key="config.query_key"
-        :timeframe="config.timeframe"
-        @input="updateChangeConfig" />
+    <ConfigMatchChange
+      v-if="form.type === 'change'"
+      ref="change"
+      :fields="fields"
+      :compare-key="form.compareKey"
+      :ignore-null="form.ignoreNull"
+      :query-key="form.queryKey"
+      :timeframe="form.timeframe"
+      @input="updateChangeConfig" />
 
-      <ConfigMatchFrequency
-        v-if="config.type === 'frequency'"
-        ref="freq"
-        :query="config.filter[0].query.query_string.query"
-        :index="index"
-        :fields="fields"
-        :types="types"
-        :timeframe="config.timeframe"
-        :num-events="config.num_events"
-        :strftime="config.use_strftime_index"
-        :terms-size="config.terms_size"
-        :query-key="config.query_key"
-        :doc-type="config.doc_type"
-        :use-count-query="config.use_count_query"
-        :use-terms-query="config.use_terms_query"
-        @input="updateFrequencyConfig" />
+    <ConfigMatchFrequency
+      v-if="form.type === 'frequency'"
+      ref="freq"
+      :query="form.queryString"
+      :index="index"
+      :fields="fields"
+      :types="types"
+      :timeframe="form.timeframe"
+      :num-events="form.numEvents"
+      :strftime="form.strftime"
+      :terms-size="form.termsSize"
+      :query-key="form.queryKey"
+      :doc-type="form.docType"
+      :use-count-query="form.useCountQuery"
+      :use-terms-query="form.useTermsQuery"
+      @updateTimeframe="(t) => $emit('updateTimeframe', t)"
+      @updateMarkLine="(m) => $emit('updateMarkLine', m)"
+      @input="updateFrequencyConfig" />
 
-      <ConfigMatchSpike
-        v-if="config.type === 'spike'"
-        ref="spike"
-        :index="index"
-        :query="config.filter[0].query.query_string.query"
-        :strftime="config.use_strftime_index"
-        :timeframe="config.timeframe"
-        :threshold-ref="config.threshold_ref"
-        :threshold-cur="config.threshold_cur"
-        :spike-type="config.spike_type"
-        :spike-height="config.spike_height"
-        @input="updateSpikeConfig" />
-    </el-card>
+    <ConfigMatchSpike
+      v-if="form.type === 'spike'"
+      ref="spike"
+      :index="index"
+      :query="form.queryString"
+      :strftime="form.strftime"
+      :timeframe="form.timeframe"
+      :threshold-ref="form.thresholdRef"
+      :threshold-cur="form.thresholdCur"
+      :spike-type="form.spikeType"
+      :spike-height="form.spikeHeight"
+      @updateSpikeHeight="(m) => $emit('updateSpikeHeight', m)"
+      @updateTimeframe="(t) => $emit('updateTimeframe', t)"
+      @updateMarkLine="(m) => $emit('updateMarkLine', m)"
+      @input="updateSpikeConfig" />
 
-    <!-- <vue-json-pretty :data="config" /> -->
   </el-form>
 </template>
 
 <script>
 import Vue from 'vue';
-import debounce from 'debounce';
 import ConfigMatchBlacklist from '@/components/config/match/ConfigMatchBlacklist';
 import ConfigMatchWhitelist from '@/components/config/match/ConfigMatchWhitelist';
 import ConfigMatchFrequency from '@/components/config/match/ConfigMatchFrequency';
 import ConfigMatchSpike from '@/components/config/match/ConfigMatchSpike';
 import ConfigMatchChange from '@/components/config/match/ConfigMatchChange';
+import { validateForm } from '@/mixins/validateForm';
 
 export default {
   components: {
@@ -117,16 +122,42 @@ export default {
     ConfigMatchChange
   },
 
-  props: ['prefill', 'fields', 'types', 'index'],
+  mixins: [validateForm],
 
-  data() {
-    return {
-      config: {}
-    };
-  },
+  props: [
+    'spikeHeight',
+    'spikeType',
+
+    'thresholdRef',
+    'thresholdCur',
+
+    'useTermsQuery',
+    'useCountQuery',
+
+    'docType',
+    'termsSize',
+
+    'strftime',
+
+    'numEvents',
+
+    'timeframe',
+
+    'queryKey',
+
+    'compareKey',
+    'blacklist',
+    'whitelist',
+    'ignoreNull',
+
+    'type',
+    'fields',
+    'types',
+    'index'
+  ],
 
   watch: {
-    'config.type': {
+    'form.type': {
       immediate: true,
       handler(type, oldType) {
         // When switching between match types, we want to clear
@@ -144,51 +175,113 @@ export default {
         }
       }
     },
-
-    prefill() {
-      this.config = this.prefill;
-    }
   },
 
   mounted() {
-    this.config = this.prefill;
+    if (this.type) {
+      Vue.set(this.form, 'type', this.type);
+    }
+
+    if (this.blacklist) {
+      Vue.set(this.form, 'blacklist', this.blacklist);
+    }
+
+    if (this.whitelist) {
+      Vue.set(this.form, 'whitelist', this.whitelist);
+    }
+
+    if (this.compareKey) {
+      Vue.set(this.form, 'compareKey', this.compareKey);
+    }
+
+    if (this.ignoreNull) {
+      Vue.set(this.form, 'ignoreNull', this.ignoreNull);
+    }
+
+    if (this.queryKey) {
+      Vue.set(this.form, 'queryKey', this.queryKey);
+    }
+
+    if (this.timeframe) {
+      Vue.set(this.form, 'timeframe', this.timeframe);
+    }
+
+    if (this.numEvents) {
+      Vue.set(this.form, 'numEvents', this.numEvents);
+    }
+
+    if (this.strftime) {
+      Vue.set(this.form, 'strftime', this.strftime);
+    }
+
+    if (this.termsSize) {
+      Vue.set(this.form, 'termsSize', this.termsSize);
+    }
+
+    if (this.docType) {
+      Vue.set(this.form, 'docType', this.docType);
+    }
+
+    if (this.useCountQuery) {
+      Vue.set(this.form, 'useCountQuery', this.useCountQuery);
+    }
+
+    if (this.useTermsQuery) {
+      Vue.set(this.form, 'useTermsQuery', this.useTermsQuery);
+    }
+
+    if (this.thresholdCur) {
+      Vue.set(this.form, 'thresholdCur', this.thresholdCur);
+    }
+
+    if (this.thresholdRef) {
+      Vue.set(this.form, 'thresholdRef', this.thresholdRef);
+    }
+
+    if (this.spikeHeight) {
+      Vue.set(this.form, 'spikeHeight', this.spikeHeight);
+    }
+
+    if (this.spikeType) {
+      Vue.set(this.form, 'spikeType', this.spikeType);
+    }
   },
 
   methods: {
     clearBlacklistConfig() {
-      Vue.delete(this.config, 'compare_key');
-      Vue.delete(this.config, 'blacklist');
+      Vue.delete(this.form, 'compareKey');
+      Vue.delete(this.form, 'blacklist');
     },
 
     clearWhitelistConfig() {
-      Vue.delete(this.config, 'compare_key');
-      Vue.delete(this.config, 'ignore_null');
-      Vue.delete(this.config, 'whitelist');
+      Vue.delete(this.form, 'compareKey');
+      Vue.delete(this.form, 'ignoreNull');
+      Vue.delete(this.form, 'whitelist');
     },
 
     clearChangeConfig() {
-      Vue.delete(this.config, 'compare_key');
-      Vue.delete(this.config, 'timeframe');
-      Vue.delete(this.config, 'query_key');
-      Vue.delete(this.config, 'ignore_null');
+      Vue.delete(this.form, 'compareKey');
+      Vue.delete(this.form, 'timeframe');
+      Vue.delete(this.form, 'queryKey');
+      Vue.delete(this.form, 'ignoreNull');
     },
 
     clearFrequencyConfig() {
-      Vue.delete(this.config, 'timeframe');
-      Vue.delete(this.config, 'query_key');
-      Vue.delete(this.config, 'num_events');
-      Vue.delete(this.config, 'terms_size');
-      Vue.delete(this.config, 'use_count_query');
-      Vue.delete(this.config, 'use_terms_query');
-      Vue.delete(this.config, 'doc_type');
+      Vue.delete(this.form, 'timeframe');
+      Vue.delete(this.form, 'queryKey');
+      Vue.delete(this.form, 'numEvents');
+      Vue.delete(this.form, 'termsSize');
+      Vue.delete(this.form, 'useCountQuery');
+      Vue.delete(this.form, 'useTermsQuery');
+      Vue.delete(this.form, 'docType');
     },
 
     clearSpikeConfig() {
-      Vue.delete(this.config, 'spike_type');
-      Vue.delete(this.config, 'spike_height');
-      Vue.delete(this.config, 'timeframe');
-      Vue.delete(this.config, 'threshold_ref');
-      Vue.delete(this.config, 'threshold_cur');
+      Vue.delete(this.form, 'spikeType');
+      Vue.delete(this.form, 'spikeHeight');
+      Vue.delete(this.form, 'timeframe');
+      Vue.delete(this.form, 'thresholdRef');
+      Vue.delete(this.form, 'thresholdCur');
     },
 
     async updateWhitelistConfig() {
@@ -199,18 +292,18 @@ export default {
         return;
       }
 
-      Vue.set(this.config, 'compare_key', form.compareKey);
+      Vue.set(this.form, 'compareKey', form.compareKey);
 
       if (form.whitelist && form.whitelist.length) {
-        Vue.set(this.config, 'whitelist', form.whitelist);
+        Vue.set(this.form, 'whitelist', form.whitelist);
       } else {
-        Vue.delete(this.config, 'whitelist');
+        Vue.delete(this.form, 'whitelist');
       }
 
       if (form.ignoreNull) {
-        Vue.set(this.config, 'ignore_null', form.ignoreNull);
+        Vue.set(this.form, 'ignoreNull', form.ignoreNull);
       } else {
-        Vue.delete(this.config, 'ignore_null');
+        Vue.delete(this.form, 'ignoreNull');
       }
     },
 
@@ -222,12 +315,12 @@ export default {
         return;
       }
 
-      Vue.set(this.config, 'compare_key', form.compareKey);
+      Vue.set(this.form, 'compareKey', form.compareKey);
 
       if (form.blacklist && form.blacklist.length) {
-        Vue.set(this.config, 'blacklist', form.blacklist);
+        Vue.set(this.form, 'blacklist', form.blacklist);
       } else {
-        Vue.delete(this.config, 'blacklist');
+        Vue.delete(this.form, 'blacklist');
       }
     },
 
@@ -239,22 +332,22 @@ export default {
         return;
       }
 
-      Vue.set(this.config, 'compare_key', form.compareKey);
+      Vue.set(this.form, 'compareKey', form.compareKey);
 
       if (form.ignoreNull) {
-        Vue.set(this.config, 'ignore_null', form.ignoreNull);
+        Vue.set(this.form, 'ignoreNull', form.ignoreNull);
       } else {
-        Vue.delete(this.config, 'ignore_null');
+        Vue.delete(this.form, 'ignoreNull');
       }
 
       if (form.queryKey) {
-        Vue.set(this.config, 'query_key', form.queryKey);
+        Vue.set(this.form, 'queryKey', form.queryKey);
       }
 
       if (form.timeframe) {
-        Vue.set(this.config, 'timeframe', form.timeframe);
+        Vue.set(this.form, 'timeframe', form.timeframe);
       } else {
-        Vue.delete(this.config, 'timeframe');
+        Vue.delete(this.form, 'timeframe');
       }
     },
 
@@ -266,20 +359,20 @@ export default {
         return;
       }
 
-      Vue.set(this.config, 'spike_height', parseFloat(form.spikeHeight));
-      Vue.set(this.config, 'timeframe', form.timeframe);
-      Vue.set(this.config, 'spike_type', form.spikeType);
+      Vue.set(this.form, 'spikeHeight', parseFloat(form.spikeHeight));
+      Vue.set(this.form, 'timeframe', form.timeframe);
+      Vue.set(this.form, 'spikeType', form.spikeType);
 
       if (form.thresholdRef) {
-        Vue.set(this.config, 'threshold_ref', parseFloat(form.thresholdRef));
+        Vue.set(this.form, 'thresholdRef', parseFloat(form.thresholdRef));
       } else {
-        Vue.delete(this.config, 'threshold_ref');
+        Vue.delete(this.form, 'thresholdRef');
       }
 
       if (form.thresholdCur) {
-        Vue.set(this.config, 'threshold_cur', parseFloat(form.thresholdCur));
+        Vue.set(this.form, 'thresholdCur', parseFloat(form.thresholdCur));
       } else {
-        Vue.delete(this.config, 'threshold_cur');
+        Vue.delete(this.form, 'thresholdCur');
       }
     },
 
@@ -291,43 +384,39 @@ export default {
         return;
       }
 
-      Vue.set(this.config, 'num_events', parseFloat(form.numEvents));
-      Vue.set(this.config, 'timeframe', form.timeframe);
+      Vue.set(this.form, 'numEvents', parseFloat(form.numEvents));
+      Vue.set(this.form, 'timeframe', form.timeframe);
 
       if (form.termsSize) {
-        Vue.set(this.config, 'terms_size', parseFloat(form.termsSize));
+        Vue.set(this.form, 'termsSize', parseFloat(form.termsSize));
       } else {
-        Vue.delete(this.config, 'threshold_cur');
+        Vue.delete(this.form, 'thresholdCur');
       }
 
       if (form.docType) {
-        Vue.set(this.config, 'doc_type', form.docType);
+        Vue.set(this.form, 'docType', form.docType);
       } else {
-        Vue.delete(this.config, 'doc_type');
+        Vue.delete(this.form, 'docType');
       }
 
       if (form.queryKey) {
-        Vue.set(this.config, 'query_key', form.queryKey);
+        Vue.set(this.form, 'queryKey', form.queryKey);
       } else {
-        Vue.delete(this.config, 'query_key');
+        Vue.delete(this.form, 'queryKey');
       }
 
       if (form.useCountQuery) {
-        Vue.set(this.config, 'use_count_query', form.useCountQuery);
+        Vue.set(this.form, 'useCountQuery', form.useCountQuery);
       } else {
-        Vue.delete(this.config, 'use_count_query');
+        Vue.delete(this.form, 'useCountQuery');
       }
 
       if (form.useTermsQuery) {
-        Vue.set(this.config, 'use_terms_query', form.useTermsQuery);
+        Vue.set(this.form, 'useTermsQuery', form.useTermsQuery);
       } else {
-        Vue.delete(this.config, 'use_terms_query');
+        Vue.delete(this.form, 'useTermsQuery');
       }
     },
-
-    preview: debounce(function() {
-      this.$emit('preview', this.config);
-    }, 350),
 
     async validate() {
       try {
@@ -357,11 +446,7 @@ export default {
           }
         }
 
-        if (!await this.$refs.form.validate()) {
-          return false;
-        }
-
-        return this.config;
+        return this.form;
       } catch (error) {
         return false;
       }

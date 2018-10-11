@@ -66,6 +66,10 @@ function getColorForIndex(index, data, spikeHeight) {
   let val = data[index].value;
   let preVal = data[index - 1].value;
 
+  if (spikeHeight === 1) {
+    return '#333';
+  }
+
   if (val / preVal > spikeHeight) {
     return '#fc8a00';
   } else if (preVal / val > spikeHeight) {
@@ -130,9 +134,11 @@ export default {
   },
   watch: {
     query() {
+      console.log('query changed, updating chart');
       this.updateChart();
     },
     markLine() {
+      console.log('updating markline...', this.markLine);
       if (this.markLine.data) {
         Vue.set(this.chart.series[0], 'markLine', this.markLine);
       } else {
@@ -145,6 +151,7 @@ export default {
     bucket(val) {
       if (val) {
         this.interval = val;
+        console.log('bucket changed, updating chart');
         this.updateChart();
       }
     }
@@ -158,6 +165,7 @@ export default {
       this.interval = this.bucket;
     }
 
+    console.log('mounted, updating chart');
     this.updateChart();
   },
   methods: {

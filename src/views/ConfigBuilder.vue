@@ -1,115 +1,125 @@
 <template>
   <el-row :gutter="40">
     <el-col :span="12" style="border-right: 1px solid #e6e6e6">
-      <h1>{{ pageTitle }}</h1>
+      <h1 class="m-s-xl">{{ pageTitle }}</h1>
 
-      <!-- FORMS -->
-      <ConfigSettings
-        v-show="currentStep === 'settings'"
-        ref="settings"
-        :type="type"
-        :prefill-path="prefill"
-        :prefill-type="prefillType"
-        :prefill="config"
-        :action="action" />
+      <el-collapse v-model="activePane" :accordion="true">
+        <el-collapse-item title="Settings" name="settings">
+          <ConfigSettings
+            v-if="(config.index || (action === 'add' && !prefill)) && activePane === 'settings'"
+            ref="settings"
+            :name="config.name"
+            :description="config.description"
+            :index="config.index"
+            :type="type"
+            :prefill-path="prefill"
+            :prefill-type="prefillType"
+            :action="action"
+            @input="updateConfigSettings" />
 
-      <ConfigQuery
-        v-if="currentStep === 'query'"
-        ref="query"
-        :prefill="config"
-        :fields="mappingFields"
-        :query-builder-query="config.__praeco_query_builder"
-        @preview="preview" />
-
-      <ConfigMatch
-        v-if="currentStep === 'match'"
-        ref="match"
-        :prefill="config"
-        :index="wildcardIndex"
-        :fields="mappingFields"
-        :types="mappingTypes"
-        @preview="preview" />
-
-      <ConfigAlert
-        v-show="currentStep === 'alert'"
-        ref="alert"
-        :prefill="config"
-        :fields="fields" />
-
-      <ConfigSave v-show="currentStep === 'save'" :config="config"/>
-
-      <!-- BUTTON ROW -->
-      <el-row class="button-row">
-        <el-col :span="12">
-          <el-button
-            v-show="currentStep !== 'settings'"
-            plain
-            size="small"
-            @click="back">
-            Back
+          <el-button class="m-n-lg" type="primary" plain @click="nextPane">
+            Continue
           </el-button>
-          &nbsp;
-        </el-col>
+        </el-collapse-item>
 
-        <el-col :span="12" align="right">
-          <el-button
-            v-show="showNextButton"
-            plain
-            size="small"
-            type="primary"
-            @click="handleClickNext">
-            Next
+        <el-collapse-item title="Filter" name="query">
+          <ConfigQuery
+            v-if="hasMapping && activePane === 'query'"
+            ref="query"
+            :fields="mappingFields"
+            :query-string="config.filter[0].query.query_string.query"
+            :query-tree="config.__praeco_query_builder.query"
+            @input="updateQuerySettings" />
+
+          <el-button class="m-n-lg" type="primary" plain @click="nextPane">
+            Continue
           </el-button>
+        </el-collapse-item>
 
-          <span v-show="currentStep === 'save'">
-            <el-button
-              plain
-              size="small"
-              type="primary"
-              class="praeco-config-save"
-              @click="saveConfig">
-              Save
-            </el-button>
-          </span>
-        </el-col>
-      </el-row>
+        <el-collapse-item title="Match" name="match">
+          <ConfigMatch
+            v-if="hasMapping && activePane === 'match'"
+            ref="match"
+            :type="config.type"
+            :query-string="config.filter[0].query.query_string.query"
+            :spike-height="config.spike_height"
+            :spike-type="config.spike_type"
+            :threshold-ref="config.threshold_ref"
+            :threshold-cur="config.threshold_cur"
+            :use-terms-query="config.use_terms_query"
+            :use-count-query="config.use_count_query"
+            :doc-type="config.doc_type"
+            :terms-size="config.terms_size"
+            :strftime="config.use_strftime_index"
+            :num-events="config.num_events"
+            :timeframe="config.timeframe"
+            :query-key="config.query_key"
+            :ignore-null="config.ignore_null"
+            :blacklist="config.blacklist"
+            :whitelist="config.whitelist"
+            :compare-key="config.compare_key"
+            :index="wildcardIndex"
+            :fields="mappingFields"
+            :types="mappingTypes"
+            @updateTimeframe="(t) => timeframe = t"
+            @updateMarkLine="(m) => markLine = m"
+            @updateSpikeHeight="(h) => spikeHeight = h"
+            @input="updateMatchSettings" />
+
+          <el-button class="m-n-lg" type="primary" plain @click="nextPane">
+            Continue
+          </el-button>
+        </el-collapse-item>
+
+        <el-collapse-item title="Alert" name="alert">
+          <ConfigAlert
+            ref="alert"
+            :v-show="showAlertConfig"
+            :prefill="config"
+            :fields="fields" />
+          <el-button class="m-n-lg" type="primary" plain @click="nextPane">
+            Continue
+          </el-button>
+        </el-collapse-item>
+
+        <el-collapse-item title="Save" name="save">
+          <ConfigSave :config="config" @save="saveConfig" />
+        </el-collapse-item>
+      </el-collapse>
     </el-col>
 
     <!-- SIDEBAR -->
     <el-col :span="12">
-      <h2><i v-if="currentStep === 'settings'" class="el-icon-d-arrow-right" />Settings</h2>
+      <h2><i class="el-icon-d-arrow-right" />Settings</h2>
       <SidebarSettings
-        :show-mapping-validation="currentStep === 'settings'"
+        :show-mapping-validation="true"
         v-bind="{
-          mappingLoaded,
-          mappingError,
-          mappingLoading,
           remoteValid,
+          remoteValidating,
           remoteError,
-          remoteValidating
       }" />
 
       <h2><i v-if="currentStep === 'query'" class="el-icon-d-arrow-right" />Search</h2>
       <SidebarQuery
-        v-if="currentStep === 'query'"
-        :show-preview="currentStep === 'query'"
+        :show-preview="true"
+        :spike-height="spikeHeight"
+        :timeframe="timeframe"
+        :mark-line="markLine"
         :index="wildcardIndex"
         :query="config.filter[0].query.query_string.query"
         v-bind="{ previewLoading, previewResult, previewError, config }" />
 
       <h2><i v-if="currentStep === 'match'" class="el-icon-d-arrow-right" />Match</h2>
       <SidebarMatch
-        v-if="currentStep === 'match'"
+        v-if="hasMapping"
         ref="sidebarMatch"
-        :show-test="currentStep === 'query' || currentStep === 'match'"
+        :show-test="hasMapping"
         v-bind="{ config }"
         @validateMatchForTest="validateMatchForTest" />
 
       <h2><i v-if="currentStep === 'alert'" class="el-icon-d-arrow-right" />Alert</h2>
 
-      <SidebarAlert
-        v-if="currentStep === 'alert'"
-        v-bind="{ renderedAlertResult, alertType: config.alert_text_type }" />
+      <SidebarAlert v-bind="{ renderedAlertResult, alertType: config.alert_text_type }" />
 
       <h2>
         <i v-if="currentStep === 'save'" />
@@ -125,11 +135,11 @@
             <el-button v-if="showYaml" type="text" @click="showYaml = false">Hide YAML</el-button>
           </div>
         </el-container>
-
       </h2>
-      <SidebarSave
-        v-if="currentStep === 'save'"
-        :save-error="saveError" />
+
+      <SidebarSave :save-error="saveError" />
+
+      <!-- <vue-json-pretty :data="config" /> -->
 
       <prism v-if="showYaml" language="javascript">{{ yaml }}</prism>
     </el-col>
@@ -144,6 +154,7 @@ import format from 'string-format';
 import get from 'lodash.get';
 import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
+import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import SidebarSettings from '@/components/sidebar/SidebarSettings.vue';
 import SidebarQuery from '@/components/sidebar/SidebarQuery.vue';
 import SidebarMatch from '@/components/sidebar/SidebarMatch.vue';
@@ -151,59 +162,13 @@ import SidebarAlert from '@/components/sidebar/SidebarAlert.vue';
 import SidebarSave from '@/components/sidebar/SidebarSave.vue';
 import ConfigSettings from '@/components/config/ConfigSettings.vue';
 import ConfigQuery from '@/components/config/ConfigQuery.vue';
-import ConfigAlert from '@/components/config/ConfigAlert.vue';
+import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
 import ConfigSave from '@/components/config/ConfigSave.vue';
 import ConfigMatch from '@/components/config/match/ConfigMatch.vue';
 import { formatConfig } from '../lib/formatConfig';
 import { htmlToConfigFormat } from '../lib/alertText';
 
 const CancelToken = axios.CancelToken;
-
-function buildMappingFields(mapping) {
-  let fields = {};
-
-  Object.values(mapping)
-    .map(m => m.mappings)
-    .forEach(mping => {
-      Object.values(mping).forEach(mp => {
-        Object.entries(mp.properties).forEach(prop => {
-          fields[prop[0]] = prop[1];
-        });
-      });
-    });
-
-  return fields;
-}
-
-function buildMappingTypes(mapping) {
-  let types = {};
-
-  Object.values(mapping)
-    .map(m => m.mappings)
-    .forEach(m =>
-      Object.keys(m).forEach(k => {
-        types[k] = true;
-      }));
-
-  return Object.keys(types).sort();
-}
-
-function formatIndex(index) {
-  let formattedIndex = index;
-  let now = new Date();
-
-  formattedIndex = formattedIndex.replace('%Y', now.getFullYear());
-  formattedIndex = formattedIndex.replace('%m', (now.getMonth() + 1).toString().padStart(2, 0));
-  formattedIndex = formattedIndex.replace(
-    '%d',
-    now
-      .getDate()
-      .toString()
-      .padStart(2, 0)
-  );
-
-  return formattedIndex;
-}
 
 export default {
   components: {
@@ -218,9 +183,22 @@ export default {
     SidebarAlert,
     SidebarSave
   },
+
   props: ['path', 'action', 'prefill', 'type', 'prefillType'],
+
   data() {
     return {
+      showAlertConfig: false,
+
+      spikeHeight: 1,
+      timeframe: null,
+      markLine: 0,
+
+      activePane: 'settings',
+
+      nextDisabled: false,
+      nextLabel: 'Next',
+
       source: null,
       showYaml: false,
 
@@ -237,10 +215,6 @@ export default {
       remoteValid: null,
       remoteError: '',
 
-      mappingLoading: false,
-      mappingLoaded: null,
-      mappingError: '',
-      mappingFields: [],
       mappingTypes: [],
 
       config: {
@@ -274,6 +248,7 @@ export default {
       }
     };
   },
+
   computed: {
     yaml() {
       let config = {};
@@ -286,10 +261,20 @@ export default {
           config[v] = this.config[v];
         });
 
-      if (!this.config.name) return false;
+      if (!config.__praeco_query_builder) return false;
 
       let conf = formatConfig(config);
       return yaml.safeDump(conf);
+    },
+    hasMapping() {
+      return Object.keys(this.mappingFields).length;
+    },
+    mappingFields() {
+      let mappings = this.$store.state.metadata.mappings[formatIndex(this.config.index)];
+      if (mappings) {
+        return mappings.fields;
+      }
+      return [];
     },
     fields() {
       let fields = [];
@@ -307,19 +292,10 @@ export default {
 
       return fields;
     },
-    formattedIndex() {
-      let formattedIndex = this.config.index;
-
-      if (this.config.use_strftime_index) {
-        formattedIndex = formatIndex(this.config.index);
-      }
-
-      return formattedIndex;
-    },
     wildcardIndex() {
-      let formattedIndex = this.config.index;
+      let formattedIndex = formatIndex(this.config.index);
 
-      if (this.config.use_strftime_index) {
+      if (this.config.use_strftime_index && formattedIndex) {
         formattedIndex = formattedIndex.replace(/%[Ymd]/g, '*');
       }
 
@@ -358,6 +334,7 @@ export default {
       };
     }
   },
+
   async mounted() {
     if (this.action === 'edit' && this.path) {
       // First we get the prefill from the store
@@ -396,7 +373,180 @@ export default {
       `${appUrl}/rules/${encodedPath}`
     );
   },
+
   methods: {
+    async updateMatchSettings() {
+      console.log('called updatematchsettings...');
+      let form = await this.$refs.match.validate();
+
+      if (!form) {
+        return;
+      }
+
+      console.log('GOT TYPE FROM UPDATED MATCH SETTINGS', form.type);
+
+      Vue.set(this.config, 'type', form.type);
+
+      if (form.compareKey) {
+        Vue.set(this.config, 'compare_key', form.compareKey);
+      } else {
+        Vue.delete(this.config, 'compare_key');
+      }
+
+      if (form.blacklist && form.blacklist.length) {
+        Vue.set(this.config, 'blacklist', form.blacklist);
+      } else {
+        Vue.delete(this.config, 'blacklist');
+      }
+
+      if (form.whitelist && form.whitelist.length) {
+        Vue.set(this.config, 'whitelist', form.whitelist);
+      } else {
+        Vue.delete(this.config, 'whitelist');
+      }
+
+      if (form.ignoreNull) {
+        Vue.set(this.config, 'ignore_null', form.ignoreNull);
+      } else {
+        Vue.delete(this.config, 'ignore_null');
+      }
+
+      if (form.queryKey) {
+        Vue.set(this.config, 'query_key', form.queryKey);
+      } else {
+        Vue.delete(this.config, 'query_key');
+      }
+
+      if (form.timeframe) {
+        Vue.set(this.config, 'timeframe', form.timeframe);
+      } else {
+        Vue.delete(this.config, 'timeframe');
+      }
+
+      if (form.numEvents) {
+        Vue.set(this.config, 'num_events', form.numEvents);
+      } else {
+        Vue.delete(this.config, 'num_events');
+      }
+
+      if (form.strftime) {
+        Vue.set(this.config, 'use_strftime_index', form.strftime);
+      } else {
+        Vue.set(this.config, 'use_strftime_index', false);
+      }
+
+      if (form.termsSize) {
+        Vue.set(this.config, 'terms_size', form.termsSize);
+      } else {
+        Vue.delete(this.config, 'terms_size');
+      }
+
+      if (form.docType) {
+        Vue.set(this.config, 'doc_type', form.docType);
+      } else {
+        Vue.delete(this.config, 'doc_type');
+      }
+
+      if (form.useCountQuery) {
+        Vue.set(this.config, 'use_count_query', form.useCountQuery);
+      } else {
+        Vue.delete(this.config, 'use_count_query');
+      }
+
+      if (form.useTermsQuery) {
+        Vue.set(this.config, 'use_terms_query', form.useTermsQuery);
+      } else {
+        Vue.delete(this.config, 'use_terms_query');
+      }
+
+      if (form.thresholdCur) {
+        Vue.set(this.config, 'threshold_cur', form.thresholdCur);
+      } else {
+        Vue.delete(this.config, 'threshold_cur');
+      }
+
+      if (form.thresholdRef) {
+        Vue.set(this.config, 'threshold_ref', form.thresholdRef);
+      } else {
+        Vue.delete(this.config, 'threshold_ref');
+      }
+
+      if (form.spikeType) {
+        Vue.set(this.config, 'spike_type', form.spikeType);
+      } else {
+        Vue.delete(this.config, 'spike_type');
+      }
+
+      if (form.spikeHeight) {
+        Vue.set(this.config, 'spike_height', form.spikeHeight);
+      } else {
+        Vue.delete(this.config, 'spike_height');
+      }
+    },
+
+    async updateConfigSettings() {
+      let form = await this.$refs.settings.validate();
+
+      if (!form) {
+        return;
+      }
+
+      Vue.set(this.config, 'name', form.name);
+
+      if (form.description) {
+        Vue.set(this.config, 'description', form.description);
+      } else {
+        Vue.delete(this.config, 'description');
+      }
+
+      Vue.set(this.config, 'index', form.index);
+
+      if (form.strftime) {
+        Vue.set(this.config, 'use_strftime_index', true);
+      } else {
+        Vue.set(this.config, 'use_strftime_index', false);
+      }
+    },
+
+    async updateQuerySettings() {
+      let form = await this.$refs.query.validate();
+
+      if (!form) {
+        return;
+      }
+      console.log(form);
+      Vue.set(this.config.filter[0].query.query_string, 'query', form.queryString);
+
+      Vue.set(this.config.__praeco_query_builder, 'query', form.queryTree);
+    },
+
+    async nextPane() {
+      if (this.activePane === 'settings') {
+        let settingsConfig = await this.$refs.settings.validate();
+        if (!settingsConfig) {
+          return;
+        }
+        this.config = { ...this.config, ...settingsConfig };
+        this.activePane = 'query';
+      } else if (this.activePane === 'query') {
+        let queryConfig = await this.$refs.query.validate();
+        if (!queryConfig) {
+          return;
+        }
+        this.config = { ...this.config, ...queryConfig };
+        this.activePane = 'match';
+      } else if (this.activePane === 'match') {
+        let matchConfig = await this.$refs.match.validate();
+        if (!matchConfig) {
+          return;
+        }
+        this.config = { ...this.config, ...matchConfig };
+        this.activePane = 'alert';
+      } else if (this.activePane === 'alert') {
+        this.activePane = 'save';
+      }
+    },
+
     async validateMatchForTest() {
       let matchConfig = await this.$refs.match.validate();
       if (!matchConfig) {
@@ -404,6 +554,7 @@ export default {
       }
       this.$refs.sidebarMatch.runTest();
     },
+
     async preview(config) {
       this.previewResult = null;
       this.previewError = null;
@@ -465,6 +616,7 @@ export default {
         this.previewLoading = false;
       }
     },
+
     async handleClickNext() {
       window.scrollTo({ top: 0 });
 
@@ -495,11 +647,12 @@ export default {
       }
 
       if (this.currentStep === 'settings') {
-        this.mappingLoaded = null;
-        this.mappingLoading = true;
+        this.nextDisabled = true;
         if (!(await this.getMapping())) {
+          this.nextDisabled = false;
           return false;
         }
+        this.nextDisabled = false;
       }
 
       if (this.currentStep !== 'settings') {
@@ -514,30 +667,7 @@ export default {
         this.next();
       }
     },
-    back() {
-      window.scrollTo({ top: 0 });
 
-      if (this.currentStep === 'query') {
-        this.currentStep = 'settings';
-      } else if (this.currentStep === 'match') {
-        this.currentStep = 'query';
-      } else if (this.currentStep === 'alert') {
-        this.currentStep = 'match';
-      } else if (this.currentStep === 'save') {
-        this.currentStep = 'alert';
-      }
-    },
-    next() {
-      if (this.currentStep === 'settings') {
-        this.currentStep = 'query';
-      } else if (this.currentStep === 'query') {
-        this.currentStep = 'match';
-      } else if (this.currentStep === 'match') {
-        this.currentStep = 'alert';
-      } else if (this.currentStep === 'alert') {
-        this.currentStep = 'save';
-      }
-    },
     async remoteValidation() {
       try {
         await axios.post('/test', {
@@ -556,6 +686,7 @@ export default {
         return false;
       }
     },
+
     async saveConfig() {
       this.saveError = '';
       let rootPath = false;
@@ -582,34 +713,6 @@ export default {
         this.$message.success(`${changeCase.titleCase(this.type)} saved`);
       } else {
         this.saveError = res;
-      }
-    },
-    async getMapping() {
-      try {
-        let formattedIndex = this.config.index;
-
-        if (this.config.use_strftime_index) {
-          formattedIndex = formatIndex(this.config.index);
-        }
-
-        let res = await axios.get(`/mapping/${formattedIndex}`);
-
-        if (res.data.error) {
-          this.mappingLoaded = false;
-          this.mappingError = res.data.error.msg;
-          return false;
-        }
-
-        this.mappingFields = buildMappingFields(res.data);
-        this.mappingTypes = buildMappingTypes(res.data);
-        this.mappingLoaded = true;
-        return true;
-      } catch (error) {
-        this.mappingLoaded = false;
-        this.mappingError = error.toString();
-        return false;
-      } finally {
-        this.mappingLoading = false;
       }
     }
   }
