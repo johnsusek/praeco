@@ -1,8 +1,12 @@
 <template>
-  <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
+  <el-form
+    ref="form"
+    :model="$store.state.config.match"
+    label-position="top"
+    @submit.native.prevent>
     <el-form-item label="Field" prop="compareKey" required>
       <el-select
-        v-model="form.compareKey"
+        v-model="compareKey"
         filterable
         placeholder="Field">
         <el-option
@@ -17,7 +21,7 @@
     <el-form-item label="Blacklist" prop="blacklist" required>
       <template>
         <el-form-item
-          v-for="(entry, index) in form.blacklist"
+          v-for="(entry, index) in $store.state.config.match.blacklist"
           :key="index"
           :prop="'blacklist.' + index"
           :rules="{ required: true, message: 'entry can not be null', trigger: 'blur' }"
@@ -25,7 +29,10 @@
           label="">
           <el-row :gutter="5" type="flex" justify="space-between">
             <el-col :span="10">
-              <el-input v-model="form.blacklist[index]" placeholder="Keyword" />
+              <el-input
+                v-model="$store.state.config.match.blacklist[index]"
+                placeholder="Keyword"
+                @input="(val) => updateBlacklist(val, index)" />
             </el-col>
             <el-col :span="14">
               <el-button
@@ -45,40 +52,34 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { validateForm } from '@/mixins/validateForm';
 
 export default {
-  mixins: [validateForm],
+  computed: {
+    fields() {
+      return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    },
 
-  props: ['fields', 'compareKey', 'blacklist'],
-
-  mounted() {
-    if (this.compareKey) {
-      Vue.set(this.form, 'compareKey', this.compareKey);
-    }
-
-    if (this.blacklist) {
-      Vue.set(this.form, 'blacklist', this.blacklist);
+    compareKey: {
+      get() {
+        return this.$store.state.config.match.compareKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_COMPARE_KEY', value);
+      }
     }
   },
 
   methods: {
-    removeEntry(item) {
-      let index = this.form.blacklist.indexOf(item);
-      if (index !== -1) {
-        this.form.blacklist.splice(index, 1);
-      }
-      if (this.form.blacklist.length === 0) {
-        Vue.delete(this.form, 'blacklist');
-      }
+    updateBlacklist(entry, index) {
+      this.$store.commit('config/match/UPDATE_BLACKLIST_ENTRY', { entry, index });
+    },
+
+    removeEntry(entry) {
+      this.$store.commit('config/match/REMOVE_BLACKLIST_ENTRY', entry);
     },
 
     addEntry() {
-      if (!this.form.blacklist) {
-        Vue.set(this.form, 'blacklist', []);
-      }
-      this.form.blacklist.push('');
+      this.$store.commit('config/match/ADD_BLACKLIST_ENTRY');
     }
   }
 };

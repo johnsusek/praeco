@@ -1,8 +1,12 @@
 <template>
-  <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
+  <el-form
+    ref="form"
+    :model="$store.state.config.match"
+    label-position="top"
+    @submit.native.prevent>
     <el-form-item label="Compare key(s)" prop="compareKey" required>
       <el-select
-        v-model="form.compareKey"
+        v-model="compareKey"
         filterable
         placeholder="Field">
         <el-option
@@ -18,7 +22,7 @@
     </el-form-item>
 
     <el-form-item label="Ignore null">
-      <el-switch v-model="form.ignoreNull" @input="updateIgnoreNull" />
+      <el-switch v-model="ignoreNull" />
       <label>
         If true, events without a compare_key field will not count as changed.
         Currently this checks for all the fields in compare_key.
@@ -27,10 +31,9 @@
 
     <el-form-item required prop="queryKey" label="Query key">
       <el-select
-        v-model="form.queryKey"
+        v-model="queryKey"
         filterable
-        placeholder="Field"
-        @input="updateQueryKey">
+        placeholder="Field">
         <el-option
           v-for="field in Object.keys(fields)"
           :key="field"
@@ -45,7 +48,7 @@
 
     <el-form-item label="Use timeframe">
       <el-switch v-model="useTimeframe" @input="updateUseTimeframe" /><br>
-      <ElastalertTimePicker v-if="useTimeframe" v-model="form.timeframe" />
+      <ElastalertTimePicker v-if="useTimeframe" v-model="timeframe" />
       <label>
         The maximum time between changes.
         After this time period, ElastAlert will forget the old value of the "compare key" field.
@@ -56,58 +59,59 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { validateForm } from '@/mixins/validateForm';
-
 export default {
-  mixins: [validateForm],
-
-  props: ['fields', 'compareKey', 'ignoreNull', 'queryKey', 'timeframe'],
-
   data() {
     return {
       useTimeframe: false,
     };
   },
 
-  mounted() {
-    if (this.compareKey) {
-      Vue.set(this.form, 'compareKey', this.compareKey);
-    }
+  computed: {
+    fields() {
+      return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    },
 
-    if (this.ignoreNull) {
-      Vue.set(this.form, 'ignoreNull', this.ignoreNull);
-    }
+    compareKey: {
+      get() {
+        return this.$store.state.config.match.compareKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_COMPARE_KEY', value);
+      }
+    },
 
-    if (this.queryKey) {
-      Vue.set(this.form, 'queryKey', this.queryKey);
-    }
+    ignoreNull: {
+      get() {
+        return this.$store.state.config.match.ignoreNull;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_IGNORE_NULL', value);
+      }
+    },
 
-    if (this.timeframe) {
-      Vue.set(this.form, 'timeframe', this.timeframe);
+    queryKey: {
+      get() {
+        return this.$store.state.config.match.queryKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_QUERY_KEY', value);
+      }
+    },
+
+    timeframe: {
+      get() {
+        return this.$store.state.config.match.timeframe;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_TIMEFRAME', value);
+      }
     }
   },
 
   methods: {
-    updateIgnoreNull(val) {
-      if (!val) {
-        Vue.delete(this.form, 'ignoreNull');
-      }
-    },
-
-    updateQueryKey(val) {
-      if (!val) {
-        Vue.delete(this.form, 'queryKey');
-      }
-    },
-
     updateUseTimeframe(val) {
-      if (val) {
-        this.$nextTick(() => {
-          Vue.set(this.form, 'timeframe', { hours: 24 });
-        });
-      } else {
-        Vue.delete(this.form, 'timeframe');
+      if (!val) {
+        this.$store.commit('config/match/UPDATE_TIMEFRAME', {});
       }
     }
   },

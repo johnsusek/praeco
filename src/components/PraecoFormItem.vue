@@ -30,7 +30,7 @@ export default {
   ],
   computed: {
     hidePreconfiguredFields() {
-      return this.$store.state.config.config.hidePreconfiguredFields;
+      return this.$store.state.appconfig.config.hidePreconfiguredFields;
     },
     type() {
       return this.$route.meta.type;

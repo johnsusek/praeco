@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
 export default {
   props: {
     value: {
@@ -32,8 +34,8 @@ export default {
   data() {
     return {
       currentValue: {
-        num: 888,
-        unit: 'minutes'
+        num: 1,
+        unit: 'hours'
       }
     };
   },
@@ -42,11 +44,22 @@ export default {
       initial: true,
       deep: true,
       handler() {
-        if (Object.values(this.value)[0] && Object.keys(this.value)[0]) {
-          this.currentValue.num = Object.values(this.value)[0];
-          this.currentValue.unit = Object.keys(this.value)[0];
-        }
+        console.log(
+          'v-model has changed skipping update',
+          Object.values(this.value)[0],
+          Object.keys(this.value)[0]
+        );
+        // if (Object.values(this.value)[0] && Object.keys(this.value)[0]) {
+        //   Vue.set(this.currentValue, 'num', Object.values(this.value)[0]);
+        //   Vue.set(this.currentValue, 'unit', Object.keys(this.value)[0]);
+        // }
       }
+    }
+  },
+  mounted() {
+    if (Object.values(this.value)[0] && Object.keys(this.value)[0]) {
+      Vue.set(this.currentValue, 'num', Object.values(this.value)[0]);
+      Vue.set(this.currentValue, 'unit', Object.keys(this.value)[0]);
     }
   },
   methods: {
@@ -56,7 +69,7 @@ export default {
     },
     emitNumKeyup(ev) {
       if (ev.target) {
-        this.currentValue.num = ev.target.value;
+        Vue.set(this.currentValue, 'num', ev.target.value);
       }
     },
     emitValue() {

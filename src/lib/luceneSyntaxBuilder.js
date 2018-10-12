@@ -107,7 +107,6 @@ function luceneSyntaxFromQueryBuilderGroup(group) {
   });
 
   // and add AND or OR after each rule string
-  console.log(group.query.logicalOperator);
   if (group.query.logicalOperator === 'all') {
     mainString += childRules.join(' AND ');
   } else {

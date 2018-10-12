@@ -1,15 +1,21 @@
 <template>
-  <el-form ref="form" :rules="rules" :model="form" label-position="top" @submit.native.prevent>
+  <el-form
+    ref="form"
+    :rules="rules"
+    :model="$store.state.config.settings"
+    label-position="top"
+    @submit.native.prevent>
+
     <el-form-item v-if="action !== 'edit'" label="Name" prop="name" required>
-      <el-input ref="name" v-model="form.name" spellcheck="false"/>
+      <el-input ref="name" v-model="name" spellcheck="false" />
     </el-form-item>
 
     <el-form-item label="Description" prop="description">
-      <el-input ref="description" v-model="form.description" spellcheck="false" />
+      <el-input ref="description" v-model="description" spellcheck="false" />
     </el-form-item>
 
     <el-form-item label="Index" prop="index" required>
-      <el-input v-model="form.index" spellcheck="false" @input="updateIndex" />
+      <el-input v-model="index" spellcheck="false" @input="updateIndex" />
       <label>
         The index that contains data you want to be alerted on, e.g. logstash-* or logstash-%Y.%m.%d
         [<a href="https://elastalert.readthedocs.io/en/latest/ruletypes.html#index" target="_blank">?</a>]
@@ -26,44 +32,21 @@
     </el-form-item>
 
     <el-alert
-      v-if="mappingLoading"
-      :closable="false"
-      class="el-alert-loading"
-      title="Getting fields..."
-      type="info">
-      <i class="el-icon-loading" />
-    </el-alert>
-
-    <el-alert
       v-if="mappingError"
       :description="mappingError"
       :closable="false"
       title="Get mapping failed. Make sure the index exists."
       type="error"
       show-icon />
-
-    <el-alert
-      v-if="mappingLoaded"
-      :closable="false"
-      title="Got field mapping."
-      type="success"
-      show-icon />
   </el-form>
 </template>
 
 <script>
-import Vue from 'vue';
 import debounce from 'debounce';
 import { formatIndex } from '@/lib/elasticSearchMetadata.js';
-import { validateForm } from '@/mixins/validateForm';
 
 export default {
-  mixins: [validateForm],
-
   props: [
-    'index',
-    'description',
-    'name',
     'prefillPath',
     'prefillType',
     'action',
@@ -73,9 +56,6 @@ export default {
   data() {
     return {
       mappingError: '',
-      mappingLoaded: null,
-      mappingLoading: false,
-
       rules: {
         name: [{
           validator: this.validateName
@@ -85,35 +65,46 @@ export default {
   },
 
   computed: {
-    suggestions() {
-      return this.$store.getters['metadata/suggestedIndices'];
+    name: {
+      get() {
+        return this.$store.state.config.settings.name;
+      },
+      set(value) {
+        this.$store.commit('config/settings/UPDATE_NAME', value);
+      }
     },
 
-    formattedIndex() {
-      return formatIndex(this.form.index);
+    description: {
+      get() {
+        return this.$store.state.config.settings.description;
+      },
+      set(value) {
+        this.$store.commit('config/settings/UPDATE_DESCRIPTION', value);
+      }
+    },
+
+    index: {
+      get() {
+        return this.$store.state.config.settings.index;
+      },
+      set(value) {
+        this.$store.commit('config/settings/UPDATE_INDEX', value);
+      }
+    },
+
+    suggestions() {
+      return this.$store.getters['metadata/suggestedIndices'];
     }
   },
 
-  async mounted() {
+  mounted() {
+    // Get the indices needed to build the suggestions list
     this.$store.dispatch('metadata/fetchIndices');
 
-    if (this.name) {
-      Vue.set(this.form, 'name', this.name);
-    }
-
-    if (this.description) {
-      Vue.set(this.form, 'description', this.description);
-    }
-
+    // Automatically set strftime and get the mapping on start
     if (this.index) {
-      Vue.set(this.form, 'index', this.index);
+      this.updateIndex(this.index);
     }
-
-    if (this.formattedIndex) {
-      this.getMapping();
-    }
-
-    this.updateIndex(this.form.index);
   },
 
   methods: {
@@ -122,35 +113,30 @@ export default {
     }, 1000),
 
     async getMapping() {
-      this.mappingLoading = true;
-      this.mappingLoaded = false;
       this.mappingError = '';
 
-      let fetched = await this.$store.dispatch('metadata/fetchMappings', this.formattedIndex);
+      let fetched = await this.$store.dispatch('metadata/fetchMappings', formatIndex(this.index));
 
       if (!fetched) {
-        this.mappingLoading = false;
         this.mappingError = 'Could not fetch mappings.';
         return false;
       }
 
-      this.mappingLoading = false;
-      this.mappingLoaded = true;
       return true;
     },
 
     updateIndex(index) {
       if (index.includes('%Y') || index.includes('%m') || index.includes('%d')) {
-        Vue.set(this.form, 'strftime', true);
+        this.$store.commit('config/settings/UPDATE_STRFTIME', true);
       } else {
-        Vue.set(this.form, 'strftime', false);
+        this.$store.commit('config/settings/UPDATE_STRFTIME', false);
       }
 
       this.getMappingDebounced();
     },
 
     useSuggestion(suggestion) {
-      Vue.set(this.form, 'index', suggestion);
+      this.$store.commit('config/settings/UPDATE_INDEX', suggestion);
       this.getMapping();
     },
 

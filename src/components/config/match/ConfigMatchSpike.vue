@@ -1,7 +1,7 @@
 <template>
-  <el-form ref="form" :model="form" :rules="rules" label-position="top" @submit.native.prevent>
+  <el-form ref="form" :model="$store.state.config.match" :rules="rules" label-position="top" @submit.native.prevent>
     <el-form-item label="Spike height" prop="spikeHeight" required>
-      <el-input v-model="form.spikeHeight" type="number" @input="updateSpikeHeight" />
+      <el-input v-model="spikeHeight" type="number" @input="updateSpikeHeight" />
       <label>
         The ratio of number of events in the last "timeframe" to the previous
         "timeframe" that when hit will trigger an alert.
@@ -9,7 +9,7 @@
     </el-form-item>
 
     <el-form-item label="Timeframe" prop="timeframe" required>
-      <ElastalertTimePicker v-model="form.timeframe" @input="(t) => $emit('updateTimeframe', t)" />
+      <ElastalertTimePicker v-model="timeframe" @input="(t) => $emit('updateTimeframe', t)" />
       <label>
         The rule will average out the rate of events over this time period.
         For example, 1 hour means that the ‘current’ window will span from
@@ -19,7 +19,7 @@
     </el-form-item>
 
     <el-form-item label="Direction" prop="spikeType">
-      <el-select v-model="form.spikeType">
+      <el-select v-model="spikeType">
         <el-option label="Up" value="up"/>
         <el-option label="Down" value="down"/>
         <el-option label="Both" value="both"/>
@@ -49,7 +49,7 @@
         <br>
         <el-input
           v-if="useThresholdRef"
-          v-model="form.thresholdRef"
+          v-model="thresholdRef"
           type="number"
           @input="updateMarkLine" />
         <label>
@@ -66,7 +66,7 @@
         <el-switch v-model="useThresholdCur" @input="toggleThresholdCur" /><br>
         <el-input
           v-if="useThresholdCur"
-          v-model="form.thresholdCur"
+          v-model="thresholdCur"
           type="number"
           @input="updateMarkLine" />
         <label>
@@ -78,43 +78,18 @@
         </label>
       </el-form-item>
     </template>
-
-    <!-- <el-form-item label="Frequency visualizer" >
-      <ESChart
-        :spike-height="form.spikeHeight"
-        :mark-line="markLine"
-        :timeframe="{ hours: 24 }"
-        :bucket="form.timeframe"
-        :query="query"
-        :index="wildcardIndex" />
-    </el-form-item> -->
   </el-form>
 </template>
 
 <script>
 import Vue from 'vue';
-import { validateForm } from '@/mixins/validateForm';
 
 export default {
-  mixins: [validateForm],
-
-  props: [
-    'index',
-    'query',
-    'spikeHeight',
-    'timeframe',
-    'spikeType',
-    'thresholdRef',
-    'thresholdCur',
-    'strftime'
-  ],
-
   data() {
     return {
       useThresholdRef: false,
       useThresholdCur: false,
       showAdvanced: false,
-      markLine: {},
       rules: {
         spike_height: [{
           pattern: /^([1-9]*[.])?[0-9]+$/,
@@ -135,65 +110,59 @@ export default {
   },
 
   computed: {
-    wildcardIndex() {
-      let formattedIndex = this.index;
-      if (this.strftime) {
-        formattedIndex = formattedIndex.replace(/%[Ymd]/g, '*');
+    timeframe: {
+      get() {
+        return this.$store.state.config.match.timeframe;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_TIMEFRAME', value);
       }
-      return formattedIndex;
-    }
+    },
+
+    spikeHeight: {
+      get() {
+        return this.$store.state.config.match.spikeHeight;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_SPIKE_HEIGHT', value);
+      }
+    },
+
+    spikeType: {
+      get() {
+        return this.$store.state.config.match.spikeType;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_SPIKE_TYPE', value);
+      }
+    },
+
+    thresholdRef: {
+      get() {
+        return this.$store.state.config.match.threasholdRef;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD_REF', value);
+      }
+    },
+
+    thresholdCur: {
+      get() {
+        return this.$store.state.config.match.threasholdCur;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD_CUR', value);
+      }
+    },
   },
 
   mounted() {
-    if (this.spikeHeight) {
-      Vue.set(this.form, 'spikeHeight', this.spikeHeight);
-    } else {
-      Vue.set(this.form, 'spikeHeight', 2);
-    }
-
-    if (this.spikeType) {
-      Vue.set(this.form, 'spikeType', this.spikeType);
-    } else {
-      Vue.set(this.form, 'spikeType', 'up');
-    }
-
-    if (this.timeframe) {
-      Vue.set(this.form, 'timeframe', this.timeframe);
-    } else {
-      console.log('no timeframe set in props, setting to 15', this.timeframe);
-      Vue.set(this.form, 'timeframe', { minutes: 15 });
-    }
-
-    if (this.thresholdRef) {
-      Vue.set(this.form, 'thresholdRef', this.thresholdRef);
-    }
-
-    if (this.thresholdCur) {
-      Vue.set(this.form, 'thresholdCur', this.thresholdCur);
-    }
-
     this.updateMarkLine();
   },
 
   methods: {
     updateSpikeHeight(val) {
-      console.log('emitting updateSpikeHeight');
       this.$emit('updateSpikeHeight', val);
-    },
-    toggleThresholdRef(val) {
-      if (val === false) {
-        Vue.delete(this.form, 'thresholdRef');
-      } else {
-        Vue.set(this.form, 'thresholdRef', '1');
-      }
-    },
-
-    toggleThresholdCur(val) {
-      if (val === false) {
-        Vue.delete(this.form, 'thresholdCur');
-      } else {
-        Vue.set(this.form, 'thresholdCur', '1');
-      }
     },
 
     updateMarkLine() {
@@ -202,12 +171,12 @@ export default {
       if (this.useThresholdRef) {
         data.push({
           name: 'Threshold (reference)',
-          yAxis: this.form.thresholdRef,
+          yAxis: this.thresholdRef,
           lineStyle: {
             color: 'red'
           },
           label: {
-            formatter: `Threshold (reference) - ${this.form.thresholdRef}`,
+            formatter: `Threshold (reference) - ${this.thresholdRef}`,
             position: 'middle',
             color: 'red',
             textBorderColor: 'white',
@@ -222,9 +191,9 @@ export default {
       if (this.useThresholdCur) {
         data.push({
           name: 'Threshold (current)',
-          yAxis: this.form.thresholdCur,
+          yAxis: this.thresholdCur,
           label: {
-            formatter: `Threshold (current) - ${this.form.thresholdCur}`,
+            formatter: `Threshold (current) - ${this.thresholdCur}`,
             position: 'middle',
             color: 'green',
             fontWeight: 'bold',
@@ -252,6 +221,18 @@ export default {
     toggleAdvanced() {
       this.showAdvanced = !this.showAdvanced;
     },
+
+    toggleThresholdRef(val) {
+      if (!val) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD_REF', null);
+      }
+    },
+
+    toggleThresholdCur(val) {
+      if (!val) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD_CUR', null);
+      }
+    }
   }
 };
 </script>

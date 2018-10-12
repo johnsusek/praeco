@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
+import 'prismjs/components/prism-yaml.min.js';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 let ECharts = require('vue-echarts');

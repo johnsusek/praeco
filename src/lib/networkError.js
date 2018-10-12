@@ -3,7 +3,7 @@ import { logger } from '@/lib/logger.js';
 import store from '../store';
 
 export default function notifyError(error) {
-  let baseUrl = store.state.config.config.apiBaseUrl;
+  let baseUrl = store.state.appconfig.config.apiBaseUrl;
 
   try {
     logger().error({

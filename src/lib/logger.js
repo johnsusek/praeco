@@ -11,12 +11,12 @@ export function initLogging() {
     src: true
   };
 
-  if (store.state.config.config.errorLoggerUrl) {
+  if (store.state.appconfig.config.errorLoggerUrl) {
     options.streams = [
       {
         level: ERROR,
         stream: new ServerStream({
-          url: store.state.config.config.errorLoggerUrl,
+          url: store.state.appconfig.config.errorLoggerUrl,
           method: 'PUT'
         })
       }

@@ -180,9 +180,9 @@ export default {
     },
 
     /*eslint-disable */
-    async createConfig({ dispatch }, { config, type, overwrite, rootPath }) {
+    async createConfig({ dispatch }, { config, type, overwrite, rootPath, format = true }) {
       /* eslint-enable */
-      let conf = formatConfig(config);
+      let conf = format ? formatConfig(config) : config;
 
       let fullPath;
       if (rootPath) {

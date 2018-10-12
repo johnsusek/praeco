@@ -527,10 +527,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-h1 .el-tag {
-  position: relative;
-  top: -3px;
-}
-</style>

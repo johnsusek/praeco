@@ -31,7 +31,7 @@ Vue.config.errorHandler = function(err, vm, info) {
 };
 
 function startApp(config) {
-  store.commit('config/SET_CONFIG', config);
+  store.commit('appconfig/SET_APP_CONFIG', config);
 
   initLogging();
 

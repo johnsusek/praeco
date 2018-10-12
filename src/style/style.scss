@@ -50,3 +50,21 @@ hr {
 label {
   color: #606266;
 }
+
+.drawer-row {
+  padding-bottom: 240px;
+}
+
+.drawer-card {
+  position: fixed;
+  bottom: -30px;
+  padding-bottom: 30px;
+  height: 200px;
+  width: calc(100% - 250px);
+  background: #fff;
+  z-index: 9;
+}
+
+.drawer-card .el-card__body {
+  padding-top: 10px;
+}

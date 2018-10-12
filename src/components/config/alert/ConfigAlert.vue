@@ -1,125 +1,131 @@
 <template>
-  <el-form ref="form" :rules="rules" :model="config" label-position="top" @submit.native.prevent>
-    <el-form-item label="Re-alert minutes">
-      <el-input-number v-model="config.realert.minutes" />
-      <label v-if="config.realert.minutes === 0">
+  <el-form
+    ref="form"
+    :rules="rules"
+    :model="$store.state.config.alert"
+    label-position="top"
+    @submit.native.prevent>
+
+    <el-form-item label="Re-alert">
+      <ElastalertTimePicker v-model="realert" />
+      <label v-if="Object.values(realert)[0] === 0">
         WARNING: When re-alert is set to 0 minutes, you will receive an alert
         every single time this rule triggers. This may result in large bursts
         of notifications.
       </label>
       <label v-else>
         You will receive, at most, one alert every
-        {{ config.realert.minutes }} minute(s), even if a rule
+        {{ realert.minutes }} minute(s), even if a rule
         triggers multiple times within that timeframe
       </label>
     </el-form-item>
 
-
-    <ConfigAlertSubjectBody
-      v-if="config.alert.includes('slack') || config.alert.includes('email')"
-      v-model="config"
-      :alert-text-type-prefill="prefill.alert_text_type"
-      :fields="fields"
-      class="m-s-lg" />
-
     <el-form-item label="Destination" prop="alert" required>
-      <el-checkbox-group v-model="config.alert">
+      <el-checkbox-group v-model="alert">
         <el-checkbox label="slack" border>Slack</el-checkbox>
         <el-checkbox label="email" border>Email</el-checkbox>
         <el-checkbox label="post" border>HTTP</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
-    <el-tabs v-if="config.alert.length" type="border-card" class="border-card-plain">
-      <el-tab-pane v-if="config.alert.includes('slack')" label="Slack">
-        <praeco-form-item
-          :value="config.slack_webhook_url"
-          label="Slack webhook URL"
-          prop="slack_webhook_url"
-          required>
-          <el-input v-model="config.slack_webhook_url" />
-        </praeco-form-item>
+    <el-form-item label="">
+      <el-tabs v-if="alert.length" type="border-card" class="border-card-plain">
+        <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')" label="Settings">
+          <ConfigAlertSubjectBody
+            v-if="alert.includes('slack') || alert.includes('email')"
+            class="m-s-lg" />
+        </el-tab-pane>
 
-        <el-form-item label="Channel or username" prop="slack_channel_override" required>
-          <el-input v-model="config.slack_channel_override" />
-          <label>
-            The @username or #channel to send the alert. Tip: Create new channels
-            for your alerts, to have fine-grained control of Slack notifications.
-          </label>
-        </el-form-item>
+        <el-tab-pane v-if="alert.includes('slack')" label="Slack">
+          <praeco-form-item
+            :value="slackWebhookUrl"
+            label="Slack webhook URL"
+            prop="slackWebhookUrl"
+            required>
+            <el-input v-model="slackWebhookUrl" />
+          </praeco-form-item>
 
-        <praeco-form-item label="Post as" prop="slack_username_override" required>
-          <el-input v-model="config.slack_username_override" />
-          <label>This is the username that will appear in Slack for the alert</label>
-        </praeco-form-item>
+          <el-form-item label="Channel or username" prop="slackChannelOverride" required>
+            <el-input v-model="slackChannelOverride" />
+            <label>
+              The @username or #channel to send the alert. Tip: Create new channels
+              for your alerts, to have fine-grained control of Slack notifications.
+            </label>
+          </el-form-item>
 
-        <el-form-item label="Message color" prop="slack_msg_color" required>
-          <el-radio-group v-model="config.slack_msg_color">
-            <el-radio label="danger" border class="slack-danger">Danger</el-radio>
-            <el-radio label="warning" border class="slack-warning">Warning</el-radio>
-            <el-radio label="good" border class="slack-good">Good</el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-tab-pane>
+          <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
+            <el-input v-model="slackUsernameOverride" />
+            <label>This is the username that will appear in Slack for the alert</label>
+          </praeco-form-item>
 
-      <el-tab-pane v-if="config.alert.includes('email')" label="Email">
-        <praeco-form-item :value="config.smtp_host" label="SMTP host" prop="smtp_host" required>
-          <el-input v-model="config.smtp_host" />
-          <label>The SMTP host to use</label>
-        </praeco-form-item>
+          <el-form-item label="Message color" prop="slackMsgColor" required>
+            <el-radio-group v-model="slackMsgColor">
+              <el-radio label="danger" border class="slack-danger">Danger</el-radio>
+              <el-radio label="warning" border class="slack-warning">Warning</el-radio>
+              <el-radio label="good" border class="slack-good">Good</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-tab-pane>
 
-        <praeco-form-item :value="config.smtp_port" label="SMTP port" prop="smtp_port" required>
-          <el-input-number v-model="config.smtp_port" />
-          <label>The SMTP port to use</label>
-        </praeco-form-item>
+        <el-tab-pane v-if="alert.includes('email')" label="Email">
+          <praeco-form-item :value="smtpHost" label="SMTP host" prop="smtpHost" required>
+            <el-input v-model="smtpHost" />
+            <label>The SMTP host to use</label>
+          </praeco-form-item>
 
-        <praeco-form-item
-          :value="config.from_addr"
-          label="From address"
-          prop="from_addr">
-          <el-input v-model="config.from_addr" />
-          <label>
-            This sets the From header in the email.
-            By default, the from address is ElastAlert@
-            and the domain will be set by the smtp server.
-          </label>
-        </praeco-form-item>
+          <praeco-form-item :value="smtpPort" label="SMTP port" prop="smtpPort" required>
+            <el-input-number v-model="smtpPort" />
+            <label>The SMTP port to use</label>
+          </praeco-form-item>
 
-        <praeco-form-item
-          :value="config.email_reply_to"
-          label="Reply to"
-          prop="email_reply_to">
-          <el-input v-model="config.email_reply_to" />
-          <label>
-            This sets the Reply-To header in the email.
-            By default, the from address is ElastAlert@ and the
-            domain will be set by the smtp server.
-          </label>
-        </praeco-form-item>
+          <praeco-form-item
+            :value="fromAddr"
+            label="From address"
+            prop="fromAddr">
+            <el-input v-model="fromAddr" />
+            <label>
+              This sets the From header in the email.
+              By default, the from address is ElastAlert@
+              and the domain will be set by the smtp server.
+            </label>
+          </praeco-form-item>
 
-        <el-form-item label="To" prop="email" required>
-          <el-input v-model="config.email" />
-          <label>Comma separated list of email addresses</label>
-        </el-form-item>
+          <praeco-form-item
+            :value="replyTo"
+            label="Reply to"
+            prop="replyTo">
+            <el-input v-model="replyTo" />
+            <label>
+              This sets the Reply-To header in the email.
+              By default, the from address is ElastAlert@ and the
+              domain will be set by the smtp server.
+            </label>
+          </praeco-form-item>
 
-        <el-form-item label="CC" prop="cc">
-          <el-input v-model="config.cc" />
-          <label>Comma separated list of email addresses</label>
-        </el-form-item>
+          <el-form-item label="To" prop="email" required>
+            <el-input v-model="email" />
+            <label>Comma separated list of email addresses</label>
+          </el-form-item>
 
-        <el-form-item label="BCC" prop="bcc">
-          <el-input v-model="config.bcc" />
-          <label>Comma separated list of email addresses</label>
-        </el-form-item>
-      </el-tab-pane>
+          <el-form-item label="CC" prop="cc">
+            <el-input v-model="cc" />
+            <label>Comma separated list of email addresses</label>
+          </el-form-item>
 
-      <el-tab-pane v-if="config.alert.includes('post')" label="HTTP">
-        <el-form-item label="HTTP POST URL" prop="http_post_url" required>
-          <el-input v-model="config.http_post_url" />
-          <label>JSON results will be POSTed to this URL</label>
-        </el-form-item>
-      </el-tab-pane>
-    </el-tabs>
+          <el-form-item label="BCC" prop="bcc">
+            <el-input v-model="bcc" />
+            <label>Comma separated list of email addresses</label>
+          </el-form-item>
+        </el-tab-pane>
+
+        <el-tab-pane v-if="alert.includes('post')" label="HTTP">
+          <el-form-item label="HTTP POST URL" prop="httpPostUrl" required>
+            <el-input v-model="httpPostUrl" />
+            <label>JSON results will be POSTed to this URL</label>
+          </el-form-item>
+        </el-tab-pane>
+      </el-tabs>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -140,7 +146,9 @@ export default {
   components: {
     ConfigAlertSubjectBody
   },
-  props: ['fields', 'prefill'],
+
+  props: ['prefill'],
+
   data() {
     return {
       rules: {
@@ -150,47 +158,154 @@ export default {
             message: 'You must choose at least one alert type'
           }
         ],
-        slack_channel_override: [
+        slackChannelOverride: [
           {
             validator: validateSlackDestination,
             trigger: 'change'
           }
         ]
       },
-      config: {
-        alert: [],
-        realert: {}
-      }
     };
   },
-  // computed: {
-  //   alertTextType() {
-  //     if (this.attach === 'default') {
-  //       return undefined;
-  //     }
-  //     return this.attach;
-  //   }
-  // },
-  watch: {
-    prefill() {
-      this.config = this.prefill;
+
+  computed: {
+    httpPostUrl: {
+      get() {
+        return this.$store.state.config.alert.httpPostUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HTTP_POST_URL', value);
+      }
     },
 
-  },
-  methods: {
-    async validate() {
-      try {
-        await this.$refs.form.validate();
-        return this.config;
-      } catch (error) {
-        return false;
+    smtpHost: {
+      get() {
+        return this.$store.state.config.alert.smtpHost;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SMTP_HOST', value);
+      }
+    },
+
+    smtpPort: {
+      get() {
+        return this.$store.state.config.alert.smtpPort;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SMTP_PORT', value);
+      }
+    },
+
+    fromAddr: {
+      get() {
+        return this.$store.state.config.alert.fromAddr;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_FROM_ADDR', value);
+      }
+    },
+
+    replyTo: {
+      get() {
+        return this.$store.state.config.alert.replyTo;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_REPLY_TO', value);
+      }
+    },
+
+    email: {
+      get() {
+        return this.$store.state.config.alert.email;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_EMAIL', value);
+      }
+    },
+
+    cc: {
+      get() {
+        return this.$store.state.config.alert.cc;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_CC', value);
+      }
+    },
+
+    bcc: {
+      get() {
+        return this.$store.state.config.alert.bcc;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_BCC', value);
+      }
+    },
+
+    slackWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.slackWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_WEBHOOK_URL', value);
+      }
+    },
+
+
+    slackChannelOverride: {
+      get() {
+        return this.$store.state.config.alert.slackChannelOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_CHANNEL_OVERRIDE', value);
+      }
+    },
+
+    slackUsernameOverride: {
+      get() {
+        return this.$store.state.config.alert.slackUsernameOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_USERNAME_OVERRIDE', value);
+      }
+    },
+
+    slackMsgColor: {
+      get() {
+        return this.$store.state.config.alert.slackMsgColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_MSG_COLOR', value);
+      }
+    },
+
+    realert: {
+      get() {
+        return this.$store.state.config.alert.realert || { minutes: 5 };
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_REALERT', value);
+      }
+    },
+
+    alert: {
+      get() {
+        return this.$store.state.config.alert.alert;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERT', value);
       }
     }
-  }
+  },
 };
 </script>
 
 <style>
+.atwho-view {
+  max-height: 220px;
+  height: 220px;
+  margin-bottom: -245px;
+}
+
 .slack-danger .el-radio__inner:hover {
   border-color: red;
 }

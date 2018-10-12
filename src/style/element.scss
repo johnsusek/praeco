@@ -10,6 +10,7 @@
 // Label
 //
 
+.el-button + label,
 .el-select + label,
 .el-form-item__content > label {
   display: block;
@@ -106,6 +107,11 @@
   margin: 0 5px 5px 0;
 }
 
+h1 .el-tag {
+  position: relative;
+  top: -3px;
+}
+
 //
 // Form item
 //
@@ -176,14 +182,18 @@
   margin-bottom: 0;
 }
 
-.el-collapse-item__content {
-  padding-bottom: 20px;
-}
-
 //
 // Tabs
 //
 
 .el-tabs--border-card.border-card-plain {
   box-shadow: none;
+}
+
+//
+// Main
+//
+
+.el-main {
+  position: relative;
 }

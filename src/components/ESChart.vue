@@ -97,7 +97,7 @@ export default {
         yAxis: Object.assign({}, chartOptions.yAxis),
         animation: false,
         grid: {
-          top: 35,
+          top: 45,
           bottom: 15,
           left: 10,
           right: 0,
@@ -124,7 +124,9 @@ export default {
   },
   computed: {
     title() {
-      let title = Object.values(this.interval)[0];
+      let title = this.query;
+      title += '\n';
+      title += Object.values(this.interval)[0];
       title += ' ';
       title += Object.keys(this.interval)[0].slice(0, -1);
       title += ' buckets over last ';
@@ -134,11 +136,9 @@ export default {
   },
   watch: {
     query() {
-      console.log('query changed, updating chart');
       this.updateChart();
     },
     markLine() {
-      console.log('updating markline...', this.markLine);
       if (this.markLine.data) {
         Vue.set(this.chart.series[0], 'markLine', this.markLine);
       } else {
@@ -151,7 +151,6 @@ export default {
     bucket(val) {
       if (val) {
         this.interval = val;
-        console.log('bucket changed, updating chart');
         this.updateChart();
       }
     }
@@ -165,7 +164,6 @@ export default {
       this.interval = this.bucket;
     }
 
-    console.log('mounted, updating chart');
     this.updateChart();
   },
   methods: {

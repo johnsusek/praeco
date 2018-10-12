@@ -1,8 +1,12 @@
 <template>
-  <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
+  <el-form
+    ref="form"
+    :model="$store.state.config.match"
+    label-position="top"
+    @submit.native.prevent>
     <el-form-item label="Field" prop="compareKey" required>
       <el-select
-        v-model="form.compareKey"
+        v-model="compareKey"
         filterable
         placeholder="Field">
         <el-option
@@ -17,7 +21,7 @@
     <el-form-item label="Whitelist" prop="whitelist" required>
       <template>
         <el-form-item
-          v-for="(entry, index) in form.whitelist"
+          v-for="(entry, index) in $store.state.config.match.whitelist"
           :key="index"
           :prop="'whitelist.' + index"
           :rules="{ required: true, message: 'entry can not be null', trigger: 'blur' }"
@@ -25,7 +29,10 @@
           label="">
           <el-row :gutter="5" type="flex" justify="space-between">
             <el-col :span="10">
-              <el-input v-model="form.whitelist[index]" placeholder="Keyword" />
+              <el-input
+                v-model="$store.state.config.match.whitelist[index]"
+                placeholder="Keyword"
+                @input="(val) => updateWhitelist(val, index)" />
             </el-col>
             <el-col :span="14">
               <el-button
@@ -43,58 +50,51 @@
     </el-form-item>
 
     <el-form-item label="Ignore null">
-      <el-switch v-model="form.ignoreNull" @input="updateIgnoreNull" />
+      <el-switch v-model="ignoreNull" />
       <label>If set, events without the selected field will not match.</label>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import Vue from 'vue';
-import { validateForm } from '@/mixins/validateForm';
 
 export default {
-  mixins: [validateForm],
+  computed: {
+    fields() {
+      return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    },
 
-  props: ['fields', 'compareKey', 'whitelist', 'ignoreNull'],
+    compareKey: {
+      get() {
+        return this.$store.state.config.match.compareKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_COMPARE_KEY', value);
+      }
+    },
 
-  mounted() {
-    if (this.compareKey) {
-      Vue.set(this.form, 'compareKey', this.compareKey);
-    }
-
-    if (this.whitelist) {
-      Vue.set(this.form, 'whitelist', this.whitelist);
-    }
-
-    if (this.ignoreNull) {
-      Vue.set(this.form, 'ignoreNull', this.ignoreNull);
+    ignoreNull: {
+      get() {
+        return this.$store.state.config.match.ignoreNull;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_IGNORE_NULL', value);
+      }
     }
   },
 
   methods: {
-    updateIgnoreNull(val) {
-      if (!val) {
-        Vue.delete(this.form, 'ignoreNull');
-      }
+    updateWhitelist(entry, index) {
+      this.$store.commit('config/match/UPDATE_WHITELIST_ENTRY', { entry, index });
     },
 
-    removeEntry(item) {
-      let index = this.form.whitelist.indexOf(item);
-      if (index !== -1) {
-        this.form.whitelist.splice(index, 1);
-      }
-      if (this.form.whitelist.length === 0) {
-        Vue.delete(this.form, 'whitelist');
-      }
+    removeEntry(entry) {
+      this.$store.commit('config/match/REMOVE_WHITELIST_ENTRY', entry);
     },
 
     addEntry() {
-      if (!this.form.whitelist) {
-        Vue.set(this.form, 'whitelist', []);
-      }
-      this.form.whitelist.push('');
+      this.$store.commit('config/match/ADD_WHITELIST_ENTRY');
     }
-  },
+  }
 };
 </script>

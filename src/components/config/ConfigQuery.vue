@@ -1,38 +1,74 @@
 <template>
-  <el-form ref="form" :model="form" label-position="top" @submit.native.prevent>
-    <el-form-item>
-      <vue-query-builder
-        v-if="form.queryTree"
-        v-model="form.queryTree"
-        :rules="rules"
-        :labels="labels"
-        :styled="false"
-        @input="queryChanged" />
-      <label>
-        To get started, select a term from the dropdown menu and click the "+ Add" button.
-        Once you have some filtered results, you can choose criteria for being alerted on them.
-      </label>
-    </el-form-item>
+  <el-form ref="form" label-position="top" @submit.native.prevent>
+    <el-row :gutter="100">
+      <el-col :span="12">
+        <el-form-item>
+          <vue-query-builder
+            v-if="rules.length"
+            v-model="queryTree"
+            :rules="rules"
+            :labels="labels"
+            :styled="false"
+            @input="queryChanged" />
+          <label>
+            To get started, select a term from the dropdown menu and click the "+ Add" button.
+            Once you have some filtered results, you can choose criteria for being alerted on them.
+          </label>
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="12">
+        <el-button
+          v-if="!sampling"
+          type="primary"
+          plain
+          class="m-n-xs"
+          @click="sample">
+          Sample
+        </el-button>
+        <el-button
+          v-if="sampling"
+          disabled
+          type="primary"
+          plain
+          class="m-n-xs"
+          @click="sample">
+          Sampling...
+        </el-button>
+        <label>Preview a sample result matching your filters.</label>
+
+        <el-form-item v-if="$store.state.config.sampleResult" label="Preview" class="m-n-med">
+          <el-table
+            :data="Object.entries($store.state.config.sampleResult).sort()">
+            <el-table-column label="Field" prop="0" width="160" />
+            <el-table-column label="Value" prop="1">
+              <template slot-scope="scope">
+                <vue-json-pretty
+                  v-if="typeof scope.row[1] === 'object'"
+                  :data="scope.row[1]" :deep="0" />
+                <template v-else>{{ scope.row[1] }}</template>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-form-item>
+      </el-col>
+    </el-row>
+
+
   </el-form>
 </template>
 
 <script>
-import Vue from 'vue';
 import VueQueryBuilder from 'vue-query-builder';
-import { luceneSyntaxFromQueryBuilder } from '@/lib/luceneSyntaxBuilder.js';
-import { validateForm } from '@/mixins/validateForm';
 
 export default {
   components: {
     VueQueryBuilder
   },
 
-  mixins: [validateForm],
-
-  props: ['fields', 'queryTree'],
-
   data() {
     return {
+      sampling: false,
       labels: {
         matchType: ' of the following conditions are met:',
         matchTypeAll: 'all',
@@ -47,6 +83,19 @@ export default {
   },
 
   computed: {
+    queryTree: {
+      get() {
+        return this.$store.state.config.query.tree;
+      },
+      set(value) {
+        this.$store.commit('config/query/UPDATE_TREE', value);
+      }
+    },
+
+    fields() {
+      return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    },
+
     rules() {
       let rules = [];
 
@@ -75,24 +124,17 @@ export default {
     }
   },
 
-  mounted() {
-    if (this.queryTree) {
-      Vue.set(this.form, 'queryTree', this.queryTree);
-    } else {
-      Vue.set(this.form, 'queryTree', {
-        query: {
-          logicalOperator: 'all',
-          children: []
-        }
-      });
-    }
-  },
-
   methods: {
+    async sample() {
+      this.sampling = true;
+      await this.$store.dispatch('config/sample');
+      this.sampling = false;
+    },
+
     queryChanged() {
-      let queryTree = this.form.queryTree;
+      let queryTree = this.queryTree;
       if (queryTree) {
-        this.form.queryString = luceneSyntaxFromQueryBuilder(queryTree);
+        this.$store.commit('config/query/UPDATE_TREE', queryTree);
       }
     }
   }

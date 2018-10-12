@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
-import { buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
+import { formatIndex, buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
 import networkError from '../lib/networkError.js';
 
 export default {
@@ -21,6 +21,7 @@ export default {
       let indices = {};
 
       state.indices.forEach(item => {
+        if (item.startsWith('elastalert')) return;
         let parts = item.split(/-/);
         if (parts[0].startsWith('.')) return;
         if (parts.length > 1) {
@@ -31,6 +32,24 @@ export default {
       });
 
       return Object.keys(indices);
+    },
+
+    fieldsForCurrentConfig: (state, getters, rootState) => {
+      let index = rootState.config.settings.index;
+      let mappings = state.mappings[formatIndex(index)];
+      if (mappings) {
+        return mappings.fields;
+      }
+      return [];
+    },
+
+    typesForCurrentConfig: (state, getters, rootState) => {
+      let index = rootState.config.settings.index;
+      let mappings = state.mappings[formatIndex(index)];
+      if (mappings) {
+        return mappings.types;
+      }
+      return [];
     }
   },
 
