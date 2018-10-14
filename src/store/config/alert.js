@@ -51,14 +51,18 @@ export default {
 
     subjectRendered(state, getters, rootState) {
       let subject = htmlToConfigFormat(state.subject);
-      subject.alertArgs = subject.alertArgs.map(a => get(rootState.config.sampleResult, a) || '<MISSING VALUE>');
+      let sample = rootState.config.sampleResult;
+
+      subject.alertArgs = subject.alertArgs.map(a => get(sample, a) || '<MISSING VALUE>');
 
       return format(subject.alertText, ...subject.alertArgs);
     },
 
     bodyRendered(state, getters, rootState) {
       let body = htmlToConfigFormat(state.body);
-      body.alertArgs = body.alertArgs.map(a => get(rootState.config.sampleResult, a) || '<MISSING VALUE>');
+      let sample = rootState.config.sampleResult;
+
+      body.alertArgs = body.alertArgs.map(a => get(sample, a) || '<MISSING VALUE>');
 
       return format(body.alertText, ...body.alertArgs);
     }

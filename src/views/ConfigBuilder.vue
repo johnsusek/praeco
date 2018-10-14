@@ -9,8 +9,8 @@
             <ConfigSettings
               ref="settings"
               :type="type"
-              :action="action"
-              :prefill-path="prefill" />
+              :prefill-path="prefill"
+              action="add" />
 
             <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
           </el-collapse-item>
@@ -37,7 +37,8 @@
           </el-collapse-item>
 
           <el-collapse-item title="Save" name="save">
-            <ConfigSave :action="action" :type="type" />
+            <el-button v-if="!saving" type="primary" plain @click="save">Save</el-button>
+            <el-button v-else type="primary" plain disabled>Saving...</el-button>
           </el-collapse-item>
         </el-collapse>
       </el-col>
@@ -50,13 +51,12 @@
 </template>
 
 <script>
-import changeCase from 'change-case';
 import ConfigSettings from '@/components/config/ConfigSettings.vue';
 import ConfigQuery from '@/components/config/ConfigQuery.vue';
 import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
-import ConfigSave from '@/components/config/ConfigSave.vue';
 import ConfigMatch from '@/components/config/match/ConfigMatch.vue';
 import ConfigDrawer from '@/components/config/ConfigDrawer.vue';
+import configSave from '@/mixins/configSave';
 
 export default {
   components: {
@@ -64,16 +64,16 @@ export default {
     ConfigQuery,
     ConfigMatch,
     ConfigAlert,
-    ConfigSave,
     ConfigDrawer,
   },
 
-  props: ['path', 'action', 'type', 'prefill'],
+  mixins: [configSave],
+
+  props: ['path', 'type', 'prefill'],
 
   data() {
     return {
       activePane: 'settings',
-      activePaneSidebar: 'settings',
     };
   },
 
@@ -83,28 +83,22 @@ export default {
     },
 
     pageTitle() {
-      let title = `${changeCase.titleCase(this.action)} ${this.type}`;
-
-      if (this.action === 'edit') {
-        title += ` ${this.$store.state.config.settings.name}`;
-      }
-
+      let title = `Add ${this.type}`;
       return title;
     },
   },
 
   async mounted() {
-    this.$store.dispatch('config/reset');
     this.$store.commit('config/UPDATE_TYPE', this.type);
 
-    if (this.action === 'edit' && this.path) {
-      this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
-      // get data from store (fetchconfig)
-      // and set it to our working config
-    } else if (this.action === 'add' && this.prefill) {
+    if (this.prefill) {
       // First we get the prefill from the store
       // and merge it into the config we are working on
     }
+  },
+
+  destroyed() {
+    this.$store.dispatch('config/reset');
   },
 
   methods: {

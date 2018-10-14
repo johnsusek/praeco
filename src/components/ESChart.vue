@@ -318,7 +318,7 @@ export default {
             value: r.key_as_string,
           }));
 
-          let y = res.data.aggregations.by_minute.buckets.map((r, i) => ({
+          let y = res.data.aggregations.by_minute.buckets.map(r => ({
             value: r.doc_count,
           }));
 

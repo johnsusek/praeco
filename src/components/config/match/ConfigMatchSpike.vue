@@ -1,5 +1,10 @@
 <template>
-  <el-form ref="form" :model="$store.state.config.match" :rules="rules" label-position="top" @submit.native.prevent>
+  <el-form
+    ref="form"
+    :model="$store.state.config.match"
+    :rules="rules"
+    label-position="top"
+    @submit.native.prevent>
     <el-form-item label="Spike height" prop="spikeHeight" required>
       <el-input v-model="spikeHeight" type="number" @input="updateSpikeHeight" />
       <label>
@@ -82,8 +87,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
-
 export default {
   data() {
     return {

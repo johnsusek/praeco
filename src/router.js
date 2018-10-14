@@ -11,6 +11,7 @@ import Rules from './views/Rules.vue';
 import RuleView from './views/RuleView.vue';
 import TemplateView from './views/TemplateView.vue';
 import ConfigBuilder from './views/ConfigBuilder.vue';
+import ConfigEditor from './views/ConfigEditor.vue';
 
 Vue.use(Router);
 
@@ -60,10 +61,17 @@ export default new Router({
       props: route => ({ ...route.params, ...route.query })
     },
     {
-      path: '/rule/:action/:path?',
+      path: '/rule/add/:path?',
       props: route => ({ ...route.params, ...route.query, type: 'rule' }),
       name: 'ruleconfigbuilder',
       component: ConfigBuilder,
+      meta: { type: 'rule' }
+    },
+    {
+      path: '/rule/edit/:path?',
+      props: route => ({ ...route.params, ...route.query, type: 'rule' }),
+      name: 'ruleconfigeditor',
+      component: ConfigEditor,
       meta: { type: 'rule' }
     },
     {
@@ -73,10 +81,17 @@ export default new Router({
       component: RuleView
     },
     {
-      path: '/template/:action/:path?',
+      path: '/template/add/:path?',
       props: route => ({ ...route.params, ...route.query, type: 'template' }),
       name: 'templateconfigbuilder',
       component: ConfigBuilder,
+      meta: { type: 'template' }
+    },
+    {
+      path: '/template/edit/:path?',
+      props: route => ({ ...route.params, ...route.query, type: 'template' }),
+      name: 'templateconfigeditor',
+      component: ConfigEditor,
       meta: { type: 'template' }
     },
     {

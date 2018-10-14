@@ -31,7 +31,7 @@
       </router-link>
 
       <router-link :to="{
-        name: 'templateconfigbuilder',
+        name: 'templateconfigeditor',
         params: { action: 'edit', path: id } }">
         <el-button type="primary" icon="el-icon-edit" plain>Edit</el-button>
       </router-link>

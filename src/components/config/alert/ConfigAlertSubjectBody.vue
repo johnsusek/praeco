@@ -61,8 +61,16 @@
         <h6>Body preview</h6>
         {{ $store.getters['config/alert/bodyRendered'] }}
 
-        <div v-if="bodyType === 'default' || bodyType === 'exclude_fields'" type="info">(Trigger details)</div>
-        <div v-if="bodyType === 'default' || bodyType === 'exclude_fields'" type="info">(Top counts)</div>
+        <div
+          v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
+          type="info">
+          (Trigger details)
+        </div>
+        <div
+          v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
+          type="info">
+          (Top counts)
+        </div>
         <div v-if="bodyType === 'default'" type="info">(Field values)</div>
       </el-col>
     </el-row>
