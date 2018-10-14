@@ -2,7 +2,7 @@
   <el-form ref="form" label-position="top" @submit.native.prevent>
     <el-row :gutter="100">
       <el-col :span="12">
-        <el-form-item>
+        <el-form-item class="el-form-item-tight">
           <vue-query-builder
             v-if="rules.length"
             v-model="queryTree"
@@ -10,12 +10,14 @@
             :labels="labels"
             :styled="false"
             @input="queryChanged" />
+        </el-form-item>
+        <el-form-item>
           <label>
             To get started, select a term from the dropdown menu and click the "+ Add" button.
-            Once you have some filtered results, you can choose criteria for being alerted on them.
           </label>
         </el-form-item>
       </el-col>
+
 
       <el-col :span="12">
         <el-button
@@ -59,6 +61,7 @@
 </template>
 
 <script>
+import debounce from 'debounce';
 import VueQueryBuilder from 'vue-query-builder';
 
 export default {
@@ -93,7 +96,7 @@ export default {
     },
 
     fields() {
-      return this.$store.getters['metadata/fieldsForCurrentConfig'];
+      return this.$store.getters['metadata/fieldsForCurrentConfig'] || [];
     },
 
     rules() {
@@ -125,16 +128,15 @@ export default {
   },
 
   methods: {
-    async sample() {
+    sample: debounce(async function() {
       this.sampling = true;
       await this.$store.dispatch('config/sample');
       this.sampling = false;
-    },
+    }, 750),
 
     queryChanged() {
       let queryTree = this.queryTree;
       if (queryTree) {
-        this.$store.commit('config/CLEAR_SAMPLE');
         this.$store.commit('config/query/UPDATE_TREE', queryTree);
         this.sample();
       }
@@ -142,3 +144,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.el-form-item-tight {
+  margin-bottom: 0;
+}
+</style>

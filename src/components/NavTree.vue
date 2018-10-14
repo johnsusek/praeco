@@ -194,7 +194,10 @@ export default {
       } else if (node.isDirectory) {
         this.$router.push({
           name: 'folder',
-          params: { type: node.directoryType, path: node.id }
+          params: {
+            type: node.isRule ? 'rules' : 'templates',
+            path: node.id
+          }
         });
       } else if (node.id === '_templates') {
         this.$router.push('/templates');

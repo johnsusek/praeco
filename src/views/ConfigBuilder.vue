@@ -94,6 +94,9 @@ export default {
   },
 
   async mounted() {
+    this.$store.dispatch('config/reset');
+    this.$store.commit('config/UPDATE_TYPE', this.type);
+
     if (this.action === 'edit' && this.path) {
       this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
       // get data from store (fetchconfig)

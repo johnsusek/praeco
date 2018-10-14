@@ -93,7 +93,7 @@ export default {
         commit('FETCHED_MAPPINGS', { mappings: res.data, index });
         return true;
       } catch (error) {
-        networkError(error);
+        return false;
       }
     }
   }

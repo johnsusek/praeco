@@ -36,9 +36,7 @@
       alert triggers
       over the last day.`"
       type="success"
-      class="m-n-med">
-      <br>Your re-alert settings may reduce the actual amount of alerts you receive.
-    </el-alert>
+      class="m-n-med" />
 
     <template v-if="testRunLoading && messages.length">
       <el-row type="flex" justify="center" align="middle" class="m-n-lg">

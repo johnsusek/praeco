@@ -2,17 +2,13 @@
   <div>
     <h1>{{ type }}/{{ path }}</h1>
 
-    <el-button type="primary" plain @click="addFolder">
-      Add folder
-    </el-button>
+    <el-button type="primary" plain @click="addFolder">Add folder</el-button>
 
     <el-button type="danger" plain @click="deleteFolder">Delete folder...</el-button>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   props: ['type', 'path'],
   methods: {
@@ -35,15 +31,20 @@ export default {
     },
     async deleteFolder() {
       try {
-        let res = await axios.delete(`/folders/${this.type}/${this.path}`);
-        if (res.data.deleted) {
+        let res = await this.$store.dispatch('configs/deleteFolder', {
+          path: this.path,
+          type: this.type
+        });
+
+        if (res.deleted) {
           this.$message.success('Deleted folder successfully');
-          let path = this.path.split('/');
+          let path = res.path.split('/');
           path.pop();
+          path = path.join('/');
 
           if (path.length) {
             this.$router.push({
-              path: `/folders/${this.type}/${path.join('/')}`,
+              path: `/folders/${this.type}/${path}`,
               query: { refreshTree: true }
             });
           } else {

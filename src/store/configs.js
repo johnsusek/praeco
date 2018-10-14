@@ -267,6 +267,15 @@ export default {
       }
     },
 
+    async deleteFolder(context, { path, type }) {
+      try {
+        let res = await axios.delete(`/folders/${type}/${path}`);
+        return res.data;
+      } catch (error) {
+        networkError(error);
+      }
+    },
+
     async disableRule({ commit }, config) {
       let conf = formatConfig(config);
       conf.is_enabled = false;

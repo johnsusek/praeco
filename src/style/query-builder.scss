@@ -1,13 +1,8 @@
 .vue-query-builder {
   color: #606266;
-
-  + label {
-    padding-top: 80px !important;
-  }
+  padding-bottom: 80px;
 
   .vqb-group .vqb-group-heading {
-    // background: red;
-    // float: right;
     margin-bottom: 5px;
 
     select {
@@ -29,7 +24,7 @@
     // background: green;
     margin-bottom: 0;
     position: absolute;
-    bottom: 40px;
+    bottom: 0px;
     width: 100%;
 
     select {
@@ -37,18 +32,9 @@
     }
   }
 
-  .vqb-group .vqb-group > .vqb-group-body > .rule-actions {
-    // background: blue;
-  }
-
   .vqb-group-body .vqb-group-heading {
-    // background: purple;
-    // position: absolute;
-    // right: 0;
     padding: 0 10px;
     margin-bottom: 5px;
-    // width: auto;
-    // display: inline-block;
   }
 
   .vqb-group-body .vqb-group-heading {

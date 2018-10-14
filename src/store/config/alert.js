@@ -38,9 +38,15 @@ export default {
   getters: {
     slackTitleLink(state, getters, rootState) {
       let appUrl = rootState.appconfig.config.appUrl;
-      let encodedPath = encodeURIComponent(rootState.config.fullPath);
+      let path = rootState.config.settings.name;
 
-      return `${appUrl}/rules/${encodedPath}`;
+      if (rootState.config.path) {
+        path = `${rootState.config.path}/${path}`;
+      }
+
+      let type = rootState.config.type;
+
+      return `${appUrl}/${type}s/${encodeURIComponent(path)}`;
     },
 
     subjectRendered(state, getters, rootState) {

@@ -21,6 +21,7 @@ export default {
 
   state: {
     path: '',
+    type: '',
 
     valid: true,
     validating: false,
@@ -30,6 +31,10 @@ export default {
   },
 
   mutations: {
+    UPDATE_TYPE(state, type) {
+      state.type = type;
+    },
+
     UPDATE_VALID(state, valid) {
       state.valid = valid;
     },
@@ -56,16 +61,20 @@ export default {
   },
 
   actions: {
+    reset({ commit }) {
+      commit('CLEAR_SAMPLE');
+      commit('settings/RESET');
+      commit('query/RESET');
+      commit('match/RESET');
+      commit('alert/RESET');
+    },
+
     async load({ dispatch, commit, rootState }, { type, path }) {
       await dispatch('configs/fetchConfig', { type, path }, { root: true });
       let config = rootState.configs[type][path];
 
       if (config) {
-        commit('CLEAR_SAMPLE');
-        commit('settings/RESET');
-        commit('query/RESET');
-        commit('match/RESET');
-        commit('alert/RESET');
+        dispatch('reset');
 
         let folderPath = path.split('/');
         folderPath.pop();
@@ -216,8 +225,6 @@ export default {
       } catch (error) {
         if (!axios.isCancel(error)) {
           console.error(error);
-        } else {
-          console.log('canceled sample');
         }
       } finally {
         sampleCancelToken = null;
