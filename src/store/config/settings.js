@@ -1,22 +1,38 @@
 import Vue from 'vue';
 
+function initialState() {
+  return {
+    name: '',
+    description: '',
+    index: ''
+  };
+}
+
 export default {
   namespaced: true,
 
   state: {
-    name: '',
-    description: '',
-    index: '',
-    strftime: null
+    ...initialState()
   },
 
   getters: {
     wildcardIndex(state) {
+      if (!state.index) return '';
       return state.index.replace(/%[Ymd]/g, '*');
+    },
+
+    strftime(state) {
+      return state.index.includes('%Y') || state.index.includes('%m') || state.index.includes('%d');
     }
   },
 
   mutations: {
+    /*eslint-disable */
+    RESET(state) {
+      /* eslint-enable */
+      state = Object.assign(state, initialState());
+    },
+
     UPDATE_NAME(state, name) {
       state.name = name;
     },
@@ -31,10 +47,6 @@ export default {
 
     UPDATE_INDEX(state, index) {
       state.index = index;
-    },
-
-    UPDATE_STRFTIME(state, strftime) {
-      state.strftime = !!strftime;
     }
   }
 };

@@ -1,9 +1,7 @@
 import Vue from 'vue';
 
-export default {
-  namespaced: true,
-
-  state: {
+function initialState() {
+  return {
     type: 'any',
 
     blacklist: [],
@@ -24,6 +22,14 @@ export default {
     spikeType: 'up',
     thresholdRef: null,
     thresholdCur: null
+  };
+}
+
+export default {
+  namespaced: true,
+
+  state: {
+    ...initialState()
   },
 
   getters: {
@@ -112,48 +118,25 @@ export default {
   },
 
   mutations: {
+    /*eslint-disable */
+    RESET(state) {
+      /* eslint-enable */
+      state = Object.assign(state, initialState());
+    },
+
+    //
+    // Shared
+    //
     UPDATE_TYPE(state, type) {
       state.type = type;
     },
 
-    UPDATE_THRESHOLD_REF(state, thresholdRef) {
-      state.thresholdRef = parseFloat(thresholdRef);
-    },
-
-    UPDATE_THRESHOLD_CUR(state, thresholdCur) {
-      state.thresholdCur = parseFloat(thresholdCur);
-    },
-
-    UPDATE_SPIKE_HEIGHT(state, spikeHeight) {
-      state.spikeHeight = parseFloat(spikeHeight);
-    },
-
-    UPDATE_SPIKE_TYPE(state, spikeType) {
-      state.spikeType = spikeType;
+    UPDATE_IGNORE_NULL(state, ignoreNull) {
+      state.ignoreNull = ignoreNull;
     },
 
     UPDATE_DOC_TYPE(state, docType) {
       state.docType = docType;
-    },
-
-    UPDATE_TERMS_SIZE(state, termsSize) {
-      state.termsSize = parseInt(termsSize);
-    },
-
-    UPDATE_USE_TERMS_QUERY(state, useTermsQuery) {
-      state.useTermsQuery = useTermsQuery;
-    },
-
-    UPDATE_USE_COUNT_QUERY(state, useCountQuery) {
-      state.useCountQuery = useCountQuery;
-    },
-
-    UPDATE_NUM_EVENTS(state, numEvents) {
-      state.numEvents = parseInt(numEvents);
-    },
-
-    UPDATE_TIMEFRAME(state, timeframe) {
-      state.timeframe = timeframe;
     },
 
     UPDATE_QUERY_KEY(state, queryKey) {
@@ -164,9 +147,13 @@ export default {
       state.compareKey = compareKey;
     },
 
-    UPDATE_IGNORE_NULL(state, ignoreNull) {
-      state.ignoreNull = ignoreNull;
+    UPDATE_TIMEFRAME(state, timeframe) {
+      state.timeframe = timeframe;
     },
+
+    //
+    // Blacklist
+    //
 
     ADD_BLACKLIST_ENTRY(state) {
       if (!state.blacklist) {
@@ -189,6 +176,10 @@ export default {
       state.blacklist[index] = entry;
     },
 
+    //
+    // Whitelist
+    //
+
     ADD_WHITELIST_ENTRY(state) {
       if (!state.whitelist) {
         state.whitelist = [];
@@ -208,6 +199,49 @@ export default {
     UPDATE_WHITELIST_ENTRY(state, { entry, index }) {
       if (!state.whitelist) return;
       state.whitelist[index] = entry;
+    },
+
+    //
+    // Change
+    //
+
+    //
+    // Frequency
+    //
+    UPDATE_NUM_EVENTS(state, numEvents) {
+      state.numEvents = parseInt(numEvents);
+    },
+
+    UPDATE_USE_TERMS_QUERY(state, useTermsQuery) {
+      state.useTermsQuery = useTermsQuery;
+    },
+
+    UPDATE_USE_COUNT_QUERY(state, useCountQuery) {
+      state.useCountQuery = useCountQuery;
+    },
+
+    UPDATE_TERMS_SIZE(state, termsSize) {
+      state.termsSize = parseInt(termsSize);
+    },
+
+    //
+    // Spike
+    //
+
+    UPDATE_THRESHOLD_REF(state, thresholdRef) {
+      state.thresholdRef = parseFloat(thresholdRef);
+    },
+
+    UPDATE_THRESHOLD_CUR(state, thresholdCur) {
+      state.thresholdCur = parseFloat(thresholdCur);
+    },
+
+    UPDATE_SPIKE_HEIGHT(state, spikeHeight) {
+      state.spikeHeight = parseFloat(spikeHeight);
+    },
+
+    UPDATE_SPIKE_TYPE(state, spikeType) {
+      state.spikeType = spikeType;
     }
   }
 };

@@ -1,16 +1,28 @@
 import { luceneSyntaxFromQueryBuilder } from '@/lib/luceneSyntaxBuilder.js';
 
-export default {
-  namespaced: true,
-
-  state: {
+function initialState() {
+  return {
     tree: {
       logicalOperator: 'all',
       children: []
     }
+  };
+}
+
+export default {
+  namespaced: true,
+
+  state: {
+    ...initialState()
   },
 
   mutations: {
+    /*eslint-disable */
+    RESET(state) {
+      /* eslint-enable */
+      state = Object.assign(state, initialState());
+    },
+
     UPDATE_TREE(state, tree) {
       state.tree = tree;
     }

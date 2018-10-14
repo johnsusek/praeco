@@ -9,6 +9,7 @@ import { formatConfig } from '../lib/formatConfig';
 
 export default {
   namespaced: true,
+
   state: {
     templates: {
       // 'aaa/templateName': { ...config... },
@@ -23,6 +24,7 @@ export default {
       rules: []
     }
   },
+
   mutations: {
     FETCHED_CONFIGS(state, { paths, type }) {
       // Configs are stored with their full path as their key
@@ -79,13 +81,14 @@ export default {
       Vue.delete(state[type], path);
     }
   },
+
   actions: {
     async fetchConfig({ commit }, { path, type }) {
       try {
         let res = await axios.get(`/${type}/${path}`);
         // We have got the config, so save it to our store keyed on its path
         commit('FETCHED_CONFIG', { path, config: res.data, type });
-        return res;
+        return res.data;
       } catch (error) {
         networkError(error);
       }

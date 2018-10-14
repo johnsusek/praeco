@@ -2,10 +2,8 @@ import get from 'lodash.get';
 import format from 'string-format';
 import { htmlToConfigFormat } from '@/lib/alertText';
 
-export default {
-  namespaced: true,
-
-  state: {
+function initialState() {
+  return {
     alert: [],
     realert: null,
 
@@ -27,6 +25,14 @@ export default {
     bcc: '',
 
     httpPostUrl: ''
+  };
+}
+
+export default {
+  namespaced: true,
+
+  state: {
+    ...initialState()
   },
 
   getters: {
@@ -53,6 +59,12 @@ export default {
   },
 
   mutations: {
+    /*eslint-disable */
+    RESET(state) {
+      /* eslint-enable */
+      state = Object.assign(state, initialState());
+    },
+
     UPDATE_HTTP_POST_URL(state, httpPostUrl) {
       state.httpPostUrl = httpPostUrl;
     },

@@ -10,8 +10,7 @@
               ref="settings"
               :type="type"
               :action="action"
-              :prefill-path="prefill"
-              :prefill-type="prefillType" />
+              :prefill-path="prefill" />
 
             <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
           </el-collapse-item>
@@ -38,7 +37,7 @@
           </el-collapse-item>
 
           <el-collapse-item title="Save" name="save">
-            <ConfigSave :type="type" />
+            <ConfigSave :action="action" :type="type" />
           </el-collapse-item>
         </el-collapse>
       </el-col>
@@ -69,7 +68,7 @@ export default {
     ConfigDrawer,
   },
 
-  props: ['path', 'action', 'prefill', 'type', 'prefillType'],
+  props: ['path', 'action', 'type', 'prefill'],
 
   data() {
     return {
@@ -87,7 +86,7 @@ export default {
       let title = `${changeCase.titleCase(this.action)} ${this.type}`;
 
       if (this.action === 'edit') {
-        title += ` ${this.$store.state.config.name}`;
+        title += ` ${this.$store.state.config.settings.name}`;
       }
 
       return title;
@@ -96,6 +95,7 @@ export default {
 
   async mounted() {
     if (this.action === 'edit' && this.path) {
+      this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
       // get data from store (fetchconfig)
       // and set it to our working config
     } else if (this.action === 'add' && this.prefill) {

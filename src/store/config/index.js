@@ -7,6 +7,8 @@ import query from './query';
 import match from './match';
 import alert from './alert';
 
+let sampleCancelToken = null;
+
 export default {
   namespaced: true,
 
@@ -18,7 +20,7 @@ export default {
   },
 
   state: {
-    fullPath: '',
+    path: '',
 
     valid: true,
     validating: false,
@@ -42,11 +44,95 @@ export default {
 
     UPDATE_SAMPLE_RESULT(state, sampleResult) {
       state.sampleResult = sampleResult;
+    },
+
+    CLEAR_SAMPLE(state) {
+      state.sampleResult = null;
+    },
+
+    UPDATE_PATH(state, path) {
+      state.path = path;
     }
   },
 
   actions: {
-    async save({ state, getters, dispatch }, { type }) {
+    async load({ dispatch, commit, rootState }, { type, path }) {
+      await dispatch('configs/fetchConfig', { type, path }, { root: true });
+      let config = rootState.configs[type][path];
+
+      if (config) {
+        commit('CLEAR_SAMPLE');
+        commit('settings/RESET');
+        commit('query/RESET');
+        commit('match/RESET');
+        commit('alert/RESET');
+
+        let folderPath = path.split('/');
+        folderPath.pop();
+        folderPath = folderPath.join('/');
+
+        commit('UPDATE_PATH', folderPath);
+
+        commit('settings/UPDATE_NAME', config.name);
+        commit('settings/UPDATE_DESCRIPTION', config.description);
+        commit('settings/UPDATE_INDEX', config.index);
+
+        if (config.__praeco_query_builder && config.__praeco_query_builder.query) {
+          commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
+        }
+
+        commit('match/UPDATE_TYPE', config.type);
+        commit('match/UPDATE_IGNORE_NULL', config.ignore_null);
+        commit('match/UPDATE_DOC_TYPE', config.doc_type);
+        commit('match/UPDATE_QUERY_KEY', config.query_key);
+        commit('match/UPDATE_COMPARE_KEY', config.compare_key);
+        commit('match/UPDATE_TIMEFRAME', config.timeframe);
+
+        if (config.blacklist) {
+          config.blacklist.forEach(entry => commit('match/ADD_BLACKLIST_ENTRY', entry));
+        }
+
+        if (config.whitelist) {
+          config.whitelist.forEach(entry => commit('match/ADD_WHITELIST_ENTRY', entry));
+        }
+
+        commit('match/UPDATE_NUM_EVENTS', config.num_events);
+        commit('match/UPDATE_USE_TERMS_QUERY', config.use_terms_query);
+        commit('match/UPDATE_USE_COUNT_QUERY', config.use_count_query);
+        commit('match/UPDATE_TERMS_SIZE', config.terms_size);
+        commit('match/UPDATE_THRESHOLD_REF', config.threshold_ref);
+        commit('match/UPDATE_THRESHOLD_CUR', config.threshold_cur);
+        commit('match/UPDATE_SPIKE_HEIGHT', config.spike_height);
+        commit('match/UPDATE_SPIKE_TYPE', config.spike_type);
+
+        commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
+        commit('alert/UPDATE_SMTP_HOST', config.smtp_host);
+        commit('alert/UPDATE_SMTP_PORT', config.smtp_port);
+        commit('alert/UPDATE_FROM_ADDR', config.from_addr);
+        commit('alert/UPDATE_REPLY_TO', config.reply_to);
+        commit('alert/UPDATE_EMAIL', config.email);
+        commit('alert/UPDATE_CC', config.cc);
+        commit('alert/UPDATE_BCC', config.bcc);
+
+        commit('alert/UPDATE_SLACK_WEBHOOK_URL', config.slack_webhook_url);
+        commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
+        commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
+        commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
+        commit('alert/UPDATE_REALERT', config.realert);
+        commit('alert/UPDATE_ALERT', config.alert);
+
+        if (config.alert_text_type) {
+          commit('alert/UPDATE_BODY_TYPE', config.alert_text_type);
+        } else {
+          commit('alert/UPDATE_BODY_TYPE', 'default');
+        }
+
+        commit('alert/UPDATE_BODY', config.alert_text);
+        commit('alert/UPDATE_SUBJECT', config.alert_subject);
+      }
+    },
+
+    async save({ state, getters, dispatch }, { type, overwrite }) {
       await dispatch('validate');
 
       if (!state.valid) {
@@ -58,7 +144,8 @@ export default {
         {
           config: getters.config,
           format: false,
-          type
+          type,
+          overwrite
         },
         {
           root: true
@@ -100,8 +187,6 @@ export default {
     },
 
     async sample({ commit, getters }) {
-      // gets single result - most recent - from search endpoint and
-      // commits to store
       let search = {
         query: {
           bool: {
@@ -116,7 +201,27 @@ export default {
         size: 1
       };
 
-      let res = await axios.post(`/search/${getters['settings/wildcardIndex']}`, search);
+      if (sampleCancelToken) {
+        sampleCancelToken.cancel();
+      }
+
+      let res = {};
+
+      try {
+        sampleCancelToken = axios.CancelToken.source();
+        console.log(sampleCancelToken);
+        res = await axios.post(`/search/${getters['settings/wildcardIndex']}`, search, {
+          cancelToken: sampleCancelToken.token
+        });
+      } catch (error) {
+        if (!axios.isCancel(error)) {
+          console.error(error);
+        } else {
+          console.log('canceled sample');
+        }
+      } finally {
+        sampleCancelToken = null;
+      }
 
       if (res.data && res.data.hits && res.data.hits.hits[0] && res.data.hits.hits[0]._source) {
         commit('UPDATE_SAMPLE_RESULT', res.data.hits.hits[0]._source);
@@ -346,6 +451,14 @@ export default {
         ...getters.queryString
       };
 
+      if (state.path) {
+        config.__praeco_full_path = `${state.path}/${state.settings.name}`;
+      } else {
+        config.__praeco_full_path = state.settings.name;
+      }
+
+      config.__praeco_query_builder = JSON.stringify({ query: state.query.tree });
+
       if (state.settings.name) {
         config.name = state.settings.name;
       }
@@ -353,6 +466,8 @@ export default {
       if (state.settings.index) {
         config.index = state.settings.index;
       }
+
+      config.use_strftime_index = getters['settings/strftime'];
 
       if (state.match.type) {
         config.type = state.match.type;

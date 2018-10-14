@@ -134,7 +134,9 @@ export default {
     queryChanged() {
       let queryTree = this.queryTree;
       if (queryTree) {
+        this.$store.commit('config/CLEAR_SAMPLE');
         this.$store.commit('config/query/UPDATE_TREE', queryTree);
+        this.sample();
       }
     }
   }

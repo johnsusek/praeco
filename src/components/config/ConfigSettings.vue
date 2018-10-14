@@ -15,7 +15,7 @@
     </el-form-item>
 
     <el-form-item label="Index" prop="index" required>
-      <el-input v-model="index" spellcheck="false" @input="updateIndex" />
+      <el-input v-model="index" spellcheck="false" @input="getMappingDebounced" />
       <label>
         The index that contains data you want to be alerted on, e.g. logstash-* or logstash-%Y.%m.%d
         [<a href="https://elastalert.readthedocs.io/en/latest/ruletypes.html#index" target="_blank">?</a>]
@@ -48,7 +48,6 @@ import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 export default {
   props: [
     'prefillPath',
-    'prefillType',
     'action',
     'type'
   ],
@@ -101,9 +100,9 @@ export default {
     // Get the indices needed to build the suggestions list
     this.$store.dispatch('metadata/fetchIndices');
 
-    // Automatically set strftime and get the mapping on start
+    // Automatically get the mapping on start
     if (this.index) {
-      this.updateIndex(this.index);
+      this.getMappingDebounced();
     }
   },
 
@@ -125,33 +124,20 @@ export default {
       return true;
     },
 
-    updateIndex(index) {
-      if (index.includes('%Y') || index.includes('%m') || index.includes('%d')) {
-        this.$store.commit('config/settings/UPDATE_STRFTIME', true);
-      } else {
-        this.$store.commit('config/settings/UPDATE_STRFTIME', false);
-      }
-
-      this.getMappingDebounced();
-    },
-
     useSuggestion(suggestion) {
       this.$store.commit('config/settings/UPDATE_INDEX', suggestion);
       this.getMapping();
     },
 
     validateName(rule, value, callback) {
-      // If the prefill type is template, and the type is rule, use root for prefillpath
-      let path = this.prefillPath || '';
+      let path = '';
 
-      if (this.type === 'rule' && this.prefillType === 'template') {
-        path = '';
+      if (this.$store.state.config.path) {
+        path = `${this.$store.state.config.path}/${this.$store.state.config.settings.name}`;
+      } else {
+        path = this.$store.state.config.settings.name;
       }
 
-      path = path.split('/');
-      path.pop();
-      path.push(value);
-      path = path.join('/');
       let configs = Object.keys(this.$store.state.configs[`${this.type}s`]);
 
       if (configs.includes(path)) {
