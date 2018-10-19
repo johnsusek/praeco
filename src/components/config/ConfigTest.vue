@@ -99,6 +99,8 @@ import { logger } from '@/lib/logger.js';
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export default {
+  props: ['valid'],
+
   data() {
     return {
       startTime: 0,
@@ -111,11 +113,13 @@ export default {
       testRunLoading: false
     };
   },
+
   computed: {
     lastRateAverage() {
       return Math.trunc(average(this.lastRates)) || 0;
     }
   },
+
   watch: {
     messages() {
       if (!this.messages.length || !this.startTime) return 0;
@@ -127,9 +131,11 @@ export default {
       }
     }
   },
+
   destroyed() {
     this.$disconnect();
   },
+
   mounted() {
     this.$options.sockets.onmessage = ev => {
       let payload = JSON.parse(ev.data);
@@ -160,6 +166,7 @@ export default {
       }
     };
   },
+
   methods: {
     colorFromPercent(percent) {
       if (percent > 75) {
@@ -174,35 +181,41 @@ export default {
       this.$disconnect();
     },
     runTest() {
-      this.$connect();
+      this.$emit('validate');
 
-      let rule = this.$store.getters['config/yaml'];
+      this.$nextTick(() => {
+        if (!this.valid) return;
 
-      this.testRunLoading = true;
-      this.testRunResult = '';
-      this.testRunError = '';
-      this.messages = [];
-      this.messages.push('Starting test run...');
+        this.$connect();
 
-      let options = {
-        testType: 'all',
-        days: 1,
-        alert: false,
-        format: 'json',
-        maxResults: 1
-      };
+        let rule = this.$store.getters['config/yaml'];
 
-      this.$socket.onopen = () => {
-        this.startTime = +new Date();
-        this.$socket.sendObj({ rule, options });
-      };
+        this.testRunLoading = true;
+        this.testRunResult = '';
+        this.testRunError = '';
+        this.messages = [];
+        this.messages.push('Starting test run...');
 
-      this.$socket.onclose = () => {
-        this.lastRates = [];
-        this.startTime = 0;
-        this.testRunStats = {};
-        this.testRunLoading = false;
-      };
+        let options = {
+          testType: 'all',
+          days: 1,
+          alert: false,
+          format: 'json',
+          maxResults: 1
+        };
+
+        this.$socket.onopen = () => {
+          this.startTime = +new Date();
+          this.$socket.sendObj({ rule, options });
+        };
+
+        this.$socket.onclose = () => {
+          this.lastRates = [];
+          this.startTime = 0;
+          this.testRunStats = {};
+          this.testRunLoading = false;
+        };
+      });
     }
   }
 };

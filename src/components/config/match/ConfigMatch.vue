@@ -54,7 +54,7 @@
       </el-col>
 
       <el-col :span="12">
-        <ConfigTest />
+        <ConfigTest :valid="valid" @validate="validate" />
       </el-col>
     </el-row>
   </el-form>
@@ -78,6 +78,12 @@ export default {
     ConfigTest
   },
 
+  data() {
+    return {
+      valid: false
+    };
+  },
+
   computed: {
     type: {
       get() {
@@ -94,33 +100,35 @@ export default {
       try {
         if (this.$refs.freq) {
           if (!await this.$refs.freq.$refs.form.validate()) {
-            return false;
+            this.valid = false;
           }
         }
         if (this.$refs.spike) {
           if (!await this.$refs.spike.$refs.form.validate()) {
-            return false;
+            this.valid = false;
           }
         }
         if (this.$refs.blacklist) {
           if (!await this.$refs.blacklist.$refs.form.validate()) {
-            return false;
+            this.valid = false;
           }
         }
         if (this.$refs.whitelist) {
           if (!await this.$refs.whitelist.$refs.form.validate()) {
-            return false;
+            this.valid = false;
           }
         }
         if (this.$refs.change) {
           if (!await this.$refs.change.$refs.form.validate()) {
-            return false;
+            this.valid = false;
           }
         }
 
-        return true;
+        this.valid = true;
+        return this.valid;
       } catch (error) {
-        return false;
+        this.valid = false;
+        return this.valid;
       }
     }
   }

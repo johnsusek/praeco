@@ -8,7 +8,7 @@ Praeco is a GUI for elastalert, using [bitsensor's elastalert API](https://githu
 
 ## Installation
 
-- Copy `praeco.config.json.default` to `public/praeco.config.json` and update apiBaseUrl to point to your API instance.
+- Copy `praeco.config.json.default` to `public/praeco.config.json` and update apiBaseUrl to point to your API instance. See instructions below for setting up the required API server.
 
 ## Running
 
@@ -16,7 +16,7 @@ For just running the app, use the official docker images:
 
 ### [Server] Elastalert API server:
 
-- At the moment, our fork of the elastalert API is required:
+- At the moment, our fork of the elastalert API is required.
 
 ```bash
 git clone -b folders https://github.com/ServerCentral/elastalert-server.git && cd elastalert-server
@@ -24,7 +24,7 @@ git clone -b folders https://github.com/ServerCentral/elastalert-server.git && c
 
 - Instructions for configuring the API are on the [github repo](https://github.com/servercentral/elastalert-server/tree/folders).
 
-- Run the below docker image (note this is servercentral/elastalert) once your API config files are set up:
+- Run the below docker image (note this is servercentral/elastalert) once your API config files are set up per the above link:
 
 ```bash
 docker run -d -p 3030:3030 -p 3333:3333 \
@@ -38,6 +38,8 @@ docker run -d -p 3030:3030 -p 3333:3333 \
 Elastalert API server should now be available at http://127.0.0.1:3030 and ws://127.0.0.1:3333
 
 ### [Client] Praeco client:
+
+Now that your Elastalert API server is up and listening, start the Praeco UI.
 
 ```
 docker run -v ${PWD}/public/praeco.config.json:/var/www/html/praeco.config.json -it -p 8080:80 servercentral/praeco

@@ -4,6 +4,8 @@
       <el-col :span="24">
         <h1 class="m-s-sm">{{ pageTitle }}</h1>
 
+        <!-- <vue-json-pretty :data="$store.getters['config/config']" /> -->
+
         <el-button v-if="!saving" type="primary" plain @click="save">Save</el-button>
         <el-button v-else type="primary" plain disabled>Saving...</el-button>
 
@@ -76,11 +78,6 @@ export default {
     this.$store.commit('config/UPDATE_TYPE', this.type);
 
     this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
-    // if (this.path) {
-    //   this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
-    //   // get data from store (fetchconfig)
-    //   // and set it to our working config
-    // }
   },
 
 };

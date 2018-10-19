@@ -23,11 +23,11 @@
       </label>
     </el-form-item>
 
-    <el-form-item label="Direction" prop="spikeType">
+    <el-form-item label="Direction" prop="spikeType" required>
       <el-select v-model="spikeType">
-        <el-option label="Up" value="up"/>
-        <el-option label="Down" value="down"/>
-        <el-option label="Both" value="both"/>
+        <el-option label="Up" value="up" />
+        <el-option label="Down" value="down" />
+        <el-option label="Both" value="both" />
       </el-select>
       <label>
         ‘Up’ means the rule will only match when the number of events is "spike height" times

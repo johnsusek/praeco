@@ -311,7 +311,7 @@ export default {
         config.timeframe = state.match.timeframe;
       }
 
-      config.ignore_null = state.match.ignoreNull;
+      config.ignore_null = !!state.match.ignoreNull;
 
       return config;
     },
@@ -323,7 +323,7 @@ export default {
         config.compare_key = state.match.compareKey;
       }
 
-      config.ignore_null = state.match.ignoreNull;
+      config.ignore_null = !!state.match.ignoreNull;
 
       if (state.match.whitelist && state.match.whitelist.length) {
         config.whitelist = state.match.whitelist;

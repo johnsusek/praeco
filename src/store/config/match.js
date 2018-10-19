@@ -219,7 +219,7 @@ export default {
     // Frequency
     //
     UPDATE_NUM_EVENTS(state, numEvents) {
-      state.numEvents = parseInt(numEvents);
+      state.numEvents = parseInt(numEvents) || null;
     },
 
     UPDATE_USE_TERMS_QUERY(state, useTermsQuery) {
@@ -231,7 +231,7 @@ export default {
     },
 
     UPDATE_TERMS_SIZE(state, termsSize) {
-      state.termsSize = parseInt(termsSize);
+      state.termsSize = parseInt(termsSize) || null;
     },
 
     //
@@ -239,18 +239,19 @@ export default {
     //
 
     UPDATE_THRESHOLD_REF(state, thresholdRef) {
-      state.thresholdRef = parseFloat(thresholdRef);
+      state.thresholdRef = parseFloat(thresholdRef) || null;
     },
 
     UPDATE_THRESHOLD_CUR(state, thresholdCur) {
-      state.thresholdCur = parseFloat(thresholdCur);
+      state.thresholdCur = parseFloat(thresholdCur) || null;
     },
 
     UPDATE_SPIKE_HEIGHT(state, spikeHeight) {
-      state.spikeHeight = parseFloat(spikeHeight);
+      state.spikeHeight = parseFloat(spikeHeight) || null;
     },
 
     UPDATE_SPIKE_TYPE(state, spikeType) {
+      if (!spikeType) return;
       state.spikeType = spikeType;
     }
   }
