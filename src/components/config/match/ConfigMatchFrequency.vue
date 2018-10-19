@@ -9,8 +9,7 @@
         :controls="false"
         v-model="numEvents"
         min="1"
-        type="number"
-        @input="updateMarkLine" />
+        type="number" />
       <label>The number of events which will trigger an alert, inclusive.</label>
     </el-form-item>
 
@@ -173,30 +172,6 @@ export default {
         this.$store.commit('config/match/UPDATE_TIMEFRAME', value);
       }
     }
-  },
-
-  mounted() {
-    this.updateMarkLine();
-  },
-
-  methods: {
-    updateMarkLine() {
-      this.$emit('updateMarkLine', {
-        silent: true,
-        lineStyle: {
-          color: '#ff0000',
-          type: 'solid'
-        },
-        animation: false,
-        symbol: 'none',
-        data: [
-          {
-            name: 'Alert level',
-            yAxis: this.numEvents
-          },
-        ]
-      });
-    },
   }
 };
 </script>

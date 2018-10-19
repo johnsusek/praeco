@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.state.config.settings.name">
     <el-row :gutter="2" class="drawer-row">
       <el-col :span="24">
         <h1 class="m-s-sm">{{ pageTitle }}</h1>
@@ -28,9 +28,7 @@
       </el-col>
     </el-row>
 
-    <el-card v-if="showDrawer" class="drawer-card">
-      <ConfigDrawer />
-    </el-card>
+    <ConfigDrawer v-if="showDrawer" />
   </div>
 </template>
 

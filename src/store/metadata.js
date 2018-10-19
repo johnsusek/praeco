@@ -76,8 +76,12 @@ export default {
 
       try {
         let res = await axios.get('/indices');
-        commit('FETCHED_INDICES', res.data);
-        return true;
+        if (res.data.error) {
+          networkError('Error fetching indices.');
+        } else {
+          commit('FETCHED_INDICES', res.data);
+          return true;
+        }
       } catch (error) {
         networkError(error);
       }

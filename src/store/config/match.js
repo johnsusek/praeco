@@ -41,6 +41,12 @@ export default {
       }
     },
 
+    spikeHeight(state) {
+      if (state.type === 'spike') {
+        return state.spikeHeight;
+      }
+    },
+
     markLineSpike(state) {
       let data = [];
 
@@ -101,6 +107,10 @@ export default {
           lineStyle: {
             color: '#ff0000',
             type: 'solid'
+          },
+          label: {
+            position: 'middle',
+            formatter: `Threshold - ${state.numEvents}`
           },
           animation: false,
           symbol: 'none',

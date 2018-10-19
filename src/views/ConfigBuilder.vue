@@ -4,6 +4,14 @@
       <el-col :span="24">
         <h1 class="m-s-xl">{{ pageTitle }}</h1>
 
+        <el-steps :active="steps.indexOf(activePane)" align-center class="m-s-xl">
+          <el-step title="Settings" />
+          <el-step title="Filter" />
+          <el-step title="Match" />
+          <el-step title="Alert" />
+          <el-step title="Save" />
+        </el-steps>
+
         <el-collapse v-model="activePane" :accordion="true">
           <el-collapse-item title="Settings" name="settings">
             <ConfigSettings
@@ -44,9 +52,7 @@
       </el-col>
     </el-row>
 
-    <el-card v-if="showDrawer" class="drawer-card">
-      <ConfigDrawer />
-    </el-card>
+    <ConfigDrawer v-if="showDrawer" />
   </div>
 </template>
 
@@ -74,6 +80,7 @@ export default {
   data() {
     return {
       activePane: 'settings',
+      steps: ['settings', 'query', 'match', 'alert', 'save']
     };
   },
 
@@ -92,8 +99,9 @@ export default {
     this.$store.commit('config/UPDATE_TYPE', this.type);
 
     if (this.prefill) {
-      // First we get the prefill from the store
-      // and merge it into the config we are working on
+      await this.$store.dispatch('config/load', { type: 'templates', path: this.prefill });
+      this.$store.commit('config/UPDATE_PATH', '');
+      this.$store.commit('config/settings/UPDATE_NAME', 'New rule');
     }
   },
 

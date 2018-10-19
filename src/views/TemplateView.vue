@@ -23,7 +23,7 @@
     <el-row>
       <router-link :to="{
         name: 'ruleconfigbuilder',
-        params: { action: 'add' }, query: { prefill: id, prefillType: 'template' }
+        params: { action: 'add' }, query: { prefill: id }
       }">
         <el-button icon="el-icon-plus" plain type="primary">
           Create rule from template

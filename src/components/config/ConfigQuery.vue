@@ -128,7 +128,13 @@ export default {
   },
 
   methods: {
-    sample: debounce(async function() {
+    async sample() {
+      this.sampling = true;
+      await this.$store.dispatch('config/sample');
+      this.sampling = false;
+    },
+
+    sampleDebounced: debounce(async function() {
       this.sampling = true;
       await this.$store.dispatch('config/sample');
       this.sampling = false;
@@ -138,7 +144,7 @@ export default {
       let queryTree = this.queryTree;
       if (queryTree) {
         this.$store.commit('config/query/UPDATE_TREE', queryTree);
-        this.sample();
+        this.sampleDebounced();
       }
     }
   }

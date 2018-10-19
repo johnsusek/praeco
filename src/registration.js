@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
 import Bulb from '@/components/Bulb';
+import DateTime from '@/components/DateTime';
 import ConfigViewAlert from '@/components/config/view/ConfigViewAlert';
 import ConfigViewQuery from '@/components/config/view/ConfigViewQuery';
 import ConfigViewSettings from '@/components/config/view/ConfigViewSettings';
@@ -18,6 +19,7 @@ import TableRow from '@/components/TableRow';
 import ElastalertTimeView from '@/components/ElastalertTimeView';
 
 Vue.component('Bulb', Bulb);
+Vue.component('DateTime', DateTime);
 Vue.component('ConfigView', ConfigView);
 Vue.component('ConfigViewAlert', ConfigViewAlert);
 Vue.component('ConfigViewMatch', ConfigViewMatch);

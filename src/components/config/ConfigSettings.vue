@@ -102,7 +102,8 @@ export default {
 
     // Automatically get the mapping on start
     if (this.index) {
-      this.getMappingDebounced();
+      this.$store.commit('config/settings/UPDATE_INDEX', this.index);
+      this.getMapping();
     }
   },
 
@@ -130,17 +131,10 @@ export default {
     },
 
     validateName(rule, value, callback) {
-      let path = '';
-
-      if (this.$store.state.config.path) {
-        path = `${this.$store.state.config.path}/${this.$store.state.config.settings.name}`;
-      } else {
-        path = this.$store.state.config.settings.name;
-      }
-
       let configs = Object.keys(this.$store.state.configs[`${this.type}s`]);
+      configs = configs.map(c => c.split('/').pop());
 
-      if (configs.includes(path)) {
+      if (configs.includes(this.$store.state.config.settings.name)) {
         callback(new Error(`A ${this.type} by that name already exists`));
       } else {
         callback();

@@ -218,7 +218,6 @@ export default {
 
       try {
         sampleCancelToken = axios.CancelToken.source();
-        console.log(sampleCancelToken);
         res = await axios.post(`/search/${getters['settings/wildcardIndex']}`, search, {
           cancelToken: sampleCancelToken.token
         });
@@ -256,7 +255,7 @@ export default {
         config.threshold_cur = state.match.thresholdCur;
       }
 
-      if (Object.keys(state.match.timeframe).length) {
+      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
         config.timeframe = state.match.timeframe;
       }
 
@@ -290,7 +289,7 @@ export default {
         config.use_terms_query = state.match.useTermsQuery;
       }
 
-      if (Object.keys(state.match.timeframe).length) {
+      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
         config.timeframe = state.match.timeframe;
       }
 
@@ -308,7 +307,7 @@ export default {
         config.query_key = state.match.queryKey;
       }
 
-      if (Object.keys(state.match.timeframe).length) {
+      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
         config.timeframe = state.match.timeframe;
       }
 

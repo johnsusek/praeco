@@ -62,9 +62,16 @@ label {
   height: 200px;
   width: calc(100% - 250px);
   background: #fff;
-  z-index: 9;
+  z-index: 999;
+}
+
+.drawer-card-open {
+  height: calc(100% - 30px);
+  left: 10px;
+  right: 10px;
+  width: auto;
 }
 
 .drawer-card .el-card__body {
-  padding-top: 10px;
+  padding: 10px;
 }
