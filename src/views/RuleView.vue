@@ -118,7 +118,7 @@
 
     <el-tabs type="card" >
       <el-tab-pane label="Overview">
-        <ConfigView :config="rule" />
+        <ConfigView :config="rule" :path="id" type="rule" />
         <br>
       </el-tab-pane>
 

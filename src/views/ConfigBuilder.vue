@@ -96,7 +96,12 @@ export default {
   },
 
   async mounted() {
+    this.$store.dispatch('config/reset');
     this.$store.commit('config/UPDATE_TYPE', this.type);
+
+    this.$nextTick(() => {
+      this.$refs.settings.$refs.form.clearValidate();
+    });
 
     if (this.prefill) {
       await this.$store.dispatch('config/load', { type: 'templates', path: this.prefill });

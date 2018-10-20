@@ -16,7 +16,13 @@
 
 <script>
 export default {
-  props: ['config', 'type']
+  props: ['config', 'type', 'path'],
+
+  mounted() {
+    this.$store.dispatch('config/reset');
+    this.$store.commit('config/UPDATE_TYPE', this.type);
+    this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
+  }
 };
 </script>
 

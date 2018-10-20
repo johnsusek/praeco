@@ -5,18 +5,20 @@
       <TableRow :value="config.type" name="Type" />
     </DefinitionTable>
 
-    <ESChart
-      v-if="showChart"
-      :timeframe="{ hours: 24 }"
-      :bucket="{ minutes: 10 }"
-      :query="query"
-      :index="wildcardIndex" />
+    <ConfigDrawer v-if="showChart" />
   </el-card>
 </template>
 
 <script>
+import ConfigDrawer from '@/components/config/ConfigDrawer.vue';
+
 export default {
+  components: {
+    ConfigDrawer
+  },
+
   props: ['config', 'showChart'],
+
   computed: {
     query() {
       if (
@@ -27,6 +29,7 @@ export default {
         return this.config.filter[0].query.query_string.query;
       }
     },
+
     wildcardIndex() {
       let formattedIndex = this.config.index;
       if (this.config.use_strftime_index) {

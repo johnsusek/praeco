@@ -61,7 +61,7 @@
       </span>
     </el-dialog>
 
-    <ConfigView :config="template" type="template" />
+    <ConfigView :config="template" :path="id" type="template" />
   </div>
 </template>
 

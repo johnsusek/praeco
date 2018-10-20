@@ -145,6 +145,7 @@ export default {
               zlevel: 9,
               symbol: 'diamond',
               symbolSize: '7',
+              symbolOffset: [0, '-50%'],
               itemStyle: {
                 borderWidth: '0.5',
                 borderColor: 'black',

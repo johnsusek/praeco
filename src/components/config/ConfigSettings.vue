@@ -7,7 +7,7 @@
     @submit.native.prevent>
 
     <el-form-item v-if="action !== 'edit'" label="Name" prop="name" required>
-      <el-input ref="name" v-model="name" spellcheck="false" />
+      <el-input ref="name" v-model="name" spellcheck="false" autofocus />
     </el-form-item>
 
     <el-form-item label="Description" prop="description">

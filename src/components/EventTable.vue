@@ -116,11 +116,12 @@ export default {
 
     this.$refs.table.$el.querySelector('.el-table__body-wrapper').addEventListener('scroll', (e) => {
       let scrollVal;
+      let scrollAmount = ((e.target.scrollTop + e.target.clientHeight) / e.target.scrollHeight);
 
       if (this.loadedEvents && this.loadedEvents.length) {
-        scrollVal = parseInt((e.target.scrollTop / e.target.scrollHeight) * this.loadedEvents.length);
+        scrollVal = parseInt(scrollAmount * this.loadedEvents.length);
       } else {
-        scrollVal = parseInt((e.target.scrollTop / e.target.scrollHeight) * 40);
+        scrollVal = parseInt(scrollAmount * this.events.length);
       }
 
       this.$emit('scroll', scrollVal);
