@@ -14,7 +14,11 @@
     </el-form-item>
 
     <el-form-item label="Timeframe" prop="timeframe" required>
-      <ElastalertTimePicker v-model="timeframe" @input="(t) => $emit('updateTimeframe', t)" />
+      <ElastalertTimePicker
+        v-if="timeframe"
+        :unit="Object.keys(timeframe)[0]"
+        :amount="Object.values(timeframe)[0]"
+        @input="updateTimeframe" />
       <label>
         The rule will average out the rate of events over this time period.
         For example, 1 hour means that the ‘current’ window will span from
@@ -164,6 +168,10 @@ export default {
   },
 
   methods: {
+    updateTimeframe(value) {
+      this.timeframe = value;
+    },
+
     updateSpikeHeight(val) {
       this.$emit('updateSpikeHeight', val);
     },

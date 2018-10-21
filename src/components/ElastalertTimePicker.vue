@@ -1,14 +1,8 @@
 <template>
   <span>
-    <el-input-number
-      v-model="currentValue.num"
-      :min="1"
-      @input.native="emitNumKeyup"
-      @input="emitValue"
-    />
-    <el-select
-      v-model="currentValue.unit"
-      @input="emitValue">
+    <el-input-number v-model="currentAmount" :min="1" @input.native="emitNumKeyup" @input="emitValue" />
+
+    <el-select v-model="currentUnit" @input="emitValue">
       <el-option :label="`Second`+plural()" value="seconds" />
       <el-option :label="`Minute`+plural()" value="minutes" />
       <el-option :label="`Hour`+plural()" value="hours" />
@@ -19,61 +13,37 @@
 </template>
 
 <script>
-import Vue from 'vue';
-
 export default {
-  props: {
-    value: {
-      type: Object,
-      required: true,
-      default () {
-        return { minutes: 999 };
-      }
-    }
-  },
+  props: ['unit', 'amount'],
+
   data() {
     return {
-      currentValue: {
-        num: 1,
-        unit: 'hours'
-      }
+      currentUnit: 'minutes',
+      currentAmount: '888'
     };
   },
-  watch: {
-    value: {
-      initial: true,
-      deep: true,
-      handler() {
-        console.log(
-          'v-model has changed skipping update',
-          Object.values(this.value)[0],
-          Object.keys(this.value)[0]
-        );
-        // if (Object.values(this.value)[0] && Object.keys(this.value)[0]) {
-        //   Vue.set(this.currentValue, 'num', Object.values(this.value)[0]);
-        //   Vue.set(this.currentValue, 'unit', Object.keys(this.value)[0]);
-        // }
-      }
-    }
-  },
+
   mounted() {
-    if (Object.values(this.value)[0] && Object.keys(this.value)[0]) {
-      Vue.set(this.currentValue, 'num', Object.values(this.value)[0]);
-      Vue.set(this.currentValue, 'unit', Object.keys(this.value)[0]);
-    }
+    this.currentUnit = this.unit;
+    this.currentAmount = this.amount;
   },
+
   methods: {
     plural() {
-      if (this.currentValue.num !== 1) return 's';
+      if (this.currentAmount !== 1) return 's';
       return '';
     },
+
     emitNumKeyup(ev) {
       if (ev.target) {
-        Vue.set(this.currentValue, 'num', ev.target.value);
+        this.currentAmount = ev.target.value;
       }
     },
+
     emitValue() {
-      this.$emit('input', { [this.currentValue.unit]: this.currentValue.num });
+      if (this.currentUnit && this.currentAmount) {
+        this.$emit('input', { [this.currentUnit]: this.currentAmount });
+      }
     }
   }
 };

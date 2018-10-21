@@ -96,6 +96,9 @@ export default {
         commit('match/UPDATE_QUERY_KEY', config.query_key);
         commit('match/UPDATE_COMPARE_KEY', config.compare_key);
         commit('match/UPDATE_TIMEFRAME', config.timeframe);
+        if (config.type === 'change' && config.timeframe && Object.keys(config.timeframe).length) {
+          commit('match/UPDATE_USE_TIMEFRAME', true);
+        }
 
         if (config.blacklist) {
           config.blacklist.forEach(entry => commit('match/ADD_BLACKLIST_ENTRY', entry));
@@ -180,10 +183,7 @@ export default {
           commit('UPDATE_VALID', true);
         } else {
           commit('UPDATE_VALID', false);
-          commit(
-            'UPDATE_VALIDATION_ERROR',
-            'Invalid config. Make sure all required fields are filled out.'
-          );
+          commit('UPDATE_VALIDATION_ERROR', 'Invalid config. Make sure all required fields are filled out.');
         }
       } catch (error) {
         commit('UPDATE_VALID', false);
@@ -307,7 +307,7 @@ export default {
         config.query_key = state.match.queryKey;
       }
 
-      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
+      if (state.match.useTimeframe && state.match.timeframe && Object.keys(state.match.timeframe).length) {
         config.timeframe = state.match.timeframe;
       }
 

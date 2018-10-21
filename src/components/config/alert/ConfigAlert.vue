@@ -7,7 +7,11 @@
     @submit.native.prevent>
 
     <el-form-item label="Re-alert">
-      <ElastalertTimePicker v-model="realert" />
+      <ElastalertTimePicker
+        v-if="realert"
+        :unit="Object.keys(realert)[0]"
+        :amount="Object.values(realert)[0]"
+        @input="updateRealert" />
       <label v-if="Object.values(realert)[0] === 0">
         WARNING: When re-alert is set to 0 minutes, you will receive an alert
         every single time this rule triggers. This may result in large bursts
@@ -296,6 +300,12 @@ export default {
       }
     }
   },
+
+  methods: {
+    updateRealert(value) {
+      this.realert = value;
+    }
+  }
 };
 </script>
 

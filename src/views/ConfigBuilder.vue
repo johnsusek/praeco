@@ -4,7 +4,14 @@
       <el-col :span="24">
         <h1 class="m-s-xl">{{ pageTitle }}</h1>
 
-        <el-steps :active="steps.indexOf(activePane)" align-center class="m-s-xl">
+        <!-- <vue-json-pretty :data="$store.getters['config/config']" /> -->
+
+        <el-steps
+          :active="steps.indexOf(activePane)"
+          align-center
+          class="builder-steps m-s-xl"
+          process-status="finish"
+          finish-status="success">
           <el-step title="Settings" />
           <el-step title="Filter" />
           <el-step title="Match" />
@@ -12,7 +19,7 @@
           <el-step title="Save" />
         </el-steps>
 
-        <el-collapse v-model="activePane" :accordion="true">
+        <el-collapse v-model="activePane" :accordion="true" class="builder-collapse">
           <el-collapse-item title="Settings" name="settings">
             <ConfigSettings
               ref="settings"
@@ -27,21 +34,21 @@
             <ConfigQuery ref="query" />
 
             <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
-            <el-button class="m-n-lg" type="text" @click="previousPane">Back</el-button>
+            <el-button class="m-n-lg" @click="previousPane">Back</el-button>
           </el-collapse-item>
 
           <el-collapse-item title="Match" name="match">
             <ConfigMatch ref="match" />
 
             <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
-            <el-button class="m-n-lg" type="text" @click="previousPane">Back</el-button>
+            <el-button class="m-n-lg" @click="previousPane">Back</el-button>
           </el-collapse-item>
 
           <el-collapse-item title="Alert" name="alert">
             <ConfigAlert ref="alert" />
 
             <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
-            <el-button class="m-n-lg" type="text" @click="previousPane">Back</el-button>
+            <el-button class="m-n-lg" @click="previousPane">Back</el-button>
           </el-collapse-item>
 
           <el-collapse-item title="Save" name="save">
@@ -86,7 +93,8 @@ export default {
 
   computed: {
     showDrawer() {
-      return this.activePane.includes('query') || this.activePane.includes('match');
+      return (this.activePane.includes('query') || this.activePane.includes('match'))
+        && this.$store.state.config.query.tree.children.length;
     },
 
     pageTitle() {
@@ -120,9 +128,9 @@ export default {
         this.activePane = 'alert';
       } else if (this.activePane === 'alert') {
         this.activePane = 'match';
-      } if (this.activePane === 'match') {
+      } else if (this.activePane === 'match') {
         this.activePane = 'query';
-      } if (this.activePane === 'query') {
+      } else if (this.activePane === 'query') {
         this.activePane = 'settings';
       }
     },
@@ -151,3 +159,27 @@ export default {
   }
 };
 </script>
+
+<style>
+.builder-collapse.el-collapse {
+  border-bottom: none;
+  padding-top: 15px;
+}
+
+.builder-collapse .el-collapse-item {
+  display: none;
+}
+
+.builder-collapse .el-collapse-item.is-active {
+  display: block;
+}
+
+.builder-collapse .el-collapse-item__header {
+  pointer-events: none;
+  display: none;
+}
+
+.builder-collapse .el-collapse-item__wrap {
+  transition-property: none;
+}
+</style>

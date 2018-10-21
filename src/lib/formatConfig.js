@@ -15,7 +15,7 @@ export function formatConfig(config) {
   if (typeof conf.__praeco_query_builder === 'object') {
     conf.__praeco_query_builder = JSON.stringify(conf.__praeco_query_builder);
   } else {
-    console.warn('Tried to convert __praeco_query_builder to string but not an object!');
+    console.warn('Tried to convert __praeco_query_builder to string but not an object!', conf.__praeco_query_builder);
   }
 
   return conf;

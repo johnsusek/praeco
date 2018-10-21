@@ -14,7 +14,11 @@
     </el-form-item>
 
     <el-form-item label="Timeframe" props="timeframe" required>
-      <ElastalertTimePicker v-model="timeframe" @input="(t) => $emit('updateTimeframe', t)" />
+      <ElastalertTimePicker
+        v-if="timeframe"
+        :unit="Object.keys(timeframe)[0]"
+        :amount="Object.values(timeframe)[0]"
+        @input="updateTimeframe" />
       <label>The time that the number of events must occur within.</label>
     </el-form-item>
 
@@ -171,6 +175,12 @@ export default {
       set(value) {
         this.$store.commit('config/match/UPDATE_TIMEFRAME', value);
       }
+    }
+  },
+
+  methods: {
+    updateTimeframe(value) {
+      this.timeframe = value;
     }
   }
 };

@@ -74,7 +74,11 @@
             </el-col>
           </el-row>
           <hr>
-          <ElastalertTimePicker v-model="silenceTime" />
+          <ElastalertTimePicker
+            v-if="silenceTime"
+            :unit="Object.keys(silenceTime)[0]"
+            :amount="Object.values(silenceTime)[0]"
+            @input="updateSilenceTime" />
           <el-button
             class="m-w-sm"
             @click="handleSilence(Object.keys(silenceTime)[0], Object.values(silenceTime)[0])">
@@ -222,6 +226,7 @@ export default {
       silenceLog: []
     };
   },
+
   computed: {
     rule() {
       return this.$store.state.configs.rules[this.id] || {};
@@ -244,6 +249,7 @@ export default {
       }
     }
   },
+
   async mounted() {
     await this.$store.dispatch('configs/fetchConfig', { path: this.id, type: 'rules' });
     this.newName = this.rule.name;
@@ -255,7 +261,12 @@ export default {
       this.now = new Date();
     }, 1000);
   },
+
   methods: {
+    updateSilenceTime(value) {
+      this.silenceTime = value;
+    },
+
     //
     // Move
     //

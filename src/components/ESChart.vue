@@ -30,14 +30,22 @@
           <el-row type="flex" class="row-bg" justify="space-around">
             <el-col :span="24" align="right">
               <label>Group</label>
-              <ElastalertTimePicker v-if="interval" v-model="interval" @input="updateChart" />
+              <ElastalertTimePicker
+                v-if="interval"
+                :unit="Object.keys(interval)[0]"
+                :amount="Object.values(interval)[0]"
+                @input="updateInterval" />
             </el-col>
           </el-row>
 
           <el-row type="flex" class="row-bg" justify="space-around">
             <el-col :span="24" align="right">
               <label>View previous</label>
-              <ElastalertTimePicker v-if="timespan" v-model="timespan" @input="updateChart" />
+              <ElastalertTimePicker
+                v-if="timespan"
+                :unit="Object.keys(timespan)[0]"
+                :amount="Object.values(timespan)[0]"
+                @input="updateTimespan" />
             </el-col>
           </el-row>
         </div>
@@ -131,7 +139,7 @@ export default {
         ],
         series: [
           {
-            cursor: 'pointer',
+            cursor: 'disabled',
             name: 'Events',
             type: 'bar',
             barCategoryGap: '0',
@@ -168,12 +176,14 @@ export default {
   computed: {
     title() {
       let title = this.query;
-      title += '\n';
-      title += Object.values(this.interval)[0];
-      title += ' ';
-      title += Object.keys(this.interval)[0].slice(0, -1);
-      title += ' buckets over last ';
-      title += intervalFromTimeframe(this.timespan);
+      if (Object.values(this.interval)[0]) {
+        title += '\n';
+        title += Object.values(this.interval)[0];
+        title += ' ';
+        title += Object.keys(this.interval)[0].slice(0, -1);
+        title += ' buckets over last ';
+        title += intervalFromTimeframe(this.timespan);
+      }
       return title;
     }
   },
@@ -380,6 +390,16 @@ export default {
       this.fetchData();
     },
 
+    updateInterval(value) {
+      this.interval = value;
+      this.updateChart();
+    },
+
+    updateTimespan(value) {
+      this.timespan = value;
+      this.updateChart();
+    },
+
     fetchData: debounce(async function() {
       if (!this.index) return;
       if (!Object.keys(this.timespan)[0]) return;
@@ -402,11 +422,17 @@ export default {
             ]
           }
         },
+        size: 0,
         aggs: {
           by_minute: {
             date_histogram: {
               field: '@timestamp',
-              interval: intervalFromTimeframe(this.interval)
+              interval: intervalFromTimeframe(this.interval),
+              min_doc_count: 0,
+              extended_bounds: {
+                min: `now-${intervalFromTimeframe(this.timespan)}`,
+                max: 'now'
+              }
             }
           }
         }
@@ -436,13 +462,13 @@ export default {
       if (res && res.data) {
         if (res.data.error) {
           this.searchError = res.data.error.msg;
-        } else {
+        } else if (res.data.aggregations) {
           let x = res.data.aggregations.by_minute.buckets.map(r => ({
-            value: r.key_as_string,
+            value: r.key_as_string
           }));
 
           let y = res.data.aggregations.by_minute.buckets.map(r => ({
-            value: r.doc_count,
+            value: r.doc_count || 0
           }));
 
           // Remove the first and last values because they will contain
@@ -475,6 +501,8 @@ export default {
           }
 
           this.loading = false;
+        } else {
+          console.warn('No aggregations in response data: ', res.data);
         }
       }
     }, 800)

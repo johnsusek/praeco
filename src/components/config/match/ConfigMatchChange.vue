@@ -48,7 +48,11 @@
 
     <el-form-item label="Use timeframe">
       <el-switch v-model="useTimeframe" @input="updateUseTimeframe" /><br>
-      <ElastalertTimePicker v-if="useTimeframe" v-model="timeframe" />
+      <ElastalertTimePicker
+        v-if="timeframe && useTimeframe"
+        :unit="Object.keys(timeframe)[0]"
+        :amount="Object.values(timeframe)[0]"
+        @input="updateTimeframe" />
       <label>
         The maximum time between changes.
         After this time period, ElastAlert will forget the old value of the "compare key" field.
@@ -109,9 +113,17 @@ export default {
   },
 
   methods: {
+    updateTimeframe(value) {
+      this.timeframe = value;
+    },
+
     updateUseTimeframe(val) {
-      if (!val) {
-        this.$store.commit('config/match/UPDATE_TIMEFRAME', {});
+      this.$store.commit('config/match/UPDATE_USE_TIMEFRAME', val);
+
+      if (val) {
+        this.$store.commit('config/match/UPDATE_TIMEFRAME', { hours: 1 });
+      } else {
+        this.$store.commit('config/match/UPDATE_TIMEFRAME', { minutes: 5 });
       }
     }
   },

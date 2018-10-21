@@ -10,7 +10,8 @@ function initialState() {
     ignoreNull: false,
 
     queryKey: '',
-    timeframe: {},
+    timeframe: { minutes: 5 },
+    useTimeframe: false,
     docType: '',
 
     numEvents: null,
@@ -159,6 +160,10 @@ export default {
 
     UPDATE_TIMEFRAME(state, timeframe) {
       state.timeframe = timeframe;
+    },
+
+    UPDATE_USE_TIMEFRAME(state, useTimeframe) {
+      state.useTimeframe = useTimeframe;
     },
 
     //

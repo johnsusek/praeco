@@ -87,6 +87,8 @@ export default {
         return this.$store.state.config.settings.index;
       },
       set(value) {
+        this.$store.commit('config/CLEAR_SAMPLE');
+        this.$store.commit('config/query/RESET');
         this.$store.commit('config/settings/UPDATE_INDEX', value);
       }
     },
@@ -102,7 +104,6 @@ export default {
 
     // Automatically get the mapping on start
     if (this.index) {
-      this.$store.commit('config/settings/UPDATE_INDEX', this.index);
       this.getMapping();
     }
   },
@@ -126,7 +127,7 @@ export default {
     },
 
     useSuggestion(suggestion) {
-      this.$store.commit('config/settings/UPDATE_INDEX', suggestion);
+      this.index = suggestion;
       this.getMapping();
     },
 
