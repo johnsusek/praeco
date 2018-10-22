@@ -63,7 +63,8 @@ export default {
 
   computed: {
     showDrawer() {
-      return (this.activeTab.includes('query') || this.activeTab.includes('match'))
+      return ((this.activeTab.includes('query') || this.activeTab.includes('match')) &&
+      ['any', 'spike', 'frequency'].includes(this.$store.state.config.match.type))
         && this.$store.state.config.query.tree.children.length;
     },
 

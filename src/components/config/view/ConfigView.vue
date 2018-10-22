@@ -10,13 +10,21 @@
       </el-col>
     </el-row>
 
-    <ConfigViewQuery :config="config" :show-chart="type !== 'template'" />
+    <ConfigViewQuery :config="config" :show-chart="showDrawer" />
   </div>
 </template>
 
 <script>
 export default {
   props: ['config', 'type', 'path'],
+
+  computed: {
+    showDrawer() {
+      return this.type !== 'template' &&
+      ['any', 'spike', 'frequency'].includes(this.$store.state.config.match.type)
+        && this.$store.state.config.query.tree.children.length;
+    }
+  },
 
   mounted() {
     this.$store.dispatch('config/reset');

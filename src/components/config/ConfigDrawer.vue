@@ -9,6 +9,7 @@
         @click="toggleDrawer">
         <icon v-if="drawerOpen" icon="chevron-down" />
         <icon v-if="!drawerOpen" icon="chevron-up" />
+        Events
       </el-button>
 
       <div v-if="$store.state.config.match.type === 'spike'" class="spike-legend">

@@ -192,6 +192,7 @@ export default {
 
         this.testRunLoading = true;
         this.testRunResult = '';
+        this.debugMessages = [];
         this.testRunError = '';
         this.messages = [];
         this.messages.push('Starting test run...');
