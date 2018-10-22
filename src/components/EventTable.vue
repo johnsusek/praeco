@@ -6,6 +6,7 @@
       :border="true"
       :height="height"
       style="overflow-y: auto;"
+      stripe
       @header-dragend="saveColumnWidths">
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -37,9 +38,7 @@
       </el-table-column>
 
       <template slot="append">
-        <div
-          v-infinite-scroll="loadMore"
-          infinite-scroll-distance="400" />
+        <div v-infinite-scroll="loadMore" infinite-scroll-distance="600" />
       </template>
     </el-table>
 
@@ -151,7 +150,7 @@ export default {
 
     loadMore() {
       if (!this.loadedEvents) {
-        this.loadedEvents = this.events;
+        this.loadedEvents = this.events || [];
       }
 
       if (this.totalEvents === 0 || this.loadedEvents.length < this.totalEvents) {
@@ -218,9 +217,8 @@ export default {
 
 .event-table .el-table td {
   color: #212121;
-  font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter',
-    'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
-    'Courier New', Courier, monospace;
+  font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
+    'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
   vertical-align: top;
 }
 

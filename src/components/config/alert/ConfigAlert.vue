@@ -134,6 +134,7 @@
 </template>
 
 <script>
+import validUrl from 'valid-url';
 import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
 
 let validateSlackDestination = (rule, value, callback) => {
@@ -144,6 +145,43 @@ let validateSlackDestination = (rule, value, callback) => {
   } else {
     callback();
   }
+};
+
+let validateEmail = (rule, value, callback) => {
+  if (!value || value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
+    callback();
+  } else {
+    callback(new Error('Invalid email address'));
+  }
+};
+
+let validateUrl = (rule, value, callback) => {
+  if (validUrl.isUri(value)) {
+    try {
+      let url = new URL(value);
+      if (['http:', 'https:'].includes(url.protocol)) {
+        callback();
+      } else {
+        callback(new Error('Invalid URL'));
+      }
+    } catch (error) {
+      callback(new Error('Invalid URL'));
+    }
+  } else {
+    callback(new Error('Invalid URL'));
+  }
+};
+
+let validateEmailCommaSeparated = (rule, value, callback) => {
+  let emails = value.split(',');
+
+  emails.forEach(email => {
+    if (email && !email.trim().match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
+      return callback(new Error('Invalid email address'));
+    }
+  });
+
+  return callback();
 };
 
 export default {
@@ -166,6 +204,42 @@ export default {
           {
             validator: validateSlackDestination,
             trigger: 'change'
+          }
+        ],
+        fromAddr: [
+          {
+            validator: validateEmail,
+            trigger: 'change'
+          }
+        ],
+        replyTo: [
+          {
+            validator: validateEmail,
+            trigger: 'change'
+          }
+        ],
+        email: [
+          {
+            validator: validateEmailCommaSeparated,
+            trigger: 'change'
+          }
+        ],
+        cc: [
+          {
+            validator: validateEmailCommaSeparated,
+            trigger: 'change'
+          }
+        ],
+        bcc: [
+          {
+            validator: validateEmailCommaSeparated,
+            trigger: 'change'
+          }
+        ],
+        httpPostUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
           }
         ]
       },

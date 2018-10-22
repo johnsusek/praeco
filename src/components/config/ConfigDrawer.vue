@@ -4,11 +4,12 @@
     class="drawer-card">
     <div>
       <el-button
-        :icon="drawerOpen ? 'el-icon-arrow-down' : 'el-icon-arrow-up'"
-        class="toggle-results"
-        circle
+        class="toggle-results p-w-sm p-e-sm"
         size="mini"
-        @click="toggleDrawer" />
+        @click="toggleDrawer">
+        <icon v-if="drawerOpen" icon="chevron-down" />
+        <icon v-if="!drawerOpen" icon="chevron-up" />
+      </el-button>
 
       <div v-if="$store.state.config.match.type === 'spike'" class="spike-legend">
         <div class="swatch spike-up" /> Spike up

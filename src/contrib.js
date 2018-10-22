@@ -8,6 +8,8 @@ import 'prismjs';
 import locale from 'element-ui/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
+  faChevronDown,
+  faChevronUp,
   faEllipsisH,
   faFolder,
   faFolderOpen,
@@ -22,7 +24,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 let ECharts = require('vue-echarts');
 
-library.add(faEllipsisH, faFolder, faFolderOpen, faExclamationCircle);
+library.add(faChevronUp, faChevronDown, faEllipsisH, faFolder, faFolderOpen, faExclamationCircle);
 
 Vue.use(ElementUI, { locale, size: 'mini' });
 Vue.use(infiniteScroll);
