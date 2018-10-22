@@ -6,9 +6,6 @@ RUN mkdir -p /tmp/nginx/praeco
 RUN mkdir -p /var/log/nginx
 RUN mkdir -p /var/www/html
 
-COPY nginx_config/nginx.conf /etc/nginx/nginx.conf
-COPY nginx_config/default.conf /etc/nginx/conf.d/default.conf
-
 WORKDIR /tmp/nginx/praeco
 
 COPY . .

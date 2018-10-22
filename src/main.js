@@ -35,7 +35,7 @@ function startApp(config) {
 
   initLogging();
 
-  axios.defaults.baseURL = config.apiBaseUrl;
+  axios.defaults.baseURL = '/api';
 
   Vue.use(VueNativeSock, `${config.apiWsBaseUrl}/test`, {
     connectManually: true,
