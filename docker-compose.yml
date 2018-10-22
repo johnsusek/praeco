@@ -1,0 +1,18 @@
+version: '3'
+services:
+  elastalert:
+    image: 'servercentral/elastalert'
+    ports:
+      - '3030:3030'
+      - '3333:3333'
+    volumes:
+      - ${PWD}/config/elastalert.yaml:/opt/elastalert/config.yaml
+      - ${PWD}/config/config.json:/opt/elastalert-server/config/config.json
+      - ${PWD}/rules:/opt/elastalert/rules
+      - ${PWD}/rule_templates:/opt/elastalert/rule_templates
+  webapp:
+    image: 'servercentral/praeco'
+    ports:
+      - '8080:80'
+    volumes:
+      - ${PWD}/public/praeco.config.json:/var/www/html/praeco.config.json

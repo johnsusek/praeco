@@ -1,0 +1,7 @@
+{
+  "appUrl": "http://localhost:8080",
+  "apiBaseUrl": "http://localhost:3030",
+  "apiWsBaseUrl": "ws://localhost:3333",
+  "errorLoggerUrl": "",
+  "hidePreconfiguredFields": []
+}
