@@ -56,10 +56,10 @@
 
       <el-col :span="12">
         <h6>Subject preview</h6>
-        {{ $store.getters['config/alert/subjectRendered'] }}
+        <div class="preview">{{ $store.getters['config/alert/subjectRendered'] }}</div>
 
         <h6>Body preview</h6>
-        {{ $store.getters['config/alert/bodyRendered'] }}
+        <div class="preview">{{ $store.getters['config/alert/bodyRendered'] }}</div>
 
         <div
           v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
@@ -136,6 +136,10 @@ export default {
 </script>
 
 <style scoped>
+.preview {
+  white-space: pre;
+}
+
 .el-select {
   width: 340px;
 }

@@ -34,15 +34,18 @@ export function htmlToConfigFormat(text) {
           } else if (innerNode.tagName === 'BR') {
             alertText += '\n';
           } else {
+            /* istanbul ignore next */
             console.log('unknown inner tag', innerNode.innerHTML);
           }
         });
       } else if (node.tagName === 'BR') {
         alertText += '\n';
       } else {
+        /* istanbul ignore next */
         console.log('unknown tag', node.innerHTML);
       }
     } else {
+      /* istanbul ignore next */
       console.log('unknown node type', node);
     }
   });

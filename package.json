@@ -55,9 +55,38 @@
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-airbnb": "^3.0.1",
     "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-plugin-istanbul": "^5.1.0",
     "chai": "^4.1.2",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "node-sass": "^4.9.3",
+    "nyc": "^13.1.0",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 0,
+    "statements": 0,
+    "functions": 0,
+    "branches": 0,
+    "include": [
+      "apollo-server/**/*.js",
+      "src/**/*.{js,vue}"
+    ],
+    "exclude": [
+      "apollo-server/*.js",
+      "src/*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "cache": true,
+    "all": true
   }
 }

@@ -66,6 +66,7 @@ function luceneSyntaxFromQueryBuilderRule(qbRule) {
   } else if (operator === 'regex') {
     syntax += `${rule}:/${value}/`; // 'message:/ahci/`
   } else {
+    /* istanbul ignore next */
     console.warn(`Unknown operator selected for field ${rule}:`, operator);
   }
 
