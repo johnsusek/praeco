@@ -105,7 +105,7 @@ export default {
     if (localStorage.getItem('hiddenEventTableColumns')) {
       this.hidden = JSON.parse(localStorage.getItem('hiddenEventTableColumns'));
     } else if (this.events[0]) {
-      this.hidden = Object.keys(this.events[0]).sort();
+      this.hidden = [];
     }
 
     // if there are saved col widths, use those
