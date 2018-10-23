@@ -30,7 +30,7 @@ export async function loadChildrenOptions({ action, parentNode, callback }, only
   if (action === 'LOAD_CHILDREN_OPTIONS') {
     if (parentNode.id === '_rules') {
       // Load root rules folder
-      let res = await axios.get('/rules?all');
+      let res = await axios.get('/api/rules?all');
       store.commit('configs/FETCHED_CONFIGS_TREE', { paths: res.data, type: 'rules' });
 
       let folderNodes = {};
@@ -60,14 +60,11 @@ export async function loadChildrenOptions({ action, parentNode, callback }, only
       let paths = store.state.configs.tree.rules.filter(entry => !entry.endsWith('/'));
       store.commit('configs/FETCHED_CONFIGS', { paths, type: 'rules' });
 
-      parentNode.children = [
-        ...Object.values(folderNodes).sort(),
-        ...Object.values(ruleNodes).sort()
-      ];
+      parentNode.children = [...Object.values(folderNodes).sort(), ...Object.values(ruleNodes).sort()];
     } else if (parentNode.id === '_templates') {
       if (parentNode.id === '_templates') {
         // Load root templates folder
-        let res = await axios.get('/templates?all');
+        let res = await axios.get('/api/templates?all');
         store.commit('configs/FETCHED_CONFIGS_TREE', { paths: res.data, type: 'templates' });
 
         let folderNodes = {};
@@ -97,10 +94,7 @@ export async function loadChildrenOptions({ action, parentNode, callback }, only
         let paths = store.state.configs.tree.templates.filter(entry => !entry.endsWith('/'));
         store.commit('configs/FETCHED_CONFIGS', { paths, type: 'templates' });
 
-        parentNode.children = [
-          ...Object.values(folderNodes).sort(),
-          ...Object.values(templateNodes).sort()
-        ];
+        parentNode.children = [...Object.values(folderNodes).sort(), ...Object.values(templateNodes).sort()];
       }
     } else {
       // Load child rule or template nodes
@@ -152,10 +146,7 @@ export async function loadChildrenOptions({ action, parentNode, callback }, only
         }
       });
 
-      parentNode.children = [
-        ...Object.values(folderNodes).sort(),
-        ...Object.values(ruleNodes).sort()
-      ];
+      parentNode.children = [...Object.values(folderNodes).sort(), ...Object.values(ruleNodes).sort()];
     }
   }
 

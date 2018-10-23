@@ -75,7 +75,7 @@ export default {
       }
 
       try {
-        let res = await axios.get('/indices');
+        let res = await axios.get('/api/indices');
         if (res.data.error) {
           networkError('Error fetching indices.');
         } else {
@@ -93,7 +93,7 @@ export default {
       }
 
       try {
-        let res = await axios.get(`/mapping/${index}`);
+        let res = await axios.get(`/api/mapping/${index}`);
         commit('FETCHED_MAPPINGS', { mappings: res.data, index });
         return true;
       } catch (error) {

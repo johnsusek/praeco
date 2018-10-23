@@ -450,7 +450,7 @@ export default {
 
       try {
         this.source = CancelToken.source();
-        res = await axios.post(`/search/${this.index}`, query, { cancelToken: this.source.token });
+        res = await axios.post(`/api/search/${this.index}`, query, { cancelToken: this.source.token });
       } catch (error) {
         if (!axios.isCancel(error)) {
           console.error(error);

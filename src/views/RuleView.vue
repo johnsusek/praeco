@@ -21,7 +21,7 @@
 
     <h1 v-show="!showRename">
       {{ rule.name }}
-      <el-tag v-if="rule.is_enabled" type="success" class="m-w-xs">
+      <el-tag v-if="isEnabled" type="success" class="m-w-xs">
         <Bulb success />
         Enabled
       </el-tag>
@@ -44,7 +44,7 @@
       <el-button plain type="info" @click="showMoveDialog">Move</el-button>
 
       <el-button
-        v-if="rule.is_enabled"
+        v-if="isEnabled"
         plain
         type="warning"
         @click="handleDisable">
@@ -52,7 +52,7 @@
       </el-button>
 
       <el-popover
-        v-if="rule.is_enabled"
+        v-if="isEnabled"
         :disabled="!!silenceNotice"
         v-model="silencePopoverVisible">
         <span slot="reference">
@@ -88,7 +88,7 @@
       </el-popover>
 
       <el-button
-        v-if="!rule.is_enabled"
+        v-if="!isEnabled"
         plain
         type="success"
         @click="handleEnable">
@@ -228,6 +228,9 @@ export default {
   },
 
   computed: {
+    isEnabled() {
+      return this.rule.is_enabled === undefined || this.rule.is_enabled;
+    },
     rule() {
       return this.$store.state.configs.rules[this.id] || {};
     },
@@ -463,7 +466,7 @@ export default {
     //
     async getQueryLog() {
       try {
-        let res = await axios.get('/metadata/elastalert_status', {
+        let res = await axios.get('/api/metadata/elastalert_status', {
           params: { rule_name: this.rule.name }
         });
         if (res.data.error) {
@@ -486,7 +489,7 @@ export default {
     //
     async getAlertLog() {
       try {
-        let res = await axios.get('/metadata/elastalert', {
+        let res = await axios.get('/api/metadata/elastalert', {
           params: { rule_name: this.rule.name }
         });
         if (res.data.error) {
@@ -509,7 +512,7 @@ export default {
     //
     async getSilenceLog() {
       try {
-        let res = await axios.get('/metadata/silence', {
+        let res = await axios.get('/api/metadata/silence', {
           params: { rule_name: this.rule.name }
         });
         if (res.data.error) {

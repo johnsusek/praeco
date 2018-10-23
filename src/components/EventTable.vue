@@ -189,7 +189,7 @@ export default {
         size: 40
       };
 
-      let res = await axios.post(`/search/${this.$store.state.config.settings.index}`, query);
+      let res = await axios.post(`/api/search/${this.$store.state.config.settings.index}`, query);
 
       if (res.data.hits) {
         res.data.hits.hits.map(h => h._source).forEach(event => {

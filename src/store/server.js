@@ -18,7 +18,7 @@ export default {
   actions: {
     async fetchVersion({ commit }) {
       try {
-        let res = await axios.get('/');
+        let res = await axios.get('/api');
         commit('FETCHED_VERSION', res.data);
       } catch (error) {
         networkError(error);
@@ -26,7 +26,7 @@ export default {
     },
     async fetchStatus({ commit }) {
       try {
-        let res = await axios.get('/status');
+        let res = await axios.get('/api/status');
         commit('FETCHED_STATUS', res.data);
       } catch (error) {
         networkError(error);

@@ -4,7 +4,8 @@ function initialState() {
   return {
     name: '',
     description: '',
-    index: ''
+    index: '',
+    isEnabled: false
   };
 }
 
@@ -47,6 +48,10 @@ export default {
 
     UPDATE_INDEX(state, index) {
       state.index = index;
+    },
+
+    UPDATE_ENABLED(state, isEnabled) {
+      state.isEnabled = isEnabled;
     }
   }
 };

@@ -35,12 +35,16 @@ function startApp(config) {
 
   initLogging();
 
-  axios.defaults.baseURL = '/api';
-
-  Vue.use(VueNativeSock, `${config.apiWsBaseUrl}/test`, {
-    connectManually: true,
-    format: 'json'
-  });
+  Vue.use(
+    VueNativeSock,
+    `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
+      window.location.port
+    }/api-ws/test`,
+    {
+      connectManually: true,
+      format: 'json'
+    }
+  );
 
   new Vue({
     router,

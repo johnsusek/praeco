@@ -48,7 +48,7 @@ export default {
 
     async getSilenceLog() {
       try {
-        let res = await axios.get('/metadata/silence');
+        let res = await axios.get('/api/metadata/silence');
         if (res.data.error) {
           this.$notify.error({
             message: res.data.error.msg,

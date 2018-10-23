@@ -1,20 +1,36 @@
 # praeco
 
-⚠️ Praeco is currently an alpha and should not to be used on production systems. Please create a github issue if you are having trouble installing.
+Praeco is an alerting tool for elasticsearch – a GUI for [elastalert](https://github.com/yelp/elastalert), using the [elastalert API](https://github.com/bitsensor/elastalert).
 
-Praeco is a GUI for elastalert, using [bitsensor's elastalert API](https://github.com/bitsensor/elastalert) to manage rules.
+- Interactively build alert rules using a query builder
+- View a preview of your query and a graph of results over the last 24h
+- Supports Any, Blacklist, Whitelist, Change, Frequency and Spike elastalert rule types
+- Test your alerts against historical data
+- See a preview of your alert subject/body as you are editing
+- Supports notifications to Slack, Email or HTTP POST
+- View logs of when your alerts are checked and when they fire
+- Use templates to pre-fill commonly used rule options
 
-![](https://user-images.githubusercontent.com/611996/46428598-0575b280-c70a-11e8-8ba2-bdcd9932380b.png)
+⚠️ Praeco is currently an alpha and should not to be used on production systems. Please create a github issue if you are having trouble or have a feature request.
 
-## Configure
+## Quickstart
 
-Edit docker-compose.yml and change the extra_hosts entry for elasticsearch to match your elasticsearch host.
+If you have an existing elastalert installation, you should edit config/api.config.json and config/elastalert.yaml and change the writeback_index to something unique.
 
-## Run
-
-`docker-compose up`
+```bash
+export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
+docker-compose up
+```
 
 Praeco should now be available on http://127.0.0.1:8080
+
+## Configuration
+
+OPTIONAL: Edit config/api.config.json, config/elastalert.yaml, and/or public/praeco.config.json for advanced configuration options. See the [api docs](https://github.com/bitsensor/elastalert#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information on config options.
+
+## Screenshot
+
+![](https://user-images.githubusercontent.com/611996/46428598-0575b280-c70a-11e8-8ba2-bdcd9932380b.png)
 
 ## Operation
 
@@ -35,13 +51,19 @@ npm install
 npm run serve
 ```
 
-## Building
-
-To build your own docker container from local changes:
+To build a docker container from local changes:
 
 ```
 docker build -t praeco .
 ```
+
+## Testing
+
+Unit tests:
+`npm run test:unit`
+
+E2E tests:
+`npm run test:e2e`
 
 <br><br>
 

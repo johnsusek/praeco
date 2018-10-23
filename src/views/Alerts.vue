@@ -60,7 +60,7 @@ export default {
 
     async getAlertLog() {
       try {
-        let res = await axios.get('/metadata/elastalert');
+        let res = await axios.get('/api/metadata/elastalert');
         if (res.data.error) {
           this.$notify.error({
             message: res.data.error.msg,

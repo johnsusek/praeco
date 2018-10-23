@@ -85,7 +85,7 @@ export default {
   actions: {
     async fetchConfig({ commit }, { path, type }) {
       try {
-        let res = await axios.get(`/${type}/${path}`);
+        let res = await axios.get(`/api/${type}/${path}`);
         // We have got the config, so save it to our store keyed on its path
         commit('FETCHED_CONFIG', { path, config: res.data, type });
         return res.data;
@@ -211,7 +211,7 @@ export default {
       try {
         // Before creating the config at this path, we check to make sure
         // it doesn't already exist
-        let res = await axios.get(`/${type}/${path}`);
+        let res = await axios.get(`/api/${type}/${path}`);
         if (res.data) {
           return { error: 'A rule by that name already exists at that path' };
         }
@@ -224,7 +224,7 @@ export default {
 
     async createConfigFinal({ commit, state }, { type, path, conf }) {
       try {
-        let res = await axios.post(`/${type}/${path}`, {
+        let res = await axios.post(`/api/${type}/${path}`, {
           yaml: yaml.safeDump(conf)
         });
 
@@ -247,7 +247,7 @@ export default {
 
     async deleteConfig({ commit }, { path, type }) {
       try {
-        let res = await axios.delete(`/${type}/${path}`);
+        let res = await axios.delete(`/api/${type}/${path}`);
 
         if (res.status === 200) {
           commit('DELETED_CONFIG', { path, type });
@@ -260,7 +260,7 @@ export default {
 
     async createFolder(context, { path, type }) {
       try {
-        let res = await axios.put(`/folders/${type}/${path}`);
+        let res = await axios.put(`/api/folders/${type}/${path}`);
         return res.data;
       } catch (error) {
         networkError(error);
@@ -269,7 +269,7 @@ export default {
 
     async deleteFolder(context, { path, type }) {
       try {
-        let res = await axios.delete(`/folders/${type}/${path}`);
+        let res = await axios.delete(`/api/folders/${type}/${path}`);
         return res.data;
       } catch (error) {
         networkError(error);
@@ -281,7 +281,7 @@ export default {
       conf.is_enabled = false;
 
       try {
-        let res = await axios.post(`/rules/${conf.__praeco_full_path}`, {
+        let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
           yaml: yaml.safeDump(conf)
         });
 
@@ -301,7 +301,7 @@ export default {
 
     async silenceRule(context, { path, unit, duration }) {
       try {
-        let res = await axios.post(`/silence/${path}`, {
+        let res = await axios.post(`/api/silence/${path}`, {
           unit,
           duration
         });
@@ -321,7 +321,7 @@ export default {
       conf.is_enabled = true;
 
       try {
-        let res = await axios.post(`/rules/${conf.__praeco_full_path}`, {
+        let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
           yaml: yaml.safeDump(conf)
         });
 

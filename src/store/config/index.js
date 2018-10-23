@@ -86,6 +86,13 @@ export default {
         commit('settings/UPDATE_DESCRIPTION', config.description);
         commit('settings/UPDATE_INDEX', config.index);
 
+        // If is_enabled is not in the config, the rule is in fact enabled
+        if (config.is_enabled === undefined || config.is_enabled) {
+          commit('settings/UPDATE_ENABLED', true);
+        } else {
+          commit('settings/UPDATE_ENABLED', false);
+        }
+
         if (config.__praeco_query_builder && config.__praeco_query_builder.query) {
           commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
         }
@@ -170,7 +177,7 @@ export default {
       commit('UPDATE_VALIDATING', true);
 
       try {
-        let res = await axios.post('/test', {
+        let res = await axios.post('/api/test', {
           rule: getters.yaml,
           options: {
             testType: 'schemaOnly',
@@ -218,7 +225,7 @@ export default {
 
       try {
         sampleCancelToken = axios.CancelToken.source();
-        res = await axios.post(`/search/${getters['settings/wildcardIndex']}`, search, {
+        res = await axios.post(`/api/search/${getters['settings/wildcardIndex']}`, search, {
           cancelToken: sampleCancelToken.token
         });
       } catch (error) {
@@ -472,6 +479,8 @@ export default {
       if (state.settings.index) {
         config.index = state.settings.index;
       }
+      
+      config.is_enabled = !!state.settings.isEnabled;
 
       config.use_strftime_index = getters['settings/strftime'];
 

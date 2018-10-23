@@ -46,7 +46,7 @@ export default {
 
     async getQueryLog() {
       try {
-        let res = await axios.get('/metadata/elastalert_status');
+        let res = await axios.get('/api/metadata/elastalert_status');
         if (res.data.error) {
           this.$notify.error({
             message: res.data.error.msg,

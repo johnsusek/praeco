@@ -37,7 +37,7 @@ export default {
     },
     async getErrorLog() {
       try {
-        let res = await axios.get('/metadata/elastalert_error');
+        let res = await axios.get('/api/metadata/elastalert_error');
         this.errorLog = res.data.hits;
       } catch (error) {
         networkError(error);

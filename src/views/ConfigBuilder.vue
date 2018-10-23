@@ -117,6 +117,9 @@ export default {
       this.$store.commit('config/UPDATE_PATH', '');
       this.$store.commit('config/settings/UPDATE_NAME', 'New rule');
     }
+
+    // Since this is a new rule, we want to disable it by default
+    this.$store.commit('config/settings/UPDATE_ENABLED', false);
   },
 
   destroyed() {
