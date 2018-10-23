@@ -18,7 +18,7 @@ services:
       - 'elasticsearch:${PRAECO_ELASTICSEARCH}'
 
   webapp:
-    image: 'praeco'
+    image: 'servercentral/praeco'
 
     ports:
       - '8080:8080'
