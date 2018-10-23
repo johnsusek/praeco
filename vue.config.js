@@ -30,6 +30,23 @@ module.exports = {
   devServer: {
     host: '0.0.0.0',
     hot: true,
-    disableHostCheck: true
+    disableHostCheck: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3030/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+      '/api-ws': {
+        target: 'http://localhost:3333/',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api-ws': ''
+        }
+      }
+    }
   }
 };
