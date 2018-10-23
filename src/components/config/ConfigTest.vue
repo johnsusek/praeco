@@ -1,9 +1,5 @@
 <template>
   <div>
-    <p v-if="showTest">
-      Check alert settings by testing against last 24h of events. No actual alerts will be sent.
-    </p>
-
     <ExpandableAlert
       v-if="testRunError"
       :contents="testRunError"
@@ -11,10 +7,13 @@
       type="error"
     />
 
-    <el-row v-if="showTest" class="m-s-lg">
-      <el-col :span="24" align="center">
-        <el-button v-if="!testRunLoading" type="primary" @click="testStream">Test</el-button>
-        <el-button v-else type="primary" disabled>Testing...</el-button>
+    <el-row>
+      <el-col :span="24">
+        <el-button v-if="!testRunLoading" type="primary" plain @click="runTest">Test</el-button>
+        <el-button v-else type="primary" plain disabled>Testing...</el-button>
+        <label>
+          Check alert settings by testing against last 24h of events. No actual alerts will be sent.
+        </label>
       </el-col>
     </el-row>
 
@@ -22,31 +21,25 @@
       v-if="(+new Date() - startTime) > 10000 && lastRateAverage > 0 && lastRateAverage < 70"
       :closable="false"
       :show-icon="true"
-      title=""
-      type="warning">
-      This is a slow query that could consume a large amount of
-      server resources. Please consider modifying your query or match settings.
-    </el-alert>
+      title="This is a slow query that could consume a large amount of
+      server resources. Please consider modifying your query or match settings."
+      type="warning"
+      class="m-n-med" />
 
     <el-alert
       v-if="testRunResult &&
         testRunResult.writeback &&
       testRunResult.writeback.elastalert_status"
       :closable="false"
-      type="success"
-      title="">
-      This rule would result in
-      <strong>
-        {{ testRunResult.writeback.elastalert_status.matches || 0 }}
-      </strong>
+      :title="`This rule would result in
+      ${testRunResult.writeback.elastalert_status.matches || 0 }
       alert triggers
-      over the last day.
-      <br>
-      <small>Your re-alert settings may reduce the actual amount of alerts you receive.</small>
-    </el-alert>
+      over the last day.`"
+      type="success"
+      class="m-n-med" />
 
     <template v-if="testRunLoading && messages.length">
-      <el-row type="flex" justify="center" align="middle">
+      <el-row type="flex" justify="center" align="middle" class="m-n-lg">
         <el-col :span="8" align="center">
           <div class="rate">{{ lastRateAverage }}</div>
         </el-col>
@@ -101,13 +94,13 @@
 </template>
 
 <script>
-import yaml from 'js-yaml';
 import { logger } from '@/lib/logger.js';
 
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export default {
-  props: ['showTest', 'config'],
+  props: ['valid'],
+
   data() {
     return {
       startTime: 0,
@@ -120,11 +113,13 @@ export default {
       testRunLoading: false
     };
   },
+
   computed: {
     lastRateAverage() {
       return Math.trunc(average(this.lastRates)) || 0;
     }
   },
+
   watch: {
     messages() {
       if (!this.messages.length || !this.startTime) return 0;
@@ -136,9 +131,11 @@ export default {
       }
     }
   },
+
   destroyed() {
     this.$disconnect();
   },
+
   mounted() {
     this.$options.sockets.onmessage = ev => {
       let payload = JSON.parse(ev.data);
@@ -169,6 +166,7 @@ export default {
       }
     };
   },
+
   methods: {
     colorFromPercent(percent) {
       if (percent > 75) {
@@ -182,39 +180,43 @@ export default {
     cancelTestRun() {
       this.$disconnect();
     },
-    testStream() {
-      this.$emit('validateMatchForTest');
-    },
     runTest() {
-      this.$connect();
+      this.$emit('validate');
 
-      let rule = yaml.safeDump(this.config);
+      this.$nextTick(() => {
+        if (!this.valid) return;
 
-      this.testRunLoading = true;
-      this.testRunResult = '';
-      this.testRunError = '';
-      this.messages = [];
-      this.messages.push('Starting test run...');
+        this.$connect();
 
-      let options = {
-        testType: 'all',
-        days: 1,
-        alert: false,
-        format: 'json',
-        maxResults: 1
-      };
+        let rule = this.$store.getters['config/yaml'];
 
-      this.$socket.onopen = () => {
-        this.startTime = +new Date();
-        this.$socket.sendObj({ rule, options });
-      };
+        this.testRunLoading = true;
+        this.testRunResult = '';
+        this.debugMessages = [];
+        this.testRunError = '';
+        this.messages = [];
+        this.messages.push('Starting test run...');
 
-      this.$socket.onclose = () => {
-        this.lastRates = [];
-        this.startTime = 0;
-        this.testRunStats = {};
-        this.testRunLoading = false;
-      };
+        let options = {
+          testType: 'all',
+          days: 1,
+          alert: false,
+          format: 'json',
+          maxResults: 1
+        };
+
+        this.$socket.onopen = () => {
+          this.startTime = +new Date();
+          this.$socket.sendObj({ rule, options });
+        };
+
+        this.$socket.onclose = () => {
+          this.lastRates = [];
+          this.startTime = 0;
+          this.testRunStats = {};
+          this.testRunLoading = false;
+        };
+      });
     }
   }
 };

@@ -23,4 +23,5 @@ yarn-error.log*
 *.sln
 *.sw*
 
-public/praeco.config.json
+coverage/
+.nyc_output/

@@ -35,7 +35,7 @@ describe('App test', () => {
       .contains('OK')
       .click();
 
-    cy.get('[data-id="Automated test folder"]');
+    cy.get('[data-id="Automated test folder/"]');
     cy.contains('Delete folder...').click({ force: true });
   });
 });

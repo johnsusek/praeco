@@ -23,7 +23,7 @@
     <el-row>
       <router-link :to="{
         name: 'ruleconfigbuilder',
-        params: { action: 'add' }, query: { prefill: id, prefillType: 'template' }
+        params: { action: 'add' }, query: { prefill: id }
       }">
         <el-button icon="el-icon-plus" plain type="primary">
           Create rule from template
@@ -31,7 +31,7 @@
       </router-link>
 
       <router-link :to="{
-        name: 'templateconfigbuilder',
+        name: 'templateconfigeditor',
         params: { action: 'edit', path: id } }">
         <el-button type="primary" icon="el-icon-edit" plain>Edit</el-button>
       </router-link>
@@ -61,7 +61,7 @@
       </span>
     </el-dialog>
 
-    <ConfigView :config="template" type="template" />
+    <ConfigView :config="template" :path="id" type="template" />
   </div>
 </template>
 

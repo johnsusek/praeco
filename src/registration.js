@@ -1,0 +1,37 @@
+import Vue from 'vue';
+
+import Bulb from '@/components/Bulb';
+import DateTime from '@/components/DateTime';
+import ConfigViewAlert from '@/components/config/view/ConfigViewAlert';
+import ConfigViewQuery from '@/components/config/view/ConfigViewQuery';
+import ConfigViewSettings from '@/components/config/view/ConfigViewSettings';
+import ConfigView from '@/components/config/view/ConfigView.vue';
+import ConfigViewMatch from '@/components/config/view/ConfigViewMatch';
+import DefinitionTable from '@/components/DefinitionTable';
+import ElastalertTimePicker from '@/components/ElastalertTimePicker';
+import ESChart from '@/components/ESChart';
+import EventTable from '@/components/EventTable';
+import ExpandableAlert from '@/components/ExpandableAlert';
+import FolderTree from '@/components/FolderTree';
+import NavTree from '@/components/NavTree';
+import PraecoFormItem from '@/components/PraecoFormItem';
+import TableRow from '@/components/TableRow';
+import ElastalertTimeView from '@/components/ElastalertTimeView';
+
+Vue.component('Bulb', Bulb);
+Vue.component('DateTime', DateTime);
+Vue.component('ConfigView', ConfigView);
+Vue.component('ConfigViewAlert', ConfigViewAlert);
+Vue.component('ConfigViewMatch', ConfigViewMatch);
+Vue.component('ConfigViewQuery', ConfigViewQuery);
+Vue.component('ConfigViewSettings', ConfigViewSettings);
+Vue.component('DefinitionTable', DefinitionTable);
+Vue.component('ElastalertTimePicker', ElastalertTimePicker);
+Vue.component('ESChart', ESChart);
+Vue.component('EventTable', EventTable);
+Vue.component('ExpandableAlert', ExpandableAlert);
+Vue.component('FolderTree', FolderTree);
+Vue.component('NavTree', NavTree);
+Vue.component('PraecoFormItem', PraecoFormItem);
+Vue.component('TableRow', TableRow);
+Vue.component('ElastalertTimeView', ElastalertTimeView);

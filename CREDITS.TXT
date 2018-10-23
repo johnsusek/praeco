@@ -1,0 +1,14 @@
+# Credits
+
+Yelp - for Elastalert and documentation snippets used in UI
+https://github.com/Yelp/elastalert
+
+Bitsensor - for Elastalert API server
+https://github.com/bitsensor/elastalert
+
+ServerCentral - Sponsors of Praeco development
+https://github.com/ServerCentral
+
+Praeco designed and created by John Susek
+https://github.com/johnsusek
+

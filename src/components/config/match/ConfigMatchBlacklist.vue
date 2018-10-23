@@ -1,10 +1,12 @@
 <template>
-  <el-form ref="form" :model="config" label-position="top" @submit.native.prevent>
-    <br>
-
-    <el-form-item label="Field" prop="compare_key" required>
+  <el-form
+    ref="form"
+    :model="$store.state.config.match"
+    label-position="top"
+    @submit.native.prevent>
+    <el-form-item label="Field" prop="compareKey" required>
       <el-select
-        v-model="config.compare_key"
+        v-model="compareKey"
         filterable
         placeholder="Field">
         <el-option
@@ -19,7 +21,7 @@
     <el-form-item label="Blacklist" prop="blacklist" required>
       <template>
         <el-form-item
-          v-for="(entry, index) in config.blacklist"
+          v-for="(entry, index) in $store.state.config.match.blacklist"
           :key="index"
           :prop="'blacklist.' + index"
           :rules="{ required: true, message: 'entry can not be null', trigger: 'blur' }"
@@ -27,7 +29,10 @@
           label="">
           <el-row :gutter="5" type="flex" justify="space-between">
             <el-col :span="10">
-              <el-input v-model="config.blacklist[index]" placeholder="Keyword" />
+              <el-input
+                v-model="$store.state.config.match.blacklist[index]"
+                placeholder="Keyword"
+                @input="(val) => updateBlacklist(val, index)" />
             </el-col>
             <el-col :span="14">
               <el-button
@@ -47,33 +52,34 @@
 </template>
 
 <script>
-import Vue from 'vue';
 
 export default {
-  props: ['config', 'fields'],
-  watch: {
-    config: {
-      deep: true,
-      handler() {
-        if (this.config.type !== 'blacklist') {
-          delete this.config.blacklist;
-          delete this.config.compare_key;
-        }
+  computed: {
+    fields() {
+      return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    },
+
+    compareKey: {
+      get() {
+        return this.$store.state.config.match.compareKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_COMPARE_KEY', value);
       }
     }
   },
+
   methods: {
-    removeEntry(item) {
-      let index = this.config.blacklist.indexOf(item);
-      if (index !== -1) {
-        this.config.blacklist.splice(index, 1);
-      }
+    updateBlacklist(entry, index) {
+      this.$store.commit('config/match/UPDATE_BLACKLIST_ENTRY', { entry, index });
     },
+
+    removeEntry(entry) {
+      this.$store.commit('config/match/REMOVE_BLACKLIST_ENTRY', entry);
+    },
+
     addEntry() {
-      if (!this.config.blacklist) {
-        Vue.set(this.config, 'blacklist', []);
-      }
-      this.config.blacklist.push('');
+      this.$store.commit('config/match/ADD_BLACKLIST_ENTRY');
     }
   }
 };

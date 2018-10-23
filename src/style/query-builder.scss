@@ -1,0 +1,125 @@
+.vue-query-builder {
+  color: #606266;
+  padding-bottom: 80px;
+
+  .vqb-group .vqb-group-heading {
+    margin-bottom: 5px;
+
+    select {
+      margin-right: 5px;
+    }
+
+    label[for='vqb-match-type'] {
+      float: right;
+    }
+  }
+
+  .match-type-container {
+    &::before {
+      content: 'If ';
+    }
+  }
+
+  > .vqb-group > .vqb-group-body > .rule-actions {
+    // background: green;
+    margin-bottom: 0;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+
+    select {
+      width: 100%;
+    }
+  }
+
+  .vqb-group-body .vqb-group-heading {
+    padding: 0 10px;
+    margin-bottom: 5px;
+  }
+
+  .vqb-group-body .vqb-group-heading {
+    border-radius: 0 4px 0 0;
+  }
+
+  .vqb-group-body .vqb-group-body {
+    padding: 0 10px 10px;
+  }
+
+  .vqb-group .vqb-group {
+    border-left: 3px solid #18cc2e;
+    margin-bottom: 10px;
+  }
+
+  .vqb-group .vqb-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .vqb-group .vqb-group .vqb-group:last-child {
+    margin-bottom: 10px;
+  }
+
+  .rule-actions {
+    margin-bottom: 20px;
+
+    select {
+      margin-right: 10px;
+    }
+
+    button {
+      margin-right: 10px;
+    }
+  }
+
+  .vqb-rule {
+    background: #f5f7fa;
+    padding: 5px 10px;
+    margin: 10px 0;
+    border-left: 3px solid #189acc;
+
+    > div {
+      position: relative;
+      padding-right: 21px;
+    }
+
+    label {
+      margin-right: 10px;
+      font-weight: 600;
+    }
+
+    select {
+      margin-right: 10px;
+    }
+
+    input {
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: 4px;
+    }
+
+    button {
+      margin-top: 3px;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+
+  .match-type-container {
+    > div {
+      display: inline-block;
+    }
+
+    label {
+      margin-right: 10px;
+    }
+
+    button {
+      float: right;
+      margin-left: 20px;
+    }
+  }
+
+  select {
+    max-width: 100%;
+  }
+}

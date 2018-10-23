@@ -9,6 +9,7 @@ import { formatConfig } from '../lib/formatConfig';
 
 export default {
   namespaced: true,
+
   state: {
     templates: {
       // 'aaa/templateName': { ...config... },
@@ -17,19 +18,27 @@ export default {
     rules: {
       // 'zzz/ruleName': { ...config... },
       // 'zzz/ddd/otherRuleName': { ...config... }
+    },
+    tree: {
+      templates: [],
+      rules: []
     }
   },
+
   mutations: {
-    FETCHED_CONFIGS(state, { configs, path, type }) {
+    FETCHED_CONFIGS(state, { paths, type }) {
       // Configs are stored with their full path as their key
-      configs[type].forEach(name => {
-        let fullPath = `${path ? `${path}/` : ''}${name}`;
-        if (!state[type][fullPath]) {
+      paths.forEach(path => {
+        if (!state[type][path]) {
           // Since we are just getting a list of configs without their
           // details, we set to an empty object in the store
-          Vue.set(state[type], fullPath, {});
+          Vue.set(state[type], path, {});
         }
       });
+    },
+
+    FETCHED_CONFIGS_TREE(state, { paths, type }) {
+      Vue.set(state.tree, type, paths);
     },
 
     /*eslint-disable */
@@ -72,22 +81,29 @@ export default {
       Vue.delete(state[type], path);
     }
   },
+
   actions: {
     async fetchConfig({ commit }, { path, type }) {
       try {
-        let res = await axios.get(`/${type}/${path}`);
+        let res = await axios.get(`/api/${type}/${path}`);
         // We have got the config, so save it to our store keyed on its path
         commit('FETCHED_CONFIG', { path, config: res.data, type });
-        return res;
+        return res.data;
       } catch (error) {
         networkError(error);
       }
     },
 
-    async renameConfig({ dispatch }, { config, type, newName }) {
+    async renameConfig({ dispatch, state }, { config, type, newName }) {
       // Rename is similar to move, except the path is the same,
       // so our param is just the new name
       if (config.name === newName) return;
+
+      // If a config with the same name exists somewhere, return false
+      let takenNames = state.tree[type].map(c => c.split('/').pop()).filter(c => c !== '');
+      if (takenNames.includes(newName)) {
+        return;
+      }
 
       let newConfig = cloneDeep(config);
 
@@ -167,9 +183,9 @@ export default {
     },
 
     /*eslint-disable */
-    async createConfig({ dispatch }, { config, type, overwrite, rootPath }) {
+    async createConfig({ dispatch }, { config, type, overwrite, rootPath, format = true }) {
       /* eslint-enable */
-      let conf = formatConfig(config);
+      let conf = format ? formatConfig(config) : config;
 
       let fullPath;
       if (rootPath) {
@@ -195,7 +211,7 @@ export default {
       try {
         // Before creating the config at this path, we check to make sure
         // it doesn't already exist
-        let res = await axios.get(`/${type}/${path}`);
+        let res = await axios.get(`/api/${type}/${path}`);
         if (res.data) {
           return { error: 'A rule by that name already exists at that path' };
         }
@@ -208,7 +224,7 @@ export default {
 
     async createConfigFinal({ commit, state }, { type, path, conf }) {
       try {
-        let res = await axios.post(`/${type}/${path}`, {
+        let res = await axios.post(`/api/${type}/${path}`, {
           yaml: yaml.safeDump(conf)
         });
 
@@ -231,7 +247,7 @@ export default {
 
     async deleteConfig({ commit }, { path, type }) {
       try {
-        let res = await axios.delete(`/${type}/${path}`);
+        let res = await axios.delete(`/api/${type}/${path}`);
 
         if (res.status === 200) {
           commit('DELETED_CONFIG', { path, type });
@@ -244,7 +260,16 @@ export default {
 
     async createFolder(context, { path, type }) {
       try {
-        let res = await axios.put(`/folders/${type}/${path}`);
+        let res = await axios.put(`/api/folders/${type}/${path}`);
+        return res.data;
+      } catch (error) {
+        networkError(error);
+      }
+    },
+
+    async deleteFolder(context, { path, type }) {
+      try {
+        let res = await axios.delete(`/api/folders/${type}/${path}`);
         return res.data;
       } catch (error) {
         networkError(error);
@@ -256,7 +281,7 @@ export default {
       conf.is_enabled = false;
 
       try {
-        let res = await axios.post(`/rules/${conf.__praeco_full_path}`, {
+        let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
           yaml: yaml.safeDump(conf)
         });
 
@@ -274,12 +299,29 @@ export default {
       }
     },
 
+    async silenceRule(context, { path, unit, duration }) {
+      try {
+        let res = await axios.post(`/api/silence/${path}`, {
+          unit,
+          duration
+        });
+
+        if (res.data.startsWith('INFO:elastalert:Success')) {
+          return true;
+        }
+
+        return false;
+      } catch (error) {
+        networkError(error);
+      }
+    },
+
     async enableRule({ commit }, config) {
       let conf = formatConfig(config);
       conf.is_enabled = true;
 
       try {
-        let res = await axios.post(`/rules/${conf.__praeco_full_path}`, {
+        let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
           yaml: yaml.safeDump(conf)
         });
 

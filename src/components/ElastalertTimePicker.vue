@@ -1,16 +1,8 @@
 <template>
   <span>
-    <el-input-number
-      :value="Object.values(value)[0]"
-      v-model="num"
-      :min="1"
-      @input.native="emitNumKeyup"
-      @input="emitValue"
-    />
-    <el-select
-      :value="Object.keys(value)[0]"
-      v-model="unit"
-      @input="emitValue">
+    <el-input-number v-model="currentAmount" :min="1" @input.native="emitNumKeyup" @input="emitValue" />
+
+    <el-select v-model="currentUnit" @input="emitValue">
       <el-option :label="`Second`+plural()" value="seconds" />
       <el-option :label="`Minute`+plural()" value="minutes" />
       <el-option :label="`Hour`+plural()" value="hours" />
@@ -22,25 +14,36 @@
 
 <script>
 export default {
-  props: ['value'],
+  props: ['unit', 'amount'],
+
   data() {
     return {
-      num: Object.values(this.value)[0],
-      unit: Object.keys(this.value)[0]
+      currentUnit: 'minutes',
+      currentAmount: '888'
     };
   },
+
+  mounted() {
+    this.currentUnit = this.unit;
+    this.currentAmount = this.amount;
+  },
+
   methods: {
     plural() {
-      if (this.num !== 1) return 's';
+      if (this.currentAmount !== 1) return 's';
       return '';
     },
+
     emitNumKeyup(ev) {
       if (ev.target) {
-        this.num = ev.target.value;
+        this.currentAmount = ev.target.value;
       }
     },
+
     emitValue() {
-      this.$emit('input', { [this.unit]: this.num });
+      if (this.currentUnit && this.currentAmount) {
+        this.$emit('input', { [this.currentUnit]: this.currentAmount });
+      }
     }
   }
 };

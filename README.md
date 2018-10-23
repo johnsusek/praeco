@@ -1,47 +1,36 @@
 # praeco
 
-Praeco is a GUI for elastalert, using [bitsensor's elastalert API](https://github.com/bitsensor/elastalert) to manage rules.
+Praeco is an alerting tool for elasticsearch – a GUI for [elastalert](https://github.com/yelp/elastalert), using the [elastalert API](https://github.com/bitsensor/elastalert).
 
-![](https://user-images.githubusercontent.com/611996/46428598-0575b280-c70a-11e8-8ba2-bdcd9932380b.png)
+- Interactively build alert rules using a query builder
+- View a preview of your query and a graph of results over the last 24h
+- Supports Any, Blacklist, Whitelist, Change, Frequency and Spike elastalert rule types
+- Test your alerts against historical data
+- See a preview of your alert subject/body as you are editing
+- Supports notifications to Slack, Email or HTTP POST
+- View logs of when your alerts are checked and when they fire
+- Use templates to pre-fill commonly used rule options
 
-## Installation
+⚠️ Praeco is currently an alpha and should not to be used on production systems. Please create a github issue if you are having trouble or have a feature request.
 
-- Copy `praeco.config.json.default` to `public/praeco.config.json` and update apiBaseUrl to point to your API instance.
+## Quickstart
 
-## Running
-
-For just running the app, use the official docker images:
-
-### [Server] Elastalert API server:
-
-- At the moment, our fork of the elastalert API is required:
-
-```bash
-git clone -b folders https://github.com/ServerCentral/elastalert-server.git && cd elastalert-server
-```
-
-- Instructions for configuring the API are on the [github repo](https://github.com/servercentral/elastalert-server/tree/folders).
-
-- Run the below docker image (note this is servercentral/elastalert) once your API config files are set up:
+If you have an existing elastalert installation, you should edit config/api.config.json and config/elastalert.yaml and change the writeback_index to something unique.
 
 ```bash
-docker run -d -p 3030:3030 -p 3333:3333 \
-    -v `pwd`/config/elastalert.yaml:/opt/elastalert/config.yaml \
-    -v `pwd`/config/config.json:/opt/elastalert-server/config/config.json \
-    -v `pwd`/rules:/opt/elastalert/rules \
-    -v `pwd`/rule_templates:/opt/elastalert/rule_templates \
-    --name elastalert servercentral/elastalert:latest
-```
-
-Elastalert API server should now be available at http://127.0.0.1:3030 and ws://127.0.0.1:3333
-
-### [Client] Praeco client:
-
-```
-docker run -v ${PWD}/public/praeco.config.json:/var/www/html/praeco.config.json -it -p 8080:80 servercentral/praeco
+export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
+docker-compose up
 ```
 
 Praeco should now be available on http://127.0.0.1:8080
+
+## Configuration
+
+OPTIONAL: Edit config/api.config.json, config/elastalert.yaml, and/or public/praeco.config.json for advanced configuration options. See the [api docs](https://github.com/bitsensor/elastalert#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information on config options.
+
+## Screenshot
+
+![](https://user-images.githubusercontent.com/611996/46428598-0575b280-c70a-11e8-8ba2-bdcd9932380b.png)
 
 ## Operation
 
@@ -62,13 +51,19 @@ npm install
 npm run serve
 ```
 
-## Building
-
-To build your own docker container from local changes:
+To build a docker container from local changes:
 
 ```
 docker build -t praeco .
 ```
+
+## Testing
+
+Unit tests:
+`npm run test:unit`
+
+E2E tests:
+`npm run test:e2e`
 
 <br><br>
 

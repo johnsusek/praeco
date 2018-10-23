@@ -1,0 +1,77 @@
+$--color-primary: #157ce7;
+$--color-warning: #eaa43b;
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+@import '~element-ui/packages/theme-chalk/src/index';
+
+pre {
+  font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter',
+    'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
+    'Courier New', Courier, monospace;
+  word-break: break-word;
+  white-space: pre-wrap;
+  margin: 0;
+  font-size: 12px;
+  background: #ddd;
+  padding: 10px;
+  border: 1px solid #ccc;
+  color: #444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #444;
+}
+
+h1 {
+  margin: 0 0 10px 0;
+  font-size: 25px;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+h6 {
+  margin-bottom: 5px;
+  margin-top: 10px;
+  color: #86898f;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #ebeef5;
+  margin: 15px 0px;
+}
+
+label {
+  color: #606266;
+}
+
+.drawer-row {
+  padding-bottom: 240px;
+}
+
+.drawer-card {
+  position: fixed;
+  bottom: -30px;
+  padding-bottom: 30px;
+  height: 200px;
+  width: calc(100% - 250px);
+  background: #fff;
+  z-index: 999;
+}
+
+.drawer-card-open {
+  height: calc(100% - 30px);
+  left: 10px;
+  right: 10px;
+  width: auto;
+}
+
+.drawer-card .el-card__body {
+  padding: 10px;
+}

@@ -12,7 +12,11 @@ export function formatConfig(config) {
   conf.alert_text = formattedText.alertText;
   conf.alert_text_args = formattedText.alertArgs;
 
-  conf.__praeco_query_builder = JSON.stringify(conf.__praeco_query_builder);
+  if (typeof conf.__praeco_query_builder === 'object') {
+    conf.__praeco_query_builder = JSON.stringify(conf.__praeco_query_builder);
+  } else {
+    console.warn('Tried to convert __praeco_query_builder to string but not an object!', conf.__praeco_query_builder);
+  }
 
   return conf;
 }

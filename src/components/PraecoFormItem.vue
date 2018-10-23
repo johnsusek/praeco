@@ -1,6 +1,6 @@
 <template>
   <el-form-item
-    v-show="(!value && !hidePreconfiguredFields.includes(prop)) || type === 'template'"
+    v-show="!(value && hidePreconfiguredFields.includes(prop)) || type === 'template'"
     :label="label"
     :prop="prop"
     :required="required"
@@ -30,7 +30,7 @@ export default {
   ],
   computed: {
     hidePreconfiguredFields() {
-      return this.$store.state.config.config.hidePreconfiguredFields;
+      return this.$store.state.appconfig.config.hidePreconfiguredFields || [];
     },
     type() {
       return this.$route.meta.type;

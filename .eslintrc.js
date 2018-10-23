@@ -24,7 +24,7 @@ module.exports = {
     'prefer-destructuring': 'off',
     'space-before-function-paren': 'off',
     'no-new': 'off',
-    'max-len': ['error', { code: 100, ignoreUrls: true }],
+    'max-len': ['error', { ignoreStrings: true, code: 120 }],
     'vue/require-v-for-key': 'off',
     'vue/require-prop-types': 'off',
     'vue/max-attributes-per-line': 'off',

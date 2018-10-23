@@ -23,16 +23,21 @@
     "comma-number": "^2.0.0",
     "debounce": "^1.2.0",
     "echarts": "4.1.0",
-    "element-ui": "^2.4.6",
+    "element-ui": "^2.4.8",
     "js-yaml": "^3.12.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
+    "lodash.throttle": "^4.1.1",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
     "normalize.css": "^8.0.0",
     "prismjs": "^1.15.0",
     "string-format": "^2.0.0",
+    "valid-url": "^1.0.9",
     "vue": "^2.5.17",
     "vue-at": "^2.5.0-beta",
     "vue-echarts": "^3.1.2",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-json-pretty": "^1.4.1",
     "vue-native-websocket": "^2.0.11",
     "vue-prism-component": "^1.0.1",
@@ -50,9 +55,38 @@
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-airbnb": "^3.0.1",
     "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-plugin-istanbul": "^5.1.0",
     "chai": "^4.1.2",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "node-sass": "^4.9.3",
+    "nyc": "^13.1.0",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 0,
+    "statements": 0,
+    "functions": 0,
+    "branches": 0,
+    "include": [
+      "apollo-server/**/*.js",
+      "src/**/*.{js,vue}"
+    ],
+    "exclude": [
+      "apollo-server/*.js",
+      "src/*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "cache": true,
+    "all": true
   }
 }

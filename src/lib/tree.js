@@ -1,32 +1,6 @@
 import axios from 'axios';
 import store from '@/store';
 
-export function buildRuleNodes(rules, parentNode) {
-  return rules.sort().map(rule => ({
-    id: `${parentNode ? `${parentNode.id}/` : ''}${rule}`,
-    label: rule,
-    isRule: true
-  }));
-}
-
-export function buildTemplateNodes(rules, parentNode) {
-  return rules.sort().map(rule => ({
-    id: `${parentNode ? `${parentNode.id}/` : ''}${rule}`,
-    label: rule,
-    isTemplate: true
-  }));
-}
-
-export function buildDirectoryNodes(directories, parentNode, directoryType) {
-  return directories.sort().map(directory => ({
-    id: `${parentNode ? `${parentNode.id}/` : ''}${directory}`,
-    label: directory,
-    isDirectory: true,
-    directoryType,
-    children: null
-  }));
-}
-
 export function triggerMouseEvent(node, eventType) {
   let clickEvent = document.createEvent('MouseEvents');
   clickEvent.synthetic = true;
@@ -56,54 +30,125 @@ export async function loadChildrenOptions({ action, parentNode, callback }, only
   if (action === 'LOAD_CHILDREN_OPTIONS') {
     if (parentNode.id === '_rules') {
       // Load root rules folder
-      let res = await axios.get('/rules');
+      let res = await axios.get('/api/rules?all');
+      store.commit('configs/FETCHED_CONFIGS_TREE', { paths: res.data, type: 'rules' });
 
-      store.commit('configs/FETCHED_CONFIGS', { configs: res.data, type: 'rules' });
+      let folderNodes = {};
+      let ruleNodes = {};
 
-      let rules = onlyFolders ? [] : buildRuleNodes(res.data.rules);
-      let directories = buildDirectoryNodes(res.data.directories, null, 'rules');
+      store.state.configs.tree.rules.sort().forEach(entry => {
+        let entryParts = entry.split('/');
+        let entryName = entryParts[0];
 
-      parentNode.children = [...directories, ...rules];
+        if (entry.endsWith('/') && entryParts.length === 2) {
+          folderNodes[entry] = {
+            id: entry,
+            label: entryName,
+            isDirectory: true,
+            isRule: true,
+            children: null
+          };
+        } else if (entryParts.length === 1 && !onlyFolders) {
+          ruleNodes[entry] = {
+            id: entry,
+            label: entryName,
+            isRule: true
+          };
+        }
+      });
+
+      let paths = store.state.configs.tree.rules.filter(entry => !entry.endsWith('/'));
+      store.commit('configs/FETCHED_CONFIGS', { paths, type: 'rules' });
+
+      parentNode.children = [...Object.values(folderNodes).sort(), ...Object.values(ruleNodes).sort()];
     } else if (parentNode.id === '_templates') {
-      // Load root templates folder
-      let res = await axios.get('/templates');
+      if (parentNode.id === '_templates') {
+        // Load root templates folder
+        let res = await axios.get('/api/templates?all');
+        store.commit('configs/FETCHED_CONFIGS_TREE', { paths: res.data, type: 'templates' });
 
-      store.commit('configs/FETCHED_CONFIGS', { configs: res.data, type: 'templates' });
+        let folderNodes = {};
+        let templateNodes = {};
 
-      let templates = onlyFolders ? [] : buildTemplateNodes(res.data.templates);
-      let directories = buildDirectoryNodes(res.data.directories, null, 'templates');
+        store.state.configs.tree.templates.sort().forEach(entry => {
+          let entryParts = entry.split('/');
+          let entryName = entryParts[0];
 
-      parentNode.children = [...directories, ...templates];
+          if (entry.endsWith('/') && entryParts.length === 2) {
+            folderNodes[entry] = {
+              id: entry,
+              label: entryName,
+              isDirectory: true,
+              children: null,
+              isTemplate: true
+            };
+          } else if (entryParts.length === 1 && !onlyFolders) {
+            templateNodes[entry] = {
+              id: entry,
+              label: entryName,
+              isTemplate: true
+            };
+          }
+        });
+
+        let paths = store.state.configs.tree.templates.filter(entry => !entry.endsWith('/'));
+        store.commit('configs/FETCHED_CONFIGS', { paths, type: 'templates' });
+
+        parentNode.children = [...Object.values(folderNodes).sort(), ...Object.values(templateNodes).sort()];
+      }
     } else {
-      // Load a rules or templates child folder
-      let res = await axios.get(`/${parentNode.directoryType}`, {
-        params: { path: parentNode.id }
-      });
+      // Load child rule or template nodes
+      let folderNodes = {};
+      let ruleNodes = {};
 
-      store.commit('configs/FETCHED_CONFIGS', {
-        configs: res.data,
-        path: parentNode.id,
-        type: parentNode.directoryType
-      });
+      let nodeEntries = [];
 
-      let rules = [];
-      if (res.data.rules && !onlyFolders) {
-        rules = buildRuleNodes(res.data.rules, parentNode);
+      if (parentNode.isTemplate) {
+        nodeEntries = store.state.configs.tree.templates;
+      } else if (parentNode.isRule) {
+        nodeEntries = store.state.configs.tree.rules;
       }
 
-      let templates = [];
-      if (res.data.templates && !onlyFolders) {
-        templates = buildTemplateNodes(res.data.templates, parentNode);
-      }
+      nodeEntries.forEach(entry => {
+        if (!entry.startsWith(parentNode.id)) {
+          return;
+        }
 
-      let directories = buildDirectoryNodes(
-        res.data.directories,
-        parentNode,
-        parentNode.directoryType
-      );
+        let stripped = entry.replace(parentNode.id, '');
 
-      parentNode.children = [...directories, ...rules, ...templates];
+        if (!stripped) {
+          return;
+        }
+
+        // We are only interested in direct children
+        let match = stripped.match(/\//g);
+
+        if (!match && !onlyFolders) {
+          // Direct child rule
+          ruleNodes[entry] = {
+            id: entry,
+            label: stripped,
+            isTemplate: parentNode.isTemplate,
+            isRule: parentNode.isRule
+          };
+        } else if (match && match.length === 1) {
+          // Direct child folder
+          if (stripped.endsWith('/')) {
+            folderNodes[entry] = {
+              id: entry,
+              label: stripped.replace('/', ''),
+              isDirectory: true,
+              children: null,
+              isTemplate: parentNode.isTemplate,
+              isRule: parentNode.isRule
+            };
+          }
+        }
+      });
+
+      parentNode.children = [...Object.values(folderNodes).sort(), ...Object.values(ruleNodes).sort()];
     }
   }
+
   callback();
 }

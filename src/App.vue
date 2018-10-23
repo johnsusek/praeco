@@ -1,5 +1,5 @@
 <template>
-  <el-container id="app">
+  <div id="app">
     <el-header>
       <div id="nav">
         <el-row>
@@ -26,8 +26,7 @@
         <router-view :key="$route.fullPath" />
       </el-main>
     </el-container>
-
-  </el-container>
+  </div>
 </template>
 
 <script>
@@ -63,7 +62,7 @@ body {
   opacity: 0.5;
 }
 
-body > section > section > .el-aside {
+#app > section > .el-aside {
   padding: 22px 0 20px 10px;
 }
 

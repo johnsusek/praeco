@@ -21,32 +21,18 @@
 
     <h1 v-show="!showRename">
       {{ rule.name }}
-      <el-tag v-if="rule.is_enabled" type="success">
+      <el-tag v-if="isEnabled" type="success" class="m-w-xs">
         <Bulb success />
         Enabled
       </el-tag>
       <el-tag v-else type="warning">Disabled</el-tag>
     </h1>
 
+    <el-alert v-if="silenceNotice" :closable="false" :title="silenceNotice" show-icon type="info" />
+
     <el-row>
-      <el-button
-        v-if="rule.is_enabled"
-        plain
-        type="warning"
-        @click="handleDisable">
-        Disable...
-      </el-button>
-
-      <el-button
-        v-if="!rule.is_enabled"
-        plain
-        type="success"
-        @click="handleEnable">
-        Enable...
-      </el-button>
-
       <router-link :to="{
-        name: 'ruleconfigbuilder',
+        name: 'ruleconfigeditor',
         params: { action: 'edit', path: id } }">
         <el-button icon="el-icon-edit" plain type="primary">Edit</el-button>
       </router-link>
@@ -56,6 +42,58 @@
       <el-button plain type="info" @click="duplicate">Duplicate</el-button>
 
       <el-button plain type="info" @click="showMoveDialog">Move</el-button>
+
+      <el-button
+        v-if="isEnabled"
+        plain
+        type="warning"
+        @click="handleDisable">
+        Disable...
+      </el-button>
+
+      <el-popover
+        v-if="isEnabled"
+        :disabled="!!silenceNotice"
+        v-model="silencePopoverVisible">
+        <span slot="reference">
+          <el-button
+            :disabled="!!silenceNotice"
+            plain
+            type="warning">
+            Silence
+            <i v-if="!silencePopoverVisible" class="el-icon-arrow-down el-icon-right" />
+            <i v-if="silencePopoverVisible" class="el-icon-arrow-up el-icon-right" />
+          </el-button>
+        </span>
+        <template>
+          <el-row type="flex" justify="space-around">
+            <el-col :span="24" align="center">
+              <el-button @click="handleSilence('minutes', 5)">5 minutes</el-button>
+              <el-button @click="handleSilence('hour', 1)">1 hour</el-button>
+              <el-button @click="handleSilence('day', 1)">1 day</el-button>
+            </el-col>
+          </el-row>
+          <hr>
+          <ElastalertTimePicker
+            v-if="silenceTime"
+            :unit="Object.keys(silenceTime)[0]"
+            :amount="Object.values(silenceTime)[0]"
+            @input="updateSilenceTime" />
+          <el-button
+            class="m-w-sm"
+            @click="handleSilence(Object.keys(silenceTime)[0], Object.values(silenceTime)[0])">
+            Silence
+          </el-button>
+        </template>
+      </el-popover>
+
+      <el-button
+        v-if="!isEnabled"
+        plain
+        type="success"
+        @click="handleEnable">
+        Enable...
+      </el-button>
 
       <el-button
         icon="el-icon-delete"
@@ -84,7 +122,7 @@
 
     <el-tabs type="card" >
       <el-tab-pane label="Overview">
-        <ConfigView :config="rule" />
+        <ConfigView :config="rule" :path="id" type="rule" />
         <br>
       </el-tab-pane>
 
@@ -166,6 +204,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
+import moment from 'moment';
 import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
@@ -175,6 +214,9 @@ export default {
   props: ['id'],
   data() {
     return {
+      silencePopoverVisible: false,
+      now: new Date(),
+      silenceTime: { hours: 2 },
       moveVisible: false,
       moveDest: '',
       showRename: false,
@@ -184,7 +226,11 @@ export default {
       silenceLog: []
     };
   },
+
   computed: {
+    isEnabled() {
+      return this.rule.is_enabled === undefined || this.rule.is_enabled;
+    },
     rule() {
       return this.$store.state.configs.rules[this.id] || {};
     },
@@ -192,16 +238,38 @@ export default {
       if (!this.rule.name) return false;
       let conf = formatConfig(this.rule);
       return yaml.safeDump(conf);
+    },
+    silenceNotice() {
+      if (!this.silenceLog[0]) {
+        return;
+      }
+
+      let silencedDate = new Date(this.silenceLog[0].until);
+
+      if (this.now < silencedDate) {
+        let formattedSilencedDate = moment(silencedDate).format('MMMM Do YYYY, h:mm:ss A');
+        return `Rule silenced until ${formattedSilencedDate}`;
+      }
     }
   },
+
   async mounted() {
     await this.$store.dispatch('configs/fetchConfig', { path: this.id, type: 'rules' });
     this.newName = this.rule.name;
     this.getQueryLog();
     this.getAlertLog();
     this.getSilenceLog();
+
+    setInterval(() => {
+      this.now = new Date();
+    }, 1000);
   },
+
   methods: {
+    updateSilenceTime(value) {
+      this.silenceTime = value;
+    },
+
     //
     // Move
     //
@@ -337,6 +405,36 @@ export default {
     },
 
     //
+    // Silence
+    //
+
+    async handleSilence(unit, duration) {
+      this.silencePopoverVisible = false;
+
+      let silenced = await this.$store.dispatch('configs/silenceRule', {
+        path: this.id,
+        unit,
+        duration
+      });
+
+      setTimeout(() => {
+        this.getSilenceLog();
+      }, 1000);
+
+      if (silenced) {
+        this.$message({
+          type: 'success',
+          message: 'Rule silenced'
+        });
+      } else {
+        this.$message({
+          type: 'error',
+          message: 'There was an error silencing the rule.'
+        });
+      }
+    },
+
+    //
     // Enable
     //
 
@@ -368,8 +466,8 @@ export default {
     //
     async getQueryLog() {
       try {
-        let res = await axios.get('/metadata/elastalert_status', {
-          params: { rule_name: this.id }
+        let res = await axios.get('/api/metadata/elastalert_status', {
+          params: { rule_name: this.rule.name }
         });
         if (res.data.error) {
           this.$notify.error({
@@ -391,8 +489,8 @@ export default {
     //
     async getAlertLog() {
       try {
-        let res = await axios.get('/metadata/elastalert', {
-          params: { rule_name: this.id }
+        let res = await axios.get('/api/metadata/elastalert', {
+          params: { rule_name: this.rule.name }
         });
         if (res.data.error) {
           this.$notify.error({
@@ -414,8 +512,8 @@ export default {
     //
     async getSilenceLog() {
       try {
-        let res = await axios.get('/metadata/silence', {
-          params: { rule_name: this.id }
+        let res = await axios.get('/api/metadata/silence', {
+          params: { rule_name: this.rule.name }
         });
         if (res.data.error) {
           this.$notify.error({
@@ -443,10 +541,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-h1 .el-tag {
-  position: relative;
-  top: -3px;
-}
-</style>

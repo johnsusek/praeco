@@ -4,7 +4,7 @@ export default {
     config: {}
   },
   mutations: {
-    SET_CONFIG(state, payload) {
+    SET_APP_CONFIG(state, payload) {
       state.config = payload;
     }
   }
