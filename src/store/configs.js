@@ -286,10 +286,11 @@ export default {
         });
 
         if (res.data.created) {
+          config.is_enabled = false;
           commit('UPDATED_CONFIG', {
             path: conf.__praeco_full_path,
             type: 'rules',
-            config: conf
+            config
           });
           return true;
         }
@@ -326,10 +327,11 @@ export default {
         });
 
         if (res.data.created) {
+          config.is_enabled = true;
           commit('UPDATED_CONFIG', {
             path: conf.__praeco_full_path,
             type: 'rules',
-            config: conf
+            config
           });
           return true;
         }

@@ -15,8 +15,6 @@ Praeco is an alerting tool for elasticsearch – a GUI for [elastalert](https://
 
 ## Quickstart
 
-If you have an existing elastalert installation, you should edit config/api.config.json and config/elastalert.yaml and change the writeback_index to something unique.
-
 ```bash
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
