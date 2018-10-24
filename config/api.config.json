@@ -16,5 +16,5 @@
   },
   "es_host": "elasticsearch",
   "es_port": 9200,
-  "writeback_index": "elastalert_status"
+  "writeback_index": "praeco_elastalert_status"
 }
