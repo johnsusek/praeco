@@ -185,6 +185,10 @@ export default {
         title += intervalFromTimeframe(this.timespan);
       }
       return title;
+    },
+
+    timeField() {
+      return this.$store.state.config.settings.timeField;
     }
   },
 
@@ -413,7 +417,7 @@ export default {
               },
               {
                 range: {
-                  '@timestamp': {
+                  [this.timeField]: {
                     lte: 'now',
                     gte: `now-${intervalFromTimeframe(this.timespan)}`
                   }
@@ -426,7 +430,7 @@ export default {
         aggs: {
           by_minute: {
             date_histogram: {
-              field: '@timestamp',
+              field: this.timeField,
               interval: intervalFromTimeframe(this.interval),
               min_doc_count: 0,
               extended_bounds: {

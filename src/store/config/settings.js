@@ -5,7 +5,8 @@ function initialState() {
     name: '',
     description: '',
     index: '',
-    isEnabled: false
+    isEnabled: false,
+    timeField: ''
   };
 }
 
@@ -48,6 +49,10 @@ export default {
 
     UPDATE_INDEX(state, index) {
       state.index = index;
+    },
+
+    UPDATE_TIME_FIELD(state, timeField) {
+      state.timeField = timeField;
     },
 
     UPDATE_ENABLED(state, isEnabled) {

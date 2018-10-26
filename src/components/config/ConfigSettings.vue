@@ -31,6 +31,16 @@
       </label>
     </el-form-item>
 
+    <el-form-item label="Time field" prop="timeField" required>
+      <el-select v-model="timeField" filterable clearable placeholder="">
+        <el-option
+          v-for="field in Object.keys(dateFields)"
+          :key="field"
+          :label="field"
+          :value="field" />
+      </el-select>
+    </el-form-item>
+
     <el-alert
       v-if="mappingError"
       :description="mappingError"
@@ -64,12 +74,25 @@ export default {
   },
 
   computed: {
+    dateFields() {
+      return this.$store.getters['metadata/dateFieldsForCurrentConfig'];
+    },
+
     name: {
       get() {
         return this.$store.state.config.settings.name;
       },
       set(value) {
         this.$store.commit('config/settings/UPDATE_NAME', value);
+      }
+    },
+
+    timeField: {
+      get() {
+        return this.$store.state.config.settings.timeField;
+      },
+      set(value) {
+        this.$store.commit('config/settings/UPDATE_TIME_FIELD', value);
       }
     },
 

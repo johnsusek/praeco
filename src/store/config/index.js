@@ -97,6 +97,10 @@ export default {
           commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
         }
 
+        if (config.__praeco_time_field) {
+          commit('settings/UPDATE_TIME_FIELD', config.__praeco_time_field);
+        }
+
         commit('match/UPDATE_TYPE', config.type);
         commit('match/UPDATE_IGNORE_NULL', config.ignore_null);
         commit('match/UPDATE_DOC_TYPE', config.doc_type);
@@ -202,7 +206,7 @@ export default {
       }
     },
 
-    async sample({ commit, getters }) {
+    async sample({ commit, getters, state }) {
       commit('CLEAR_SAMPLE');
 
       let search = {
@@ -215,7 +219,7 @@ export default {
             ]
           }
         },
-        sort: [{ '@timestamp': { order: 'desc' } }],
+        sort: [{ [state.settings.timeField]: { order: 'desc' } }],
         size: 1
       };
 
@@ -481,7 +485,11 @@ export default {
       if (state.settings.index) {
         config.index = state.settings.index;
       }
-      
+
+      if (state.settings.timeField) {
+        config.__praeco_time_field = state.settings.timeField;
+      }
+
       config.is_enabled = !!state.settings.isEnabled;
 
       config.use_strftime_index = getters['settings/strftime'];

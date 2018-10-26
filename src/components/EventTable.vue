@@ -31,7 +31,7 @@
             :data="scope.row[col]"
             :deep="0" />
           <template v-else>
-            <DateTime v-if="col === '@timestamp'" :date="scope.row[col]" />
+            <DateTime v-if="col === timeField" :date="scope.row[col]" />
             <template v-else>{{ scope.row[col] }}</template>
           </template>
         </template>
@@ -81,6 +81,10 @@ export default {
   computed: {
     columns() {
       return Object.keys(this.events[0]).sort().filter(col => !this.hidden.includes(col));
+    },
+
+    timeField() {
+      return this.$store.state.config.settings.timeField;
     }
   },
 
@@ -175,7 +179,7 @@ export default {
               },
               {
                 range: {
-                  '@timestamp': {
+                  [this.timeField]: {
                     gte: this.from,
                     lte: `${this.from}||+${to}`
                   }
@@ -184,7 +188,7 @@ export default {
             ]
           }
         },
-        sort: [{ '@timestamp': { order: 'desc' } }],
+        sort: [{ [this.timeField]: { order: 'desc' } }],
         from: this.offset,
         size: 40
       };

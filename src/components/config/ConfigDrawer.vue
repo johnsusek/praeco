@@ -63,6 +63,10 @@ export default {
   computed: {
     bucket() {
       return this.$store.state.config.match.timeframe || { minutes: 5 };
+    },
+
+    timeField() {
+      return this.$store.state.config.settings.timeField;
     }
   },
 
@@ -115,7 +119,7 @@ export default {
               },
               {
                 range: {
-                  '@timestamp': {
+                  [this.timeField]: {
                     gte: from,
                     lte: `${from}||+${to}`
                   }
@@ -124,7 +128,7 @@ export default {
             ]
           }
         },
-        sort: [{ '@timestamp': { order: 'desc' } }],
+        sort: [{ [this.timeField]: { order: 'desc' } }],
         size: 40
       };
 

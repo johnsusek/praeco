@@ -48,6 +48,18 @@ export default {
       return Object.keys(indices);
     },
 
+    dateFieldsForCurrentConfig: (state, getters) => {
+      let fields = {};
+
+      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+        if (field.type === 'date') {
+          fields[name] = field;
+        }
+      });
+
+      return fields;
+    },
+
     fieldsForCurrentConfig: (state, getters, rootState) => {
       let index = rootState.config.settings.index;
       let mappings = state.mappings[formatIndex(index)];
