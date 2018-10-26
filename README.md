@@ -22,6 +22,8 @@ docker-compose up
 
 Praeco should now be available on http://127.0.0.1:8080
 
+A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e078a9) is available to guide you through creating your first template and rule.
+
 ## Configuration
 
 OPTIONAL: Edit config/api.config.json, config/elastalert.yaml, and/or public/praeco.config.json for advanced configuration options. See the [api docs](https://github.com/bitsensor/elastalert#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information on config options.
@@ -58,9 +60,11 @@ docker build -t praeco .
 ## Testing
 
 Unit tests:
+
 `npm run test:unit`
 
 E2E tests:
+
 `npm run test:e2e`
 
 <br><br>

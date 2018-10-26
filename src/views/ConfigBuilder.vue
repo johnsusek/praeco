@@ -22,6 +22,7 @@
         <el-collapse v-model="activePane" :accordion="true" class="builder-collapse">
           <el-collapse-item title="Settings" name="settings">
             <ConfigSettings
+              v-if="prefill && $store.state.config.settings.index || !prefill"
               ref="settings"
               :type="type"
               :prefill-path="prefill"
@@ -109,7 +110,7 @@ export default {
     this.$store.commit('config/UPDATE_TYPE', this.type);
 
     this.$nextTick(() => {
-      this.$refs.settings.$refs.form.clearValidate();
+      if (this.$refs.settings) this.$refs.settings.$refs.form.clearValidate();
     });
 
     if (this.prefill) {

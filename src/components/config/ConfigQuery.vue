@@ -18,7 +18,6 @@
         </el-form-item>
       </el-col>
 
-
       <el-col :span="12">
         <el-button
           v-if="!sampling"
@@ -55,8 +54,6 @@
         </el-form-item>
       </el-col>
     </el-row>
-
-
   </el-form>
 </template>
 
@@ -96,7 +93,7 @@ export default {
     },
 
     fields() {
-      return this.$store.getters['metadata/fieldsForCurrentConfig'] || [];
+      return this.$store.getters['metadata/fieldsForCurrentConfig'] || {};
     },
 
     rules() {

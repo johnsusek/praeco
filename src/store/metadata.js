@@ -3,6 +3,20 @@ import axios from 'axios';
 import { formatIndex, buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
 import networkError from '../lib/networkError.js';
 
+function buildObjectFields(fields, prefix) {
+  let objectFields = {};
+
+  Object.entries(fields).forEach(([name, field]) => {
+    if (field.type) {
+      objectFields[`${prefix}.${name}`] = field;
+    } else if (field.properties) {
+      objectFields = { ...objectFields, ...buildObjectFields(field.properties, `${prefix}.${name}`) };
+    }
+  });
+
+  return objectFields;
+}
+
 export default {
   namespaced: true,
 
@@ -37,10 +51,22 @@ export default {
     fieldsForCurrentConfig: (state, getters, rootState) => {
       let index = rootState.config.settings.index;
       let mappings = state.mappings[formatIndex(index)];
-      if (mappings) {
-        return mappings.fields;
+
+      if (!mappings) {
+        return {};
       }
-      return [];
+
+      let fields = {};
+
+      Object.entries(mappings.fields).forEach(([name, field]) => {
+        if (field.type) {
+          fields[name] = field;
+        } else if (field.properties) {
+          fields = { ...fields, ...buildObjectFields(field.properties, name) };
+        }
+      });
+
+      return fields;
     },
 
     typesForCurrentConfig: (state, getters, rootState) => {

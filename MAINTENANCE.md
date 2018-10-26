@@ -11,10 +11,14 @@ Run `npm install` to install latest versions of packages per package.json.
 
 # Checklist for new prod release
 
+## Elastalert (if neccessary)
+
 - Stash all changes in elastalert project
-- Create docker image + tag + push to servercentral/elastalert
+- Create docker image + push to servercentral/elastalert
+
+## Praeco
 
 - Run tests
 - Recreate latest.zip if neccessary
 - Stash all changes in this project; make sure in `master`
-- Create docker image + tag + push to servercentral/praeco (Drone does this for us)
+- Create docker image + push to servercentral/praeco (Drone does this for us)

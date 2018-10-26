@@ -203,6 +203,8 @@ export default {
     },
 
     async sample({ commit, getters }) {
+      commit('CLEAR_SAMPLE');
+
       let search = {
         query: {
           bool: {
