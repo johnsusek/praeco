@@ -32,19 +32,19 @@ module.exports = {
     hot: true,
     disableHostCheck: true,
     proxy: {
+      '/api-ws/test': {
+        target: 'http://localhost:3333/',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api-ws/test': '/test'
+        }
+      },
       '/api': {
         target: 'http://localhost:3030/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
-        }
-      },
-      '/api-ws': {
-        target: 'http://localhost:3333/',
-        ws: true,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api-ws': ''
         }
       }
     }
