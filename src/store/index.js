@@ -4,6 +4,7 @@ import configs from './configs';
 import server from './server';
 import metadata from './metadata';
 import appconfig from './appconfig';
+import elastalert from './elastalert';
 import config from './config';
 
 Vue.use(Vuex);
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     server,
     metadata,
     appconfig,
+    elastalert,
     config
   }
 });
