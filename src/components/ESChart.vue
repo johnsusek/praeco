@@ -8,48 +8,70 @@
     />
 
     <div class="praeco-chart m-s-med">
-      <v-chart
-        v-loading="loading"
-        ref="chart"
-        :options="chart"
-        auto-resize
-        tabindex="0"
-        @keydown.native.left="moveLeft"
-        @keydown.native.right="moveRight" />
+      <div v-if="groupBy">
+        <el-tabs v-if="groups.length" v-model="activeGroupIndex" tab-position="bottom" @input="updateGroupIndex">
+          <el-tab-pane
+            v-for="(group, index) in groups"
+            v-model="activeGroupIndex"
+            :key="index"
+            :label="group.key"
+            :name="index.toString()">
+            <v-chart
+              v-loading="loading"
+              ref="chart"
+              :options="chart"
+              auto-resize
+              tabindex="0"
+              @keydown.native.left="moveLeft"
+              @keydown.native.right="moveRight" />
+          </el-tab-pane>
+        </el-tabs>
+      </div>
 
-      <el-popover trigger="click" class="praeco-chart-popover">
-        <el-button
-          slot="reference"
-          size="medium"
-          class="praeco-chart-options"
-          circle
-          plain
-          icon="el-icon-time" />
+      <div v-else>
+        <v-chart
+          v-loading="loading"
+          ref="chart"
+          :options="chart"
+          auto-resize
+          tabindex="0"
+          @keydown.native.left="moveLeft"
+          @keydown.native.right="moveRight" />
 
-        <div class="praeco-chart-controls">
-          <el-row type="flex" class="row-bg" justify="space-around">
-            <el-col :span="24" align="right">
-              <label>Group</label>
-              <ElastalertTimePicker
-                v-if="interval"
-                :unit="Object.keys(interval)[0]"
-                :amount="Object.values(interval)[0]"
-                @input="updateInterval" />
-            </el-col>
-          </el-row>
+        <el-popover v-if="showControls" trigger="click" class="praeco-chart-popover">
+          <el-button
+            slot="reference"
+            size="medium"
+            class="praeco-chart-options"
+            circle
+            plain
+            icon="el-icon-time" />
 
-          <el-row type="flex" class="row-bg" justify="space-around">
-            <el-col :span="24" align="right">
-              <label>View previous</label>
-              <ElastalertTimePicker
-                v-if="timespan"
-                :unit="Object.keys(timespan)[0]"
-                :amount="Object.values(timespan)[0]"
-                @input="updateTimespan" />
-            </el-col>
-          </el-row>
-        </div>
-      </el-popover>
+          <div class="praeco-chart-controls">
+            <el-row type="flex" class="row-bg" justify="space-around">
+              <el-col :span="24" align="right">
+                <label>Group</label>
+                <ElastalertTimePicker
+                  v-if="interval"
+                  :unit="Object.keys(interval)[0]"
+                  :amount="Object.values(interval)[0]"
+                  @input="updateInterval" />
+              </el-col>
+            </el-row>
+
+            <el-row type="flex" class="row-bg" justify="space-around">
+              <el-col :span="24" align="right">
+                <label>View previous</label>
+                <ElastalertTimePicker
+                  v-if="timespan"
+                  :unit="Object.keys(timespan)[0]"
+                  :amount="Object.values(timespan)[0]"
+                  @input="updateTimespan" />
+              </el-col>
+            </el-row>
+          </div>
+        </el-popover>
+      </div>
     </div>
   </div>
 </template>
@@ -95,11 +117,20 @@ export default {
     'markLine',
     'spikeHeight',
     'showAxisPointer',
-    'scrollPos'
+    'showTitle',
+    'showControls',
+    'scrollPos',
+    'groupBy',
+    'aggAvg',
+    'aggSum',
+    'aggMin',
+    'aggMax'
   ],
 
   data() {
     return {
+      groups: [],
+      activeGroupIndex: '0',
       movedFromKeyboard: false,
       source: null,
       searchError: '',
@@ -113,7 +144,7 @@ export default {
         yAxis: Object.assign({}, chartOptions.yAxis),
         animation: false,
         grid: {
-          top: 45,
+          top: this.showTitle ? 45 : 10,
           bottom: this.showAxisPointer ? 65 : 10,
           left: 10,
           right: 10,
@@ -139,7 +170,6 @@ export default {
         ],
         series: [
           {
-            cursor: 'disabled',
             name: 'Events',
             type: 'bar',
             barCategoryGap: '0',
@@ -189,11 +219,111 @@ export default {
 
     timeField() {
       return this.$store.state.config.settings.timeField;
+    },
+
+    statAggs() {
+      let aggs = {};
+
+      if (this.aggAvg) {
+        aggs = {
+          avg: {
+            avg: {
+              field: this.aggAvg
+            }
+          }
+        };
+      } else if (this.aggSum) {
+        aggs = {
+          sum: {
+            sum: {
+              field: this.aggSum
+            }
+          }
+        };
+      } else if (this.aggMin) {
+        aggs = {
+          min: {
+            min: {
+              field: this.aggMin
+            }
+          }
+        };
+      } else if (this.aggMax) {
+        aggs = {
+          max: {
+            max: {
+              field: this.aggMax
+            }
+          }
+        };
+      }
+
+      return aggs;
+    },
+
+    byMinuteAgg() {
+      return {
+        by_minute: {
+          date_histogram: {
+            field: this.timeField,
+            interval: intervalFromTimeframe(this.interval),
+            min_doc_count: 0,
+            extended_bounds: {
+              min: `now-${intervalFromTimeframe(this.timespan)}`,
+              max: 'now'
+            }
+          },
+          aggs: this.statAggs
+        }
+      };
+    },
+
+    aggs() {
+      let aggs = {};
+
+      if (this.groupBy) {
+        aggs = {
+          group_by_field: {
+            terms: {
+              field: `${this.groupBy}.keyword`
+            },
+            aggs: this.byMinuteAgg
+          }
+        };
+      } else {
+        aggs = this.byMinuteAgg;
+      }
+
+      return aggs;
     }
   },
 
   watch: {
+    aggAvg() {
+      this.updateChart();
+    },
+
+    aggSum() {
+      this.updateChart();
+    },
+
+    aggMin() {
+      this.updateChart();
+    },
+
+    aggMax() {
+      this.updateChart();
+    },
+
+    groupBy() {
+      this.updateChart();
+    },
+
     query() {
+      this.updateChart();
+    },
+
+    index() {
       this.updateChart();
     },
 
@@ -201,7 +331,12 @@ export default {
       if (this.markLine && this.markLine.data) {
         Vue.set(this.chart.series[0], 'markLine', this.markLine);
       } else {
-        Vue.set(this.chart.series[0], 'markLine', {});
+        Vue.set(this.chart.series[0], 'markLine', {
+          silent: true,
+          animation: false,
+          symbol: 'none',
+          data: []
+        });
       }
     },
 
@@ -291,6 +426,44 @@ export default {
   },
 
   methods: {
+    getYValue(result) {
+      let value = 0;
+
+      if (this.aggAvg) {
+        value = result.avg.value;
+      } else if (this.aggSum) {
+        value = result.sum.value;
+      } else if (this.aggMin) {
+        value = result.min.value;
+      } else if (this.aggMax) {
+        value = result.max.value;
+      } else if (result.doc_count) {
+        value = result.doc_count;
+      }
+
+      return {
+        value
+      };
+    },
+
+    updateGroupIndex() {
+      let x = this.groups[this.activeGroupIndex].by_minute.buckets.map(r => ({
+        value: r.key_as_string
+      }));
+
+      let y = this.groups[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
+
+      // Remove the first and last values because they will contain
+      // partial data
+      x.pop();
+      x.shift();
+      y.pop();
+      y.shift();
+
+      this.chart.xAxis.data = x;
+      this.chart.series[0].data = y;
+    },
+
     moveLeft() {
       this.movedFromKeyboard = true;
       let xAxis = this.$refs.chart.options.xAxis;
@@ -339,33 +512,22 @@ export default {
 
     setTooltipDefault() {
       Vue.set(this.chart.tooltip, 'formatter', (options) => {
-        let {
-          dataIndex,
-          data,
-        } = options[0];
-
-        let event = this.chart.xAxis.data[dataIndex];
+        let event = this.chart.xAxis.data[options.dataIndex];
         let momentDate = moment(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
-
-        return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${data.value} Events`;
+        return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${options.data.value} Events`;
       });
     },
 
     setTooltipSpike() {
       Vue.set(this.chart.tooltip, 'formatter', (options) => {
-        let {
-          dataIndex,
-          data,
-        } = options[0];
-
-        let event = this.chart.xAxis.data[dataIndex];
-        let preVal = this.chart.series[0].data[dataIndex > 0 ? (dataIndex - 1) : dataIndex].value;
-        let val = this.chart.series[0].data[dataIndex].value;
+        let event = this.chart.xAxis.data[options.dataIndex];
+        let preVal = this.chart.series[0].data[options.dataIndex > 0 ? (options.dataIndex - 1) : options.dataIndex].value;
+        let val = this.chart.series[0].data[options.dataIndex].value;
         let spike = val / preVal;
         let momentDate = moment(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
 
         if (spike.toFixed(1) === '1.0') {
-          return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${data.value} Events`;
+          return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${options.data.value} Events`;
         }
 
         let spikeVal = spike;
@@ -374,7 +536,7 @@ export default {
         }
 
         return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> 
-              ${data.value} Events - Spike ${spike > 1 ? 'up' : 'down'} 
+              ${options.data.value} Events - Spike ${spike > 1 ? 'up' : 'down'} 
               ${spikeVal.toFixed(1)}`;
       });
     },
@@ -390,7 +552,9 @@ export default {
     },
 
     updateChart() {
-      this.chart.title.text = this.title;
+      if (this.showTitle) {
+        this.chart.title.text = this.title;
+      }
       this.fetchData();
     },
 
@@ -427,19 +591,7 @@ export default {
           }
         },
         size: 0,
-        aggs: {
-          by_minute: {
-            date_histogram: {
-              field: this.timeField,
-              interval: intervalFromTimeframe(this.interval),
-              min_doc_count: 0,
-              extended_bounds: {
-                min: `now-${intervalFromTimeframe(this.timespan)}`,
-                max: 'now'
-              }
-            }
-          }
-        }
+        aggs: this.aggs
       };
 
       this.loading = true;
@@ -467,21 +619,39 @@ export default {
         if (res.data.error) {
           this.searchError = res.data.error.msg;
         } else if (res.data.aggregations) {
-          let x = res.data.aggregations.by_minute.buckets.map(r => ({
-            value: r.key_as_string
-          }));
+          let x = null;
+          let y = null;
 
-          let y = res.data.aggregations.by_minute.buckets.map(r => ({
-            value: r.doc_count || 0
-          }));
+          if (this.groupBy) {
+            if (res.data.aggregations.group_by_field.buckets.length) {
+              let buckets = res.data.aggregations.group_by_field.buckets;
+
+              x = buckets[this.activeGroupIndex].by_minute.buckets.map(r => ({
+                value: r.key_as_string
+              }));
+
+              y = buckets[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
+
+              this.groups = buckets;
+            } else {
+              this.groups = [];
+            }
+          } else {
+            x = res.data.aggregations.by_minute.buckets.map(r => ({
+              value: r.key_as_string
+            }));
+
+            y = res.data.aggregations.by_minute.buckets.map(this.getYValue);
+          }
 
           // Remove the first and last values because they will contain
           // partial data
-          x.pop();
-          x.shift();
-          y.pop();
-          y.shift();
-
+          if (x && y) {
+            x.pop();
+            x.shift();
+            y.pop();
+            y.shift();
+          }
 
           this.chart.xAxis.data = x;
           this.chart.series[0].data = y;
