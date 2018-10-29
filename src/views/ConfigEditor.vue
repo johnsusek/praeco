@@ -20,9 +20,7 @@
           <el-tab-pane label="Filter" name="query">
             <ConfigQuery ref="query" />
           </el-tab-pane>
-          <el-tab-pane label="Match" name="match">
-            <ConfigMatch ref="match" />
-          </el-tab-pane>
+          <el-tab-pane label="Match" name="match"/>
           <el-tab-pane label="Alert" name="alert">
             <ConfigAlert ref="alert" />
           </el-tab-pane>
@@ -37,8 +35,6 @@
 <script>
 import ConfigSettings from '@/components/config/ConfigSettings.vue';
 import ConfigQuery from '@/components/config/ConfigQuery.vue';
-import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
-import ConfigMatch from '@/components/config/match/ConfigMatch.vue';
 import ConfigDrawer from '@/components/config/ConfigDrawer.vue';
 import configSave from '@/mixins/configSave';
 
@@ -46,8 +42,6 @@ export default {
   components: {
     ConfigSettings,
     ConfigQuery,
-    ConfigMatch,
-    ConfigAlert,
     ConfigDrawer,
   },
 

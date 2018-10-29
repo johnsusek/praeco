@@ -802,7 +802,9 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch('config/sample');
+    if (this.index) {
+      this.$store.dispatch('config/sample');
+    }
 
     this.$nextTick(() => {
       if (this.metricAggType === 'count') {
@@ -853,12 +855,13 @@ export default {
         }
 
         let aboveValid = await this.validateAbove();
-        if (!aboveValid) throw new Error('invalid');
+        if (!aboveValid) return false;
 
         this.$emit('validate', true);
+        return true;
       } catch (error) {
         this.$emit('validate', false);
-        throw error;
+        return false;
       }
     },
 

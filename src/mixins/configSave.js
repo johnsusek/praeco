@@ -9,9 +9,14 @@ export default {
     async save() {
       try {
         await this.$refs.settings.$refs.form.validate();
-        await this.$refs.condition.validate();
         await this.$refs.alert.$refs.form.validate();
       } catch (error) {
+        this.$message.error('Please fill out all required fields.');
+        return;
+      }
+
+      let conditionsValid = await this.$refs.condition.validate();
+      if (!conditionsValid) {
         this.$message.error('Please fill out all required fields.');
         return;
       }
