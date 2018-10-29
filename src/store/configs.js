@@ -38,6 +38,7 @@ export default {
     },
 
     FETCHED_CONFIGS_TREE(state, { paths, type }) {
+      paths = paths.filter(path => path !== 'BaseRule.config');
       Vue.set(state.tree, type, paths);
     },
 
