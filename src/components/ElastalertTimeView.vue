@@ -1,12 +1,26 @@
 <template>
   <span>
-    {{ time && Object.values(time)[0] }}
-    {{ time && Object.keys(time)[0] }}
+    {{ value }}
+    {{ unit }}
   </span>
 </template>
 
 <script>
 export default {
-  props: ['time']
+  props: ['time'],
+
+  computed: {
+    value() {
+      return this.time && Object.values(this.time)[0];
+    },
+
+    unit() {
+      let unit = this.time && Object.keys(this.time)[0];
+      if (this.value <= 1) {
+        unit = unit.slice(0, -1);
+      }
+      return unit;
+    }
+  }
 };
 </script>
