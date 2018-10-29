@@ -10,14 +10,7 @@ let lineStyle = {
 };
 
 export default {
-  tooltip: {
-    triggerOn: 'click',
-    confine: true,
-    trigger: 'axis',
-    position(pt) {
-      return [pt[0], '10%'];
-    }
-  },
+  tooltip: {},
   textStyle,
   lineStyle,
   title: {
@@ -25,13 +18,11 @@ export default {
     left: 'center',
     text: ''
   },
-  silent: true,
   xAxis: {
     axisTick: false,
     axisLine: {
       lineStyle
     },
-    silent: true,
     type: 'category',
     boundaryGap: true,
     data: [],
@@ -63,7 +54,6 @@ export default {
     axisLine: {
       lineStyle
     },
-    silent: true,
     axisLabel: textStyle,
     offset: 8,
     type: 'value',
