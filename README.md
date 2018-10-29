@@ -32,6 +32,19 @@ A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e
 
 OPTIONAL: Edit config/api.config.json, config/elastalert.yaml, and/or public/praeco.config.json for advanced configuration options. See the [api docs](https://github.com/bitsensor/elastalert#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information on config options.
 
+The following config settings are available in praeco.config.json:
+
+```
+// link back to your praeco instance, used in slack alerts
+"appUrl": "http://praeco-app-url:8080",
+
+// a recordatus (https://github.com/ServerCentral/recordatus) instance for javascript error reporting
+"errorLoggerUrl": "",
+
+// hide these fields when editing rules, if they are already filled in template
+"hidePreconfiguredFields": []
+```
+
 ## Screenshot
 
 ![](https://user-images.githubusercontent.com/611996/46428598-0575b280-c70a-11e8-8ba2-bdcd9932380b.png)
