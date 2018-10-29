@@ -165,7 +165,7 @@ export default {
       return dispatch(
         'configs/createConfig',
         {
-          config: getters.config,
+          config: getters.config(false),
           format: false,
           type,
           overwrite
@@ -182,7 +182,7 @@ export default {
 
       try {
         let res = await axios.post('/api/test', {
-          rule: getters.yaml,
+          rule: getters.yaml(true),
           options: {
             testType: 'schemaOnly',
             days: 1,
@@ -465,10 +465,17 @@ export default {
       return config;
     },
 
-    config(state, getters) {
+    config: (state, getters) => forTest => {
       let config = {
         ...getters.queryString
       };
+
+      if (forTest) {
+        // when run as part of a test, fix path since rule will be in server_data/tests/
+        config.import = '../../rules/BaseRule.config';
+      } else {
+        config.import = 'BaseRule.config';
+      }
 
       if (state.path) {
         config.__praeco_full_path = `${state.path}/${state.settings.name}`;
@@ -546,8 +553,6 @@ export default {
       return conf;
     },
 
-    yaml(state, getters) {
-      return yaml.safeDump(getters.config);
-    }
+    yaml: (state, getters) => forTest => yaml.safeDump(getters.config(forTest))
   }
 };

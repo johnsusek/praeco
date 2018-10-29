@@ -15,6 +15,10 @@ Praeco is an alerting tool for elasticsearch – a GUI for [elastalert](https://
 
 ## Quickstart
 
+First, edit rules/BaseRule.config and change the slack and smtp settings to match your environment.
+
+Then run the app using docker:
+
 ```bash
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
