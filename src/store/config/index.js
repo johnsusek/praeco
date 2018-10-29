@@ -214,7 +214,7 @@ export default {
           bool: {
             must: [
               {
-                query_string: { query: getters['query/queryString'] }
+                query_string: { query: getters['query/queryString'] || `${state.settings.timeField}:*` }
               }
             ]
           }

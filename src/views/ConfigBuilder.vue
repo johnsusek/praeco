@@ -1,84 +1,46 @@
 <template>
   <div>
-    <el-row :gutter="2" class="drawer-row">
-      <el-col :span="24">
-        <h1 class="m-s-xl">{{ pageTitle }}</h1>
+    <h1 class="m-s-xl">{{ pageTitle }}</h1>
 
-        <!-- <vue-json-pretty :data="$store.getters['config/config']" /> -->
+    <ConfigSettings
+      v-if="prefill && $store.state.config.settings.index || !prefill"
+      ref="settings"
+      :type="type"
+      :prefill-path="prefill"
+      action="add" />
 
-        <el-steps
-          :active="steps.indexOf(activePane)"
-          align-center
-          class="builder-steps m-s-xl"
-          process-status="finish"
-          finish-status="success">
-          <el-step title="Settings" />
-          <el-step title="Filter" />
-          <el-step title="Match" />
-          <el-step title="Alert" />
-          <el-step title="Save" />
-        </el-steps>
+    <template v-if="timeField">
+      <ConfigCondition ref="condition" class="m-n-xl" @validate="val => valid = val" />
 
-        <el-collapse v-model="activePane" :accordion="true" class="builder-collapse">
-          <el-collapse-item title="Settings" name="settings">
-            <ConfigSettings
-              v-if="prefill && $store.state.config.settings.index || !prefill"
-              ref="settings"
-              :type="type"
-              :prefill-path="prefill"
-              action="add" />
+      <ConfigAlert ref="alert" />
 
-            <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
-          </el-collapse-item>
+      <hr>
 
-          <el-collapse-item title="Filter" name="query">
-            <ConfigQuery ref="query" />
+      <el-row>
+        <ConfigTest :valid="valid" class="m-e-sm" />
 
-            <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
-            <el-button class="m-n-lg" @click="previousPane">Back</el-button>
-          </el-collapse-item>
+        <div class="save-button">
+          <el-button v-if="!saving" type="primary" size="medium" @click="save">Save</el-button>
+          <el-button v-else type="primary" disabled size="medium">Saving...</el-button>
+        </div>
+      </el-row>
 
-          <el-collapse-item title="Match" name="match">
-            <ConfigMatch ref="match" />
-
-            <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
-            <el-button class="m-n-lg" @click="previousPane">Back</el-button>
-          </el-collapse-item>
-
-          <el-collapse-item title="Alert" name="alert">
-            <ConfigAlert ref="alert" />
-
-            <el-button class="m-n-lg" type="primary" @click="nextPane">Continue</el-button>
-            <el-button class="m-n-lg" @click="previousPane">Back</el-button>
-          </el-collapse-item>
-
-          <el-collapse-item title="Save" name="save">
-            <el-button v-if="!saving" type="primary" plain @click="save">Save</el-button>
-            <el-button v-else type="primary" plain disabled>Saving...</el-button>
-          </el-collapse-item>
-        </el-collapse>
-      </el-col>
-    </el-row>
-
-    <ConfigDrawer v-if="showDrawer" />
+    <!-- <vue-json-pretty :data="$store.getters['config/config']" /> -->
+    </template>
   </div>
 </template>
 
 <script>
 import ConfigSettings from '@/components/config/ConfigSettings.vue';
-import ConfigQuery from '@/components/config/ConfigQuery.vue';
-import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
-import ConfigMatch from '@/components/config/match/ConfigMatch.vue';
-import ConfigDrawer from '@/components/config/ConfigDrawer.vue';
+import ConfigCondition from '@/components/config/ConfigCondition.vue';
+import ConfigTest from '@/components/config/ConfigTest';
 import configSave from '@/mixins/configSave';
 
 export default {
   components: {
     ConfigSettings,
-    ConfigQuery,
-    ConfigMatch,
-    ConfigAlert,
-    ConfigDrawer,
+    ConfigCondition,
+    ConfigTest
   },
 
   mixins: [configSave],
@@ -87,22 +49,33 @@ export default {
 
   data() {
     return {
-      activePane: 'settings',
-      steps: ['settings', 'query', 'match', 'alert', 'save']
+      valid: false
     };
   },
 
   computed: {
-    showDrawer() {
-      return ((this.activePane.includes('query') || this.activePane.includes('match')) &&
-      ['any', 'spike', 'frequency'].includes(this.$store.state.config.match.type))
-        && this.$store.state.config.query.tree.children.length;
+    timeField() {
+      return this.$store.state.config.settings.timeField;
+    },
+
+    name: {
+      get() {
+        return this.$store.state.config.settings.name;
+      },
+      set(value) {
+        this.$store.commit('config/settings/UPDATE_NAME', value);
+      }
     },
 
     pageTitle() {
       let title = `Add ${this.type}`;
+
+      if (this.name) {
+        title += ` “${this.name}”`;
+      }
+
       return title;
-    },
+    }
   },
 
   async mounted() {
@@ -125,66 +98,14 @@ export default {
 
   destroyed() {
     this.$store.dispatch('config/reset');
-  },
-
-  methods: {
-    async previousPane() {
-      if (this.activePane === 'save') {
-        this.activePane = 'alert';
-      } else if (this.activePane === 'alert') {
-        this.activePane = 'match';
-      } else if (this.activePane === 'match') {
-        this.activePane = 'query';
-      } else if (this.activePane === 'query') {
-        this.activePane = 'settings';
-      }
-    },
-
-    async nextPane() {
-      if (this.activePane === 'settings') {
-        try {
-          await this.$refs.settings.$refs.form.validate();
-          this.activePane = 'query';
-        } catch (error) {}
-      } else if (this.activePane === 'query') {
-        this.activePane = 'match';
-      } else if (this.activePane === 'match') {
-        try {
-          if (await this.$refs.match.validate()) {
-            this.activePane = 'alert';
-          }
-        } catch (error) {}
-      } else if (this.activePane === 'alert') {
-        try {
-          await this.$refs.alert.$refs.form.validate();
-          this.activePane = 'save';
-        } catch (error) {}
-      }
-    }
   }
 };
 </script>
 
 <style>
-.builder-collapse.el-collapse {
-  border-bottom: none;
-  padding-top: 15px;
-}
-
-.builder-collapse .el-collapse-item {
-  display: none;
-}
-
-.builder-collapse .el-collapse-item.is-active {
-  display: block;
-}
-
-.builder-collapse .el-collapse-item__header {
-  pointer-events: none;
-  display: none;
-}
-
-.builder-collapse .el-collapse-item__wrap {
-  transition-property: none;
+.save-button {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>

@@ -5,7 +5,7 @@
     label-position="top"
     @submit.native.prevent>
 
-    <el-row :gutter="100">
+    <el-row :gutter="50">
       <el-col :span="12">
         <el-form-item
           label="Subject"
@@ -55,7 +55,7 @@
       </el-col>
 
       <el-col :span="12">
-        <h6>Subject preview</h6>
+        <h6 class="m-n-xs">Subject preview</h6>
         <div class="preview">{{ $store.getters['config/alert/subjectRendered'] }}</div>
 
         <h6>Body preview</h6>
@@ -64,14 +64,14 @@
         <div
           v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
           type="info">
-          (Trigger details)
+          <em>(Trigger details)</em>
         </div>
         <div
           v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
           type="info">
-          (Top counts)
+          <em>(Top counts)</em>
         </div>
-        <div v-if="bodyType === 'default'" type="info">(Field values)</div>
+        <div v-if="bodyType === 'default'" type="info"><em>(Field values)</em></div>
       </el-col>
     </el-row>
 
@@ -137,7 +137,8 @@ export default {
 
 <style scoped>
 .preview {
-  white-space: pre;
+  white-space: pre-wrap;
+  line-height: 1.3;
 }
 
 .el-select {

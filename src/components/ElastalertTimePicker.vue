@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="elastalert-timepicker">
     <el-input-number v-model="currentAmount" :min="1" @input.native="emitNumKeyup" @input="emitValue" />
 
     <el-select v-model="currentUnit" @input="emitValue">

@@ -5,32 +5,36 @@
     :model="$store.state.config.alert"
     label-position="top"
     @submit.native.prevent>
-
-    <el-form-item label="Re-alert">
-      <ElastalertTimePicker
-        v-if="realert"
-        :unit="Object.keys(realert)[0]"
-        :amount="Object.values(realert)[0]"
-        @input="updateRealert" />
-      <label v-if="Object.values(realert)[0] === 0">
-        WARNING: When re-alert is set to 0 minutes, you will receive an alert
-        every single time this rule triggers. This may result in large bursts
-        of notifications.
-      </label>
-      <label v-else>
-        You will receive, at most, one alert every
-        {{ realert.minutes }} minute(s), even if a rule
-        triggers multiple times within that timeframe
-      </label>
-    </el-form-item>
-
-    <el-form-item label="Destination" prop="alert" required>
-      <el-checkbox-group v-model="alert">
-        <el-checkbox label="slack" border>Slack</el-checkbox>
-        <el-checkbox label="email" border>Email</el-checkbox>
-        <el-checkbox label="post" border>HTTP</el-checkbox>
-      </el-checkbox-group>
-    </el-form-item>
+    <el-row>
+      <el-col :span="12">
+        <el-form-item label="Destination" prop="alert" required>
+          <el-checkbox-group v-model="alert">
+            <el-checkbox label="slack" border>Slack</el-checkbox>
+            <el-checkbox label="email" border>Email</el-checkbox>
+            <el-checkbox label="post" border>HTTP</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="Re-alert">
+          <ElastalertTimePicker
+            v-if="realert"
+            :unit="Object.keys(realert)[0]"
+            :amount="Object.values(realert)[0]"
+            @input="updateRealert" />
+          <label v-if="Object.values(realert)[0] === 0">
+            WARNING: When re-alert is set to 0 minutes, you will receive an alert
+            every single time this rule triggers. This may result in large bursts
+            of notifications.
+          </label>
+          <label v-else>
+            You will receive, at most, one alert every
+            {{ realert.minutes }} minute(s), even if a rule
+            triggers multiple times within that timeframe
+          </label>
+        </el-form-item>
+      </el-col>
+    </el-row>
 
     <el-form-item label="">
       <el-tabs v-if="alert.length" type="border-card" class="border-card-plain">

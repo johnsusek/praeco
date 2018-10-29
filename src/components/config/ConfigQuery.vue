@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" label-position="top" @submit.native.prevent>
-    <el-row :gutter="100">
-      <el-col :span="12">
+    <el-row :gutter="30" :class="{ 'empty': !queryTree.children.length }">
+      <el-col :span="12" class="scroll-pane">
         <el-form-item class="el-form-item-tight">
           <vue-query-builder
             v-if="rules.length"
@@ -11,15 +11,15 @@
             :styled="false"
             @input="queryChanged" />
         </el-form-item>
-        <el-form-item>
+        <el-form-item v-if="!queryTree.children.length">
           <label>
-            To get started, select a term from the dropdown menu and click the "+ Add" button.
+            To get started, select a term from the dropdown menu and click the "Add filter" button.
           </label>
         </el-form-item>
       </el-col>
 
       <el-col :span="12">
-        <el-button
+        <!-- <el-button
           v-if="!sampling"
           type="primary"
           plain
@@ -36,9 +36,9 @@
           @click="sample">
           Sampling...
         </el-button>
-        <label>Preview a sample result matching your filters.</label>
+        <label>Preview a sample result matching your filters.</label> -->
 
-        <el-form-item v-if="$store.state.config.sampleResult" label="Preview" class="m-n-med">
+        <el-form-item v-if="$store.state.config.sampleResult" label="Sample result" class="scroll-pane sample-result">
           <el-table
             :data="Object.entries($store.state.config.sampleResult).sort()">
             <el-table-column label="Field" prop="0" width="160" />
@@ -73,7 +73,7 @@ export default {
         matchType: ' of the following conditions are met:',
         matchTypeAll: 'all',
         matchTypeAny: 'any',
-        addRule: '&plus; Add',
+        addRule: 'Add filter',
         removeRule: '&times;',
         addGroup: 'Add group',
         removeGroup: '&times;',
@@ -151,5 +151,31 @@ export default {
 <style>
 .el-form-item-tight {
   margin-bottom: 0;
+}
+
+.el-row.empty .vue-query-builder > .vqb-group > .vqb-group-heading {
+  display: none;
+}
+
+.el-row.empty .vue-query-builder > .vqb-group > .vqb-group-body > .rule-actions {
+  position: static;
+}
+
+.el-row.empty .vue-query-builder {
+  padding-bottom: 0;
+}
+
+.scroll-pane {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.sample-result,
+.sample-result * {
+  background: #f9f9f9 !important;
+}
+
+.sample-result > .el-form-item__label {
+  padding-left: 10px !important;
 }
 </style>

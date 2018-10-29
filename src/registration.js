@@ -17,10 +17,14 @@ import NavTree from '@/components/NavTree';
 import PraecoFormItem from '@/components/PraecoFormItem';
 import TableRow from '@/components/TableRow';
 import ElastalertTimeView from '@/components/ElastalertTimeView';
+import ConfigQuery from '@/components/config/ConfigQuery.vue';
+import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
 
 Vue.component('Bulb', Bulb);
 Vue.component('DateTime', DateTime);
 Vue.component('ConfigView', ConfigView);
+Vue.component('ConfigQuery', ConfigQuery);
+Vue.component('ConfigAlert', ConfigAlert);
 Vue.component('ConfigViewAlert', ConfigViewAlert);
 Vue.component('ConfigViewMatch', ConfigViewMatch);
 Vue.component('ConfigViewQuery', ConfigViewQuery);

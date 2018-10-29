@@ -35,7 +35,7 @@ export default {
       let indices = {};
 
       state.indices.forEach(item => {
-        if (item.startsWith('elastalert')) return;
+        if (item.includes('elastalert')) return;
         let parts = item.split(/-/);
         if (parts[0].startsWith('.')) return;
         if (parts.length > 1) {
@@ -46,6 +46,32 @@ export default {
       });
 
       return Object.keys(indices);
+    },
+
+    textFieldsForCurrentConfig: (state, getters) => {
+      let fields = {};
+
+      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+        if (['text', 'keyword'].includes(field.type)) {
+          fields[name] = field;
+        }
+      });
+
+      return fields;
+    },
+
+    numberFieldsForCurrentConfig: (state, getters) => {
+      let fields = {};
+
+      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+        if (
+          ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float'].includes(field.type)
+        ) {
+          fields[name] = field;
+        }
+      });
+
+      return fields;
     },
 
     dateFieldsForCurrentConfig: (state, getters) => {
@@ -70,13 +96,15 @@ export default {
 
       let fields = {};
 
-      Object.entries(mappings.fields).forEach(([name, field]) => {
-        if (field.type) {
-          fields[name] = field;
-        } else if (field.properties) {
-          fields = { ...fields, ...buildObjectFields(field.properties, name) };
-        }
-      });
+      if (mappings.fields) {
+        Object.entries(mappings.fields).forEach(([name, field]) => {
+          if (field.type) {
+            fields[name] = field;
+          } else if (field.properties) {
+            fields = { ...fields, ...buildObjectFields(field.properties, name) };
+          }
+        });
+      }
 
       return fields;
     },
