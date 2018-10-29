@@ -31,15 +31,11 @@
 </template>
 
 <script>
-import ConfigSettings from '@/components/config/ConfigSettings.vue';
-import ConfigCondition from '@/components/config/ConfigCondition.vue';
 import ConfigTest from '@/components/config/ConfigTest';
 import configSave from '@/mixins/configSave';
 
 export default {
   components: {
-    ConfigSettings,
-    ConfigCondition,
     ConfigTest
   },
 

@@ -120,10 +120,13 @@
 
     <br>
 
-    <el-tabs type="card" >
+    <el-tabs type="card" class="m-n-sm">
       <el-tab-pane label="Overview">
-        <ConfigView :config="rule" :path="id" type="rule" />
-        <br>
+        <template v-if="$store.state.config.settings.index && $store.getters['config/config']()">
+          <ConfigSettings :view-only="true" type="template" />
+          <ConfigCondition class="condition-view m-n-med m-s-xl" />
+          <ConfigAlert :view-only="true" />
+        </template>
       </el-tab-pane>
 
       <el-tab-pane label="Alert log">
@@ -203,12 +206,10 @@
 <script>
 import Vue from 'vue';
 import axios from 'axios';
-import yaml from 'js-yaml';
 import moment from 'moment';
 import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
-import { formatConfig } from '../lib/formatConfig';
 
 export default {
   props: ['id'],
@@ -228,17 +229,15 @@ export default {
   },
 
   computed: {
-    isEnabled() {
-      return this.rule.is_enabled === undefined || this.rule.is_enabled;
-    },
     rule() {
       return this.$store.state.configs.rules[this.id] || {};
     },
+
     yaml() {
-      if (!this.rule.name) return false;
-      let conf = formatConfig(this.rule);
-      return yaml.safeDump(conf);
+      if (!this.name) return false;
+      return this.$store.getters['config/yaml']();
     },
+
     silenceNotice() {
       if (!this.silenceLog[0]) {
         return;
@@ -250,12 +249,22 @@ export default {
         let formattedSilencedDate = moment(silencedDate).format('MMMM Do YYYY, h:mm:ss A');
         return `Rule silenced until ${formattedSilencedDate}`;
       }
+    },
+
+    name() {
+      return this.$store.state.config.settings.name;
+    },
+
+    isEnabled() {
+      return this.$store.state.config.settings.isEnabled;
     }
   },
 
   async mounted() {
-    await this.$store.dispatch('configs/fetchConfig', { path: this.id, type: 'rules' });
-    this.newName = this.rule.name;
+    this.$store.dispatch('config/reset');
+    this.$store.dispatch('config/load', { type: 'rules', path: this.id });
+
+    this.newName = this.name;
     this.getQueryLog();
     this.getAlertLog();
     this.getSilenceLog();
@@ -276,7 +285,7 @@ export default {
 
     async move() {
       let newPath = await this.$store.dispatch('configs/moveConfig', {
-        oldConfig: this.rule,
+        oldConfig: this.$store.getters['config/config'](),
         newPath: this.moveDest.replace(/_rules/, ''),
         type: 'rules'
       });
@@ -302,7 +311,7 @@ export default {
 
     async rename() {
       let res = await this.$store.dispatch('configs/renameConfig', {
-        config: this.rule,
+        config: this.$store.getters['config/config'](),
         newName: this.newName.trim(),
         type: 'rules'
       });
@@ -330,7 +339,7 @@ export default {
 
     async duplicate() {
       let path = await this.$store.dispatch('configs/duplicateConfig', {
-        config: this.rule,
+        config: this.$store.getters['config/config'](),
         type: 'rules'
       });
 
@@ -393,7 +402,7 @@ export default {
         }
       )
         .then(async () => {
-          let disabled = await this.$store.dispatch('configs/disableRule', this.rule);
+          let disabled = await this.$store.dispatch('configs/disableRule', this.$store.getters['config/config']());
           if (disabled) {
             this.$message({
               type: 'success',
@@ -450,7 +459,7 @@ export default {
         }
       )
         .then(async () => {
-          let enabled = await this.$store.dispatch('configs/enableRule', this.rule);
+          let enabled = await this.$store.dispatch('configs/enableRule', this.$store.getters['config/config']());
           if (enabled) {
             this.$message({
               type: 'success',
@@ -467,7 +476,7 @@ export default {
     async getQueryLog() {
       try {
         let res = await axios.get('/api/metadata/elastalert_status', {
-          params: { rule_name: this.rule.name }
+          params: { rule_name: this.name }
         });
         if (res.data.error) {
           this.$notify.error({
@@ -490,7 +499,7 @@ export default {
     async getAlertLog() {
       try {
         let res = await axios.get('/api/metadata/elastalert', {
-          params: { rule_name: this.rule.name }
+          params: { rule_name: this.name }
         });
         if (res.data.error) {
           this.$notify.error({
@@ -513,7 +522,7 @@ export default {
     async getSilenceLog() {
       try {
         let res = await axios.get('/api/metadata/silence', {
-          params: { rule_name: this.rule.name }
+          params: { rule_name: this.name }
         });
         if (res.data.error) {
           this.$notify.error({

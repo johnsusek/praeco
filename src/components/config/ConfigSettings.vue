@@ -16,25 +16,26 @@
 
     <el-row :gutter="20">
       <el-col :span="8">
-        <el-form-item v-if="action !== 'edit'" label="Name" prop="name" required>
+        <el-form-item v-if="action === 'add'" label="Name" prop="name" required>
           <el-input ref="name" v-model="name" spellcheck="false" autofocus />
-          <label>The name of the rule, must be unique.</label>
+          <label>The name of the {{ type }}, must be unique.</label>
         </el-form-item>
         <el-form-item v-else label="Name">
           <el-input v-model="name" disabled />
-          <label>The name of the rule, must be unique.</label>
+          <label v-if="!viewOnly">The name of the rule, must be unique.</label>
         </el-form-item>
       </el-col>
 
       <el-col :span="8">
         <el-form-item label="Index" prop="index" required>
           <el-autocomplete
+            :disabled="viewOnly"
             v-model="index"
             :fetch-suggestions="(qs, cb) => { cb(links); }"
             class="el-input-wide"
             placeholder=""
             @input="getMappingDebounced" />
-          <label>
+          <label v-if="!viewOnly">
             e.g. logstash-* or logstash-%Y.%m.%d
             [<a href="https://elastalert.readthedocs.io/en/latest/ruletypes.html#index" target="_blank">?</a>]
           </label>
@@ -43,7 +44,14 @@
 
       <el-col :span="8">
         <el-form-item label="Time field" prop="timeField" required>
-          <el-select v-model="timeField" filterable clearable placeholder="" class="el-select-wide">
+          <el-select
+            v-model="timeField"
+            :disabled="viewOnly"
+            filterable
+            clearable
+            placeholder=""
+            class="el-select-wide"
+          >
             <el-option
               v-for="field in Object.keys(dateFields)"
               :key="field"
@@ -64,7 +72,8 @@ export default {
   props: [
     'prefillPath',
     'action',
-    'type'
+    'type',
+    'viewOnly'
   ],
 
   data() {

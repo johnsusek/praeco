@@ -19,8 +19,8 @@
             <span slot="embeddedItem" slot-scope="s">
               <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
             </span>
-            <div contenteditable />
-            <label>Insert fields by typing '%' followed by the field name</label>
+            <div :contenteditable="!viewOnly" />
+            <label v-if="!viewOnly">Insert fields by typing '%' followed by the field name</label>
           </at>
         </el-form-item>
 
@@ -36,14 +36,14 @@
             <span slot="embeddedItem" slot-scope="s">
               <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
             </span>
-            <div contenteditable />
-            <label>Insert fields by typing '%' followed by the field name</label>
+            <div :contenteditable="!viewOnly" />
+            <label v-if="!viewOnly">Insert fields by typing '%' followed by the field name</label>
           </at>
         </el-form-item>
 
         <el-form-item required label="Include">
           <el-row>
-            <el-select v-model="bodyType">
+            <el-select v-model="bodyType" :disabled="viewOnly">
               <el-option value="alert_text_only" label="Body text only" />
               <el-option value="exclude_fields" label="Include trigger details &amp; top counts"/>
               <el-option
@@ -85,6 +85,8 @@ export default {
   components: {
     At,
   },
+
+  props: ['viewOnly'],
 
   computed: {
     subject: {
@@ -151,6 +153,11 @@ export default {
 
 .el-checkbox.is-bordered.el-checkbox--mini {
   height: auto;
+}
+
+[contenteditable='false'] {
+  border: 0 !important;
+  padding: 0 !important;
 }
 
 [contenteditable] {

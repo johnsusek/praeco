@@ -830,7 +830,9 @@ export default {
         this.type = 'metric_aggregation';
       }
 
-      this.validate();
+      setTimeout(() => {
+        this.validate();
+      }, 10);
     });
   },
 
@@ -1121,7 +1123,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" >
 .el-popover .el-form-item {
   margin-bottom: 10px !important;
 }
@@ -1141,6 +1143,18 @@ export default {
 .el-popover.popover-options {
   padding-top: 5px;
   max-width: 600px;
+}
+
+.condition-view {
+  .pop-trigger {
+    border-bottom: 0 !important;
+    cursor: default !important;
+    pointer-events: none;
+  }
+
+  .pop-trigger > :first-child {
+    color: #999 !important;
+  }
 }
 </style>
 

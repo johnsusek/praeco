@@ -11,10 +11,13 @@ import {
   faChevronDown,
   faChevronUp,
   faEllipsisH,
+  faEnvelope,
+  faGlobe,
   faFolder,
   faFolderOpen,
   faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
@@ -24,7 +27,17 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 let ECharts = require('vue-echarts');
 
-library.add(faChevronUp, faChevronDown, faEllipsisH, faFolder, faFolderOpen, faExclamationCircle);
+library.add(
+  faSlack,
+  faGlobe,
+  faEnvelope,
+  faChevronUp,
+  faChevronDown,
+  faEllipsisH,
+  faFolder,
+  faFolderOpen,
+  faExclamationCircle
+);
 
 Vue.use(ElementUI, { locale, size: 'mini' });
 Vue.use(infiniteScroll);

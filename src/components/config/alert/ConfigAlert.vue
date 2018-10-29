@@ -7,8 +7,13 @@
     @submit.native.prevent>
     <el-row>
       <el-col :span="12">
-        <el-form-item label="Destination" prop="alert" required>
-          <el-checkbox-group v-model="alert">
+        <el-form-item :label="`Destination${alert.length > 1 ? 's' : ''}`" prop="alert" required>
+          <template v-if="viewOnly">
+            <el-tag v-if="alert.includes('slack')" class="m-e-sm" type="success">Slack</el-tag>
+            <el-tag v-if="alert.includes('email')" class="m-e-sm" type="success">Email</el-tag>
+            <el-tag v-if="alert.includes('post')" class="m-e-sm" type="success">HTTP</el-tag>
+          </template>
+          <el-checkbox-group v-else v-model="alert" :disabled="viewOnly">
             <el-checkbox label="slack" border>Slack</el-checkbox>
             <el-checkbox label="email" border>Email</el-checkbox>
             <el-checkbox label="post" border>HTTP</el-checkbox>
@@ -16,9 +21,10 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="Re-alert">
+        <el-form-item :class="{'view-only': viewOnly }" label="Re-alert">
+          <ElastalertTimeView v-if="viewOnly" :time="realert" />
           <ElastalertTimePicker
-            v-if="realert"
+            v-else-if="realert"
             :unit="Object.keys(realert)[0]"
             :amount="Object.values(realert)[0]"
             @input="updateRealert" />
@@ -37,16 +43,18 @@
     </el-row>
 
     <el-form-item label="">
-      <el-tabs v-if="alert.length" type="border-card" class="border-card-plain">
+      <el-tabs v-if="alert.length" class="border-card-plain">
         <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')" label="Settings">
           <ConfigAlertSubjectBody
             v-if="alert.includes('slack') || alert.includes('email')"
+            :view-only="viewOnly"
             class="m-s-lg" />
         </el-tab-pane>
 
-        <el-tab-pane v-if="alert.includes('slack')" label="Slack">
+        <el-tab-pane v-if="alert.includes('slack')" >
+          <span slot="label"><icon :icon="['fab', 'slack']" size="lg" /> Slack</span>
           <el-form-item label="Channel or username" prop="slackChannelOverride" required>
-            <el-input v-model="slackChannelOverride" />
+            <el-input v-model="slackChannelOverride" :disabled="viewOnly" />
             <label>
               The @username or #channel to send the alert. Tip: Create new channels
               for your alerts, to have fine-grained control of Slack notifications.
@@ -54,12 +62,12 @@
           </el-form-item>
 
           <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
-            <el-input v-model="slackUsernameOverride" />
+            <el-input v-model="slackUsernameOverride" :disabled="viewOnly" />
             <label>This is the username that will appear in Slack for the alert</label>
           </praeco-form-item>
 
           <el-form-item label="Message color" prop="slackMsgColor" required>
-            <el-radio-group v-model="slackMsgColor">
+            <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
               <el-radio label="danger" border class="slack-danger">Danger</el-radio>
               <el-radio label="warning" border class="slack-warning">Warning</el-radio>
               <el-radio label="good" border class="slack-good">Good</el-radio>
@@ -67,12 +75,14 @@
           </el-form-item>
         </el-tab-pane>
 
-        <el-tab-pane v-if="alert.includes('email')" label="Email">
+        <el-tab-pane v-if="alert.includes('email')">
+          <span slot="label"><icon icon="envelope" /> Email</span>
           <praeco-form-item
+            v-if="!viewOnly || fromAddr"
             :value="fromAddr"
             label="From address"
             prop="fromAddr">
-            <el-input v-model="fromAddr" />
+            <el-input v-model="fromAddr" :disabled="viewOnly" />
             <label>
               This sets the From header in the email.
               By default, the from address is ElastAlert@
@@ -81,10 +91,11 @@
           </praeco-form-item>
 
           <praeco-form-item
+            v-if="!viewOnly || replyTo"
             :value="replyTo"
             label="Reply to"
             prop="replyTo">
-            <el-input v-model="replyTo" />
+            <el-input v-model="replyTo" :disabled="viewOnly" />
             <label>
               This sets the Reply-To header in the email.
               By default, the from address is ElastAlert@ and the
@@ -93,24 +104,25 @@
           </praeco-form-item>
 
           <el-form-item label="To" prop="email" required>
-            <el-input v-model="email" />
+            <el-input v-model="email" :disabled="viewOnly" />
             <label>Comma separated list of email addresses</label>
           </el-form-item>
 
-          <el-form-item label="CC" prop="cc">
-            <el-input v-model="cc" />
+          <el-form-item v-if="!viewOnly || cc" label="CC" prop="cc">
+            <el-input v-model="cc" :disabled="viewOnly" />
             <label>Comma separated list of email addresses</label>
           </el-form-item>
 
-          <el-form-item label="BCC" prop="bcc">
-            <el-input v-model="bcc" />
+          <el-form-item v-if="!viewOnly || bcc" label="BCC"prop="bcc">
+            <el-input v-model="bcc" :disabled="viewOnly" />
             <label>Comma separated list of email addresses</label>
           </el-form-item>
         </el-tab-pane>
 
         <el-tab-pane v-if="alert.includes('post')" label="HTTP">
+          <span slot="label"><icon icon="globe" /> HTTP</span>
           <el-form-item label="HTTP POST URL" prop="httpPostUrl" required>
-            <el-input v-model="httpPostUrl" />
+            <el-input v-model="httpPostUrl" :disabled="viewOnly" />
             <label>JSON results will be POSTed to this URL</label>
           </el-form-item>
         </el-tab-pane>
@@ -177,7 +189,7 @@ export default {
     ConfigAlertSubjectBody
   },
 
-  props: ['prefill'],
+  props: ['prefill', 'viewOnly'],
 
   data() {
     return {
@@ -343,55 +355,57 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .atwho-view {
   max-height: 220px;
   height: 220px;
   margin-bottom: -245px;
 }
 
-.slack-danger .el-radio__inner:hover {
-  border-color: red;
-}
+:not(.is-disabled) {
+  &.slack-danger .el-radio__inner:hover {
+    border-color: red;
+  }
 
-.slack-danger .el-radio__input.is-checked .el-radio__inner {
-  border-color: red;
-  background: red;
-}
+  &.slack-danger .el-radio__input.is-checked .el-radio__inner {
+    border-color: red;
+    background: red;
+  }
 
-.slack-danger .el-radio__input.is-checked + .el-radio__label,
-.slack-danger {
-  color: red !important;
-  border-color: red !important;
-}
+  &.slack-danger .el-radio__input.is-checked + .el-radio__label,
+  &.slack-danger {
+    color: red !important;
+    border-color: red !important;
+  }
 
-.slack-warning .el-radio__inner:hover {
-  border-color: orange;
-}
+  &.slack-warning .el-radio__inner:hover {
+    border-color: orange;
+  }
 
-.slack-warning .el-radio__input.is-checked .el-radio__inner {
-  border-color: orange;
-  background: orange;
-}
+  &.slack-warning .el-radio__input.is-checked .el-radio__inner {
+    border-color: orange;
+    background: orange;
+  }
 
-.slack-warning .el-radio__input.is-checked + .el-radio__label,
-.slack-warning {
-  color: orange !important;
-  border-color: orange !important;
-}
+  &.slack-warning .el-radio__input.is-checked + .el-radio__label,
+  &.slack-warning {
+    color: orange !important;
+    border-color: orange !important;
+  }
 
-.slack-good .el-radio__inner:hover {
-  border-color: green;
-}
+  &.slack-good .el-radio__inner:hover {
+    border-color: green;
+  }
 
-.slack-good .el-radio__input.is-checked .el-radio__inner {
-  border-color: green;
-  background: green;
-}
+  &.slack-good .el-radio__input.is-checked .el-radio__inner {
+    border-color: green;
+    background: green;
+  }
 
-.slack-good .el-radio__input.is-checked + .el-radio__label,
-.slack-good {
-  color: green !important;
-  border-color: green !important;
+  &.slack-good .el-radio__input.is-checked + .el-radio__label,
+  &.slack-good {
+    color: green !important;
+    border-color: green !important;
+  }
 }
 </style>

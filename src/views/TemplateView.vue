@@ -61,7 +61,11 @@
       </span>
     </el-dialog>
 
-    <ConfigView :config="template" :path="id" type="template" />
+    <template v-if="$store.state.config.settings.index && $store.getters['config/config']()">
+      <ConfigSettings :view-only="true" type="template" />
+      <ConfigCondition class="condition-view m-n-med m-s-xl" />
+      <ConfigAlert :view-only="true" />
+    </template>
   </div>
 </template>
 
@@ -84,7 +88,9 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch('configs/fetchConfig', { path: this.id, type: 'templates' });
+    this.$store.dispatch('config/reset');
+    this.$store.dispatch('config/load', { type: 'templates', path: this.id });
+
     this.newName = this.template.name;
   },
   methods: {
@@ -94,7 +100,7 @@ export default {
 
     async move() {
       let newPath = await this.$store.dispatch('configs/moveConfig', {
-        oldConfig: this.template,
+        oldConfig: this.$store.getters['config/config'](),
         newPath: this.moveDest.replace(/_templates/, ''),
         type: 'templates'
       });
@@ -120,7 +126,7 @@ export default {
 
     async rename() {
       let res = await this.$store.dispatch('configs/renameConfig', {
-        config: this.template,
+        config: this.$store.getters['config/config'](),
         newName: this.newName.trim(),
         type: 'templates'
       });
@@ -148,7 +154,7 @@ export default {
 
     async duplicate() {
       let path = await this.$store.dispatch('configs/duplicateConfig', {
-        config: this.template,
+        config: this.$store.getters['config/config'](),
         type: 'templates'
       });
 

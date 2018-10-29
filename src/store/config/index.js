@@ -97,8 +97,8 @@ export default {
           commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
         }
 
-        if (config.__praeco_time_field) {
-          commit('settings/UPDATE_TIME_FIELD', config.__praeco_time_field);
+        if (config.timestamp_field) {
+          commit('settings/UPDATE_TIME_FIELD', config.timestamp_field);
         }
 
         commit('match/UPDATE_TYPE', config.type);
@@ -477,7 +477,7 @@ export default {
       }
 
       if (state.settings.timeField) {
-        config.__praeco_time_field = state.settings.timeField;
+        config.timestamp_field = state.settings.timeField;
       }
 
       config.is_enabled = !!state.settings.isEnabled;
