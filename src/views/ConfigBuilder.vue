@@ -7,7 +7,7 @@
       ref="settings"
       :type="type"
       :prefill-path="prefill"
-      action="add" />
+      :action="action" />
 
     <template v-if="timeField">
       <ConfigCondition ref="condition" class="m-n-xl" @validate="val => valid = val" />
@@ -45,7 +45,7 @@ export default {
 
   mixins: [configSave],
 
-  props: ['path', 'type', 'prefill'],
+  props: ['path', 'type', 'action', 'prefill'],
 
   data() {
     return {
@@ -68,7 +68,9 @@ export default {
     },
 
     pageTitle() {
-      let title = `Add ${this.type}`;
+      let title = this.action === 'add' ? 'Add ' : 'Edit ';
+
+      title += this.type;
 
       if (this.name) {
         title += ` “${this.name}”`;
@@ -80,20 +82,25 @@ export default {
 
   async mounted() {
     this.$store.dispatch('config/reset');
+
     this.$store.commit('config/UPDATE_TYPE', this.type);
 
     this.$nextTick(() => {
       if (this.$refs.settings) this.$refs.settings.$refs.form.clearValidate();
     });
 
-    if (this.prefill) {
-      await this.$store.dispatch('config/load', { type: 'templates', path: this.prefill });
-      this.$store.commit('config/UPDATE_PATH', '');
-      this.$store.commit('config/settings/UPDATE_NAME', 'New rule');
-    }
+    if (this.action === 'add') {
+      if (this.prefill) {
+        await this.$store.dispatch('config/load', { type: 'templates', path: this.prefill });
+        this.$store.commit('config/UPDATE_PATH', '');
+        this.$store.commit('config/settings/UPDATE_NAME', '');
+      }
 
-    // Since this is a new rule, we want to disable it by default
-    this.$store.commit('config/settings/UPDATE_ENABLED', false);
+      // Since this is a new rule, we want to disable it by default
+      this.$store.commit('config/settings/UPDATE_ENABLED', false);
+    } else if (this.action === 'edit') {
+      this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
+    }
   },
 
   destroyed() {

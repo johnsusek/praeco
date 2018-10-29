@@ -25,7 +25,7 @@ export default {
 
       let res = await this.$store.dispatch('config/save', {
         type: `${this.type}s`,
-        overwrite: true
+        overwrite: this.action === 'edit'
       });
 
       this.saving = false;

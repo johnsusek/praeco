@@ -129,15 +129,12 @@ export default {
         commit('match/UPDATE_SPIKE_TYPE', config.spike_type);
 
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
-        commit('alert/UPDATE_SMTP_HOST', config.smtp_host);
-        commit('alert/UPDATE_SMTP_PORT', config.smtp_port);
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.reply_to);
         commit('alert/UPDATE_EMAIL', config.email);
         commit('alert/UPDATE_CC', config.cc);
         commit('alert/UPDATE_BCC', config.bcc);
 
-        commit('alert/UPDATE_SLACK_WEBHOOK_URL', config.slack_webhook_url);
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
         commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
@@ -360,19 +357,17 @@ export default {
     },
 
     queryString(state, getters) {
-      if (getters['query/queryString']) {
-        return {
-          filter: [
-            {
-              query: {
-                query_string: {
-                  query: getters['query/queryString']
-                }
+      return {
+        filter: [
+          {
+            query: {
+              query_string: {
+                query: getters['query/queryString'] || `${state.settings.timeField}:*`
               }
             }
-          ]
-        };
-      }
+          }
+        ]
+      };
     },
 
     http(state) {
@@ -385,14 +380,6 @@ export default {
 
     email(state) {
       let config = {};
-
-      if (state.alert.smtpHost) {
-        config.smtp_host = state.alert.smtpHost;
-      }
-
-      if (state.alert.smtpPort) {
-        config.smtp_port = state.alert.smtpPort;
-      }
 
       if (state.alert.fromAddr) {
         config.from_addr = state.alert.fromAddr;
@@ -419,10 +406,6 @@ export default {
 
     slack(state, getters) {
       let config = {};
-
-      if (state.alert.slackWebhookUrl) {
-        config.slack_webhook_url = state.alert.slackWebhookUrl;
-      }
 
       if (state.alert.slackChannelOverride) {
         config.slack_channel_override = state.alert.slackChannelOverride;

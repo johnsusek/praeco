@@ -18,7 +18,6 @@
       </div>
 
       <ESChart
-        v-if="$store.getters['config/query/queryString']"
         :timeframe="{ hours: 24 }"
         :bucket="bucket"
         :show-axis-pointer="drawerOpen"

@@ -781,7 +781,7 @@ export default {
     },
 
     queryString() {
-      return this.$store.getters['config/query/queryString'] || `${this.timeField}:*`;
+      return this.$store.getters['config/query/queryString'];
     },
 
     numberFields() {
@@ -802,11 +802,11 @@ export default {
   },
 
   mounted() {
-    if (this.index) {
-      this.$store.dispatch('config/sample');
-    }
-
     this.$nextTick(() => {
+      if (this.index) {
+        this.$store.dispatch('config/sample');
+      }
+
       if (this.metricAggType === 'count') {
         this.type = 'frequency';
       } else if (this.metricAggType === 'field in list') {

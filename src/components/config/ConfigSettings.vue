@@ -20,6 +20,10 @@
           <el-input ref="name" v-model="name" spellcheck="false" autofocus />
           <label>The name of the rule, must be unique.</label>
         </el-form-item>
+        <el-form-item v-else label="Name">
+          <el-input v-model="name" disabled />
+          <label>The name of the rule, must be unique.</label>
+        </el-form-item>
       </el-col>
 
       <el-col :span="8">

@@ -16,7 +16,7 @@ export default {
 
     unit() {
       let unit = this.time && Object.keys(this.time)[0];
-      if (this.value <= 1) {
+      if (this.value <= 1 && this.unit) {
         unit = unit.slice(0, -1);
       }
       return unit;

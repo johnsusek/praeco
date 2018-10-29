@@ -45,14 +45,6 @@
         </el-tab-pane>
 
         <el-tab-pane v-if="alert.includes('slack')" label="Slack">
-          <praeco-form-item
-            :value="slackWebhookUrl"
-            label="Slack webhook URL"
-            prop="slackWebhookUrl"
-            required>
-            <el-input v-model="slackWebhookUrl" />
-          </praeco-form-item>
-
           <el-form-item label="Channel or username" prop="slackChannelOverride" required>
             <el-input v-model="slackChannelOverride" />
             <label>
@@ -76,16 +68,6 @@
         </el-tab-pane>
 
         <el-tab-pane v-if="alert.includes('email')" label="Email">
-          <praeco-form-item :value="smtpHost" label="SMTP host" prop="smtpHost" required>
-            <el-input v-model="smtpHost" />
-            <label>The SMTP host to use</label>
-          </praeco-form-item>
-
-          <praeco-form-item :value="smtpPort" label="SMTP port" prop="smtpPort" required>
-            <el-input-number v-model="smtpPort" />
-            <label>The SMTP port to use</label>
-          </praeco-form-item>
-
           <praeco-form-item
             :value="fromAddr"
             label="From address"
@@ -177,7 +159,9 @@ let validateUrl = (rule, value, callback) => {
 };
 
 let validateEmailCommaSeparated = (rule, value, callback) => {
-  let emails = value.split(',');
+  let emails = [];
+
+  if (value) emails = value.split(',');
 
   emails.forEach(email => {
     if (email && !email.trim().match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
@@ -260,24 +244,6 @@ export default {
       }
     },
 
-    smtpHost: {
-      get() {
-        return this.$store.state.config.alert.smtpHost;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_SMTP_HOST', value);
-      }
-    },
-
-    smtpPort: {
-      get() {
-        return this.$store.state.config.alert.smtpPort;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_SMTP_PORT', value);
-      }
-    },
-
     fromAddr: {
       get() {
         return this.$store.state.config.alert.fromAddr;
@@ -322,16 +288,6 @@ export default {
         this.$store.commit('config/alert/UPDATE_BCC', value);
       }
     },
-
-    slackWebhookUrl: {
-      get() {
-        return this.$store.state.config.alert.slackWebhookUrl;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_SLACK_WEBHOOK_URL', value);
-      }
-    },
-
 
     slackChannelOverride: {
       get() {
