@@ -36,7 +36,8 @@
           auto-resize
           tabindex="0"
           @keydown.native.left="moveLeft"
-          @keydown.native.right="moveRight" />
+          @keydown.native.right="moveRight"
+          @click="ev => $emit('click', ev)" />
 
         <el-popover v-if="showControls" trigger="click" class="praeco-chart-popover">
           <el-button
@@ -175,7 +176,10 @@ export default {
             barCategoryGap: '0',
             symbol: 'none',
             itemStyle: {
-              color: '#333'
+              color: '#333',
+              emphasis: {
+                color: '#666'
+              }
             },
             markPoint: {
               silent: true,

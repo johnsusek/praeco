@@ -132,7 +132,7 @@ export default {
 
         this.$connect();
 
-        let rule = this.$store.getters['config/yaml'];
+        let rule = this.$store.getters['config/yaml'](true);
 
         this.testRunLoading = true;
         this.testRunResult = '';

@@ -480,7 +480,7 @@
       v-if="showChart"
       :index="$store.state.config.settings.index"
       :query="queryString"
-      :timeframe="{ hours: 24 }"
+      :timeframe="{ hours: 12 }"
       :bucket="bucket"
       :mark-line="$store.getters['config/match/markLine']"
       :spike-height="$store.getters['config/match/spikeHeight']"
@@ -490,7 +490,12 @@
       :agg-sum="metricAggType === 'sum' && metricAggKey"
       :agg-min="metricAggType === 'min' && metricAggKey"
       :agg-max="metricAggType === 'max' && metricAggKey"
-      class="m-n-med" />
+      class="m-n-med"
+      @click="clickChart" />
+
+    <el-dialog :visible.sync="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
+      <EventTable v-if="eventViewerFrom" :from="eventViewerFrom" :timeframe="timeframe" :height="eventTableHeight" />
+    </el-dialog>
   </div>
 </template>
 
@@ -498,6 +503,8 @@
 export default {
   data() {
     return {
+      eventViewerFrom: '',
+      eventViewerVisible: false,
       popWhenVisible: false,
       popOverVisible: false,
       popGroupVisible: false,
@@ -531,6 +538,10 @@ export default {
   },
 
   computed: {
+    eventTableHeight() {
+      return document.body.clientHeight - 85;
+    },
+
     thresholdRef: {
       get() {
         return this.$store.state.config.match.threasholdRef;
@@ -781,7 +792,7 @@ export default {
     },
 
     queryString() {
-      return this.$store.getters['config/query/queryString'];
+      return this.$store.getters['config/query/queryString'] || `${this.timeField}:*`;
     },
 
     numberFields() {
@@ -819,11 +830,16 @@ export default {
         this.type = 'metric_aggregation';
       }
 
-      this.validateAbove();
+      this.validate();
     });
   },
 
   methods: {
+    clickChart(val) {
+      this.eventViewerFrom = val.name;
+      this.eventViewerVisible = true;
+    },
+
     async validate() {
       try {
         if (this.$refs.of) {

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="height" class="event-table">
+  <div class="event-table">
     <el-table
       ref="table"
       :data="loadedEvents"
@@ -10,7 +10,7 @@
       @header-dragend="saveColumnWidths">
       <el-table-column type="expand">
         <template slot-scope="props">
-          <p v-for="col in Object.keys(events[0]).sort()" :key="col">
+          <p v-for="col in columns" :key="col">
             <strong>{{ col }}</strong>
             <br>
             {{ props.row[col] }}
@@ -19,7 +19,7 @@
       </el-table-column>
 
       <el-table-column
-        v-for="col in columns"
+        v-for="col in visibleColumns"
         :key="col"
         :label="col"
         :prop="col"
@@ -38,7 +38,7 @@
       </el-table-column>
 
       <template slot="append">
-        <div v-infinite-scroll="loadMore" infinite-scroll-distance="600" />
+        <div v-infinite-scroll="loadMore" infinite-scroll-distance="800" />
       </template>
     </el-table>
 
@@ -47,7 +47,7 @@
         <icon icon="ellipsis-h" />
       </el-button>
       <el-checkbox-group v-model="hidden">
-        <div v-for="col in Object.keys(events[0]).sort()" :key="col" >
+        <div v-for="col in columns" :key="col" >
           <el-checkbox :label="col" @change="saveColumns">
             {{ col }}
           </el-checkbox>
@@ -60,27 +60,35 @@
 
 <script>
 import axios from 'axios';
-import throttle from 'lodash.throttle';
 import { intervalFromTimeframe } from '@/lib/intervalFromTimeframe';
 
 export default {
-  props: ['events', 'bucket', 'from'],
+  props: ['timeframe', 'from', 'height'],
 
   data() {
     return {
-      height: 0,
       hidden: [],
       widths: {},
       offset: 0,
       totalEvents: 0,
-      loadedEvents: null,
+      loadedEvents: [],
       eventsLoading: false
     };
   },
 
   computed: {
     columns() {
-      return Object.keys(this.events[0]).sort().filter(col => !this.hidden.includes(col));
+      if (this.loadedEvents.length) {
+        return Object.keys(this.loadedEvents[0]).sort();
+      }
+      return [];
+    },
+
+    visibleColumns() {
+      if (this.loadedEvents.length) {
+        return Object.keys(this.loadedEvents[0]).sort().filter(col => !this.hidden.includes(col));
+      }
+      return [];
     },
 
     timeField() {
@@ -89,26 +97,22 @@ export default {
   },
 
   watch: {
-    events() {
-      this.loadedEvents = this.events;
+    from() {
+      this.loadedEvents = [];
+      this.offset = 0;
+      this.totalEvents = 0;
+      this.$refs.table.$el.querySelector('.el-table__body-wrapper').scrollTop = 0;
+      this.fetchEvents();
     }
   },
 
-  created() {
-    this.height = document.body.clientHeight - 260;
-  },
-
   mounted() {
-    this.loadedEvents = this.events;
-
-    window.addEventListener('resize', throttle(() => {
-      this.height = document.body.clientHeight - 260;
-    }, 50));
+    this.fetchEvents();
 
     // if there are saved columns, use those
     if (localStorage.getItem('hiddenEventTableColumns')) {
       this.hidden = JSON.parse(localStorage.getItem('hiddenEventTableColumns'));
-    } else if (this.events[0]) {
+    } else if (this.loadedEvents[0]) {
       this.hidden = [];
     }
 
@@ -116,33 +120,9 @@ export default {
     if (localStorage.getItem('eventTableColumnWidths')) {
       this.widths = JSON.parse(localStorage.getItem('eventTableColumnWidths'));
     }
-
-    this.$refs.table.$el.querySelector('.el-table__body-wrapper').addEventListener('scroll', (e) => {
-      let scrollVal;
-      let scrollAmount = ((e.target.scrollTop + e.target.clientHeight) / e.target.scrollHeight);
-
-      if (this.loadedEvents && this.loadedEvents.length) {
-        scrollVal = parseInt(scrollAmount * this.loadedEvents.length);
-      } else {
-        scrollVal = parseInt(scrollAmount * this.events.length);
-      }
-
-      this.$emit('scroll', scrollVal);
-    });
   },
 
   methods: {
-    setLoadedEvents(events) {
-      this.loadedEvents = events;
-    },
-
-    resetLoadedEvents() {
-      this.$refs.table.$el.querySelector('.el-table__body-wrapper').scrollTop = 0;
-      this.loadedEvents = null;
-      this.offset = 0;
-      this.totalEvents = 0;
-    },
-
     saveColumns() {
       localStorage.setItem('hiddenEventTableColumns', JSON.stringify(this.hidden));
     },
@@ -153,10 +133,6 @@ export default {
     },
 
     loadMore() {
-      if (!this.loadedEvents) {
-        this.loadedEvents = this.events || [];
-      }
-
       if (this.totalEvents === 0 || this.loadedEvents.length < this.totalEvents) {
         this.offset += 40;
         this.fetchEvents();
@@ -168,14 +144,16 @@ export default {
 
       this.eventsLoading = true;
 
-      let to = intervalFromTimeframe(this.bucket);
+      let to = intervalFromTimeframe(this.timeframe);
 
       let query = {
         query: {
           bool: {
             must: [
               {
-                query_string: { query: this.$store.getters['config/query/queryString'] }
+                query_string: {
+                  query: this.$store.getters['config/query/queryString'] || `${this.timeField}:*`
+                }
               },
               {
                 range: {
