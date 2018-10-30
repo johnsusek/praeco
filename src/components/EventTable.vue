@@ -168,7 +168,7 @@ export default {
       let to;
 
       if (this.timeType === 'iso') {
-        to = intervalFromTimeframe(this.timeframe);
+        to = `${this.from}||+${intervalFromTimeframe(this.timeframe)}`;
       } else if (this.timeType === 'unix_ms') {
         to = this.from + msFromTimeframe(this.timeframe);
       } else {
