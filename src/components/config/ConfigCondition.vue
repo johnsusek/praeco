@@ -1,0 +1,1274 @@
+<template>
+  <div>
+    <el-popover v-model="popWhenVisible">
+      <span slot="reference" class="pop-trigger">
+        <span>WHEN </span>
+        <span>{{ metricAggType === 'avg' ? 'average' : metricAggType }}</span>
+      </span>
+      <div>
+        <el-menu mode="vertical" @select="selectWhen">
+          <el-menu-item index="count">count</el-menu-item>
+          <el-menu-item index="avg">average</el-menu-item>
+          <el-menu-item index="sum">sum</el-menu-item>
+          <el-menu-item index="min">min</el-menu-item>
+          <el-menu-item index="max">max</el-menu-item>
+          <el-menu-item index="field in list">field in list</el-menu-item>
+          <el-menu-item index="field not in list">field not in list</el-menu-item>
+          <el-menu-item index="field changes">field changes</el-menu-item>
+        </el-menu>
+      </div>
+    </el-popover>
+
+    <el-popover v-if="showPopOf" :class="{ 'is-invalid': !popOfValid }" v-model="popOfVisible">
+      <span slot="reference" class="pop-trigger">
+        <span>OF </span>
+        <span>{{ metricAggKey || 'select a field' }}</span>
+      </span>
+      <el-form ref="of" :model="$store.state.config.match">
+        <el-form-item prop="metricAggKey" required>
+          <el-select
+            v-model="metricAggKey"
+            filterable
+            clearable
+            placeholder="Select field"
+            @input="popOfVisible = false; validate();">
+            <el-option
+              v-for="field in Object.keys(numberFields)"
+              :key="field"
+              :label="field"
+              :value="field" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </el-popover>
+
+    <el-popover v-if="showPopOver" :class="{ 'is-invalid': !popOverValid }" v-model="popOverVisible">
+      <span slot="reference" class="pop-trigger">
+        <span>
+          <span v-if="groupedOver === 'field'">GROUPED </span>
+          <span>OVER </span>
+        </span>
+        <span v-if="groupedOver === 'all'">all documents</span>
+        <span v-if="groupedOver === 'field'">{{ queryKey }}</span>
+      </span>
+      <div>
+        <el-radio v-model="groupedOver" label="all" border @change="validate">All documents</el-radio>
+        <el-radio v-model="groupedOver" label="field" border @change="validate">Field</el-radio>
+        <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
+          <el-form ref="overall" :model="$store.state.config.match">
+            <el-form-item label="" prop="docType" required>
+              <el-select
+                v-model="docType"
+                filterable
+                clearable
+                class="el-select-wide m-n-sm"
+                placeholder="Select doc type"
+                @change="validate">
+                <el-option v-for="type in types" :key="type" :label="type" :value="type"/>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div v-if="groupedOver === 'field'">
+          <el-form ref="over" :model="$store.state.config.match">
+            <el-form-item prop="queryKey" required>
+              <el-select
+                v-model="queryKey"
+                filterable
+                clearable
+                placeholder="Select field"
+                class="el-select-wide m-n-sm"
+                style="width: 280px"
+                @input="popOverVisible = false; validate();">
+                <el-option-group label="Date">
+                  <el-option
+                    v-for="field in Object.keys(dateFields)"
+                    :key="field"
+                    :label="field"
+                    :value="field" />
+                </el-option-group>
+                <el-option-group label="Text">
+                  <el-option
+                    v-for="field in Object.keys(textFields)"
+                    :key="field"
+                    :label="field"
+                    :value="field" />
+                </el-option-group>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+    </el-popover>
+
+    <el-popover v-if="showPopCompare" :class="{ 'is-invalid': !popCompareValid }" v-model="popCompareVisible">
+      <span slot="reference" class="pop-trigger">
+        <span>FIELD</span>
+        <span> {{ compareKey }}</span>
+      </span>
+      <el-form ref="compare" :model="$store.state.config.match">
+        <el-form-item prop="compareKey" required>
+          <el-select
+            v-model="compareKey"
+            filterable
+            clearable
+            placeholder="Field"
+            style="width: 280px"
+            @input="popCompareVisible = false; validate();">
+            <template v-if="['field in list', 'field not in list'].includes(metricAggType)">
+              <el-option
+                v-for="field in Object.keys(textFields)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </template>
+            <template v-else>
+              <el-option
+                v-for="field in Object.keys(fields)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </template>
+          </el-select>
+          <label v-if="metricAggType === 'field changes'">The field to check for changes.</label>
+        </el-form-item>
+      </el-form>
+    </el-popover>
+
+    <el-popover v-if="showPopGroup" :class="{ 'is-invalid': !popGroupValid }" v-model="popGroupVisible">
+      <span slot="reference" class="pop-trigger">
+        <span>
+          <span>GROUPED OVER </span>
+        </span>
+        <span>{{ queryKey }}</span>
+      </span>
+      <el-form ref="group" :model="$store.state.config.match">
+        <el-form-item prop="queryKey" required>
+          <el-select
+            v-model="queryKey"
+            filterable
+            clearable
+            placeholder="Select field"
+            class="el-select-wide"
+            style="width: 280px"
+            @input="popGroupVisible = false; validate();">
+            <el-option-group label="Date">
+              <el-option
+                v-for="field in Object.keys(dateFields)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </el-option-group>
+            <el-option-group label="Text">
+              <el-option
+                v-for="field in Object.keys(textFields)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </el-option-group>
+          </el-select>
+          <label v-if="metricAggType === 'field changes'">Field change will be checked per-group.</label>
+        </el-form-item>
+      </el-form>
+    </el-popover>
+
+    <el-popover v-if="showPopBlacklist" :class="{ 'is-invalid': !popBlacklistValid }" v-model="popBlacklistVisible">
+      <span slot="reference" class="pop-trigger">
+        <el-tooltip v-if="blacklist.length" :content="blacklist.join(', ')" placement="top">
+          <span>IN LIST ({{ blacklist.length }})</span>
+        </el-tooltip>
+        <span v-else>IN LIST ({{ blacklist.length }})</span>
+      </span>
+      <template>
+        <el-form
+          ref="blacklist"
+          :model="$store.state.config.match"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in blacklist"
+            :key="index"
+            :prop="'blacklist.' + index"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="blacklist[index]"
+                  placeholder="Keyword"
+                  @input="(val) => updateBlacklist(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeBlacklistEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button class="m-n-sm" @click="addBlacklistEntry">Add keyword</el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-if="showPopWhitelist" :class="{ 'is-invalid': !popWhitelistValid }" v-model="popWhitelistVisible">
+      <span slot="reference" class="pop-trigger">
+        <el-tooltip v-if="whitelist.length" :content="whitelist.join(', ')" placement="top">
+          <span>NOT IN LIST ({{ whitelist.length }})</span>
+        </el-tooltip>
+        <span v-else>NOT IN LIST ({{ whitelist.length }})</span>
+      </span>
+      <template>
+        <el-form
+          ref="whitelist"
+          :model="$store.state.config.match"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in whitelist"
+            :key="index"
+            :prop="'whitelist.' + index"
+            required
+            class="el-form-item-list"
+            label="">
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="whitelist[index]"
+                  placeholder="Keyword"
+                  @input="(val) => updateWhitelist(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click.prevent="removeWhitelistEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button class="m-n-sm" @click="addWhitelistEntry">Add keyword</el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popFilterVisible">
+      <span slot="reference" class="pop-trigger">
+        <span v-if="!queryTree.children.length">UNFILTERED</span>
+        <el-tooltip v-else :content="queryString" placement="top">
+          <span>FILTERED ({{ queryTree.children.length }})</span>
+        </el-tooltip>
+      </span>
+      <div>
+        <ConfigQuery ref="query" class="config-query" />
+      </div>
+    </el-popover>
+
+    <el-popover v-if="showPopAbove" :class="{ 'is-invalid': !popAboveValid }" v-model="popAboveVisible">
+      <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" slot="reference" class="pop-trigger">
+        <span>IS</span>
+        <span v-if="numEvents || maxThreshold">
+          ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
+        </span>
+        <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
+          &amp;
+        </span>
+        <span v-if="threshold || minThreshold">
+          BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}
+        </span>
+      </span>
+
+      <span v-else-if="spikeOrThreshold === 'spike'" slot="reference" class="pop-trigger">
+        <span>SPIKES</span>
+        <span v-if="spikeType === 'up'">
+          UP
+        </span>
+        <span v-if="spikeType === 'down'">
+          DOWN
+        </span>
+        <span v-if="spikeType === 'both'">
+          EITHER DIRECTION
+        </span>
+        {{ spikeHeight }}x
+      </span>
+
+      <span v-else-if="spikeOrThreshold === 'any'" slot="reference" class="pop-trigger">
+        <span>IS NOT EMPTY</span>
+      </span>
+
+      <div v-if="metricAggType === 'count'">
+        <el-row :gutter="10" style="width: 360px">
+          <el-col :span="spikeOrThreshold === 'any' ? 24 : 8">
+            <el-select v-model="spikeOrThreshold" class="el-select-wide" @input="updateSpikeOrThreshold">
+              <el-option key="any" label="Is not empty" value="any" />
+              <el-option key="is" label="Is" value="is" />
+              <el-option key="spike" label="Spikes" value="spike" />
+            </el-select>
+          </el-col>
+
+          <el-col v-if="spikeOrThreshold !== 'any'" :span="8">
+            <el-select
+              v-if="spikeOrThreshold === 'is'"
+              v-model="aboveOrBelow"
+              class="el-select-wide"
+              @input="updateAboveOrBelow">
+              <el-option key="above" label="Above" value="above" />
+              <el-option key="below" label="Below" value="below" />
+            </el-select>
+            <el-select v-else v-model="spikeType" class="el-select-wide">
+              <el-option label="Up" value="up" />
+              <el-option label="Down" value="down" />
+              <el-option label="Both" value="both" />
+            </el-select>
+          </el-col>
+
+          <el-col v-if="spikeOrThreshold !== 'any'" :span="8">
+            <el-form ref="spikeOrThreshold" :model="$store.state.config.match">
+              <template v-if="spikeOrThreshold === 'is'" >
+                <el-form-item v-if="aboveOrBelow === 'above'" prop="numEvents" required>
+                  <el-input
+                    v-model="numEvents"
+                    min="1"
+                    type="number"
+                    class="el-input-wide"
+                    @input="validate" />
+                </el-form-item>
+                <el-form-item v-else prop="threshold" required>
+                  <el-input
+                    v-model="threshold"
+                    min="1"
+                    type="number"
+                    class="el-input-wide"
+                    @input="validate" />
+                </el-form-item>
+              </template>
+              <el-form-item v-else prop="spikeHeight" required>
+                <el-input v-model="spikeHeight" type="number" class="el-input-wide" @input="validate" />
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
+      </div>
+
+      <div v-else>
+        <el-form ref="aboveOrBelow" :rules="aboveOrBelowRules" :model="$store.state.config.match" label-width="60px">
+          <el-form-item label="Above" prop="maxThreshold">
+            <el-input v-model="maxThreshold" min="1" type="number" @change="validate" />
+          </el-form-item>
+          <el-form-item label="Below" prop="minThreshold">
+            <el-input v-model="minThreshold" min="1" type="number" @change="validate" />
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-popover>
+
+    <span v-show="showTime">
+      <el-popover v-show="metricAggType === 'count' || metricAggType === 'field changes'">
+        <span slot="reference" class="pop-trigger">
+          <span>
+            <span v-if="metricAggType === 'field changes'">WITHIN</span>
+            <span v-if="metricAggType === 'count'">FOR</span>
+            THE LAST
+          </span>
+          <ElastalertTimeView :time="timeframe" />
+        </span>
+        <ElastalertTimePicker
+          :unit="Object.keys(timeframe)[0]"
+          :amount="Object.values(timeframe)[0]"
+          @input="updateTimeframe" />
+        <label v-if="metricAggType === 'field changes'">The maximum time between changes.</label>
+      </el-popover>
+
+      <el-popover v-show="metricAggType !== 'count' && metricAggType !== 'field changes'">
+        <span slot="reference" class="pop-trigger-pseudo">
+          <span>FOR THE LAST </span>
+          <ElastalertTimeView :time="bufferTime" />
+        </span>
+      </el-popover>
+    </span>
+
+    <el-popover
+      v-if="showOptions"
+      ref="optionsPop"
+      v-model="popOptionsVisible"
+      :class="{ 'is-invalid': !popOptionsValid }"
+      popper-class="popover-options">
+      <span slot="reference" class="pop-trigger">
+        <span>WITH OPTIONS</span>
+      </span>
+
+      <div v-if="metricAggType === 'field not in list' || metricAggType === 'field changes'">
+        <el-form
+          ref="form"
+          :model="$store.state.config.match"
+          label-position="top"
+          @submit.native.prevent>
+          <el-form-item label="Ignore null">
+            <el-switch v-model="ignoreNull" />
+            <label>If set, events without the selected field will not match.</label>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <div v-if="type === 'frequency' || type === 'flatline'">
+        <el-form
+          ref="freqFlatlineOptions"
+          :model="$store.state.config.match"
+          label-position="top"
+          @submit.native.prevent>
+          <el-form-item label="Use count query">
+            <el-switch :disabled="useTermsQuery" v-model="useCountQuery" @input="refreshOptionsPop" />
+            <label>
+              If true, ElastAlert will poll Elasticsearch using the count api,
+              and not download all of the matching documents.
+              This is useful is you care only about numbers and not the actual data.
+              It should also be used if you expect a large number of query hits, in the order of
+              tens of thousands or more.
+            </label>
+          </el-form-item>
+
+          <el-form-item label="Use terms query">
+            <el-switch :disabled="useCountQuery" v-model="useTermsQuery" @input="refreshOptionsPop" />
+            <label>
+              If true, ElastAlert will make an aggregation query against Elasticsearch
+              to get counts of documents matching each unique value of "query key". This
+              must be used with "query key" and "doc type". This will only return a maximum
+              of "terms size", default 50, unique terms.
+            </label>
+          </el-form-item>
+
+          <el-form-item
+            v-if="useCountQuery || useTermsQuery"
+            label="Doc type"
+            prop="docType"
+            required>
+            <el-select v-model="docType" filterable clearable placeholder="" @change="validateFreqFlatlineOptions">
+              <el-option v-for="type in types" :key="type" :label="type" :value="type"/>
+            </el-select>
+            <label>
+              Specify the _type of document to search for.
+              This must be present if "use count query" or "use terms query" is set.
+            </label>
+          </el-form-item>
+
+          <el-form-item v-if="useTermsQuery" label="Terms size">
+            <el-input v-model="termsSize" type="number" />
+            <label>
+              When used with "use terms query", this is the maximum number of terms returned
+              per query. Default is 50.
+            </label>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <div v-if="type === 'spike'">
+        <el-form
+          :model="$store.state.config.match"
+          label-position="top"
+          @submit.native.prevent>
+          <el-form-item label="Threshold (reference)" prop="thresholdRef">
+            <el-input v-model="thresholdRef" type="number" />
+            <label>
+              The minimum number of events that must exist in the
+              reference window for an alert to trigger.
+              For example, if "spike height" is 3 and "threshold reference" is 10,
+              then the ‘reference’ window must contain
+              at least 10 events and the ‘current’ window at least
+              30 events for an alert to be triggered.
+            </label>
+          </el-form-item>
+
+          <el-form-item label="Threshold (current)" prop="thresholdCur">
+            <el-input v-model="thresholdCur" type="number" />
+            <label>
+              The minimum number of events that must exist in the current
+              window for an alert to trigger.
+              For example, if 'spike height' is 3 and 'threshold current' is 60, then an alert
+              will occur if the current window has more than 60 events and the reference
+              window has less than 20.
+            </label>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-popover>
+
+    <ESChart
+      v-if="showChart"
+      :index="$store.state.config.settings.index"
+      :query="queryString"
+      :timeframe="chartTimeframe"
+      :bucket="bucket"
+      :mark-line="$store.getters['config/match/markLine']"
+      :spike-height="$store.getters['config/match/spikeHeight']"
+      :show-axis-pointer="false"
+      :group-by="groupedOver === 'field' && queryKey"
+      :agg-avg="metricAggType === 'avg' && metricAggKey"
+      :agg-sum="metricAggType === 'sum' && metricAggKey"
+      :agg-min="metricAggType === 'min' && metricAggKey"
+      :agg-max="metricAggType === 'max' && metricAggKey"
+      class="m-n-med"
+      @click="clickChart" />
+
+    <el-dialog :visible.sync="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
+      <EventTable v-if="eventViewerFrom" :from="eventViewerFrom" :timeframe="timeframe" :height="eventTableHeight" />
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      eventViewerFrom: '',
+      eventViewerVisible: false,
+      popWhenVisible: false,
+      popOverVisible: false,
+      popGroupVisible: false,
+      popFilterVisible: false,
+      popOptionsVisible: false,
+      popCompareVisible: false,
+      popBlacklistVisible: false,
+      popWhitelistVisible: false,
+      popOfVisible: false,
+      groupedOver: 'all',
+      popAboveVisible: false,
+      aboveOrBelow: 'above',
+      spikeOrThreshold: 'is',
+      popOfValid: true,
+      popOverValid: true,
+      popCompareValid: true,
+      popGroupValid: true,
+      popBlacklistValid: true,
+      popWhitelistValid: true,
+      popAboveValid: true,
+      popOptionsValid: true,
+      aboveOrBelowRules: {
+        maxThreshold: [
+          { validator: this.validateMaxThreshold, trigger: 'change' }
+        ],
+        minThreshold: [
+          { validator: this.validateMinThreshold, trigger: 'change' }
+        ]
+      }
+    };
+  },
+
+  computed: {
+    chartTimeframe() {
+      if (!this.bucket) return {};
+
+      if (typeof this.bucket === 'object' && Object.keys(this.bucket).length) {
+        return {
+          [Object.keys(this.bucket)[0]]: Object.values(this.bucket)[0] * 100
+        };
+      }
+    },
+
+    eventTableHeight() {
+      return document.body.clientHeight - 85;
+    },
+
+    thresholdRef: {
+      get() {
+        return this.$store.state.config.match.threasholdRef;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD_REF', value);
+      }
+    },
+
+    thresholdCur: {
+      get() {
+        return this.$store.state.config.match.threasholdCur;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD_CUR', value);
+      }
+    },
+
+    termsSize: {
+      get() {
+        return this.$store.state.config.match.termsSize;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_TERMS_SIZE', value);
+      }
+    },
+
+    types() {
+      return this.$store.getters['metadata/typesForCurrentConfig'];
+    },
+
+    docType: {
+      get() {
+        return this.$store.state.config.match.docType;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_DOC_TYPE', value);
+      }
+    },
+
+    useCountQuery: {
+      get() {
+        return this.$store.state.config.match.useCountQuery;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_USE_COUNT_QUERY', value);
+      }
+    },
+
+    useTermsQuery: {
+      get() {
+        return this.$store.state.config.match.useTermsQuery;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_USE_TERMS_QUERY', value);
+      }
+    },
+
+    ignoreNull: {
+      get() {
+        return this.$store.state.config.match.ignoreNull;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_IGNORE_NULL', value);
+      }
+    },
+
+    index() {
+      return this.$store.state.config.settings.index;
+    },
+
+    blacklist() {
+      return this.$store.state.config.match.blacklist;
+    },
+
+    whitelist() {
+      return this.$store.state.config.match.whitelist;
+    },
+
+    compareKey: {
+      get() {
+        return this.$store.state.config.match.compareKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_COMPARE_KEY', value);
+      }
+    },
+
+    showChart() {
+      return !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+    },
+
+    showOptions() {
+      let shouldShowOptions = ['field not in list', 'field changes'].includes(this.metricAggType);
+      let shouldShowOptionsSt = this.metricAggType === 'count' && this.spikeOrThreshold !== 'any';
+
+      return shouldShowOptions || shouldShowOptionsSt;
+    },
+
+    showPopOf() {
+      return this.metricAggType !== 'count' && !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+    },
+
+    showPopOver() {
+      return this.spikeOrThreshold !== 'any' && !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+    },
+
+    showPopAbove() {
+      return !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+    },
+
+    showPopCompare() {
+      return ['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+    },
+
+    showPopGroup() {
+      return this.metricAggType === 'field changes';
+    },
+
+    showPopBlacklist() {
+      return this.metricAggType === 'field in list';
+    },
+
+    showPopWhitelist() {
+      return this.metricAggType === 'field not in list';
+    },
+
+    showTime() {
+      return !['field in list', 'field not in list'].includes(this.metricAggType);
+    },
+
+    queryTree: {
+      get() {
+        return this.$store.state.config.query.tree;
+      },
+      set(value) {
+        this.$store.commit('config/query/UPDATE_TREE', value);
+      }
+    },
+
+    spikeHeight: {
+      get() {
+        return this.$store.state.config.match.spikeHeight;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_SPIKE_HEIGHT', value);
+      }
+    },
+
+    spikeType: {
+      get() {
+        return this.$store.state.config.match.spikeType;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_SPIKE_TYPE', value);
+      }
+    },
+
+    bucket() {
+      if (this.metricAggType === 'count') {
+        return this.timeframe;
+      }
+      return this.bufferTime;
+    },
+
+    bufferTime() {
+      return this.$store.state.elastalert.bufferTime;
+    },
+
+    threshold: {
+      get() {
+        return this.$store.state.config.match.threshold;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD', value);
+      }
+    },
+
+    timeframe: {
+      get() {
+        return this.$store.state.config.match.timeframe;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_TIMEFRAME', value);
+      }
+    },
+
+    metricAggKey: {
+      get() {
+        return this.$store.state.config.match.metricAggKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_METRIC_AGG_KEY', value);
+      }
+    },
+
+    metricAggType: {
+      get() {
+        return this.$store.state.config.match.metricAggType;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_METRIC_AGG_TYPE', value);
+      }
+    },
+
+    maxThreshold: {
+      get() {
+        return this.$store.state.config.match.maxThreshold;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_MAX_THRESHOLD', value);
+      }
+    },
+
+    minThreshold: {
+      get() {
+        return this.$store.state.config.match.minThreshold;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_MIN_THRESHOLD', value);
+      }
+    },
+
+    queryKey: {
+      get() {
+        return this.$store.state.config.match.queryKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_QUERY_KEY', value);
+      }
+    },
+
+    numEvents: {
+      get() {
+        return this.$store.state.config.match.numEvents;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_NUM_EVENTS', value);
+      }
+    },
+
+    type: {
+      get() {
+        return this.$store.state.config.match.type;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_TYPE', value);
+      }
+    },
+
+    timeField() {
+      return this.$store.state.config.settings.timeField;
+    },
+
+    queryString() {
+      return this.$store.getters['config/query/queryString'] || `${this.timeField}:*`;
+    },
+
+    numberFields() {
+      return this.$store.getters['metadata/numberFieldsForCurrentConfig'];
+    },
+
+    textFields() {
+      return this.$store.getters['metadata/textFieldsForCurrentConfig'];
+    },
+
+    dateFields() {
+      return this.$store.getters['metadata/dateFieldsForCurrentConfig'];
+    },
+
+    fields() {
+      return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    }
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      if (this.index) {
+        this.$store.dispatch('config/sample');
+      }
+
+      if (this.type === 'frequency') {
+        this.aboveOrBelow = 'above';
+        this.metricAggType = 'count';
+      } else if (this.type === 'flatline') {
+        this.aboveOrBelow = 'below';
+        this.metricAggType = 'count';
+      } else if (this.type === 'any') {
+        this.metricAggType = 'count';
+        this.spikeOrThreshold = 'any';
+      } else if (this.type === 'blacklist') {
+        this.metricAggType = 'field in list';
+      } else if (this.type === 'whitelist') {
+        this.metricAggType = 'field not in list';
+      } else if (this.type === 'change') {
+        this.metricAggType = 'field changes';
+      } else if (this.type === 'spike') {
+        this.metricAggType = 'count';
+        this.spikeOrThreshold = 'spike';
+      }
+
+      setTimeout(() => {
+        this.validate();
+      }, 10);
+    });
+  },
+
+  methods: {
+    clickChart(val) {
+      this.eventViewerFrom = val.name;
+      this.eventViewerVisible = true;
+    },
+
+    async validate() {
+      try {
+        if (this.$refs.of) {
+          await this.validateOf();
+        }
+
+        if (this.$refs.over) {
+          await this.validateOver();
+        }
+
+        if (this.$refs.overall) {
+          await this.validateOverall();
+        }
+
+        if (this.$refs.compare) {
+          await this.validateCompare();
+        }
+
+        if (this.$refs.group) {
+          await this.validateGroup();
+        }
+
+        if (this.$refs.blacklist) {
+          await this.validateBlacklist();
+        }
+
+        if (this.$refs.whitelist) {
+          await this.validateWhitelist();
+        }
+
+        if (this.$refs.freqFlatlineOptions) {
+          await this.validateFreqFlatlineOptions();
+        }
+
+        let aboveValid = await this.validateAbove();
+        if (!aboveValid) return false;
+
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    validateMaxThreshold(rule, value, callback) {
+      if (!value && !this.minThreshold) {
+        callback(new Error('No value and no min threshold'));
+      } else {
+        callback();
+      }
+    },
+
+    validateMinThreshold(rule, value, callback) {
+      if (!value && !this.maxThreshold) {
+        callback(new Error('No value and no max threshold'));
+      } else {
+        callback();
+      }
+    },
+
+    async validateFreqFlatlineOptions() {
+      try {
+        this.popOptionsValid = await this.$refs.freqFlatlineOptions.validate();
+      } catch (error) {
+        this.popOptionsValid = false;
+        throw error;
+      }
+    },
+
+    async validateCompare() {
+      try {
+        this.popCompareValid = await this.$refs.compare.validate();
+      } catch (error) {
+        this.popCompareValid = false;
+        throw error;
+      }
+    },
+
+    async validateAbove() {
+      let stValid = true;
+      let abValid = true;
+
+      if (this.$refs.spikeOrThreshold) {
+        try {
+          stValid = await this.$refs.spikeOrThreshold.validate();
+        } catch (error) {
+          stValid = false;
+        }
+      }
+
+      if (this.$refs.aboveOrBelow) {
+        try {
+          abValid = await this.$refs.aboveOrBelow.validate();
+        } catch (error) {
+          abValid = false;
+        }
+      }
+
+      this.popAboveValid = stValid && abValid;
+
+      return this.popAboveValid;
+    },
+
+    async validateBlacklist() {
+      if (!this.blacklist.length) {
+        this.popBlacklistValid = false;
+        return;
+      }
+
+      try {
+        this.popBlacklistValid = await this.$refs.blacklist.validate();
+      } catch (error) {
+        this.popBlacklistValid = false;
+        throw error;
+      }
+    },
+
+    async validateWhitelist() {
+      if (!this.whitelist.length) {
+        this.popWhitelistValid = false;
+        return;
+      }
+
+      try {
+        this.popWhitelistValid = await this.$refs.whitelist.validate();
+      } catch (error) {
+        this.popWhitelistValid = false;
+        throw error;
+      }
+    },
+
+    async validateGroup() {
+      try {
+        this.popGroupValid = await this.$refs.group.validate();
+      } catch (error) {
+        this.popGroupValid = false;
+        throw error;
+      }
+    },
+
+    async validateOf() {
+      try {
+        this.popOfValid = await this.$refs.of.validate();
+      } catch (error) {
+        this.popOfValid = false;
+        throw error;
+      }
+    },
+
+    async validateOver() {
+      if (!this.$refs.over) {
+        this.popOverValid = true;
+        return;
+      }
+
+      try {
+        this.popOverValid = await this.$refs.over.validate();
+      } catch (error) {
+        this.popOverValid = false;
+        throw error;
+      }
+    },
+
+    async validateOverall() {
+      if (!this.$refs.overall) {
+        this.popOverValid = true;
+        return;
+      }
+
+      try {
+        this.popOverValid = await this.$refs.overall.validate();
+      } catch (error) {
+        this.popOverValid = false;
+        throw error;
+      }
+    },
+
+    toggleThresholdRef(val) {
+      if (!val) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD_REF', null);
+      }
+    },
+
+    toggleThresholdCur(val) {
+      if (!val) {
+        this.$store.commit('config/match/UPDATE_THRESHOLD_CUR', null);
+      }
+    },
+
+    refreshOptionsPop() {
+      this.$nextTick(() => {
+        this.$refs.optionsPop.updatePopper();
+      });
+    },
+
+    updateBlacklist(entry, index) {
+      if (Number.isNaN(entry)) return;
+
+      this.$store.commit('config/match/UPDATE_BLACKLIST_ENTRY', { entry, index });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeBlacklistEntry(entry) {
+      this.$store.commit('config/match/REMOVE_BLACKLIST_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addBlacklistEntry() {
+      this.$store.commit('config/match/ADD_BLACKLIST_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    updateWhitelist(entry, index) {
+      this.$store.commit('config/match/UPDATE_WHITELIST_ENTRY', { entry, index });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeWhitelistEntry(entry) {
+      this.$store.commit('config/match/REMOVE_WHITELIST_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addWhitelistEntry() {
+      this.$store.commit('config/match/ADD_WHITELIST_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    updateSpikeOrThreshold(val) {
+      if (val === 'spike') {
+        this.type = 'spike';
+      } else if (val === 'any') {
+        this.type = 'any';
+        this.popAboveVisible = false;
+      } else if (this.aboveOrBelow === 'above') {
+        this.type = 'frequency';
+      } else {
+        this.type = 'flatline';
+      }
+
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    updateTimeframe(val) {
+      this.timeframe = val;
+    },
+
+    updateAboveOrBelow(val) {
+      if (val === 'above') {
+        this.type = 'frequency';
+        this.threshold = null;
+      } else {
+        this.type = 'flatline';
+        this.numEvents = null;
+      }
+    },
+
+    selectWhen(val) {
+      this.metricAggType = val;
+
+      if (val === 'count') {
+        if (this.aboveOrBelow === 'above') {
+          this.type = 'frequency';
+        } else {
+          this.type = 'flatline';
+        }
+      } else if (val === 'field in list') {
+        this.type = 'blacklist';
+      } else if (val === 'field not in list') {
+        this.type = 'whitelist';
+      } else if (val === 'field changes') {
+        this.type = 'change';
+      } else {
+        this.type = 'metric_aggregation';
+      }
+
+      this.threshold = null;
+      this.numEvents = null;
+      this.maxThreshold = null;
+      this.minThreshold = null;
+
+      this.popWhenVisible = false;
+
+      this.$nextTick(() => {
+        this.validate();
+      });
+    }
+  }
+};
+</script>
+
+<style lang="scss" >
+.el-popover .el-form-item {
+  margin-bottom: 10px !important;
+}
+
+.el-popover .el-form-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+.el-tabs__active-bar.is-bottom {
+  top: 0;
+}
+
+.is-bottom .el-tabs__nav-wrap::after {
+  top: 0;
+}
+
+.el-popover.popover-options {
+  padding-top: 5px;
+  max-width: 600px;
+}
+
+.condition-view {
+  .pop-trigger {
+    border-bottom: 0 !important;
+    cursor: default !important;
+    pointer-events: none;
+  }
+
+  .pop-trigger-pseudo {
+    pointer-events: none;
+  }
+
+  .pop-trigger > :first-child {
+    color: #999 !important;
+  }
+}
+</style>
+
+<style scoped>
+.pop-trigger {
+  border-bottom: 1px dotted #157ce7;
+  cursor: pointer;
+  margin-right: 20px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.pop-trigger-pseudo {
+  margin-right: 20px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.is-invalid .pop-trigger,
+.is-invalid .pop-trigger-pseudo {
+  border-bottom: 1px dotted #f56c6c;
+}
+
+.is-invalid .pop-trigger > :first-child,
+.is-invalid .pop-trigger-pseudo > :first-child {
+  color: #f56c6c;
+}
+
+.pop-trigger > :first-child {
+  color: #157ce7;
+}
+
+.el-menu {
+  border: 0;
+}
+
+.config-query {
+  padding: 0 5px 5px;
+  min-width: 70vw;
+  max-width: 90vw;
+}
+</style>

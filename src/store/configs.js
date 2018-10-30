@@ -38,6 +38,7 @@ export default {
     },
 
     FETCHED_CONFIGS_TREE(state, { paths, type }) {
+      paths = paths.filter(path => path !== 'BaseRule.config');
       Vue.set(state.tree, type, paths);
     },
 
@@ -201,9 +202,6 @@ export default {
       path.push(config.name);
       path = path.join('/');
 
-      // We don't want to actually save this internal value to the rule file
-      delete conf.__praeco_full_path;
-
       if (overwrite) {
         return dispatch('createConfigFinal', { type, path, conf });
       }
@@ -223,6 +221,9 @@ export default {
     },
 
     async createConfigFinal({ commit, state }, { type, path, conf }) {
+      // We don't want to actually save this internal value to the rule file
+      delete conf.__praeco_full_path;
+
       try {
         let res = await axios.post(`/api/${type}/${path}`, {
           yaml: yaml.safeDump(conf)
@@ -287,6 +288,7 @@ export default {
 
         if (res.data.created) {
           config.is_enabled = false;
+          commit('config/settings/UPDATE_ENABLED', false, { root: true });
           commit('UPDATED_CONFIG', {
             path: conf.__praeco_full_path,
             type: 'rules',
@@ -328,6 +330,7 @@ export default {
 
         if (res.data.created) {
           config.is_enabled = true;
+          commit('config/settings/UPDATE_ENABLED', true, { root: true });
           commit('UPDATED_CONFIG', {
             path: conf.__praeco_full_path,
             type: 'rules',

@@ -97,6 +97,14 @@ export default {
           commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
         }
 
+        if (config.timestamp_field) {
+          commit('settings/UPDATE_TIME_FIELD', config.timestamp_field);
+        }
+
+        if (config.timestamp_type) {
+          commit('settings/UPDATE_TIME_TYPE', config.timestamp_type);
+        }
+
         commit('match/UPDATE_TYPE', config.type);
         commit('match/UPDATE_IGNORE_NULL', config.ignore_null);
         commit('match/UPDATE_DOC_TYPE', config.doc_type);
@@ -108,32 +116,39 @@ export default {
         }
 
         if (config.blacklist) {
-          config.blacklist.forEach(entry => commit('match/ADD_BLACKLIST_ENTRY', entry));
+          config.blacklist.forEach(entry => commit('match/ADD_BLACKLIST_ENTRY_VALUE', entry));
         }
 
         if (config.whitelist) {
-          config.whitelist.forEach(entry => commit('match/ADD_WHITELIST_ENTRY', entry));
+          config.whitelist.forEach(entry => commit('match/ADD_WHITELIST_ENTRY_VALUE', entry));
         }
 
+        commit('match/UPDATE_THRESHOLD', config.threshold);
+
         commit('match/UPDATE_NUM_EVENTS', config.num_events);
+
         commit('match/UPDATE_USE_TERMS_QUERY', config.use_terms_query);
         commit('match/UPDATE_USE_COUNT_QUERY', config.use_count_query);
         commit('match/UPDATE_TERMS_SIZE', config.terms_size);
+
         commit('match/UPDATE_THRESHOLD_REF', config.threshold_ref);
         commit('match/UPDATE_THRESHOLD_CUR', config.threshold_cur);
+
         commit('match/UPDATE_SPIKE_HEIGHT', config.spike_height);
         commit('match/UPDATE_SPIKE_TYPE', config.spike_type);
 
+        commit('match/UPDATE_METRIC_AGG_KEY', config.metric_agg_key);
+        commit('match/UPDATE_METRIC_AGG_TYPE', config.metric_agg_type);
+        commit('match/UPDATE_MAX_THRESHOLD', config.max_threshold);
+        commit('match/UPDATE_MIN_THRESHOLD', config.min_threshold);
+
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
-        commit('alert/UPDATE_SMTP_HOST', config.smtp_host);
-        commit('alert/UPDATE_SMTP_PORT', config.smtp_port);
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.reply_to);
         commit('alert/UPDATE_EMAIL', config.email);
         commit('alert/UPDATE_CC', config.cc);
         commit('alert/UPDATE_BCC', config.bcc);
 
-        commit('alert/UPDATE_SLACK_WEBHOOK_URL', config.slack_webhook_url);
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
         commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
@@ -161,7 +176,7 @@ export default {
       return dispatch(
         'configs/createConfig',
         {
-          config: getters.config,
+          config: getters.config(false),
           format: false,
           type,
           overwrite
@@ -178,7 +193,7 @@ export default {
 
       try {
         let res = await axios.post('/api/test', {
-          rule: getters.yaml,
+          rule: getters.yaml(true),
           options: {
             testType: 'schemaOnly',
             days: 1,
@@ -202,18 +217,20 @@ export default {
       }
     },
 
-    async sample({ commit, getters }) {
+    async sample({ commit, getters, state }) {
+      commit('CLEAR_SAMPLE');
+
       let search = {
         query: {
           bool: {
             must: [
               {
-                query_string: { query: getters['query/queryString'] }
+                query_string: { query: getters['query/queryString'] || `${state.settings.timeField}:*` }
               }
             ]
           }
         },
-        sort: [{ '@timestamp': { order: 'desc' } }],
+        sort: [{ [state.settings.timeField]: { order: 'desc' } }],
         size: 1
       };
 
@@ -243,6 +260,36 @@ export default {
   },
 
   getters: {
+    metricagg(state) {
+      let config = {};
+
+      if (state.match.metricAggKey) {
+        config.metric_agg_key = state.match.metricAggKey;
+      }
+
+      if (state.match.metricAggType) {
+        config.metric_agg_type = state.match.metricAggType;
+      }
+
+      if (state.match.docType) {
+        config.doc_type = state.match.docType;
+      }
+
+      if (state.match.maxThreshold) {
+        config.max_threshold = state.match.maxThreshold;
+      }
+
+      if (state.match.minThreshold) {
+        config.min_threshold = state.match.minThreshold;
+      }
+
+      if (state.match.queryKey) {
+        config.query_key = state.match.queryKey;
+      }
+
+      return config;
+    },
+
     spike(state) {
       let config = {};
 
@@ -282,6 +329,40 @@ export default {
 
       if (state.match.numEvents) {
         config.num_events = state.match.numEvents;
+      }
+
+      if (state.match.termsSize) {
+        config.terms_size = state.match.termsSize;
+      }
+
+      if (state.match.useCountQuery) {
+        config.use_count_query = state.match.useCountQuery;
+      }
+
+      if (state.match.useTermsQuery) {
+        config.use_terms_query = state.match.useTermsQuery;
+      }
+
+      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
+        config.timeframe = state.match.timeframe;
+      }
+
+      return config;
+    },
+
+    flatline(state) {
+      let config = {};
+
+      if (state.match.queryKey) {
+        config.query_key = state.match.queryKey;
+      }
+
+      if (state.match.docType) {
+        config.doc_type = state.match.docType;
+      }
+
+      if (state.match.threshold) {
+        config.threshold = state.match.threshold;
       }
 
       if (state.match.termsSize) {
@@ -354,19 +435,17 @@ export default {
     },
 
     queryString(state, getters) {
-      if (getters['query/queryString']) {
-        return {
-          filter: [
-            {
-              query: {
-                query_string: {
-                  query: getters['query/queryString']
-                }
+      return {
+        filter: [
+          {
+            query: {
+              query_string: {
+                query: getters['query/queryString'] || `${state.settings.timeField}:*`
               }
             }
-          ]
-        };
-      }
+          }
+        ]
+      };
     },
 
     http(state) {
@@ -379,14 +458,6 @@ export default {
 
     email(state) {
       let config = {};
-
-      if (state.alert.smtpHost) {
-        config.smtp_host = state.alert.smtpHost;
-      }
-
-      if (state.alert.smtpPort) {
-        config.smtp_port = state.alert.smtpPort;
-      }
 
       if (state.alert.fromAddr) {
         config.from_addr = state.alert.fromAddr;
@@ -413,10 +484,6 @@ export default {
 
     slack(state, getters) {
       let config = {};
-
-      if (state.alert.slackWebhookUrl) {
-        config.slack_webhook_url = state.alert.slackWebhookUrl;
-      }
 
       if (state.alert.slackChannelOverride) {
         config.slack_channel_override = state.alert.slackChannelOverride;
@@ -459,10 +526,17 @@ export default {
       return config;
     },
 
-    config(state, getters) {
+    config: (state, getters) => forTest => {
       let config = {
         ...getters.queryString
       };
+
+      if (forTest) {
+        // when run as part of a test, fix path since rule will be in server_data/tests/
+        config.import = '../../rules/BaseRule.config';
+      } else {
+        config.import = 'BaseRule.config';
+      }
 
       if (state.path) {
         config.__praeco_full_path = `${state.path}/${state.settings.name}`;
@@ -479,7 +553,15 @@ export default {
       if (state.settings.index) {
         config.index = state.settings.index;
       }
-      
+
+      if (state.settings.timeField) {
+        config.timestamp_field = state.settings.timeField;
+      }
+
+      if (state.settings.timeType) {
+        config.timestamp_type = state.settings.timeType;
+      }
+
       config.is_enabled = !!state.settings.isEnabled;
 
       config.use_strftime_index = getters['settings/strftime'];
@@ -520,6 +602,10 @@ export default {
         config = { ...config, ...getters.change };
       } else if (state.match.type === 'frequency') {
         config = { ...config, ...getters.frequency };
+      } else if (state.match.type === 'flatline') {
+        config = { ...config, ...getters.flatline };
+      } else if (state.match.type === 'metric_aggregation') {
+        config = { ...config, ...getters.metricagg };
       } else if (state.match.type === 'spike') {
         config = { ...config, ...getters.spike };
       }
@@ -536,8 +622,6 @@ export default {
       return conf;
     },
 
-    yaml(state, getters) {
-      return yaml.safeDump(getters.config);
-    }
+    yaml: (state, getters) => forTest => yaml.safeDump(getters.config(forTest))
   }
 };

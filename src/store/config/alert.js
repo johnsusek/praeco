@@ -9,15 +9,12 @@ function initialState() {
 
     subject: '',
     body: '',
-    bodyType: 'default',
+    bodyType: 'alert_text_only',
 
-    slackWebhookUrl: '',
     slackChannelOverride: '',
     slackUsernameOverride: 'Praeco',
     slackMsgColor: 'danger',
 
-    smtpHost: '',
-    smtpPort: null,
     fromAddr: '',
     replyTo: '',
     email: '',
@@ -79,14 +76,6 @@ export default {
       state.httpPostUrl = httpPostUrl;
     },
 
-    UPDATE_SMTP_HOST(state, smtpHost) {
-      state.smtpHost = smtpHost;
-    },
-
-    UPDATE_SMTP_PORT(state, smtpPort) {
-      state.smtpPort = smtpPort;
-    },
-
     UPDATE_FROM_ADDR(state, fromAddr) {
       state.fromAddr = fromAddr;
     },
@@ -105,10 +94,6 @@ export default {
 
     UPDATE_BCC(state, bcc) {
       state.bcc = bcc;
-    },
-
-    UPDATE_SLACK_WEBHOOK_URL(state, slackWebhookUrl) {
-      state.slackWebhookUrl = slackWebhookUrl;
     },
 
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {

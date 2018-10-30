@@ -2,7 +2,7 @@ import Vue from 'vue';
 
 function initialState() {
   return {
-    type: 'any',
+    type: 'frequency',
 
     blacklist: [],
     whitelist: [],
@@ -22,7 +22,14 @@ function initialState() {
     spikeHeight: null,
     spikeType: 'up',
     thresholdRef: null,
-    thresholdCur: null
+    thresholdCur: null,
+
+    metricAggKey: '',
+    metricAggType: 'count',
+    maxThreshold: null,
+    minThreshold: null,
+
+    threshold: null
   };
 }
 
@@ -39,6 +46,10 @@ export default {
         return getters.markLineSpike;
       } else if (state.type === 'frequency') {
         return getters.markLineFrequency;
+      } else if (state.type === 'flatline') {
+        return getters.markLineFlatline;
+      } else if (state.type === 'metric_aggregation') {
+        return getters.markLineMetricAggregation;
       }
     },
 
@@ -106,15 +117,14 @@ export default {
         return {
           silent: true,
           lineStyle: {
-            color: '#ff0000',
+            color: 'red',
             type: 'solid'
-          },
-          label: {
-            position: 'middle',
-            formatter: `Threshold - ${state.numEvents}`
           },
           animation: false,
           symbol: 'none',
+          label: {
+            show: false
+          },
           data: [
             {
               name: 'Alert level',
@@ -125,6 +135,84 @@ export default {
       }
 
       return {};
+    },
+
+    markLineFlatline(state) {
+      if (state.threshold > 0) {
+        return {
+          silent: true,
+          lineStyle: {
+            color: 'red',
+            type: 'solid'
+          },
+          animation: false,
+          symbol: 'none',
+          label: {
+            show: false
+          },
+          data: [
+            {
+              name: 'Alert level',
+              yAxis: state.threshold
+            }
+          ]
+        };
+      }
+
+      return {};
+    },
+
+    markLineMetricAggregation(state) {
+      let data = [];
+
+      if (state.maxThreshold) {
+        data.push({
+          name: 'Above',
+          yAxis: state.maxThreshold,
+          lineStyle: {
+            color: 'red'
+          },
+          label: {
+            formatter: `Above - ${state.maxThreshold}`,
+            position: 'middle',
+            color: 'red',
+            textBorderColor: 'white',
+            textShadowColor: 'white',
+            textShadowBlur: 1,
+            textBorderWidth: 2,
+            fontSize: 14
+          }
+        });
+      }
+
+      if (state.minThreshold) {
+        data.push({
+          name: 'Below',
+          yAxis: state.minThreshold,
+          label: {
+            formatter: `Below - ${state.minThreshold}`,
+            position: 'middle',
+            color: 'green',
+            fontWeight: 'bold',
+            textBorderColor: 'white',
+            textShadowColor: 'white',
+            textShadowBlur: 1,
+            textBorderWidth: 2,
+            fontSize: 14
+          }
+        });
+      }
+
+      return {
+        silent: true,
+        lineStyle: {
+          color: 'green',
+          type: 'solid'
+        },
+        animation: false,
+        symbol: 'none',
+        data
+      };
     }
   },
 
@@ -159,7 +247,15 @@ export default {
     },
 
     UPDATE_TIMEFRAME(state, timeframe) {
-      state.timeframe = timeframe;
+      if (!timeframe) return;
+
+      Vue.delete(state, 'timeframe');
+
+      if (typeof timeframe === 'object' && Object.keys(timeframe).length) {
+        state.timeframe = {
+          [Object.keys(timeframe)[0]]: Object.values(timeframe)[0]
+        };
+      }
     },
 
     UPDATE_USE_TIMEFRAME(state, useTimeframe) {
@@ -171,19 +267,15 @@ export default {
     //
 
     ADD_BLACKLIST_ENTRY(state) {
-      if (!state.blacklist) {
-        state.blacklist = [];
-      }
-
       state.blacklist.push('');
+    },
+
+    ADD_BLACKLIST_ENTRY_VALUE(state, value) {
+      state.blacklist.push(value);
     },
 
     REMOVE_BLACKLIST_ENTRY(state, entry) {
       state.blacklist = state.blacklist.filter(b => b !== entry);
-
-      if (state.blacklist.length === 0) {
-        Vue.delete(state, 'blacklist');
-      }
     },
 
     UPDATE_BLACKLIST_ENTRY(state, { entry, index }) {
@@ -196,19 +288,15 @@ export default {
     //
 
     ADD_WHITELIST_ENTRY(state) {
-      if (!state.whitelist) {
-        state.whitelist = [];
-      }
-
       state.whitelist.push('');
+    },
+
+    ADD_WHITELIST_ENTRY_VALUE(state, value) {
+      state.whitelist.push(value);
     },
 
     REMOVE_WHITELIST_ENTRY(state, entry) {
       state.whitelist = state.whitelist.filter(b => b !== entry);
-
-      if (state.whitelist.length === 0) {
-        Vue.delete(state, 'whitelist');
-      }
     },
 
     UPDATE_WHITELIST_ENTRY(state, { entry, index }) {
@@ -258,6 +346,34 @@ export default {
     UPDATE_SPIKE_TYPE(state, spikeType) {
       if (!spikeType) return;
       state.spikeType = spikeType;
+    },
+
+    //
+    // Metric aggregation
+    //
+
+    UPDATE_METRIC_AGG_KEY(state, metricAggKey) {
+      state.metricAggKey = metricAggKey;
+    },
+
+    UPDATE_METRIC_AGG_TYPE(state, metricAggType) {
+      state.metricAggType = metricAggType;
+    },
+
+    UPDATE_MAX_THRESHOLD(state, maxThreshold) {
+      state.maxThreshold = parseFloat(maxThreshold) || null;
+    },
+
+    UPDATE_MIN_THRESHOLD(state, minThreshold) {
+      state.minThreshold = parseFloat(minThreshold) || null;
+    },
+
+    //
+    // Flatline
+    //
+
+    UPDATE_THRESHOLD(state, threshold) {
+      state.threshold = parseFloat(threshold) || null;
     }
   }
 };

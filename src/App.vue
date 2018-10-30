@@ -34,6 +34,7 @@ export default {
   mounted() {
     this.$store.dispatch('server/fetchVersion');
     this.$store.dispatch('server/fetchStatus');
+    this.$store.dispatch('elastalert/fetchConfig');
   }
 };
 </script>

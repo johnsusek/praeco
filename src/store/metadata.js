@@ -3,6 +3,20 @@ import axios from 'axios';
 import { formatIndex, buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
 import networkError from '../lib/networkError.js';
 
+function buildObjectFields(fields, prefix) {
+  let objectFields = {};
+
+  Object.entries(fields).forEach(([name, field]) => {
+    if (field.type) {
+      objectFields[`${prefix}.${name}`] = field;
+    } else if (field.properties) {
+      objectFields = { ...objectFields, ...buildObjectFields(field.properties, `${prefix}.${name}`) };
+    }
+  });
+
+  return objectFields;
+}
+
 export default {
   namespaced: true,
 
@@ -11,17 +25,32 @@ export default {
     mappings: {
       // 'ms-*': {
       //   types: [],
-      //   fields: []
+      //   fields: {}
       // }
     }
   },
 
   getters: {
+    fieldIsNumeric: (state, getters) => (index, field) => {
+      let numTypes = ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float'];
+      if (numTypes.includes(getters.typeForField(index, field))) {
+        return true;
+      }
+    },
+
+    typeForField: state => (index, field) => {
+      if (!state.mappings[index]) return;
+      if (!state.mappings[index].fields) return;
+      if (!state.mappings[index].fields[field]) return;
+
+      return state.mappings[index].fields[field].type;
+    },
+
     suggestedIndices(state) {
       let indices = {};
 
       state.indices.forEach(item => {
-        if (item.startsWith('elastalert')) return;
+        if (item.includes('elastalert')) return;
         let parts = item.split(/-/);
         if (parts[0].startsWith('.')) return;
         if (parts.length > 1) {
@@ -34,13 +63,65 @@ export default {
       return Object.keys(indices);
     },
 
+    textFieldsForCurrentConfig: (state, getters) => {
+      let fields = {};
+
+      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+        if (['text', 'keyword'].includes(field.type)) {
+          fields[name] = field;
+        }
+      });
+
+      return fields;
+    },
+
+    numberFieldsForCurrentConfig: (state, getters) => {
+      let fields = {};
+
+      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+        if (
+          ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float'].includes(field.type)
+        ) {
+          fields[name] = field;
+        }
+      });
+
+      return fields;
+    },
+
+    dateFieldsForCurrentConfig: (state, getters) => {
+      let fields = {};
+
+      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+        if (field.type === 'date') {
+          fields[name] = field;
+        }
+      });
+
+      return fields;
+    },
+
     fieldsForCurrentConfig: (state, getters, rootState) => {
       let index = rootState.config.settings.index;
       let mappings = state.mappings[formatIndex(index)];
-      if (mappings) {
-        return mappings.fields;
+
+      if (!mappings) {
+        return {};
       }
-      return [];
+
+      let fields = {};
+
+      if (mappings.fields) {
+        Object.entries(mappings.fields).forEach(([name, field]) => {
+          if (field.type) {
+            fields[name] = field;
+          } else if (field.properties) {
+            fields = { ...fields, ...buildObjectFields(field.properties, name) };
+          }
+        });
+      }
+
+      return fields;
     },
 
     typesForCurrentConfig: (state, getters, rootState) => {

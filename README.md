@@ -4,7 +4,7 @@ Praeco is an alerting tool for elasticsearch – a GUI for [elastalert](https://
 
 - Interactively build alert rules using a query builder
 - View a preview of your query and a graph of results over the last 24h
-- Supports Any, Blacklist, Whitelist, Change, Frequency and Spike elastalert rule types
+- Supports Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike and Metric Aggregation elastalert rule types
 - Test your alerts against historical data
 - See a preview of your alert subject/body as you are editing
 - Supports notifications to Slack, Email or HTTP POST
@@ -15,6 +15,10 @@ Praeco is an alerting tool for elasticsearch – a GUI for [elastalert](https://
 
 ## Quickstart
 
+First, edit rules/BaseRule.config and change the slack and smtp settings to match your environment.
+
+Then run the app using docker:
+
 ```bash
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
@@ -22,27 +26,36 @@ docker-compose up
 
 Praeco should now be available on http://127.0.0.1:8080
 
+A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e078a9) is available to guide you through creating your first template and rule.
+
+## Upgrading
+
+Please see UPGRADING.md for version-specific instructions.
+
 ## Configuration
 
 OPTIONAL: Edit config/api.config.json, config/elastalert.yaml, and/or public/praeco.config.json for advanced configuration options. See the [api docs](https://github.com/bitsensor/elastalert#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information on config options.
 
+The following config settings are available in praeco.config.json:
+
+```
+// link back to your praeco instance, used in slack alerts
+"appUrl": "http://praeco-app-url:8080",
+
+// a recordatus (https://github.com/ServerCentral/recordatus) instance for javascript error reporting
+"errorLoggerUrl": "",
+
+// hide these fields when editing rules, if they are already filled in template
+"hidePreconfiguredFields": []
+```
+
 ## Screenshot
 
-![](https://user-images.githubusercontent.com/611996/46428598-0575b280-c70a-11e8-8ba2-bdcd9932380b.png)
-
-## Operation
-
-### Creating a basic rule
-
-[![](https://img.youtube.com/vi/jn_adWuffRo/0.jpg)](http://www.youtube.com/watch?v=jn_adWuffRo)
-
-### Creating a frequency rule
-
-[![](https://img.youtube.com/vi/yC631wtA3ic/0.jpg)](http://www.youtube.com/watch?v=yC631wtA3ic)
+![](https://user-images.githubusercontent.com/611996/47752071-7c4a9080-dc61-11e8-8ccf-2196f13429b2.png)
 
 ## Developing
 
-If you instead want to develop for praeco, run the built-in development server:
+If you want to develop for praeco, run the built-in development server:
 
 ```
 npm install
@@ -58,9 +71,11 @@ docker build -t praeco .
 ## Testing
 
 Unit tests:
+
 `npm run test:unit`
 
 E2E tests:
+
 `npm run test:e2e`
 
 <br><br>

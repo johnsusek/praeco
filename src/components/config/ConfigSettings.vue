@@ -6,31 +6,6 @@
     label-position="top"
     @submit.native.prevent>
 
-    <el-form-item v-if="action !== 'edit'" label="Name" prop="name" required>
-      <el-input ref="name" v-model="name" spellcheck="false" autofocus />
-    </el-form-item>
-
-    <el-form-item label="Description" prop="description">
-      <el-input ref="description" v-model="description" spellcheck="false" />
-    </el-form-item>
-
-    <el-form-item label="Index" prop="index" required>
-      <el-input v-model="index" spellcheck="false" @input="getMappingDebounced" />
-      <label>
-        The index that contains data you want to be alerted on, e.g. logstash-* or logstash-%Y.%m.%d
-        [<a href="https://elastalert.readthedocs.io/en/latest/ruletypes.html#index" target="_blank">?</a>]
-        <br>
-        <span v-if="suggestions.length">
-          <br>
-          Suggestions:
-          <span v-for="(suggestion, i) in suggestions" :key="suggestion">
-            <el-button type="text" @click="useSuggestion(suggestion)">{{ suggestion }}</el-button>
-            <template v-if="i !== suggestions.length - 1">, </template>
-          </span>
-        </span>
-      </label>
-    </el-form-item>
-
     <el-alert
       v-if="mappingError"
       :description="mappingError"
@@ -38,6 +13,83 @@
       title="Get mapping failed. Make sure the index exists."
       type="error"
       show-icon />
+
+    <el-row :gutter="20">
+      <el-col :span="7">
+        <el-form-item v-if="action === 'add'" label="Name" prop="name" required>
+          <el-input ref="name" v-model="name" spellcheck="false" autofocus />
+          <label>The name of the {{ type }}, must be unique.</label>
+        </el-form-item>
+        <el-form-item v-else label="Name">
+          <el-input v-model="name" disabled />
+          <label v-if="!viewOnly">The name of the rule, must be unique.</label>
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="7">
+        <el-form-item label="Index" prop="index" required>
+          <el-autocomplete
+            :disabled="viewOnly"
+            v-model="index"
+            :fetch-suggestions="(qs, cb) => { cb(links); }"
+            class="el-input-wide"
+            placeholder=""
+            @input="getMappingDebounced" />
+          <label v-if="!viewOnly">
+            e.g. logstash-* or logstash-%Y.%m.%d
+            [<a href="https://elastalert.readthedocs.io/en/latest/ruletypes.html#index" target="_blank">?</a>]
+          </label>
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="5">
+        <el-form-item label="Time type" prop="timeType" required>
+          <el-select
+            v-model="timeType"
+            :disabled="viewOnly"
+            placeholder=""
+            class="el-select-wide">
+            <el-option key="iso" label="Default" value="iso" />
+            <el-option key="unix" label="Unix timestamp" value="unix" />
+            <el-option key="unix_ms" label="Unix timestamp (milliseconds)" value="unix_ms" />
+          </el-select>
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="5">
+        <el-form-item v-if="timeType === 'iso'" label="Time field" prop="timeField" required>
+          <el-select
+            v-model="timeField"
+            :disabled="viewOnly"
+            filterable
+            clearable
+            placeholder=""
+            class="el-select-wide">
+            <el-option
+              v-for="field in Object.keys(dateFields)"
+              :key="field"
+              :label="field"
+              :value="field" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item v-else label="Time field" prop="timeField" required>
+          <el-select
+            v-model="timeField"
+            :disabled="viewOnly"
+            filterable
+            clearable
+            placeholder=""
+            class="el-select-wide">
+            <el-option
+              v-for="field in Object.keys(numberFields)"
+              :key="field"
+              :label="field"
+              :value="field" />
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
   </el-form>
 </template>
 
@@ -49,7 +101,8 @@ export default {
   props: [
     'prefillPath',
     'action',
-    'type'
+    'type',
+    'viewOnly'
   ],
 
   data() {
@@ -64,12 +117,42 @@ export default {
   },
 
   computed: {
+    numberFields() {
+      return this.$store.getters['metadata/numberFieldsForCurrentConfig'];
+    },
+
+    links() {
+      return this.suggestions.map(s => ({ value: s, link: s }));
+    },
+
+    dateFields() {
+      return this.$store.getters['metadata/dateFieldsForCurrentConfig'];
+    },
+
     name: {
       get() {
         return this.$store.state.config.settings.name;
       },
       set(value) {
         this.$store.commit('config/settings/UPDATE_NAME', value);
+      }
+    },
+
+    timeType: {
+      get() {
+        return this.$store.state.config.settings.timeType;
+      },
+      set(value) {
+        this.$store.commit('config/settings/UPDATE_TIME_TYPE', value);
+      }
+    },
+
+    timeField: {
+      get() {
+        return this.$store.state.config.settings.timeField;
+      },
+      set(value) {
+        this.$store.commit('config/settings/UPDATE_TIME_FIELD', value);
       }
     },
 

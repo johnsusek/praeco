@@ -61,7 +61,11 @@
       </span>
     </el-dialog>
 
-    <ConfigView :config="template" :path="id" type="template" />
+    <template v-if="configLoaded && elastalertConfigLoaded">
+      <ConfigSettings :view-only="true" type="template" />
+      <ConfigCondition class="condition-view m-n-med m-s-xl" />
+      <ConfigAlert :view-only="true" />
+    </template>
   </div>
 </template>
 
@@ -70,23 +74,43 @@ import Vue from 'vue';
 
 export default {
   props: ['id'],
+
   data() {
     return {
+      configLoaded: false,
       moveVisible: false,
       moveDest: '',
       showRename: false,
       newName: ''
     };
   },
+
   computed: {
     template() {
       return this.$store.state.configs.templates[this.id] || {};
+    },
+
+    elastalertConfigLoaded() {
+      return !!this.$store.state.elastalert.bufferTime;
+    },
+
+    index() {
+      return this.$store.state.config.settings.index;
     }
   },
+
   async mounted() {
-    await this.$store.dispatch('configs/fetchConfig', { path: this.id, type: 'templates' });
+    this.$store.dispatch('config/reset');
+
+    await this.$store.dispatch('config/load', { type: 'templates', path: this.id });
+
+    this.configLoaded = true;
+
     this.newName = this.template.name;
+
+    this.$store.dispatch('metadata/fetchMappings', this.index);
   },
+
   methods: {
     //
     // Move
@@ -94,7 +118,7 @@ export default {
 
     async move() {
       let newPath = await this.$store.dispatch('configs/moveConfig', {
-        oldConfig: this.template,
+        oldConfig: this.$store.getters['config/config'](),
         newPath: this.moveDest.replace(/_templates/, ''),
         type: 'templates'
       });
@@ -120,7 +144,7 @@ export default {
 
     async rename() {
       let res = await this.$store.dispatch('configs/renameConfig', {
-        config: this.template,
+        config: this.$store.getters['config/config'](),
         newName: this.newName.trim(),
         type: 'templates'
       });
@@ -148,7 +172,7 @@ export default {
 
     async duplicate() {
       let path = await this.$store.dispatch('configs/duplicateConfig', {
-        config: this.template,
+        config: this.$store.getters['config/config'](),
         type: 'templates'
       });
 

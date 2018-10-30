@@ -15,8 +15,10 @@ import moment from 'moment-timezone';
 export default {
   props: {
     date: {
-      type: String,
-      default: null
+      default: null,
+      validator (value) {
+        return (typeof value === 'string' || typeof value === 'number');
+      }
     },
     fromNow: {
       type: Boolean,
@@ -34,7 +36,15 @@ export default {
     formatted() {
       if (!this.date) return;
 
-      let momentDate = moment(String(this.date)).tz(this.timeZone);
+      let momentDate;
+
+      if (typeof this.date === 'string') {
+        momentDate = moment(String(this.date)).tz(this.timeZone);
+      } else if (this.date.toString().length === 10) {
+        momentDate = moment.unix(String(this.date)).tz(this.timeZone);
+      } else {
+        momentDate = moment(this.date).tz(this.timeZone);
+      }
 
       return momentDate.format('M/D/YYYY h:mm:ssa');
     },
