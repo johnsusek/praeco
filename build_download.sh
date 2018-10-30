@@ -16,6 +16,10 @@ cd public
 ln -s ../../public/praeco.config.json 
 cd ..
 
+cd rules
+ln -s ../../rules/BaseRule.config 
+cd ..
+
 zip -r latest.zip *
 
 rm -rf config docker-compose.yml nginx_config praeco.config.json public/ rule_templates/ rules/

@@ -7,7 +7,7 @@ This zip file contains only what is needed to run praeco for end users, and is l
 
 # Updating packages
 
-Run `npm install` to install latest versions of packages per package.json.
+Run `npm update` to install latest versions of packages per package.json.
 
 # Checklist for new prod release
 

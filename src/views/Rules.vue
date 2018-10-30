@@ -2,6 +2,10 @@
   <div>
     <h1>Rules</h1>
 
+    <el-button type="primary" plain @click="$router.push('/rule/add')">
+      Add rule
+    </el-button>
+
     <el-button type="primary" plain @click="addFolder">
       Add folder
     </el-button>
