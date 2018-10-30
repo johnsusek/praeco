@@ -267,8 +267,8 @@ export default {
       let gte;
 
       if (this.timeType === 'iso') {
-        lte = Math.trunc(+new Date());
-        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).valueOf();
+        gte = `now-${intervalFromTimeframe(this.timespan)}`;
+        lte = 'now';
       } else if (this.timeType === 'unix_ms') {
         lte = Math.trunc(+new Date());
         gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).valueOf();
