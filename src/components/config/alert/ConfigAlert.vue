@@ -13,7 +13,7 @@
             <el-tag v-if="alert.includes('email')" class="m-e-sm" type="success">Email</el-tag>
             <el-tag v-if="alert.includes('post')" class="m-e-sm" type="success">HTTP</el-tag>
           </template>
-          <el-checkbox-group v-else v-model="alert" :disabled="viewOnly">
+          <el-checkbox-group v-else v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
             <el-checkbox label="slack" border>Slack</el-checkbox>
             <el-checkbox label="email" border>Email</el-checkbox>
             <el-checkbox label="post" border>HTTP</el-checkbox>
@@ -47,6 +47,7 @@
         <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')" label="Settings">
           <ConfigAlertSubjectBody
             v-if="alert.includes('slack') || alert.includes('email')"
+            ref="subjectBody"
             :view-only="viewOnly"
             class="m-s-lg" />
         </el-tab-pane>

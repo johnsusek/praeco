@@ -61,7 +61,7 @@
       </span>
     </el-dialog>
 
-    <template v-if="$store.state.config.settings.index && $store.getters['config/config']()">
+    <template v-if="configLoaded && elastalertConfigLoaded">
       <ConfigSettings :view-only="true" type="template" />
       <ConfigCondition class="condition-view m-n-med m-s-xl" />
       <ConfigAlert :view-only="true" />
@@ -74,25 +74,43 @@ import Vue from 'vue';
 
 export default {
   props: ['id'],
+
   data() {
     return {
+      configLoaded: false,
       moveVisible: false,
       moveDest: '',
       showRename: false,
       newName: ''
     };
   },
+
   computed: {
     template() {
       return this.$store.state.configs.templates[this.id] || {};
+    },
+
+    elastalertConfigLoaded() {
+      return !!this.$store.state.elastalert.bufferTime;
+    },
+
+    index() {
+      return this.$store.state.config.settings.index;
     }
   },
+
   async mounted() {
     this.$store.dispatch('config/reset');
-    this.$store.dispatch('config/load', { type: 'templates', path: this.id });
+
+    await this.$store.dispatch('config/load', { type: 'templates', path: this.id });
+
+    this.configLoaded = true;
 
     this.newName = this.template.name;
+
+    this.$store.dispatch('metadata/fetchMappings', this.index);
   },
+
   methods: {
     //
     // Move

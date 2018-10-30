@@ -21,9 +21,7 @@
               ref="chart"
               :options="chart"
               auto-resize
-              tabindex="0"
-              @keydown.native.left="moveLeft"
-              @keydown.native.right="moveRight" />
+              @click="ev => $emit('click', ev)" />
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -34,9 +32,6 @@
           ref="chart"
           :options="chart"
           auto-resize
-          tabindex="0"
-          @keydown.native.left="moveLeft"
-          @keydown.native.right="moveRight"
           @click="ev => $emit('click', ev)" />
 
         <el-popover v-if="showControls" trigger="click" class="praeco-chart-popover">
@@ -97,7 +92,7 @@ function getColorForIndex(index, data, spikeHeight) {
   let preVal = data[index - 1].value;
 
   if (spikeHeight === 1) {
-    return '#333';
+    return '#555';
   }
 
   if (val / preVal > spikeHeight) {
@@ -106,7 +101,7 @@ function getColorForIndex(index, data, spikeHeight) {
     return '#157ce7';
   }
 
-  return '#333';
+  return '#555';
 }
 
 export default {
@@ -117,10 +112,8 @@ export default {
     'timeframe',
     'markLine',
     'spikeHeight',
-    'showAxisPointer',
     'showTitle',
     'showControls',
-    'scrollPos',
     'groupBy',
     'aggAvg',
     'aggSum',
@@ -146,7 +139,7 @@ export default {
         animation: false,
         grid: {
           top: this.showTitle ? 45 : 10,
-          bottom: this.showAxisPointer ? 65 : 10,
+          bottom: 10,
           left: 10,
           right: 10,
           containLabel: true
@@ -176,9 +169,9 @@ export default {
             barCategoryGap: '0',
             symbol: 'none',
             itemStyle: {
-              color: '#333',
+              color: '#555',
               emphasis: {
-                color: '#666'
+                color: '#999'
               }
             },
             markPoint: {
@@ -197,7 +190,7 @@ export default {
               data: []
             },
             areaStyle: {
-              color: '#333'
+              color: '#555'
             },
             data: [],
             markLine: {}
@@ -223,6 +216,10 @@ export default {
 
     timeField() {
       return this.$store.state.config.settings.timeField;
+    },
+
+    timeType() {
+      return this.$store.state.config.settings.timeType;
     },
 
     statAggs() {
@@ -266,6 +263,20 @@ export default {
     },
 
     byMinuteAgg() {
+      let lte;
+      let gte;
+
+      if (this.timeType === 'iso') {
+        lte = Math.trunc(+new Date());
+        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).valueOf();
+      } else if (this.timeType === 'unix_ms') {
+        lte = Math.trunc(+new Date());
+        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).valueOf();
+      } else {
+        lte = Math.trunc(+new Date() / 1000);
+        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).unix();
+      }
+
       return {
         by_minute: {
           date_histogram: {
@@ -273,8 +284,8 @@ export default {
             interval: intervalFromTimeframe(this.interval),
             min_doc_count: 0,
             extended_bounds: {
-              min: `now-${intervalFromTimeframe(this.timespan)}`,
-              max: 'now'
+              min: gte,
+              max: lte
             }
           },
           aggs: this.statAggs
@@ -303,6 +314,10 @@ export default {
   },
 
   watch: {
+    timeframe() {
+      this.timespan = this.timeframe;
+    },
+
     aggAvg() {
       this.updateChart();
     },
@@ -354,38 +369,6 @@ export default {
         this.interval = val;
         this.updateChart();
       }
-    },
-
-    showAxisPointer(show) {
-      this.chart.grid.bottom = show ? 65 : 10;
-      this.chart.xAxis.axisPointer.show = show;
-      this.chart.dataZoom[0].show = show;
-      this.chart.dataZoom[1].show = show;
-      this.chart.series[0].markPoint.itemStyle.opacity = show ? 1 : 0;
-
-      if (!show) {
-        let current = new Date(this.chart.xAxis.data[this.chart.xAxis.data.length - 1].value);
-
-        // Reset the axisPointer to the last position
-        this.$refs.chart.mergeOptions({
-          xAxis: {
-            axisPointer: {
-              value: current.toISOString()
-            }
-          }
-        });
-      }
-    },
-
-    scrollPos() {
-      this.chart.xAxis.data.forEach((value, i) => {
-        if (value.value === this.currentPosition) {
-          this.chart.series[0].markPoint.data = [{
-            xAxis: value.value,
-            yAxis: this.chart.series[0].data[i].value - this.scrollPos
-          }];
-        }
-      });
     }
   },
 
@@ -397,34 +380,6 @@ export default {
     if (this.bucket) {
       this.interval = this.bucket;
     }
-
-    this.chart.xAxis.axisPointer.label.formatter = debounce(val => {
-      if (this.currentPosition && val.value === this.currentPosition) {
-        return val.value;
-      }
-
-      if (this.movedFromKeyboard) {
-        this.$emit('pointerMoved', val);
-        this.movedFromKeyboard = false;
-      } else {
-        this.$emit('pointerDragged', val);
-      }
-
-      this.currentPosition = val.value;
-
-      this.chart.xAxis.data.forEach((value, i) => {
-        if (value.value === this.currentPosition) {
-          this.chart.series[0].markPoint.data = [{
-            xAxis: value.value,
-            yAxis: this.chart.series[0].data[i].value - this.scrollPos
-          }];
-        }
-      });
-
-      return val.value;
-    }, 40);
-
-    this.chart.xAxis.axisPointer.show = this.showAxisPointer;
 
     this.updateChart();
   },
@@ -452,7 +407,7 @@ export default {
 
     updateGroupIndex() {
       let x = this.groups[this.activeGroupIndex].by_minute.buckets.map(r => ({
-        value: r.key_as_string
+        value: this.timeType === 'iso' ? r.key_as_string : r.key
       }));
 
       let y = this.groups[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
@@ -468,56 +423,19 @@ export default {
       this.chart.series[0].data = y;
     },
 
-    moveLeft() {
-      this.movedFromKeyboard = true;
-      let xAxis = this.$refs.chart.options.xAxis;
-      let current;
-
-      if (this.currentPosition) {
-        current = new Date(this.currentPosition);
-      } else {
-        current = new Date(xAxis.data[xAxis.data.length - 1].value);
-      }
-
-      let newDate = new Date(+current - 300000);
-      this.currentPosition = newDate;
-
-      this.$refs.chart.mergeOptions({
-        xAxis: {
-          axisPointer: {
-            value: newDate.toISOString()
-          }
-        }
-      });
-    },
-
-    moveRight() {
-      this.movedFromKeyboard = true;
-      let xAxis = this.$refs.chart.options.xAxis;
-      let current;
-
-      if (this.currentPosition) {
-        current = new Date(this.currentPosition);
-      } else {
-        current = new Date(xAxis.data[xAxis.data.length - 1].value);
-      }
-
-      let newDate = new Date(+current + 300000);
-      this.currentPosition = newDate;
-
-      this.$refs.chart.mergeOptions({
-        xAxis: {
-          axisPointer: {
-            value: newDate.toISOString()
-          }
-        }
-      });
-    },
-
     setTooltipDefault() {
       Vue.set(this.chart.tooltip, 'formatter', (options) => {
         let event = this.chart.xAxis.data[options.dataIndex];
-        let momentDate = moment(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        let momentDate;
+
+        if (this.timeType === 'iso') {
+          momentDate = moment(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        } else if (this.timeType === 'unix_ms') {
+          momentDate = moment(event.value).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        } else {
+          momentDate = moment.unix(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        }
+
         return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${options.data.value} Events`;
       });
     },
@@ -525,10 +443,19 @@ export default {
     setTooltipSpike() {
       Vue.set(this.chart.tooltip, 'formatter', (options) => {
         let event = this.chart.xAxis.data[options.dataIndex];
-        let preVal = this.chart.series[0].data[options.dataIndex > 0 ? (options.dataIndex - 1) : options.dataIndex].value;
+        let preVal = this.chart.series[0].data[options.dataIndex > 0 ?
+          (options.dataIndex - 1) : options.dataIndex].value;
         let val = this.chart.series[0].data[options.dataIndex].value;
         let spike = val / preVal;
-        let momentDate = moment(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        let momentDate;
+
+        if (this.timeType === 'iso') {
+          momentDate = moment(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        } else if (this.timeType === 'unix_ms') {
+          momentDate = moment(event.value).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        } else {
+          momentDate = moment.unix(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        }
 
         if (spike.toFixed(1) === '1.0') {
           return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${options.data.value} Events`;
@@ -576,6 +503,20 @@ export default {
       if (!this.index) return;
       if (!Object.keys(this.timespan)[0]) return;
 
+      let lte;
+      let gte;
+
+      if (this.timeType === 'iso') {
+        lte = 'now';
+        gte = `now-${intervalFromTimeframe(this.timespan)}`;
+      } else if (this.timeType === 'unix_ms') {
+        lte = Math.trunc(+new Date());
+        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).valueOf();
+      } else {
+        lte = Math.trunc(+new Date() / 1000);
+        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).unix();
+      }
+
       let query = {
         query: {
           bool: {
@@ -586,8 +527,8 @@ export default {
               {
                 range: {
                   [this.timeField]: {
-                    lte: 'now',
-                    gte: `now-${intervalFromTimeframe(this.timespan)}`
+                    lte,
+                    gte
                   }
                 }
               }
@@ -631,7 +572,7 @@ export default {
               let buckets = res.data.aggregations.group_by_field.buckets;
 
               x = buckets[this.activeGroupIndex].by_minute.buckets.map(r => ({
-                value: r.key_as_string
+                value: this.timeType === 'iso' ? r.key_as_string : r.key
               }));
 
               y = buckets[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
@@ -642,7 +583,7 @@ export default {
             }
           } else {
             x = res.data.aggregations.by_minute.buckets.map(r => ({
-              value: r.key_as_string
+              value: this.timeType === 'iso' ? r.key_as_string : r.key
             }));
 
             y = res.data.aggregations.by_minute.buckets.map(this.getYValue);

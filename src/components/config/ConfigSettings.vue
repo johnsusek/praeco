@@ -15,7 +15,7 @@
       show-icon />
 
     <el-row :gutter="20">
-      <el-col :span="8">
+      <el-col :span="7">
         <el-form-item v-if="action === 'add'" label="Name" prop="name" required>
           <el-input ref="name" v-model="name" spellcheck="false" autofocus />
           <label>The name of the {{ type }}, must be unique.</label>
@@ -26,7 +26,7 @@
         </el-form-item>
       </el-col>
 
-      <el-col :span="8">
+      <el-col :span="7">
         <el-form-item label="Index" prop="index" required>
           <el-autocomplete
             :disabled="viewOnly"
@@ -42,18 +42,47 @@
         </el-form-item>
       </el-col>
 
-      <el-col :span="8">
-        <el-form-item label="Time field" prop="timeField" required>
+      <el-col :span="5">
+        <el-form-item label="Time type" prop="timeType" required>
+          <el-select
+            v-model="timeType"
+            :disabled="viewOnly"
+            placeholder=""
+            class="el-select-wide">
+            <el-option key="iso" label="Default" value="iso" />
+            <el-option key="unix" label="Unix timestamp" value="unix" />
+            <el-option key="unix_ms" label="Unix timestamp (milliseconds)" value="unix_ms" />
+          </el-select>
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="5">
+        <el-form-item v-if="timeType === 'iso'" label="Time field" prop="timeField" required>
           <el-select
             v-model="timeField"
             :disabled="viewOnly"
             filterable
             clearable
             placeholder=""
-            class="el-select-wide"
-          >
+            class="el-select-wide">
             <el-option
               v-for="field in Object.keys(dateFields)"
+              :key="field"
+              :label="field"
+              :value="field" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item v-else label="Time field" prop="timeField" required>
+          <el-select
+            v-model="timeField"
+            :disabled="viewOnly"
+            filterable
+            clearable
+            placeholder=""
+            class="el-select-wide">
+            <el-option
+              v-for="field in Object.keys(numberFields)"
               :key="field"
               :label="field"
               :value="field" />
@@ -88,6 +117,10 @@ export default {
   },
 
   computed: {
+    numberFields() {
+      return this.$store.getters['metadata/numberFieldsForCurrentConfig'];
+    },
+
     links() {
       return this.suggestions.map(s => ({ value: s, link: s }));
     },
@@ -102,6 +135,15 @@ export default {
       },
       set(value) {
         this.$store.commit('config/settings/UPDATE_NAME', value);
+      }
+    },
+
+    timeType: {
+      get() {
+        return this.$store.state.config.settings.timeType;
+      },
+      set(value) {
+        this.$store.commit('config/settings/UPDATE_TIME_TYPE', value);
       }
     },
 

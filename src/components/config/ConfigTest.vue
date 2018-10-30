@@ -1,8 +1,8 @@
 <template>
   <span>
-    <el-popover v-model="testPopoverVisible" :disabled="!valid" placement="bottom">
+    <el-popover v-model="testPopoverVisible" placement="bottom">
       <span slot="reference">
-        <el-button v-if="!testRunLoading" :disabled="!valid" type="primary" plain size="medium">
+        <el-button v-if="!testRunLoading" type="primary" plain size="medium">
           Test
           <i v-if="!testPopoverVisible" class="el-icon-arrow-down el-icon-right" />
           <i v-if="testPopoverVisible" class="el-icon-arrow-up el-icon-right" />
@@ -37,8 +37,7 @@
       <div>
         This rule would result in
         {{ testRunResult.writeback.elastalert_status.matches || 0 }}
-        alert triggers
-        over the last
+        alert triggers over the last
         <ElastalertTimeView :time="testTime" />
       </div>
     </el-alert>
@@ -90,6 +89,7 @@ export default {
   mounted() {
     this.$options.sockets.onmessage = ev => {
       let payload = JSON.parse(ev.data);
+
       if (payload.event === 'progress') {
         if (payload.data.startsWith('INFO:elastalert:')) {
           this.messages.push(payload.data);
@@ -126,6 +126,7 @@ export default {
 
     runTest() {
       this.testPopoverVisible = false;
+      this.$emit('validate');
 
       this.$nextTick(() => {
         if (!this.valid) return;

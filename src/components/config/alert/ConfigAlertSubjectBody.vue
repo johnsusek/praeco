@@ -163,7 +163,7 @@ export default {
 [contenteditable] {
   border: 1px solid #dcdfe6;
   border-radius: 4px;
-  padding: 10px;
+  padding: 5px 10px;
   overflow-y: auto;
   line-height: 1.4;
 }

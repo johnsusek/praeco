@@ -288,6 +288,7 @@ export default {
 
         if (res.data.created) {
           config.is_enabled = false;
+          commit('config/settings/UPDATE_ENABLED', false, { root: true });
           commit('UPDATED_CONFIG', {
             path: conf.__praeco_full_path,
             type: 'rules',
@@ -329,6 +330,7 @@ export default {
 
         if (res.data.created) {
           config.is_enabled = true;
+          commit('config/settings/UPDATE_ENABLED', true, { root: true });
           commit('UPDATED_CONFIG', {
             path: conf.__praeco_full_path,
             type: 'rules',

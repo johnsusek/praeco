@@ -6,7 +6,8 @@ function initialState() {
     description: '',
     index: '',
     isEnabled: false,
-    timeField: ''
+    timeField: '',
+    timeType: 'iso'
   };
 }
 
@@ -53,6 +54,10 @@ export default {
 
     UPDATE_TIME_FIELD(state, timeField) {
       state.timeField = timeField;
+    },
+
+    UPDATE_TIME_TYPE(state, timeType) {
+      state.timeType = timeType;
     },
 
     UPDATE_ENABLED(state, isEnabled) {

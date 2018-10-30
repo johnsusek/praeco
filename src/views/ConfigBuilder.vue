@@ -10,14 +10,14 @@
       :action="action" />
 
     <template v-if="timeField">
-      <ConfigCondition ref="condition" class="m-n-xl" @validate="val => valid = val" />
+      <ConfigCondition ref="condition" class="m-n-xl m-s-xl" @validate="val => valid = val" />
 
-      <ConfigAlert ref="alert" />
+      <ConfigAlert ref="alert" @validate="validateBuilder" />
 
       <hr>
 
       <el-row>
-        <ConfigTest :valid="valid" class="m-e-sm" />
+        <ConfigTest :valid="valid" class="m-e-sm" @validate="validateForTest" />
 
         <div class="save-button">
           <el-button v-if="!saving" type="primary" size="medium" @click="save">Save</el-button>
@@ -32,26 +32,28 @@
 
 <script>
 import ConfigTest from '@/components/config/ConfigTest';
-import configSave from '@/mixins/configSave';
 
 export default {
   components: {
     ConfigTest
   },
 
-  mixins: [configSave],
-
   props: ['path', 'type', 'action', 'prefill'],
 
   data() {
     return {
-      valid: false
+      valid: false,
+      saving: false
     };
   },
 
   computed: {
     timeField() {
       return this.$store.state.config.settings.timeField;
+    },
+
+    index() {
+      return this.$store.state.config.settings.index;
     },
 
     name: {
@@ -95,12 +97,75 @@ export default {
       // Since this is a new rule, we want to disable it by default
       this.$store.commit('config/settings/UPDATE_ENABLED', false);
     } else if (this.action === 'edit') {
-      this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
+      await this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
+      this.$store.dispatch('metadata/fetchMappings', this.index);
     }
   },
 
   destroyed() {
     this.$store.dispatch('config/reset');
+  },
+
+  methods: {
+    async save() {
+      if (!await this.validateBuilder()) {
+        this.$message.error('Please fill out all required fields before saving.');
+        return;
+      }
+
+      this.saving = true;
+
+      let res = await this.$store.dispatch('config/save', {
+        type: `${this.type}s`,
+        overwrite: this.action === 'edit'
+      });
+
+      this.saving = false;
+
+      if (res) {
+        if (res.error) {
+          this.$message.warning(res.error);
+        } else {
+          this.$message.success('Config saved.');
+          let path = this.$store.state.config.settings.name;
+          if (this.$store.state.config.path) {
+            path = `${this.$store.state.config.path}/${path}`;
+          }
+          this.$router.push({
+            path: `/${this.type}s/${path}`,
+            query: { refreshTree: true }
+          });
+        }
+      } else {
+        this.$message.warning('Error saving config, are all fields filled out?');
+      }
+    },
+
+    async validateForTest() {
+      if (!await this.validateBuilder()) {
+        this.$message.warning('Please fill out all required fields before testing.');
+      }
+    },
+
+    async validateBuilder() {
+      try {
+        await this.$refs.settings.$refs.form.validate();
+        await this.$refs.alert.$refs.form.validate();
+        await this.$refs.alert.$refs.subjectBody.$refs.form.validate();
+      } catch (error) {
+        this.valid = false;
+        return false;
+      }
+
+      let conditionsValid = await this.$refs.condition.validate();
+      if (!conditionsValid) {
+        this.valid = false;
+        return false;
+      }
+
+      this.valid = true;
+      return true;
+    }
   }
 };
 </script>

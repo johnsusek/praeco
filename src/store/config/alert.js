@@ -9,7 +9,7 @@ function initialState() {
 
     subject: '',
     body: '',
-    bodyType: 'default',
+    bodyType: 'alert_text_only',
 
     slackChannelOverride: '',
     slackUsernameOverride: 'Praeco',

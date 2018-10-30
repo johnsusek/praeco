@@ -25,12 +25,27 @@ export default {
     mappings: {
       // 'ms-*': {
       //   types: [],
-      //   fields: []
+      //   fields: {}
       // }
     }
   },
 
   getters: {
+    fieldIsNumeric: (state, getters) => (index, field) => {
+      let numTypes = ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float'];
+      if (numTypes.includes(getters.typeForField(index, field))) {
+        return true;
+      }
+    },
+
+    typeForField: state => (index, field) => {
+      if (!state.mappings[index]) return;
+      if (!state.mappings[index].fields) return;
+      if (!state.mappings[index].fields[field]) return;
+
+      return state.mappings[index].fields[field].type;
+    },
+
     suggestedIndices(state) {
       let indices = {};
 

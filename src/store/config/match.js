@@ -2,7 +2,7 @@ import Vue from 'vue';
 
 function initialState() {
   return {
-    type: 'any',
+    type: 'frequency',
 
     blacklist: [],
     whitelist: [],
@@ -247,9 +247,15 @@ export default {
     },
 
     UPDATE_TIMEFRAME(state, timeframe) {
+      if (!timeframe) return;
+
       Vue.delete(state, 'timeframe');
-      state.timeframe = {};
-      Vue.set(state.timeframe, Object.keys(timeframe)[0], Object.values(timeframe)[0]);
+
+      if (typeof timeframe === 'object' && Object.keys(timeframe).length) {
+        state.timeframe = {
+          [Object.keys(timeframe)[0]]: Object.values(timeframe)[0]
+        };
+      }
     },
 
     UPDATE_USE_TIMEFRAME(state, useTimeframe) {
@@ -262,6 +268,10 @@ export default {
 
     ADD_BLACKLIST_ENTRY(state) {
       state.blacklist.push('');
+    },
+
+    ADD_BLACKLIST_ENTRY_VALUE(state, value) {
+      state.blacklist.push(value);
     },
 
     REMOVE_BLACKLIST_ENTRY(state, entry) {
@@ -279,6 +289,10 @@ export default {
 
     ADD_WHITELIST_ENTRY(state) {
       state.whitelist.push('');
+    },
+
+    ADD_WHITELIST_ENTRY_VALUE(state, value) {
+      state.whitelist.push(value);
     },
 
     REMOVE_WHITELIST_ENTRY(state, entry) {

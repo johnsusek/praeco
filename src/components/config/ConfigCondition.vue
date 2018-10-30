@@ -3,12 +3,12 @@
     <el-popover v-model="popWhenVisible">
       <span slot="reference" class="pop-trigger">
         <span>WHEN </span>
-        <span>{{ metricAggType }}</span>
+        <span>{{ metricAggType === 'avg' ? 'average' : metricAggType }}</span>
       </span>
       <div>
         <el-menu mode="vertical" @select="selectWhen">
           <el-menu-item index="count">count</el-menu-item>
-          <el-menu-item index="average">average</el-menu-item>
+          <el-menu-item index="avg">average</el-menu-item>
           <el-menu-item index="sum">sum</el-menu-item>
           <el-menu-item index="min">min</el-menu-item>
           <el-menu-item index="max">max</el-menu-item>
@@ -52,8 +52,23 @@
         <span v-if="groupedOver === 'field'">{{ queryKey }}</span>
       </span>
       <div>
-        <el-radio v-model="groupedOver" label="all" border @change="validateOver">All documents</el-radio>
-        <el-radio v-model="groupedOver" label="field" border @change="validateOver">Field</el-radio>
+        <el-radio v-model="groupedOver" label="all" border @change="validate">All documents</el-radio>
+        <el-radio v-model="groupedOver" label="field" border @change="validate">Field</el-radio>
+        <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
+          <el-form ref="overall" :model="$store.state.config.match">
+            <el-form-item label="" prop="docType" required>
+              <el-select
+                v-model="docType"
+                filterable
+                clearable
+                class="el-select-wide m-n-sm"
+                placeholder="Select doc type"
+                @change="validate">
+                <el-option v-for="type in types" :key="type" :label="type" :value="type"/>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
         <div v-if="groupedOver === 'field'">
           <el-form ref="over" :model="$store.state.config.match">
             <el-form-item prop="queryKey" required>
@@ -100,11 +115,20 @@
             placeholder="Field"
             style="width: 280px"
             @input="popCompareVisible = false; validate();">
-            <el-option
-              v-for="field in Object.keys(fields)"
-              :key="field"
-              :label="field"
-              :value="field" />
+            <template v-if="['field in list', 'field not in list'].includes(metricAggType)">
+              <el-option
+                v-for="field in Object.keys(textFields)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </template>
+            <template v-else>
+              <el-option
+                v-for="field in Object.keys(fields)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </template>
           </el-select>
           <label v-if="metricAggType === 'field changes'">The field to check for changes.</label>
         </el-form-item>
@@ -337,10 +361,10 @@
       <div v-else>
         <el-form ref="aboveOrBelow" :rules="aboveOrBelowRules" :model="$store.state.config.match" label-width="60px">
           <el-form-item label="Above" prop="maxThreshold">
-            <el-input v-model="maxThreshold" min="1" type="number" @input="validate" />
+            <el-input v-model="maxThreshold" min="1" type="number" @change="validate" />
           </el-form-item>
           <el-form-item label="Below" prop="minThreshold">
-            <el-input v-model="minThreshold" min="1" type="number" @input="validate" />
+            <el-input v-model="minThreshold" min="1" type="number" @change="validate" />
           </el-form-item>
         </el-form>
       </div>
@@ -480,13 +504,13 @@
       v-if="showChart"
       :index="$store.state.config.settings.index"
       :query="queryString"
-      :timeframe="{ hours: 12 }"
+      :timeframe="chartTimeframe"
       :bucket="bucket"
       :mark-line="$store.getters['config/match/markLine']"
       :spike-height="$store.getters['config/match/spikeHeight']"
       :show-axis-pointer="false"
       :group-by="groupedOver === 'field' && queryKey"
-      :agg-avg="metricAggType === 'average' && metricAggKey"
+      :agg-avg="metricAggType === 'avg' && metricAggKey"
       :agg-sum="metricAggType === 'sum' && metricAggKey"
       :agg-min="metricAggType === 'min' && metricAggKey"
       :agg-max="metricAggType === 'max' && metricAggKey"
@@ -528,16 +552,26 @@ export default {
       popOptionsValid: true,
       aboveOrBelowRules: {
         maxThreshold: [
-          { validator: this.validateMaxThreshold, trigger: 'blur' }
+          { validator: this.validateMaxThreshold, trigger: 'change' }
         ],
         minThreshold: [
-          { validator: this.validateMinThreshold, trigger: 'blur' }
+          { validator: this.validateMinThreshold, trigger: 'change' }
         ]
       }
     };
   },
 
   computed: {
+    chartTimeframe() {
+      if (!this.bucket) return {};
+
+      if (typeof this.bucket === 'object' && Object.keys(this.bucket).length) {
+        return {
+          [Object.keys(this.bucket)[0]]: Object.values(this.bucket)[0] * 100
+        };
+      }
+    },
+
     eventTableHeight() {
       return document.body.clientHeight - 85;
     },
@@ -609,6 +643,10 @@ export default {
       }
     },
 
+    index() {
+      return this.$store.state.config.settings.index;
+    },
+
     blacklist() {
       return this.$store.state.config.match.blacklist;
     },
@@ -631,7 +669,10 @@ export default {
     },
 
     showOptions() {
-      return ['count', 'field not in list', 'field changes'].includes(this.metricAggType);
+      let shouldShowOptions = ['field not in list', 'field changes'].includes(this.metricAggType);
+      let shouldShowOptionsSt = this.metricAggType === 'count' && this.spikeOrThreshold !== 'any';
+
+      return shouldShowOptions || shouldShowOptionsSt;
     },
 
     showPopOf() {
@@ -700,10 +741,8 @@ export default {
       return this.bufferTime;
     },
 
-    bufferTime: {
-      get() {
-        return this.$store.state.elastalert.bufferTime;
-      },
+    bufferTime() {
+      return this.$store.state.elastalert.bufferTime;
     },
 
     threshold: {
@@ -818,16 +857,24 @@ export default {
         this.$store.dispatch('config/sample');
       }
 
-      if (this.metricAggType === 'count') {
-        this.type = 'frequency';
-      } else if (this.metricAggType === 'field in list') {
-        this.type = 'blacklist';
-      } else if (this.metricAggType === 'field not in list') {
-        this.type = 'whitelist';
-      } else if (this.metricAggType === 'field changes') {
-        this.type = 'change';
-      } else {
-        this.type = 'metric_aggregation';
+      if (this.type === 'frequency') {
+        this.aboveOrBelow = 'above';
+        this.metricAggType = 'count';
+      } else if (this.type === 'flatline') {
+        this.aboveOrBelow = 'below';
+        this.metricAggType = 'count';
+      } else if (this.type === 'any') {
+        this.metricAggType = 'count';
+        this.spikeOrThreshold = 'any';
+      } else if (this.type === 'blacklist') {
+        this.metricAggType = 'field in list';
+      } else if (this.type === 'whitelist') {
+        this.metricAggType = 'field not in list';
+      } else if (this.type === 'change') {
+        this.metricAggType = 'field changes';
+      } else if (this.type === 'spike') {
+        this.metricAggType = 'count';
+        this.spikeOrThreshold = 'spike';
       }
 
       setTimeout(() => {
@@ -850,6 +897,10 @@ export default {
 
         if (this.$refs.over) {
           await this.validateOver();
+        }
+
+        if (this.$refs.overall) {
+          await this.validateOverall();
         }
 
         if (this.$refs.compare) {
@@ -1002,6 +1053,20 @@ export default {
       }
     },
 
+    async validateOverall() {
+      if (!this.$refs.overall) {
+        this.popOverValid = true;
+        return;
+      }
+
+      try {
+        this.popOverValid = await this.$refs.overall.validate();
+      } catch (error) {
+        this.popOverValid = false;
+        throw error;
+      }
+    },
+
     toggleThresholdRef(val) {
       if (!val) {
         this.$store.commit('config/match/UPDATE_THRESHOLD_REF', null);
@@ -1021,6 +1086,8 @@ export default {
     },
 
     updateBlacklist(entry, index) {
+      if (Number.isNaN(entry)) return;
+
       this.$store.commit('config/match/UPDATE_BLACKLIST_ENTRY', { entry, index });
       this.$nextTick(() => {
         this.validate();
@@ -1097,7 +1164,11 @@ export default {
       this.metricAggType = val;
 
       if (val === 'count') {
-        this.type = 'frequency';
+        if (this.aboveOrBelow === 'above') {
+          this.type = 'frequency';
+        } else {
+          this.type = 'flatline';
+        }
       } else if (val === 'field in list') {
         this.type = 'blacklist';
       } else if (val === 'field not in list') {
@@ -1149,6 +1220,10 @@ export default {
   .pop-trigger {
     border-bottom: 0 !important;
     cursor: default !important;
+    pointer-events: none;
+  }
+
+  .pop-trigger-pseudo {
     pointer-events: none;
   }
 

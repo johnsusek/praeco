@@ -9,15 +9,31 @@
 export default {
   props: ['time'],
 
-  computed: {
-    value() {
-      if (!this.time) return;
+  data() {
+    return {
+      value: '999',
+      unit: 'seconds'
+    };
+  },
 
-      return Object.values(this.time)[0];
-    },
+  watch: {
+    time: {
+      deep: true,
+      handler() {
+        this.updateTime();
+      }
+    }
+  },
 
-    unit() {
-      if (!this.time) return;
+  mounted() {
+    this.updateTime();
+  },
+
+  methods: {
+    updateTime() {
+      if (!this.time || !Object.values(this.time).length) return;
+
+      this.value = Object.values(this.time)[0];
 
       let unit = Object.keys(this.time)[0];
 
@@ -25,7 +41,7 @@ export default {
         unit = unit.slice(0, -1);
       }
 
-      return unit;
+      this.unit = unit;
     }
   }
 };

@@ -62,6 +62,23 @@
 import axios from 'axios';
 import { intervalFromTimeframe } from '@/lib/intervalFromTimeframe';
 
+function msFromTimeframe(timeframe) {
+  let value = Object.values(timeframe)[0];
+  let unit = Object.keys(timeframe)[0];
+
+  if (unit === 'seconds') {
+    return value * 1000;
+  } else if (unit === 'minutes') {
+    return value * 60000;
+  } else if (unit === 'hours') {
+    return value * 3600000;
+  } else if (unit === 'days') {
+    return value * 86400000;
+  } else if (unit === 'weeks') {
+    return value * 604800000;
+  }
+}
+
 export default {
   props: ['timeframe', 'from', 'height'],
 
@@ -93,6 +110,10 @@ export default {
 
     timeField() {
       return this.$store.state.config.settings.timeField;
+    },
+
+    timeType() {
+      return this.$store.state.config.settings.timeType;
     }
   },
 
@@ -144,8 +165,15 @@ export default {
 
       this.eventsLoading = true;
 
-      let to = intervalFromTimeframe(this.timeframe);
+      let to;
 
+      if (this.timeType === 'iso') {
+        to = intervalFromTimeframe(this.timeframe);
+      } else if (this.timeType === 'unix_ms') {
+        to = this.from + msFromTimeframe(this.timeframe);
+      } else {
+        to = this.from + Math.trunc(msFromTimeframe(this.timeframe) / 1000);
+      }
       let query = {
         query: {
           bool: {
@@ -159,7 +187,7 @@ export default {
                 range: {
                   [this.timeField]: {
                     gte: this.from,
-                    lte: `${this.from}||+${to}`
+                    lte: to
                   }
                 }
               }
