@@ -262,7 +262,7 @@ export default {
 
   async mounted() {
     this.$store.dispatch('config/reset');
-    this.$store.dispatch('config/load', { type: 'rules', path: this.id });
+    await this.$store.dispatch('config/load', { type: 'rules', path: this.id });
 
     this.newName = this.name;
     this.getQueryLog();
