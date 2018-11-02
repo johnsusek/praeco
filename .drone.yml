@@ -1,6 +1,7 @@
 clone:
   git:
     image: plugins/git
+    pull: true
   when:
     branch: master
 
