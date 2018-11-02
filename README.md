@@ -30,7 +30,12 @@ A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e
 
 ## Upgrading
 
-Please see UPGRADING.md for version-specific instructions.
+```
+docker pull servercentral/praeco && docker pull servercentral/elastalert
+docker-compose down && docker-compose up
+```
+
+Please see [UPGRADING.md](https://github.com/ServerCentral/praeco/blob/master/UPGRADING.md) for version-specific instructions.
 
 ## Configuration
 
