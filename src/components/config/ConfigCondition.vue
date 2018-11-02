@@ -260,17 +260,14 @@
       </template>
     </el-popover>
 
-    <el-popover v-model="popFilterVisible">
-      <span slot="reference" class="pop-trigger">
-        <span v-if="!queryTree.children.length">UNFILTERED</span>
-        <el-tooltip v-else :content="queryString" placement="top">
-          <span>FILTERED ({{ queryTree.children.length }})</span>
-        </el-tooltip>
-      </span>
-      <div>
-        <ConfigQuery ref="query" class="config-query" />
-      </div>
-    </el-popover>
+    <span class="pop-trigger" @click="popFilterVisible = true">
+      <span v-if="!queryTree.children.length">UNFILTERED</span>
+      <span v-else>{{ queryString }}</span>
+    </span>
+
+    <el-dialog :visible.sync="popFilterVisible" fullscreen>
+      <ConfigQuery ref="query" class="config-query" />
+    </el-dialog>
 
     <el-popover v-if="showPopAbove" :class="{ 'is-invalid': !popAboveValid }" v-model="popAboveVisible">
       <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" slot="reference" class="pop-trigger">
@@ -704,7 +701,7 @@ export default {
     },
 
     showTime() {
-      return !['field in list', 'field not in list'].includes(this.metricAggType);
+      return !['field in list', 'field not in list'].includes(this.metricAggType) && this.spikeOrThreshold !== 'any';
     },
 
     queryTree: {
@@ -853,10 +850,6 @@ export default {
 
   mounted() {
     this.$nextTick(() => {
-      if (this.index) {
-        this.$store.dispatch('config/sample');
-      }
-
       if (this.type === 'frequency') {
         this.aboveOrBelow = 'above';
         this.metricAggType = 'count';
@@ -1215,60 +1208,14 @@ export default {
   padding-top: 5px;
   max-width: 600px;
 }
-
-.condition-view {
-  .pop-trigger {
-    border-bottom: 0 !important;
-    cursor: default !important;
-    pointer-events: none;
-  }
-
-  .pop-trigger-pseudo {
-    pointer-events: none;
-  }
-
-  .pop-trigger > :first-child {
-    color: #999 !important;
-  }
-}
 </style>
 
 <style scoped>
-.pop-trigger {
-  border-bottom: 1px dotted #157ce7;
-  cursor: pointer;
-  margin-right: 20px;
-  font-size: 17px;
-  line-height: 1.5;
-}
-
-.pop-trigger-pseudo {
-  margin-right: 20px;
-  font-size: 17px;
-  line-height: 1.5;
-}
-
-.is-invalid .pop-trigger,
-.is-invalid .pop-trigger-pseudo {
-  border-bottom: 1px dotted #f56c6c;
-}
-
-.is-invalid .pop-trigger > :first-child,
-.is-invalid .pop-trigger-pseudo > :first-child {
-  color: #f56c6c;
-}
-
-.pop-trigger > :first-child {
-  color: #157ce7;
-}
-
 .el-menu {
   border: 0;
 }
 
-.config-query {
-  padding: 0 5px 5px;
-  min-width: 70vw;
-  max-width: 90vw;
+.el-dialog__wrapper {
+  z-index: 9999;
 }
 </style>

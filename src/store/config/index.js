@@ -177,7 +177,6 @@ export default {
         'configs/createConfig',
         {
           config: getters.config(false),
-          format: false,
           type,
           overwrite
         },
@@ -531,11 +530,17 @@ export default {
         ...getters.queryString
       };
 
+      let dots = '';
+
+      for (let i = 0; i < state.path.split('/').length; i++) {
+        dots += '../';
+      }
+
       if (forTest) {
         // when run as part of a test, fix path since rule will be in server_data/tests/
         config.import = '../../rules/BaseRule.config';
       } else {
-        config.import = 'BaseRule.config';
+        config.import = `${dots}BaseRule.config`;
       }
 
       if (state.path) {

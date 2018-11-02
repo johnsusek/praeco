@@ -26,6 +26,11 @@
   display: none;
 }
 
+.vjs__tree {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 .vjs__tree .vjs__value__boolean,
 .vjs__tree .vjs__value__number,
 .vjs__tree .vjs__value__string {

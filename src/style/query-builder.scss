@@ -79,6 +79,8 @@
     > div {
       position: relative;
       padding-right: 21px;
+      width: 100%;
+      display: flex;
     }
 
     label {
@@ -94,12 +96,14 @@
       border: 1px solid #ddd;
       border-radius: 3px;
       padding: 4px;
+      flex: 1;
+      margin-right: 30px;
     }
 
     button {
       margin-top: 3px;
       position: absolute;
-      right: 0;
+      right: 18px;
       top: 0;
     }
   }

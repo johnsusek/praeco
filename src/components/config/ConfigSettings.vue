@@ -15,7 +15,7 @@
       show-icon />
 
     <el-row :gutter="20">
-      <el-col :span="7">
+      <el-col :span="6">
         <el-form-item v-if="action === 'add'" label="Name" prop="name" required>
           <el-input ref="name" v-model="name" spellcheck="false" autofocus />
           <label>The name of the {{ type }}, must be unique.</label>
@@ -26,7 +26,7 @@
         </el-form-item>
       </el-col>
 
-      <el-col :span="7">
+      <el-col :span="6">
         <el-form-item label="Index" prop="index" required>
           <el-autocomplete
             :disabled="viewOnly"
@@ -42,7 +42,7 @@
         </el-form-item>
       </el-col>
 
-      <el-col :span="5">
+      <el-col :span="6">
         <el-form-item label="Time type" prop="timeType" required>
           <el-select
             v-model="timeType"
@@ -56,7 +56,7 @@
         </el-form-item>
       </el-col>
 
-      <el-col :span="5">
+      <el-col :span="6">
         <el-form-item v-if="timeType === 'iso'" label="Time field" prop="timeField" required>
           <el-select
             v-model="timeField"

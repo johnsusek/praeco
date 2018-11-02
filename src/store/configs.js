@@ -5,7 +5,6 @@ import cloneDeep from 'lodash.clonedeep';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
 import { configFormatToHtml } from '../lib/alertText';
-import { formatConfig } from '../lib/formatConfig';
 
 export default {
   namespaced: true,
@@ -184,15 +183,14 @@ export default {
     },
 
     /*eslint-disable */
-    async createConfig({ dispatch }, { config, type, overwrite, rootPath, format = true }) {
+    async createConfig({ dispatch }, { config, type, overwrite, rootPath }) {
       /* eslint-enable */
-      let conf = format ? formatConfig(config) : config;
 
       let fullPath;
       if (rootPath) {
         fullPath = '';
-      } else if (conf.__praeco_full_path) {
-        fullPath = conf.__praeco_full_path;
+      } else if (config.__praeco_full_path) {
+        fullPath = config.__praeco_full_path;
       } else {
         fullPath = '';
       }
@@ -203,7 +201,7 @@ export default {
       path = path.join('/');
 
       if (overwrite) {
-        return dispatch('createConfigFinal', { type, path, conf });
+        return dispatch('createConfigFinal', { type, path, conf: config });
       }
 
       try {
@@ -216,7 +214,7 @@ export default {
       } catch (error) {
         // 404 on this file, which means it is safe to save
         // because no file exists here
-        return dispatch('createConfigFinal', { type, path, conf });
+        return dispatch('createConfigFinal', { type, path, conf: config });
       }
     },
 
@@ -277,31 +275,6 @@ export default {
       }
     },
 
-    async disableRule({ commit }, config) {
-      let conf = formatConfig(config);
-      conf.is_enabled = false;
-
-      try {
-        let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
-          yaml: yaml.safeDump(conf)
-        });
-
-        if (res.data.created) {
-          config.is_enabled = false;
-          commit('config/settings/UPDATE_ENABLED', false, { root: true });
-          commit('UPDATED_CONFIG', {
-            path: conf.__praeco_full_path,
-            type: 'rules',
-            config
-          });
-          return true;
-        }
-        return false;
-      } catch (error) {
-        networkError(error);
-      }
-    },
-
     async silenceRule(context, { path, unit, duration }) {
       try {
         let res = await axios.post(`/api/silence/${path}`, {
@@ -319,8 +292,30 @@ export default {
       }
     },
 
-    async enableRule({ commit }, config) {
-      let conf = formatConfig(config);
+    async disableRule({ commit }, conf) {
+      conf.is_enabled = false;
+
+      try {
+        let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
+          yaml: yaml.safeDump(conf)
+        });
+
+        if (res.data.created) {
+          commit('config/settings/UPDATE_ENABLED', false, { root: true });
+          commit('UPDATED_CONFIG', {
+            path: conf.__praeco_full_path,
+            type: 'rules',
+            config: conf
+          });
+          return true;
+        }
+        return false;
+      } catch (error) {
+        networkError(error);
+      }
+    },
+
+    async enableRule({ commit }, conf) {
       conf.is_enabled = true;
 
       try {
@@ -329,12 +324,11 @@ export default {
         });
 
         if (res.data.created) {
-          config.is_enabled = true;
           commit('config/settings/UPDATE_ENABLED', true, { root: true });
           commit('UPDATED_CONFIG', {
             path: conf.__praeco_full_path,
             type: 'rules',
-            config
+            config: conf
           });
           return true;
         }
