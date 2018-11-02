@@ -1,5 +1,5 @@
 <template>
-  <div class="event-table">
+  <div v-show="loadedEvents.length" class="event-table">
     <el-table
       ref="table"
       :data="loadedEvents"
@@ -19,11 +19,11 @@
       </el-table-column>
 
       <el-table-column
-        v-for="col in visibleColumns"
+        v-for="(col, i) in visibleColumns"
         :key="col"
         :label="col"
         :prop="col"
-        :width="widths[col] || 'auto'"
+        :width="widthForCol(col, i)"
         resizable>
         <template slot-scope="scope">
           <vue-json-pretty
@@ -60,7 +60,10 @@
 
 <script>
 import axios from 'axios';
+import debounce from 'debounce';
 import { intervalFromTimeframe } from '@/lib/intervalFromTimeframe';
+
+const CancelToken = axios.CancelToken;
 
 function msFromTimeframe(timeframe) {
   let value = Object.values(timeframe)[0];
@@ -84,6 +87,7 @@ export default {
 
   data() {
     return {
+      source: null,
       hidden: [],
       widths: {},
       offset: 0,
@@ -114,21 +118,29 @@ export default {
 
     timeType() {
       return this.$store.state.config.settings.timeType;
+    },
+
+    queryString() {
+      return this.$store.getters['config/query/queryString'];
     }
   },
 
   watch: {
+    queryString() {
+      this.reset();
+      this.fetchEventsDebounced();
+    },
+
     from() {
-      this.loadedEvents = [];
-      this.offset = 0;
-      this.totalEvents = 0;
-      this.$refs.table.$el.querySelector('.el-table__body-wrapper').scrollTop = 0;
+      this.reset();
       this.fetchEvents();
     }
   },
 
   mounted() {
-    this.fetchEvents();
+    if (this.from) {
+      this.fetchEvents();
+    }
 
     // if there are saved columns, use those
     if (localStorage.getItem('hiddenEventTableColumns')) {
@@ -144,6 +156,20 @@ export default {
   },
 
   methods: {
+    reset() {
+      this.loadedEvents = [];
+      this.offset = 0;
+      this.totalEvents = 0;
+      this.$refs.table.$el.querySelector('.el-table__body-wrapper').scrollTop = 0;
+    },
+
+    widthForCol(col, i) {
+      if (this.visibleColumns.length === i + 1) {
+        return 'auto';
+      }
+      return this.widths[col] || 'auto';
+    },
+
     saveColumns() {
       localStorage.setItem('hiddenEventTableColumns', JSON.stringify(this.hidden));
     },
@@ -154,26 +180,20 @@ export default {
     },
 
     loadMore() {
-      if (this.totalEvents === 0 || this.loadedEvents.length < this.totalEvents) {
-        this.offset += 40;
+      if (!this.eventsLoading && (this.totalEvents === 0 || this.loadedEvents.length < this.totalEvents)) {
         this.fetchEvents();
       }
     },
+
+    fetchEventsDebounced: debounce(async function() {
+      this.fetchEvents();
+    }, 1000),
 
     async fetchEvents() {
       if (!this.$store.state.config.settings.index) return;
 
       this.eventsLoading = true;
 
-      let to;
-
-      if (this.timeType === 'iso') {
-        to = `${this.from}||+${intervalFromTimeframe(this.timeframe)}`;
-      } else if (this.timeType === 'unix_ms') {
-        to = this.from + msFromTimeframe(this.timeframe);
-      } else {
-        to = this.from + Math.trunc(msFromTimeframe(this.timeframe) / 1000);
-      }
       let query = {
         query: {
           bool: {
@@ -181,14 +201,6 @@ export default {
               {
                 query_string: {
                   query: this.$store.getters['config/query/queryString'] || `${this.timeField}:*`
-                }
-              },
-              {
-                range: {
-                  [this.timeField]: {
-                    gte: this.from,
-                    lte: to
-                  }
                 }
               }
             ]
@@ -199,13 +211,54 @@ export default {
         size: 40
       };
 
-      let res = await axios.post(`/api/search/${this.$store.state.config.settings.index}`, query);
+      if (this.from) {
+        let to;
 
-      if (res.data.hits) {
+        if (this.timeType === 'iso') {
+          to = `${this.from}||+${intervalFromTimeframe(this.timeframe)}`;
+        } else if (this.timeType === 'unix_ms') {
+          to = this.from + msFromTimeframe(this.timeframe);
+        } else {
+          to = this.from + Math.trunc(msFromTimeframe(this.timeframe) / 1000);
+        }
+
+        query.query.bool.must.push({
+          range: {
+            [this.timeField]: {
+              gte: this.from,
+              lte: to
+            }
+          }
+        });
+      }
+
+      let res;
+
+      // Cancel any currently running requests
+      if (this.source) {
+        this.source.cancel();
+      }
+
+      try {
+        this.source = CancelToken.source();
+        res = await axios.post(
+          `/api/search/${this.$store.state.config.settings.index}`,
+          query, { cancelToken: this.source.token }
+        );
+      } catch (error) {
+        if (!axios.isCancel(error)) {
+          console.error(error);
+        }
+      } finally {
+        this.source = null;
+      }
+
+      if (res && res.data && res.data.hits) {
         res.data.hits.hits.map(h => h._source).forEach(event => {
           this.loadedEvents.push(event);
         });
         this.totalEvents = res.data.hits.total;
+        this.offset += 40;
       }
 
       this.eventsLoading = false;

@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import debounce from 'debounce';
 import At from 'vue-at';
 
 export default {
@@ -89,6 +90,10 @@ export default {
   props: ['viewOnly'],
 
   computed: {
+    queryString() {
+      return this.$store.getters['config/query/queryString'];
+    },
+
     subject: {
       get() {
         return this.$store.state.config.alert.subject;
@@ -133,6 +138,22 @@ export default {
 
       return fields;
     }
+  },
+
+  watch: {
+    queryString() {
+      this.sampleDebounced();
+    }
+  },
+
+  mounted() {
+    this.$store.dispatch('config/sample');
+  },
+
+  methods: {
+    sampleDebounced: debounce(() => {
+      this.$store.dispatch('config/sample');
+    }, 750)
   }
 };
 </script>

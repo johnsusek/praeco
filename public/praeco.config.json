@@ -1,5 +1,5 @@
 {
-  "appUrl": "http://praeco-app-url:8080",
+  "appUrl": "http://localhost:8080",
   "errorLoggerUrl": "",
   "hidePreconfiguredFields": []
 }

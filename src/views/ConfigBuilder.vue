@@ -3,13 +3,13 @@
     <h1 class="m-s-xl">{{ pageTitle }}</h1>
 
     <ConfigSettings
-      v-if="prefill && $store.state.config.settings.index || !prefill"
+      v-if="prefill && index || !prefill"
       ref="settings"
       :type="type"
       :prefill-path="prefill"
       :action="action" />
 
-    <template v-if="timeField">
+    <template v-if="index && timeField">
       <ConfigCondition ref="condition" class="m-n-xl m-s-xl" @validate="val => valid = val" />
 
       <ConfigAlert ref="alert" @validate="validateBuilder" />

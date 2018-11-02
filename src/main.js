@@ -15,6 +15,7 @@ import './style/tree.scss';
 import './style/icons.scss';
 import './style/query-builder.scss';
 import './style/element.scss';
+import './style/pop-trigger.scss';
 
 Vue.config.productionTip = false;
 

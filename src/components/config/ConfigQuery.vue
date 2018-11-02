@@ -1,64 +1,38 @@
 <template>
   <el-form ref="form" label-position="top" @submit.native.prevent>
-    <el-row :gutter="30" :class="{ 'empty': !queryTree.children.length }">
-      <el-col :span="12" class="scroll-pane">
-        <el-form-item class="el-form-item-tight">
-          <vue-query-builder
-            v-if="rules.length"
-            v-model="queryTree"
-            :rules="rules"
-            :labels="labels"
-            :styled="false"
-            @input="queryChanged" />
-        </el-form-item>
-        <el-form-item v-if="!queryTree.children.length">
-          <label>
-            To get started, select a term from the dropdown menu and click the "Add filter" button.
-          </label>
-        </el-form-item>
-      </el-col>
 
-      <el-col :span="12">
-        <!-- <el-button
-          v-if="!sampling"
-          type="primary"
-          plain
-          class="m-n-xs"
-          @click="sample">
-          Sample
-        </el-button>
-        <el-button
-          v-if="sampling"
-          disabled
-          type="primary"
-          plain
-          class="m-n-xs"
-          @click="sample">
-          Sampling...
-        </el-button>
-        <label>Preview a sample result matching your filters.</label> -->
+    <el-popover v-model="popFilterVisible">
+      <span slot="reference" class="pop-trigger">
+        <span v-if="!queryTree.children.length">NEW FILTER</span>
+        <span else>{{ queryString }}</span>
+      </span>
+      <div>
+        <el-row :gutter="30" :class="{ 'empty': !queryTree.children.length }">
+          <el-col :span="24">
+            <el-form-item class="el-form-item-tight">
+              <vue-query-builder
+                v-if="rules.length"
+                v-model="queryTree"
+                :rules="rules"
+                :labels="labels"
+                :styled="false" />
+            </el-form-item>
+            <el-form-item v-if="!queryTree.children.length">
+              <label>
+                To get started, select a term from the dropdown menu and click the "Add filter" button.
+              </label>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </div>
+    </el-popover>
 
-        <el-form-item v-if="$store.state.config.sampleResult" label="Sample result" class="scroll-pane sample-result">
-          <el-table
-            :data="Object.entries($store.state.config.sampleResult).sort()">
-            <el-table-column label="Field" prop="0" width="160" />
-            <el-table-column label="Value" prop="1">
-              <template slot-scope="scope">
-                <vue-json-pretty
-                  v-if="typeof scope.row[1] === 'object'"
-                  :data="scope.row[1]" :deep="0" />
-                <template v-else>{{ scope.row[1] }}</template>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-form-item>
-      </el-col>
-    </el-row>
+
+    <EventTable v-if="queryString" :height="eventTableHeight" class="m-n-xl" />
   </el-form>
 </template>
 
 <script>
-import debounce from 'debounce';
 import VueQueryBuilder from 'vue-query-builder';
 
 export default {
@@ -68,6 +42,7 @@ export default {
 
   data() {
     return {
+      popFilterVisible: false,
       sampling: false,
       labels: {
         matchType: ' of the following conditions are met:',
@@ -83,6 +58,14 @@ export default {
   },
 
   computed: {
+    eventTableHeight() {
+      return document.body.clientHeight - 85;
+    },
+
+    queryString() {
+      return this.$store.getters['config/query/queryString'];
+    },
+
     queryTree: {
       get() {
         return this.$store.state.config.query.tree;
@@ -122,28 +105,6 @@ export default {
 
       return rules;
     }
-  },
-
-  methods: {
-    async sample() {
-      this.sampling = true;
-      await this.$store.dispatch('config/sample');
-      this.sampling = false;
-    },
-
-    sampleDebounced: debounce(async function() {
-      this.sampling = true;
-      await this.$store.dispatch('config/sample');
-      this.sampling = false;
-    }, 750),
-
-    queryChanged() {
-      let queryTree = this.queryTree;
-      if (queryTree) {
-        this.$store.commit('config/query/UPDATE_TREE', queryTree);
-        this.sampleDebounced();
-      }
-    }
   }
 };
 </script>
@@ -165,17 +126,13 @@ export default {
   padding-bottom: 0;
 }
 
-.scroll-pane {
-  max-height: 500px;
-  overflow: auto;
+.is-fullscreen .el-dialog__body {
+  padding-bottom: 0;
 }
+</style>
 
-.sample-result,
-.sample-result * {
-  background: #f9f9f9 !important;
-}
-
-.sample-result > .el-form-item__label {
-  padding-left: 10px !important;
+<style scoped>
+.el-form {
+  margin-top: -2ex;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loaded">
     <div v-show="showRename" >
       <el-row :gutter="10">
         <el-col :span="6">
@@ -20,7 +20,7 @@
     </div>
 
     <h1 v-show="!showRename">
-      {{ rule.name }}
+      {{ name }}
       <el-tag v-if="isEnabled" type="success" class="m-w-xs">
         <Bulb success />
         Enabled
@@ -215,6 +215,7 @@ export default {
   props: ['id'],
   data() {
     return {
+      loaded: false,
       silencePopoverVisible: false,
       now: new Date(),
       silenceTime: { hours: 2 },
@@ -263,6 +264,7 @@ export default {
   async mounted() {
     this.$store.dispatch('config/reset');
     await this.$store.dispatch('config/load', { type: 'rules', path: this.id });
+    this.loaded = true;
 
     this.newName = this.name;
     this.getQueryLog();

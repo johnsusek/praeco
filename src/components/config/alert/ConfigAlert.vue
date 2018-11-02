@@ -25,6 +25,7 @@
           <ElastalertTimeView v-if="viewOnly" :time="realert" />
           <ElastalertTimePicker
             v-else-if="realert"
+            :allow-zero="true"
             :unit="Object.keys(realert)[0]"
             :amount="Object.values(realert)[0]"
             @input="updateRealert" />
@@ -114,7 +115,7 @@
             <label>Comma separated list of email addresses</label>
           </el-form-item>
 
-          <el-form-item v-if="!viewOnly || bcc" label="BCC"prop="bcc">
+          <el-form-item v-if="!viewOnly || bcc" label="BCC" prop="bcc">
             <el-input v-model="bcc" :disabled="viewOnly" />
             <label>Comma separated list of email addresses</label>
           </el-form-item>
@@ -350,7 +351,8 @@ export default {
 
   methods: {
     updateRealert(value) {
-      this.realert = value;
+      this.realert = {};
+      this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
     }
   }
 };

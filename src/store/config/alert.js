@@ -41,9 +41,7 @@ export default {
         path = `${rootState.config.path}/${path}`;
       }
 
-      let type = rootState.config.type;
-
-      return `${appUrl}/${type}s/${encodeURIComponent(path)}`;
+      return `${appUrl}/rules/${encodeURIComponent(path)}`;
     },
 
     subjectRendered(state, getters, rootState) {
