@@ -1,3 +1,9 @@
+clone:
+  git:
+    image: plugins/git
+  when:
+    branch: master
+
 pipeline:
   hubpublish:
     image: plugins/docker
