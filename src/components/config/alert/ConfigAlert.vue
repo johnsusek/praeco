@@ -68,7 +68,11 @@
             <label>This is the username that will appear in Slack for the alert</label>
           </praeco-form-item>
 
-          <praeco-form-item v-if="!(viewOnly && !slackEmojiOverride)" :class="{ 'disabled': viewOnly }" label="Icon" prop="slackEmojiOverride" required>
+          <praeco-form-item
+            v-if="!(viewOnly && !slackEmojiOverride)"
+            :class="{ 'disabled': viewOnly }"
+            label="Icon"
+            prop="slackEmojiOverride">
             <picker
               :emoji="slackEmojiOverride || 'arrow_up'"
               :title="slackEmojiOverride || 'Pick your icon...'"
