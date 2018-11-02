@@ -135,9 +135,19 @@ export default {
       let newConfig = cloneDeep(oldConfig);
 
       // If there is a new path (i.e. in a subfolder), add that to the full pathname
-      newConfig.__praeco_full_path = `${newPath ? `${newPath}/` : ''}${newConfig.name}`;
+      newConfig.__praeco_full_path = `${newPath}${newConfig.name}`;
 
       if (oldConfig.__praeco_full_path === newConfig.__praeco_full_path) return;
+
+      if (type === 'rules') {
+        let dots = '';
+
+        for (let i = 1; i < newConfig.__praeco_full_path.split('/').length; i++) {
+          dots += '../';
+        }
+
+        newConfig.import = `${dots}BaseRule.config`;
+      }
 
       try {
         // Create the config at the full path
