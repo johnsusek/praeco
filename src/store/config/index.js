@@ -151,6 +151,7 @@ export default {
 
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
+        commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
         commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
         commit('alert/UPDATE_REALERT', config.realert);
         commit('alert/UPDATE_ALERT', config.alert);
@@ -490,6 +491,10 @@ export default {
 
       if (state.alert.slackUsernameOverride) {
         config.slack_username_override = state.alert.slackUsernameOverride;
+      }
+
+      if (state.alert.slackEmojiOverride) {
+        config.slack_emoji_override = state.alert.slackEmojiOverride;
       }
 
       if (state.alert.slackMsgColor) {

@@ -68,6 +68,14 @@
             <label>This is the username that will appear in Slack for the alert</label>
           </praeco-form-item>
 
+          <praeco-form-item v-if="!(viewOnly && !slackEmojiOverride)" :class="{ 'disabled': viewOnly }" label="Icon" prop="slackEmojiOverride" required>
+            <picker
+              :emoji="slackEmojiOverride || 'arrow_up'"
+              :title="slackEmojiOverride || 'Pick your icon...'"
+              color="#189acc"
+              @select="addEmoji" />
+          </praeco-form-item>
+
           <el-form-item label="Message color" prop="slackMsgColor" required>
             <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
               <el-radio label="danger" border class="slack-danger">Danger</el-radio>
@@ -135,6 +143,7 @@
 
 <script>
 import validUrl from 'valid-url';
+import { Picker } from 'emoji-mart-vue';
 import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
 
 let validateSlackDestination = (rule, value, callback) => {
@@ -188,7 +197,8 @@ let validateEmailCommaSeparated = (rule, value, callback) => {
 
 export default {
   components: {
-    ConfigAlertSubjectBody
+    ConfigAlertSubjectBody,
+    Picker
   },
 
   props: ['prefill', 'viewOnly'],
@@ -321,6 +331,15 @@ export default {
       }
     },
 
+    slackEmojiOverride: {
+      get() {
+        return this.$store.state.config.alert.slackEmojiOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_EMOJI_OVERRIDE', value);
+      }
+    },
+
     slackMsgColor: {
       get() {
         return this.$store.state.config.alert.slackMsgColor;
@@ -350,6 +369,10 @@ export default {
   },
 
   methods: {
+    addEmoji(value) {
+      this.slackEmojiOverride = value.colons;
+    },
+
     updateRealert(value) {
       this.realert = {};
       this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
@@ -359,6 +382,37 @@ export default {
 </script>
 
 <style lang="scss">
+.disabled {
+  .emoji-mart {
+    height: auto !important;
+    border: 0 !important;
+  }
+
+  .emoji-mart-title-label,
+  .emoji-mart-bar:first-child,
+  .emoji-mart-search,
+  .emoji-mart-scroll,
+  .emoji-mart-preview-skins {
+    display: none;
+  }
+
+  .emoji-mart-bar {
+    border: 0 !important;
+  }
+
+  .emoji-mart-preview {
+    height: 45px !important;
+  }
+
+  .emoji-mart-preview-emoji {
+    left: 0 !important;
+  }
+
+  .emoji-mart-preview-data {
+    left: 56px !important;
+  }
+}
+
 .atwho-view {
   max-height: 220px;
   height: 220px;

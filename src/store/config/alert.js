@@ -13,6 +13,7 @@ function initialState() {
 
     slackChannelOverride: '',
     slackUsernameOverride: 'Praeco',
+    slackEmojiOverride: '',
     slackMsgColor: 'danger',
 
     fromAddr: '',
@@ -100,6 +101,10 @@ export default {
 
     UPDATE_SLACK_USERNAME_OVERRIDE(state, slackUsernameOverride) {
       state.slackUsernameOverride = slackUsernameOverride;
+    },
+
+    UPDATE_SLACK_EMOJI_OVERRIDE(state, slackEmojiOverride) {
+      state.slackEmojiOverride = slackEmojiOverride;
     },
 
     UPDATE_SLACK_MSG_COLOR(state, slackMsgColor) {
