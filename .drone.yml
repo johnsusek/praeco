@@ -1,6 +1,4 @@
 pipeline:
-  branches: master
-
   hubpublish:
     image: plugins/docker
     repo: servercentral/praeco
