@@ -29,11 +29,11 @@
       <el-col :span="6">
         <el-form-item label="Index" prop="index" required>
           <el-autocomplete
-            :disabled="viewOnly"
+            :disabled="viewOnly || indicesLoading"
             v-model="index"
             :fetch-suggestions="(qs, cb) => { cb(links); }"
+            :placeholder="indicesLoading ? `Loading indices...`: ''"
             class="el-input-wide"
-            placeholder=""
             @input="getMappingDebounced" />
           <label v-if="!viewOnly">
             e.g. logstash-* or logstash-%Y.%m.%d
@@ -60,10 +60,10 @@
         <el-form-item v-if="timeType === 'iso'" label="Time field" prop="timeField" required>
           <el-select
             v-model="timeField"
-            :disabled="viewOnly"
+            :disabled="viewOnly || mappingLoading"
+            :placeholder="mappingLoading ? `Loading mappings...`: ''"
             filterable
             clearable
-            placeholder=""
             class="el-select-wide">
             <el-option
               v-for="field in Object.keys(dateFields)"
@@ -107,6 +107,8 @@ export default {
 
   data() {
     return {
+      indicesLoading: false,
+      mappingLoading: false,
       mappingError: '',
       rules: {
         name: [{
@@ -181,9 +183,11 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
     // Get the indices needed to build the suggestions list
-    this.$store.dispatch('metadata/fetchIndices');
+    this.indicesLoading = true;
+    await this.$store.dispatch('metadata/fetchIndices');
+    this.indicesLoading = false;
 
     // Automatically get the mapping on start
     if (this.index) {
@@ -199,7 +203,9 @@ export default {
     async getMapping() {
       this.mappingError = '';
 
+      this.mappingLoading = true;
       let fetched = await this.$store.dispatch('metadata/fetchMappings', formatIndex(this.index));
+      this.mappingLoading = false;
 
       if (!fetched) {
         this.mappingError = 'Could not fetch mappings.';

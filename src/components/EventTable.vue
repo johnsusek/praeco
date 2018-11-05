@@ -83,7 +83,7 @@ function msFromTimeframe(timeframe) {
 }
 
 export default {
-  props: ['timeframe', 'from', 'height'],
+  props: ['timeframe', 'from', 'height', 'groupByField', 'groupByValue'],
 
   data() {
     return {
@@ -210,6 +210,14 @@ export default {
         from: this.offset,
         size: 40
       };
+
+      if (this.groupByField && this.groupByValue) {
+        query.query.bool.must.push({
+          query_string: {
+            query: `${this.groupByField}:"${this.groupByValue}"`
+          }
+        });
+      }
 
       if (this.from) {
         let to;

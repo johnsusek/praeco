@@ -9,7 +9,12 @@
 
     <div class="praeco-chart m-s-med">
       <div v-if="groupBy">
-        <el-tabs v-if="groups.length" v-model="activeGroupIndex" tab-position="bottom" @input="updateGroupIndex">
+        <el-tabs
+          v-if="groups.length"
+          v-model="activeGroupIndex"
+          tab-position="bottom"
+          @input="updateGroupIndex"
+          @tab-click="clickTab">
           <el-tab-pane
             v-for="(group, index) in groups"
             v-model="activeGroupIndex"
@@ -339,6 +344,7 @@ export default {
     },
 
     query() {
+      this.activeGroupIndex = 0;
       this.updateChart();
     },
 
@@ -385,6 +391,10 @@ export default {
   },
 
   methods: {
+    clickTab() {
+      this.$emit('group', this.groups[this.activeGroupIndex].key);
+    },
+
     getYValue(result) {
       let value = 0;
 
@@ -412,13 +422,6 @@ export default {
 
       let y = this.groups[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
 
-      // Remove the first and last values because they will contain
-      // partial data
-      x.pop();
-      x.shift();
-      y.pop();
-      y.shift();
-
       this.chart.xAxis.data = x;
       this.chart.series[0].data = y;
     },
@@ -436,7 +439,21 @@ export default {
           momentDate = moment.unix(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         }
 
-        return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${options.data.value} Events`;
+        let tip = `${momentDate.format('M/D/YYYY h:mm:ssa')}<br>`;
+
+        if (this.aggAvg) {
+          tip += `average of ${this.aggAvg}: ${options.data.value}`;
+        } else if (this.aggSum) {
+          tip += `sum of ${this.aggSum}: ${options.data.value}`;
+        } else if (this.aggMin) {
+          tip += `min of ${this.aggMin}: ${options.data.value}`;
+        } else if (this.aggMax) {
+          tip += `max of ${this.aggMax}: ${options.data.value}`;
+        } else {
+          tip += `${options.data.value} results`;
+        }
+
+        return tip;
       });
     },
 
@@ -568,7 +585,8 @@ export default {
           let y = null;
 
           if (this.groupBy) {
-            if (res.data.aggregations.group_by_field.buckets.length) {
+            if (res.data.aggregations.group_by_field &&
+                res.data.aggregations.group_by_field.buckets.length) {
               let buckets = res.data.aggregations.group_by_field.buckets;
 
               x = buckets[this.activeGroupIndex].by_minute.buckets.map(r => ({
@@ -578,6 +596,10 @@ export default {
               y = buckets[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
 
               this.groups = buckets;
+
+              if (this.groups.length) {
+                this.$emit('group', this.groups[0].key);
+              }
             } else {
               this.groups = [];
             }
@@ -587,15 +609,6 @@ export default {
             }));
 
             y = res.data.aggregations.by_minute.buckets.map(this.getYValue);
-          }
-
-          // Remove the first and last values because they will contain
-          // partial data
-          if (x && y) {
-            x.pop();
-            x.shift();
-            y.pop();
-            y.shift();
           }
 
           this.chart.xAxis.data = x;
