@@ -461,7 +461,11 @@ export default {
         }
       )
         .then(async () => {
-          let enabled = await this.$store.dispatch('configs/enableRule', this.$store.getters['config/config']());
+          let enabled = await this.$store.dispatch(
+            'configs/enableRule',
+            this.$store.getters['config/config']()
+          );
+
           if (enabled) {
             this.$message({
               type: 'success',

@@ -52,8 +52,8 @@
         <span v-if="groupedOver === 'field'">{{ queryKey }}</span>
       </span>
       <div>
-        <el-radio v-model="groupedOver" label="all" border @change="validate">All documents</el-radio>
-        <el-radio v-model="groupedOver" label="field" border @change="validate">Field</el-radio>
+        <el-radio v-model="groupedOver" label="all" border @change="changeGroupedOver">All documents</el-radio>
+        <el-radio v-model="groupedOver" label="field" border @change="changeGroupedOver">Field</el-radio>
         <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
           <el-form ref="overall" :model="$store.state.config.match">
             <el-form-item label="" prop="docType" required>
@@ -512,10 +512,17 @@
       :agg-min="metricAggType === 'min' && metricAggKey"
       :agg-max="metricAggType === 'max' && metricAggKey"
       class="m-n-med"
-      @click="clickChart" />
+      @click="clickChart"
+      @group="val => groupByValue = val" />
 
     <el-dialog :visible.sync="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
-      <EventTable v-if="eventViewerFrom" :from="eventViewerFrom" :timeframe="timeframe" :height="eventTableHeight" />
+      <EventTable
+        v-if="eventViewerFrom"
+        :group-by-field="queryKey"
+        :group-by-value="groupByValue"
+        :from="eventViewerFrom"
+        :timeframe="timeframe"
+        :height="eventTableHeight" />
     </el-dialog>
   </div>
 </template>
@@ -524,6 +531,7 @@
 export default {
   data() {
     return {
+      groupByValue: '',
       eventViewerFrom: '',
       eventViewerVisible: false,
       popWhenVisible: false,
@@ -877,6 +885,14 @@ export default {
   },
 
   methods: {
+    changeGroupedOver() {
+      this.validate();
+
+      if (this.groupedOver === 'all') {
+        this.groupByValue = '';
+      }
+    },
+
     clickChart(val) {
       this.eventViewerFrom = val.name;
       this.eventViewerVisible = true;
@@ -888,13 +904,8 @@ export default {
           await this.validateOf();
         }
 
-        if (this.$refs.over) {
-          await this.validateOver();
-        }
-
-        if (this.$refs.overall) {
-          await this.validateOverall();
-        }
+        await this.validateOver();
+        await this.validateOverall();
 
         if (this.$refs.compare) {
           await this.validateCompare();
