@@ -878,6 +878,11 @@ export default {
         this.spikeOrThreshold = 'spike';
       }
 
+      // if querykey and type is freq or flatline, set groupedOver to field
+      if (this.queryKey && (this.type === 'frequency' || this.type === 'flatline')) {
+        this.groupedOver = 'field';
+      }
+
       setTimeout(() => {
         this.validate();
       }, 10);
