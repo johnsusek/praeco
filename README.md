@@ -58,6 +58,47 @@ The following config settings are available in praeco.config.json:
 
 ![](https://user-images.githubusercontent.com/611996/47752071-7c4a9080-dc61-11e8-8ccf-2196f13429b2.png)
 
+## FAQ
+
+#### How do I change the writeback index?
+
+Edit `config/elastalert.yaml` and `config/api.config.json` and change the writeback_index values.
+
+#### How do I change elastalert options, like SSL, user/pass, etc?
+
+Edit `config/elastalert.yaml` and uncomment the appropriate lines.
+
+#### How do I run this on Windows?
+
+First, install docker and docker-compose.
+
+Then, using powershell, run these commands:
+
+```
+$Env:PRAECO_ELASTICSEARCH="1.2.3.4"
+docker-compose.exe up
+```
+
+Replace 1.2.3.4 with your Elasticsearch IP.
+
+## Troubleshooting
+
+#### I'm not receiving alerts even though I expect them
+
+First of all, try to test your alert and see if that is returning results.
+
+If the test is returning results, but you are not receiving any alerts, check the error log. There may be a problem with your slack or email settings. Make sure you edited rules/BaseRule.config and have correct values in there.
+
+If the test is not returning results, even though you think it should, try reading the [elastalert docs](https://elastalert.readthedocs.io/en/latest/ruletypes.html#rule-types) for your rule type. Compare the yaml from praeco with the options from the docs to make sure the rule is being created as expected. If praeco is generating the wrong yaml, please file an issue.
+
+#### Failed to establish a new connection: [Errno 111] Connection refused
+
+You will see this error when launching if praeco cannot find elasticsearch at the IP address you specified at $PRAECO_ELASTICSEARCH. Please make sure you can communicate with this IP address by issuing the following command: `curl http://$PRAECO_ELASTICSEARCH:9200`. If the connection is refused, your machine cannot communicate with Elasticsearch, it may be a networking problem.
+
+#### 404 error in error log for slack webhook
+
+Make sure the channel you are trying to post to exists.
+
 ## Developing
 
 If you want to develop for praeco, run the built-in development server:
