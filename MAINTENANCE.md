@@ -20,6 +20,8 @@ Run `npm update` to install latest versions of packages per package.json.
 
 - Run tests
 - Recreate latest.zip if neccessary
-- Stash all changes in this project; make sure in `master`
-- `docker build -t praeco .`
-- Create docker image + push to servercentral/praeco (Drone does this for us in master)
+- Bump version number in version.json
+- Push to master
+- (Drone will create/push docker image)
+- Tag release in github
+- Update docs where neccessary
