@@ -3,7 +3,7 @@
 To upgrade to the newest release of praeco, run the following commands:
 
 - `docker pull servercentral/praeco && docker pull servercentral/elastalert`
-- `docker-compose down && docker-compose up`
+- `docker-compose up --force-recreate --build && docker image prune -f`
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 

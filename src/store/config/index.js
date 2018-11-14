@@ -111,6 +111,7 @@ export default {
         commit('match/UPDATE_QUERY_KEY', config.query_key);
         commit('match/UPDATE_COMPARE_KEY', config.compare_key);
         commit('match/UPDATE_TIMEFRAME', config.timeframe);
+
         if (config.type === 'change' && config.timeframe && Object.keys(config.timeframe).length) {
           commit('match/UPDATE_USE_TIMEFRAME', true);
         }

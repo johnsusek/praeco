@@ -14,7 +14,9 @@ Run `npm update` to install latest versions of packages per package.json.
 ## Elastalert (if neccessary)
 
 - Stash all changes in elastalert project
-- Create docker image + push to servercentral/elastalert
+- `make build v=master`
+- `docker tag id servercentral/elastalert`
+- `docker push servercentral/elastalert`
 
 ## Praeco
 

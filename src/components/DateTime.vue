@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import moment from 'moment-timezone';
+import parseDate from '@/lib/parseDate';
 
 export default {
   props: {
@@ -35,21 +35,8 @@ export default {
   computed: {
     formatted() {
       if (!this.date) return;
-
-      let momentDate;
-
-      if (typeof this.date === 'string') {
-        momentDate = moment(String(this.date)).tz(this.timeZone);
-      } else if (this.date.toString().length === 10) {
-        momentDate = moment.unix(String(this.date)).tz(this.timeZone);
-      } else {
-        momentDate = moment(this.date).tz(this.timeZone);
-      }
-
+      let momentDate = parseDate(this.date);
       return momentDate.format('M/D/YYYY h:mm:ssa');
-    },
-    timeZone() {
-      return Intl.DateTimeFormat().resolvedOptions().timeZone;
     }
   },
   watch: {
