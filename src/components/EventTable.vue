@@ -1,6 +1,7 @@
 <template>
-  <div v-show="loadedEvents.length" class="event-table">
+  <div class="event-table">
     <el-table
+      v-loading="eventsLoading && !loadedEvents.length"
       ref="table"
       :data="loadedEvents"
       :border="true"
@@ -107,7 +108,9 @@ export default {
 
     visibleColumns() {
       if (this.loadedEvents.length) {
-        return Object.keys(this.loadedEvents[0]).sort().filter(col => !this.hidden.includes(col));
+        return Object.keys(this.loadedEvents[0])
+          .sort()
+          .filter(col => !this.hidden.includes(col));
       }
       return [];
     },
@@ -171,16 +174,25 @@ export default {
     },
 
     saveColumns() {
-      localStorage.setItem('hiddenEventTableColumns', JSON.stringify(this.hidden));
+      localStorage.setItem(
+        'hiddenEventTableColumns',
+        JSON.stringify(this.hidden)
+      );
     },
 
     saveColumnWidths(newWidth, oldWidth, column) {
       this.widths[column.property] = newWidth;
-      localStorage.setItem('eventTableColumnWidths', JSON.stringify(this.widths));
+      localStorage.setItem(
+        'eventTableColumnWidths',
+        JSON.stringify(this.widths)
+      );
     },
 
     loadMore() {
-      if (!this.eventsLoading && (this.totalEvents === 0 || this.loadedEvents.length < this.totalEvents)) {
+      if (
+        !this.eventsLoading &&
+        (this.totalEvents === 0 || this.loadedEvents.length < this.totalEvents)
+      ) {
         this.fetchEvents();
       }
     },
@@ -200,7 +212,9 @@ export default {
             must: [
               {
                 query_string: {
-                  query: this.$store.getters['config/query/queryString'] || `${this.timeField}:*`
+                  query:
+                    this.$store.getters['config/query/queryString'] ||
+                    `${this.timeField}:*`
                 }
               }
             ]
@@ -251,7 +265,8 @@ export default {
         this.source = CancelToken.source();
         res = await axios.post(
           `/api/search/${this.$store.state.config.settings.index}`,
-          query, { cancelToken: this.source.token }
+          query,
+          { cancelToken: this.source.token }
         );
       } catch (error) {
         if (!axios.isCancel(error)) {
@@ -262,9 +277,11 @@ export default {
       }
 
       if (res && res.data && res.data.hits) {
-        res.data.hits.hits.map(h => h._source).forEach(event => {
-          this.loadedEvents.push(event);
-        });
+        res.data.hits.hits
+          .map(h => h._source)
+          .forEach(event => {
+            this.loadedEvents.push(event);
+          });
         this.totalEvents = res.data.hits.total;
         this.offset += 40;
       }
@@ -288,8 +305,10 @@ export default {
 
 .event-table .el-table td {
   color: #212121;
-  font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
-    'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+  font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console",
+    "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono",
+    "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier,
+    monospace;
   vertical-align: top;
 }
 

@@ -70,7 +70,7 @@ export default {
 
   computed: {
     eventTableHeight() {
-      return document.body.clientHeight - 140;
+      return document.body.clientHeight - 145;
     },
 
     queryType: {
