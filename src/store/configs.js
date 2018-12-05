@@ -201,6 +201,7 @@ export default {
         fullPath = '';
       } else if (config.__praeco_full_path) {
         fullPath = config.__praeco_full_path;
+        delete config.__praeco_full_path;
       } else {
         fullPath = '';
       }

@@ -95,6 +95,10 @@ export default {
 
         if (config.__praeco_query_builder && config.__praeco_query_builder.query) {
           commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
+          commit('query/UPDATE_TYPE', 'tree');
+        } else {
+          commit('query/UPDATE_MANUAL', config.filter[0].query.query_string.query);
+          commit('query/UPDATE_TYPE', 'manual');
         }
 
         if (config.timestamp_field) {
@@ -560,7 +564,11 @@ export default {
         config.__praeco_full_path = state.settings.name;
       }
 
-      config.__praeco_query_builder = JSON.stringify({ query: state.query.tree });
+      // if the user is using a manual query, then don't save this to the config,
+      // so we know when loading it is manual
+      if (state.query.type === 'tree') {
+        config.__praeco_query_builder = JSON.stringify({ query: state.query.tree });
+      }
 
       if (state.settings.name) {
         config.name = state.settings.name;

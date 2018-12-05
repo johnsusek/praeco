@@ -20,11 +20,11 @@ First, edit rules/BaseRule.config and change the slack and smtp settings to matc
 Then run the app using docker:
 
 ```bash
-export PRAECO_ELASTICSEARCH=<your elasticsearch ip*>
+export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
 ```
 
-\* If you are using 127.0.0.1 for ES, it won't work. See first item under the Troubleshooting section.
+ℹ️ Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
 
 Praeco should now be available on http://127.0.0.1:8080
 

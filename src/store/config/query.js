@@ -5,7 +5,9 @@ function initialState() {
     tree: {
       logicalOperator: 'all',
       children: []
-    }
+    },
+    manual: '',
+    type: 'tree'
   };
 }
 
@@ -25,11 +27,23 @@ export default {
 
     UPDATE_TREE(state, tree) {
       state.tree = tree;
+    },
+
+    UPDATE_MANUAL(state, manual) {
+      state.manual = manual;
+    },
+
+    UPDATE_TYPE(state, type) {
+      state.type = type;
     }
   },
 
   getters: {
     queryString(state) {
+      if (state.type === 'manual') {
+        return state.manual;
+      }
+
       return luceneSyntaxFromQueryBuilder(state.tree);
     }
   }

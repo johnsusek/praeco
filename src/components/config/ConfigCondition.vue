@@ -261,11 +261,12 @@
     </el-popover>
 
     <span class="pop-trigger" @click="popFilterVisible = true">
-      <span v-if="!queryTree.children.length">UNFILTERED</span>
+      <span v-if="!queryTree.children.length && !queryString">UNFILTERED</span>
       <span v-else>{{ queryString }}</span>
     </span>
 
-    <el-dialog :visible.sync="popFilterVisible" fullscreen>
+    <el-dialog :visible.sync="popFilterVisible" :show-close="false" fullscreen>
+      <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">Done</el-button>
       <ConfigQuery ref="query" class="config-query" />
     </el-dialog>
 
@@ -368,7 +369,9 @@
     </el-popover>
 
     <span v-show="showTime">
-      <el-popover v-show="metricAggType === 'count' || metricAggType === 'field changes'" popper-class="popover-time">
+      <el-popover
+        v-show="metricAggType === 'count' || metricAggType === 'field changes'"
+        popper-class="popover-time">
         <span
           slot="reference"
           class="pop-trigger">
@@ -1297,5 +1300,11 @@ export default {
 
 .el-dialog__wrapper {
   z-index: 9999;
+}
+
+.close-button {
+  position: absolute;
+  right: 20px;
+  z-index: 9;
 }
 </style>

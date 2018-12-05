@@ -153,7 +153,7 @@ export default {
   },
 
   methods: {
-    sampleDebounced: debounce(() => {
+    sampleDebounced: debounce(function() {
       this.$store.dispatch('config/sample');
     }, 750)
   }
