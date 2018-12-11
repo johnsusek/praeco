@@ -9,6 +9,16 @@ pipeline:
     when:
       branch: master
 
+  tagandpublish:
+    image: registry.servercentral.com/drone-plugins/tagandpublish
+    pull: true
+    environment:
+      - PROJECT_NAME=servercentral/praeco
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    when:
+      branch: master
+
   deployment:
     image: registry.servercentral.com/drone-plugins/awxdeployment
     pull: true
