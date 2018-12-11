@@ -47,3 +47,5 @@ writeback_index: praeco_elastalert_status
 # sending the alert until this time period has elapsed
 alert_time_limit:
   days: 2
+
+skip_invalid: True

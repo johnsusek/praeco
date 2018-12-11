@@ -1,34 +1,45 @@
 <template>
   <el-form ref="form" label-position="top" @submit.native.prevent>
 
-    <el-popover v-model="popFilterVisible">
-      <span slot="reference" class="pop-trigger">
-        <span v-if="!queryTree.children.length">NEW FILTER</span>
-        <span else>{{ queryString }}</span>
-      </span>
-      <div>
-        <el-row :gutter="30" :class="{ 'empty': !queryTree.children.length }">
-          <el-col :span="24">
-            <el-form-item class="el-form-item-tight">
-              <vue-query-builder
-                v-if="rules.length"
-                v-model="queryTree"
-                :rules="rules"
-                :labels="labels"
-                :styled="false" />
-            </el-form-item>
-            <el-form-item v-if="!queryTree.children.length">
-              <label>
-                To get started, select a term from the dropdown menu and click the "Add filter" button.
-              </label>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </div>
-    </el-popover>
+    <el-tabs v-model="queryType" type="card" @tab-click="changeQueryType">
+      <el-tab-pane label="Builder" name="tree">
+        <el-popover v-model="popFilterVisible">
+          <span slot="reference" class="pop-trigger">
+            <span v-if="!queryTree.children.length">NEW FILTER</span>
+            <span else>{{ queryString }}</span>
+          </span>
+          <div>
+            <el-row :gutter="30" :class="{ 'empty': !queryTree.children.length }">
+              <el-col :span="24">
+                <el-form-item class="el-form-item-tight">
+                  <vue-query-builder
+                    v-if="rules.length"
+                    v-model="queryTree"
+                    :rules="rules"
+                    :labels="labels"
+                    :styled="false" />
+                </el-form-item>
+                <el-form-item v-if="!queryTree.children.length">
+                  <label>
+                    To get started, select a term from the dropdown menu and click the "Add filter" button.
+                  </label>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+        </el-popover>
+      </el-tab-pane>
 
+      <el-tab-pane label="Manual" name="manual">
+        <el-input
+          ref="manual"
+          v-model="manual"
+          placeholder="Search... (e.g. status:200 AND extension:PL)"
+          size="medium" />
+      </el-tab-pane>
+    </el-tabs>
 
-    <EventTable v-if="queryString" :height="eventTableHeight" class="m-n-xl" />
+    <EventTable v-if="queryString" :height="eventTableHeight" class="m-n-lg" />
   </el-form>
 </template>
 
@@ -59,7 +70,25 @@ export default {
 
   computed: {
     eventTableHeight() {
-      return document.body.clientHeight - 85;
+      return document.body.clientHeight - 145;
+    },
+
+    queryType: {
+      get() {
+        return this.$store.state.config.query.type;
+      },
+      set(value) {
+        this.$store.commit('config/query/UPDATE_TYPE', value);
+      }
+    },
+
+    manual: {
+      get() {
+        return this.$store.state.config.query.manual;
+      },
+      set(value) {
+        this.$store.commit('config/query/UPDATE_MANUAL', value);
+      }
     },
 
     queryString() {
@@ -83,7 +112,13 @@ export default {
       let rules = [];
 
       Object.entries(this.fields).forEach(([k, v]) => {
-        let operators = ['contains', 'does not contain', 'is empty', 'is not empty', 'regex'];
+        let operators = [
+          'contains',
+          'does not contain',
+          'is empty',
+          'is not empty',
+          'regex'
+        ];
 
         if (v.type === 'long') {
           operators = operators.concat(['less than', 'greater than']);
@@ -105,6 +140,16 @@ export default {
 
       return rules;
     }
+  },
+
+  methods: {
+    changeQueryType() {
+      if (this.queryType === 'manual') {
+        this.$nextTick(() => {
+          this.$refs.manual.focus();
+        });
+      }
+    }
   }
 };
 </script>
@@ -118,7 +163,11 @@ export default {
   display: none;
 }
 
-.el-row.empty .vue-query-builder > .vqb-group > .vqb-group-body > .rule-actions {
+.el-row.empty
+  .vue-query-builder
+  > .vqb-group
+  > .vqb-group-body
+  > .rule-actions {
   position: static;
 }
 
@@ -134,5 +183,11 @@ export default {
 <style scoped>
 .el-form {
   margin-top: -2ex;
+}
+
+.el-tabs .el-input {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: monospace;
 }
 </style>

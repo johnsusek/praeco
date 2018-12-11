@@ -84,7 +84,7 @@ import At from 'vue-at';
 
 export default {
   components: {
-    At,
+    At
   },
 
   props: ['viewOnly'],
@@ -123,7 +123,9 @@ export default {
 
     fields() {
       let fields = [];
-      let mappingFields = this.$store.getters['metadata/fieldsForCurrentConfig'];
+      let mappingFields = this.$store.getters[
+        'metadata/templateFieldsForCurrentConfig'
+      ];
 
       // Handle JSON fields with dot notation
       Object.entries(mappingFields).forEach(([field, mapping]) => {
@@ -151,7 +153,7 @@ export default {
   },
 
   methods: {
-    sampleDebounced: debounce(() => {
+    sampleDebounced: debounce(function() {
       this.$store.dispatch('config/sample');
     }, 750)
   }
@@ -176,7 +178,7 @@ export default {
   height: auto;
 }
 
-[contenteditable='false'] {
+[contenteditable="false"] {
   border: 0 !important;
   padding: 0 !important;
 }

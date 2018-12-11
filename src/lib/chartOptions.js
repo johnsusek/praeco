@@ -1,3 +1,5 @@
+import parseDate from '@/lib/parseDate';
+
 let textStyle = {
   fontSize: 13,
   fontWeight: '500',
@@ -27,7 +29,11 @@ export default {
     boundaryGap: true,
     data: [],
     axisLabel: {
-      show: false
+      show: true,
+      formatter(val) {
+        let momentDate = parseDate(val);
+        return momentDate.format('h:mma');
+      }
     }
   },
   yAxis: {

@@ -101,6 +101,22 @@ export default {
       return fields;
     },
 
+    templateFieldsForCurrentConfig: (state, getters, rootState) => {
+      let fields = {};
+
+      // if using "grouped over field", only allow for the grouped field (queryKey)
+      if (
+        rootState.config.match.queryKey &&
+        (rootState.config.match.type === 'frequency' || rootState.config.match.type === 'flatline')
+      ) {
+        fields[rootState.config.match.queryKey] = rootState.config.match.queryKey;
+        return fields;
+      }
+
+      fields = getters.fieldsForCurrentConfig;
+      return fields;
+    },
+
     fieldsForCurrentConfig: (state, getters, rootState) => {
       let index = rootState.config.settings.index;
       let mappings = state.mappings[formatIndex(index)];

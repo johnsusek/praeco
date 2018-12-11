@@ -261,11 +261,12 @@
     </el-popover>
 
     <span class="pop-trigger" @click="popFilterVisible = true">
-      <span v-if="!queryTree.children.length">UNFILTERED</span>
+      <span v-if="!queryTree.children.length && !queryString">UNFILTERED</span>
       <span v-else>{{ queryString }}</span>
     </span>
 
-    <el-dialog :visible.sync="popFilterVisible" fullscreen>
+    <el-dialog :visible.sync="popFilterVisible" :show-close="false" fullscreen>
+      <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">Done</el-button>
       <ConfigQuery ref="query" class="config-query" />
     </el-dialog>
 
@@ -368,20 +369,45 @@
     </el-popover>
 
     <span v-show="showTime">
-      <el-popover v-show="metricAggType === 'count' || metricAggType === 'field changes'">
-        <span slot="reference" class="pop-trigger">
+      <el-popover
+        v-show="metricAggType === 'count' || metricAggType === 'field changes'"
+        popper-class="popover-time">
+        <span
+          slot="reference"
+          class="pop-trigger">
           <span>
-            <span v-if="metricAggType === 'field changes'">WITHIN</span>
-            <span v-if="metricAggType === 'count'">FOR</span>
-            THE LAST
+            <span v-if="metricAggType === 'field changes'">
+              WITHIN
+              <span v-if="!useTimeframe">ANY TIMEFRAME</span>
+            </span>
+            <span v-if="metricAggType === 'count'">FOR </span>
+            <span v-if="useTimeframe">THE LAST</span>
           </span>
-          <ElastalertTimeView :time="timeframe" />
+          <ElastalertTimeView
+            v-if="useTimeframe"
+            :time="timeframe"/>
         </span>
-        <ElastalertTimePicker
-          :unit="Object.keys(timeframe)[0]"
-          :amount="Object.values(timeframe)[0]"
-          @input="updateTimeframe" />
-        <label v-if="metricAggType === 'field changes'">The maximum time between changes.</label>
+
+        <el-form v-if="metricAggType === 'field changes'" :class="{ 'm-s-lg': useTimeframe }">
+          <el-form-item label="Limit timeframe">
+            <el-switch v-model="useTimeframe" />
+            <label>
+              By default, the change rule type has no maximum time limit between changes.
+              Enable this option to check for a change within a limited time window.
+            </label>
+          </el-form-item>
+        </el-form>
+        <div v-if="useTimeframe">
+          <ElastalertTimePicker
+            :unit="Object.keys(timeframe)[0]"
+            :amount="Object.values(timeframe)[0]"
+            @input="updateTimeframe"/>
+          <label v-if="metricAggType === 'field changes'">
+            The maximum time between changes.
+            After this time period, elastalert will forget the old
+            value of the {{ compareKey }} field.
+          </label>
+        </div>
       </el-popover>
 
       <el-popover v-show="metricAggType !== 'count' && metricAggType !== 'field changes'">
@@ -581,9 +607,18 @@ export default {
       return document.body.clientHeight - 85;
     },
 
+    useTimeframe: {
+      get() {
+        return this.$store.state.config.match.useTimeframe;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_USE_TIMEFRAME', value);
+      }
+    },
+
     thresholdRef: {
       get() {
-        return this.$store.state.config.match.threasholdRef;
+        return this.$store.state.config.match.thresholdRef;
       },
       set(value) {
         this.$store.commit('config/match/UPDATE_THRESHOLD_REF', value);
@@ -592,7 +627,7 @@ export default {
 
     thresholdCur: {
       get() {
-        return this.$store.state.config.match.threasholdCur;
+        return this.$store.state.config.match.thresholdCur;
       },
       set(value) {
         this.$store.commit('config/match/UPDATE_THRESHOLD_CUR', value);
@@ -675,17 +710,24 @@ export default {
 
     showOptions() {
       let shouldShowOptions = ['field not in list', 'field changes'].includes(this.metricAggType);
-      let shouldShowOptionsSt = this.metricAggType === 'count' && this.spikeOrThreshold !== 'any';
+      let shouldShowOptionsSt =
+        this.metricAggType === 'count' && this.spikeOrThreshold !== 'any';
 
       return shouldShowOptions || shouldShowOptionsSt;
     },
 
     showPopOf() {
-      return this.metricAggType !== 'count' && !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+      return (
+        this.metricAggType !== 'count' &&
+        !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
+      );
     },
 
     showPopOver() {
-      return this.spikeOrThreshold !== 'any' && !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+      return (
+        this.spikeOrThreshold !== 'any' &&
+        !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
+      );
     },
 
     showPopAbove() {
@@ -709,7 +751,10 @@ export default {
     },
 
     showTime() {
-      return !['field in list', 'field not in list'].includes(this.metricAggType) && this.spikeOrThreshold !== 'any';
+      return (
+        !['field in list', 'field not in list'].includes(this.metricAggType) &&
+        this.spikeOrThreshold !== 'any'
+      );
     },
 
     queryTree: {
@@ -836,7 +881,9 @@ export default {
     },
 
     queryString() {
-      return this.$store.getters['config/query/queryString'] || `${this.timeField}:*`;
+      return (
+        this.$store.getters['config/query/queryString'] || `${this.timeField}:*`
+      );
     },
 
     numberFields() {
@@ -879,8 +926,15 @@ export default {
       }
 
       // if querykey and type is freq or flatline, set groupedOver to field
-      if (this.queryKey && (this.type === 'frequency' || this.type === 'flatline')) {
+      if (
+        this.queryKey &&
+        (this.type === 'frequency' || this.type === 'flatline')
+      ) {
         this.groupedOver = 'field';
+      }
+
+      if (this.metricAggType === 'count') {
+        this.useTimeframe = true;
       }
 
       setTimeout(() => {
@@ -895,6 +949,7 @@ export default {
 
       if (this.groupedOver === 'all') {
         this.groupByValue = '';
+        this.queryKey = '';
       }
     },
 
@@ -1097,7 +1152,10 @@ export default {
     updateBlacklist(entry, index) {
       if (Number.isNaN(entry)) return;
 
-      this.$store.commit('config/match/UPDATE_BLACKLIST_ENTRY', { entry, index });
+      this.$store.commit('config/match/UPDATE_BLACKLIST_ENTRY', {
+        entry,
+        index
+      });
       this.$nextTick(() => {
         this.validate();
       });
@@ -1118,7 +1176,10 @@ export default {
     },
 
     updateWhitelist(entry, index) {
-      this.$store.commit('config/match/UPDATE_WHITELIST_ENTRY', { entry, index });
+      this.$store.commit('config/match/UPDATE_WHITELIST_ENTRY', {
+        entry,
+        index
+      });
       this.$nextTick(() => {
         this.validate();
       });
@@ -1188,6 +1249,8 @@ export default {
         this.type = 'metric_aggregation';
       }
 
+      this.useTimeframe = true;
+
       this.threshold = null;
       this.numEvents = null;
       this.maxThreshold = null;
@@ -1224,6 +1287,10 @@ export default {
   padding-top: 5px;
   max-width: 600px;
 }
+
+.popover-time {
+  max-width: 320px;
+}
 </style>
 
 <style scoped>
@@ -1233,5 +1300,11 @@ export default {
 
 .el-dialog__wrapper {
   z-index: 9999;
+}
+
+.close-button {
+  position: absolute;
+  right: 20px;
+  z-index: 9;
 }
 </style>
