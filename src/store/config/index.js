@@ -549,10 +549,9 @@ export default {
           dots = '';
         } else {
           dots = '../';
-        }
-
-        for (let i = 1; i < state.path.split('/').length; i++) {
-          dots += '../';
+          for (let i = 1; i < state.path.split('/').length; i++) {
+            dots += '../';
+          }
         }
 
         config.import = `${dots}BaseRule.config`;

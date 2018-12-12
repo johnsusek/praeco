@@ -230,9 +230,6 @@ export default {
     },
 
     async createConfigFinal({ commit, state }, { type, path, conf }) {
-      // We don't want to actually save this internal value to the rule file
-      delete conf.__praeco_full_path;
-
       try {
         let res = await axios.post(`/api/${type}/${path}`, {
           yaml: yaml.safeDump(conf)

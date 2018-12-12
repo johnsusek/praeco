@@ -3,10 +3,12 @@
     <h1>Rules</h1>
 
     <el-button type="primary" plain @click="$router.push('/rule/add')">
+      <icon icon="file-alt" transform="left-4" />
       Add rule
     </el-button>
 
-    <el-button type="primary" plain @click="addFolder">
+    <el-button type="info" plain @click="addFolder">
+      <icon icon="folder" transform="left-4" />
       Add folder
     </el-button>
   </div>
@@ -21,8 +23,14 @@ export default {
         cancelButtonText: 'Cancel'
       })
         .then(async ({ value }) => {
-          await this.$store.dispatch('configs/createFolder', { path: value, type: 'rules' });
-          this.$router.push({ path: `/folders/rules/${value}`, query: { refreshTree: true } });
+          await this.$store.dispatch('configs/createFolder', {
+            path: value,
+            type: 'rules'
+          });
+          this.$router.push({
+            path: `/folders/rules/${value}`,
+            query: { refreshTree: true }
+          });
         })
         .catch(() => {});
     }

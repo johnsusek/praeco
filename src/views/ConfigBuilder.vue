@@ -89,15 +89,22 @@ export default {
 
     if (this.action === 'add') {
       if (this.prefill) {
-        await this.$store.dispatch('config/load', { type: 'templates', path: this.prefill });
-        this.$store.commit('config/UPDATE_PATH', '');
+        await this.$store.dispatch('config/load', {
+          type: 'templates',
+          path: this.prefill
+        });
         this.$store.commit('config/settings/UPDATE_NAME', '');
       }
+
+      this.$store.commit('config/UPDATE_PATH', this.path);
 
       // Since this is a new rule, we want to disable it by default
       this.$store.commit('config/settings/UPDATE_ENABLED', false);
     } else if (this.action === 'edit') {
-      await this.$store.dispatch('config/load', { type: `${this.type}s`, path: this.path });
+      await this.$store.dispatch('config/load', {
+        type: `${this.type}s`,
+        path: this.path
+      });
       this.$store.dispatch('metadata/fetchMappings', this.index);
     }
   },
@@ -108,7 +115,7 @@ export default {
 
   methods: {
     async save() {
-      if (!await this.validateBuilder()) {
+      if (!(await this.validateBuilder())) {
         this.$message.error('Please fill out all required fields before saving.');
         return;
       }
@@ -142,7 +149,7 @@ export default {
     },
 
     async validateForTest() {
-      if (!await this.validateBuilder()) {
+      if (!(await this.validateBuilder())) {
         this.$message.warning('Please fill out all required fields before testing.');
       }
     },
