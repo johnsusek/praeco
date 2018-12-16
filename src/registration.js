@@ -1,5 +1,5 @@
 import Vue from 'vue';
-
+import { cron } from 'vue-cron';
 import Bulb from '@/components/Bulb';
 import DateTime from '@/components/DateTime';
 import DefinitionTable from '@/components/DefinitionTable';
@@ -13,14 +13,17 @@ import PraecoFormItem from '@/components/PraecoFormItem';
 import TableRow from '@/components/TableRow';
 import ElastalertTimeView from '@/components/ElastalertTimeView';
 import ConfigQuery from '@/components/config/ConfigQuery.vue';
+import ConfigAggregation from '@/components/config/ConfigAggregation.vue';
 import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
 import ConfigSettings from '@/components/config/ConfigSettings.vue';
 import ConfigCondition from '@/components/config/ConfigCondition.vue';
 
+Vue.component('Cron', cron);
 Vue.component('Bulb', Bulb);
 Vue.component('DateTime', DateTime);
 Vue.component('ConfigQuery', ConfigQuery);
 Vue.component('ConfigAlert', ConfigAlert);
+Vue.component('ConfigAggregation', ConfigAggregation);
 Vue.component('ConfigSettings', ConfigSettings);
 Vue.component('ConfigCondition', ConfigCondition);
 Vue.component('DefinitionTable', DefinitionTable);

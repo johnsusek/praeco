@@ -7,20 +7,6 @@
     @submit.native.prevent>
     <el-row>
       <el-col :span="12">
-        <el-form-item :label="`Destination${alert.length > 1 ? 's' : ''}`" prop="alert" required>
-          <template v-if="viewOnly">
-            <el-tag v-if="alert.includes('slack')" class="m-e-sm" type="success">Slack</el-tag>
-            <el-tag v-if="alert.includes('email')" class="m-e-sm" type="success">Email</el-tag>
-            <el-tag v-if="alert.includes('post')" class="m-e-sm" type="success">HTTP</el-tag>
-          </template>
-          <el-checkbox-group v-else v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
-            <el-checkbox label="slack" border>Slack</el-checkbox>
-            <el-checkbox label="email" border>Email</el-checkbox>
-            <el-checkbox label="post" border>HTTP</el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
         <el-form-item :class="{'view-only': viewOnly }" label="Re-alert">
           <ElastalertTimeView v-if="viewOnly" :time="realert" />
           <ElastalertTimePicker
@@ -41,7 +27,24 @@
           </label>
         </el-form-item>
       </el-col>
+
+      <el-col :span="12">
+        <ConfigAggregation ref="aggregation" :view-only="viewOnly" />
+      </el-col>
     </el-row>
+
+    <el-form-item :label="`Destination${alert.length > 1 ? 's' : ''}`" prop="alert" required>
+      <template v-if="viewOnly">
+        <el-tag v-if="alert.includes('slack')" class="m-e-sm" type="success">Slack</el-tag>
+        <el-tag v-if="alert.includes('email')" class="m-e-sm" type="success">Email</el-tag>
+        <el-tag v-if="alert.includes('post')" class="m-e-sm" type="success">HTTP</el-tag>
+      </template>
+      <el-checkbox-group v-else v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
+        <el-checkbox label="slack" border>Slack</el-checkbox>
+        <el-checkbox label="email" border>Email</el-checkbox>
+        <el-checkbox label="post" border>HTTP</el-checkbox>
+      </el-checkbox-group>
+    </el-form-item>
 
     <el-form-item label="">
       <el-tabs v-if="alert.length" class="border-card-plain">
@@ -191,7 +194,10 @@ let validateEmailCommaSeparated = (rule, value, callback) => {
   if (value) emails = value.split(',');
 
   emails.forEach(email => {
-    if (email && !email.trim().match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
+    if (
+      email &&
+      !email.trim().match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)
+    ) {
       return callback(new Error('Invalid email address'));
     }
   });
@@ -258,7 +264,7 @@ export default {
             trigger: ['change', 'blur']
           }
         ]
-      },
+      }
     };
   },
 
@@ -331,7 +337,10 @@ export default {
         return this.$store.state.config.alert.slackUsernameOverride;
       },
       set(value) {
-        this.$store.commit('config/alert/UPDATE_SLACK_USERNAME_OVERRIDE', value);
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_USERNAME_OVERRIDE',
+          value
+        );
       }
     },
 

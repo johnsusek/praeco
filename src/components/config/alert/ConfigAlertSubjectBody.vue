@@ -44,11 +44,15 @@
         <el-form-item required label="Include">
           <el-row>
             <el-select v-model="bodyType" :disabled="viewOnly">
-              <el-option value="alert_text_only" label="Body text only" />
-              <el-option value="exclude_fields" label="Include trigger details &amp; top counts"/>
+              <el-option value="alert_text_only" label="Body text" />
+              <el-option value="exclude_fields" label="Body text &amp; trigger details &amp; top counts"/>
               <el-option
                 value="default"
-                label="Include trigger details &amp; top counts &amp; field values"/>
+                label="Body text &amp; trigger details &amp; top counts &amp; field values"/>
+              <el-option
+                v-if="summaryTableFields.length"
+                value="aggregation_summary_only"
+                label="Aggregation summary only"/>
             </el-select>
           </el-row>
         </el-form-item>
@@ -72,6 +76,7 @@
           <em>(Top counts)</em>
         </div>
         <div v-if="bodyType === 'default'" type="info"><em>(Field values)</em></div>
+        <div v-if="summaryTableFields.length" type="info"><em>(Summary table)</em></div>
       </el-col>
     </el-row>
 
@@ -92,6 +97,10 @@ export default {
   computed: {
     queryString() {
       return this.$store.getters['config/query/queryString'];
+    },
+
+    summaryTableFields() {
+      return this.$store.state.config.alert.summaryTableFields || [];
     },
 
     subject: {

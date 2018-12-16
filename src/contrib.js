@@ -13,6 +13,8 @@ import {
   faEllipsisH,
   faEnvelope,
   faGlobe,
+  faFile,
+  faFileAlt,
   faFolder,
   faFolderOpen,
   faExclamationCircle
@@ -28,6 +30,8 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 let ECharts = require('vue-echarts');
 
 library.add(
+  faFile,
+  faFileAlt,
   faSlack,
   faGlobe,
   faEnvelope,

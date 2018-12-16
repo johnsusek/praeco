@@ -147,6 +147,13 @@ export default {
         commit('match/UPDATE_MAX_THRESHOLD', config.max_threshold);
         commit('match/UPDATE_MIN_THRESHOLD', config.min_threshold);
 
+        if (config.aggregation && config.aggregation.schedule) {
+          commit('alert/UPDATE_AGGREGATION_SCHEDULE', config.aggregation.schedule);
+        }
+        commit('alert/UPDATE_SUMMARY_TABLE_FIELDS', config.summary_table_fields);
+
+        commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
+
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.reply_to);
@@ -461,6 +468,26 @@ export default {
       return config;
     },
 
+    aggregation(state) {
+      let config = {};
+
+      if (state.alert.aggregationSchedule) {
+        config.aggregation = {
+          schedule: state.alert.aggregationSchedule
+        };
+      }
+
+      if (state.alert.summaryTableFields) {
+        config.summary_table_fields = state.alert.summaryTableFields;
+      }
+
+      if (state.alert.aggregationKey) {
+        config.aggregation_key = state.alert.aggregationKey;
+      }
+
+      return config;
+    },
+
     email(state) {
       let config = {};
 
@@ -549,10 +576,9 @@ export default {
           dots = '';
         } else {
           dots = '../';
-        }
-
-        for (let i = 1; i < state.path.split('/').length; i++) {
-          dots += '../';
+          for (let i = 1; i < state.path.split('/').length; i++) {
+            dots += '../';
+          }
         }
 
         config.import = `${dots}BaseRule.config`;
@@ -601,6 +627,8 @@ export default {
       if (state.alert.realert) {
         config.realert = state.alert.realert;
       }
+
+      config = { ...config, ...getters.aggregation };
 
       if (state.alert.alert.includes('post')) {
         config = { ...config, ...getters.http };

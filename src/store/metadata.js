@@ -111,6 +111,9 @@ export default {
       ) {
         fields[rootState.config.match.queryKey] = rootState.config.match.queryKey;
         return fields;
+      } else if (rootState.config.alert.aggregationSchedule) {
+        // if using aggregation, there is no templating
+        return fields;
       }
 
       fields = getters.fieldsForCurrentConfig;

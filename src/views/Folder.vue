@@ -2,7 +2,28 @@
   <div>
     <h1>{{ type }}/{{ path }}</h1>
 
-    <el-button type="primary" plain @click="addFolder">Add folder</el-button>
+    <el-button
+      v-if="type === 'rules'"
+      type="primary"
+      plain
+      @click="$router.push('/rule/add/' + encodeURIComponent(path))">
+      <icon icon="file-alt" transform="left-4" />
+      Add rule
+    </el-button>
+
+    <el-button
+      v-if="type === 'templates'"
+      type="primary"
+      plain
+      @click="$router.push('/template/add/' + encodeURIComponent(path))">
+      <icon icon="file" transform="left-4" />
+      Add template
+    </el-button>
+
+    <el-button type="info" plain @click="addFolder">
+      <icon icon="folder" transform="left-4" />
+      Add folder
+    </el-button>
 
     <el-button type="danger" plain @click="deleteFolder">Delete folder...</el-button>
   </div>
@@ -48,7 +69,10 @@ export default {
               query: { refreshTree: true }
             });
           } else {
-            this.$router.push({ path: `/${this.type}`, query: { refreshTree: true } });
+            this.$router.push({
+              path: `/${this.type}`,
+              query: { refreshTree: true }
+            });
           }
         }
       } catch (error) {
