@@ -6,6 +6,7 @@ module.exports = {
       hints: false
     },
     plugins: [
+      new webpack.EnvironmentPlugin({ LATER_COV: false }),
       new webpack.NormalModuleReplacementPlugin(
         /element-ui[/\\]lib[/\\]locale[/\\]lang[/\\]zh-CN/,
         'element-ui/lib/locale/lang/en'

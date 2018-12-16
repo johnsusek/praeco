@@ -7,6 +7,10 @@ function initialState() {
     alert: [],
     realert: null,
 
+    aggregationSchedule: '',
+    aggregationKey: '',
+    summaryTableFields: [],
+
     subject: '',
     body: '',
     bodyType: 'alert_text_only',
@@ -69,6 +73,18 @@ export default {
     RESET(state) {
       /* eslint-enable */
       state = Object.assign(state, initialState());
+    },
+
+    UPDATE_AGGREGATION_SCHEDULE(state, schedule) {
+      state.aggregationSchedule = schedule;
+    },
+
+    UPDATE_AGGREGATION_KEY(state, key) {
+      state.aggregationKey = key;
+    },
+
+    UPDATE_SUMMARY_TABLE_FIELDS(state, fields) {
+      state.summaryTableFields = fields;
     },
 
     UPDATE_HTTP_POST_URL(state, httpPostUrl) {

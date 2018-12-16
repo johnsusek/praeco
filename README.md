@@ -62,6 +62,14 @@ The following config settings are available in praeco.config.json:
 
 ## FAQ
 
+#### How do I connect to elasticsearch using SSL?
+
+Edit `config/api.config.json` and set/add `"es_ssl": true`.
+
+#### How do I serve the praeco UI over https?
+
+The praeco UI is served by an included nginx server. Configure it as you would any nginx project by editing the files in `nginx_config`. Then update your docker-compose.yml and add your certificate files (under webapp volumes).
+
 #### How do I change the writeback index?
 
 Edit `config/elastalert.yaml` and `config/api.config.json` and change the writeback_index values.
