@@ -5,23 +5,18 @@
       Instead of sending alerts immediately, send a report of
       alerts.
     </label>
-    <template v-if="enableAgg">
 
-      <el-form-item class="m-n-med" label="Schedule" required>
-        <el-popover v-model="cronPopover">
-          <el-button
-            slot="reference"
-            :disabled="viewOnly"
-            type="text"
-            class="formatted-cron"
-            @click="cronPopover = true">
-            {{ formattedCron }}
-          </el-button>
-          <Cron i18n="en" @change="changeCron" @close="cronPopover = false"/>
-        </el-popover>
+    <div v-show="enableAgg">
+      <el-form-item class="m-n-med" label="Schedule">
+        <div v-show="viewOnly">
+          {{ formattedAggSchedule }}
+        </div>
+        <div v-show="!viewOnly">
+          Every <span id="cron" />
+        </div>
       </el-form-item>
 
-      <el-form-item v-if="!viewOnly || summaryTableFields.length" class="m-n-sm">
+      <el-form-item v-if="!viewOnly || (summaryTableFields && summaryTableFields.length)" class="m-n-sm">
         Summary table
         <br>
         <el-select
@@ -57,7 +52,7 @@
         </el-select>
         <label>Send separate reports grouped by the value of this field.</label>
       </el-form-item>
-    </template>
+    </div>
   </el-form-item>
 </template>
 
@@ -70,7 +65,7 @@ export default {
   data() {
     return {
       enableAgg: false,
-      cronPopover: false
+      recurrentEventForm: {}
     };
   },
 
@@ -79,20 +74,12 @@ export default {
       return this.$store.getters['metadata/fieldsForCurrentConfig'];
     },
 
-    cron: {
+    aggregationSchedule: {
       get() {
         return this.$store.state.config.alert.aggregationSchedule;
       },
       set(value) {
-        let schedule = value.split(' ');
-        if (schedule.length === 7) {
-          schedule.pop();
-          schedule.pop();
-        }
-        this.$store.commit(
-          'config/alert/UPDATE_AGGREGATION_SCHEDULE',
-          schedule.join(' ')
-        );
+        this.$store.commit('config/alert/UPDATE_AGGREGATION_SCHEDULE', value);
       }
     },
 
@@ -114,50 +101,35 @@ export default {
       }
     },
 
-    formattedCron() {
-      return prettycron.toString(this.cron, true);
+    formattedAggSchedule() {
+      return prettycron.toString(this.aggregationSchedule);
     }
   },
 
   mounted() {
-    if (this.cron) {
+    if (!this.viewOnly || (this.viewOnly && this.aggregationSchedule)) {
+      this.recurrentEventForm = new CronUI('#cron', {
+        changeEvent: val => {
+          this.aggregationSchedule = val;
+        }
+      });
+    }
+
+    if (this.aggregationSchedule) {
       this.enableAgg = true;
+      if (this.recurrentEventForm) {
+        this.recurrentEventForm.setCronString(this.aggregationSchedule);
+      }
     }
   },
 
   methods: {
-    changeCron(val) {
-      this.cron = val;
-    },
-
     changeAgg(val) {
       if (!val) {
-        this.cron = '';
+        this.aggregationSchedule = '';
         this.summaryTableFields = [];
       }
     }
   }
 };
 </script>
-
-<style>
-#changeContab .bottom .value,
-.el-button.language {
-  display: none;
-}
-
-#changeContab .el-radio__label {
-  font-weight: 400;
-}
-
-#changeContab #tab-5 {
-  display: none;
-}
-
-.formatted-cron.el-button--text {
-  font-size: 15px;
-  font-weight: 400;
-  border-bottom: 1px dotted;
-  line-height: 1;
-}
-</style>

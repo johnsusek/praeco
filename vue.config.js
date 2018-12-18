@@ -2,6 +2,9 @@ const webpack = require('webpack');
 
 module.exports = {
   configureWebpack: {
+    externals: {
+      jquery: 'CronUI'
+    },
     performance: {
       hints: false
     },

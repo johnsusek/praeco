@@ -477,7 +477,7 @@ export default {
         };
       }
 
-      if (state.alert.summaryTableFields) {
+      if (state.alert.summaryTableFields && state.alert.summaryTableFields.length) {
         config.summary_table_fields = state.alert.summaryTableFields;
       }
 
