@@ -6,7 +6,7 @@
     label-position="top"
     @submit.native.prevent>
 
-    <el-row>
+    <el-row class="m-s-sm">
       <el-col :span="aggregationSchedule ? 24 : 12">
         <ConfigAggregation ref="aggregation" :view-only="viewOnly" />
       </el-col>
@@ -37,8 +37,7 @@
       v-if="!viewOnly"
       :label="`Destination${alert.length > 1 ? 's' : ''}`"
       prop="alert"
-      required
-      class="m-n-sm">
+      required>
       <el-checkbox-group v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
         <el-checkbox label="slack" border>Slack</el-checkbox>
         <el-checkbox label="email" border>Email</el-checkbox>

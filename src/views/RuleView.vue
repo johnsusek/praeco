@@ -124,7 +124,7 @@
       <el-tab-pane label="Overview">
         <template v-if="$store.state.config.settings.index && $store.getters['config/config']()">
           <ConfigSettings :view-only="true" type="template" />
-          <ConfigCondition class="condition-view m-n-med m-s-xl" />
+          <ConfigCondition class="condition-view m-n-med m-s-sm" />
           <ConfigAlert :view-only="true" />
         </template>
       </el-tab-pane>
@@ -295,7 +295,10 @@ export default {
       // This action returns the new path, so if it does (will return falsey if not)
       // then route to it.
       if (newPath) {
-        this.$router.push({ path: `/rules/${newPath}`, query: { refreshTree: true } });
+        this.$router.push({
+          path: `/rules/${newPath}`,
+          query: { refreshTree: true }
+        });
       } else {
         this.$message.warning(`Could not move the rule. Perhaps a rule with 
                               the same name already exists at this location?`);
@@ -320,7 +323,10 @@ export default {
 
       // This action will return the new name back at us if it worked
       if (res) {
-        this.$router.push({ path: `/rules/${res}`, query: { refreshTree: true } });
+        this.$router.push({
+          path: `/rules/${res}`,
+          query: { refreshTree: true }
+        });
       } else {
         this.$message.warning(`Could not rename the rule. Perhaps a rule
                               already exists with that name?`);
@@ -404,7 +410,10 @@ export default {
         }
       )
         .then(async () => {
-          let disabled = await this.$store.dispatch('configs/disableRule', this.$store.getters['config/config']());
+          let disabled = await this.$store.dispatch(
+            'configs/disableRule',
+            this.$store.getters['config/config']()
+          );
           if (disabled) {
             this.$message({
               type: 'success',
