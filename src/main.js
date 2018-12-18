@@ -2,7 +2,6 @@ import Vue from 'vue';
 import { Notification } from 'element-ui';
 import axios from 'axios';
 import VueNativeSock from 'vue-native-websocket';
-import VueCron from 'vue-cron';
 import '@/contrib.js';
 import '@/registration.js';
 import { initLogging, logger } from './lib/logger.js';
@@ -17,8 +16,6 @@ import './style/icons.scss';
 import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
-
-Vue.use(VueCron);
 
 Vue.config.productionTip = false;
 

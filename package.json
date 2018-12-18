@@ -41,7 +41,6 @@
     "valid-url": "^1.0.9",
     "vue": "^2.5.17",
     "vue-at": "^2.5.0-beta",
-    "vue-cron": "^1.0.9",
     "vue-echarts": "^3.1.2",
     "vue-infinite-scroll": "^2.0.2",
     "vue-json-pretty": "^1.4.1",
