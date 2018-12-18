@@ -150,7 +150,10 @@ export default {
         if (config.aggregation && config.aggregation.schedule) {
           commit('alert/UPDATE_AGGREGATION_SCHEDULE', config.aggregation.schedule);
         }
-        commit('alert/UPDATE_SUMMARY_TABLE_FIELDS', config.summary_table_fields);
+
+        if (config.summary_table_fields) {
+          commit('alert/UPDATE_SUMMARY_TABLE_FIELDS', config.summary_table_fields);
+        }
 
         commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
 
