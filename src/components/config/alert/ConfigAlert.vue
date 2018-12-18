@@ -5,8 +5,12 @@
     :model="$store.state.config.alert"
     label-position="top"
     @submit.native.prevent>
+
     <el-row>
-      <el-col :span="12">
+      <el-col :span="aggregationSchedule ? 24 : 12">
+        <ConfigAggregation ref="aggregation" :view-only="viewOnly" />
+      </el-col>
+      <el-col v-if="!aggregationSchedule" :span="12">
         <el-form-item :class="{'view-only': viewOnly }" label="Re-alert">
           <ElastalertTimeView v-if="viewOnly" :time="realert" />
           <ElastalertTimePicker
@@ -27,124 +31,118 @@
           </label>
         </el-form-item>
       </el-col>
-
-      <el-col :span="12">
-        <ConfigAggregation ref="aggregation" :view-only="viewOnly" />
-      </el-col>
     </el-row>
 
-    <el-form-item :label="`Destination${alert.length > 1 ? 's' : ''}`" prop="alert" required>
-      <template v-if="viewOnly">
-        <el-tag v-if="alert.includes('slack')" class="m-e-sm" type="success">Slack</el-tag>
-        <el-tag v-if="alert.includes('email')" class="m-e-sm" type="success">Email</el-tag>
-        <el-tag v-if="alert.includes('post')" class="m-e-sm" type="success">HTTP</el-tag>
-      </template>
-      <el-checkbox-group v-else v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
+    <el-form-item
+      v-if="!viewOnly"
+      :label="`Destination${alert.length > 1 ? 's' : ''}`"
+      prop="alert"
+      required
+      class="m-n-sm">
+      <el-checkbox-group v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
         <el-checkbox label="slack" border>Slack</el-checkbox>
         <el-checkbox label="email" border>Email</el-checkbox>
         <el-checkbox label="post" border>HTTP</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
-    <el-form-item label="">
-      <el-tabs v-if="alert.length" class="border-card-plain">
-        <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')" label="Settings">
-          <ConfigAlertSubjectBody
-            v-if="alert.includes('slack') || alert.includes('email')"
-            ref="subjectBody"
-            :view-only="viewOnly"
-            class="m-s-lg" />
-        </el-tab-pane>
+    <el-tabs v-if="alert.length" class="border-card-plain m-n-sm" type="card">
+      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')" label="Alert">
+        <ConfigAlertSubjectBody
+          v-if="alert.includes('slack') || alert.includes('email')"
+          ref="subjectBody"
+          :view-only="viewOnly"
+          class="m-s-lg" />
+      </el-tab-pane>
 
-        <el-tab-pane v-if="alert.includes('slack')" >
-          <span slot="label"><icon :icon="['fab', 'slack']" size="lg" /> Slack</span>
-          <el-form-item label="Channel or username" prop="slackChannelOverride" required>
-            <el-input v-model="slackChannelOverride" :disabled="viewOnly" />
-            <label>
-              The @username or #channel to send the alert. Tip: Create new channels
-              for your alerts, to have fine-grained control of Slack notifications.
-            </label>
-          </el-form-item>
+      <el-tab-pane v-if="alert.includes('slack')" >
+        <template slot="label"><icon :icon="['fab', 'slack']" size="lg" /> Slack</template>
+        <el-form-item label="Channel or username" prop="slackChannelOverride" required>
+          <el-input v-model="slackChannelOverride" :disabled="viewOnly" />
+          <label>
+            The @username or #channel to send the alert. Tip: Create new channels
+            for your alerts, to have fine-grained control of Slack notifications.
+          </label>
+        </el-form-item>
 
-          <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
-            <el-input v-model="slackUsernameOverride" :disabled="viewOnly" />
-            <label>This is the username that will appear in Slack for the alert</label>
-          </praeco-form-item>
+        <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
+          <el-input v-model="slackUsernameOverride" :disabled="viewOnly" />
+          <label>This is the username that will appear in Slack for the alert</label>
+        </praeco-form-item>
 
-          <praeco-form-item
-            v-if="!(viewOnly && !slackEmojiOverride)"
-            :class="{ 'disabled': viewOnly }"
-            label="Icon"
-            prop="slackEmojiOverride">
-            <picker
-              :emoji="slackEmojiOverride || 'arrow_up'"
-              :title="slackEmojiOverride || 'Pick your icon...'"
-              color="#189acc"
-              @select="addEmoji" />
-          </praeco-form-item>
+        <praeco-form-item
+          v-if="!(viewOnly && !slackEmojiOverride)"
+          :class="{ 'disabled': viewOnly }"
+          label="Icon"
+          prop="slackEmojiOverride">
+          <picker
+            :emoji="slackEmojiOverride || 'arrow_up'"
+            :title="slackEmojiOverride || 'Pick your icon...'"
+            color="#189acc"
+            @select="addEmoji" />
+        </praeco-form-item>
 
-          <el-form-item label="Message color" prop="slackMsgColor" required>
-            <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
-              <el-radio label="danger" border class="slack-danger">Danger</el-radio>
-              <el-radio label="warning" border class="slack-warning">Warning</el-radio>
-              <el-radio label="good" border class="slack-good">Good</el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-tab-pane>
+        <el-form-item label="Message color" prop="slackMsgColor" required>
+          <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
+            <el-radio label="danger" border class="slack-danger">Danger</el-radio>
+            <el-radio label="warning" border class="slack-warning">Warning</el-radio>
+            <el-radio label="good" border class="slack-good">Good</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-tab-pane>
 
-        <el-tab-pane v-if="alert.includes('email')">
-          <span slot="label"><icon icon="envelope" /> Email</span>
-          <praeco-form-item
-            v-if="!viewOnly || fromAddr"
-            :value="fromAddr"
-            label="From address"
-            prop="fromAddr">
-            <el-input v-model="fromAddr" :disabled="viewOnly" />
-            <label>
-              This sets the From header in the email.
-              By default, the from address is ElastAlert@
-              and the domain will be set by the smtp server.
-            </label>
-          </praeco-form-item>
+      <el-tab-pane v-if="alert.includes('email')">
+        <span slot="label"><icon icon="envelope" /> Email</span>
+        <praeco-form-item
+          v-if="!viewOnly || fromAddr"
+          :value="fromAddr"
+          label="From address"
+          prop="fromAddr">
+          <el-input v-model="fromAddr" :disabled="viewOnly" />
+          <label>
+            This sets the From header in the email.
+            By default, the from address is ElastAlert@
+            and the domain will be set by the smtp server.
+          </label>
+        </praeco-form-item>
 
-          <praeco-form-item
-            v-if="!viewOnly || replyTo"
-            :value="replyTo"
-            label="Reply to"
-            prop="replyTo">
-            <el-input v-model="replyTo" :disabled="viewOnly" />
-            <label>
-              This sets the Reply-To header in the email.
-              By default, the from address is ElastAlert@ and the
-              domain will be set by the smtp server.
-            </label>
-          </praeco-form-item>
+        <praeco-form-item
+          v-if="!viewOnly || replyTo"
+          :value="replyTo"
+          label="Reply to"
+          prop="replyTo">
+          <el-input v-model="replyTo" :disabled="viewOnly" />
+          <label>
+            This sets the Reply-To header in the email.
+            By default, the from address is ElastAlert@ and the
+            domain will be set by the smtp server.
+          </label>
+        </praeco-form-item>
 
-          <el-form-item label="To" prop="email" required>
-            <el-input v-model="email" :disabled="viewOnly" />
-            <label>Comma separated list of email addresses</label>
-          </el-form-item>
+        <el-form-item label="To" prop="email" required>
+          <el-input v-model="email" :disabled="viewOnly" />
+          <label>Comma separated list of email addresses</label>
+        </el-form-item>
 
-          <el-form-item v-if="!viewOnly || cc" label="CC" prop="cc">
-            <el-input v-model="cc" :disabled="viewOnly" />
-            <label>Comma separated list of email addresses</label>
-          </el-form-item>
+        <el-form-item v-if="!viewOnly || cc" label="CC" prop="cc">
+          <el-input v-model="cc" :disabled="viewOnly" />
+          <label>Comma separated list of email addresses</label>
+        </el-form-item>
 
-          <el-form-item v-if="!viewOnly || bcc" label="BCC" prop="bcc">
-            <el-input v-model="bcc" :disabled="viewOnly" />
-            <label>Comma separated list of email addresses</label>
-          </el-form-item>
-        </el-tab-pane>
+        <el-form-item v-if="!viewOnly || bcc" label="BCC" prop="bcc">
+          <el-input v-model="bcc" :disabled="viewOnly" />
+          <label>Comma separated list of email addresses</label>
+        </el-form-item>
+      </el-tab-pane>
 
-        <el-tab-pane v-if="alert.includes('post')" label="HTTP">
-          <span slot="label"><icon icon="globe" /> HTTP</span>
-          <el-form-item label="HTTP POST URL" prop="httpPostUrl" required>
-            <el-input v-model="httpPostUrl" :disabled="viewOnly" />
-            <label>JSON results will be POSTed to this URL</label>
-          </el-form-item>
-        </el-tab-pane>
-      </el-tabs>
-    </el-form-item>
+      <el-tab-pane v-if="alert.includes('post')" label="HTTP">
+        <span slot="label"><icon icon="globe" /> HTTP</span>
+        <el-form-item label="HTTP POST URL" prop="httpPostUrl" required>
+          <el-input v-model="httpPostUrl" :disabled="viewOnly" />
+          <label>JSON results will be POSTed to this URL</label>
+        </el-form-item>
+      </el-tab-pane>
+    </el-tabs>
   </el-form>
 </template>
 
@@ -269,6 +267,15 @@ export default {
   },
 
   computed: {
+    aggregationSchedule: {
+      get() {
+        return this.$store.state.config.alert.aggregationSchedule;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_AGGREGATION_SCHEDULE', value);
+      }
+    },
+
     httpPostUrl: {
       get() {
         return this.$store.state.config.alert.httpPostUrl;
