@@ -581,7 +581,13 @@ export default {
           dots = '../';
         }
 
-        for (let i = 1; i < state.path.split('/').length; i++) {
+        let path = state.path;
+
+        if (path.endsWith('/')) {
+          path = path.slice(0, -1);
+        }
+
+        for (let i = 1; i < path.split('/').length; i++) {
           dots += '../';
         }
 
