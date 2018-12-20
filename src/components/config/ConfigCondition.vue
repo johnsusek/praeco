@@ -261,7 +261,7 @@
     </el-popover>
 
     <span class="pop-trigger" @click="popFilterVisible = true">
-      <span v-if="!queryTree.children.length && !queryString">UNFILTERED</span>
+      <span v-if="queryString === defaultFilter">UNFILTERED</span>
       <span v-else>{{ queryString }}</span>
     </span>
 
@@ -882,7 +882,7 @@ export default {
 
     queryString() {
       return (
-        this.$store.getters['config/query/queryString'] || `${this.timeField}:*`
+        this.$store.getters['config/query/queryString'] || this.defaultFilter
       );
     },
 
@@ -900,6 +900,10 @@ export default {
 
     fields() {
       return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    },
+
+    defaultFilter() {
+      return `${this.timeField}:*`;
     }
   },
 
