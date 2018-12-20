@@ -1,6 +1,6 @@
 <template>
   <span>
-    <el-popover v-model="testPopoverVisible" placement="bottom" width="310">
+    <el-popover v-model="testPopoverVisible" placement="top" width="310">
       <span slot="reference">
         <el-button v-if="!testRunLoading" type="primary" plain size="medium">
           Test
@@ -19,7 +19,7 @@
             <el-button class="m-w-med" type="primary" plain @click="runTest">Run</el-button>
           </el-form-item>
         </div>
-        <div class="m-n-med">
+        <div v-if="!aggregationSchedule" class="m-n-med">
           <el-form-item label="Send real alerts">
             <el-switch v-model="realAlerts" active-color="#F56C6C" />
             <label>
@@ -94,6 +94,17 @@ export default {
       testRunError: '',
       testRunLoading: false
     };
+  },
+
+  computed: {
+    aggregationSchedule: {
+      get() {
+        return this.$store.state.config.alert.aggregationSchedule;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_AGGREGATION_SCHEDULE', value);
+      }
+    }
   },
 
   destroyed() {
