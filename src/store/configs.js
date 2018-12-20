@@ -169,6 +169,8 @@ export default {
     async duplicateConfig({ dispatch, state }, { config, type }) {
       let newConfig = cloneDeep(config);
 
+      newConfig.is_enabled = false;
+
       // Get a new path/key for the config
       let i = 1;
       while (state[type][`${newConfig.__praeco_full_path} (${i})`]) {
