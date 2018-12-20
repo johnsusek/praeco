@@ -63,6 +63,8 @@
         <div class="preview">{{ $store.getters['config/alert/subjectRendered'] }}</div>
 
         <h6>Body preview</h6>
+        <div v-if="summaryTableFields.length" type="info"><em>(Summary table)</em></div>
+
         <div class="preview">{{ $store.getters['config/alert/bodyRendered'] }}</div>
 
         <div
@@ -76,7 +78,6 @@
           <em>(Top counts)</em>
         </div>
         <div v-if="bodyType === 'default'" type="info"><em>(Field values)</em></div>
-        <div v-if="summaryTableFields.length" type="info"><em>(Summary table)</em></div>
       </el-col>
     </el-row>
 
