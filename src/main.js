@@ -5,6 +5,7 @@ import VueNativeSock from 'vue-native-websocket';
 import VueSplit from 'vue-split-panel';
 import '@/contrib.js';
 import '@/registration.js';
+import '@/lib/string.js';
 import { initLogging, logger } from './lib/logger.js';
 import App from './App.vue';
 import router from './router';

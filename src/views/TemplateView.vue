@@ -80,6 +80,7 @@
 
 <script>
 import Vue from 'vue';
+import { selectNode } from '@/lib/tree';
 
 export default {
   props: ['id'],
@@ -109,6 +110,8 @@ export default {
   },
 
   async mounted() {
+    selectNode(this.id);
+
     this.$store.dispatch('config/reset');
 
     await this.$store.dispatch('config/load', {

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>{{ type }}/{{ path }}</h1>
+    <h1>
+      <icon icon="folder" transform="left-0" />
+      {{ type.capitalize() }}/{{ path }}
+    </h1>
 
     <el-button
       v-if="type === 'rules'"
@@ -26,12 +29,38 @@
     </el-button>
 
     <el-button type="danger" plain @click="deleteFolder">Delete folder...</el-button>
+
+    <el-table :data="type === 'templates' ? templatesForFolder : rulesForFolder" class="m-n-sm" style="width: 100%">
+      <el-table-column :label="type.capitalize()">
+        <template slot-scope="scope">
+          <icon icon="file-alt" style="padding-right: 4px" />
+          <router-link :to="`/${type}/${encodeURIComponent(scope.row.val)}`">{{ scope.row.label }}</router-link>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
 export default {
   props: ['type', 'path'],
+
+  computed: {
+    rulesForFolder() {
+      return Object.keys(this.$store.state.configs.rules)
+        .filter(val => val.startsWith(this.path))
+        .filter(val => !val.replace(this.path, '').includes('/'))
+        .map(val => ({ val, label: val.replace(this.path, '') }));
+    },
+
+    templatesForFolder() {
+      return Object.keys(this.$store.state.configs.templates)
+        .filter(val => val.startsWith(this.path))
+        .filter(val => !val.replace(this.path, '').includes('/'))
+        .map(val => ({ val, label: val.replace(this.path, '') }));
+    }
+  },
+
   methods: {
     addFolder() {
       this.$prompt('Name', 'Add folder', {

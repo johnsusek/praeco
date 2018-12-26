@@ -5,7 +5,7 @@
         <el-switch v-model="enableAgg" :disabled="viewOnly" @change="changeAgg" />
         <label>
           Instead of sending alerts immediately, send a report of
-          alerts.
+          alerts on a schedule.
         </label>
       </el-form-item>
     </el-col>

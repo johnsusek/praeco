@@ -214,6 +214,7 @@ import axios from 'axios';
 import moment from 'moment';
 import changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
+import { selectNode } from '@/lib/tree';
 import networkError from '../lib/networkError.js';
 
 export default {
@@ -267,6 +268,8 @@ export default {
   },
 
   async mounted() {
+    selectNode(this.id);
+
     this.$store.dispatch('config/reset');
     await this.$store.dispatch('config/load', { type: 'rules', path: this.id });
     this.loaded = true;
