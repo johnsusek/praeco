@@ -20,29 +20,24 @@
       </div>
     </el-header>
 
-    <el-container>
-      <multipane layout="vertical" @paneResizeStop="handleResize">
-        <div :style="{ width: sidebarWidth, maxWidth: '600px', minWidth: '100px' }">
-          <NavTree style="margin: 10px" />
-        </div>
-        <multipane-resizer/>
-        <div :style="{ flexGrow: 1, padding: '10px' }">
-          <router-view :key="$route.fullPath" />
-        </div>
-      </multipane>
-    </el-container>
+    <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
+      <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
+        <NavTree style="padding: 10px" />
+      </SplitArea>
+      <SplitArea :size="sidebarWidth[1]">
+        <router-view :key="$route.fullPath" style="padding: 10px" />
+      </SplitArea>
+    </Split>
+
   </div>
 </template>
 
 <script>
-import { Multipane, MultipaneResizer } from 'vue-multipane';
 import UpdateIndicator from '@/components/UpdateIndicator';
 
 export default {
   components: {
-    UpdateIndicator,
-    Multipane,
-    MultipaneResizer
+    UpdateIndicator
   },
 
   computed: {
@@ -63,7 +58,7 @@ export default {
   },
 
   methods: {
-    handleResize(pane, container, size) {
+    onDragEnd(size) {
       this.sidebarWidth = size;
     }
   }
@@ -107,15 +102,11 @@ body {
   height: initial !important;
 }
 
-.multipane.layout-v .multipane-resizer {
-  margin: 0;
-  left: 0; /* reset default styling */
-  width: 15px;
-  margin-left: -15px;
-  background: white;
+.gutter.gutter-horizontal {
+  opacity: 0;
 }
 
-.multipane.layout-v .multipane-resizer:hover {
-  background: #efefef;
+.gutter.gutter-horizontal:hover {
+  opacity: 1;
 }
 </style>

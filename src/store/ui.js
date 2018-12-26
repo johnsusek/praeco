@@ -2,7 +2,7 @@ export default {
   namespaced: true,
 
   state: {
-    sidebarWidth: '200px'
+    sidebarWidth: [20, 80]
   },
 
   mutations: {

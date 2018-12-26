@@ -4,6 +4,7 @@
   border-radius: 0 !important;
   box-shadow: none !important;
   position: inherit;
+  background: transparent;
 }
 
 .vue-treeselect__control {
@@ -35,4 +36,8 @@
 .vjs__tree .vjs__value__number,
 .vjs__tree .vjs__value__string {
   color: inherit;
+}
+
+.vue-treeselect__option--highlight {
+  background: #efefef;
 }
