@@ -21,6 +21,7 @@
     "axios": "^0.18.0",
     "browser-bunyan": "^1.4.0",
     "change-case": "^3.0.2",
+    "choices.js": "^4.1.3",
     "comma-number": "^2.0.0",
     "debounce": "^1.2.0",
     "echarts": "4.1.0",

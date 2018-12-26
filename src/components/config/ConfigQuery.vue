@@ -142,6 +142,34 @@ export default {
     }
   },
 
+  mounted() {
+    let sel = document.querySelector('.rule-actions select');
+    // document
+    //   .querySelectorAll('.rule-actions select option')
+    //   .forEach((option, i) => {
+    //     sel.options[sel.options.length] = new Option(
+    //       option.innerText,
+    //       option.innerText
+    //     );
+    //   });
+    // document
+    //   .querySelectorAll('.rule-actions select option')
+    //   .forEach((option, i) => {
+    //     if (option.value === '[object Object]') {
+    //       sel.removeChild(option);
+    //     }
+    //   });
+    // console.log(window.jQuery('.rule-actions select')[0]);
+    // setTimeout(() => {
+    window.jQuery('.rule-actions select').selectize({
+      onChange(val) {
+        debugger;
+        sel.options[parseInt(val)].selected = true;
+      }
+    });
+    // }, 500);
+  },
+
   methods: {
     changeQueryType() {
       if (this.queryType === 'manual') {
