@@ -1,3 +1,4 @@
+import VuexPersistence from 'vuex-persist';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import configs from './configs';
@@ -6,8 +7,15 @@ import metadata from './metadata';
 import appconfig from './appconfig';
 import elastalert from './elastalert';
 import config from './config';
+import ui from './ui';
 
 Vue.use(Vuex);
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+  reducer: state => ({ ui: state.ui }),
+  key: 'praeco-vuex'
+});
 
 export default new Vuex.Store({
   modules: {
@@ -16,6 +24,8 @@ export default new Vuex.Store({
     metadata,
     appconfig,
     elastalert,
-    config
-  }
+    config,
+    ui
+  },
+  plugins: [vuexLocal.plugin]
 });

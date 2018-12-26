@@ -8,6 +8,7 @@ module.exports = {
   },
   extends: ['plugin:vue/recommended', '@vue/airbnb'],
   rules: {
+    quotes: ['error', 'single'],
     'no-underscore-dangle': 'off',
     'no-empty': 'off',
     radix: 'off',
