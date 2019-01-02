@@ -1,6 +1,6 @@
 <template>
   <span>
-    <el-popover v-model="testPopoverVisible" placement="bottom">
+    <el-popover v-model="testPopoverVisible" placement="top" width="310">
       <span slot="reference">
         <el-button v-if="!testRunLoading" type="primary" plain size="medium">
           Test
@@ -9,12 +9,26 @@
         </el-button>
         <el-button v-else type="primary" plain disabled size="medium">Testing...</el-button>
       </span>
-      <span class="m-e-sm">Test over previous</span>
-      <ElastalertTimePicker
-        :unit="Object.keys(testTime)[0]"
-        :amount="Object.values(testTime)[0]"
-        @input="updateTestTime" />
-      <el-button class="m-w-med" type="primary" plain @click="runTest">Run</el-button>
+      <el-form label-position="top">
+        <div>
+          <el-form-item label="Test over previous">
+            <ElastalertTimePicker
+              :unit="Object.keys(testTime)[0]"
+              :amount="Object.values(testTime)[0]"
+              @input="updateTestTime" />
+            <el-button class="m-w-med" type="primary" plain @click="runTest">Run</el-button>
+          </el-form-item>
+        </div>
+        <div v-if="!aggregationSchedule" class="m-n-med">
+          <el-form-item label="Send real alerts">
+            <el-switch v-model="realAlerts" active-color="#F56C6C" />
+            <label>
+              WARNING: A large amount of alerts may be sent at once if re-alert is 0.
+              Always send to a test channel/address.
+            </label>
+          </el-form-item>
+        </div>
+      </el-form>
     </el-popover>
 
     <ExpandableAlert
@@ -22,8 +36,7 @@
       :contents="testRunError"
       title="Test run error"
       type="error"
-      class="m-n-med"
-    />
+      class="m-n-med" />
 
     <el-alert
       v-if="testRunResult &&
@@ -72,6 +85,7 @@ export default {
 
   data() {
     return {
+      realAlerts: false,
       testTime: { hours: 1 },
       testPopoverVisible: false,
       messages: [],
@@ -80,6 +94,17 @@ export default {
       testRunError: '',
       testRunLoading: false
     };
+  },
+
+  computed: {
+    aggregationSchedule: {
+      get() {
+        return this.$store.state.config.alert.aggregationSchedule;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_AGGREGATION_SCHEDULE', value);
+      }
+    }
   },
 
   destroyed() {
@@ -142,15 +167,20 @@ export default {
         this.messages = [];
         this.messages.push('Starting test run...');
 
-        let start = moment().subtract(Object.values(this.testTime)[0], Object.keys(this.testTime)[0]).toISOString();
+        let start = moment()
+          .subtract(
+            Object.values(this.testTime)[0],
+            Object.keys(this.testTime)[0]
+          )
+          .toISOString();
 
         let options = {
           testType: 'all',
           start,
           end: 'NOW',
-          alert: false,
           format: 'json',
-          maxResults: 1
+          maxResults: 1,
+          alert: this.realAlerts
         };
 
         this.$socket.onopen = () => {

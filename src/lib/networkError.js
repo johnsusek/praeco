@@ -2,8 +2,6 @@ import { Notification } from 'element-ui';
 import { logger } from '@/lib/logger.js';
 
 export default function notifyError(error) {
-  let baseUrl = '/api';
-
   try {
     logger().error({
       serverData: error.response.data,
@@ -17,7 +15,7 @@ export default function notifyError(error) {
 
   Notification.error({
     message: error.toString(),
-    title: `Cannot connect to API ${baseUrl}`,
+    title: 'API error',
     duration: 0
   });
 

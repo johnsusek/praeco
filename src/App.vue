@@ -20,14 +20,15 @@
       </div>
     </el-header>
 
-    <el-container>
-      <el-aside width="200px">
-        <NavTree />
-      </el-aside>
-      <el-main>
-        <router-view :key="$route.fullPath" />
-      </el-main>
-    </el-container>
+    <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
+      <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
+        <NavTree style="padding: 10px" />
+      </SplitArea>
+      <SplitArea :size="sidebarWidth[1]">
+        <router-view :key="$route.fullPath" style="padding: 10px" />
+      </SplitArea>
+    </Split>
+
   </div>
 </template>
 
@@ -39,10 +40,27 @@ export default {
     UpdateIndicator
   },
 
+  computed: {
+    sidebarWidth: {
+      get() {
+        return this.$store.state.ui.sidebarWidth;
+      },
+      set(value) {
+        this.$store.commit('ui/UPDATE_SIDEBAR_WIDTH', value);
+      }
+    }
+  },
+
   mounted() {
     this.$store.dispatch('server/fetchVersion');
     this.$store.dispatch('server/fetchStatus');
     this.$store.dispatch('elastalert/fetchConfig');
+  },
+
+  methods: {
+    onDragEnd(size) {
+      this.sidebarWidth = size;
+    }
   }
 };
 </script>
@@ -54,7 +72,7 @@ body {
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
   color: #303133;
 }
@@ -63,6 +81,10 @@ body {
 .el-aside > .el-menu,
 .el-main > section {
   height: 100%;
+}
+
+#app .el-container {
+  height: calc(100% - 48px);
 }
 
 .el-header img {
@@ -80,7 +102,11 @@ body {
   height: initial !important;
 }
 
-.el-container > aside {
-  max-width: 300px;
+.gutter.gutter-horizontal {
+  opacity: 0;
+}
+
+.gutter.gutter-horizontal:hover {
+  opacity: 1;
 }
 </style>

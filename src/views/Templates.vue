@@ -11,11 +11,30 @@
       <icon icon="folder" transform="left-4" />
       Add folder
     </el-button>
+
+    <el-table :data="templates" class="m-n-sm" style="width: 100%">
+      <el-table-column label="Templates">
+        <template slot-scope="scope">
+          <icon icon="file-alt" style="padding-right: 4px" />
+          <router-link :to="`/templates/${encodeURIComponent(scope.row.val)}`">{{ scope.row.val }}</router-link>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
 export default {
+  computed: {
+    templates() {
+      return Object.keys(this.$store.state.configs.templates)
+        .filter(val => !val.includes('/'))
+        .map(val => ({
+          val
+        }));
+    }
+  },
+
   methods: {
     addFolder() {
       this.$prompt('Name', 'Add folder', {

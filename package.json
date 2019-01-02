@@ -48,7 +48,9 @@
     "vue-prism-component": "^1.0.1",
     "vue-query-builder": "^0.6.1",
     "vue-router": "^3.0.1",
+    "vue-split-panel": "^1.0.4",
     "vuex": "^3.0.1",
+    "vuex-persist": "^2.0.0",
     "webpack": "^4.18.0",
     "zrender": "^4.0.5"
   },

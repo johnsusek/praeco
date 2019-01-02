@@ -103,14 +103,25 @@
 
     <el-popover v-if="showPopCompare" :class="{ 'is-invalid': !popCompareValid }" v-model="popCompareVisible">
       <span slot="reference" class="pop-trigger">
-        <span>FIELD</span>
-        <span> {{ compareKey }}</span>
+        <template v-if="compareKey && compareKey.length > 1">
+          <span>FIELDS</span>
+          <span> {{ compareKey }}</span>
+        </template>
+        <template v-else-if="compareKey && compareKey.length === 1">
+          <span>FIELD</span>
+          <span> {{ compareKey[0] }}</span>
+        </template>
+        <template v-else>
+          <span>FIELD</span>
+          <span> {{ compareKey }}</span>
+        </template>
       </span>
       <el-form ref="compare" :model="$store.state.config.match">
         <el-form-item prop="compareKey" required>
           <el-select
             v-model="compareKey"
-            filterable
+            :multiple="metricAggType === 'field changes'"
+            :filterable="metricAggType !== 'field changes'"
             clearable
             placeholder="Field"
             style="width: 280px"
@@ -261,7 +272,7 @@
     </el-popover>
 
     <span class="pop-trigger" @click="popFilterVisible = true">
-      <span v-if="!queryTree.children.length && !queryString">UNFILTERED</span>
+      <span v-if="queryString === defaultFilter">UNFILTERED</span>
       <span v-else>{{ queryString }}</span>
     </span>
 
@@ -697,7 +708,11 @@ export default {
 
     compareKey: {
       get() {
-        return this.$store.state.config.match.compareKey;
+        if (this.$store.state.config.match.compareKey) {
+          return this.$store.state.config.match.compareKey;
+        } else if (this.metricAggType === 'field changes') {
+          return [];
+        }
       },
       set(value) {
         this.$store.commit('config/match/UPDATE_COMPARE_KEY', value);
@@ -882,7 +897,7 @@ export default {
 
     queryString() {
       return (
-        this.$store.getters['config/query/queryString'] || `${this.timeField}:*`
+        this.$store.getters['config/query/queryString'] || this.defaultFilter
       );
     },
 
@@ -900,6 +915,10 @@ export default {
 
     fields() {
       return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    },
+
+    defaultFilter() {
+      return `${this.timeField}:*`;
     }
   },
 
@@ -1241,10 +1260,13 @@ export default {
         }
       } else if (val === 'field in list') {
         this.type = 'blacklist';
+        this.compareKey = '';
       } else if (val === 'field not in list') {
         this.type = 'whitelist';
+        this.compareKey = '';
       } else if (val === 'field changes') {
         this.type = 'change';
+        this.compareKey = [];
       } else {
         this.type = 'metric_aggregation';
       }
