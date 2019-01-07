@@ -4,8 +4,7 @@
       v-if="searchError"
       :contents="searchError"
       title="Search error"
-      type="error"
-    />
+      type="error" />
 
     <div class="praeco-chart m-s-med">
       <div v-if="groupBy">
@@ -164,8 +163,8 @@ export default {
             show: false,
             bottom: 0,
             type: 'inside',
-            xAxisIndex: [0],
-          },
+            xAxisIndex: [0]
+          }
         ],
         series: [
           {
@@ -199,7 +198,7 @@ export default {
             },
             data: [],
             markLine: {}
-          },
+          }
         ]
       }
     };
@@ -276,10 +275,20 @@ export default {
         lte = 'now';
       } else if (this.timeType === 'unix_ms') {
         lte = Math.trunc(+new Date());
-        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).valueOf();
+        gte = moment()
+          .subtract(
+            Object.values(this.timespan)[0],
+            Object.keys(this.timespan)[0]
+          )
+          .valueOf();
       } else {
         lte = Math.trunc(+new Date() / 1000);
-        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).unix();
+        gte = moment()
+          .subtract(
+            Object.values(this.timespan)[0],
+            Object.keys(this.timespan)[0]
+          )
+          .unix();
       }
 
       return {
@@ -344,7 +353,7 @@ export default {
     },
 
     query() {
-      this.activeGroupIndex = 0;
+      this.activeGroupIndex = '0';
       this.updateChart();
     },
 
@@ -427,7 +436,7 @@ export default {
     },
 
     setTooltipDefault() {
-      Vue.set(this.chart.tooltip, 'formatter', (options) => {
+      Vue.set(this.chart.tooltip, 'formatter', options => {
         let event = this.chart.xAxis.data[options.dataIndex];
         let momentDate;
 
@@ -436,7 +445,9 @@ export default {
         } else if (this.timeType === 'unix_ms') {
           momentDate = moment(event.value).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         } else {
-          momentDate = moment.unix(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+          momentDate = moment
+            .unix(String(event.value))
+            .tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         }
 
         let tip = `${momentDate.format('M/D/YYYY h:mm:ssa')}<br>`;
@@ -458,10 +469,11 @@ export default {
     },
 
     setTooltipSpike() {
-      Vue.set(this.chart.tooltip, 'formatter', (options) => {
+      Vue.set(this.chart.tooltip, 'formatter', options => {
         let event = this.chart.xAxis.data[options.dataIndex];
-        let preVal = this.chart.series[0].data[options.dataIndex > 0 ?
-          (options.dataIndex - 1) : options.dataIndex].value;
+        let preVal = this.chart.series[0].data[
+          options.dataIndex > 0 ? options.dataIndex - 1 : options.dataIndex
+        ].value;
         let val = this.chart.series[0].data[options.dataIndex].value;
         let spike = val / preVal;
         let momentDate;
@@ -471,11 +483,15 @@ export default {
         } else if (this.timeType === 'unix_ms') {
           momentDate = moment(event.value).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         } else {
-          momentDate = moment.unix(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+          momentDate = moment
+            .unix(String(event.value))
+            .tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         }
 
         if (spike.toFixed(1) === '1.0') {
-          return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${options.data.value} Events`;
+          return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> ${
+            options.data.value
+          } Events`;
         }
 
         let spikeVal = spike;
@@ -494,7 +510,11 @@ export default {
       this.chart.series[0].data = this.chart.series[0].data.map((yy, i) => ({
         value: yy.value,
         itemStyle: {
-          color: getColorForIndex(i, this.chart.series[0].data, this.spikeHeight)
+          color: getColorForIndex(
+            i,
+            this.chart.series[0].data,
+            this.spikeHeight
+          )
         }
       }));
     },
@@ -528,10 +548,20 @@ export default {
         gte = `now-${intervalFromTimeframe(this.timespan)}`;
       } else if (this.timeType === 'unix_ms') {
         lte = Math.trunc(+new Date());
-        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).valueOf();
+        gte = moment()
+          .subtract(
+            Object.values(this.timespan)[0],
+            Object.keys(this.timespan)[0]
+          )
+          .valueOf();
       } else {
         lte = Math.trunc(+new Date() / 1000);
-        gte = moment().subtract(Object.values(this.timespan)[0], Object.keys(this.timespan)[0]).unix();
+        gte = moment()
+          .subtract(
+            Object.values(this.timespan)[0],
+            Object.keys(this.timespan)[0]
+          )
+          .unix();
       }
 
       let query = {
@@ -568,7 +598,9 @@ export default {
 
       try {
         this.source = CancelToken.source();
-        res = await axios.post(`/api/search/${this.index}`, query, { cancelToken: this.source.token });
+        res = await axios.post(`/api/search/${this.index}`, query, {
+          cancelToken: this.source.token
+        });
       } catch (error) {
         if (!axios.isCancel(error)) {
           console.error(error);
@@ -585,8 +617,10 @@ export default {
           let y = null;
 
           if (this.groupBy) {
-            if (res.data.aggregations.group_by_field &&
-                res.data.aggregations.group_by_field.buckets.length) {
+            if (
+              res.data.aggregations.group_by_field &&
+              res.data.aggregations.group_by_field.buckets.length
+            ) {
               let buckets = res.data.aggregations.group_by_field.buckets;
 
               x = buckets[this.activeGroupIndex].by_minute.buckets.map(r => ({
