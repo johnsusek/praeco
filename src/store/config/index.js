@@ -56,7 +56,7 @@ export default {
     },
 
     UPDATE_PATH(state, path) {
-      state.path = path;
+      state.path = path || '';
     }
   },
 
