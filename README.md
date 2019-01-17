@@ -11,8 +11,6 @@ Praeco is an alerting tool for elasticsearch – a GUI for [elastalert](https://
 - View logs of when your alerts are checked and when they fire
 - Use templates to pre-fill commonly used rule options
 
-⚠️ Praeco is currently an alpha and should not to be used on production systems. Please create a github issue if you are having trouble or have a feature request.
-
 ## Quickstart
 
 First, edit rules/BaseRule.config and change the slack and smtp settings to match your environment.
