@@ -452,7 +452,7 @@
         </el-form>
       </div>
 
-      <div v-if="type === 'frequency' || type === 'flatline'">
+      <div v-if="type === 'frequency' || type === 'flatline' || type ==='spike'">
         <el-form
           ref="freqFlatlineOptions"
           :model="$store.state.config.match"
@@ -469,7 +469,7 @@
             </label>
           </el-form-item>
 
-          <el-form-item label="Use terms query">
+          <el-form-item v-if="type !== 'spike'" label="Use terms query">
             <el-switch :disabled="useCountQuery" v-model="useTermsQuery" @input="refreshOptionsPop" />
             <label>
               If true, ElastAlert will make an aggregation query against Elasticsearch
@@ -507,6 +507,7 @@
         <el-form
           :model="$store.state.config.match"
           label-position="top"
+          class="m-n-lg"
           @submit.native.prevent>
           <el-form-item label="Threshold (reference)" prop="thresholdRef">
             <el-input v-model="thresholdRef" type="number" />
