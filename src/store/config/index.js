@@ -328,6 +328,14 @@ export default {
         config.timeframe = state.match.timeframe;
       }
 
+      if (state.match.useCountQuery) {
+        config.use_count_query = state.match.useCountQuery;
+      }
+
+      if (state.match.docType) {
+        config.doc_type = state.match.docType;
+      }
+
       return config;
     },
 
