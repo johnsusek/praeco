@@ -948,7 +948,7 @@ export default {
       // if rule supports queryKey, set groupedOver to field
       if (
         this.queryKey &&
-        ['metric_aggregation', 'freqeuncy', 'flatline',
+        ['metric_aggregation', 'frequency', 'flatline',
           'change', 'spike', 'flatline'].includes(this.type)
       ) {
         this.groupedOver = 'field';
