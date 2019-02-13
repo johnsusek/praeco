@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import moment from 'moment-timezone';
 import parseDate from '@/lib/parseDate';
 
 export default {
