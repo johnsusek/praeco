@@ -114,7 +114,7 @@ Replace 192.168.1.145 with the IP address your ES binds to (look for bound_addre
 
 #### I am getting high CPU usage on some of my rules
 
-When editing a rule, click "WITH OPTIONS" and try using the "Use Count Query" or "Use Terms Query" options. These can dramatically speed up processing time for large amounts of data (tens of thousands of results).
+When editing a rule, click "WITH OPTIONS" and try using the "Use count query" option. This can dramatically speed up processing time for large amounts of data (tens of thousands of results).
 
 #### I'm not receiving alerts even though I expect them
 
@@ -152,19 +152,62 @@ Please see the development section below if you're interested in running these s
 
 ## Developing
 
-If you want to develop for praeco, run the built-in development server:
+First, you need a local copy of the elastalert api server running, which itself needs elastalert. Start by cloning the neccessary repos 
 
 ```
+cd
+git clone https://github.com/Yelp/elastalert.git
+git clone -b folders https://github.com/ServerCentral/elastalert-server.git
+git clone https://github.com/ServerCentral/praeco.git
+```
+
+### Setting up elastalert
+
+Configure the elastalert `config.yaml` with:
+- Your `es_host`
+- A unique `writeback_index`
+- Change the rules_folder to `rules`
+
+```
+cd ~/elastalert
+mkdir rules rule_templates
+pip install -r requirements-dev.txt
+cp config.yaml.example config.yaml
+vi config.yaml
+```
+
+### Setting up the API server
+
+Configure the api server `config.json` with:
+- An _absolute path_ to your elastalert folder for `elastalertPath`
+- The address of your elasticsearch instance for `es_host`
+- The same `writeback_index` from the config.yaml
+
+```
+cd ~/elastalert-server
+vi config/config.json
+npm install
+npm run start
+```
+
+You should see this line if it started successfully:
+```
+INFO elastalert-server: Server:  Server started
+```
+
+### Setting up praeco
+
+Finally, run praeco:
+
+```
+cd ~/praeco
 npm install
 npm run serve
 ```
 
-To build a docker container from local changes:
+You should now see the UI running at [http://localhost:8080](http://localhost:8080).
 
-```
-docker build -t praeco .
-```
-
+If you have any difficulties please open a github issue with your problem. 
 
 <br><br>
 
