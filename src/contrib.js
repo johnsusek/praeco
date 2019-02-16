@@ -8,6 +8,7 @@ import 'prismjs';
 import locale from 'element-ui/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
+  faBell,
   faChevronDown,
   faChevronUp,
   faEllipsisH,
@@ -30,6 +31,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 let ECharts = require('vue-echarts');
 
 library.add(
+  faBell,
   faFile,
   faFileAlt,
   faSlack,

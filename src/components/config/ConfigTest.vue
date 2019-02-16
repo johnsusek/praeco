@@ -22,9 +22,11 @@
         <div v-if="!aggregationSchedule" class="m-n-med">
           <el-form-item label="Send real alerts">
             <el-switch v-model="realAlerts" active-color="#F56C6C" />
-            <label>
-              WARNING: A large amount of alerts may be sent at once if re-alert is 0.
-              Always send to a test channel/address.
+            <label v-if="realert && Object.values(realert)[0] === 0">
+              <strong>
+                WARNING: A large amount of alerts may be sent at once, since re-alert is set to 0.
+                Always send to a test channel/address.
+              </strong>
             </label>
           </el-form-item>
         </div>
@@ -49,9 +51,14 @@
       class="m-n-med">
       <div>
         This rule would result in
-        {{ testRunResult.writeback.elastalert_status.matches || 0 }}
+        <strong>{{ testRunResult.writeback.elastalert_status.matches || 0 }}</strong>
         alert triggers over the last
-        <ElastalertTimeView :time="testTime" />
+        <strong>
+          <ElastalertTimeView :time="testTime" />
+        </strong>.
+        <div>
+          (This does not take into account your re-alert settings.)
+        </div>
       </div>
     </el-alert>
 
@@ -97,6 +104,15 @@ export default {
   },
 
   computed: {
+    realert: {
+      get() {
+        return this.$store.state.config.alert.realert || { minutes: 5 };
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_REALERT', value);
+      }
+    },
+
     aggregationSchedule: {
       get() {
         return this.$store.state.config.alert.aggregationSchedule;
@@ -180,7 +196,7 @@ export default {
           end: 'NOW',
           format: 'json',
           maxResults: 1,
-          alert: this.realAlerts
+          alert: !!this.realAlerts
         };
 
         this.$socket.onopen = () => {
@@ -195,3 +211,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+label > strong {
+  color: red;
+}
+</style>

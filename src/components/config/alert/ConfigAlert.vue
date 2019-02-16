@@ -46,7 +46,8 @@
     </el-form-item>
 
     <el-tabs v-if="alert.length" class="border-card-plain m-n-sm" type="card">
-      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')" label="Alert">
+      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')">
+        <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           v-if="alert.includes('slack') || alert.includes('email')"
           ref="subjectBody"
@@ -55,7 +56,7 @@
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('slack')" >
-        <template slot="label"><icon :icon="['fab', 'slack']" size="lg" /> Slack</template>
+        <template slot="label"><icon :icon="['fab', 'slack']" size="1x" /> Slack</template>
         <el-form-item label="Channel or username" prop="slackChannelOverride" required>
           <el-input v-model="slackChannelOverride" :disabled="viewOnly" />
           <label>
@@ -91,7 +92,7 @@
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('email')">
-        <span slot="label"><icon icon="envelope" /> Email</span>
+        <span slot="label"><icon icon="envelope" size="1x" /> Email</span>
         <praeco-form-item
           v-if="!viewOnly || fromAddr"
           :value="fromAddr"
