@@ -2,20 +2,16 @@
 
 Praeco is an alerting tool for elasticsearch – a GUI for [elastalert](https://github.com/yelp/elastalert), using the [elastalert API](https://github.com/bitsensor/elastalert).
 
-- Interactively build alert rules using a query builder
+- Interactively build alert rules for your Elasticsearch data using a query builder
 - View a preview of your query and a graph of results
 - Test your alerts against historical data
-- See a preview of your alert subject/body as you are editing
 - Supports notifications to Slack, Email or HTTP POST
 - Supports Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike and Metric Aggregation elastalert rule types
 - View logs of when your alerts are checked and when they fire
-- Use templates to pre-fill commonly used rule options
 
 ## Quickstart
 
-First, edit rules/BaseRule.config and change the slack and smtp settings to match your environment.
-
-Then run the app using docker:
+Run the app using docker. Praeco includes a bundled elastalert + api server, you do not need to set up your own elastalert instance.
 
 ```bash
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
@@ -23,6 +19,8 @@ docker-compose up
 ```
 
 ℹ️ Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
+
+ℹ️ To set up slack and email notifications, edit `rules/BaseRule.config`.
 
 Praeco should now be available on http://127.0.0.1:8080
 
@@ -35,11 +33,11 @@ docker pull servercentral/praeco; docker pull servercentral/elastalert
 docker-compose up --force-recreate --build; docker image prune -f
 ```
 
-ℹ️ You may need to update your config files when a new version comes out. Please see [UPGRADING.md](https://github.com/ServerCentral/praeco/blob/master/UPGRADING.md) for version-specific instructions.
+You may need to update your config files when a new version comes out. Please see [UPGRADING.md](https://github.com/ServerCentral/praeco/blob/master/UPGRADING.md) for version-specific instructions.
 
 ## Configuration
 
-OPTIONAL: Edit config/api.config.json, config/elastalert.yaml, and/or public/praeco.config.json for advanced configuration options. See the [api docs](https://github.com/bitsensor/elastalert#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information on config options.
+OPTIONAL: Edit config/api.config.json, rules/BaseRule.config, config/elastalert.yaml, and/or public/praeco.config.json for advanced configuration options. See the [api docs](https://github.com/bitsensor/elastalert#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information on config options.
 
 The following config settings are available in praeco.config.json:
 
@@ -54,6 +52,7 @@ The following config settings are available in praeco.config.json:
 "hidePreconfiguredFields": []
 ```
 
+
 ## Screenshot
 
 ![](https://user-images.githubusercontent.com/611996/47752071-7c4a9080-dc61-11e8-8ccf-2196f13429b2.png)
@@ -64,9 +63,13 @@ The following config settings are available in praeco.config.json:
 
 Edit `config/api.config.json` and set/add `"es_ssl": true`.
 
+#### How do I connect to elasticsearch with a username and password?
+
+Edit `es_username` and `es_password` in `config/api.config.json` and `config/elastalert.yaml`.
+
 #### How do I serve the praeco UI over https?
 
-The praeco UI is served by an included nginx server. Configure it as you would any nginx project by editing the files in `nginx_config`. Then update your docker-compose.yml and add your certificate files (under webapp volumes).
+The praeco UI is served by an included nginx server (see Dockerfile). Configure it as you would any nginx project by editing the files in `nginx_config`. Then update your docker-compose.yml and add your certificate files (under webapp volumes).
 
 #### How do I change the writeback index?
 
@@ -89,6 +92,10 @@ docker-compose.exe up
 
 Replace 1.2.3.4 with your Elasticsearch IP.
 
+#### Can I import my current elastalert rules into praeco?
+
+Unfortunately this is not a possibility for two reasons. First, praeco only supports a subset of elastalert features, so only certain rules would work. Second, praeco stores certain metadata related to the state of the query builder ui in the elastalert rule yaml. Praeco cannot automatically populate the query builder ui from an arbitrary elastalert `filter` entry, so it needs to store this state with the rule file.
+
 ## Troubleshooting
 
 #### I am using 127.0.0.1 for PRAECO_ELASTICSEARCH and it isn't working
@@ -104,6 +111,10 @@ docker-compose up
 ```
 
 Replace 192.168.1.145 with the IP address your ES binds to (look for bound_addresses in the elasticsearch launch log).
+
+#### I am getting high CPU usage on some of my rules
+
+When editing a rule, click "WITH OPTIONS" and try using the "Use Count Query" or "Use Terms Query" options. These can dramatically speed up processing time for large amounts of data (tens of thousands of results).
 
 #### I'm not receiving alerts even though I expect them
 
@@ -121,6 +132,24 @@ You will see this error when launching if praeco cannot find elasticsearch at th
 
 Make sure the channel/username you are trying to post to exists.
 
+## Architecture details
+
+For those interested in how praeco works and what it is actually doing, this section is for you. 
+
+![](https://user-images.githubusercontent.com/611996/52892144-90a19300-3155-11e9-8050-cb4a440411a4.png)
+
+Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [elastalert api](https://github.com/bitsensor/elastalert) (running in another docker container) to view/edit rules. 
+The elastalert api interacts with the included [elastalert](https://github.com/Yelp/elastalert) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
+rule files in the rules/ directory.
+
+When you run praeco using the quickstart instructions, it runs these two docker containers, per the docker-compose.yml file. 
+
+Praeco uses a fork of the elastalert _api server_, which is why the docker image source is `servercentral/elastalert`. This docker image is built against the branch `folders` in the fork. 
+
+NOTE: Only the _api server_ is a fork, the elastalert daemon itself is built from the `master` branch whenever a new version of the `servercentral/elastalert` docker image is created.
+
+Please see the development section below if you're interested in running these services separately. 
+
 ## Developing
 
 If you want to develop for praeco, run the built-in development server:
@@ -136,15 +165,6 @@ To build a docker container from local changes:
 docker build -t praeco .
 ```
 
-## Testing
-
-Unit tests:
-
-`npm run test:unit`
-
-E2E tests:
-
-`npm run test:e2e`
 
 <br><br>
 

@@ -33,3 +33,7 @@ and within the server {} section:
 ```
 
 See [the default config file](https://github.com/ServerCentral/praeco/blob/master/nginx_config/default.conf) for exactly where to place these snippets.
+
+## v0.3.0 -> v0.3.1
+
+- New options `es_username` and `es_password` added to `config/api.config.json`. Add these to your config if you need this capability.
