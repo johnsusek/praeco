@@ -12,12 +12,12 @@
 <script>
 import axios from 'axios';
 import semver from 'semver';
-import currentVersion from '@/../version.json';
+import packageData from '@/../package.json';
 
 export default {
   data() {
     return {
-      currentVersion,
+      currentVersion: packageData.version,
       latestRelease: {}
     };
   },
