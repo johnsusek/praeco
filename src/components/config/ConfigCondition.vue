@@ -535,6 +535,19 @@
       </div>
     </el-popover>
 
+    <el-alert
+      v-if="bigBuckets && !useCountQuery && metricAggType === 'count'"
+      :closable="false"
+      class="m-n-med"
+      type="warning"
+      title="Large data size detected"
+      show-icon>
+      <div>
+        This rule is processing large amounts of data and should use the
+        "Use count query" option under "WITH OPTIONS" to avoid high CPU usage.
+      </div>
+    </el-alert>
+
     <ESChart
       v-if="showChart"
       :index="$store.state.config.settings.index"
@@ -551,6 +564,7 @@
       :agg-max="metricAggType === 'max' && metricAggKey"
       class="m-n-med"
       @click="clickChart"
+      @update="handleUpdateData"
       @group="val => groupByValue = val" />
 
     <el-dialog :visible.sync="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
@@ -569,6 +583,7 @@
 export default {
   data() {
     return {
+      bigBuckets: false,
       groupByValue: '',
       eventViewerFrom: '',
       eventViewerVisible: false,
@@ -965,6 +980,10 @@ export default {
   },
 
   methods: {
+    handleUpdateData(ddd) {
+      this.bigBuckets = !!ddd.map(d => d.value).find(v => v > 10000);
+    },
+
     changeGroupedOver() {
       this.validate();
 

@@ -648,6 +648,8 @@ export default {
           this.chart.xAxis.data = x;
           this.chart.series[0].data = y;
 
+          this.$emit('update', y);
+
           // Charts can have one or more marklines on their main axis,
           // passed in as a prop to this component.
           // We'll want to redraw it now that new data has arrived.
