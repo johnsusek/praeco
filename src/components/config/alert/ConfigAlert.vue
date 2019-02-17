@@ -15,6 +15,7 @@
           <ElastalertTimeView v-if="viewOnly" :time="realert" />
           <ElastalertTimePicker
             v-else-if="realert"
+            id="realert"
             :allow-zero="true"
             :unit="Object.keys(realert)[0]"
             :amount="Object.values(realert)[0]"
@@ -39,13 +40,13 @@
       prop="alert"
       required>
       <el-checkbox-group v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
-        <el-checkbox label="slack" border>Slack</el-checkbox>
-        <el-checkbox label="email" border>Email</el-checkbox>
-        <el-checkbox label="post" border>HTTP</el-checkbox>
+        <el-checkbox id="destinationSlack" label="slack" border>Slack</el-checkbox>
+        <el-checkbox id="destinationEmail" label="email" border>Email</el-checkbox>
+        <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
-    <el-tabs v-if="alert.length" class="border-card-plain m-n-sm" type="card">
+    <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
@@ -58,7 +59,7 @@
       <el-tab-pane v-if="alert.includes('slack')" >
         <template slot="label"><icon :icon="['fab', 'slack']" size="1x" /> Slack</template>
         <el-form-item label="Channel or username" prop="slackChannelOverride" required>
-          <el-input v-model="slackChannelOverride" :disabled="viewOnly" />
+          <el-input id="slackChannelOverride" v-model="slackChannelOverride" :disabled="viewOnly" />
           <label>
             The @username or #channel to send the alert. Tip: Create new channels
             for your alerts, to have fine-grained control of Slack notifications.
@@ -66,7 +67,7 @@
         </el-form-item>
 
         <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
-          <el-input v-model="slackUsernameOverride" :disabled="viewOnly" />
+          <el-input id="slackUsernameOverride" v-model="slackUsernameOverride" :disabled="viewOnly" />
           <label>This is the username that will appear in Slack for the alert</label>
         </praeco-form-item>
 
@@ -84,9 +85,9 @@
 
         <el-form-item label="Message color" prop="slackMsgColor" required>
           <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
-            <el-radio label="danger" border class="slack-danger">Danger</el-radio>
-            <el-radio label="warning" border class="slack-warning">Warning</el-radio>
-            <el-radio label="good" border class="slack-good">Good</el-radio>
+            <el-radio id="slackMsgColorDanger" label="danger" border class="slack-danger">Danger</el-radio>
+            <el-radio id="slackMsgColorWarning" label="warning" border class="slack-warning">Warning</el-radio>
+            <el-radio id="slackMsgColorGood" label="good" border class="slack-good">Good</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-tab-pane>
@@ -209,10 +210,11 @@ export default {
     Picker
   },
 
-  props: ['prefill', 'viewOnly'],
+  props: ['viewOnly'],
 
   data() {
     return {
+      visibleTabPane: '',
       rules: {
         alert: [
           {

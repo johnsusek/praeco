@@ -1,0 +1,400 @@
+{
+  "total": 69,
+  "max_score": null,
+  "hits": [
+    {
+      "message": "Failed to delete alert AWfGxQUYhG_oRzlIakZM at 2018-12-19T15:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGxQUYhG_oRzlIakZM\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T15:01:30.010368Z"
+    },
+    {
+      "message": "Failed to delete alert AWfGjgEMhG_oRzlIWIvz at 2018-12-19T14:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGjgEMhG_oRzlIWIvz\",\"_version\":1,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T14:02:10.711981Z"
+    },
+    {
+      "message": "Error fetching aggregated matches: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGk5B_hG_oRzlIWnfn\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1627, in get_aggregated_matches",
+        "    id=match['_id'])",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGk5B_hG_oRzlIWnfn\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "data": {
+        "id": "AWfGjgEMhG_oRzlIWIvz"
+      },
+      "@timestamp": "2018-12-19T14:00:59.108759Z"
+    },
+    {
+      "message": "Failed to delete alert AWfGVxCchG_oRzlIRspP at 2018-12-19T13:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGVxCchG_oRzlIRspP\",\"_version\":1,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T13:01:55.775337Z"
+    },
+    {
+      "message": "Error fetching aggregated matches: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGZ4kRhG_oRzlITE6U\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1627, in get_aggregated_matches",
+        "    id=match['_id'])",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGZ4kRhG_oRzlITE6U\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "data": {
+        "id": "AWfGVxCchG_oRzlIRspP"
+      },
+      "@timestamp": "2018-12-19T13:00:53.732364Z"
+    },
+    {
+      "message": "Failed to delete alert AWfGICA_hG_oRzlINaja at 2018-12-19T12:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGICA_hG_oRzlINaja\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T12:01:38.052254Z"
+    },
+    {
+      "message": "Error fetching aggregated matches: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGTtGlhG_oRzlIRGUY\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1627, in get_aggregated_matches",
+        "    id=match['_id'])",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfGTtGlhG_oRzlIRGUY\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "data": {
+        "id": "AWfGICA_hG_oRzlINaja"
+      },
+      "@timestamp": "2018-12-19T12:00:53.119373Z"
+    },
+    {
+      "message": "Failed to delete alert AWfF6TOrhG_oRzlII3LU at 2018-12-19T11:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfF6TOrhG_oRzlII3LU\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T11:01:19.421555Z"
+    },
+    {
+      "message": "Failed to delete alert AWfFsh5chG_oRzlIEfUa at 2018-12-19T10:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFsh5chG_oRzlIEfUa\",\"_version\":1,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T10:02:00.668014Z"
+    },
+    {
+      "message": "Error fetching aggregated matches: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFu0N8hG_oRzlIFQjh\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1627, in get_aggregated_matches",
+        "    id=match['_id'])",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFu0N8hG_oRzlIFQjh\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "data": {
+        "id": "AWfFsh5chG_oRzlIEfUa"
+      },
+      "@timestamp": "2018-12-19T10:00:53.070965Z"
+    },
+    {
+      "message": "Failed to delete alert AWfFew9ghG_oRzlIABfs at 2018-12-19T09:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFew9ghG_oRzlIABfs\",\"_version\":1,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T09:01:49.424478Z"
+    },
+    {
+      "message": "Error fetching aggregated matches: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFhT2ohG_oRzlIA4OW\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1627, in get_aggregated_matches",
+        "    id=match['_id'])",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFhT2ohG_oRzlIA4OW\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "data": {
+        "id": "AWfFew9ghG_oRzlIABfs"
+      },
+      "@timestamp": "2018-12-19T09:00:43.135211Z"
+    },
+    {
+      "message": "Failed to delete alert AWfFQ71MhG_oRzlI7aql at 2018-12-19T08:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFQ71MhG_oRzlI7aql\",\"_version\":1,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T08:01:36.593459Z"
+    },
+    {
+      "message": "Error fetching aggregated matches: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFYz1XhG_oRzlI-LgH\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1627, in get_aggregated_matches",
+        "    id=match['_id'])",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFYz1XhG_oRzlI-LgH\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "data": {
+        "id": "AWfFQ71MhG_oRzlI7aql"
+      },
+      "@timestamp": "2018-12-19T08:00:34.305544Z"
+    },
+    {
+      "message": "Failed to delete alert AWfFDYc4hG_oRzlI2Yug at 2018-12-19T07:00:00Z",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1589, in send_pending_alerts",
+        "    id=_id)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFDYc4hG_oRzlI2Yug\",\"_version\":1,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "@timestamp": "2018-12-19T07:01:30.814511Z"
+    },
+    {
+      "message": "Error fetching aggregated matches: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFEESyhG_oRzlI2oww\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 1627, in get_aggregated_matches",
+        "    id=match['_id'])",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 1070, in delete",
+        "    doc_type, id), params=params)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 90, in perform_request",
+        "    self._raise_error(response.status_code, raw_data)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/base.py\", line 125, in _raise_error",
+        "    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)",
+        "NotFoundError: NotFoundError(404, u'{\"found\":false,\"_index\":\"elastalert_dev_status\",\"_type\":\"elastalert\",\"_id\":\"AWfFEESyhG_oRzlI2oww\",\"_version\":3,\"result\":\"not_found\",\"_shards\":{\"total\":2,\"successful\":2,\"failed\":0}}')"
+      ],
+      "data": {
+        "id": "AWfFDYc4hG_oRzlI2Yug"
+      },
+      "@timestamp": "2018-12-19T07:00:09.303894Z"
+    },
+    {
+      "message": "Error running query: ConnectionTimeout caused by - ReadTimeout(HTTPConnectionPool(host='x', port=9200): Read timed out. (read timeout=20))",
+      "traceback": [
+        "Traceback (most recent call last):",
+        "  File \"/Users/john/Code/servercentral-elastalert/elastalert/elastalert.py\", line 391, in get_hits",
+        "    **extra_args",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/utils.py\", line 76, in _wrapped",
+        "    return func(*args, params=params, **kwargs)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/client/__init__.py\", line 660, in search",
+        "    doc_type, '_search'), params=params, body=body)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/transport.py\", line 318, in perform_request",
+        "    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)",
+        "  File \"build/bdist.macosx-10.13-intel/egg/elasticsearch/connection/http_requests.py\", line 84, in perform_request",
+        "    raise ConnectionTimeout('TIMEOUT', str(e), e)",
+        "ConnectionTimeout: ConnectionTimeout caused by - ReadTimeout(HTTPConnectionPool(host='x', port=9200): Read timed out. (read timeout=20))"
+      ],
+      "data": {
+        "query": {
+          "sort": [
+            {
+              "@timestamp": {
+                "order": "asc"
+              }
+            }
+          ],
+          "query": {
+            "bool": {
+              "filter": {
+                "bool": {
+                  "must": [
+                    {
+                      "range": {
+                        "@timestamp": {
+                          "gt": "2018-12-19T06:01:36.803780Z",
+                          "lte": "2018-12-19T06:16:28.506381Z"
+                        }
+                      }
+                    },
+                    {
+                      "query_string": {
+                        "query": "message:vpn AND message:IKE AND host:127.0.0.1"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "rule": "Agg Test"
+      },
+      "@timestamp": "2018-12-19T06:17:08.125402Z"
+    }
+  ]
+}

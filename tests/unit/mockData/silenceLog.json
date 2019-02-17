@@ -1,0 +1,606 @@
+{
+  "total": 4853,
+  "max_score": null,
+  "hits": [
+    {
+      "rule_name": "test1._silence",
+      "@timestamp": "2019-01-29T16:36:04.390301Z",
+      "exponent": 0,
+      "until": "2019-01-29T16:41:04.390291Z"
+    },
+    {
+      "rule_name": "avgexample",
+      "@timestamp": "2018-12-20T22:12:03.361649Z",
+      "exponent": 0,
+      "until": "2018-12-20T22:17:03.361581Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:58.166703Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:58.166690Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:56.482593Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:56.482580Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:54.551240Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:54.551229Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:48.778066Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:48.778057Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:32.781009Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:32.780998Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:25.728600Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:25.728592Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:24.629902Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:24.629890Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:21.929631Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:21.929619Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:19.548818Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:19.548807Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:18.957781Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:18.957773Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:17.975785Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:17.975778Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:13.883073Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:13.883064Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:46:10.391342Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:51:10.391326Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:52.299554Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:52.299543Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:50.200719Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:50.200706Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:48.807544Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:48.807532Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:48.511141Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:48.511130Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:42.878235Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:42.878225Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:42.745642Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:42.745631Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:42.343653Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:42.343640Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:42.249198Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:42.249188Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:38.961983Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:38.961970Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:38.811975Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:38.811966Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:32.063310Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:32.063299Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:32.025123Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:32.025111Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:31.160002Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:31.159993Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:31.125756Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:31.125746Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:30.546018Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:30.546006Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:30.524686Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:30.524675Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:29.239368Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:29.239354Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:29.232338Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:29.232329Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:28.309163Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:28.309151Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:28.308734Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:28.308722Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:23.624569Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:23.624556Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:23.598424Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:23.598417Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:17.774065Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:17.774054Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:17.756951Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:17.756943Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:11.308227Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:11.308214Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:11.276107Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:11.276095Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:05.068258Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:05.068249Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:05.065585Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:05.065575Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:03.452100Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:03.452091Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:03.416159Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:03.416151Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:00.552177Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:00.552166Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:45:00.551828Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:50:00.551815Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:59.927830Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:59.927821Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:59.911948Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:59.911938Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:59.062465Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:59.062455Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:59.061738Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:59.061727Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:55.148545Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:55.148533Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:55.114009Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:55.113998Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:54.545118Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:54.545104Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:54.459940Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:54.459931Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:53.744209Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:53.744201Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:53.679096Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:53.679077Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:52.162442Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:52.162433Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:50.805453Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:50.805440Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:50.523332Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:50.523319Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:46.005856Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:46.005844Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:45.839845Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:45.839834Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:45.261054Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:45.261042Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:45.043622Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:45.043613Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:44.604658Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:44.604651Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:44.456683Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:44.456671Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:43.865248Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:43.865240Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:43.770921Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:43.770908Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:40.900989Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:40.900980Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:40.900644Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:40.900634Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:40.197831Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:40.197817Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:40.164735Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:40.164725Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:38.977442Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:38.977420Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:38.943052Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:38.943043Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:38.238234Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:38.238223Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:38.205841Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:38.205833Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:36.628231Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:36.628222Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:36.627905Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:36.627893Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:33.843745Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:33.843733Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:33.811406Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:33.811396Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:29.263616Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:29.263608Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:29.192457Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:29.192444Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:28.902831Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:28.902821Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:28.758701Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:28.758693Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:28.417249Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:28.417237Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:28.319681Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:28.319669Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:21.365200Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:21.365189Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:21.362519Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:21.362506Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:20.632932Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:20.632922Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:20.530126Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:20.530115Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:15.039762Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:15.039749Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:14.999566Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:14.999555Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:09.805850Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:09.805841Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:09.736245Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:09.736235Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:07.791344Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:07.791332Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:07.790841Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:07.790829Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:04.835102Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:04.835092Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:04.831761Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:04.831748Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:03.754116Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:03.754103Z"
+    },
+    {
+      "rule_name": "change test data",
+      "@timestamp": "2018-12-20T20:44:03.719531Z",
+      "exponent": 0,
+      "until": "2018-12-20T20:49:03.719517Z"
+    }
+  ]
+}

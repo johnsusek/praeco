@@ -2,6 +2,8 @@ import { Notification } from 'element-ui';
 import { logger } from '@/lib/logger.js';
 
 export default function notifyError(error) {
+  console.error(error);
+
   try {
     logger().error({
       serverData: error.response.data,
@@ -10,7 +12,7 @@ export default function notifyError(error) {
       serverCode: error.response.data.statusCode
     });
   } catch (err) {
-    logger().error(err);
+    console.error(err);
   }
 
   Notification.error({

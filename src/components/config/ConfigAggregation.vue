@@ -65,6 +65,7 @@
 
 <script>
 import prettycron from 'prettycron';
+import CronUI from 'cron-ui';
 
 export default {
   props: ['viewOnly'],
@@ -124,6 +125,9 @@ export default {
 
   mounted() {
     if (!this.viewOnly || (this.viewOnly && this.aggregationSchedule)) {
+      if (!document.querySelector('#cron')) {
+        return;
+      }
       this.recurrentEventForm = new CronUI('#cron', {
         initial: '0 * * * *',
         changeEvent: val => {

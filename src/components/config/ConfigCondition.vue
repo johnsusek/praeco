@@ -1,5 +1,6 @@
 <template>
   <div>
+    PO: {{ popAboveVisible }}
     <el-popover v-model="popWhenVisible">
       <span slot="reference" class="pop-trigger">
         <span>WHEN </span>
@@ -52,8 +53,20 @@
         <span v-if="groupedOver === 'field'">{{ queryKey }}</span>
       </span>
       <div>
-        <el-radio v-model="groupedOver" label="all" border @change="changeGroupedOver">All documents</el-radio>
-        <el-radio v-model="groupedOver" label="field" border @change="changeGroupedOver">Field</el-radio>
+        <el-radio
+          id="groupedOverAll"
+          v-model="groupedOver"
+          label="all"
+          border
+          @change="changeGroupedOver">
+          All documents
+        </el-radio>
+        <el-radio
+          id="groupedOverField"
+          v-model="groupedOver"
+          label="field"
+          border
+          @change="changeGroupedOver">Field</el-radio>
         <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
           <el-form ref="overall" :model="$store.state.config.match">
             <el-form-item label="" prop="docType" required>
@@ -316,7 +329,11 @@
       <div v-if="metricAggType === 'count'">
         <el-row :gutter="10" style="width: 360px">
           <el-col :span="spikeOrThreshold === 'any' ? 24 : 8">
-            <el-select v-model="spikeOrThreshold" class="el-select-wide" @input="updateSpikeOrThreshold">
+            <el-select
+              id="spikeOrThreshold"
+              v-model="spikeOrThreshold"
+              class="el-select-wide"
+              @input="updateSpikeOrThreshold">
               <el-option key="any" label="Is not empty" value="any" />
               <el-option key="is" label="Is" value="is" />
               <el-option key="spike" label="Spikes" value="spike" />
@@ -326,6 +343,7 @@
           <el-col v-if="spikeOrThreshold !== 'any'" :span="8">
             <el-select
               v-if="spikeOrThreshold === 'is'"
+              id="aboveOrBelow"
               v-model="aboveOrBelow"
               class="el-select-wide"
               @input="updateAboveOrBelow">
@@ -344,6 +362,7 @@
               <template v-if="spikeOrThreshold === 'is'" >
                 <el-form-item v-if="aboveOrBelow === 'above'" prop="numEvents" required>
                   <el-input
+                    id="numEvents"
                     v-model="numEvents"
                     min="1"
                     type="number"
@@ -352,6 +371,7 @@
                 </el-form-item>
                 <el-form-item v-else prop="threshold" required>
                   <el-input
+                    id="threshold"
                     v-model="threshold"
                     min="1"
                     type="number"
@@ -360,7 +380,12 @@
                 </el-form-item>
               </template>
               <el-form-item v-else prop="spikeHeight" required>
-                <el-input v-model="spikeHeight" type="number" class="el-input-wide" @input="validate" />
+                <el-input
+                  id="spikeHeight"
+                  v-model="spikeHeight"
+                  type="number"
+                  class="el-input-wide"
+                  @input="validate" />
               </el-form-item>
             </el-form>
           </el-col>
@@ -370,10 +395,10 @@
       <div v-else>
         <el-form ref="aboveOrBelow" :rules="aboveOrBelowRules" :model="$store.state.config.match" label-width="60px">
           <el-form-item label="Above" prop="maxThreshold">
-            <el-input v-model="maxThreshold" min="1" type="number" @change="validate" />
+            <el-input id="maxThreshold" v-model="maxThreshold" min="1" type="number" @change="validate" />
           </el-form-item>
           <el-form-item label="Below" prop="minThreshold">
-            <el-input v-model="minThreshold" min="1" type="number" @change="validate" />
+            <el-input id="minThreshold" v-model="minThreshold" min="1" type="number" @change="validate" />
           </el-form-item>
         </el-form>
       </div>
@@ -410,6 +435,7 @@
         </el-form>
         <div v-if="useTimeframe">
           <ElastalertTimePicker
+            id="timeframe"
             :unit="Object.keys(timeframe)[0]"
             :amount="Object.values(timeframe)[0]"
             @input="updateTimeframe"/>
@@ -459,7 +485,11 @@
           label-position="top"
           @submit.native.prevent>
           <el-form-item label="Use count query">
-            <el-switch :disabled="useTermsQuery" v-model="useCountQuery" @input="refreshOptionsPop" />
+            <el-switch
+              id="useCountQuery"
+              :disabled="useTermsQuery"
+              v-model="useCountQuery"
+              @input="refreshOptionsPop" />
             <label>
               If true, ElastAlert will poll Elasticsearch using the count api,
               and not download all of the matching documents.
@@ -484,7 +514,13 @@
             label="Doc type"
             prop="docType"
             required>
-            <el-select v-model="docType" filterable clearable placeholder="" @change="validateFreqFlatlineOptions">
+            <el-select
+              id="docType"
+              v-model="docType"
+              filterable
+              clearable
+              placeholder=""
+              @change="validateFreqFlatlineOptions">
               <el-option v-for="type in types" :key="type" :label="type" :value="type"/>
             </el-select>
             <label>

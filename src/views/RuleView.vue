@@ -124,7 +124,7 @@
       <el-tabs type="card" class="m-n-sm">
         <el-tab-pane label="Overview">
           <template v-if="$store.state.config.settings.index && $store.getters['config/config']()">
-            <ConfigSettings :view-only="true" type="template" />
+            <ConfigSettings :view-only="true" type="rule" />
             <ConfigCondition class="condition-view m-n-med m-s-sm" />
             <ConfigAlert :view-only="true" />
           </template>
@@ -240,7 +240,7 @@ export default {
     },
 
     silenceNotice() {
-      if (!this.silenceLog[0]) {
+      if (!this.silenceLog || !this.silenceLog[0]) {
         return;
       }
 
