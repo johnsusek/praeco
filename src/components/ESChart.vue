@@ -82,6 +82,7 @@ import axios from 'axios';
 import moment from 'moment-timezone';
 import debounce from 'debounce';
 import 'echarts/lib/chart/bar.js';
+import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
 
@@ -598,7 +599,7 @@ export default {
 
       try {
         this.source = CancelToken.source();
-        res = await axios.post(`/api/search/${this.index}`, query, {
+        res = await axios.post(`/api/search/${formatIndex(this.index)}`, query, {
           cancelToken: this.source.token
         });
       } catch (error) {

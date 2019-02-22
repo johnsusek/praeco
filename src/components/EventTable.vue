@@ -62,6 +62,7 @@
 <script>
 import axios from 'axios';
 import debounce from 'debounce';
+import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import { intervalFromTimeframe } from '@/lib/intervalFromTimeframe';
 
 const CancelToken = axios.CancelToken;
@@ -264,7 +265,7 @@ export default {
       try {
         this.source = CancelToken.source();
         res = await axios.post(
-          `/api/search/${this.$store.state.config.settings.index}`,
+          `/api/search/${formatIndex(this.$store.state.config.settings.index)}`,
           query,
           { cancelToken: this.source.token }
         );
