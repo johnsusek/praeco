@@ -21,9 +21,7 @@ Run `npm update` to install latest versions of packages per package.json.
 ## Praeco
 
 - Run tests
-- Bump version number in version.json, if not already done
-- Stash all changes
+- Bump version number in package.json, if not already done
 - Push to master
 - (Drone will create/push docker image)
 - Tag release in github, add release notes
-- Inform people about latest release
