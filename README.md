@@ -212,6 +212,7 @@ Finally, run praeco:
 ```
 cd ~/praeco
 npm install
+export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 npm run serve
 ```
 
