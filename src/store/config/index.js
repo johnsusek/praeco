@@ -160,7 +160,7 @@ export default {
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.reply_to);
-        commit('alert/UPDATE_EMAIL', config.email);
+        commit('alert/UPDATE_EMAIL', config.email.join(','));
         commit('alert/UPDATE_CC', config.cc);
         commit('alert/UPDATE_BCC', config.bcc);
 
@@ -511,7 +511,11 @@ export default {
       }
 
       if (state.alert.email) {
-        config.email = state.alert.email;
+        if (typeof state.alert.email === 'string') {
+          config.email = state.alert.email.split(',');
+        } else {
+          console.warn('Local email state is not a string!');
+        }
       }
 
       if (state.alert.cc) {

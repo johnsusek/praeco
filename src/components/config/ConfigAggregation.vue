@@ -18,6 +18,7 @@
         <div v-show="!viewOnly" class="cron-line">
           Every <span id="cron" />
         </div>
+        <label>Schedule is in the server's time zone.</label>
       </el-form-item>
     </el-col>
 
