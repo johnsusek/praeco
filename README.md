@@ -154,7 +154,7 @@ rule files in the rules/ directory.
 
 When you run praeco using the quickstart instructions, it runs these two docker containers, per the docker-compose.yml file. 
 
-Praeco uses a fork of the elastalert _api server_, which is why the docker image source is `servercentral/elastalert`. This docker image is built against the branch `folders` in the fork. 
+Praeco uses a fork of the elastalert _api server_, which is why the docker image source is `servercentral/elastalert`.
 
 NOTE: Only the _api server_ is a fork, the elastalert daemon itself is built from the `master` branch whenever a new version of the `servercentral/elastalert` docker image is created.
 
@@ -167,7 +167,7 @@ First, you need a local copy of the elastalert api server running, which itself 
 ```
 cd
 git clone https://github.com/Yelp/elastalert.git
-git clone -b folders https://github.com/ServerCentral/elastalert-server.git
+git clone https://github.com/ServerCentral/elastalert-server.git
 git clone https://github.com/ServerCentral/praeco.git
 ```
 
