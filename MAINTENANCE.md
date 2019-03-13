@@ -1,14 +1,3 @@
-# Building download latest.zip
-
-Any time the configs, the Dockerfile or docker-compose.yml change, run this script to create a new latest.zip file.
-This zip file contains only what is needed to run praeco for end users, and is linked to from documentation.
-
-`./build_download.sh`
-
-# Updating packages
-
-Run `npm update` to install latest versions of packages per package.json.
-
 # Checklist for new prod release
 
 ## Elastalert (if neccessary)

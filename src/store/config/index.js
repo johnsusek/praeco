@@ -162,7 +162,11 @@ export default {
         commit('alert/UPDATE_REPLY_TO', config.reply_to);
 
         if (config.email) {
-          commit('alert/UPDATE_EMAIL', config.email.join(','));
+          if (Array.isArray(config.email)) {
+            commit('alert/UPDATE_EMAIL', config.email.join(','));
+          } else {
+            commit('alert/UPDATE_EMAIL', config.email);
+          }
         }
 
         commit('alert/UPDATE_CC', config.cc);
