@@ -1,32 +1,26 @@
 <template>
-  <div>
-    <h1>Alerts</h1>
+  <div v-loading="loading">
+    <h2>Activity</h2>
     <el-table :data="alertLog" empty-text="">
-      <el-table-column label="Rule" prop="rule_name" />
       <el-table-column label="Alert sent" width="100">
         <span slot-scope="scope">
           <el-tag v-if="scope.row.alert_sent" type="success">Sent</el-tag>
           <el-tag v-else type="danger">Not sent</el-tag>
         </span>
       </el-table-column>
-      <el-table-column label="Match time" width="170">
-        <span slot-scope="scope">
-          {{ shortDate(scope.row.match_time) }}
-        </span>
-      </el-table-column>
-      <el-table-column label="Alert time" width="170">
+      <el-table-column label="Alert time">
         <span slot-scope="scope">
           {{ shortDate(scope.row.alert_time) }}
         </span>
       </el-table-column>
-      <el-table-column label="Alert type" width="100">
+      <el-table-column label="Rule" prop="rule_name" />
+      <el-table-column label="Alert type">
         <span slot-scope="scope">
           {{ titleCase(scope.row.alert_info && scope.row.alert_info.type) }}
         </span>
       </el-table-column>
-      <el-table-column label="Exception" prop="alert_exception" />
-      <el-table-column label="Aggregate ID" prop="aggregate_id" />
-  </el-table>  </div>
+    </el-table>
+  </div>
 </template>
 
 <script>
@@ -60,7 +54,7 @@ export default {
 
     async getAlertLog() {
       try {
-        let res = await axios.get('/api/metadata/elastalert');
+        let res = await axios.get('/api/metadata/elastalert?noagg=1');
         if (res.data.error) {
           this.$notify.error({
             message: res.data.error.msg,

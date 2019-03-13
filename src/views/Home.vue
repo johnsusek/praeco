@@ -8,18 +8,27 @@
       <li>
         You can also <router-link to="/template/add">create a new template</router-link>.
       </li>
-      <br>
       <li>
         For more assistance, this
         <a href="https://medium.com/@john_8166/praeco-walkthrough-5aada7e078a9" target="_blank">
         walkthrough guide</a> is available.
       </li>
     </ul>
+
+    <br>
+
+    <Alerts />
   </div>
 </template>
 
 <script>
+import Alerts from './Alerts.vue';
+
 export default {
-  name: 'Home'
+  name: 'Home',
+
+  components: {
+    Alerts
+  },
 };
 </script>

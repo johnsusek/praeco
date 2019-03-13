@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import Status from './views/Status.vue';
 import Errors from './views/Errors.vue';
-import Alerts from './views/Alerts.vue';
 import Silences from './views/Silences.vue';
 import Queries from './views/Queries.vue';
 import Folder from './views/Folder.vue';
@@ -25,19 +23,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/status',
-      name: 'status',
-      component: Status
-    },
-    {
       path: '/errors',
       name: 'errors',
       component: Errors
-    },
-    {
-      path: '/alerts',
-      name: 'alerts',
-      component: Alerts
     },
     {
       path: '/queries',

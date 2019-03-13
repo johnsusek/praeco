@@ -73,10 +73,6 @@ export default {
           label: 'Errors'
         },
         {
-          id: '_alerts',
-          label: 'Alerts'
-        },
-        {
           id: '_queries',
           label: 'Queries'
         },
@@ -140,10 +136,6 @@ export default {
             if (decodeURIComponent(this.$route.path) === '/errors') {
               selectNode(node.id);
             }
-          } else if (node.id === '_alerts') {
-            if (decodeURIComponent(this.$route.path) === '/alerts') {
-              selectNode(node.id);
-            }
           } else if (node.id === '_queries') {
             if (decodeURIComponent(this.$route.path) === '/queries') {
               selectNode(node.id);
@@ -174,8 +166,6 @@ export default {
       if (node.children === undefined) {
         if (node.id === '_errors') {
           this.$router.push('/errors');
-        } else if (node.id === '_alerts') {
-          this.$router.push('/alerts');
         } else if (node.id === '_queries') {
           this.$router.push('/queries');
         } else if (node.id === '_silences') {

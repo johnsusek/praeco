@@ -138,11 +138,6 @@
                 <el-tag v-else type="danger">Not sent</el-tag>
               </span>
             </el-table-column>
-            <el-table-column label="Match time" width="170">
-              <span slot-scope="scope">
-                {{ shortDate(scope.row.match_time) }}
-              </span>
-            </el-table-column>
             <el-table-column label="Alert time" width="170">
               <span slot-scope="scope">
                 {{ shortDate(scope.row.alert_time) }}
@@ -154,7 +149,6 @@
               </span>
             </el-table-column>
             <el-table-column label="Exception" prop="alert_exception" />
-            <el-table-column label="Aggregate ID" prop="aggregate_id" />
           </el-table>
         </el-tab-pane>
 
