@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/AlertsLog.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alertText.spec.js &&
