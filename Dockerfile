@@ -16,8 +16,6 @@ FROM base AS release
 COPY --from=dependencies /tmp/nginx/praeco/node_modules ./node_modules
 COPY . .
 
-RUN ./run_tests.sh
-
 RUN npm run build
 RUN cp -r dist/* /var/www/html
 EXPOSE 8080
