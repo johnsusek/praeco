@@ -1,6 +1,5 @@
 <template>
   <div>
-    PO: {{ popAboveVisible }}
     <el-popover v-model="popWhenVisible">
       <span slot="reference" class="pop-trigger">
         <span>WHEN </span>
