@@ -8,6 +8,7 @@
     <el-row :gutter="50">
       <el-col :span="12">
         <el-form-item
+          id="subject"
           label="Subject"
           prop="subject"
           required>
@@ -26,6 +27,7 @@
 
         <el-form-item
           v-if="bodyType !== 'aggregation_summary_only'"
+          id="body"
           label="Body text"
           prop="body">
           <at

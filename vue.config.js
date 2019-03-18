@@ -2,9 +2,7 @@ const webpack = require('webpack');
 
 module.exports = {
   configureWebpack: {
-    externals: {
-      jquery: 'CronUI'
-    },
+    devtool: process.env.NODE_ENV === 'coverage' ? '#eval' : undefined,
     performance: {
       hints: false
     },

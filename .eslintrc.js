@@ -1,10 +1,8 @@
 module.exports = {
   root: true,
-  globals: {
-    CronUI: true
-  },
   env: {
-    node: true
+    node: true,
+    mocha: true
   },
   extends: ['plugin:vue/recommended', '@vue/airbnb'],
   rules: {

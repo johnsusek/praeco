@@ -69,6 +69,7 @@ export default {
         // to the rule internally.
         Vue.set(state[type], path, conf);
       } catch (error) {
+        console.error(error);
         logger().error({ error });
       }
     },
@@ -87,7 +88,8 @@ export default {
       try {
         let res = await axios.get(`/api/${type}/${path}`);
         // We have got the config, so save it to our store keyed on its path
-        commit('FETCHED_CONFIG', { path, config: res.data, type });
+        let ruleYaml = typeof res.data === 'object' ? res.data.yaml : res.data;
+        commit('FETCHED_CONFIG', { path, config: ruleYaml, type });
         return res.data;
       } catch (error) {
         networkError(error);
