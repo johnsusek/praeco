@@ -1,5 +1,4 @@
-branches: master
-
+---
 pipeline:  
   # publish to public registry
   hubpublish:
@@ -15,7 +14,7 @@ pipeline:
     pull: true
     environment:
       - HARNESS_OPTIONS=j17:c
-      - PROJECT_NAME=servercentral/queuedashboard
+      - PROJECT_NAME=servercentral/praeco
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
