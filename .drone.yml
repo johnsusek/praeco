@@ -1,6 +1,7 @@
 branches: master
 
 pipeline:  
+  # publish to public registry
   hubpublish:
     image: plugins/docker
     repo: servercentral/praeco
@@ -9,6 +10,7 @@ pipeline:
     when:
       branch: master
 
+  # publish to internal registry
   tagandpublish:
     image: registry.servercentral.com/drone-plugins/tagandpublish
     pull: true
@@ -16,8 +18,6 @@ pipeline:
       - PROJECT_NAME=servercentral/praeco
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    when:
-      branch: master
 
   deployment:
     image: registry.servercentral.com/drone-plugins/awxdeployment
