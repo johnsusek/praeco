@@ -10,6 +10,15 @@ pipeline:
     when:
       branch: master
 
+  build:
+    image: registry.servercentral.com/drone-plugins/builder
+    pull: true
+    environment:
+      - HARNESS_OPTIONS=j17:c
+      - PROJECT_NAME=servercentral/queuedashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   # publish to internal registry
   tagandpublish:
     image: registry.servercentral.com/drone-plugins/tagandpublish
