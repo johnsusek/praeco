@@ -68,6 +68,7 @@ slack_channel_override: '#elastalert-debugging'
 slack_msg_color: danger
 slack_title_link: undefined/rules/test123
 slack_username_override: Praeco
+terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: '@timestamp'

@@ -15,6 +15,7 @@
           <el-menu-item index="field in list">field in list</el-menu-item>
           <el-menu-item index="field not in list">field not in list</el-menu-item>
           <el-menu-item index="field changes">field changes</el-menu-item>
+          <el-menu-item index="new term">new term</el-menu-item>
         </el-menu>
       </div>
     </el-popover>
@@ -161,7 +162,8 @@
     <el-popover v-if="showPopGroup" :class="{ 'is-invalid': !popGroupValid }" v-model="popGroupVisible">
       <span slot="reference" class="pop-trigger">
         <span>
-          <span>GROUPED OVER </span>
+          <span v-if="metricAggType === 'new term'">IN FIELD </span>
+          <span v-else>GROUPED OVER </span>
         </span>
         <span>{{ queryKey }}</span>
       </span>
@@ -285,7 +287,8 @@
 
     <span class="pop-trigger" @click="popFilterVisible = true">
       <span v-if="queryString === defaultFilter">UNFILTERED</span>
-      <span v-else>{{ queryString }}</span>
+      <span v-else>WITH FILTER</span>
+      <span v-if="queryString !== defaultFilter"> {{ queryString }}</span>
     </span>
 
     <el-dialog :visible.sync="popFilterVisible" :show-close="false" fullscreen>
@@ -477,30 +480,84 @@
         </el-form>
       </div>
 
-      <div v-if="type === 'frequency' || type === 'flatline' || type ==='spike'">
+      <div v-if="metricAggType === 'new term'">
+        <el-form
+          ref="form"
+          :model="$store.state.config.match"
+          label-position="top"
+          @submit.native.prevent>
+          <el-form-item label="Terms window">
+            <ElastalertTimePicker
+              id="termsWindowSize"
+              :unit="Object.keys(termsWindowSize)[0]"
+              :amount="Object.values(termsWindowSize)[0]"
+              @input="updateTermsWindowSize"/>
+            <label>
+              The amount of time used for the initial query to find existing terms.
+              No term that has occurred within this time frame will trigger an alert.
+              The default is 30 days.
+            </label>
+          </el-form-item>
+
+          <el-form-item label="Window step">
+            <ElastalertTimePicker
+              id="windowStepSize"
+              :unit="Object.keys(windowStepSize)[0]"
+              :amount="Object.values(windowStepSize)[0]"
+              @input="updateWindowStepSize"/>
+            <label>
+              When querying for existing terms, split up the time range into steps of this size.
+              For example, using the default 30 day window size, and the default 1 day step size,
+              30 invidivdual queries will be made.
+              This helps to avoid timeouts for very expensive aggregation queries.
+              The default is 1 day.
+            </label>
+          </el-form-item>
+
+          <el-form-item label="Alert on missing field">
+            <el-switch v-model="alertOnMissingField" />
+            <label>Whether or not to alert when a field is missing from a document.</label>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <div v-if="type === 'frequency' || type === 'flatline' || type === 'spike' || type === 'new_term'">
         <el-form
           ref="freqFlatlineOptions"
           :model="$store.state.config.match"
           label-position="top"
           @submit.native.prevent>
-          <el-form-item label="Use count query">
-            <el-switch
-              id="useCountQuery"
-              :disabled="useTermsQuery"
-              v-model="useCountQuery"
-              @input="refreshOptionsPop" />
-            <label>
-              If true, ElastAlert will poll Elasticsearch using the count api,
-              and not download all of the matching documents.
-              This is useful is you care only about numbers and not the actual data.
-              It should also be used if you expect a large number of query hits, in the order of
-              tens of thousands or more.
-            </label>
-          </el-form-item>
+          <template v-if="type !== 'new_term'">
+            <el-form-item label="Use count query">
+              <el-switch
+                id="useCountQuery"
+                :disabled="useTermsQuery"
+                v-model="useCountQuery"
+                @input="refreshOptionsPop" />
+              <label>
+                If true, ElastAlert will poll Elasticsearch using the count api,
+                and not download all of the matching documents.
+                This is useful is you care only about numbers and not the actual data.
+                It should also be used if you expect a large number of query hits, in the order of
+                tens of thousands or more.
+              </label>
+            </el-form-item>
+          </template>
 
-          <el-form-item v-if="type !== 'spike'" label="Use terms query">
+          <el-form-item v-if="type !== 'spike'" :class="{ 'm-n-sm': type === 'new_term' }" label="Use terms query">
             <el-switch :disabled="useCountQuery" v-model="useTermsQuery" @input="refreshOptionsPop" />
-            <label>
+            <label v-if="type === 'new_term'">
+              If true, ElastAlert will use aggregation queries to get terms instead of regular search queries.
+              This is faster than regular searching if there is a large number of documents.
+              <span v-if="useTermsQuery">
+                When using use_terms_query, make sure that the field you are using is not analyzed.
+                If it is, the results of each terms query may return tokens rather than full values.
+                ElastAlert will by default turn on use_keyword_postfix, which attempts to use the non-analyzed version
+                (.keyword or .raw) to gather initial terms. These will not match the partial values and result
+                in false positives.
+              </span>
+            </label>
+            <label v-else>
               If true, ElastAlert will make an aggregation query against Elasticsearch
               to get counts of documents matching each unique value of "query key". This
               must be used with "query key" and "doc type". This will only return a maximum
@@ -530,9 +587,24 @@
 
           <el-form-item v-if="useTermsQuery" label="Terms size">
             <el-input v-model="termsSize" type="number" />
-            <label>
+            <label v-if="type === 'new_term'">
+              This means that if a new term appears but there are at least this many terms which
+              appear more frequently, it will not be found. Default is 50.
+            </label>
+            <label v-else>
               When used with "use terms query", this is the maximum number of terms returned
               per query. Default is 50.
+            </label>
+          </el-form-item>
+
+          <el-form-item label="Use keyword postfix">
+            <el-switch id="useKeywordPostfix" v-model="useKeywordPostfix" />
+            <label>
+              If true, ElastAlert will automatically try to add .keyword (ES5+) or
+              .raw to the fields when making an initial query.
+              These are non-analyzed fields added by Logstash.
+              If the field used is analyzed, the initial query will return only the tokenized values,
+              potentially causing false positives. Defaults to true.
             </label>
           </el-form-item>
         </el-form>
@@ -745,6 +817,33 @@ export default {
       }
     },
 
+    termsWindowSize: {
+      get() {
+        return this.$store.state.config.match.termsWindowSize;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_TERMS_WINDOW_SIZE', value);
+      }
+    },
+
+    windowStepSize: {
+      get() {
+        return this.$store.state.config.match.windowStepSize;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_WINDOW_STEP_SIZE', value);
+      }
+    },
+
+    alertOnMissingField: {
+      get() {
+        return this.$store.state.config.match.alertOnMissingField;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_ALERT_ON_MISSING_FIELD', value);
+      }
+    },
+
     index() {
       return this.$store.state.config.settings.index;
     },
@@ -770,12 +869,21 @@ export default {
       }
     },
 
+    useKeywordPostfix: {
+      get() {
+        return this.$store.state.config.match.useKeywordPostfix;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_USE_KEYWORD_POSTFIX', value);
+      }
+    },
+
     showChart() {
       return !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
     },
 
     showOptions() {
-      let shouldShowOptions = ['field not in list', 'field changes'].includes(this.metricAggType);
+      let shouldShowOptions = ['field not in list', 'field changes', 'new term'].includes(this.metricAggType);
       let shouldShowOptionsSt =
         this.metricAggType === 'count' && this.spikeOrThreshold !== 'any';
 
@@ -784,7 +892,7 @@ export default {
 
     showPopOf() {
       return (
-        this.metricAggType !== 'count' &&
+        this.metricAggType !== 'count' && this.metricAggType !== 'new term' &&
         !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
       );
     },
@@ -792,12 +900,12 @@ export default {
     showPopOver() {
       return (
         this.spikeOrThreshold !== 'any' &&
-        !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
+        !['field changes', 'field in list', 'field not in list', 'new term'].includes(this.metricAggType)
       );
     },
 
     showPopAbove() {
-      return !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+      return !['field changes', 'field in list', 'field not in list', 'new term'].includes(this.metricAggType);
     },
 
     showPopCompare() {
@@ -805,7 +913,7 @@ export default {
     },
 
     showPopGroup() {
-      return this.metricAggType === 'field changes';
+      return this.metricAggType === 'field changes' || this.metricAggType === 'new term';
     },
 
     showPopBlacklist() {
@@ -818,7 +926,7 @@ export default {
 
     showTime() {
       return (
-        !['field in list', 'field not in list'].includes(this.metricAggType) &&
+        !['field in list', 'field not in list', 'new term'].includes(this.metricAggType) &&
         this.spikeOrThreshold !== 'any'
       );
     },
@@ -993,6 +1101,8 @@ export default {
       } else if (this.type === 'spike') {
         this.metricAggType = 'count';
         this.spikeOrThreshold = 'spike';
+      } else if (this.type === 'new_term') {
+        this.metricAggType = 'new term';
       }
 
       // if rule supports queryKey, set groupedOver to field
@@ -1015,8 +1125,9 @@ export default {
   },
 
   methods: {
-    handleUpdateData(ddd) {
-      this.bigBuckets = !!ddd.map(d => d.value).find(v => v > 10000);
+    handleUpdateData(data) {
+      if (!data) return;
+      this.bigBuckets = !!data.map(d => d.value).find(v => v > 10000);
     },
 
     changeGroupedOver() {
@@ -1295,6 +1406,14 @@ export default {
       this.timeframe = val;
     },
 
+    updateTermsWindowSize(val) {
+      this.termsWindowSize = val;
+    },
+
+    updateWindowStepSize(val) {
+      this.windowStepSize = val;
+    },
+
     updateAboveOrBelow(val) {
       if (val === 'above') {
         this.type = 'frequency';
@@ -1320,6 +1439,8 @@ export default {
       } else if (val === 'field not in list') {
         this.type = 'whitelist';
         this.compareKey = '';
+      } else if (val === 'new term') {
+        this.type = 'new_term';
       } else if (val === 'field changes') {
         this.type = 'change';
         this.compareKey = [];

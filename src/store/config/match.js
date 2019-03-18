@@ -17,7 +17,7 @@ function initialState() {
     numEvents: null,
     useCountQuery: false,
     useTermsQuery: false,
-    termsSize: null,
+    termsSize: 50,
 
     spikeHeight: null,
     spikeType: 'up',
@@ -29,7 +29,12 @@ function initialState() {
     maxThreshold: null,
     minThreshold: null,
 
-    threshold: null
+    threshold: null,
+
+    termsWindowSize: { days: 30 },
+    windowStepSize: { days: 1 },
+    alertOnMissingField: false,
+    useKeywordPostfix: true
   };
 }
 
@@ -374,6 +379,42 @@ export default {
 
     UPDATE_THRESHOLD(state, threshold) {
       state.threshold = parseFloat(threshold) || null;
+    },
+
+    //
+    // New Term
+    //
+
+    UPDATE_TERMS_WINDOW_SIZE(state, termsWindowSize) {
+      if (!termsWindowSize) return;
+
+      Vue.delete(state, 'termsWindowSize');
+
+      if (typeof termsWindowSize === 'object' && Object.keys(termsWindowSize).length) {
+        state.termsWindowSize = {
+          [Object.keys(termsWindowSize)[0]]: Object.values(termsWindowSize)[0]
+        };
+      }
+    },
+
+    UPDATE_WINDOW_STEP_SIZE(state, windowStepSize) {
+      if (!windowStepSize) return;
+
+      Vue.delete(state, 'windowStepSize');
+
+      if (typeof windowStepSize === 'object' && Object.keys(windowStepSize).length) {
+        state.windowStepSize = {
+          [Object.keys(windowStepSize)[0]]: Object.values(windowStepSize)[0]
+        };
+      }
+    },
+
+    UPDATE_ALERT_ON_MISSING_FIELD(state, value) {
+      state.alertOnMissingField = value;
+    },
+
+    UPDATE_USE_KEYWORD_POSTFIX(state, value) {
+      state.useKeywordPostfix = value;
     }
   }
 };

@@ -49,6 +49,6 @@ describe('RuleView', () => {
 
   it('renders the rule', () => {
     let app = wrapper.find('h1');
-    return expect(app.text()).to.equal('test123\n      Disabled');
+    return expect(app.text()).to.equal('test123\n        Disabled');
   });
 });

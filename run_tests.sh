@@ -1,6 +1,5 @@
 #!/bin/sh
 
-./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/AlertsLog.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alertText.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigAlert.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigCondition.spec.js &&

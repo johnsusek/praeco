@@ -116,6 +116,22 @@ export default {
         commit('match/UPDATE_COMPARE_KEY', config.compare_key);
         commit('match/UPDATE_TIMEFRAME', config.timeframe);
 
+        if (config.terms_window_size) {
+          commit('match/UPDATE_TERMS_WINDOW_SIZE', config.terms_window_size);
+        }
+
+        if (config.window_step_size) {
+          commit('match/UPDATE_WINDOW_STEP_SIZE', config.window_step_size);
+        }
+
+        if (config.alert_on_missing_field !== undefined) {
+          commit('match/UPDATE_ALERT_ON_MISSING_FIELD', !!config.alert_on_missing_field);
+        }
+
+        if (config.use_keyword_postfix !== undefined) {
+          commit('match/UPDATE_USE_KEYWORD_POSTFIX', !!config.use_keyword_postfix);
+        }
+
         if (config.type === 'change' && config.timeframe && Object.keys(config.timeframe).length) {
           commit('match/UPDATE_USE_TIMEFRAME', true);
         }
@@ -134,7 +150,10 @@ export default {
 
         commit('match/UPDATE_USE_TERMS_QUERY', config.use_terms_query);
         commit('match/UPDATE_USE_COUNT_QUERY', config.use_count_query);
-        commit('match/UPDATE_TERMS_SIZE', config.terms_size);
+
+        if (config.terms_size) {
+          commit('match/UPDATE_TERMS_SIZE', config.terms_size);
+        }
 
         commit('match/UPDATE_THRESHOLD_REF', config.threshold_ref);
         commit('match/UPDATE_THRESHOLD_CUR', config.threshold_cur);
@@ -313,6 +332,44 @@ export default {
       return config;
     },
 
+    newterm(state) {
+      let config = {};
+
+      if (state.match.queryKey) {
+        config.query_key = state.match.queryKey;
+      }
+
+      if (state.match.termsWindowSize && Object.keys(state.match.termsWindowSize).length) {
+        config.terms_window_size = state.match.termsWindowSize;
+      }
+
+      if (state.match.windowStepSize && Object.keys(state.match.windowStepSize).length) {
+        config.window_step_size = state.match.windowStepSize;
+      }
+
+      if (state.match.alertOnMissingField !== undefined) {
+        config.alert_on_missing_field = state.match.alertOnMissingField;
+      }
+
+      if (state.match.useKeywordPostfix !== undefined) {
+        config.use_keyword_postfix = state.match.useKeywordPostfix;
+      }
+
+      if (state.match.useTermsQuery) {
+        config.use_terms_query = state.match.useTermsQuery;
+
+        if (state.match.termsSize) {
+          config.terms_size = state.match.termsSize;
+        }
+
+        if (state.match.docType) {
+          config.doc_type = state.match.docType;
+        }
+      }
+
+      return config;
+    },
+
     spike(state) {
       let config = {};
 
@@ -466,13 +523,28 @@ export default {
     },
 
     queryString(state, getters) {
+      let qs = {
+        query: getters['query/queryString'] || `${state.settings.timeField}:*`
+      };
+
+      // the new term rule triggers a bug in elastalert
+      // so we need to slightly change the way queries are sent
+      // https://github.com/Yelp/elastalert/issues/1042
+      if (state.match.type === 'new_term') {
+        return {
+          filter: [
+            {
+              query_string: qs
+            }
+          ]
+        };
+      }
+
       return {
         filter: [
           {
             query: {
-              query_string: {
-                query: getters['query/queryString'] || `${state.settings.timeField}:*`
-              }
+              query_string: qs
             }
           }
         ]
@@ -690,6 +762,8 @@ export default {
         config = { ...config, ...getters.metricagg };
       } else if (state.match.type === 'spike') {
         config = { ...config, ...getters.spike };
+      } else if (state.match.type === 'new_term') {
+        config = { ...config, ...getters.newterm };
       }
 
       // Sort the keys in the object so it appears alphabetically in the UI
