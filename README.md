@@ -142,8 +142,6 @@ Make sure the channel/username you are trying to post to exists.
 
 ## Architecture details
 
-For those interested in how praeco works and what it is actually doing, this section is for you. 
-
 ![](https://user-images.githubusercontent.com/611996/52892144-90a19300-3155-11e9-8050-cb4a440411a4.png)
 
 Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [elastalert api](https://github.com/bitsensor/elastalert) (running in another docker container) to view/edit rules. 
