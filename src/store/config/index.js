@@ -188,8 +188,21 @@ export default {
           }
         }
 
-        commit('alert/UPDATE_CC', config.cc);
-        commit('alert/UPDATE_BCC', config.bcc);
+        if (config.cc) {
+          if (Array.isArray(config.cc)) {
+            commit('alert/UPDATE_CC', config.cc.join(','));
+          } else {
+            commit('alert/UPDATE_CC', config.cc);
+          }
+        }
+
+        if (config.bcc) {
+          if (Array.isArray(config.bcc)) {
+            commit('alert/UPDATE_BCC', config.bcc.join(','));
+          } else {
+            commit('alert/UPDATE_BCC', config.bcc);
+          }
+        }
 
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
@@ -599,11 +612,19 @@ export default {
       }
 
       if (state.alert.cc) {
-        config.cc = state.alert.cc;
+        if (typeof state.alert.cc === 'string') {
+          config.cc = state.alert.cc.split(',');
+        } else {
+          console.warn('Local cc state is not a string!');
+        }
       }
 
       if (state.alert.bcc) {
-        config.bcc = state.alert.bcc;
+        if (typeof state.alert.bcc === 'string') {
+          config.bcc = state.alert.bcc.split(',');
+        } else {
+          console.warn('Local bcc state is not a string!');
+        }
       }
 
       return config;
