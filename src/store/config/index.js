@@ -661,7 +661,7 @@ export default {
 
       if (state.alert.subject) {
         let formattedSubject = htmlToConfigFormat(state.alert.subject);
-        config.alert_subject = formattedSubject.alertText;
+        config.alert_subject = formattedSubject.alertText.trim();
         config.alert_subject_args = formattedSubject.alertArgs;
       }
 
