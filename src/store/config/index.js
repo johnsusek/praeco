@@ -178,7 +178,7 @@ export default {
 
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
-        commit('alert/UPDATE_REPLY_TO', config.reply_to);
+        commit('alert/UPDATE_REPLY_TO', config.email_reply_to);
 
         if (config.email) {
           if (Array.isArray(config.email)) {
@@ -600,7 +600,7 @@ export default {
       }
 
       if (state.alert.replyTo) {
-        config.reply_to = state.alert.replyTo;
+        config.email_reply_to = state.alert.replyTo;
       }
 
       if (state.alert.email) {

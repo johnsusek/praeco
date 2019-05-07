@@ -281,7 +281,7 @@
     </span>
 
     <el-dialog :visible.sync="popFilterVisible" :show-close="false" fullscreen>
-      <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">Done</el-button>
+      <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">Close</el-button>
       <ConfigQuery ref="query" class="config-query" />
     </el-dialog>
 
