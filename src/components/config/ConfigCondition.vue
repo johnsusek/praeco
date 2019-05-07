@@ -1076,9 +1076,11 @@ export default {
   mounted() {
     this.$nextTick(() => {
       if (this.type === 'frequency') {
+        this.spikeOrThreshold = 'is';
         this.aboveOrBelow = 'above';
         this.metricAggType = 'count';
       } else if (this.type === 'flatline') {
+        this.spikeOrThreshold = 'is';
         this.aboveOrBelow = 'below';
         this.metricAggType = 'count';
       } else if (this.type === 'any') {
