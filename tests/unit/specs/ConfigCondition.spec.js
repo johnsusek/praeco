@@ -5,39 +5,7 @@ import store from '@/store';
 import ConfigCondition from '@/components/config/ConfigCondition';
 import { mountComponent, mockAxios } from '../setup';
 import mockChartData from '../mockData/chartData.json';
-
-let ruleYaml = `__praeco_query_builder: '{"query":{"logicalOperator":"all","children":[]}}'
-alert:
-  - slack
-alert_subject: test subject
-alert_subject_args: []
-alert_text: test body
-alert_text_args: []
-alert_text_type: alert_text_only
-doc_type: syslog
-filter:
-  - query:
-      query_string:
-        query: '@timestamp:*'
-import: BaseRule.config
-index: hannibal-*
-is_enabled: false
-name: test123
-num_events: 10000
-realert:
-  minutes: 5
-slack_channel_override: '#elastalert-debugging'
-slack_msg_color: danger
-slack_title_link: 'http://localhost:8080/rules/test123'
-slack_username_override: Praeco
-timeframe:
-  minutes: 5
-timestamp_field: '@timestamp'
-timestamp_type: iso
-type: frequency
-use_count_query: true
-use_strftime_index: false
-`;
+import { ruleYaml } from '../mockData/ruleData.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 mockAxios.onPost('/api/search/hannibal-*').reply(200, mockChartData);

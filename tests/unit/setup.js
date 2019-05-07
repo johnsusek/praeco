@@ -21,7 +21,8 @@ export function mountComponent(comp, opts = {}) {
   localVue.use(Vuex);
 
   return mount(comp, {
-    attachToDocument: true,
+    attachToDocument: false,
+    sync: false,
     localVue,
     router,
     store,
@@ -36,7 +37,8 @@ export function shallowMountComponent(comp, opts = {}) {
   localVue.use(Vuex);
 
   return shallowMount(comp, {
-    attachToDocument: true,
+    attachToDocument: false,
+    sync: false,
     localVue,
     router,
     store,
@@ -67,4 +69,6 @@ class MutationObserver {
 }
 
 global.MutationObserver = MutationObserver;
+
+global.window.getSelection = function() {};
 

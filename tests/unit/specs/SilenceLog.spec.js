@@ -6,25 +6,20 @@ import { mountComponent, mockAxios } from '../setup';
 mockAxios.onGet('/api/metadata/silence').reply(200, mockSilenceLog);
 
 describe('Silences log', () => {
-  let wrapper = mountComponent(Silences);
+  it('renders the silence log correctly', (done) => {
+    let wrapper = mountComponent(Silences);
 
-  it('renders the rule', () => {
-    let tableRow = wrapper.find('.el-table__body-wrapper > table > tbody > tr:nth-child(2)');
-    return expect(tableRow.find('.el-table_1_column_1').text()).to.equal('avgexample');
-  });
+    wrapper.setData({
+      silenceLog: mockSilenceLog.hits
+    });
 
-  it('renders the until', () => {
-    let tableRow = wrapper.find('.el-table__body-wrapper > table > tbody > tr:nth-child(2)');
-    return expect(tableRow.find('.el-table_1_column_2').text()).to.not.be.empty;
-  });
-
-  it('renders the timestamp', () => {
-    let tableRow = wrapper.find('.el-table__body-wrapper > table > tbody > tr:nth-child(2)');
-    return expect(tableRow.find('.el-table_1_column_3').text()).to.not.be.empty;
-  });
-
-  it('renders the exponent', () => {
-    let tableRow = wrapper.find('.el-table__body-wrapper > table > tbody > tr:nth-child(2)');
-    return expect(tableRow.find('.el-table_1_column_4').text()).to.equal('0');
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.find('table.el-table__body tr:nth-child(2) td:nth-child(1)').text()).to.equal('avgexample');
+      expect(wrapper.find('table.el-table__body tr:nth-child(2) td:nth-child(2)').text()).to.not.be.empty;
+      expect(wrapper.find('table.el-table__body tr:nth-child(2) td:nth-child(3)').text()).to.not.be.empty;
+      expect(wrapper.find('table.el-table__body tr:nth-child(2) td:nth-child(4)').text()).to.equal('0');
+      wrapper.destroy();
+      done();
+    });
   });
 });

@@ -7,6 +7,7 @@ module.exports = {
     'max-len': ['error', { ignoreStrings: true, code: 120 }],
     'no-irregular-whitespace': 'off',
     'no-return-assign': 'off',
+    'no-unused-expressions': 'off',
     'arrow-body-style': 'off'
   }
 };

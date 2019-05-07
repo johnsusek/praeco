@@ -9,7 +9,7 @@
     "test": "vue-cli-service test:e2e --headless",
     "test:coverage": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test:unit",
     "test:unit": "vue-cli-service test:unit",
-    "test:watch": "vue-cli-service test:unit -g 'Current.*' --watch",
+    "test:watch": "vue-cli-service test:unit --watch",
     "test:coverage:watch": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test:watch",
     "test:e2e": "vue-cli-service test:e2e"
   },
@@ -30,7 +30,7 @@
     "cron-ui": "1.0.3",
     "debounce": "1.2.0",
     "echarts": "4.1.0",
-    "element-ui": "2.4.11",
+    "element-ui": "2.8.2",
     "emoji-mart-vue": "2.6.4",
     "js-yaml": "3.12.0",
     "later": "1.2.0",

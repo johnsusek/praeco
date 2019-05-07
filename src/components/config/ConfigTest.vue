@@ -4,8 +4,8 @@
       <span slot="reference">
         <el-button v-if="!testRunLoading" type="primary" plain size="medium">
           Test
-          <i v-if="!testPopoverVisible" class="el-icon-arrow-down el-icon-right" />
-          <i v-if="testPopoverVisible" class="el-icon-arrow-up el-icon-right" />
+          <i v-if="!testPopoverVisible" class="el-icon-caret-bottom el-icon-right" />
+          <i v-if="testPopoverVisible" class="el-icon-caret-top el-icon-right" />
         </el-button>
         <el-button v-else type="primary" plain disabled size="medium">Testing...</el-button>
       </span>

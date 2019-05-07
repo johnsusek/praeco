@@ -1,3 +1,8 @@
+*, :before, :after {
+  transition: none !important;
+}
+   
+ 
 .el-message-box,
 .el-dialog,
 .el-card,
@@ -122,6 +127,7 @@ label.mini,
 
 .el-alert .el-alert__description {
   margin-top: 0;
+  font-size: 13px;
 }
 
 .el-alert__title {
@@ -287,4 +293,13 @@ h1 .el-tag {
 
 .el-main {
   position: relative;
+}
+
+//
+// Radio/Checkbox
+//
+
+.el-radio,
+.el-checkbox {
+  margin-right: 0;
 }
