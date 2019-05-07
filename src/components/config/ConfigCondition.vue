@@ -695,7 +695,7 @@ export default {
       groupedOver: 'all',
       popAboveVisible: false,
       aboveOrBelow: 'above',
-      spikeOrThreshold: 'is',
+      spikeOrThreshold: 'any',
       popOfValid: true,
       popOverValid: true,
       popCompareValid: true,
@@ -888,7 +888,6 @@ export default {
 
     showPopOver() {
       return (
-        this.spikeOrThreshold !== 'any' &&
         !['field changes', 'field in list', 'field not in list', 'new term'].includes(this.metricAggType)
       );
     },
