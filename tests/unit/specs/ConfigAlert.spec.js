@@ -19,6 +19,8 @@ async function prep() {
 let wrapper;
 
 describe('ConfigAlert', () => {
+  this.timeout(5000);
+
   it('renders the realert amount', async () => {
     wrapper = await prep();
     let value = wrapper.find('#realert input[min="0"]').element.value;
