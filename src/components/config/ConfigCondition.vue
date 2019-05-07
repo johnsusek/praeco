@@ -61,12 +61,14 @@
           @change="changeGroupedOver">
           All documents
         </el-radio>
+
         <el-radio
           id="groupedOverField"
           v-model="groupedOver"
           label="field"
           border
           @change="changeGroupedOver">Field</el-radio>
+
         <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
           <el-form ref="overall" :model="$store.state.config.match">
             <el-form-item label="" prop="docType" required>
@@ -93,24 +95,20 @@
                 class="el-select-wide m-n-sm"
                 style="width: 280px"
                 @input="popOverVisible = false; validate();">
-                <el-option-group label="Date">
-                  <el-option
-                    v-for="field in Object.keys(dateFields)"
-                    :key="field"
-                    :label="field"
-                    :value="field" />
-                </el-option-group>
-                <el-option-group label="Text">
-                  <el-option
-                    v-for="field in Object.keys(textFields)"
-                    :key="field"
-                    :label="field"
-                    :value="field" />
-                </el-option-group>
+                <el-option
+                  v-for="field in Object.keys(fieldsForAgg)"
+                  :key="field"
+                  :label="field"
+                  :value="field" />
               </el-select>
             </el-form-item>
           </el-form>
         </div>
+
+        <label class="m-n-xs mini">
+          Rules grouped over a field will measure <br>
+          and send alerts separately for each group.
+        </label>
       </div>
     </el-popover>
 
@@ -177,20 +175,11 @@
             class="el-select-wide"
             style="width: 280px"
             @input="popGroupVisible = false; validate();">
-            <el-option-group label="Date">
-              <el-option
-                v-for="field in Object.keys(dateFields)"
-                :key="field"
-                :label="field"
-                :value="field" />
-            </el-option-group>
-            <el-option-group label="Text">
-              <el-option
-                v-for="field in Object.keys(textFields)"
-                :key="field"
-                :label="field"
-                :value="field" />
-            </el-option-group>
+            <el-option
+              v-for="field in Object.keys(fieldsForAgg)"
+              :key="field"
+              :label="field"
+              :value="field" />
           </el-select>
           <label v-if="metricAggType === 'field changes'">Field change will be checked per-group.</label>
         </el-form-item>
@@ -1074,6 +1063,10 @@ export default {
 
     fields() {
       return this.$store.getters['metadata/fieldsForCurrentConfig'];
+    },
+
+    fieldsForAgg() {
+      return this.$store.getters['metadata/aggFieldsForCurrentConfig'];
     },
 
     defaultFilter() {

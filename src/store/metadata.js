@@ -3,14 +3,29 @@ import axios from 'axios';
 import { formatIndex, buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
 import networkError from '../lib/networkError.js';
 
-function buildObjectFields(fields, prefix) {
+function buildObjectFields(fields, prefix, addNonAnalyzedFields) {
   let objectFields = {};
 
   Object.entries(fields).forEach(([name, field]) => {
     if (field.type) {
       objectFields[`${prefix}.${name}`] = field;
+
+      // there is a field.fields, which contains e.g. keyword or raw suffixes
+      // required for aggregation
+      if (addNonAnalyzedFields && field.fields) {
+        // loop through each field.fields, adding an additional entry
+        // for it to our main list of fields
+        Object.entries(field.fields).forEach(([suffixFieldName, suffixFieldValue]) => {
+          if (suffixFieldValue.type === 'keyword') {
+            objectFields[`${prefix}.${name}.${suffixFieldName}`] = field;
+          }
+        });
+      }
     } else if (field.properties) {
-      objectFields = { ...objectFields, ...buildObjectFields(field.properties, `${prefix}.${name}`) };
+      objectFields = {
+        ...objectFields,
+        ...buildObjectFields(field.properties, `${prefix}.${name}`, addNonAnalyzedFields)
+      };
     }
   });
 
@@ -133,6 +148,40 @@ export default {
             fields[name] = field;
           } else if (field.properties) {
             fields = { ...fields, ...buildObjectFields(field.properties, name) };
+          }
+        });
+      }
+
+      return fields;
+    },
+
+    aggFieldsForCurrentConfig: (state, getters, rootState) => {
+      let index = rootState.config.settings.index;
+      let mappings = state.mappings[formatIndex(index)];
+
+      if (!mappings) {
+        return {};
+      }
+
+      let fields = {};
+
+      if (mappings.fields) {
+        Object.entries(mappings.fields).forEach(([name, field]) => {
+          if (field.type) {
+            fields[name] = field;
+            // there is a field.fields, which contains e.g. keyword or raw suffixes
+            // required for aggregation
+            if (field.fields) {
+              // loop through each field.fields, adding an additional entry
+              // for it to our main list of fields
+              Object.entries(field.fields).forEach(([suffixFieldName, suffixFieldValue]) => {
+                if (suffixFieldValue.type === 'keyword') {
+                  fields[`${name}.${suffixFieldName}`] = field;
+                }
+              });
+            }
+          } else if (field.properties) {
+            fields = { ...fields, ...buildObjectFields(field.properties, name, true) };
           }
         });
       }

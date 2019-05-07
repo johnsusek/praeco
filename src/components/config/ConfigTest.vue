@@ -85,7 +85,6 @@
 
 <script>
 import moment from 'moment-timezone';
-import { logger } from '@/lib/logger.js';
 
 export default {
   props: ['valid'],
@@ -142,7 +141,6 @@ export default {
         try {
           this.testRunResult = JSON.parse(payload.data);
         } catch (error) {
-          logger().error({ error: payload.data });
           this.testRunError = payload.data;
         } finally {
           this.testRunLoading = false;

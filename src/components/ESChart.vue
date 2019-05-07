@@ -315,7 +315,7 @@ export default {
         aggs = {
           group_by_field: {
             terms: {
-              field: `${this.groupBy}.keyword`
+              field: this.groupBy
             },
             aggs: this.byMinuteAgg
           }

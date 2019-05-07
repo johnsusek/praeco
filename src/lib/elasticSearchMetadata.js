@@ -25,7 +25,24 @@ export function buildMappingFields(mapping) {
     .forEach(mping => {
       Object.values(mping).forEach(mp => {
         Object.entries(mp.properties).forEach(prop => {
-          fields[prop[0]] = prop[1];
+          let name = prop[0];
+          let field = fields[name];
+          let value = prop[1];
+
+          if (field) {
+            // this field already exists in our mapping,
+            // merge in extra fields (.raw, .keyword)
+            // if they exist
+            if (value.fields) {
+              Object.entries(value.fields).forEach(([vfName, vfValue]) => {
+                // vfName will be something like 'raw'
+                if (!field.fields) field.fields = {};
+                field.fields[vfName] = vfValue;
+              });
+            }
+          } else {
+            fields[name] = value;
+          }
         });
       });
     });
