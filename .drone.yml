@@ -1,5 +1,11 @@
 ---
 pipeline:  
+  test:
+    image: node:lts
+    commands:
+      - npm install
+      - npm run test:unit
+
   # publish to public registry
   hubpublish:
     image: plugins/docker
