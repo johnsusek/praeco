@@ -104,11 +104,6 @@
             </el-form-item>
           </el-form>
         </div>
-
-        <label class="m-n-xs mini">
-          Rules grouped over a field will measure <br>
-          and send alerts separately for each group.
-        </label>
       </div>
     </el-popover>
 
