@@ -2,7 +2,7 @@ import Vue from 'vue';
 
 function initialState() {
   return {
-    type: 'frequency',
+    type: 'any',
 
     blacklist: [],
     whitelist: [],
