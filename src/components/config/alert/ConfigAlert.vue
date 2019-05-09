@@ -28,7 +28,9 @@
           <label v-else>
             You will receive, at most, one alert every
             {{ realert.minutes }} minute(s), even if a rule
-            triggers multiple times within that timeframe
+            triggers multiple times within that timeframe.
+            <br>
+            If the rule is grouped over a field, this option will be applied on a per-group basis.
           </label>
         </el-form-item>
       </el-col>

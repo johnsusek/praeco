@@ -338,19 +338,11 @@ export default {
         config.min_threshold = state.match.minThreshold;
       }
 
-      if (state.match.queryKey) {
-        config.query_key = state.match.queryKey;
-      }
-
       return config;
     },
 
     newterm(state) {
       let config = {};
-
-      if (state.match.queryKey) {
-        config.query_key = state.match.queryKey;
-      }
 
       if (state.match.termsWindowSize && Object.keys(state.match.termsWindowSize).length) {
         config.terms_window_size = state.match.termsWindowSize;
@@ -420,10 +412,6 @@ export default {
     frequency(state) {
       let config = {};
 
-      if (state.match.queryKey) {
-        config.query_key = state.match.queryKey;
-      }
-
       if (state.match.docType) {
         config.doc_type = state.match.docType;
       }
@@ -453,10 +441,6 @@ export default {
 
     flatline(state) {
       let config = {};
-
-      if (state.match.queryKey) {
-        config.query_key = state.match.queryKey;
-      }
 
       if (state.match.docType) {
         config.doc_type = state.match.docType;
@@ -490,10 +474,6 @@ export default {
 
       if (state.match.compareKey) {
         config.compare_key = state.match.compareKey;
-      }
-
-      if (state.match.queryKey) {
-        config.query_key = state.match.queryKey;
       }
 
       if (state.match.useTimeframe && state.match.timeframe && Object.keys(state.match.timeframe).length) {
@@ -738,6 +718,10 @@ export default {
       config.is_enabled = !!state.settings.isEnabled;
 
       config.use_strftime_index = getters['settings/strftime'];
+
+      if (state.match.queryKey) {
+        config.query_key = state.match.queryKey;
+      }
 
       if (state.match.type) {
         config.type = state.match.type;

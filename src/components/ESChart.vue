@@ -18,7 +18,7 @@
             v-for="(group, index) in groups"
             v-model="activeGroupIndex"
             :key="index"
-            :label="group.key"
+            :label="group.key.toString()"
             :name="index.toString()">
             <v-chart
               v-loading="loading"

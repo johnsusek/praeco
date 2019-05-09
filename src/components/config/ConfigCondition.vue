@@ -104,6 +104,10 @@
             </el-form-item>
           </el-form>
         </div>
+
+        <label class="m-n-xs mini">
+          Grouping over a field changes the re-alert<br> behavior to apply on a pre-group basis.
+        </label>
       </div>
     </el-popover>
 
@@ -1097,7 +1101,7 @@ export default {
       // if rule supports queryKey, set groupedOver to field
       if (
         this.queryKey &&
-        ['metric_aggregation', 'frequency', 'flatline',
+        ['metric_aggregation', 'frequency', 'flatline', 'any',
           'change', 'spike', 'flatline'].includes(this.type)
       ) {
         this.groupedOver = 'field';
