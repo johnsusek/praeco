@@ -627,7 +627,7 @@
     </el-popover>
 
     <el-alert
-      v-if="bigBuckets && !useCountQuery && metricAggType === 'count'"
+      v-if="bigBuckets && !useCountQuery && metricAggType === 'count' && spikeOrThreshold !== 'any'"
       :closable="false"
       class="m-n-med"
       type="warning"
