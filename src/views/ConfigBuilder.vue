@@ -17,7 +17,10 @@
       <hr>
 
       <el-row>
-        <ConfigTest :valid="valid" class="m-e-sm" @validate="validateForTest" />
+        <ConfigTest
+          :valid="valid"
+          class="m-e-sm"
+          @validateForTest="validateForTest" />
 
         <div class="save-button">
           <el-button v-if="!saving" type="primary" size="medium" @click="save">Save</el-button>
@@ -148,17 +151,19 @@ export default {
       }
     },
 
-    async validateForTest() {
-      if (!(await this.validateBuilder())) {
+    async validateForTest(realAlerts) {
+      if (!(await this.validateBuilder({ skipAlertValidation: !realAlerts }))) {
         this.$message.warning('Please fill out all required fields before testing.');
       }
     },
 
-    async validateBuilder() {
+    async validateBuilder({ skipAlertValidation = false }) {
       try {
         await this.$refs.settings.$refs.form.validate();
-        await this.$refs.alert.$refs.form.validate();
-        await this.$refs.alert.$refs.subjectBody.$refs.form.validate();
+        if (!skipAlertValidation) {
+          await this.$refs.alert.$refs.form.validate();
+          await this.$refs.alert.$refs.subjectBody.$refs.form.validate();
+        }
       } catch (error) {
         this.valid = false;
         return false;

@@ -165,7 +165,8 @@ export default {
 
     runTest() {
       this.testPopoverVisible = false;
-      this.$emit('validate');
+
+      this.$emit('validateForTest', this.realAlerts);
 
       this.$nextTick(() => {
         if (!this.valid) return;
