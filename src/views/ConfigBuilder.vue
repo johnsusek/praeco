@@ -152,12 +152,12 @@ export default {
     },
 
     async validateForTest(realAlerts) {
-      if (!(await this.validateBuilder({ skipAlertValidation: !realAlerts }))) {
+      if (!(await this.validateBuilder(!realAlerts))) {
         this.$message.warning('Please fill out all required fields before testing.');
       }
     },
 
-    async validateBuilder({ skipAlertValidation = false }) {
+    async validateBuilder(skipAlertValidation = false) {
       try {
         await this.$refs.settings.$refs.form.validate();
         if (!skipAlertValidation) {
