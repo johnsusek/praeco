@@ -117,6 +117,7 @@ export default {
     },
 
     templateFieldsForCurrentConfig: (state, getters, rootState) => {
+      let templateFields = [];
       let fields = {};
 
       // if using "grouped over field", only allow for the grouped field (queryKey)
@@ -129,7 +130,19 @@ export default {
       }
 
       fields = getters.fieldsForCurrentConfig;
-      return fields;
+
+      // Handle JSON fields with dot notation
+      Object.entries(fields).forEach(([field, mapping]) => {
+        if (mapping.properties) {
+          Object.entries(mapping.properties).forEach(([f]) => {
+            templateFields.push(`${field}.${f}`);
+          });
+        } else {
+          templateFields.push(field);
+        }
+      });
+
+      return templateFields;
     },
 
     fieldsForCurrentConfig: (state, getters, rootState) => {

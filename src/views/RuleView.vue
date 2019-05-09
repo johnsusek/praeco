@@ -62,8 +62,8 @@
               plain
               type="warning">
               Silence
-              <i v-if="!silencePopoverVisible" class="el-icon-arrow-down el-icon-right" />
-              <i v-if="silencePopoverVisible" class="el-icon-arrow-up el-icon-right" />
+              <i v-if="!silencePopoverVisible" class="el-icon-caret-bottom el-icon-right" />
+              <i v-if="silencePopoverVisible" class="el-icon-caret-top el-icon-right" />
             </el-button>
           </span>
           <template>

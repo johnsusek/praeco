@@ -134,23 +134,9 @@ export default {
     },
 
     fields() {
-      let fields = [];
-      let mappingFields = this.$store.getters[
+      return this.$store.getters[
         'metadata/templateFieldsForCurrentConfig'
       ];
-
-      // Handle JSON fields with dot notation
-      Object.entries(mappingFields).forEach(([field, mapping]) => {
-        if (mapping.properties) {
-          Object.entries(mapping.properties).forEach(([f]) => {
-            fields.push(`${field}.${f}`);
-          });
-        } else {
-          fields.push(field);
-        }
-      });
-
-      return fields;
     }
   },
 
