@@ -16,7 +16,8 @@
             v-model="subject"
             :members="fields"
             :allow-spaces="false"
-            at="%">
+            at="%"
+            @paste.native="pastePlainText">
             <span slot="embeddedItem" slot-scope="s">
               <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
             </span>
@@ -34,7 +35,8 @@
             v-model="body"
             :members="fields"
             :allow-spaces="false"
-            at="%">
+            at="%"
+            @paste.native="pastePlainText">
             <span slot="embeddedItem" slot-scope="s">
               <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
             </span>
@@ -157,7 +159,13 @@ export default {
   methods: {
     sampleDebounced: debounce(function() {
       this.$store.dispatch('config/sample');
-    }, 750)
+    }, 750),
+
+    pastePlainText(e) {
+      e.preventDefault();
+      let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+      document.execCommand('insertHTML', false, text);
+    }
   }
 };
 </script>
