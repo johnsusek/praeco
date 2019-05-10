@@ -12,9 +12,9 @@
           <el-menu-item index="sum">sum</el-menu-item>
           <el-menu-item index="min">min</el-menu-item>
           <el-menu-item index="max">max</el-menu-item>
-          <el-menu-item index="field in list">field in list</el-menu-item>
-          <el-menu-item index="field not in list">field not in list</el-menu-item>
-          <el-menu-item index="field changes">field changes</el-menu-item>
+          <el-menu-item index="field in list">field value in list</el-menu-item>
+          <el-menu-item index="field not in list">field value not in list</el-menu-item>
+          <el-menu-item index="field changes">field value changes</el-menu-item>
           <el-menu-item index="new term">new term</el-menu-item>
         </el-menu>
       </div>
@@ -383,7 +383,7 @@
       </div>
 
       <div v-else>
-        <el-form ref="aboveOrBelow" :rules="aboveOrBelowRules" :model="$store.state.config.match" label-width="60px">
+        <el-form ref="minMaxThreshold" :rules="minMaxThresholdRules" :model="$store.state.config.match" label-width="60px">
           <el-form-item label="Above" prop="maxThreshold">
             <el-input id="maxThreshold" v-model="maxThreshold" min="1" type="number" @change="validate" />
           </el-form-item>
@@ -703,7 +703,7 @@ export default {
       popWhitelistValid: true,
       popAboveValid: true,
       popOptionsValid: true,
-      aboveOrBelowRules: {
+      minMaxThresholdRules: {
         maxThreshold: [
           { validator: this.validateMaxThreshold, trigger: 'change' }
         ],
@@ -1166,8 +1166,30 @@ export default {
           await this.validateFreqFlatlineOptions();
         }
 
-        let aboveValid = await this.validateAbove();
-        if (!aboveValid) return false;
+        if (this.$refs.spikeOrThreshold) {
+          try {
+            await this.$refs.spikeOrThreshold.validate();
+            this.popAboveValid = true;
+          } catch (error) {
+            this.popAboveValid = false;
+            throw error;
+          }
+        }
+
+        if (this.$refs.minMaxThreshold) {
+          try {
+            await this.$refs.minMaxThreshold.validate();
+            this.popAboveValid = true;
+          } catch (error) {
+            this.popAboveValid = false;
+            throw error;
+          }
+        }
+
+        // For "IS NOT EMPTY", or conditions without an "IS" dropdown, validate as true
+        if ((this.spikeOrThreshold === 'any' || !this.$refs.spikeOrThreshold) && !this.$refs.minMaxThreshold) {
+          this.popAboveValid = true;
+        }
 
         this.$emit('validate', true);
         return true;
@@ -1209,31 +1231,6 @@ export default {
         this.popCompareValid = false;
         throw error;
       }
-    },
-
-    async validateAbove() {
-      let stValid = true;
-      let abValid = true;
-
-      if (this.$refs.spikeOrThreshold) {
-        try {
-          stValid = await this.$refs.spikeOrThreshold.validate();
-        } catch (error) {
-          stValid = false;
-        }
-      }
-
-      if (this.$refs.aboveOrBelow) {
-        try {
-          abValid = await this.$refs.aboveOrBelow.validate();
-        } catch (error) {
-          abValid = false;
-        }
-      }
-
-      this.popAboveValid = stValid && abValid;
-
-      return this.popAboveValid;
     },
 
     async validateBlacklist() {
