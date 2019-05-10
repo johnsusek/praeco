@@ -126,10 +126,9 @@ export default {
         (rootState.config.match.type === 'frequency' || rootState.config.match.type === 'flatline')
       ) {
         fields[rootState.config.match.queryKey] = rootState.config.match.queryKey;
-        return fields;
+      } else {
+        fields = getters.fieldsForCurrentConfig;
       }
-
-      fields = getters.fieldsForCurrentConfig;
 
       // Handle JSON fields with dot notation
       Object.entries(fields).forEach(([field, mapping]) => {
