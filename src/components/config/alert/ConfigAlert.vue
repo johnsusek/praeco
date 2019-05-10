@@ -405,6 +405,13 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+// If we don't do this, the autocomplete dropdown gets cut off
+.el-tabs__content {
+  overflow: visible;
+}
+</style>
+
 <style lang="scss">
 .disabled {
   .emoji-mart {
@@ -441,6 +448,11 @@ export default {
   max-height: 220px;
   height: 220px;
   margin-bottom: -245px;
+}
+
+// Fix issue where clicking on label of dropdown didn't register
+.atwho-li span {
+  pointer-events: none;
 }
 
 :not(.is-disabled) {

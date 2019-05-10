@@ -60,26 +60,30 @@
         </el-form-item>
       </el-col>
 
-      <el-col :span="12">
+      <el-col :span="12" class="preview-container">
         <h6 class="m-n-xs">Subject preview</h6>
         <div class="preview">{{ $store.getters['config/alert/subjectRendered'] }}</div>
 
-        <h6>Body preview</h6>
+        <h6 class="m-n-lg">Body preview</h6>
         <div v-if="summaryTableFields.length" type="info"><em>(Summary table)</em></div>
 
         <div class="preview">{{ $store.getters['config/alert/bodyRendered'] }}</div>
+        <br v-if="$store.getters['config/alert/bodyRendered']">
 
-        <div
-          v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
-          type="info">
-          <em>(Trigger details)</em>
+        <div class="preview">
+          <div
+            v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
+            type="info">
+            <em>(Trigger details)</em>
+          </div>
+          <div
+            v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
+            type="info">
+            <em>(Top counts)</em>
+          </div>
+          <div v-if="bodyType === 'default'" type="info"><em>(Field values)</em></div>
         </div>
-        <div
-          v-if="bodyType === 'default' || bodyType === 'exclude_fields'"
-          type="info">
-          <em>(Top counts)</em>
         </div>
-        <div v-if="bodyType === 'default'" type="info"><em>(Field values)</em></div>
       </el-col>
     </el-row>
 
@@ -159,9 +163,15 @@ export default {
 </script>
 
 <style scoped>
+.preview-container {
+  padding: 25px 0;
+  background: #eee;
+}
+
 .preview {
   white-space: pre-wrap;
   line-height: 1.3;
+  font-family: monospace;
 }
 
 .el-select {
@@ -208,6 +218,10 @@ export default {
 
 .el-card {
   margin-bottom: 20px;
+}
+
+h6 {
+  font-size: 13px;
 }
 </style>
 
