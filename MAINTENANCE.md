@@ -9,7 +9,7 @@
 
 ## Praeco
 
-- Run tests
+- `npm run test:unit`
 - Bump version number in package.json, if not already done
 - Push to master
 - (Drone will create/push docker image)
