@@ -38,7 +38,7 @@
             placeholder="Select field"
             @input="popCardinalityVisible = false; validate();">
             <el-option
-              v-for="field in Object.keys(fields)"
+              v-for="field in Object.keys(fieldsForAgg)"
               :key="field"
               :label="field"
               :value="field" />
@@ -732,6 +732,7 @@
       :spike-height="$store.getters['config/match/spikeHeight']"
       :show-axis-pointer="false"
       :group-by="groupedOver === 'field' && queryKey"
+      :agg-cardinality="metricAggType === 'cardinality' && cardinalityField"
       :agg-avg="metricAggType === 'avg' && metricAggKey"
       :agg-sum="metricAggType === 'sum' && metricAggKey"
       :agg-min="metricAggType === 'min' && metricAggKey"

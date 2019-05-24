@@ -30,8 +30,8 @@ function initialState() {
     minThreshold: null,
 
     cardinalityField: null,
-    maxCardinality: null,
     minCardinality: null,
+    maxCardinality: null,
 
     threshold: null,
 
@@ -59,6 +59,8 @@ export default {
         return getters.markLineFlatline;
       } else if (state.type === 'metric_aggregation') {
         return getters.markLineMetricAggregation;
+      } else if (state.type === 'cardinality') {
+        return getters.markLineCardinality;
       }
     },
 
@@ -66,6 +68,53 @@ export default {
       if (state.type === 'spike') {
         return state.spikeHeight;
       }
+    },
+
+    markLineCardinality(state) {
+      let data = [];
+
+      if (state.minCardinality) {
+        data.push({
+          name: 'Minimum cardinality',
+          yAxis: state.minCardinality,
+          lineStyle: {
+            color: '#F56C6C'
+          },
+          label: {
+            formatter: 'Minimum cardinality',
+            position: 'middle',
+            color: '#F56C6C',
+            fontSize: 14
+          }
+        });
+      }
+
+      if (state.maxCardinality) {
+        data.push({
+          name: 'Maximum cardinality',
+          yAxis: state.maxCardinality,
+          lineStyle: {
+            color: '#F56C6C'
+          },
+          label: {
+            formatter: 'Maximum cardinality',
+            position: 'middle',
+            color: '#F56C6C',
+            fontSize: 14
+          }
+        });
+      }
+
+      return {
+        silent: true,
+        lineStyle: {
+          color: '#F56C6C',
+          type: 'solid'
+        },
+        animation: false,
+        symbol: 'none',
+        data
+      };
     },
 
     markLineSpike(state) {
@@ -76,16 +125,12 @@ export default {
           name: 'Threshold (reference)',
           yAxis: state.thresholdRef,
           lineStyle: {
-            color: 'red'
+            color: '#F56C6C'
           },
           label: {
             formatter: `Threshold (reference) - ${state.thresholdRef}`,
             position: 'middle',
-            color: 'red',
-            textBorderColor: 'white',
-            textShadowColor: 'white',
-            textShadowBlur: 1,
-            textBorderWidth: 2,
+            color: '#F56C6C',
             fontSize: 14
           }
         });
@@ -100,10 +145,6 @@ export default {
             position: 'middle',
             color: 'green',
             fontWeight: 'bold',
-            textBorderColor: 'white',
-            textShadowColor: 'white',
-            textShadowBlur: 1,
-            textBorderWidth: 2,
             fontSize: 14
           }
         });
@@ -126,7 +167,7 @@ export default {
         return {
           silent: true,
           lineStyle: {
-            color: 'red',
+            color: '#F56C6C',
             type: 'solid'
           },
           animation: false,
@@ -151,7 +192,7 @@ export default {
         return {
           silent: true,
           lineStyle: {
-            color: 'red',
+            color: '#F56C6C',
             type: 'solid'
           },
           animation: false,
@@ -179,16 +220,12 @@ export default {
           name: 'Above',
           yAxis: state.maxThreshold,
           lineStyle: {
-            color: 'red'
+            color: '#F56C6C'
           },
           label: {
             formatter: `Above - ${state.maxThreshold}`,
             position: 'middle',
-            color: 'red',
-            textBorderColor: 'white',
-            textShadowColor: 'white',
-            textShadowBlur: 1,
-            textBorderWidth: 2,
+            color: '#F56C6C',
             fontSize: 14
           }
         });
@@ -203,10 +240,6 @@ export default {
             position: 'middle',
             color: 'green',
             fontWeight: 'bold',
-            textBorderColor: 'white',
-            textShadowColor: 'white',
-            textShadowBlur: 1,
-            textBorderWidth: 2,
             fontSize: 14
           }
         });

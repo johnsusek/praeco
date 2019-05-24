@@ -123,7 +123,8 @@ export default {
     'aggAvg',
     'aggSum',
     'aggMin',
-    'aggMax'
+    'aggMax',
+    'aggCardinality'
   ],
 
   data() {
@@ -262,6 +263,14 @@ export default {
             }
           }
         };
+      } else if (this.aggCardinality) {
+        aggs = {
+          type_count: {
+            cardinality: {
+              field: this.aggCardinality
+            }
+          }
+        };
       }
 
       return aggs;
@@ -333,6 +342,10 @@ export default {
       this.timespan = this.timeframe;
     },
 
+    aggCardinality() {
+      this.updateChart();
+    },
+
     aggAvg() {
       this.updateChart();
     },
@@ -363,7 +376,7 @@ export default {
     },
 
     markLine() {
-      if (this.markLine && this.markLine.data) {
+      if (this.markLine && this.markLine.data && !this.loading) {
         Vue.set(this.chart.series[0], 'markLine', this.markLine);
       } else {
         Vue.set(this.chart.series[0], 'markLine', {
@@ -416,6 +429,8 @@ export default {
         value = result.min.value;
       } else if (this.aggMax) {
         value = result.max.value;
+      } else if (this.aggCardinality) {
+        value = result.type_count.value;
       } else if (result.doc_count) {
         value = result.doc_count;
       }
@@ -454,13 +469,15 @@ export default {
         let tip = `${momentDate.format('M/D/YYYY h:mm:ssa')}<br>`;
 
         if (this.aggAvg) {
-          tip += `average of ${this.aggAvg}: ${options.data.value}`;
+          tip += `Average of ${this.aggAvg}: ${options.data.value}`;
         } else if (this.aggSum) {
-          tip += `sum of ${this.aggSum}: ${options.data.value}`;
+          tip += `Sum of ${this.aggSum}: ${options.data.value}`;
         } else if (this.aggMin) {
-          tip += `min of ${this.aggMin}: ${options.data.value}`;
+          tip += `Min of ${this.aggMin}: ${options.data.value}`;
         } else if (this.aggMax) {
-          tip += `max of ${this.aggMax}: ${options.data.value}`;
+          tip += `Max of ${this.aggMax}: ${options.data.value}`;
+        } else if (this.aggCardinality) {
+          tip += `Cardinality of ${this.aggCardinality}: ${options.data.value}`;
         } else {
           tip += `${options.data.value} results`;
         }
@@ -614,6 +631,8 @@ export default {
         if (res.data.error) {
           this.searchError = res.data.error.msg;
         } else if (res.data.aggregations) {
+          this.chart.title.text = null;
+
           let x = null;
           let y = null;
 
@@ -667,7 +686,10 @@ export default {
             this.setTooltipDefault();
           }
         } else {
-          console.warn('No aggregations in response data: ', res.data);
+          this.chart.title.text = 'No data.\nSelected field may not support aggregations.';
+          this.chart.xAxis.data = null;
+          this.chart.series[0].data = null;
+          this.$emit('update', this.chart.series[0].data);
         }
 
         this.loading = false;
