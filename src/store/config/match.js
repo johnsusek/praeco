@@ -29,6 +29,10 @@ function initialState() {
     maxThreshold: null,
     minThreshold: null,
 
+    cardinalityField: null,
+    maxCardinality: null,
+    minCardinality: null,
+
     threshold: null,
 
     termsWindowSize: { days: 30 },
@@ -351,6 +355,22 @@ export default {
     UPDATE_SPIKE_TYPE(state, spikeType) {
       if (!spikeType) return;
       state.spikeType = spikeType;
+    },
+
+    //
+    // Cardinality
+    //
+
+    UPDATE_CARDINALITY_FIELD(state, cardinalityField) {
+      state.cardinalityField = cardinalityField;
+    },
+
+    UPDATE_MAX_CARDINALITY(state, maxCardinality) {
+      state.maxCardinality = parseInt(maxCardinality);
+    },
+
+    UPDATE_MIN_CARDINALITY(state, minCardinality) {
+      state.minCardinality = parseInt(minCardinality);
     },
 
     //

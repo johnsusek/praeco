@@ -16,8 +16,35 @@
           <el-menu-item index="field not in list">field value not in list</el-menu-item>
           <el-menu-item index="field changes">field value changes</el-menu-item>
           <el-menu-item index="new term">new term</el-menu-item>
+          <el-menu-item index="cardinality">cardinality</el-menu-item>
         </el-menu>
       </div>
+    </el-popover>
+
+    <el-popover
+      v-if="showPopCardinalityField"
+      :class="{ 'is-invalid': !popCardinalityValid }"
+      v-model="popCardinalityVisible">
+      <span slot="reference" class="pop-trigger">
+        <span>OF </span>
+        <span>{{ cardinalityField || 'select a field' }}</span>
+      </span>
+      <el-form ref="cardinalityField" :model="$store.state.config.match">
+        <el-form-item prop="cardinalityField" required>
+          <el-select
+            v-model="cardinalityField"
+            filterable
+            clearable
+            placeholder="Select field"
+            @input="popCardinalityVisible = false; validate();">
+            <el-option
+              v-for="field in Object.keys(fields)"
+              :key="field"
+              :label="field"
+              :value="field" />
+          </el-select>
+        </el-form-item>
+      </el-form>
     </el-popover>
 
     <el-popover v-if="showPopOf" :class="{ 'is-invalid': !popOfValid }" v-model="popOfVisible">
@@ -284,6 +311,57 @@
       <ConfigQuery ref="query" class="config-query" />
     </el-dialog>
 
+    <el-popover
+      v-if="showPopCardinalityThresholds"
+      :class="{ 'is-invalid': !popCardinalityThresholdsValid }"
+      v-model="popCardinalityThresholdsVisible">
+      <span slot="reference" class="pop-trigger">
+        <span>IS</span>
+        <span v-if="maxCardinality">
+          ABOVE {{ maxCardinality }}
+        </span>
+        <span v-if="minCardinality">
+          BELOW {{ minCardinality }}
+        </span>
+      </span>
+
+      <el-row :gutter="10" style="width: 260px">
+        <el-col :span="10">
+          <el-select
+            id="cardinalityAboveOrBelow"
+            v-model="cardinalityAboveOrBelow"
+            class="el-select-wide"
+            @input="updateCardinalityAboveOrBelow">
+            <el-option key="above" label="Above" value="above" />
+            <el-option key="below" label="Below" value="below" />
+          </el-select>
+        </el-col>
+
+        <el-col :span="14">
+          <el-form ref="minMaxCardinality" :model="$store.state.config.match">
+            <el-form-item v-if="cardinalityAboveOrBelow === 'above'" prop="maxCardinality" required>
+              <el-input
+                id="maxCardinality"
+                v-model="maxCardinality"
+                min="0"
+                type="number"
+                class="el-input-wide"
+                @input="validate" />
+            </el-form-item>
+            <el-form-item v-else prop="minCardinality" required>
+              <el-input
+                id="minCardinality"
+                v-model="minCardinality"
+                min="1"
+                type="number"
+                class="el-input-wide"
+                @input="validate" />
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </el-popover>
+
     <el-popover v-if="showPopAbove" :class="{ 'is-invalid': !popAboveValid }" v-model="popAboveVisible">
       <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" slot="reference" class="pop-trigger">
         <span>IS</span>
@@ -396,7 +474,7 @@
 
     <span v-show="showTime">
       <el-popover
-        v-show="metricAggType === 'count' || metricAggType === 'field changes'"
+        v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality'"
         popper-class="popover-time">
         <span
           slot="reference"
@@ -406,12 +484,12 @@
               WITHIN
               <span v-if="!useTimeframe">ANY TIMEFRAME</span>
             </span>
-            <span v-if="metricAggType === 'count'">FOR </span>
+            <span v-if="metricAggType === 'count' || metricAggType === 'cardinality'">FOR </span>
             <span v-if="useTimeframe">THE LAST</span>
           </span>
           <ElastalertTimeView
             v-if="useTimeframe"
-            :time="timeframe"/>
+            :time="timeframe" />
         </span>
 
         <el-form v-if="metricAggType === 'field changes'" :class="{ 'm-s-lg': useTimeframe }">
@@ -423,6 +501,7 @@
             </label>
           </el-form-item>
         </el-form>
+
         <div v-if="useTimeframe">
           <ElastalertTimePicker
             id="timeframe"
@@ -437,7 +516,7 @@
         </div>
       </el-popover>
 
-      <el-popover v-show="metricAggType !== 'count' && metricAggType !== 'field changes'">
+      <el-popover v-show="metricAggType !== 'count' && metricAggType !== 'field changes' && metricAggType !== 'cardinality'">
         <span slot="reference" class="pop-trigger-pseudo">
           <span>FOR THE LAST </span>
           <ElastalertTimeView :time="bufferTime" />
@@ -691,10 +770,15 @@ export default {
       popBlacklistVisible: false,
       popWhitelistVisible: false,
       popOfVisible: false,
+      popCardinalityVisible: false,
       groupedOver: 'all',
       popAboveVisible: false,
+      popCardinalityThresholdsVisible: false,
+      cardinalityAboveOrBelow: 'above',
       aboveOrBelow: 'above',
       spikeOrThreshold: 'any',
+      popCardinalityValid: true,
+      popCardinalityThresholdsValid: true,
       popOfValid: true,
       popOverValid: true,
       popCompareValid: true,
@@ -878,9 +962,17 @@ export default {
       return shouldShowOptions || shouldShowOptionsSt;
     },
 
+    showPopCardinalityField() {
+      return this.metricAggType === 'cardinality';
+    },
+
+    showPopCardinalityThresholds() {
+      return this.metricAggType === 'cardinality';
+    },
+
     showPopOf() {
       return (
-        this.metricAggType !== 'count' && this.metricAggType !== 'new term' &&
+        this.metricAggType !== 'count' && this.metricAggType !== 'new term' && this.metricAggType !== 'cardinality' &&
         !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
       );
     },
@@ -892,7 +984,7 @@ export default {
     },
 
     showPopAbove() {
-      return !['field changes', 'field in list', 'field not in list', 'new term'].includes(this.metricAggType);
+      return !['field changes', 'field in list', 'field not in list', 'new term', 'cardinality'].includes(this.metricAggType);
     },
 
     showPopCompare() {
@@ -914,7 +1006,7 @@ export default {
     showTime() {
       return (
         !['field in list', 'field not in list', 'new term'].includes(this.metricAggType) &&
-        this.spikeOrThreshold !== 'any'
+        (this.spikeOrThreshold !== 'any' || this.metricAggType === 'cardinality')
       );
     },
 
@@ -971,6 +1063,33 @@ export default {
       },
       set(value) {
         this.$store.commit('config/match/UPDATE_TIMEFRAME', value);
+      }
+    },
+
+    cardinalityField: {
+      get() {
+        return this.$store.state.config.match.cardinalityField;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_CARDINALITY_FIELD', value);
+      }
+    },
+
+    maxCardinality: {
+      get() {
+        return this.$store.state.config.match.maxCardinality;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_MAX_CARDINALITY', value);
+      }
+    },
+
+    minCardinality: {
+      get() {
+        return this.$store.state.config.match.minCardinality;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_MIN_CARDINALITY', value);
       }
     },
 
@@ -1098,16 +1217,16 @@ export default {
         this.metricAggType = 'new term';
       }
 
-      // if rule supports queryKey, set groupedOver to field
+      // if rule supports and has a queryKey, set groupedOver to field
       if (
         this.queryKey &&
         ['metric_aggregation', 'frequency', 'flatline', 'any',
-          'change', 'spike', 'flatline'].includes(this.type)
+          'change', 'spike', 'flatline', 'cardinality'].includes(this.type)
       ) {
         this.groupedOver = 'field';
       }
 
-      if (this.metricAggType === 'count') {
+      if (this.metricAggType === 'count' || this.metricAggType === 'cardinality') {
         this.useTimeframe = true;
       }
 
@@ -1141,6 +1260,11 @@ export default {
       try {
         if (this.$refs.of) {
           await this.validateOf();
+        }
+
+        if (this.$refs.cardinalityField) {
+          await this.validateCardinality();
+          await this.validateCardinalityThresholds();
         }
 
         await this.validateOver();
@@ -1275,6 +1399,24 @@ export default {
         this.popOfValid = await this.$refs.of.validate();
       } catch (error) {
         this.popOfValid = false;
+        throw error;
+      }
+    },
+
+    async validateCardinality() {
+      try {
+        this.popCardinalityValid = await this.$refs.cardinalityField.validate();
+      } catch (error) {
+        this.popCardinalityValid = false;
+        throw error;
+      }
+    },
+
+    async validateCardinalityThresholds() {
+      try {
+        this.popCardinalityThresholdsValid = await this.$refs.minMaxCardinality.validate();
+      } catch (error) {
+        this.popCardinalityThresholdsValid = false;
         throw error;
       }
     },
@@ -1414,6 +1556,16 @@ export default {
       }
     },
 
+    updateCardinalityAboveOrBelow(val) {
+      // reset any old min/max values
+      if (val === 'above') {
+        // reset the *other*
+        this.minCardinality = null;
+      } else {
+        this.maxCardinality = null;
+      }
+    },
+
     selectWhen(val) {
       this.metricAggType = val;
 
@@ -1434,6 +1586,8 @@ export default {
       } else if (val === 'field changes') {
         this.type = 'change';
         this.compareKey = [];
+      } else if (val === 'cardinality') {
+        this.type = 'cardinality';
       } else {
         this.type = 'metric_aggregation';
       }

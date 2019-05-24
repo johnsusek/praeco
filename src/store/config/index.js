@@ -515,6 +515,28 @@ export default {
       return config;
     },
 
+    cardinality(state) {
+      let config = {};
+
+      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
+        config.timeframe = state.match.timeframe;
+      }
+
+      if (state.match.cardinalityField) {
+        config.cardinality_field = state.match.cardinalityField;
+      }
+
+      if (state.match.maxCardinality) {
+        config.max_cardinality = state.match.maxCardinality;
+      }
+
+      if (state.match.minCardinality) {
+        config.min_cardinality = state.match.minCardinality;
+      }
+
+      return config;
+    },
+
     queryString(state, getters) {
       let qs = {
         query: getters['query/queryString'] || `${state.settings.timeField}:*`
@@ -769,6 +791,8 @@ export default {
         config = { ...config, ...getters.spike };
       } else if (state.match.type === 'new_term') {
         config = { ...config, ...getters.newterm };
+      } else if (state.match.type === 'cardinality') {
+        config = { ...config, ...getters.cardinality };
       }
 
       // Sort the keys in the object so it appears alphabetically in the UI
