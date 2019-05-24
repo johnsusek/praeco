@@ -516,7 +516,7 @@
         </div>
       </el-popover>
 
-      <el-popover v-show="metricAggType !== 'count' && metricAggType !== 'field changes' && metricAggType !== 'cardinality'">
+      <el-popover v-show="showForTheLast">
         <span slot="reference" class="pop-trigger-pseudo">
           <span>FOR THE LAST </span>
           <ElastalertTimeView :time="bufferTime" />
@@ -811,6 +811,10 @@ export default {
 
     eventTableHeight() {
       return document.body.clientHeight - 85;
+    },
+
+    showForTheLast() {
+      return this.metricAggType !== 'count' && this.metricAggType !== 'field changes' && this.metricAggType !== 'cardinality';
     },
 
     useTimeframe: {
@@ -1215,6 +1219,13 @@ export default {
         this.spikeOrThreshold = 'spike';
       } else if (this.type === 'new_term') {
         this.metricAggType = 'new term';
+      } else if (this.type === 'cardinality') {
+        this.metricAggType = 'cardinality';
+        if (this.maxCardinality) {
+          this.cardinalityAboveOrBelow = 'above';
+        } else if (this.minCardinality) {
+          this.cardinalityAboveOrBelow = 'below';
+        }
       }
 
       // if rule supports and has a queryKey, set groupedOver to field

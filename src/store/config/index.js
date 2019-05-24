@@ -166,6 +166,10 @@ export default {
         commit('match/UPDATE_MAX_THRESHOLD', config.max_threshold);
         commit('match/UPDATE_MIN_THRESHOLD', config.min_threshold);
 
+        commit('match/UPDATE_MIN_CARDINALITY', config.min_cardinality);
+        commit('match/UPDATE_MAX_CARDINALITY', config.max_cardinality);
+        commit('match/UPDATE_CARDINALITY_FIELD', config.cardinality_field);
+
         if (config.aggregation && config.aggregation.schedule) {
           commit('alert/UPDATE_AGGREGATION_SCHEDULE', config.aggregation.schedule);
         }
