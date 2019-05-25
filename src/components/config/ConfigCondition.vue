@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-popover v-model="popWhenVisible">
-      <span slot="reference" class="pop-trigger">
+      <span slot="reference" class="pop-trigger pop-when">
         <span>WHEN </span>
         <span>{{ metricAggType === 'avg' ? 'average' : metricAggType }}</span>
       </span>
@@ -20,6 +20,10 @@
         </el-menu>
       </div>
     </el-popover>
+
+    <a v-if="helpLinkForType" :href="helpLinkForType" target="_blank" class="pop-when-link">
+      <icon icon="question-circle" class="pop-when-help" />
+    </a>
 
     <el-popover
       v-if="showPopCardinalityField"
@@ -800,6 +804,23 @@ export default {
   },
 
   computed: {
+    helpLinkForType() {
+      let helpLinks = {
+        any: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#any',
+        blacklist: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#blacklist',
+        whitelist: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#whitelist',
+        change: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#change',
+        frequency: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#frequency',
+        flatline: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#flatline',
+        spike: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#spike',
+        new_term: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#new-term',
+        metric_aggregation: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#metric-aggregation',
+        cardinality: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#cardinality'
+      };
+
+      return helpLinks[this.type];
+    },
+
     chartTimeframe() {
       if (!this.bucket) return {};
 
@@ -1582,7 +1603,9 @@ export default {
       this.metricAggType = val;
 
       if (val === 'count') {
-        if (this.aboveOrBelow === 'above') {
+        if (this.spikeOrThreshold === 'any') {
+          this.type = 'any';
+        } else if (this.aboveOrBelow === 'above') {
           this.type = 'frequency';
         } else {
           this.type = 'flatline';
@@ -1661,5 +1684,21 @@ export default {
   position: absolute;
   right: 20px;
   z-index: 9;
+}
+
+.pop-when {
+  margin-right: 4px;
+}
+
+.pop-when-help {
+  margin-right: 20px;
+}
+
+.pop-when-link {
+  color: #555;
+}
+
+.pop-when-link:active {
+  color: green;
 }
 </style>

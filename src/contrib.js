@@ -18,6 +18,7 @@ import {
   faFileAlt,
   faFolder,
   faFolderOpen,
+  faQuestionCircle,
   faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
@@ -42,6 +43,7 @@ library.add(
   faEllipsisH,
   faFolder,
   faFolderOpen,
+  faQuestionCircle,
   faExclamationCircle
 );
 
