@@ -45,14 +45,14 @@
         <el-checkbox id="destinationSlack" label="slack" border>Slack</el-checkbox>
         <el-checkbox id="destinationEmail" label="email" border>Email</el-checkbox>
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
+        <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
-      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')">
+      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('telegram')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
-          v-if="alert.includes('slack') || alert.includes('email')"
           ref="subjectBody"
           :view-only="viewOnly"
           class="m-s-lg" />
@@ -144,6 +144,18 @@
           <el-input v-model="httpPostUrl" :disabled="viewOnly" />
           <label>JSON results will be POSTed to this URL</label>
         </el-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('telegram')" >
+        <template slot="label">Telegram</template>
+
+        <praeco-form-item label="Room ID" prop="telegramRoomId" required>
+          <el-input id="telegramRoomId" v-model="telegramRoomId" :disabled="viewOnly" />
+          <label>
+            Unique identifier for the target chat or username of the
+            target channel using telegram chat_id (in the format “-xxxxxxxx”)
+          </label>
+        </praeco-form-item>
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -331,6 +343,18 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_BCC', value);
+      }
+    },
+
+    telegramRoomId: {
+      get() {
+        return this.$store.state.config.alert.telegramRoomId;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_TELEGRAM_ROOM_ID',
+          value
+        );
       }
     },
 

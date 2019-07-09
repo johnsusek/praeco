@@ -5,7 +5,7 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, Email or an HTTP POST endpoint
+- Send notifications to Slack, Email, Telegram or an HTTP POST endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -27,7 +27,7 @@ docker-compose up
 
 ℹ️ Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
 
-ℹ️ To set up Slack and Email notifications, edit `rules/BaseRule.config`.
+ℹ️ To set up Slack, Email or Telegram notifications, edit `rules/BaseRule.config`.
 
 Praeco should now be available on http://127.0.0.1:8080
 
@@ -128,7 +128,7 @@ When editing a rule, click "WITH OPTIONS" and try using the "Use count query" op
 
 First of all, try to test your alert with varying time frames and see if that is returning any results.
 
-If the test is returning results, but you are not receiving any alerts, check the error log. There may be a problem with your slack or email settings. Make sure you edited rules/BaseRule.config and have correct values in there.
+If the test is returning results, but you are not receiving any alerts, check the error log. There may be a problem with your alerter settings. Make sure you edited rules/BaseRule.config and have correct values in there.
 
 If the test is not returning results, even though you think it should, try reading the [elastalert docs](https://elastalert.readthedocs.io/en/latest/ruletypes.html#rule-types) for your rule type. Compare the yaml from praeco with the options from the docs to make sure the rule is being created as expected. If praeco is generating the wrong yaml, please file an issue.
 

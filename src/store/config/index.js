@@ -208,6 +208,8 @@ export default {
           }
         }
 
+        commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
+
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
         commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
@@ -662,6 +664,16 @@ export default {
       return config;
     },
 
+    telegram(state) {
+      let config = {};
+
+      if (state.alert.telegramRoomId) {
+        config.telegram_room_id = state.alert.telegramRoomId;
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
@@ -775,7 +787,13 @@ export default {
         config = { ...config, ...getters.slack };
       }
 
-      if (state.alert.alert.includes('email') || state.alert.alert.includes('slack')) {
+      if (state.alert.alert.includes('telegram')) {
+        config = { ...config, ...getters.telegram };
+      }
+
+      if (state.alert.alert.includes('email') ||
+          state.alert.alert.includes('slack') ||
+          state.alert.alert.includes('telegram')) {
         config = { ...config, ...getters.subjectBody };
       }
 

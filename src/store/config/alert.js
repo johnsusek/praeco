@@ -20,6 +20,8 @@ function initialState() {
     slackEmojiOverride: '',
     slackMsgColor: 'danger',
 
+    telegramRoomId: '',
+
     fromAddr: '',
     replyTo: '',
     email: '',
@@ -109,6 +111,10 @@ export default {
 
     UPDATE_BCC(state, bcc) {
       state.bcc = bcc;
+    },
+
+    UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
+      state.telegramRoomId = telegramRoomId;
     },
 
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {
