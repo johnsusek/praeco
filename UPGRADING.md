@@ -37,3 +37,13 @@ See [the default config file](https://github.com/ServerCentral/praeco/blob/maste
 ## v0.3.0 -> v0.3.1
 
 - New options `es_username` and `es_password` added to `config/api.config.json`. Add these to your config if you need this capability.
+
+## v0.3.9 -> v0.4.0
+
+- New options for telegram added to `BaseRule.config`. Add these lines and customize as needed:
+```yaml
+telegram_bot_token: ''
+telegram_api_url: ''
+telegram_proxy: ''
+```
+[Here are](https://elastalert.readthedocs.io/en/latest/ruletypes.html#telegram) the elastalert docs on these options.
