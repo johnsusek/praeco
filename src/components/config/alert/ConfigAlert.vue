@@ -41,7 +41,7 @@
       :label="`Destination${alert.length > 1 ? 's' : ''}`"
       prop="alert"
       required>
-      <el-checkbox-group v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
+      <el-checkbox-group v-model="alert" :disabled="viewOnly" @change="changeAlertDestinations">
         <el-checkbox id="destinationSlack" label="slack" border>Slack</el-checkbox>
         <el-checkbox id="destinationEmail" label="email" border>Email</el-checkbox>
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
@@ -49,7 +49,7 @@
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
-      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')">
+      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email')" name="subjectBody">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           v-if="alert.includes('slack') || alert.includes('email')"
@@ -58,7 +58,7 @@
           class="m-s-lg" />
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('slack')" >
+      <el-tab-pane v-if="alert.includes('slack')" name="slack">
         <template slot="label"><icon :icon="['fab', 'slack']" size="1x" /> Slack</template>
         <el-form-item label="Channel or username" prop="slackChannelOverride" required>
           <el-input id="slackChannelOverride" v-model="slackChannelOverride" :disabled="viewOnly" />
@@ -94,7 +94,7 @@
         </el-form-item>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('email')">
+      <el-tab-pane v-if="alert.includes('email')" name="email">
         <span slot="label"><icon icon="envelope" size="1x" /> Email</span>
         <praeco-form-item
           v-if="!viewOnly || fromAddr"
@@ -138,7 +138,7 @@
         </el-form-item>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('post')" label="HTTP">
+      <el-tab-pane v-if="alert.includes('post')" name="post">
         <span slot="label"><icon icon="globe" /> HTTP</span>
         <el-form-item label="HTTP POST URL" prop="httpPostUrl" required>
           <el-input v-model="httpPostUrl" :disabled="viewOnly" />
@@ -393,6 +393,23 @@ export default {
   },
 
   methods: {
+    changeAlertDestinations() {
+      this.$emit('validate');
+
+      // Go back to subjectBody tab if 'http' is unselected while its tab is active
+      if (!this.alert.includes('post') && this.visibleTabPane === 'post') {
+        this.visibleTabPane = 'subjectBody';
+      }
+
+      // Go to HTTP tab if slack and email have both been unselected and HTTP alert is selected
+      if (
+        !this.alert.includes('slack') &&
+        !this.alert.includes('email') &&
+        this.alert.includes('post')) {
+        this.visibleTabPane = 'post';
+      }
+    },
+
     addEmoji(value) {
       this.slackEmojiOverride = value.colons;
     },
