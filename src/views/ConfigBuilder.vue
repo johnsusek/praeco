@@ -162,15 +162,19 @@ export default {
         await this.$refs.settings.$refs.form.validate();
         if (!skipAlertValidation) {
           await this.$refs.alert.$refs.form.validate();
-          await this.$refs.alert.$refs.subjectBody.$refs.form.validate();
+          if (this.$refs.alert.$refs.subjectBody) {
+            await this.$refs.alert.$refs.subjectBody.$refs.form.validate();
+          }
         }
       } catch (error) {
+        console.warn(error);
         this.valid = false;
         return false;
       }
 
       let conditionsValid = await this.$refs.condition.validate();
       if (!conditionsValid) {
+        console.warn('conditions invalid');
         this.valid = false;
         return false;
       }
