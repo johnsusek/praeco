@@ -465,7 +465,11 @@
       </div>
 
       <div v-else>
-        <el-form ref="minMaxThreshold" :rules="minMaxThresholdRules" :model="$store.state.config.match" label-width="60px">
+        <el-form
+          ref="minMaxThreshold"
+          :rules="minMaxThresholdRules"
+          :model="$store.state.config.match"
+          label-width="60px">
           <el-form-item label="Above" prop="maxThreshold">
             <el-input id="maxThreshold" v-model="maxThreshold" min="1" type="number" @change="validate" />
           </el-form-item>
