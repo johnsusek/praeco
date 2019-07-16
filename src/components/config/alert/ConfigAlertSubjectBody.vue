@@ -85,7 +85,6 @@
           </div>
           <div v-if="bodyType === 'default'" type="info"><em>(Field values)</em></div>
         </div>
-        </div>
       </el-col>
     </el-row>
 
