@@ -24,6 +24,8 @@ export function buildMappingFields(mapping) {
     .map(m => m.mappings)
     .forEach(mping => {
       Object.values(mping).forEach(mp => {
+        if (mp.properties === undefined) return;
+
         Object.entries(mp.properties).forEach(prop => {
           let name = prop[0];
           let field = fields[name];
