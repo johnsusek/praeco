@@ -23,6 +23,10 @@ export function buildMappingFields(mapping) {
   Object.values(mapping)
     .map(m => m.mappings)
     .forEach(mping => {
+      // es7 compatibility, add a fake
+      // doctype so structure is the same as es6
+      if (mping.properties) mping = { doctype: mping };
+
       Object.values(mping).forEach(mp => {
         if (mp.properties === undefined) return;
 
