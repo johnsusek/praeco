@@ -6,7 +6,7 @@
 - Preview results in an interactive chart
 - Test your alerts against historical data
 - Send notifications to Slack, Email, Telegram or an HTTP POST endpoint
-- Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike and Metric Aggregation rule types
+- Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
 <br>
