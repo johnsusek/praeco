@@ -1,12 +1,12 @@
 <img align="left" src="https://user-images.githubusercontent.com/611996/52907999-50fca900-3232-11e9-8aee-40f7dc37ec65.jpg">
 
-**Praeco** is an alerting tool for Elasticsearch 5/6 – a GUI for [ElastAlert](https://github.com/yelp/elastalert), using the [ElastAlert API](https://github.com/bitsensor/elastalert).
+**Praeco** is an alerting tool for Elasticsearch – a GUI for [ElastAlert](https://github.com/yelp/elastalert), using the [ElastAlert API](https://github.com/bitsensor/elastalert).
 
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
 - Send notifications to Slack, Email, Telegram or an HTTP POST endpoint
-- Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike and Metric Aggregation rule types
+- Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
 <br>
