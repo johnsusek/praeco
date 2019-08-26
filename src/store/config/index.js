@@ -262,7 +262,7 @@ export default {
             format: 'json'
           }
         });
-        if (res.data && res.data.success) {
+        if (res.data) {
           commit('UPDATE_VALID', true);
         } else {
           commit('UPDATE_VALID', false);
