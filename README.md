@@ -10,6 +10,9 @@
 - View logs of when your alerts check, fire and fail
 
 <br>
+<br>
+
+👉 Praeco is completely free, in return I only ask that you fill out [this simple survey](https://forms.gle/nAbu1RN2KHnyXX7L8) about how you use it. 
 
 ## 
 
