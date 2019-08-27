@@ -171,7 +171,7 @@ export default {
     async duplicateConfig({ dispatch, state }, { config, type }) {
       let newConfig = cloneDeep(config);
 
-      newConfig.is_enabled = false;
+      newConfig.is_enabled = true;
 
       // Get a new path/key for the config
       let i = 1;

@@ -5,7 +5,7 @@ function initialState() {
     name: '',
     description: '',
     index: '',
-    isEnabled: false,
+    isEnabled: true,
     timeField: '',
     timeType: 'iso'
   };
