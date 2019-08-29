@@ -101,8 +101,7 @@ export default {
 
       this.$store.commit('config/UPDATE_PATH', this.path);
 
-      // Since this is a new rule, we want to disable it by default
-      this.$store.commit('config/settings/UPDATE_ENABLED', false);
+      this.$store.commit('config/settings/UPDATE_ENABLED', true);
     } else if (this.action === 'edit') {
       await this.$store.dispatch('config/load', {
         type: `${this.type}s`,
