@@ -46,11 +46,13 @@
         <el-checkbox id="destinationEmail" label="email" border>Email</el-checkbox>
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
         <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
+        <el-checkbox id="destinationJira" label="jira" border>JIRA</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
-      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('telegram')">
+      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') ||
+      alert.includes('telegram') || alert.includes('jira')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -155,6 +157,23 @@
             Unique identifier for the target chat or username of the
             target channel using telegram chat_id (in the format “-xxxxxxxx”)
           </label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('jira')" >
+        <template slot="label">JIRA</template>
+
+        <praeco-form-item label="Project" prop="jiraProject" required>
+          <el-input id="jiraProject" v-model="jiraProject" :disabled="viewOnly" />
+          <label>Jira project</label>
+        </praeco-form-item>
+        <praeco-form-item label="Issue Type" prop="jiraIssueType" required>
+          <el-input id="jiraIssueType" v-model="jiraIssueType" :disabled="viewOnly" />
+          <label>Jira issue type (Bug, Integration Bug, etc...)</label>
+        </praeco-form-item>
+        <praeco-form-item label="Component" prop="jiraComponent">
+          <el-input id="jiraComponent" v-model="jiraComponent" :disabled="viewOnly" />
+          <label>Jira issue components</label>
         </praeco-form-item>
       </el-tab-pane>
     </el-tabs>
@@ -353,6 +372,42 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_TELEGRAM_ROOM_ID',
+          value
+        );
+      }
+    },
+
+    jiraIssueType: {
+      get() {
+        return this.$store.state.config.alert.jiraIssueType;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_ISSUE_TYPE',
+          value
+        );
+      }
+    },
+
+    jiraProject: {
+      get() {
+        return this.$store.state.config.alert.jiraProject;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_PROJECT',
+          value
+        );
+      }
+    },
+
+    jiraComponents: {
+      get() {
+        return this.$store.state.config.alert.jiraComponents;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_COMPONENTS',
           value
         );
       }
