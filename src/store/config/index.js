@@ -682,16 +682,16 @@ export default {
       let config = {};
 
       if (state.alert.jiraProject && state.alert.jiraIssueType) {
-	config.jira_project = state.alert.jiraProject;
-	config.jira_issuetype = state.alert.jiraIssueType;
+        config.jira_project = state.alert.jiraProject;
+        config.jira_issuetype = state.alert.jiraIssueType;
       }
 
       if (state.alert.jiraComponents) {
-	config.jira_components = state.alert.jiraComponents;
+        config.jira_components = state.alert.jiraComponents;
       }
 
       return config;
-    }
+    },
 
     subjectBody(state) {
       let config = {};
