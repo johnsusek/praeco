@@ -210,6 +210,10 @@ export default {
 
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
+        commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
+        commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issue_type);
+        commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
+
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
         commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
@@ -674,6 +678,21 @@ export default {
       return config;
     },
 
+    jira(state) {
+      let config = {};
+
+      if (state.alert.jiraProject && state.alert.jiraIssueType) {
+        config.jira_project = state.alert.jiraProject;
+        config.jira_issuetype = state.alert.jiraIssueType;
+      }
+
+      if (state.alert.jiraComponents) {
+        config.jira_components = state.alert.jiraComponents;
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
@@ -791,9 +810,14 @@ export default {
         config = { ...config, ...getters.telegram };
       }
 
+      if (state.alert.alert.includes('jira')) {
+        config = { ...config, ...getters.jira };
+      }
+
       if (state.alert.alert.includes('email') ||
           state.alert.alert.includes('slack') ||
-          state.alert.alert.includes('telegram')) {
+          state.alert.alert.includes('telegram') ||
+          state.alert.alert.includes('jira')) {
         config = { ...config, ...getters.subjectBody };
       }
 

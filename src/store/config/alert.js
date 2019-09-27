@@ -22,6 +22,10 @@ function initialState() {
 
     telegramRoomId: '',
 
+    jiraProject: '',
+    jiraIssueType: '',
+    jiraComponents: '',
+
     fromAddr: '',
     replyTo: '',
     email: '',
@@ -115,6 +119,18 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_JIRA_PROJECT(state, jiraProject) {
+      state.jiraProject = jiraProject;
+    },
+
+    UPDATE_JIRA_ISSUE_TYPE(state, jiraIssueType) {
+      state.jiraIssueType = jiraIssueType;
+    },
+
+    UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
+      state.jiraComponents = jiraComponents;
     },
 
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {
