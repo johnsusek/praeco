@@ -7,6 +7,10 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.0
+
+- New options for JIRA added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config`.
+
 
 ## v0.3.9 -> v0.4.0
 

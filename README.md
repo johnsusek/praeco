@@ -5,16 +5,16 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, Email, Telegram or an HTTP POST endpoint
+- Send notifications to Slack, Email, Telegram, Jira or an HTTP POST endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
 <br>
 <br>
 
-👉 Praeco is completely free, in return I only ask that you fill out [this simple survey](https://forms.gle/nAbu1RN2KHnyXX7L8) about how you use it. 
+👉 Praeco is completely free, in return I only ask that you fill out [this simple survey](https://forms.gle/nAbu1RN2KHnyXX7L8) about how you use it.
 
-## 
+##
 
 ![](https://user-images.githubusercontent.com/611996/47752071-7c4a9080-dc61-11e8-8ccf-2196f13429b2.png)
 
@@ -30,7 +30,7 @@ docker-compose up
 
 ℹ️ Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
 
-ℹ️ To set up Slack, Email or Telegram notifications, edit `rules/BaseRule.config`.
+ℹ️ To set up Slack, Email, Jira or Telegram notifications, edit `rules/BaseRule.config`.
 
 Praeco should now be available on http://127.0.0.1:8080
 
@@ -143,25 +143,29 @@ You will see this error when launching if praeco cannot find elasticsearch at th
 
 Make sure the channel/username you are trying to post to exists.
 
+#### How to setup Jira?
+
+Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config` file.
+
 ## Architecture details
 
 ![](https://user-images.githubusercontent.com/611996/52892144-90a19300-3155-11e9-8050-cb4a440411a4.png)
 
-Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [elastalert api](https://github.com/bitsensor/elastalert) (running in another docker container) to view/edit rules. 
+Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [elastalert api](https://github.com/bitsensor/elastalert) (running in another docker container) to view/edit rules.
 The elastalert api interacts with the included [elastalert](https://github.com/Yelp/elastalert) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
 rule files in the rules/ directory.
 
-When you run praeco using the quickstart instructions, it runs these two docker containers, per the docker-compose.yml file. 
+When you run praeco using the quickstart instructions, it runs these two docker containers, per the docker-compose.yml file.
 
 Praeco uses a fork of the elastalert _api server_, which is why the docker image source is `servercentral/elastalert`.
 
 NOTE: Only the _api server_ is a fork, the elastalert daemon itself is built from the `master` branch whenever a new version of the `servercentral/elastalert` docker image is created.
 
-Please see the development section below if you're interested in running these services separately. 
+Please see the development section below if you're interested in running these services separately.
 
 ## Developing
 
-First, you need a local copy of the elastalert api server running, which itself needs elastalert. Start by cloning the neccessary repos 
+First, you need a local copy of the elastalert api server running, which itself needs elastalert. Start by cloning the neccessary repos
 
 ```
 cd
@@ -217,7 +221,7 @@ npm run serve
 
 You should now see the UI running at [http://localhost:8080](http://localhost:8080).
 
-If you have any difficulties please open a github issue with your problem. 
+If you have any difficulties please open a github issue with your problem.
 
 <br><br>
 

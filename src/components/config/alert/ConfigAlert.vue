@@ -167,7 +167,7 @@
           <el-input id="jiraProject" v-model="jiraProject" :disabled="viewOnly" />
           <label>Jira project</label>
         </praeco-form-item>
-        <praeco-form-item label="Issue Type" prop="jiraIssueType" required>
+        <praeco-form-item label="Issue type" prop="jiraIssueType" required>
           <el-input id="jiraIssueType" v-model="jiraIssueType" :disabled="viewOnly" />
           <label>Jira issue type (Bug, Integration Bug, etc...)</label>
         </praeco-form-item>
