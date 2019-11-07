@@ -28,12 +28,6 @@ async function prep() {
 let wrapper;
 
 describe('ConfigCondition log', () => {
-  before(function() {
-    if (process.platform !== 'darwin') {
-      this.skip();
-    }
-  });
-
   it('renders the numEvents', async () => {
     wrapper = await prep();
     return expect(wrapper.text()).to.contain('ABOVE 10000');
