@@ -171,8 +171,8 @@
           <el-input id="jiraIssueType" v-model="jiraIssueType" :disabled="viewOnly" />
           <label>Jira issue type (Bug, Integration Bug, etc...)</label>
         </praeco-form-item>
-        <praeco-form-item label="Component" prop="jiraComponent">
-          <el-input id="jiraComponent" v-model="jiraComponent" :disabled="viewOnly" />
+        <praeco-form-item label="Components" prop="jiraComponents">
+          <el-input id="jiraComponents" v-model="jiraComponents" :disabled="viewOnly" />
           <label>Jira issue components</label>
         </praeco-form-item>
       </el-tab-pane>
