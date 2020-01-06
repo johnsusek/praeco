@@ -28,13 +28,16 @@ export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
 ```
 
-ℹ️ Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
+* Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
 
-ℹ️ To set up Slack, Email, Jira or Telegram notifications, edit `rules/BaseRule.config`.
+* To set up Slack, Email, Jira or Telegram notifications, edit `rules/BaseRule.config`.
+
+* Don't want to use Docker? Want to use your own builds of elastalert? Follow the "Manual installation" steps at the end of this document. 
 
 Praeco should now be available on http://127.0.0.1:8080
 
 A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e078a9) is available to guide you through creating your first rule.
+
 
 ## Upgrading
 
@@ -163,7 +166,7 @@ NOTE: Only the _api server_ is a fork, the elastalert daemon itself is built fro
 
 Please see the development section below if you're interested in running these services separately.
 
-## Developing
+## Manual installation
 
 First, you need a local copy of the elastalert api server running, which itself needs elastalert. Start by cloning the neccessary repos
 
