@@ -32,7 +32,11 @@ function initialState() {
     cc: '',
     bcc: '',
 
-    httpPostUrl: ''
+    httpPostUrl: '',
+
+    customAlert: null,
+    customAlertType: null,
+    alertTypesWithOwnTabs: ['email', 'slack', 'post', 'jira']
   };
 }
 
@@ -167,6 +171,36 @@ export default {
 
     UPDATE_ALERT(state, alert) {
       state.alert = alert;
+    },
+
+    UPDATE_CUSTOM_ALERT(state, customAlert) {
+      state.customAlert = customAlert;
+    },
+    UPDATE_CUSTOM_ALERT_FROM_KEYS(state, config) {
+      let customAlert = '';
+      if (config.custom_alert_keys) {
+        customAlert =
+          config.custom_alert_keys.map(key => `${key}:${config[key]}`).join('\n');
+      }
+      state.customAlert = customAlert;
+    },
+    UPDATE_CUSTOM_ALERT_TYPE(state, customAlertType) {
+      state.customAlertType = customAlertType;
+    },
+    INIT_CUSTOM_ALERT_TYPE(state, alert) {
+      if (!alert.length) {
+        return;
+      }
+      let uknownAlertTypeArr = alert.filter(i => !state.alertTypesWithOwnTabs.includes(i));
+      if (!uknownAlertTypeArr.length) {
+        return;
+      }
+      state.customAlertType = uknownAlertTypeArr[0];
+      let indexOfCustomAlert = alert.indexOf(uknownAlertTypeArr[0]);
+      if (indexOfCustomAlert !== -1) {
+        alert[indexOfCustomAlert] = 'customAlert';
+        state.alert = alert;
+      }
     }
   }
 };

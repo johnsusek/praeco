@@ -47,12 +47,13 @@
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
         <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
         <el-checkbox id="destinationJira" label="jira" border>JIRA</el-checkbox>
+        <el-checkbox id="destinationCustom" label="customAlert" border>Custom</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') ||
-      alert.includes('telegram') || alert.includes('jira')">
+      alert.includes('telegram') || alert.includes('jira') || alert.includes('customAlert')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -175,6 +176,20 @@
           <el-input id="jiraComponent" v-model="jiraComponent" :disabled="viewOnly" />
           <label>Jira issue components</label>
         </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('customAlert')" >
+        <template slot="label">Custom</template>
+
+        <praeco-form-item label="Alert type" prop="customAlertType" required>
+          <el-input id="customAlertType" v-model="customAlertType" :disabled="viewOnly" />
+        </praeco-form-item>
+
+        <praeco-form-item label="Alert type settings" prop="customAlertArea">
+          <textarea id="customAlertArea" v-model="customAlertArea" :disabled="viewOnly" rows="7"
+                    placeholder="https://elastalert.readthedocs.io/en/latest/ruletypes.html" />
+        </praeco-form-item>
+        <label>Insert in format only key:value on each row (e.g pagerduty_client_name:elasticSearch)</label>
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -449,6 +464,25 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_SLACK_MSG_COLOR', value);
+      }
+    },
+    customAlertArea: {
+      get() {
+        console.log(this.$store.state.config.alert.customAlert);
+        return this.$store.state.config.alert.customAlert;
+      },
+      set(value) {
+        // get rid of spaces but preserve new line
+        value = value.replace(/ /g, '');
+        this.$store.commit('config/alert/UPDATE_CUSTOM_ALERT', value);
+      }
+    },
+    customAlertType: {
+      get() {
+        return this.$store.state.config.alert.customAlertType;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_CUSTOM_ALERT_TYPE', value);
       }
     },
 
