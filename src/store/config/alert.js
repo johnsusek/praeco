@@ -26,6 +26,10 @@ function initialState() {
     jiraIssueType: '',
     jiraComponents: '',
 
+    mattermostChannelOverride: '',
+    mattermostUsernameOverride: 'Praeco',
+    mattermostMsgColor: 'danger',
+
     fromAddr: '',
     replyTo: '',
     email: '',
@@ -55,6 +59,17 @@ export default {
       return `${appUrl}/rules/${encodeURIComponent(path)}`;
     },
 
+    mattermostTitleLink(state, getters, rootState) {
+      let appUrl = rootState.appconfig.config.appUrl;
+      let path = rootState.config.settings.name;
+
+      if (rootState.config.path) {
+        path = `${rootState.config.path}/${path}`;
+      }
+
+      return `${appUrl}/rules/${encodeURIComponent(path)}`;
+    },
+  
     subjectRendered(state, getters, rootState) {
       let subject = htmlToConfigFormat(state.subject);
       let sample = rootState.config.sampleResult;
@@ -131,6 +146,18 @@ export default {
 
     UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
       state.jiraComponents = jiraComponents;
+    },
+
+    UPDATE_MATTERMOST_CHANNEL_OVERRIDE(state, mattermostChannelOverride) {
+      state.mattermostChannelOverride = mattermostChannelOverride;
+    },
+
+    UPDATE_MATTERMOST_USERNAME_OVERRIDE(state, mattermostUsernameOverride) {
+      state.mattermostUsernameOverride = mattermostUsernameOverride;
+    },
+
+    UPDATE_MATTERMOST_MSG_COLOR(state, mattermostMsgColor) {
+      state.mattermostMsgColor = mattermostMsgColor;
     },
 
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {

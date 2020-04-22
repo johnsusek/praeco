@@ -214,11 +214,15 @@ export default {
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issue_type);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
 
+        commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
+        commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', config.mattermost_username_override);
+        commit('alert/UPDATE_MATTERMOST_MSG_COLOR', config.mattermost_msg_color);
+
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
         commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
         commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
-        commit('alert/UPDATE_REALERT', config.realert);
+       commit('alert/UPDATE_REALERT', config.realert);
         commit('alert/UPDATE_ALERT', config.alert);
 
         if (config.alert_text_type) {
@@ -693,6 +697,28 @@ export default {
       return config;
     },
 
+    mattermost(state, getters) {
+      let config = {};
+
+      if (state.alert.mattermostChannelOverride) {
+        config.mattermost_channel_override = state.alert.mattermostChannelOverride;
+      }
+
+      if (state.alert.mattermostUsernameOverride) {
+        config.mattermost_username_override = state.alert.mattermostUsernameOverride;
+      }
+
+      if (state.alert.mattermostMsgColor) {
+        config.mattermost_msg_color = state.alert.mattermostMsgColor;
+      }
+
+      if (getters['alert/mattermostTitleLink']) {
+        config.mattermost_title_link = getters['alert/mattermostTitleLink'];
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
@@ -814,10 +840,15 @@ export default {
         config = { ...config, ...getters.jira };
       }
 
+      if (state.alert.alert.includes('mattermost')) {
+        config = { ...config, ...getters.mattermost };
+      }
+
       if (state.alert.alert.includes('email') ||
           state.alert.alert.includes('slack') ||
           state.alert.alert.includes('telegram') ||
-          state.alert.alert.includes('jira')) {
+          state.alert.alert.includes('jira') ||
+          state.alert.alert.includes('mattermost')) {
         config = { ...config, ...getters.subjectBody };
       }
 
