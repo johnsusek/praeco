@@ -48,12 +48,13 @@
         <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
         <el-checkbox id="destinationJira" label="jira" border>JIRA</el-checkbox>
         <el-checkbox id="destinationlineNotify" label="linenotify" border>LineNotify</el-checkbox>
+        <el-checkbox id="destinationMattermost" label="mattermost" border>Mattermost</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') ||
-      alert.includes('telegram') || alert.includes('jira')">
+      alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -185,6 +186,28 @@
           <el-input id="linenotifyAccessToken" v-model="linenotifyAccessToken" :disabled="viewOnly" />
           <label>The access token that you got from https://notify-bot.line.me/my/</label>
         </praeco-form-item>
+      <el-tab-pane v-if="alert.includes('mattermost')">
+        <template slot="label"><icon :icon="['fab', 'mattermost']" size="1x" />Mattermost</template>
+        <el-form-item label="Channel or username" prop="mattermostChannelOverride" required>
+          <el-input id="mattermostChannelOverride" v-model="mattermostChannelOverride" :disabled="viewOnly" />
+          <label>
+            The @username or #channel to send the alert. Tip: Create new channels
+            for your alerts, to have fine-grained control of Mattermost notifications.
+          </label>
+        </el-form-item>
+
+        <praeco-form-item label="Post as" prop="mattermostUsernameOverride" required>
+          <el-input id="mattermostUsernameOverride" v-model="mattermostUsernameOverride" :disabled="viewOnly" />
+          <label>This is the username that will appear in Mattermost for the alert</label>
+        </praeco-form-item>
+
+        <el-form-item label="Message color" prop="mattermostMsgColor" required>
+          <el-radio-group v-model="mattermostMsgColor" :disabled="viewOnly">
+            <el-radio id="mattermostMsgColorDanger" label="danger" border class="mattermost-danger">Danger</el-radio>
+            <el-radio id="mattermostMsgColorWarning" label="warning" border class="mattermost-warning">Warning</el-radio>
+            <el-radio id="mattermostMsgColorGood" label="good" border class="mattermost-good">Good</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -196,6 +219,16 @@ import { Picker } from 'emoji-mart-vue';
 import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
 
 let validateSlackDestination = (rule, value, callback) => {
+  if (value.length < 2) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else if (!value.startsWith('@') && !value.startsWith('#')) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else {
+    callback();
+  }
+};
+
+let validateMattermostDestination = (rule, value, callback) => {
   if (value.length < 2) {
     callback(new Error('Please enter a @username or #channel'));
   } else if (!value.startsWith('@') && !value.startsWith('#')) {
@@ -268,6 +301,12 @@ export default {
         slackChannelOverride: [
           {
             validator: validateSlackDestination,
+            trigger: 'change'
+          }
+        ],
+        mattermostChannelOverride: [
+          {
+            validator: validateMattermostDestination,
             trigger: 'change'
           }
         ],
@@ -474,6 +513,36 @@ export default {
       }
     },
 
+    mattermostChannelOverride: {
+      get() {
+        return this.$store.state.config.alert.mattermostChannelOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', value);
+      }
+    },
+
+    mattermostUsernameOverride: {
+      get() {
+        return this.$store.state.config.alert.mattermostUsernameOverride;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE',
+          value
+        );
+      }
+    },
+
+    mattermostMsgColor: {
+      get() {
+        return this.$store.state.config.alert.mattermostMsgColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_MSG_COLOR', value);
+      }
+    },
+
     realert: {
       get() {
         return this.$store.state.config.alert.realert || { minutes: 5 };
@@ -598,6 +667,51 @@ export default {
 
   &.slack-good .el-radio__input.is-checked + .el-radio__label,
   &.slack-good {
+    color: green !important;
+    border-color: green !important;
+  }
+
+  &.mattermost-danger .el-radio__inner:hover {
+    border-color: red;
+  }
+
+  &.mattermost-danger .el-radio__input.is-checked .el-radio__inner {
+    border-color: red;
+    background: red;
+  }
+
+  &.mattermost-danger .el-radio__input.is-checked + .el-radio__label,
+  &.mattermost-danger {
+    color: red !important;
+    border-color: red !important;
+  }
+
+  &.mattermost-warning .el-radio__inner:hover {
+    border-color: orange;
+  }
+
+  &.mattermost-warning .el-radio__input.is-checked .el-radio__inner {
+    border-color: orange;
+    background: orange;
+  }
+
+  &.mattermost-warning .el-radio__input.is-checked + .el-radio__label,
+  &.mattermost-warning {
+    color: orange !important;
+    border-color: orange !important;
+  }
+
+  &.mattermost-good .el-radio__inner:hover {
+    border-color: green;
+  }
+
+  &.mattermost-good .el-radio__input.is-checked .el-radio__inner {
+    border-color: green;
+    background: green;
+  }
+
+  &.mattermost-good .el-radio__input.is-checked + .el-radio__label,
+  &.mattermost-good {
     color: green !important;
     border-color: green !important;
   }
