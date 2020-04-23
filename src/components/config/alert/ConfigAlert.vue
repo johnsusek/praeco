@@ -47,12 +47,13 @@
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
         <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
         <el-checkbox id="destinationJira" label="jira" border>JIRA</el-checkbox>
+        <el-checkbox id="destinationGitter" label="gitter" border>Gitter</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') ||
-      alert.includes('telegram') || alert.includes('jira')">
+      alert.includes('telegram') || alert.includes('jira') || alert.includes('gitter')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -175,6 +176,16 @@
           <el-input id="jiraComponent" v-model="jiraComponent" :disabled="viewOnly" />
           <label>Jira issue components</label>
         </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('gitter')" >
+        <template slot="label"><icon :icon="['fab', 'gitter']" size="1x" /> Gitter</template>
+        <el-form-item label="Message level" prop="gitterMsgLevel" required>
+          <el-radio-group v-model="gitterMsgLevel" :disabled="viewOnly">
+            <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">Error</el-radio>
+            <el-radio id="gitterMsgLevelInfo" label="info" border class="gitter-info">Info</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -374,6 +385,15 @@ export default {
           'config/alert/UPDATE_TELEGRAM_ROOM_ID',
           value
         );
+      }
+    },
+
+    gitterMsgLevel: {
+      get() {
+        return this.$store.state.config.alert.gitterMsgLevel;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_GITTER_MSG_LEVEL', value);
       }
     },
 
@@ -578,6 +598,36 @@ export default {
   &.slack-good {
     color: green !important;
     border-color: green !important;
+  }
+
+  &.gitter-error .el-radio__inner:hover {
+    border-color: red;
+  }
+
+  &.gitter-error .el-radio__input.is-checked .el-radio__inner {
+    border-color: red;
+    background: red;
+  }
+
+  &.gitter-error .el-radio__input.is-checked + .el-radio__label,
+  &.gitter-error {
+    color: red !important;
+    border-color: red !important;
+  }
+
+  &.gitter-info .el-radio__inner:hover {
+    border-color: blue;
+  }
+
+  &.gitter-info .el-radio__input.is-checked .el-radio__inner {
+    border-color: green;
+    background: blue;
+  }
+
+  &.gitter-info .el-radio__input.is-checked + .el-radio__label,
+  &.gitter-info {
+    color: green !important;
+    border-color: blue !important;
   }
 }
 </style>

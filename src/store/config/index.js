@@ -210,6 +210,8 @@ export default {
 
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
+        commit('alert/UPDATE_GITTER_MSG_LEVEL', config.gitter_msg_level);
+
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issue_type);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
@@ -678,6 +680,16 @@ export default {
       return config;
     },
 
+    gitter(state) {
+      let config = {};
+
+      if (state.alert.gitterMsgLevel) {
+        config.gitter_msg_level = state.alert.gitterMsgLevel;
+      }
+
+      return config;
+    },
+
     jira(state) {
       let config = {};
 
@@ -810,6 +822,10 @@ export default {
         config = { ...config, ...getters.telegram };
       }
 
+      if (state.alert.alert.includes('gitter')) {
+        config = { ...config, ...getters.gitter };
+      }
+
       if (state.alert.alert.includes('jira')) {
         config = { ...config, ...getters.jira };
       }
@@ -817,7 +833,8 @@ export default {
       if (state.alert.alert.includes('email') ||
           state.alert.alert.includes('slack') ||
           state.alert.alert.includes('telegram') ||
-          state.alert.alert.includes('jira')) {
+          state.alert.alert.includes('jira') ||
+          state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.subjectBody };
       }
 

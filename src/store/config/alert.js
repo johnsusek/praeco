@@ -22,6 +22,8 @@ function initialState() {
 
     telegramRoomId: '',
 
+    gitterMsgLevel: 'error',
+
     jiraProject: '',
     jiraIssueType: '',
     jiraComponents: '',
@@ -119,6 +121,10 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_GITTER_MSG_LEVEL(state, gitterMsgLevel) {
+      state.gitterMsgLevel = gitterMsgLevel;
     },
 
     UPDATE_JIRA_PROJECT(state, jiraProject) {
