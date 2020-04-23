@@ -24,6 +24,7 @@ function initialState() {
 
     linenotifyAccessToken: '',
     command: [],
+    gitterMsgLevel: 'error',
 
     jiraProject: '',
     jiraIssueType: '',
@@ -145,6 +146,10 @@ export default {
     
     UPDATE_COMMAND(state, command) {
       state.command = command;
+    },
+
+    UPDATE_GITTER_MSG_LEVEL(state, gitterMsgLevel) {
+      state.gitterMsgLevel = gitterMsgLevel;
     },
 
     UPDATE_JIRA_PROJECT(state, jiraProject) {

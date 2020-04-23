@@ -50,12 +50,13 @@
         <el-checkbox id="destinationlineNotify" label="linenotify" border>LineNotify</el-checkbox>
         <el-checkbox id="destinationMattermost" label="mattermost" border>Mattermost</el-checkbox>
         <el-checkbox id="destinationCommand" label="command" border>Command</el-checkbox>
+        <el-checkbox id="destinationGitter" label="gitter" border>Gitter</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') ||
-      alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') || alert.includes('command')">
+      alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') || alert.includes('command') || alert.includes('gitter')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -221,6 +222,14 @@
             format, /path/program name ,argument1,argument2,argument3
           </label>
         </praeco-form-item>
+      <el-tab-pane v-if="alert.includes('gitter')" >
+        <template slot="label"><icon :icon="['fab', 'gitter']" size="1x" /> Gitter</template>
+        <el-form-item label="Message level" prop="gitterMsgLevel" required>
+          <el-radio-group v-model="gitterMsgLevel" :disabled="viewOnly">
+            <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">Error</el-radio>
+            <el-radio id="gitterMsgLevelInfo" label="info" border class="gitter-info">Info</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -463,6 +472,15 @@ export default {
       }
     },
 
+    gitterMsgLevel: {
+      get() {
+        return this.$store.state.config.alert.gitterMsgLevel;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_GITTER_MSG_LEVEL', value);
+      }
+    },
+
     jiraIssueType: {
       get() {
         return this.$store.state.config.alert.jiraIssueType;
@@ -699,46 +717,63 @@ export default {
   &.mattermost-danger .el-radio__inner:hover {
     border-color: red;
   }
-
   &.mattermost-danger .el-radio__input.is-checked .el-radio__inner {
     border-color: red;
     background: red;
   }
-
   &.mattermost-danger .el-radio__input.is-checked + .el-radio__label,
   &.mattermost-danger {
     color: red !important;
     border-color: red !important;
   }
-
   &.mattermost-warning .el-radio__inner:hover {
     border-color: orange;
   }
-
   &.mattermost-warning .el-radio__input.is-checked .el-radio__inner {
     border-color: orange;
     background: orange;
   }
-
   &.mattermost-warning .el-radio__input.is-checked + .el-radio__label,
   &.mattermost-warning {
     color: orange !important;
     border-color: orange !important;
   }
-
   &.mattermost-good .el-radio__inner:hover {
     border-color: green;
   }
-
   &.mattermost-good .el-radio__input.is-checked .el-radio__inner {
     border-color: green;
     background: green;
   }
-
   &.mattermost-good .el-radio__input.is-checked + .el-radio__label,
   &.mattermost-good {
     color: green !important;
     border-color: green !important;
+  }
+  
+  &.gitter-error .el-radio__inner:hover {
+    border-color: red;
+  }
+  &.gitter-error .el-radio__input.is-checked .el-radio__inner {
+    border-color: red;
+    background: red;
+  }
+  &.gitter-error .el-radio__input.is-checked + .el-radio__label,
+  &.gitter-error {
+    color: red !important;
+    border-color: red !important;
+  }
+  &.gitter-info .el-radio__inner:hover {
+    border-color: blue;
+  }
+  &.gitter-info .el-radio__input.is-checked .el-radio__inner {
+    border-color: green;
+    background: blue;
+  }
+  &.gitter-info .el-radio__input.is-checked + .el-radio__label,
+  &.gitter-info {
+    color: green !important;
+    border-color: blue !important;
   }
 }
 </style>

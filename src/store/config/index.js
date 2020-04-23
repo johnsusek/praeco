@@ -221,6 +221,8 @@ export default {
           commit('alert/UPDATE_COMMAND', config.command);
         }
 
+        commit('alert/UPDATE_GITTER_MSG_LEVEL', config.gitter_msg_level);
+
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issue_type);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
@@ -713,6 +715,16 @@ export default {
       return config;
     },
 
+    gitter(state) {
+      let config = {};
+
+      if (state.alert.gitterMsgLevel) {
+        config.gitter_msg_level = state.alert.gitterMsgLevel;
+      }
+
+      return config;
+    },
+
     jira(state) {
       let config = {};
 
@@ -875,6 +887,10 @@ export default {
         config = { ...config, ...getters.command };
       }
 
+      if (state.alert.alert.includes('gitter')) {
+        config = { ...config, ...getters.gitter };
+      }
+
       if (state.alert.alert.includes('jira')) {
         config = { ...config, ...getters.jira };
       }
@@ -889,7 +905,8 @@ export default {
           state.alert.alert.includes('jira') ||
           state.alert.alert.includes('linenotify') ||
           state.alert.alert.includes('mattermost') ||
-          state.alert.alert.includes('command')) {
+          state.alert.alert.includes('command') ||
+          state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.subjectBody };
       }
 
