@@ -212,6 +212,15 @@ export default {
 
         commit('alert/UPDATE_LINENOTIFY_ACCESS_TOKEN', config.linenotify_access_token);
 
+        if (config.command) {
+          if (Array.isArray(config.command)) {
+            config.command.map( function(value, index, array) {
+              array[index] = value.replace(/\"/g,'').replace(/\'/g,'').trim();
+            });
+          }
+          commit('alert/UPDATE_COMMAND', config.command);
+        }
+
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issue_type);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
@@ -693,6 +702,16 @@ export default {
 
       return config;
     },
+    
+    command(state) {
+      let config = {};
+
+      if (state.alert.command) {
+        config.command = state.alert.command;
+      }
+
+      return config;
+    },
 
     jira(state) {
       let config = {};
@@ -851,6 +870,10 @@ export default {
       if (state.alert.alert.includes('linenotify')) {
         config = { ...config, ...getters.linenotify };
       }
+      
+      if (state.alert.alert.includes('command')) {
+        config = { ...config, ...getters.command };
+      }
 
       if (state.alert.alert.includes('jira')) {
         config = { ...config, ...getters.jira };
@@ -865,7 +888,8 @@ export default {
           state.alert.alert.includes('telegram') ||
           state.alert.alert.includes('jira') ||
           state.alert.alert.includes('linenotify') ||
-          state.alert.alert.includes('mattermost')) {
+          state.alert.alert.includes('mattermost') ||
+          state.alert.alert.includes('command')) {
         config = { ...config, ...getters.subjectBody };
       }
 
