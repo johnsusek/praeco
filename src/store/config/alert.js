@@ -22,6 +22,8 @@ function initialState() {
 
     telegramRoomId: '',
 
+    command: [],
+
     jiraProject: '',
     jiraIssueType: '',
     jiraComponents: '',
@@ -119,6 +121,10 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_COMMAND(state, command) {
+      state.command = command;
     },
 
     UPDATE_JIRA_PROJECT(state, jiraProject) {

@@ -47,12 +47,13 @@
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
         <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
         <el-checkbox id="destinationJira" label="jira" border>JIRA</el-checkbox>
+        <el-checkbox id="destinationCommand" label="command" border>Command</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') ||
-      alert.includes('telegram') || alert.includes('jira')">
+      alert.includes('telegram') || alert.includes('jira') || alert.includes('command')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -174,6 +175,20 @@
         <praeco-form-item label="Component" prop="jiraComponent">
           <el-input id="jiraComponent" v-model="jiraComponent" :disabled="viewOnly" />
           <label>Jira issue components</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('command')" >
+        <template slot="label">Command</template>
+
+        <praeco-form-item label="Command" prop="command" required>
+          <el-input id="command" v-model="command" :disabled="viewOnly" />
+          <label>
+            arguments to execute or a string to execute. 
+            the first argument is the name of the program to execute. 
+            If passed a string, the command is executed through the shell. 
+            format, /path/program name ,argument1,argument2,argument3
+          </label>
         </praeco-form-item>
       </el-tab-pane>
     </el-tabs>
@@ -373,6 +388,18 @@ export default {
         this.$store.commit(
           'config/alert/UPDATE_TELEGRAM_ROOM_ID',
           value
+        );
+      }
+    },
+
+    command: {
+      get() {
+        return this.$store.state.config.alert.command;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_COMMAND',
+          value.split(',')
         );
       }
     },
