@@ -22,6 +22,8 @@ function initialState() {
 
     telegramRoomId: '',
 
+    linenotifyAccessToken: '',
+
     jiraProject: '',
     jiraIssueType: '',
     jiraComponents: '',
@@ -119,6 +121,10 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_LINENOTIFY_ACCESS_TOKEN(state, linenotifyAccessToken) {
+      state.linenotifyAccessToken = linenotifyAccessToken;
     },
 
     UPDATE_JIRA_PROJECT(state, jiraProject) {

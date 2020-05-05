@@ -47,6 +47,7 @@
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
         <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
         <el-checkbox id="destinationJira" label="jira" border>JIRA</el-checkbox>
+        <el-checkbox id="destinationlineNotify" label="linenotify" border>LineNotify</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -174,6 +175,15 @@
         <praeco-form-item label="Component" prop="jiraComponent">
           <el-input id="jiraComponent" v-model="jiraComponent" :disabled="viewOnly" />
           <label>Jira issue components</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('linenotify')" >
+        <template slot="label">Line Notify</template>
+
+        <praeco-form-item label="Access Token" prop="linenotifyAccessToken" required>
+          <el-input id="linenotifyAccessToken" v-model="linenotifyAccessToken" :disabled="viewOnly" />
+          <label>The access token that you got from https://notify-bot.line.me/my/</label>
         </praeco-form-item>
       </el-tab-pane>
     </el-tabs>
@@ -372,6 +382,18 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_TELEGRAM_ROOM_ID',
+          value
+        );
+      }
+    },
+
+    linenotifyAccessToken: {
+      get() {
+        return this.$store.state.config.alert.linenotifyAccessToken;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_LINENOTIFY_ACCESS_TOKEN',
           value
         );
       }
