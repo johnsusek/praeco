@@ -226,11 +226,3 @@ You should now see the UI running at [http://localhost:8080](http://localhost:80
 
 If you have any difficulties please open a github issue with your problem.
 
-<br><br>
-
-<h3 align="center">Sponsored by</h3>
-<p align="center">
-  <a href="https://www.servercentral.com" target="_blank">
-    <img src="https://user-images.githubusercontent.com/611996/46423453-2a632900-c6fc-11e8-9332-01ad945089b8.png" height="42" width="auto" />
-  </a>
-</p>
