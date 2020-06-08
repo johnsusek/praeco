@@ -211,7 +211,7 @@ export default {
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
-        commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issue_type);
+        commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
 
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
