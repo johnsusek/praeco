@@ -20,6 +20,9 @@ function initialState() {
     slackEmojiOverride: '',
     slackMsgColor: 'danger',
 
+    ms_teamsWebhookUrl: '',
+    ms_teamsThemeColor: '#ff0000',
+
     telegramRoomId: '',
 
     jiraProject: '',
@@ -147,6 +150,14 @@ export default {
 
     UPDATE_SLACK_MSG_COLOR(state, slackMsgColor) {
       state.slackMsgColor = slackMsgColor;
+    },
+
+    UPDATE_MS_TEAMS_WEBHOOK_URL(state, ms_teamsWebhookUrl) {
+      state.ms_teamsWebhookUrl  = ms_teamsWebhookUrl;
+    },
+
+    UPDATE_MS_TEAMS_THEME_COLOR(state, ms_teamsThemeColor) {
+      state.ms_teamsThemeColor = ms_teamsThemeColor;
     },
 
     UPDATE_REALERT(state, realert) {
