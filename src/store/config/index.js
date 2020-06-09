@@ -704,7 +704,7 @@ export default {
 
       return config;
     },
-    
+
     command(state) {
       let config = {};
 
@@ -882,7 +882,7 @@ export default {
       if (state.alert.alert.includes('linenotify')) {
         config = { ...config, ...getters.linenotify };
       }
-      
+
       if (state.alert.alert.includes('command')) {
         config = { ...config, ...getters.command };
       }

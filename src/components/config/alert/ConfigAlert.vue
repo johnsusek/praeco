@@ -56,7 +56,8 @@
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') ||
-      alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') || alert.includes('command') || alert.includes('gitter')">
+        alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
+      alert.includes('command') || alert.includes('gitter')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -188,6 +189,8 @@
           <el-input id="linenotifyAccessToken" v-model="linenotifyAccessToken" :disabled="viewOnly" />
           <label>The access token that you got from https://notify-bot.line.me/my/</label>
         </praeco-form-item>
+      </el-tab-pane>
+
       <el-tab-pane v-if="alert.includes('mattermost')">
         <template slot="label"><icon :icon="['fab', 'mattermost']" size="1x" />Mattermost</template>
         <el-form-item label="Channel or username" prop="mattermostChannelOverride" required>
@@ -206,22 +209,28 @@
         <el-form-item label="Message color" prop="mattermostMsgColor" required>
           <el-radio-group v-model="mattermostMsgColor" :disabled="viewOnly">
             <el-radio id="mattermostMsgColorDanger" label="danger" border class="mattermost-danger">Danger</el-radio>
-            <el-radio id="mattermostMsgColorWarning" label="warning" border class="mattermost-warning">Warning</el-radio>
+            <el-radio id="mattermostMsgColorWarning" label="warning" border class="mattermost-warning">
+              Warning
+            </el-radio>
             <el-radio id="mattermostMsgColorGood" label="good" border class="mattermost-good">Good</el-radio>
           </el-radio-group>
         </el-form-item>
+      </el-tab-pane>
+
       <el-tab-pane v-if="alert.includes('command')" >
         <template slot="label">Command</template>
 
         <praeco-form-item label="Command" prop="command" required>
           <el-input id="command" v-model="command" :disabled="viewOnly" />
           <label>
-            arguments to execute or a string to execute. 
-            the first argument is the name of the program to execute. 
-            If passed a string, the command is executed through the shell. 
+            arguments to execute or a string to execute.
+            the first argument is the name of the program to execute.
+            If passed a string, the command is executed through the shell.
             format, /path/program name ,argument1,argument2,argument3
           </label>
         </praeco-form-item>
+      </el-tab-pane>
+
       <el-tab-pane v-if="alert.includes('gitter')" >
         <template slot="label"><icon :icon="['fab', 'gitter']" size="1x" /> Gitter</template>
         <el-form-item label="Message level" prop="gitterMsgLevel" required>
@@ -459,7 +468,7 @@ export default {
         );
       }
     },
-    
+
     command: {
       get() {
         return this.$store.state.config.alert.command;
@@ -750,7 +759,6 @@ export default {
     color: green !important;
     border-color: green !important;
   }
-  
   &.gitter-error .el-radio__inner:hover {
     border-color: red;
   }

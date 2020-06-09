@@ -73,7 +73,7 @@ export default {
 
       return `${appUrl}/rules/${encodeURIComponent(path)}`;
     },
-  
+
     subjectRendered(state, getters, rootState) {
       let subject = htmlToConfigFormat(state.subject);
       let sample = rootState.config.sampleResult;
@@ -143,7 +143,7 @@ export default {
     UPDATE_LINENOTIFY_ACCESS_TOKEN(state, linenotifyAccessToken) {
       state.linenotifyAccessToken = linenotifyAccessToken;
     },
-    
+
     UPDATE_COMMAND(state, command) {
       state.command = command;
     },
