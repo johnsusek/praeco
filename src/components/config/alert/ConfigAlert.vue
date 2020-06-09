@@ -43,6 +43,7 @@
       required>
       <el-checkbox-group v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
         <el-checkbox id="destinationSlack" label="slack" border>Slack</el-checkbox>
+        <el-checkbox id="destinationMsTeams" label="ms_teams" border>MS Teams</el-checkbox>
         <el-checkbox id="destinationEmail" label="email" border>Email</el-checkbox>
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
         <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
@@ -55,7 +56,7 @@
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
-      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') ||
+      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
       alert.includes('command') || alert.includes('gitter')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
@@ -99,6 +100,7 @@
             <el-radio id="slackMsgColorGood" label="good" border class="slack-good">Good</el-radio>
           </el-radio-group>
         </el-form-item>
+
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('email')">
@@ -153,6 +155,25 @@
         </el-form-item>
       </el-tab-pane>
 
+      <el-tab-pane v-if="alert.includes('ms_teams')" >
+        <template slot="label"><icon :icon="['fab', 'microsoft']" size="1x" /> MS Teams</template>
+        <el-form-item label="Team webhook" prop="ms_teamsWebhookUrl" required>
+          <el-input id="ms_teamsWebhookUrl" v-model="ms_teamsWebhookUrl" :disabled="viewOnly" />
+          <label>
+            See<a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook">
+            https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook</a>
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Color" prop="ms_teamsThemeColor" required>
+          <el-input id="ms_teamsThemeColor" v-model="ms_teamsThemeColor" :disabled="viewOnly" />
+          <label>
+            HTML color name in form of <b>#RRGGBB</b>
+          </label>
+        </el-form-item>
+
+      </el-tab-pane>
+
       <el-tab-pane v-if="alert.includes('telegram')" >
         <template slot="label">Telegram</template>
 
@@ -176,8 +197,8 @@
           <el-input id="jiraIssueType" v-model="jiraIssueType" :disabled="viewOnly" />
           <label>Jira issue type (Bug, Integration Bug, etc...)</label>
         </praeco-form-item>
-        <praeco-form-item label="Component" prop="jiraComponent">
-          <el-input id="jiraComponent" v-model="jiraComponent" :disabled="viewOnly" />
+        <praeco-form-item label="Components" prop="jiraComponents">
+          <el-input id="jiraComponents" v-model="jiraComponents" :disabled="viewOnly" />
           <label>Jira issue components</label>
         </praeco-form-item>
       </el-tab-pane>
@@ -267,6 +288,11 @@ let validateMattermostDestination = (rule, value, callback) => {
   } else {
     callback();
   }
+};
+
+let validateMSTeamsDestination = (rule, value, callback) => {
+  console.log(value);
+  callback(); // FIXME
 };
 
 let validateEmail = (rule, value, callback) => {
@@ -592,6 +618,24 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_MATTERMOST_MSG_COLOR', value);
+      }
+    },
+
+    ms_teamsWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.ms_teamsWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MS_TEAMS_WEBHOOK_URL', value);
+      }
+    },
+
+    ms_teamsThemeColor: {
+      get() {
+        return this.$store.state.config.alert.ms_teamsThemeColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MS_TEAMS_THEME_COLOR', value);
       }
     },
 

@@ -5,7 +5,7 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, Email, Telegram, Jira, Line Notify, Mattermost, Command or an HTTP POST endpoint
+- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command or an HTTP POST endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -226,11 +226,3 @@ You should now see the UI running at [http://localhost:8080](http://localhost:80
 
 If you have any difficulties please open a github issue with your problem.
 
-<br><br>
-
-<h3 align="center">Sponsored by</h3>
-<p align="center">
-  <a href="https://www.servercentral.com" target="_blank">
-    <img src="https://user-images.githubusercontent.com/611996/46423453-2a632900-c6fc-11e8-9332-01ad945089b8.png" height="42" width="auto" />
-  </a>
-</p>

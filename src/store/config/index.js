@@ -224,7 +224,7 @@ export default {
         commit('alert/UPDATE_GITTER_MSG_LEVEL', config.gitter_msg_level);
 
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
-        commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issue_type);
+        commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
 
         commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
@@ -235,6 +235,11 @@ export default {
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
         commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
         commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
+
+        commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
+        commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
+
+
         commit('alert/UPDATE_REALERT', config.realert);
         commit('alert/UPDATE_ALERT', config.alert);
 
@@ -685,6 +690,22 @@ export default {
       return config;
     },
 
+    ms_teams(state) {
+      let config = {};
+
+      if (state.alert.ms_teamsWebhookUrl) {
+        config.ms_teams_webhook_url = state.alert.ms_teamsWebhookUrl;
+      }
+
+      if (state.alert.ms_teamsThemeColor) {
+        config.ms_teams_theme_color = state.alert.ms_teamsThemeColor;
+      }
+
+      config.ms_teams_alert_summary = 'Alert';
+
+      return config;
+    },
+
     telegram(state) {
       let config = {};
 
@@ -874,7 +895,6 @@ export default {
       if (state.alert.alert.includes('slack')) {
         config = { ...config, ...getters.slack };
       }
-
       if (state.alert.alert.includes('telegram')) {
         config = { ...config, ...getters.telegram };
       }
@@ -901,6 +921,7 @@ export default {
 
       if (state.alert.alert.includes('email') ||
           state.alert.alert.includes('slack') ||
+          state.alert.alert.includes('ms_teams') ||
           state.alert.alert.includes('telegram') ||
           state.alert.alert.includes('jira') ||
           state.alert.alert.includes('linenotify') ||
@@ -909,6 +930,11 @@ export default {
           state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.subjectBody };
       }
+
+      if (state.alert.alert.includes('ms_teams')) {
+        config = { ...config, ...getters.ms_teams };
+      }
+
 
       if (state.match.type === 'blacklist') {
         config = { ...config, ...getters.blacklist };
