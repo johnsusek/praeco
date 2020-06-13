@@ -2,10 +2,11 @@
 
 ## Elastalert (if neccessary)
 
-- Stash all changes in elastalert project
+- Stash all changes in elastalert-server project
 - `make build v=master`
-- `docker tag id johnsusek/elastalert`
-- `docker push johnsusek/elastalert`
+- `docker tag <id> johnsusek/elastalert-server`
+- `docker tag <id> johnsusek/elastalert-server:<timestamp for tag>`
+- `docker push johnsusek/elastalert-server`
 
 ## Praeco
 

@@ -42,8 +42,9 @@ A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e
 ## Upgrading
 
 ```
-docker pull johnsusek/praeco; docker pull johnsusek/elastalert
-docker-compose up --force-recreate --build; docker image prune -f
+docker pull johnsusek/praeco;
+docker pull johnsusek/elastalert-server;
+docker-compose up --force-recreate --build;
 ```
 
 You may need to update your config files when a new version comes out. Please see [UPGRADING.md](https://github.com/johnsusek/praeco/blob/master/UPGRADING.md) for version-specific instructions.
@@ -162,7 +163,7 @@ When you run praeco using the quickstart instructions, it runs these two docker 
 
 Praeco uses a fork of the elastalert _api server_, which is why the docker image source is `johnsusek/elastalert`.
 
-NOTE: Only the _api server_ is a fork, the elastalert daemon itself is built from the `master` branch whenever a new version of the `johnsusek/elastalert` docker image is created.
+NOTE: Only the _api server_ is a fork, the elastalert daemon itself is built from the `master` branch whenever a new version of the `johnsusek/elastalert-server` docker image is created.
 
 Please see the development section below if you're interested in running these services separately.
 
