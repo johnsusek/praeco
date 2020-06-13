@@ -214,8 +214,8 @@ export default {
 
         if (config.command) {
           if (Array.isArray(config.command)) {
-            config.command.map( function(value, index, array) {
-              array[index] = value.replace(/\"/g,'').replace(/\'/g,'').trim();
+            config.command.forEach((value, index, array) => {
+              array[index] = value.replace(/"/g, '').replace(/'/g, '').trim();
             });
           }
           commit('alert/UPDATE_COMMAND', config.command);

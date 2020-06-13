@@ -30,9 +30,7 @@ docker-compose up
 
 * Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
 
-* To set up Slack, Email, Jira, Mattermost, Command, Gitter or Telegram notifications, edit `rules/BaseRule.config`.
-
-* Don't want to use Docker? Want to use your own builds of elastalert? Follow the "Manual installation" steps at the end of this document.
+* To set up notification settings like API keys edit `rules/BaseRule.config`.
 
 Praeco should now be available on http://127.0.0.1:8080
 

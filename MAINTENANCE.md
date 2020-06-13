@@ -4,7 +4,6 @@
 
 - Stash all changes in elastalert-server project
 - `make build v=master`
-- `docker tag <id> johnsusek/elastalert-server`
 - `docker tag <id> johnsusek/elastalert-server:<timestamp for tag>`
 - `docker push johnsusek/elastalert-server`
 
