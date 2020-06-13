@@ -29,7 +29,6 @@
             You will receive, at most, one alert every
             {{ realert.minutes }} minute(s), even if a rule
             triggers multiple times within that timeframe.
-            <br>
             If the rule is grouped over a field, this option will be applied on a per-group basis.
           </label>
         </el-form-item>
@@ -156,7 +155,7 @@
           <el-input id="ms_teamsWebhookUrl" v-model="ms_teamsWebhookUrl" :disabled="viewOnly" />
           <label>
             See<a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook">
-            https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook</a>
+              https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook</a>
           </label>
         </el-form-item>
 
@@ -214,11 +213,6 @@ let validateSlackDestination = (rule, value, callback) => {
   } else {
     callback();
   }
-};
-
-let validateMSTeamsDestination = (rule, value, callback) => {
-  console.log(value);
-  callback(); // FIXME
 };
 
 let validateEmail = (rule, value, callback) => {
