@@ -173,7 +173,7 @@
         <el-tab-pane label="Silence log">
           <el-alert
             show-icon
-            title="Matches are silenced when you've already
+            title="NOTE: Matches are automatically silenced when you've already
           been alerted within the rule's re-alert timeframe." />
           <el-table :data="silenceLog" empty-text="">
             <el-table-column label="Until" width="170">

@@ -22,13 +22,14 @@
             @input="updateRealert" />
           <label v-if="Object.values(realert)[0] === 0">
             WARNING: When re-alert is set to 0 minutes, you will receive an alert
-            every single time this rule triggers. This may result in large bursts
-            of notifications.
+            every single time this rule triggers. <strong>This may result in large bursts
+            of notifications.</strong>
           </label>
           <label v-else>
             You will receive, at most, one alert every
             {{ realert.minutes }} minute(s), even if a rule
             triggers multiple times within that timeframe.
+            This is a mechanism to prevent getting flooded with alerts.
             If the rule is grouped over a field, this option will be applied on a per-group basis.
           </label>
         </el-form-item>
