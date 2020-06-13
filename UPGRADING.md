@@ -2,8 +2,8 @@
 
 **To upgrade to the newest release of praeco, run the following commands:**
 
-- `docker pull servercentral/praeco && docker pull servercentral/elastalert`
-- `docker-compose up --force-recreate --build && docker image prune -f`
+- `docker pull johnsusek/praeco && docker pull johnsusek/elastalert-server`
+- `docker-compose up --force-recreate --build`
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
@@ -43,13 +43,13 @@ and within the server {} section:
 ```
   location /api-app/releases {
       proxy_cache github_api_cache;
-      proxy_pass https://api.github.com/repos/ServerCentral/praeco/releases;
+      proxy_pass https://api.github.com/repos/johnsusek/praeco/releases;
   }
 ```
 
-See [the default config file](https://github.com/ServerCentral/praeco/blob/master/nginx_config/default.conf) for exactly where to place these snippets.
+See [the default config file](https://github.com/johnsusek/praeco/blob/master/nginx_config/default.conf) for exactly where to place these snippets.
 
 ## v0.1 -> v0.2
 
-- Create file rules/BaseRule.config and paste in contents from https://raw.githubusercontent.com/ServerCentral/praeco/develop/rules/BaseRule.config, change as neccessary.
+- Create file rules/BaseRule.config and paste in contents from https://raw.githubusercontent.com/johnsusek/praeco/develop/rules/BaseRule.config, change as neccessary.
 

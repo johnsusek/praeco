@@ -12,7 +12,7 @@
 <br>
 <br>
 
-👉 Praeco is completely free, in return I only ask that you fill out [this simple survey](https://forms.gle/nAbu1RN2KHnyXX7L8) about how you use it.
+👉 Praeco is a completely free GPLv3 project, in return I only ask that you fill out [this simple survey](https://forms.gle/nAbu1RN2KHnyXX7L8) about how you use it.
 
 ##
 
@@ -32,7 +32,7 @@ docker-compose up
 
 * To set up Slack, Email, Jira, Mattermost, Command, Gitter or Telegram notifications, edit `rules/BaseRule.config`.
 
-* Don't want to use Docker? Want to use your own builds of elastalert? Follow the "Manual installation" steps at the end of this document. 
+* Don't want to use Docker? Want to use your own builds of elastalert? Follow the "Manual installation" steps at the end of this document.
 
 Praeco should now be available on http://127.0.0.1:8080
 
@@ -42,11 +42,12 @@ A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e
 ## Upgrading
 
 ```
-docker pull servercentral/praeco; docker pull servercentral/elastalert
-docker-compose up --force-recreate --build; docker image prune -f
+docker pull johnsusek/praeco
+docker pull johnsusek/elastalert-server
+docker-compose up --force-recreate --build
 ```
 
-You may need to update your config files when a new version comes out. Please see [UPGRADING.md](https://github.com/ServerCentral/praeco/blob/master/UPGRADING.md) for version-specific instructions.
+You may need to update your config files when a new version comes out. Please see [UPGRADING.md](https://github.com/johnsusek/praeco/blob/master/UPGRADING.md) for version-specific instructions.
 
 ## Configuration
 
@@ -60,7 +61,7 @@ The following config settings are available in praeco.config.json:
 // Link back to your praeco instance, used in Slack alerts
 "appUrl": "http://praeco-app-url:8080",
 
-// A recordatus (https://github.com/ServerCentral/recordatus) instance for javascript error reporting
+// A recordatus (https://github.com/johnsusek/recordatus) instance for javascript error reporting
 "errorLoggerUrl": "",
 
 // Hide these fields when editing rules, if they are already filled in template
@@ -160,21 +161,25 @@ rule files in the rules/ directory.
 
 When you run praeco using the quickstart instructions, it runs these two docker containers, per the docker-compose.yml file.
 
-Praeco uses a fork of the elastalert _api server_, which is why the docker image source is `servercentral/elastalert`.
+Praeco uses a fork of the elastalert _api server_, which is why the docker image source is `johnsusek/elastalert`.
 
-NOTE: Only the _api server_ is a fork, the elastalert daemon itself is built from the `master` branch whenever a new version of the `servercentral/elastalert` docker image is created.
+NOTE: Only the _api server_ is a fork, the elastalert daemon itself is built from the `master` branch whenever a new version of the `johnsusek/elastalert-server` docker image is created.
 
 Please see the development section below if you're interested in running these services separately.
 
-## Manual installation
+## Manual/Dev installation
+
+NOTE: If you're just interested in developing Praeco UI features locally (and not changing elastalert or the api), you can skip right to Praeco setup and just run the internal Elastalert server with `docker-compose up elastalert-server` .
+
+---
 
 First, you need a local copy of the elastalert api server running, which itself needs elastalert. Start by cloning the neccessary repos
 
 ```
 cd
 git clone https://github.com/Yelp/elastalert.git
-git clone https://github.com/ServerCentral/elastalert-server.git
-git clone https://github.com/ServerCentral/praeco.git
+git clone https://github.com/johnsusek/elastalert-server.git
+git clone https://github.com/johnsusek/praeco.git
 ```
 
 ### Setting up elastalert
@@ -187,6 +192,7 @@ Configure the elastalert `config.yaml` with:
 ```
 cd ~/elastalert
 mkdir rules rule_templates
+touch rules/BaseRule.config
 pip install -r requirements-dev.txt
 cp config.yaml.example config.yaml
 vi config.yaml
