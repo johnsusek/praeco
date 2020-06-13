@@ -35,7 +35,7 @@ module.exports = {
     disableHostCheck: true,
     proxy: {
       '/api-app/releases': {
-        target: 'https://api.github.com/repos/ServerCentral/praeco/releases',
+        target: 'https://api.github.com/repos/johnsusek/praeco/releases',
         changeOrigin: true,
         pathRewrite: {
           '^/api-app/releases': ''
