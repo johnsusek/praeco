@@ -42,9 +42,9 @@ A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e
 ## Upgrading
 
 ```
-docker pull johnsusek/praeco;
-docker pull johnsusek/elastalert-server;
-docker-compose up --force-recreate --build;
+docker pull johnsusek/praeco
+docker pull johnsusek/elastalert-server
+docker-compose up --force-recreate --build
 ```
 
 You may need to update your config files when a new version comes out. Please see [UPGRADING.md](https://github.com/johnsusek/praeco/blob/master/UPGRADING.md) for version-specific instructions.
