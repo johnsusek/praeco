@@ -13,8 +13,7 @@ LABEL "commit"="${LABEL_COMMIT}" \
   "repo"="${LABEL_REPO}" \
   "repo_link"="${LABEL_REPO_LINK}" \
   "project_name"="${LABEL_PROJECT_NAME}" \
-  "build_created"="${LABEL_BUILD_CREATED}" \
-  "maintainer"="ServerCentral"
+  "build_created"="${LABEL_BUILD_CREATED}"
 RUN apt-get update
 RUN apt-get install -y nginx
 

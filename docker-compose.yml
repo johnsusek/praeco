@@ -1,28 +1,23 @@
 version: '3'
 
 services:
-  elastalert:
-    image: 'servercentral/elastalert'
-
+  elastalert-server:
+    image: 'johnsusek/elastalert-server'
     ports:
-      - '3030:3030'
-      - '3333:3333'
-
+      - 3030:3030
+      - 3333:3333
     volumes:
       - ./config/elastalert.yaml:/opt/elastalert/config.yaml
       - ./config/api.config.json:/opt/elastalert-server/config/config.json
       - ./rules:/opt/elastalert/rules
       - ./rule_templates:/opt/elastalert/rule_templates
-
     extra_hosts:
       - 'elasticsearch:${PRAECO_ELASTICSEARCH}'
 
   webapp:
-    image: 'servercentral/praeco'
-
+    image: 'johnsusek/praeco'
     ports:
-      - '8080:8080'
-
+      - 8080:8080
     volumes:
       - ./public/praeco.config.json:/var/www/html/praeco.config.json
       - ./nginx_config/nginx.conf:/etc/nginx/nginx.conf

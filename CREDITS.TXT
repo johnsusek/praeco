@@ -6,7 +6,7 @@ https://github.com/Yelp/elastalert
 Bitsensor - for Elastalert API server
 https://github.com/bitsensor/elastalert
 
-ServerCentral - Sponsors of Praeco development
+ServerCentral - Original sponsors of Praeco development
 https://github.com/ServerCentral
 
 Praeco designed and created by John Susek

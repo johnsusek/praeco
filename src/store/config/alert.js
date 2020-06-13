@@ -153,7 +153,7 @@ export default {
     },
 
     UPDATE_MS_TEAMS_WEBHOOK_URL(state, ms_teamsWebhookUrl) {
-      state.ms_teamsWebhookUrl  = ms_teamsWebhookUrl;
+      state.ms_teamsWebhookUrl = ms_teamsWebhookUrl;
     },
 
     UPDATE_MS_TEAMS_THEME_COLOR(state, ms_teamsThemeColor) {
