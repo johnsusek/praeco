@@ -25,9 +25,17 @@ function initialState() {
 
     telegramRoomId: '',
 
+    linenotifyAccessToken: '',
+    command: [],
+    gitterMsgLevel: 'error',
+
     jiraProject: '',
     jiraIssueType: '',
     jiraComponents: '',
+
+    mattermostChannelOverride: '',
+    mattermostUsernameOverride: 'Praeco',
+    mattermostMsgColor: 'danger',
 
     fromAddr: '',
     replyTo: '',
@@ -48,6 +56,17 @@ export default {
 
   getters: {
     slackTitleLink(state, getters, rootState) {
+      let appUrl = rootState.appconfig.config.appUrl;
+      let path = rootState.config.settings.name;
+
+      if (rootState.config.path) {
+        path = `${rootState.config.path}/${path}`;
+      }
+
+      return `${appUrl}/rules/${encodeURIComponent(path)}`;
+    },
+
+    mattermostTitleLink(state, getters, rootState) {
       let appUrl = rootState.appconfig.config.appUrl;
       let path = rootState.config.settings.name;
 
@@ -124,6 +143,18 @@ export default {
       state.telegramRoomId = telegramRoomId;
     },
 
+    UPDATE_LINENOTIFY_ACCESS_TOKEN(state, linenotifyAccessToken) {
+      state.linenotifyAccessToken = linenotifyAccessToken;
+    },
+
+    UPDATE_COMMAND(state, command) {
+      state.command = command;
+    },
+
+    UPDATE_GITTER_MSG_LEVEL(state, gitterMsgLevel) {
+      state.gitterMsgLevel = gitterMsgLevel;
+    },
+
     UPDATE_JIRA_PROJECT(state, jiraProject) {
       state.jiraProject = jiraProject;
     },
@@ -134,6 +165,18 @@ export default {
 
     UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
       state.jiraComponents = jiraComponents;
+    },
+
+    UPDATE_MATTERMOST_CHANNEL_OVERRIDE(state, mattermostChannelOverride) {
+      state.mattermostChannelOverride = mattermostChannelOverride;
+    },
+
+    UPDATE_MATTERMOST_USERNAME_OVERRIDE(state, mattermostUsernameOverride) {
+      state.mattermostUsernameOverride = mattermostUsernameOverride;
+    },
+
+    UPDATE_MATTERMOST_MSG_COLOR(state, mattermostMsgColor) {
+      state.mattermostMsgColor = mattermostMsgColor;
     },
 
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {

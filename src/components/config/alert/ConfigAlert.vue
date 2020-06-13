@@ -48,12 +48,17 @@
         <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
         <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
         <el-checkbox id="destinationJira" label="jira" border>JIRA</el-checkbox>
+        <el-checkbox id="destinationlineNotify" label="linenotify" border>LineNotify</el-checkbox>
+        <el-checkbox id="destinationMattermost" label="mattermost" border>Mattermost</el-checkbox>
+        <el-checkbox id="destinationCommand" label="command" border>Command</el-checkbox>
+        <el-checkbox id="destinationGitter" label="gitter" border>Gitter</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
-      <el-tab-pane v-if="alert.includes('slack') || alert.includes('ms_teams') || alert.includes('email') ||
-      alert.includes('telegram') || alert.includes('jira')">
+      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
+        alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
+      alert.includes('command') || alert.includes('gitter')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -197,6 +202,65 @@
           <label>Jira issue components</label>
         </praeco-form-item>
       </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('linenotify')" >
+        <template slot="label">Line Notify</template>
+
+        <praeco-form-item label="Access Token" prop="linenotifyAccessToken" required>
+          <el-input id="linenotifyAccessToken" v-model="linenotifyAccessToken" :disabled="viewOnly" />
+          <label>The access token that you got from https://notify-bot.line.me/my/</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('mattermost')">
+        <template slot="label"><icon :icon="['fab', 'mattermost']" size="1x" />Mattermost</template>
+        <el-form-item label="Channel or username" prop="mattermostChannelOverride" required>
+          <el-input id="mattermostChannelOverride" v-model="mattermostChannelOverride" :disabled="viewOnly" />
+          <label>
+            The @username or #channel to send the alert. Tip: Create new channels
+            for your alerts, to have fine-grained control of Mattermost notifications.
+          </label>
+        </el-form-item>
+
+        <praeco-form-item label="Post as" prop="mattermostUsernameOverride" required>
+          <el-input id="mattermostUsernameOverride" v-model="mattermostUsernameOverride" :disabled="viewOnly" />
+          <label>This is the username that will appear in Mattermost for the alert</label>
+        </praeco-form-item>
+
+        <el-form-item label="Message color" prop="mattermostMsgColor" required>
+          <el-radio-group v-model="mattermostMsgColor" :disabled="viewOnly">
+            <el-radio id="mattermostMsgColorDanger" label="danger" border class="mattermost-danger">Danger</el-radio>
+            <el-radio id="mattermostMsgColorWarning" label="warning" border class="mattermost-warning">
+              Warning
+            </el-radio>
+            <el-radio id="mattermostMsgColorGood" label="good" border class="mattermost-good">Good</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('command')" >
+        <template slot="label">Command</template>
+
+        <praeco-form-item label="Command" prop="command" required>
+          <el-input id="command" v-model="command" :disabled="viewOnly" />
+          <label>
+            arguments to execute or a string to execute.
+            the first argument is the name of the program to execute.
+            If passed a string, the command is executed through the shell.
+            format, /path/program name ,argument1,argument2,argument3
+          </label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('gitter')" >
+        <template slot="label"><icon :icon="['fab', 'gitter']" size="1x" /> Gitter</template>
+        <el-form-item label="Message level" prop="gitterMsgLevel" required>
+          <el-radio-group v-model="gitterMsgLevel" :disabled="viewOnly">
+            <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">Error</el-radio>
+            <el-radio id="gitterMsgLevelInfo" label="info" border class="gitter-info">Info</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -214,6 +278,21 @@ let validateSlackDestination = (rule, value, callback) => {
   } else {
     callback();
   }
+};
+
+let validateMattermostDestination = (rule, value, callback) => {
+  if (value.length < 2) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else if (!value.startsWith('@') && !value.startsWith('#')) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else {
+    callback();
+  }
+};
+
+let validateMSTeamsDestination = (rule, value, callback) => {
+  console.log(value);
+  callback(); // FIXME
 };
 
 let validateEmail = (rule, value, callback) => {
@@ -279,6 +358,12 @@ export default {
         slackChannelOverride: [
           {
             validator: validateSlackDestination,
+            trigger: 'change'
+          }
+        ],
+        mattermostChannelOverride: [
+          {
+            validator: validateMattermostDestination,
             trigger: 'change'
           }
         ],
@@ -398,6 +483,39 @@ export default {
       }
     },
 
+    linenotifyAccessToken: {
+      get() {
+        return this.$store.state.config.alert.linenotifyAccessToken;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_LINENOTIFY_ACCESS_TOKEN',
+          value
+        );
+      }
+    },
+
+    command: {
+      get() {
+        return this.$store.state.config.alert.command;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_COMMAND',
+          value.split(',')
+        );
+      }
+    },
+
+    gitterMsgLevel: {
+      get() {
+        return this.$store.state.config.alert.gitterMsgLevel;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_GITTER_MSG_LEVEL', value);
+      }
+    },
+
     jiraIssueType: {
       get() {
         return this.$store.state.config.alert.jiraIssueType;
@@ -470,6 +588,36 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_SLACK_MSG_COLOR', value);
+      }
+    },
+
+    mattermostChannelOverride: {
+      get() {
+        return this.$store.state.config.alert.mattermostChannelOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', value);
+      }
+    },
+
+    mattermostUsernameOverride: {
+      get() {
+        return this.$store.state.config.alert.mattermostUsernameOverride;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE',
+          value
+        );
+      }
+    },
+
+    mattermostMsgColor: {
+      get() {
+        return this.$store.state.config.alert.mattermostMsgColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_MSG_COLOR', value);
       }
     },
 
@@ -617,6 +765,67 @@ export default {
   &.slack-good {
     color: green !important;
     border-color: green !important;
+  }
+
+  &.mattermost-danger .el-radio__inner:hover {
+    border-color: red;
+  }
+  &.mattermost-danger .el-radio__input.is-checked .el-radio__inner {
+    border-color: red;
+    background: red;
+  }
+  &.mattermost-danger .el-radio__input.is-checked + .el-radio__label,
+  &.mattermost-danger {
+    color: red !important;
+    border-color: red !important;
+  }
+  &.mattermost-warning .el-radio__inner:hover {
+    border-color: orange;
+  }
+  &.mattermost-warning .el-radio__input.is-checked .el-radio__inner {
+    border-color: orange;
+    background: orange;
+  }
+  &.mattermost-warning .el-radio__input.is-checked + .el-radio__label,
+  &.mattermost-warning {
+    color: orange !important;
+    border-color: orange !important;
+  }
+  &.mattermost-good .el-radio__inner:hover {
+    border-color: green;
+  }
+  &.mattermost-good .el-radio__input.is-checked .el-radio__inner {
+    border-color: green;
+    background: green;
+  }
+  &.mattermost-good .el-radio__input.is-checked + .el-radio__label,
+  &.mattermost-good {
+    color: green !important;
+    border-color: green !important;
+  }
+  &.gitter-error .el-radio__inner:hover {
+    border-color: red;
+  }
+  &.gitter-error .el-radio__input.is-checked .el-radio__inner {
+    border-color: red;
+    background: red;
+  }
+  &.gitter-error .el-radio__input.is-checked + .el-radio__label,
+  &.gitter-error {
+    color: red !important;
+    border-color: red !important;
+  }
+  &.gitter-info .el-radio__inner:hover {
+    border-color: blue;
+  }
+  &.gitter-info .el-radio__input.is-checked .el-radio__inner {
+    border-color: green;
+    background: blue;
+  }
+  &.gitter-info .el-radio__input.is-checked + .el-radio__label,
+  &.gitter-info {
+    color: green !important;
+    border-color: blue !important;
   }
 }
 </style>

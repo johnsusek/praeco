@@ -5,7 +5,7 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, MS Teams, Email, Telegram, Jira or an HTTP POST endpoint
+- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter or an HTTP POST endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -30,7 +30,7 @@ docker-compose up
 
 * Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
 
-* To set up Slack, Email, Jira or Telegram notifications, edit `rules/BaseRule.config`.
+* To set up Slack, Email, Jira, Mattermost, Command, Gitter or Telegram notifications, edit `rules/BaseRule.config`.
 
 * Don't want to use Docker? Want to use your own builds of elastalert? Follow the "Manual installation" steps at the end of this document.
 

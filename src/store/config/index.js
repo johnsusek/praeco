@@ -210,9 +210,26 @@ export default {
 
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
+        commit('alert/UPDATE_LINENOTIFY_ACCESS_TOKEN', config.linenotify_access_token);
+
+        if (config.command) {
+          if (Array.isArray(config.command)) {
+            config.command.map( function(value, index, array) {
+              array[index] = value.replace(/\"/g,'').replace(/\'/g,'').trim();
+            });
+          }
+          commit('alert/UPDATE_COMMAND', config.command);
+        }
+
+        commit('alert/UPDATE_GITTER_MSG_LEVEL', config.gitter_msg_level);
+
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
+
+        commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
+        commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', config.mattermost_username_override);
+        commit('alert/UPDATE_MATTERMOST_MSG_COLOR', config.mattermost_msg_color);
 
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
@@ -699,6 +716,36 @@ export default {
       return config;
     },
 
+    linenotify(state) {
+      let config = {};
+
+      if (state.alert.linenotifyAccessToken) {
+        config.linenotify_access_token = state.alert.linenotifyAccessToken;
+      }
+
+      return config;
+    },
+
+    command(state) {
+      let config = {};
+
+      if (state.alert.command) {
+        config.command = state.alert.command;
+      }
+
+      return config;
+    },
+
+    gitter(state) {
+      let config = {};
+
+      if (state.alert.gitterMsgLevel) {
+        config.gitter_msg_level = state.alert.gitterMsgLevel;
+      }
+
+      return config;
+    },
+
     jira(state) {
       let config = {};
 
@@ -709,6 +756,28 @@ export default {
 
       if (state.alert.jiraComponents) {
         config.jira_components = state.alert.jiraComponents;
+      }
+
+      return config;
+    },
+
+    mattermost(state, getters) {
+      let config = {};
+
+      if (state.alert.mattermostChannelOverride) {
+        config.mattermost_channel_override = state.alert.mattermostChannelOverride;
+      }
+
+      if (state.alert.mattermostUsernameOverride) {
+        config.mattermost_username_override = state.alert.mattermostUsernameOverride;
+      }
+
+      if (state.alert.mattermostMsgColor) {
+        config.mattermost_msg_color = state.alert.mattermostMsgColor;
+      }
+
+      if (getters['alert/mattermostTitleLink']) {
+        config.mattermost_title_link = getters['alert/mattermostTitleLink'];
       }
 
       return config;
@@ -830,15 +899,35 @@ export default {
         config = { ...config, ...getters.telegram };
       }
 
+      if (state.alert.alert.includes('linenotify')) {
+        config = { ...config, ...getters.linenotify };
+      }
+
+      if (state.alert.alert.includes('command')) {
+        config = { ...config, ...getters.command };
+      }
+
+      if (state.alert.alert.includes('gitter')) {
+        config = { ...config, ...getters.gitter };
+      }
+
       if (state.alert.alert.includes('jira')) {
         config = { ...config, ...getters.jira };
+      }
+
+      if (state.alert.alert.includes('mattermost')) {
+        config = { ...config, ...getters.mattermost };
       }
 
       if (state.alert.alert.includes('email') ||
           state.alert.alert.includes('slack') ||
           state.alert.alert.includes('ms_teams') ||
           state.alert.alert.includes('telegram') ||
-          state.alert.alert.includes('jira')) {
+          state.alert.alert.includes('jira') ||
+          state.alert.alert.includes('linenotify') ||
+          state.alert.alert.includes('mattermost') ||
+          state.alert.alert.includes('command') ||
+          state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.subjectBody };
       }
 
