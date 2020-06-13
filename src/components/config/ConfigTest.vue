@@ -135,7 +135,15 @@ export default {
           this.messages.push(payload.data);
         } else {
           this.debugMessages.push(payload.data);
-          this.testRunError = this.debugMessages.join('\n');
+
+          let runError = this.debugMessages.join('\n');
+
+          // Ignore this error until elastalert fixes it:
+          // https://github.com/Yelp/elastalert/issues/2634
+          let ignoredError = 'ERROR:root:Uncaught exception running rule test: \'_thread._local\' object has no attribute \'alerts_sent\'';
+          if (!runError.includes(ignoredError)) {
+            this.testRunError = runError;
+          }
         }
       } else if (payload.event === 'result') {
         try {
