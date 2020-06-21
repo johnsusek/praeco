@@ -25,6 +25,15 @@ function initialState() {
 
     telegramRoomId: '',
 
+    snsTopicArn: '',
+    snsAwsAccessKeyId: '',
+    snsAwsSecretAccessKey: '',
+    snsAwsRegion: '',
+    snsAwsProfile: '',
+
+    zbxHost: '',
+    zbxKey: '',
+
     linenotifyAccessToken: '',
     command: [],
     gitterMsgLevel: 'error',
@@ -141,6 +150,34 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_SNS_TOPIC_ARN(state, snsTopicArn) {
+      state.snsTopicArn = snsTopicArn;
+    },
+
+    UPDATE_SNS_AWS_ACCESS_KEY_ID(state, snsAwsAccessKeyId) {
+      state.snsAwsAccessKeyId = snsAwsAccessKeyId;
+    },
+
+    UPDATE_SNS_AWS_SECRET_ACCESS_KEY(state, snsAwsSecretAccessKey) {
+      state.snsAwsSecretAccessKey = snsAwsSecretAccessKey;
+    },
+
+    UPDATE_SNS_AWS_REGION(state, snsAwsRegion) {
+      state.snsAwsRegion = snsAwsRegion;
+    },
+
+    UPDATE_SNS_AWS_PROFILE(state, snsAwsProfile) {
+      state.snsAwsProfile = snsAwsProfile;
+    },
+
+    UPDATE_ZBX_HOST(state, zbxHost) {
+      state.zbxHost = zbxHost;
+    },
+
+    UPDATE_ZBX_KEY(state, zbxKey) {
+      state.zbxKey = zbxKey;
     },
 
     UPDATE_LINENOTIFY_ACCESS_TOKEN(state, linenotifyAccessToken) {

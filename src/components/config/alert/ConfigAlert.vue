@@ -52,12 +52,15 @@
         <el-checkbox id="destinationMattermost" label="mattermost" border>Mattermost</el-checkbox>
         <el-checkbox id="destinationCommand" label="command" border>Command</el-checkbox>
         <el-checkbox id="destinationGitter" label="gitter" border>Gitter</el-checkbox>
+        <el-checkbox id="destinationSns" label="sns" border>SNS</el-checkbox>
+        <el-checkbox id="destinationZabbix" label="zabbix" border>Zabbix</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
+        alert.includes('sns') || alert.includes('zabbix') ||
       alert.includes('command') || alert.includes('gitter')">
         <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
         <ConfigAlertSubjectBody
@@ -261,6 +264,54 @@
           </el-radio-group>
         </el-form-item>
       </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('sns')" >
+        <template slot="label">SNS</template>
+        <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="profile" border @change="changeSns">Profile</el-radio>
+        <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="notProfile" border @change="changeSns">NotProfile</el-radio>
+
+        <div v-if="groupSns === 'notProfile'">
+          <praeco-form-item label="TopicArn" prop="snsTopicArn" required>
+            <el-input id="snsTopicArn" v-model="snsTopicArn" :disabled="viewOnly" />
+            <label>The SNS topic’s ARN. For example, arn:aws:sns:us-east-1:123456789:somesnstopic</label>
+          </praeco-form-item>
+          <praeco-form-item label="SnsAwsAccessKeyId" prop="snsAwsAccessKeyId" required>
+            <el-input id="snsAwsAccessKeyId" v-model="snsAwsAccessKeyId" :disabled="viewOnly" />
+            <label>An access key to connect to SNS with.</label>
+          </praeco-form-item>
+          <praeco-form-item label="SnsAwsSecretAccessKey" prop="snsAwsSecretAccessKey" required>
+            <el-input id="snsAwsSecretAccessKey" v-model="snsAwsSecretAccessKey" :disabled="viewOnly" />
+            <label>The secret key associated with the access key.</label>
+          </praeco-form-item>
+          <praeco-form-item label="SnsAwsRegion" prop="snsAwsRegion" required>
+            <el-input id="snsAwsRegion" v-model="snsAwsRegion" :disabled="viewOnly" />
+            <label>The AWS region in which the SNS resource is located. For example, us-east-1</label>
+          </praeco-form-item>
+        </div>
+        <div v-if="groupSns === 'profile'">
+          <praeco-form-item label="TopicArn" prop="snsTopicArn" required>
+            <el-input id="snsTopicArn" v-model="snsTopicArn" :disabled="viewOnly" />
+            <label>The SNS topic’s ARN. For example, arn:aws:sns:us-east-1:123456789:somesnstopic</label>
+          </praeco-form-item>
+          <praeco-form-item label="SnsAwsProfile" prop="snsAwsProfile" required>
+            <el-input id="snsAwsProfile" v-model="snsAwsProfile" :disabled="viewOnly" />
+            <label>The AWS profile to use. If none specified, the default will be used.</label>
+          </praeco-form-item>
+        </div>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('zabbix')" >
+        <template slot="label">Zabbix</template>
+
+        <praeco-form-item label="ZbxHost" prop="zbxHost" required>
+          <el-input id="zbxHost" v-model="zbxHost" :disabled="viewOnly" />
+          <label>This field setup the host in zabbix that receives the value sent by Elastalert.</label>
+        </praeco-form-item>
+        <praeco-form-item label="ZbxKey" prop="zbxKey" required>
+          <el-input id="zbxKey" v-model="zbxKey" :disabled="viewOnly" />
+          <label>This field setup the key in the host that receives the value sent by Elastalert.</label>
+        </praeco-form-item>
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -346,7 +397,12 @@ export default {
   props: ['viewOnly'],
 
   data() {
+    let groupSnsValue = 'profile';
+    if (typeof this.$store.state.config.alert.snsAwsProfile === 'undefined' || this.$store.state.config.alert.snsAwsProfile === '') {
+      groupSnsValue = 'notProfile';
+    }
     return {
+      groupSns: groupSnsValue,
       visibleTabPane: '',
       rules: {
         alert: [
@@ -478,6 +534,90 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_TELEGRAM_ROOM_ID',
+          value
+        );
+      }
+    },
+
+    snsTopicArn: {
+      get() {
+        return this.$store.state.config.alert.snsTopicArn;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SNS_TOPIC_ARN',
+          value
+        );
+      }
+    },
+
+    snsAwsAccessKeyId: {
+      get() {
+        return this.$store.state.config.alert.snsAwsAccessKeyId;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SNS_AWS_ACCESS_KEY_ID',
+          value
+        );
+      }
+    },
+
+    snsAwsSecretAccessKey: {
+      get() {
+        return this.$store.state.config.alert.snsAwsSecretAccessKey;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SNS_AWS_SECRET_ACCESS_KEY',
+          value
+        );
+      }
+    },
+
+    snsAwsRegion: {
+      get() {
+        return this.$store.state.config.alert.snsAwsRegion;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SNS_AWS_REGION',
+          value
+        );
+      }
+    },
+
+    snsAwsProfile: {
+      get() {
+        return this.$store.state.config.alert.snsAwsProfile;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SNS_AWS_PROFILE',
+          value
+        );
+      }
+    },
+
+    zbxHost: {
+      get() {
+        return this.$store.state.config.alert.zbxHost;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ZBX_HOST',
+          value
+        );
+      }
+    },
+
+    zbxKey: {
+      get() {
+        return this.$store.state.config.alert.zbxKey;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ZBX_KEY',
           value
         );
       }
@@ -661,6 +801,13 @@ export default {
   methods: {
     addEmoji(value) {
       this.slackEmojiOverride = value.colons;
+    },
+
+    changeSns() {
+      this.snsAwsAccessKeyId = '';
+      this.snsAwsSecretAccessKey = '';
+      this.snsAwsRegion = '';
+      this.snsAwsProfile = '';
     },
 
     updateRealert(value) {
