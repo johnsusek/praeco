@@ -5,7 +5,6 @@
     :model="$store.state.config.alert"
     label-position="top"
     @submit.native.prevent>
-
     <el-row class="m-s-sm">
       <el-col :span="aggregationSchedule ? 24 : 12">
         <ConfigAggregation ref="aggregation" :view-only="viewOnly" />
@@ -23,7 +22,7 @@
           <label v-if="Object.values(realert)[0] === 0">
             WARNING: When re-alert is set to 0 minutes, you will receive an alert
             every single time this rule triggers. <strong>This may result in large bursts
-            of notifications.</strong>
+              of notifications.</strong>
           </label>
           <label v-else>
             You will receive, at most, one alert every
@@ -42,18 +41,42 @@
       prop="alert"
       required>
       <el-checkbox-group v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
-        <el-checkbox id="destinationSlack" label="slack" border>Slack</el-checkbox>
-        <el-checkbox id="destinationMsTeams" label="ms_teams" border>MS Teams</el-checkbox>
-        <el-checkbox id="destinationEmail" label="email" border>Email</el-checkbox>
-        <el-checkbox id="destinationPost" label="post" border>HTTP</el-checkbox>
-        <el-checkbox id="destinationTelegram" label="telegram" border>Telegram</el-checkbox>
-        <el-checkbox id="destinationJira" label="jira" border>JIRA</el-checkbox>
-        <el-checkbox id="destinationlineNotify" label="linenotify" border>LineNotify</el-checkbox>
-        <el-checkbox id="destinationMattermost" label="mattermost" border>Mattermost</el-checkbox>
-        <el-checkbox id="destinationCommand" label="command" border>Command</el-checkbox>
-        <el-checkbox id="destinationGitter" label="gitter" border>Gitter</el-checkbox>
-        <el-checkbox id="destinationSns" label="sns" border>SNS</el-checkbox>
-        <el-checkbox id="destinationZabbix" label="zabbix" border>Zabbix</el-checkbox>
+        <el-checkbox id="destinationSlack" label="slack" border>
+          Slack
+        </el-checkbox>
+        <el-checkbox id="destinationMsTeams" label="ms_teams" border>
+          MS Teams
+        </el-checkbox>
+        <el-checkbox id="destinationEmail" label="email" border>
+          Email
+        </el-checkbox>
+        <el-checkbox id="destinationPost" label="post" border>
+          HTTP
+        </el-checkbox>
+        <el-checkbox id="destinationTelegram" label="telegram" border>
+          Telegram
+        </el-checkbox>
+        <el-checkbox id="destinationJira" label="jira" border>
+          JIRA
+        </el-checkbox>
+        <el-checkbox id="destinationlineNotify" label="linenotify" border>
+          LineNotify
+        </el-checkbox>
+        <el-checkbox id="destinationMattermost" label="mattermost" border>
+          Mattermost
+        </el-checkbox>
+        <el-checkbox id="destinationCommand" label="command" border>
+          Command
+        </el-checkbox>
+        <el-checkbox id="destinationGitter" label="gitter" border>
+          Gitter
+        </el-checkbox>
+        <el-checkbox id="destinationSns" label="sns" border>
+          SNS
+        </el-checkbox>
+        <el-checkbox id="destinationZabbix" label="zabbix" border>
+          Zabbix
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -61,16 +84,20 @@
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
         alert.includes('sns') || alert.includes('zabbix') ||
-      alert.includes('command') || alert.includes('gitter')">
-        <template slot="label"><icon :icon="['fa', 'bell']" size="1x" /> Alert</template>
+        alert.includes('command') || alert.includes('gitter')">
+        <template slot="label">
+          <icon :icon="['fa', 'bell']" size="1x" /> Alert
+        </template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
           :view-only="viewOnly"
           class="m-s-lg" />
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('slack')" >
-        <template slot="label"><icon :icon="['fab', 'slack']" size="1x" /> Slack</template>
+      <el-tab-pane v-if="alert.includes('slack')">
+        <template slot="label">
+          <icon :icon="['fab', 'slack']" size="1x" /> Slack
+        </template>
         <el-form-item label="Channel or username" prop="slackChannelOverride" required>
           <el-input id="slackChannelOverride" v-model="slackChannelOverride" :disabled="viewOnly" />
           <label>
@@ -98,12 +125,17 @@
 
         <el-form-item label="Message color" prop="slackMsgColor" required>
           <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
-            <el-radio id="slackMsgColorDanger" label="danger" border class="slack-danger">Danger</el-radio>
-            <el-radio id="slackMsgColorWarning" label="warning" border class="slack-warning">Warning</el-radio>
-            <el-radio id="slackMsgColorGood" label="good" border class="slack-good">Good</el-radio>
+            <el-radio id="slackMsgColorDanger" label="danger" border class="slack-danger">
+              Danger
+            </el-radio>
+            <el-radio id="slackMsgColorWarning" label="warning" border class="slack-warning">
+              Warning
+            </el-radio>
+            <el-radio id="slackMsgColorGood" label="good" border class="slack-good">
+              Good
+            </el-radio>
           </el-radio-group>
         </el-form-item>
-
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('email')">
@@ -158,8 +190,10 @@
         </el-form-item>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('ms_teams')" >
-        <template slot="label"><icon :icon="['fab', 'microsoft']" size="1x" /> MS Teams</template>
+      <el-tab-pane v-if="alert.includes('ms_teams')">
+        <template slot="label">
+          <icon :icon="['fab', 'microsoft']" size="1x" /> MS Teams
+        </template>
         <el-form-item label="Team webhook" prop="ms_teamsWebhookUrl" required>
           <el-input id="ms_teamsWebhookUrl" v-model="ms_teamsWebhookUrl" :disabled="viewOnly" />
           <label>
@@ -174,11 +208,12 @@
             HTML color name in form of <b>#RRGGBB</b>
           </label>
         </el-form-item>
-
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('telegram')" >
-        <template slot="label">Telegram</template>
+      <el-tab-pane v-if="alert.includes('telegram')">
+        <template slot="label">
+          Telegram
+        </template>
 
         <praeco-form-item label="Room ID" prop="telegramRoomId" required>
           <el-input id="telegramRoomId" v-model="telegramRoomId" :disabled="viewOnly" />
@@ -189,8 +224,10 @@
         </praeco-form-item>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('jira')" >
-        <template slot="label">JIRA</template>
+      <el-tab-pane v-if="alert.includes('jira')">
+        <template slot="label">
+          JIRA
+        </template>
 
         <praeco-form-item label="Project" prop="jiraProject" required>
           <el-input id="jiraProject" v-model="jiraProject" :disabled="viewOnly" />
@@ -206,8 +243,10 @@
         </praeco-form-item>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('linenotify')" >
-        <template slot="label">Line Notify</template>
+      <el-tab-pane v-if="alert.includes('linenotify')">
+        <template slot="label">
+          Line Notify
+        </template>
 
         <praeco-form-item label="Access Token" prop="linenotifyAccessToken" required>
           <el-input id="linenotifyAccessToken" v-model="linenotifyAccessToken" :disabled="viewOnly" />
@@ -216,7 +255,9 @@
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('mattermost')">
-        <template slot="label"><icon :icon="['fab', 'mattermost']" size="1x" />Mattermost</template>
+        <template slot="label">
+          <icon :icon="['fab', 'mattermost']" size="1x" />Mattermost
+        </template>
         <el-form-item label="Channel or username" prop="mattermostChannelOverride" required>
           <el-input id="mattermostChannelOverride" v-model="mattermostChannelOverride" :disabled="viewOnly" />
           <label>
@@ -232,17 +273,23 @@
 
         <el-form-item label="Message color" prop="mattermostMsgColor" required>
           <el-radio-group v-model="mattermostMsgColor" :disabled="viewOnly">
-            <el-radio id="mattermostMsgColorDanger" label="danger" border class="mattermost-danger">Danger</el-radio>
+            <el-radio id="mattermostMsgColorDanger" label="danger" border class="mattermost-danger">
+              Danger
+            </el-radio>
             <el-radio id="mattermostMsgColorWarning" label="warning" border class="mattermost-warning">
               Warning
             </el-radio>
-            <el-radio id="mattermostMsgColorGood" label="good" border class="mattermost-good">Good</el-radio>
+            <el-radio id="mattermostMsgColorGood" label="good" border class="mattermost-good">
+              Good
+            </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('command')" >
-        <template slot="label">Command</template>
+      <el-tab-pane v-if="alert.includes('command')">
+        <template slot="label">
+          Command
+        </template>
 
         <praeco-form-item label="Command" prop="command" required>
           <el-input id="command" v-model="command" :disabled="viewOnly" />
@@ -255,20 +302,32 @@
         </praeco-form-item>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('gitter')" >
-        <template slot="label"><icon :icon="['fab', 'gitter']" size="1x" /> Gitter</template>
+      <el-tab-pane v-if="alert.includes('gitter')">
+        <template slot="label">
+          <icon :icon="['fab', 'gitter']" size="1x" /> Gitter
+        </template>
         <el-form-item label="Message level" prop="gitterMsgLevel" required>
           <el-radio-group v-model="gitterMsgLevel" :disabled="viewOnly">
-            <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">Error</el-radio>
-            <el-radio id="gitterMsgLevelInfo" label="info" border class="gitter-info">Info</el-radio>
+            <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">
+              Error
+            </el-radio>
+            <el-radio id="gitterMsgLevelInfo" label="info" border class="gitter-info">
+              Info
+            </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('sns')" >
-        <template slot="label">SNS</template>
-        <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="profile" border @change="changeSns">Profile</el-radio>
-        <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="notProfile" border @change="changeSns">NotProfile</el-radio>
+      <el-tab-pane v-if="alert.includes('sns')">
+        <template slot="label">
+          SNS
+        </template>
+        <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="profile" border @change="changeSns">
+          Profile
+        </el-radio>
+        <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="notProfile" border @change="changeSns">
+          NotProfile
+        </el-radio>
 
         <div v-if="groupSns === 'notProfile'">
           <praeco-form-item label="TopicArn" prop="snsTopicArn" required>
@@ -300,8 +359,10 @@
         </div>
       </el-tab-pane>
 
-      <el-tab-pane v-if="alert.includes('zabbix')" >
-        <template slot="label">Zabbix</template>
+      <el-tab-pane v-if="alert.includes('zabbix')">
+        <template slot="label">
+          Zabbix
+        </template>
 
         <praeco-form-item label="ZbxHost" prop="zbxHost" required>
           <el-input id="zbxHost" v-model="zbxHost" :disabled="viewOnly" />
@@ -378,8 +439,8 @@ let validateEmailCommaSeparated = (rule, value, callback) => {
 
   emails.forEach(email => {
     if (
-      email &&
-      !email.trim().match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)
+      email
+      && !email.trim().match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)
     ) {
       return callback(new Error('Invalid email address'));
     }

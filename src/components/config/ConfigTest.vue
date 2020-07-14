@@ -43,7 +43,7 @@
     <el-alert
       v-if="testRunResult &&
         testRunResult.writeback &&
-      testRunResult.writeback.elastalert_status"
+        testRunResult.writeback.elastalert_status"
       :closable="false"
       type="success"
       show-icon

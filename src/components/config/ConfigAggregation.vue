@@ -27,8 +27,8 @@
         v-if="!viewOnly || (summaryTableFields && summaryTableFields.length)"
         label="Summary table">
         <el-select
-          :disabled="viewOnly"
           v-model="summaryTableFields"
+          :disabled="viewOnly"
           filterable
           clearable
           multiple
@@ -46,8 +46,8 @@
     <el-col v-show="enableAgg" :span="6">
       <el-form-item v-if="!viewOnly || aggregationKey" label="Group by">
         <el-select
-          :disabled="viewOnly"
           v-model="aggregationKey"
+          :disabled="viewOnly"
           filterable
           clearable
           placeholder="Select field">

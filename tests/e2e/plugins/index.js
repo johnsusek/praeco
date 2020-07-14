@@ -1,6 +1,7 @@
 // https://docs.cypress.io/guides/guides/plugins-guide.html
 
-module.exports = (on, config) => Object.assign({}, config, {
+module.exports = (on, config) => ({
+  ...config,
   fixturesFolder: 'tests/e2e/fixtures',
   integrationFolder: 'tests/e2e/specs',
   screenshotsFolder: 'tests/e2e/screenshots',

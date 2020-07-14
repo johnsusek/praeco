@@ -1,8 +1,8 @@
 <template>
   <div class="event-table">
     <el-table
-      v-loading="eventsLoading && !loadedEvents.length"
       ref="table"
+      v-loading="eventsLoading && !loadedEvents.length"
       :data="loadedEvents"
       :border="true"
       :height="height"
@@ -33,7 +33,9 @@
             :deep="0" />
           <template v-else>
             <DateTime v-if="col === timeField" :date="scope.row[col]" />
-            <template v-else>{{ scope.row[col] }}</template>
+            <template v-else>
+              {{ scope.row[col] }}
+            </template>
           </template>
         </template>
       </el-table-column>
@@ -48,14 +50,13 @@
         <icon icon="ellipsis-h" />
       </el-button>
       <el-checkbox-group v-model="hidden">
-        <div v-for="col in columns" :key="col" >
+        <div v-for="col in columns" :key="col">
           <el-checkbox :label="col" @change="saveColumns">
             {{ col }}
           </el-checkbox>
         </div>
       </el-checkbox-group>
     </el-popover>
-
   </div>
 </template>
 
@@ -73,13 +74,13 @@ function msFromTimeframe(timeframe) {
 
   if (unit === 'seconds') {
     return value * 1000;
-  } else if (unit === 'minutes') {
+  } if (unit === 'minutes') {
     return value * 60000;
-  } else if (unit === 'hours') {
+  } if (unit === 'hours') {
     return value * 3600000;
-  } else if (unit === 'days') {
+  } if (unit === 'days') {
     return value * 86400000;
-  } else if (unit === 'weeks') {
+  } if (unit === 'weeks') {
     return value * 604800000;
   }
 }
@@ -191,8 +192,8 @@ export default {
 
     loadMore() {
       if (
-        !this.eventsLoading &&
-        (this.totalEvents === 0 || this.loadedEvents.length < this.totalEvents)
+        !this.eventsLoading
+        && (this.totalEvents === 0 || this.loadedEvents.length < this.totalEvents)
       ) {
         this.fetchEvents();
       }
@@ -214,8 +215,8 @@ export default {
               {
                 query_string: {
                   query:
-                    this.$store.getters['config/query/queryString'] ||
-                    `${this.timeField}:*`
+                    this.$store.getters['config/query/queryString']
+                    || `${this.timeField}:*`
                 }
               }
             ]

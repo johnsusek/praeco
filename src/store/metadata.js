@@ -122,8 +122,8 @@ export default {
 
       // if using "grouped over field", only allow for the grouped field (queryKey)
       if (
-        rootState.config.match.queryKey &&
-        (rootState.config.match.type === 'frequency' || rootState.config.match.type === 'flatline')
+        rootState.config.match.queryKey
+        && (rootState.config.match.type === 'frequency' || rootState.config.match.type === 'flatline')
       ) {
         fields[rootState.config.match.queryKey] = rootState.config.match.queryKey;
       } else {

@@ -4,7 +4,6 @@
     :model="$store.state.config.alert"
     label-position="top"
     @submit.native.prevent>
-
     <el-row :gutter="50">
       <el-col :span="12">
         <el-form-item
@@ -49,27 +48,37 @@
           <el-row>
             <el-select v-model="bodyType" :disabled="viewOnly">
               <el-option value="alert_text_only" label="Body text" />
-              <el-option value="exclude_fields" label="Body text &amp; trigger details &amp; top counts"/>
+              <el-option value="exclude_fields" label="Body text &amp; trigger details &amp; top counts" />
               <el-option
                 value="default"
-                label="Body text &amp; trigger details &amp; top counts &amp; field values"/>
+                label="Body text &amp; trigger details &amp; top counts &amp; field values" />
               <el-option
                 v-if="summaryTableFields.length"
                 value="aggregation_summary_only"
-                label="Aggregation summary only"/>
+                label="Aggregation summary only" />
             </el-select>
           </el-row>
         </el-form-item>
       </el-col>
 
       <el-col :span="12" class="preview-container">
-        <h6 class="m-n-xs">Subject preview</h6>
-        <div class="preview">{{ $store.getters['config/alert/subjectRendered'] }}</div>
+        <h6 class="m-n-xs">
+          Subject preview
+        </h6>
+        <div class="preview">
+          {{ $store.getters['config/alert/subjectRendered'] }}
+        </div>
 
-        <h6 class="m-n-lg">Body preview</h6>
-        <div v-if="summaryTableFields.length" type="info"><em>(Summary table)</em></div>
+        <h6 class="m-n-lg">
+          Body preview
+        </h6>
+        <div v-if="summaryTableFields.length" type="info">
+          <em>(Summary table)</em>
+        </div>
 
-        <div class="preview">{{ $store.getters['config/alert/bodyRendered'] }}</div>
+        <div class="preview">
+          {{ $store.getters['config/alert/bodyRendered'] }}
+        </div>
         <br v-if="$store.getters['config/alert/bodyRendered']">
 
         <div class="preview">
@@ -83,11 +92,12 @@
             type="info">
             <em>(Top counts)</em>
           </div>
-          <div v-if="bodyType === 'default'" type="info"><em>(Field values)</em></div>
+          <div v-if="bodyType === 'default'" type="info">
+            <em>(Field values)</em>
+          </div>
         </div>
       </el-col>
     </el-row>
-
   </el-form>
 </template>
 
@@ -231,4 +241,3 @@ h6 {
   font-size: 13px;
 }
 </style>
-

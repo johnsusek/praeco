@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 class="m-s-xl">{{ pageTitle }}</h1>
+    <h1 class="m-s-xl">
+      {{ pageTitle }}
+    </h1>
 
     <ConfigSettings
       v-if="prefill && index || !prefill"
@@ -23,8 +25,12 @@
           @validateForTest="validateForTest" />
 
         <div class="save-button">
-          <el-button v-if="!saving" type="primary" size="medium" @click="save">Save</el-button>
-          <el-button v-else type="primary" disabled size="medium">Saving...</el-button>
+          <el-button v-if="!saving" type="primary" size="medium" @click="save">
+            Save
+          </el-button>
+          <el-button v-else type="primary" disabled size="medium">
+            Saving...
+          </el-button>
         </div>
       </el-row>
 

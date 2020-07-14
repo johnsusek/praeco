@@ -8,8 +8,7 @@ describe('App test', () => {
     cy.get('.vue-treeselect__option[data-id="_errors"]').click();
     cy.contains('.cell', '2018');
 
-    let selector =
-      '.vue-treeselect__option[data-id="_templates"] .vue-treeselect__option-arrow-container';
+    let selector = '.vue-treeselect__option[data-id="_templates"] .vue-treeselect__option-arrow-container';
 
     cy.get(selector).click();
     cy.contains('.vue-treeselect__label', 'Default');

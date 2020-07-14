@@ -1,7 +1,7 @@
 <template>
   <div v-if="configLoaded">
     <div v-if="template.name">
-      <div v-show="showRename" >
+      <div v-show="showRename">
         <el-row :gutter="10">
           <el-col :span="6">
             <el-input
@@ -13,13 +13,19 @@
               @keyup.enter.native="rename" />
           </el-col>
           <el-col :span="18">
-            <el-button size="large" type="primary" @click="rename">Save</el-button>
-            <el-button size="large" @click="showRename = false">Cancel</el-button>
+            <el-button size="large" type="primary" @click="rename">
+              Save
+            </el-button>
+            <el-button size="large" @click="showRename = false">
+              Cancel
+            </el-button>
           </el-col>
         </el-row>
       </div>
 
-      <h1 v-show="!showRename">{{ template.name }}</h1>
+      <h1 v-show="!showRename">
+        {{ template.name }}
+      </h1>
 
       <el-row>
         <router-link :to="{
@@ -34,14 +40,22 @@
         <router-link :to="{
           name: 'templateconfigeditor',
           params: { action: 'edit', path: id } }">
-          <el-button type="primary" icon="el-icon-edit" plain>Edit</el-button>
+          <el-button type="primary" icon="el-icon-edit" plain>
+            Edit
+          </el-button>
         </router-link>
 
-        <el-button plain type="info" @click="showRenameInput">Rename</el-button>
+        <el-button plain type="info" @click="showRenameInput">
+          Rename
+        </el-button>
 
-        <el-button plain type="info" @click="duplicate">Duplicate</el-button>
+        <el-button plain type="info" @click="duplicate">
+          Duplicate
+        </el-button>
 
-        <el-button plain type="info" @click="showMoveDialog">Move</el-button>
+        <el-button plain type="info" @click="showMoveDialog">
+          Move
+        </el-button>
 
         <el-button icon="el-icon-delete" plain type="danger" @click="showDeleteConfirm">
           Delete...

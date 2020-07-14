@@ -7,16 +7,36 @@
       </span>
       <div>
         <el-menu mode="vertical" @select="selectWhen">
-          <el-menu-item index="count">count</el-menu-item>
-          <el-menu-item index="avg">average</el-menu-item>
-          <el-menu-item index="sum">sum</el-menu-item>
-          <el-menu-item index="min">min</el-menu-item>
-          <el-menu-item index="max">max</el-menu-item>
-          <el-menu-item index="field in list">field value in list</el-menu-item>
-          <el-menu-item index="field not in list">field value not in list</el-menu-item>
-          <el-menu-item index="field changes">field value changes</el-menu-item>
-          <el-menu-item index="new term">new term</el-menu-item>
-          <el-menu-item index="cardinality">cardinality</el-menu-item>
+          <el-menu-item index="count">
+            count
+          </el-menu-item>
+          <el-menu-item index="avg">
+            average
+          </el-menu-item>
+          <el-menu-item index="sum">
+            sum
+          </el-menu-item>
+          <el-menu-item index="min">
+            min
+          </el-menu-item>
+          <el-menu-item index="max">
+            max
+          </el-menu-item>
+          <el-menu-item index="field in list">
+            field value in list
+          </el-menu-item>
+          <el-menu-item index="field not in list">
+            field value not in list
+          </el-menu-item>
+          <el-menu-item index="field changes">
+            field value changes
+          </el-menu-item>
+          <el-menu-item index="new term">
+            new term
+          </el-menu-item>
+          <el-menu-item index="cardinality">
+            cardinality
+          </el-menu-item>
         </el-menu>
       </div>
     </el-popover>
@@ -27,8 +47,8 @@
 
     <el-popover
       v-if="showPopCardinalityField"
-      :class="{ 'is-invalid': !popCardinalityValid }"
-      v-model="popCardinalityVisible">
+      v-model="popCardinalityVisible"
+      :class="{ 'is-invalid': !popCardinalityValid }">
       <span slot="reference" class="pop-trigger">
         <span>OF </span>
         <span>{{ cardinalityField || 'select a field' }}</span>
@@ -51,7 +71,7 @@
       </el-form>
     </el-popover>
 
-    <el-popover v-if="showPopOf" :class="{ 'is-invalid': !popOfValid }" v-model="popOfVisible">
+    <el-popover v-if="showPopOf" v-model="popOfVisible" :class="{ 'is-invalid': !popOfValid }">
       <span slot="reference" class="pop-trigger">
         <span>OF </span>
         <span>{{ metricAggKey || 'select a field' }}</span>
@@ -74,7 +94,7 @@
       </el-form>
     </el-popover>
 
-    <el-popover v-if="showPopOver" :class="{ 'is-invalid': !popOverValid }" v-model="popOverVisible">
+    <el-popover v-if="showPopOver" v-model="popOverVisible" :class="{ 'is-invalid': !popOverValid }">
       <span slot="reference" class="pop-trigger">
         <span>
           <span v-if="groupedOver === 'field'">GROUPED </span>
@@ -98,7 +118,9 @@
           v-model="groupedOver"
           label="field"
           border
-          @change="changeGroupedOver">Field</el-radio>
+          @change="changeGroupedOver">
+          Field
+        </el-radio>
 
         <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
           <el-form ref="overall" :model="$store.state.config.match">
@@ -110,7 +132,7 @@
                 class="el-select-wide m-n-sm"
                 placeholder="Select doc type"
                 @change="validate">
-                <el-option v-for="type in types" :key="type" :label="type" :value="type"/>
+                <el-option v-for="type in types" :key="type" :label="type" :value="type" />
               </el-select>
             </el-form-item>
           </el-form>
@@ -142,7 +164,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-if="showPopCompare" :class="{ 'is-invalid': !popCompareValid }" v-model="popCompareVisible">
+    <el-popover v-if="showPopCompare" v-model="popCompareVisible" :class="{ 'is-invalid': !popCompareValid }">
       <span slot="reference" class="pop-trigger">
         <template v-if="compareKey && compareKey.length > 1">
           <span>FIELDS</span>
@@ -187,7 +209,7 @@
       </el-form>
     </el-popover>
 
-    <el-popover v-if="showPopGroup" :class="{ 'is-invalid': !popGroupValid }" v-model="popGroupVisible">
+    <el-popover v-if="showPopGroup" v-model="popGroupVisible" :class="{ 'is-invalid': !popGroupValid }">
       <span slot="reference" class="pop-trigger">
         <span>
           <span v-if="metricAggType === 'new term'">IN FIELD </span>
@@ -216,7 +238,7 @@
       </el-form>
     </el-popover>
 
-    <el-popover v-if="showPopBlacklist" :class="{ 'is-invalid': !popBlacklistValid }" v-model="popBlacklistVisible">
+    <el-popover v-if="showPopBlacklist" v-model="popBlacklistVisible" :class="{ 'is-invalid': !popBlacklistValid }">
       <span slot="reference" class="pop-trigger">
         <el-tooltip v-if="blacklist.length" :content="blacklist.join(', ')" placement="top">
           <span>IN LIST ({{ blacklist.length }})</span>
@@ -256,11 +278,13 @@
           </el-form-item>
         </el-form>
 
-        <el-button class="m-n-sm" @click="addBlacklistEntry">Add keyword</el-button>
+        <el-button class="m-n-sm" @click="addBlacklistEntry">
+          Add keyword
+        </el-button>
       </template>
     </el-popover>
 
-    <el-popover v-if="showPopWhitelist" :class="{ 'is-invalid': !popWhitelistValid }" v-model="popWhitelistVisible">
+    <el-popover v-if="showPopWhitelist" v-model="popWhitelistVisible" :class="{ 'is-invalid': !popWhitelistValid }">
       <span slot="reference" class="pop-trigger">
         <el-tooltip v-if="whitelist.length" :content="whitelist.join(', ')" placement="top">
           <span>NOT IN LIST ({{ whitelist.length }})</span>
@@ -300,7 +324,9 @@
           </el-form-item>
         </el-form>
 
-        <el-button class="m-n-sm" @click="addWhitelistEntry">Add keyword</el-button>
+        <el-button class="m-n-sm" @click="addWhitelistEntry">
+          Add keyword
+        </el-button>
       </template>
     </el-popover>
 
@@ -311,14 +337,16 @@
     </span>
 
     <el-dialog :visible.sync="popFilterVisible" :show-close="false" fullscreen>
-      <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">Close</el-button>
+      <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">
+        Close
+      </el-button>
       <ConfigQuery ref="query" class="config-query" />
     </el-dialog>
 
     <el-popover
       v-if="showPopCardinalityThresholds"
-      :class="{ 'is-invalid': !popCardinalityThresholdsValid }"
-      v-model="popCardinalityThresholdsVisible">
+      v-model="popCardinalityThresholdsVisible"
+      :class="{ 'is-invalid': !popCardinalityThresholdsValid }">
       <span slot="reference" class="pop-trigger">
         <span>IS</span>
         <span v-if="maxCardinality">
@@ -366,7 +394,7 @@
       </el-row>
     </el-popover>
 
-    <el-popover v-if="showPopAbove" :class="{ 'is-invalid': !popAboveValid }" v-model="popAboveVisible">
+    <el-popover v-if="showPopAbove" v-model="popAboveVisible" :class="{ 'is-invalid': !popAboveValid }">
       <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" slot="reference" class="pop-trigger">
         <span>IS</span>
         <span v-if="numEvents || maxThreshold">
@@ -431,7 +459,7 @@
 
           <el-col v-if="spikeOrThreshold !== 'any'" :span="8">
             <el-form ref="spikeOrThreshold" :model="$store.state.config.match">
-              <template v-if="spikeOrThreshold === 'is'" >
+              <template v-if="spikeOrThreshold === 'is'">
                 <el-form-item v-if="aboveOrBelow === 'above'" prop="numEvents" required>
                   <el-input
                     id="numEvents"
@@ -515,7 +543,7 @@
             id="timeframe"
             :unit="Object.keys(timeframe)[0]"
             :amount="Object.values(timeframe)[0]"
-            @input="updateTimeframe"/>
+            @input="updateTimeframe" />
           <label v-if="metricAggType === 'field changes'">
             The maximum time between changes.
             After this time period, elastalert will forget the old
@@ -566,7 +594,7 @@
               id="termsWindowSize"
               :unit="Object.keys(termsWindowSize)[0]"
               :amount="Object.values(termsWindowSize)[0]"
-              @input="updateTermsWindowSize"/>
+              @input="updateTermsWindowSize" />
             <label>
               The amount of time used for the initial query to find existing terms.
               No term that has occurred within this time frame will trigger an alert.
@@ -579,7 +607,7 @@
               id="windowStepSize"
               :unit="Object.keys(windowStepSize)[0]"
               :amount="Object.values(windowStepSize)[0]"
-              @input="updateWindowStepSize"/>
+              @input="updateWindowStepSize" />
             <label>
               When querying for existing terms, split up the time range into steps of this size.
               For example, using the default 30 day window size, and the default 1 day step size,
@@ -606,8 +634,8 @@
             <el-form-item label="Use count query">
               <el-switch
                 id="useCountQuery"
-                :disabled="useTermsQuery"
                 v-model="useCountQuery"
+                :disabled="useTermsQuery"
                 @input="refreshOptionsPop" />
               <label>
                 If true, ElastAlert will poll Elasticsearch using the count api,
@@ -620,7 +648,7 @@
           </template>
 
           <el-form-item v-if="type !== 'spike'" :class="{ 'm-n-sm': type === 'new_term' }" label="Use terms query">
-            <el-switch :disabled="useCountQuery" v-model="useTermsQuery" @input="refreshOptionsPop" />
+            <el-switch v-model="useTermsQuery" :disabled="useCountQuery" @input="refreshOptionsPop" />
             <label v-if="type === 'new_term'">
               If true, ElastAlert will use aggregation queries to get terms instead of regular search queries.
               This is faster than regular searching if there is a large number of documents.
@@ -652,7 +680,7 @@
               clearable
               placeholder=""
               @change="validateFreqFlatlineOptions">
-              <el-option v-for="type in types" :key="type" :label="type" :value="type"/>
+              <el-option v-for="type in types" :key="type" :label="type" :value="type" />
             </el-select>
             <label>
               Specify the _type of document to search for.
@@ -962,7 +990,7 @@ export default {
       get() {
         if (this.$store.state.config.match.compareKey) {
           return this.$store.state.config.match.compareKey;
-        } else if (this.metricAggType === 'field changes') {
+        } if (this.metricAggType === 'field changes') {
           return [];
         }
       },
@@ -986,8 +1014,7 @@ export default {
 
     showOptions() {
       let shouldShowOptions = ['field not in list', 'field changes', 'new term'].includes(this.metricAggType);
-      let shouldShowOptionsSt =
-        this.metricAggType === 'count' && this.spikeOrThreshold !== 'any';
+      let shouldShowOptionsSt = this.metricAggType === 'count' && this.spikeOrThreshold !== 'any';
 
       return shouldShowOptions || shouldShowOptionsSt;
     },
@@ -1002,8 +1029,8 @@ export default {
 
     showPopOf() {
       return (
-        this.metricAggType !== 'count' && this.metricAggType !== 'new term' && this.metricAggType !== 'cardinality' &&
-        !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
+        this.metricAggType !== 'count' && this.metricAggType !== 'new term' && this.metricAggType !== 'cardinality'
+        && !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
       );
     },
 
@@ -1035,8 +1062,8 @@ export default {
 
     showTime() {
       return (
-        !['field in list', 'field not in list', 'new term'].includes(this.metricAggType) &&
-        (this.spikeOrThreshold !== 'any' || this.metricAggType === 'cardinality')
+        !['field in list', 'field not in list', 'new term'].includes(this.metricAggType)
+        && (this.spikeOrThreshold !== 'any' || this.metricAggType === 'cardinality')
       );
     },
 
@@ -1256,8 +1283,8 @@ export default {
 
       // if rule supports and has a queryKey, set groupedOver to field
       if (
-        this.queryKey &&
-        ['metric_aggregation', 'frequency', 'flatline', 'any',
+        this.queryKey
+        && ['metric_aggregation', 'frequency', 'flatline', 'any',
           'change', 'spike', 'flatline', 'cardinality'].includes(this.type)
       ) {
         this.groupedOver = 'field';

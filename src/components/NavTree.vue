@@ -127,8 +127,8 @@ export default {
             }
           } else if (node.raw.isDirectory) {
             if (
-              `/folders/${node.raw.directoryType}/${node.id}` ===
-              decodeURIComponent(this.$route.path)
+              `/folders/${node.raw.directoryType}/${node.id}`
+              === decodeURIComponent(this.$route.path)
             ) {
               selectNode(node.id);
             }

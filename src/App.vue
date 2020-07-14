@@ -28,7 +28,6 @@
         <router-view :key="$route.fullPath" style="padding: 10px" />
       </SplitArea>
     </Split>
-
   </div>
 </template>
 

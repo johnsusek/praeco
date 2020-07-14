@@ -1,7 +1,7 @@
 <template>
   <div v-if="loaded">
     <template v-if="name">
-      <div v-show="showRename" >
+      <div v-show="showRename">
         <el-row :gutter="10">
           <el-col :span="6">
             <el-input
@@ -13,8 +13,12 @@
               @keyup.enter.native="rename" />
           </el-col>
           <el-col :span="18">
-            <el-button size="large" type="primary" @click="rename">Save</el-button>
-            <el-button size="large" @click="showRename = false">Cancel</el-button>
+            <el-button size="large" type="primary" @click="rename">
+              Save
+            </el-button>
+            <el-button size="large" @click="showRename = false">
+              Cancel
+            </el-button>
           </el-col>
         </el-row>
         <br>
@@ -26,7 +30,9 @@
           <Bulb success />
           Enabled
         </el-tag>
-        <el-tag v-else type="warning">Disabled</el-tag>
+        <el-tag v-else type="warning">
+          Disabled
+        </el-tag>
       </h1>
 
       <el-alert v-if="silenceNotice" :closable="false" :title="silenceNotice" show-icon type="info" />
@@ -35,14 +41,22 @@
         <router-link :to="{
           name: 'ruleconfigeditor',
           params: { action: 'edit', path: id } }">
-          <el-button icon="el-icon-edit" plain type="primary">Edit</el-button>
+          <el-button icon="el-icon-edit" plain type="primary">
+            Edit
+          </el-button>
         </router-link>
 
-        <el-button plain type="info" @click="showRenameInput">Rename</el-button>
+        <el-button plain type="info" @click="showRenameInput">
+          Rename
+        </el-button>
 
-        <el-button plain type="info" @click="duplicate">Duplicate</el-button>
+        <el-button plain type="info" @click="duplicate">
+          Duplicate
+        </el-button>
 
-        <el-button plain type="info" @click="showMoveDialog">Move</el-button>
+        <el-button plain type="info" @click="showMoveDialog">
+          Move
+        </el-button>
 
         <el-button
           v-if="isEnabled"
@@ -54,8 +68,8 @@
 
         <el-popover
           v-if="isEnabled"
-          :disabled="!!silenceNotice"
-          v-model="silencePopoverVisible">
+          v-model="silencePopoverVisible"
+          :disabled="!!silenceNotice">
           <span slot="reference">
             <el-button
               :disabled="!!silenceNotice"
@@ -69,9 +83,15 @@
           <template>
             <el-row type="flex" justify="space-around">
               <el-col :span="24" align="center">
-                <el-button @click="handleSilence('minutes', 5)">5 minutes</el-button>
-                <el-button @click="handleSilence('hour', 1)">1 hour</el-button>
-                <el-button @click="handleSilence('day', 1)">1 day</el-button>
+                <el-button @click="handleSilence('minutes', 5)">
+                  5 minutes
+                </el-button>
+                <el-button @click="handleSilence('hour', 1)">
+                  1 hour
+                </el-button>
+                <el-button @click="handleSilence('day', 1)">
+                  1 day
+                </el-button>
               </el-col>
             </el-row>
             <hr>
@@ -196,7 +216,9 @@
             <a href="https://github.com/Yelp/elastalert" target="_blank">Elastalert</a> server.
             You may copy/paste this yaml and run it in any outside Elastalert instance.
           </div>
-          <prism language="javascript">{{ yaml }}</prism>
+          <prism language="javascript">
+            {{ yaml }}
+          </prism>
         </el-tab-pane>
       </el-tabs>
     </template>
@@ -211,7 +233,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import moment from 'moment';
-import changeCase from 'change-case';
+import * as changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import { selectNode } from '@/lib/tree';
 import networkError from '../lib/networkError.js';
@@ -562,7 +584,7 @@ export default {
     },
 
     titleCase(val) {
-      return changeCase.titleCase(val);
+      return changeCase.capitalCase(val);
     },
 
     shortDate(rawDate) {

@@ -16,13 +16,13 @@
           @tab-click="clickTab">
           <el-tab-pane
             v-for="(group, index) in groups"
-            v-model="activeGroupIndex"
             :key="index"
+            v-model="activeGroupIndex"
             :label="group.key.toString()"
             :name="index.toString()">
             <v-chart
-              v-loading="loading"
               ref="chart"
+              v-loading="loading"
               :options="chart"
               auto-resize
               @click="ev => $emit('click', ev)" />
@@ -32,8 +32,8 @@
 
       <div v-else>
         <v-chart
-          v-loading="loading"
           ref="chart"
+          v-loading="loading"
           :options="chart"
           auto-resize
           @click="ev => $emit('click', ev)" />
@@ -102,7 +102,7 @@ function getColorForIndex(index, data, spikeHeight) {
 
   if (val / preVal > spikeHeight) {
     return '#fc8a00';
-  } else if (preVal / val > spikeHeight) {
+  } if (preVal / val > spikeHeight) {
     return '#157ce7';
   }
 
@@ -138,10 +138,10 @@ export default {
       timespan: { hours: 24 },
       loading: false,
       chart: {
-        title: Object.assign({}, chartOptions.title),
-        tooltip: Object.assign({}, chartOptions.tooltip),
-        xAxis: Object.assign({}, chartOptions.xAxis),
-        yAxis: Object.assign({}, chartOptions.yAxis),
+        title: { ...chartOptions.title },
+        tooltip: { ...chartOptions.tooltip },
+        xAxis: { ...chartOptions.xAxis },
+        yAxis: { ...chartOptions.yAxis },
         animation: false,
         grid: {
           top: this.showTitle ? 45 : 10,
@@ -638,8 +638,8 @@ export default {
 
           if (this.groupBy) {
             if (
-              res.data.aggregations.group_by_field &&
-              res.data.aggregations.group_by_field.buckets.length
+              res.data.aggregations.group_by_field
+              && res.data.aggregations.group_by_field.buckets.length
             ) {
               let buckets = res.data.aggregations.group_by_field.buckets;
 

@@ -61,10 +61,9 @@ export function buildMappingTypes(mapping) {
 
   Object.values(mapping)
     .map(m => m.mappings)
-    .forEach(m =>
-      Object.keys(m).forEach(k => {
-        types[k] = true;
-      }));
+    .forEach(m => Object.keys(m).forEach(k => {
+      types[k] = true;
+    }));
 
   return Object.keys(types).sort();
 }

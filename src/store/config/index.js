@@ -211,9 +211,9 @@ export default {
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
         commit('alert/UPDATE_SNS_TOPIC_ARN', config.sns_topic_arn);
-        commit('alert/UPDATE_SNS_AWS_ACCESS_KEY_ID', config.sns_aws_access_key_id );
-        commit('alert/UPDATE_SNS_AWS_SECRET_ACCESS_KEY', config.sns_aws_secret_access_key );
-        commit('alert/UPDATE_SNS_AWS_REGION', config.sns_aws_region );
+        commit('alert/UPDATE_SNS_AWS_ACCESS_KEY_ID', config.sns_aws_access_key_id);
+        commit('alert/UPDATE_SNS_AWS_SECRET_ACCESS_KEY', config.sns_aws_secret_access_key);
+        commit('alert/UPDATE_SNS_AWS_REGION', config.sns_aws_region);
         commit('alert/UPDATE_SNS_AWS_PROFILE', config.sns_aws_profile);
 
         commit('alert/UPDATE_ZBX_HOST', config.zbx_host);
@@ -247,7 +247,6 @@ export default {
 
         commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
         commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
-
 
         commit('alert/UPDATE_REALERT', config.realert);
         commit('alert/UPDATE_ALERT', config.alert);
@@ -976,24 +975,23 @@ export default {
         config = { ...config, ...getters.mattermost };
       }
 
-      if (state.alert.alert.includes('email') ||
-          state.alert.alert.includes('slack') ||
-          state.alert.alert.includes('ms_teams') ||
-          state.alert.alert.includes('telegram') ||
-          state.alert.alert.includes('jira') ||
-          state.alert.alert.includes('sns') ||
-          state.alert.alert.includes('zabbix') ||
-          state.alert.alert.includes('linenotify') ||
-          state.alert.alert.includes('mattermost') ||
-          state.alert.alert.includes('command') ||
-          state.alert.alert.includes('gitter')) {
+      if (state.alert.alert.includes('email')
+          || state.alert.alert.includes('slack')
+          || state.alert.alert.includes('ms_teams')
+          || state.alert.alert.includes('telegram')
+          || state.alert.alert.includes('jira')
+          || state.alert.alert.includes('sns')
+          || state.alert.alert.includes('zabbix')
+          || state.alert.alert.includes('linenotify')
+          || state.alert.alert.includes('mattermost')
+          || state.alert.alert.includes('command')
+          || state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.subjectBody };
       }
 
       if (state.alert.alert.includes('ms_teams')) {
         config = { ...config, ...getters.ms_teams };
       }
-
 
       if (state.match.type === 'blacklist') {
         config = { ...config, ...getters.blacklist };

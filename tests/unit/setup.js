@@ -4,7 +4,9 @@ import Vuex from 'vuex';
 import MockAdapter from 'axios-mock-adapter';
 import VueRouter from 'vue-router';
 import 'localstorage-polyfill';
-import { config, mount, shallowMount, createLocalVue } from '@vue/test-utils';
+import {
+  config, mount, shallowMount, createLocalVue
+} from '@vue/test-utils';
 import '@/contrib.js';
 import '@/registration.js';
 import store from '@/store';
@@ -71,4 +73,3 @@ class MutationObserver {
 global.MutationObserver = MutationObserver;
 
 global.window.getSelection = function() {};
-
