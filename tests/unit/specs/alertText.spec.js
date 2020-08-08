@@ -3,8 +3,7 @@ import { htmlToConfigFormat, configFormatToHtml } from '@/lib/alertText.js';
 
 describe('alertText', () => {
   it('returns config-formatted alert text', () => {
-    let text =
-      'Test <span data-at-embedded="" contenteditable="false"> <span class="el-tag el-tag--info el-tag--mini" data-term="message">message<!----></span> </span>&nbsp;<div><br></div><div>123</div><div>&nbsp;b<span data-at-embedded="" contenteditable="false"> <span data-v-2d7a3f54="" class="el-tag el-tag--info el-tag--mini" data-term="@timestamp">@timestamp<!----></span> </span>&nbsp;aa</div><br><div>foo</div><div><br></div><div>bar</div><div><br></div><div>--baz</div>';
+    let text = 'Test <span data-at-embedded="" contenteditable="false"> <span class="el-tag el-tag--info el-tag--mini" data-term="message">message<!----></span> </span>&nbsp;<div><br></div><div>123</div><div>&nbsp;b<span data-at-embedded="" contenteditable="false"> <span data-v-2d7a3f54="" class="el-tag el-tag--info el-tag--mini" data-term="@timestamp">@timestamp<!----></span> </span>&nbsp;aa</div><br><div>foo</div><div><br></div><div>bar</div><div><br></div><div>--baz</div>';
     let alertText = htmlToConfigFormat(text);
     let expectedText = `Test {0} 
 
@@ -24,8 +23,7 @@ bar
     let text = 'test {0} foo';
     let args = ['SRX.destination_zone'];
 
-    let html =
-      'test <span data-at-embedded="" contenteditable="false"> <span class="el-tag el-tag--info el-tag--mini" data-term="SRX.destination_zone">SRX.destination_zone<!----></span> </span> foo';
+    let html = 'test <span data-at-embedded="" contenteditable="false"> <span class="el-tag el-tag--info el-tag--mini" data-term="SRX.destination_zone">SRX.destination_zone<!----></span> </span> foo';
 
     let formatted = configFormatToHtml(text, args);
 

@@ -28,13 +28,17 @@
       Add folder
     </el-button>
 
-    <el-button type="danger" plain @click="deleteFolder">Delete folder...</el-button>
+    <el-button type="danger" plain @click="deleteFolder">
+      Delete folder...
+    </el-button>
 
     <el-table :data="type === 'templates' ? templatesForFolder : rulesForFolder" class="m-n-sm" style="width: 100%">
       <el-table-column :label="type.capitalize()">
         <template slot-scope="scope">
           <icon icon="file-alt" style="padding-right: 4px" />
-          <router-link :to="`/${type}/${encodeURIComponent(scope.row.val)}`">{{ scope.row.label }}</router-link>
+          <router-link :to="`/${type}/${encodeURIComponent(scope.row.val)}`">
+            {{ scope.row.label }}
+          </router-link>
         </template>
       </el-table-column>
     </el-table>

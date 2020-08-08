@@ -16,7 +16,7 @@
 
 <script>
 import { loadChildrenOptions } from '@/lib/tree';
-import changeCase from 'change-case';
+import * as changeCase from 'change-case';
 
 export default {
   props: ['type'],
@@ -25,7 +25,7 @@ export default {
       options: [
         {
           id: `_${this.type}`,
-          label: changeCase.titleCase(this.type),
+          label: changeCase.capitalCase(this.type),
           children: null
         }
       ]
@@ -44,4 +44,3 @@ export default {
   display: none;
 }
 </style>
-

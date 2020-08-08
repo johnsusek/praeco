@@ -25,7 +25,7 @@
 
 <script>
 import axios from 'axios';
-import changeCase from 'change-case';
+import * as changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
 
@@ -44,7 +44,7 @@ export default {
 
   methods: {
     titleCase(val) {
-      return changeCase.titleCase(val);
+      return changeCase.capitalCase(val);
     },
 
     shortDate(rawDate) {

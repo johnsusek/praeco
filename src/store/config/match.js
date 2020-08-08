@@ -53,13 +53,13 @@ export default {
     markLine(state, getters) {
       if (state.type === 'spike') {
         return getters.markLineSpike;
-      } else if (state.type === 'frequency') {
+      } if (state.type === 'frequency') {
         return getters.markLineFrequency;
-      } else if (state.type === 'flatline') {
+      } if (state.type === 'flatline') {
         return getters.markLineFlatline;
-      } else if (state.type === 'metric_aggregation') {
+      } if (state.type === 'metric_aggregation') {
         return getters.markLineMetricAggregation;
-      } else if (state.type === 'cardinality') {
+      } if (state.type === 'cardinality') {
         return getters.markLineCardinality;
       }
     },

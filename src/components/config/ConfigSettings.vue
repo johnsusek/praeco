@@ -5,7 +5,6 @@
     :model="$store.state.config.settings"
     label-position="top"
     @submit.native.prevent>
-
     <el-alert
       v-if="mappingError"
       :description="mappingError"
@@ -29,8 +28,8 @@
       <el-col :span="6">
         <el-form-item label="Index" prop="index" required>
           <el-autocomplete
-            :disabled="viewOnly || indicesLoading"
             v-model="index"
+            :disabled="viewOnly || indicesLoading"
             :fetch-suggestions="(qs, cb) => { cb(links); }"
             :placeholder="indicesLoading ? `Loading indices...`: ''"
             class="el-input-wide"

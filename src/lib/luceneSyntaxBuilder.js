@@ -2,25 +2,25 @@ function escapeLuceneSyntax(str) {
   return [].map
     .call(str, char => {
       if (
-        char === '/' ||
-        char === '+' ||
-        char === '-' ||
-        char === '&' ||
-        char === '|' ||
-        char === '!' ||
-        char === '(' ||
-        char === ')' ||
-        char === '{' ||
-        char === '}' ||
-        char === '[' ||
-        char === ']' ||
-        char === '^' ||
-        char === '"' ||
-        char === '~' ||
-        char === '*' ||
-        char === '?' ||
-        char === ':' ||
-        char === '\\'
+        char === '/'
+        || char === '+'
+        || char === '-'
+        || char === '&'
+        || char === '|'
+        || char === '!'
+        || char === '('
+        || char === ')'
+        || char === '{'
+        || char === '}'
+        || char === '['
+        || char === ']'
+        || char === '^'
+        || char === '"'
+        || char === '~'
+        || char === '*'
+        || char === '?'
+        || char === ':'
+        || char === '\\'
       ) {
         return `\\${char}`;
       }

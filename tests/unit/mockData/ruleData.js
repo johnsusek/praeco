@@ -30,4 +30,3 @@ type: frequency
 use_count_query: true
 use_strftime_index: false
 `;
-
