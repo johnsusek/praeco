@@ -230,3 +230,13 @@ You should now see the UI running at [http://localhost:8080](http://localhost:80
 
 If you have any difficulties please open a github issue with your problem.
 
+
+
+## Maintainers
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/johnsusek"><img src="https://avatars3.githubusercontent.com/u/611996?v=4" width="100px;" alt=""/><br /><sub><b>John Susek</b></sub></a></td>
+    <td align="center"><a href="https://github.com/nsano-rururu"><img src="https://avatars1.githubusercontent.com/u/22293449?v=4" width="100px;" alt=""/><br /><sub><b>Naoyuki Sano</b></sub></a></td>
+  </tr>
+</table>
