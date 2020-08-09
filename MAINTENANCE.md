@@ -4,13 +4,15 @@
 
 - Stash all changes in elastalert-server project
 - `make build v=master`
-- `docker tag <id> johnsusek/elastalert-server:<timestamp for tag>`
-- `docker push johnsusek/elastalert-server`
+- `docker tag <image> praecoapp/elastalert-server:<version>`
+- `docker push praecoapp/elastalert-server`
 
 ## Praeco
 
 - `npm run test:unit`
 - Bump version number in package.json, if not already done
 - Push to master
-- (Create/push docker image)
+- `docker build . -t praecoapp/praeco`
+- `docker tag <image> praecoapp/praeco:<version>`
+- `docker push praecoapp/praeco`
 - Tag release in github, add release notes
