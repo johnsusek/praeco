@@ -2,7 +2,7 @@ version: '3'
 
 services:
   elastalert:
-    image: 'johnsusek/elastalert-server'
+    image: 'praecoapp/elastalert-server'
     ports:
       - 3030:3030
       - 3333:3333
@@ -15,7 +15,7 @@ services:
       - 'elasticsearch:${PRAECO_ELASTICSEARCH}'
 
   webapp:
-    image: 'johnsusek/praeco'
+    image: 'praecoapp/praeco'
     ports:
       - 8080:8080
     volumes:
