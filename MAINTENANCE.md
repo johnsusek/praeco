@@ -4,7 +4,7 @@
 
 - Stash all changes in elastalert-server project
 - `make build v=master`
-- `docker tag <image> praecoapp/elastalert-server:<version>`
+- `docker tag <image> praecoapp/elastalert-server:<yyyymmdd>`
 - `docker push praecoapp/elastalert-server`
 
 ## Praeco

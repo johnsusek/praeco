@@ -1,3 +1,10 @@
+# Praeco
+
+![GitHub release](https://img.shields.io/github/release/johnsusek/praeco.svg)
+![ElastAlertServer Docker Pulls](https://img.shields.io/docker/pulls/praecoapp/elastalert-server.svg)
+![Praeco Docker Pulls](https://img.shields.io/docker/pulls/praecoapp/praeco.svg)
+![GitHub stars](https://img.shields.io/github/stars/johnsusek/praeco.svg?style=social&label=Stars)
+
 <img align="left" src="https://user-images.githubusercontent.com/611996/52907999-50fca900-3232-11e9-8aee-40f7dc37ec65.jpg">
 
 **Praeco** is an alerting tool for Elasticsearch – a GUI for [ElastAlert](https://github.com/yelp/elastalert), using the [ElastAlert API](https://github.com/bitsensor/elastalert).
@@ -40,8 +47,8 @@ A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e
 ## Upgrading
 
 ```
-docker pull johnsusek/praeco
-docker pull johnsusek/elastalert-server
+docker pull praecoapp/praeco
+docker pull praecoapp/elastalert-server
 docker-compose up --force-recreate --build
 ```
 
