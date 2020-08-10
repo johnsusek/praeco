@@ -1,8 +1,7 @@
 # Praeco
 
 ![GitHub release](https://img.shields.io/github/release/johnsusek/praeco.svg)
-![ElastAlertServer Docker Pulls](https://img.shields.io/docker/pulls/praecoapp/elastalert-server.svg)
-![Praeco Docker Pulls](https://img.shields.io/docker/pulls/praecoapp/praeco.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/praecoapp/praeco.svg)
 ![GitHub stars](https://img.shields.io/github/stars/johnsusek/praeco.svg?style=social&label=Stars)
 
 <img align="left" src="https://user-images.githubusercontent.com/611996/52907999-50fca900-3232-11e9-8aee-40f7dc37ec65.jpg">
