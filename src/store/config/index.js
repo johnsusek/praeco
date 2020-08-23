@@ -210,6 +210,13 @@ export default {
 
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
+        commit('alert/UPDATE_TWILIO_ACCOUNT_SID', config.twilio_account_sid);
+        commit('alert/UPDATE_TWILIO_AUTH_TOKEN', config.twilio_auth_token);
+        commit('alert/UPDATE_TWILIO_TO_NUMBER', config.twilio_to_number);
+        commit('alert/UPDATE_TWILIO_FROM_NUMBER', config.twilio_from_number);
+
+        commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
+
         commit('alert/UPDATE_SNS_TOPIC_ARN', config.sns_topic_arn);
         commit('alert/UPDATE_SNS_AWS_ACCESS_KEY_ID', config.sns_aws_access_key_id);
         commit('alert/UPDATE_SNS_AWS_SECRET_ACCESS_KEY', config.sns_aws_secret_access_key);
@@ -724,6 +731,38 @@ export default {
       return config;
     },
 
+    twilio(state) {
+      let config = {};
+
+      if (state.alert.twilioAccountSid) {
+        config.twilio_account_sid = state.alert.twilioAccountSid;
+      }
+
+      if (state.alert.twilioAuth) {
+        config.twilio_auth_token = state.alert.twilioAuth;
+      }
+
+      if (state.alert.twilioToNumber) {
+        config.twilio_to_number = state.alert.twilioToNumber;
+      }
+
+      if (state.alert.twilioFromNumber) {
+        config.twilio_from_number = state.alert.twilioFromNumber;
+      }
+
+      return config;
+    },
+
+    pagertree(state) {
+      let config = {};
+
+      if (state.alert.pagertreeIntegrationUrl) {
+        config.pagertree_integration_url = state.alert.pagertreeIntegrationUrl;
+      }
+
+      return config;
+    },
+
     sns(state) {
       let config = {};
 
@@ -947,6 +986,14 @@ export default {
         config = { ...config, ...getters.telegram };
       }
 
+      if (state.alert.alert.includes('twilio')) {
+        config = { ...config, ...getters.twilio };
+      }
+
+      if (state.alert.alert.includes('pagertree')) {
+        config = { ...config, ...getters.pagertree };
+      }
+
       if (state.alert.alert.includes('sns')) {
         config = { ...config, ...getters.sns };
       }
@@ -980,6 +1027,8 @@ export default {
           || state.alert.alert.includes('ms_teams')
           || state.alert.alert.includes('telegram')
           || state.alert.alert.includes('jira')
+          || state.alert.alert.includes('twilio')
+          || state.alert.alert.includes('pagertree')
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('zabbix')
           || state.alert.alert.includes('linenotify')

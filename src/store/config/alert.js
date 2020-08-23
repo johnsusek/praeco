@@ -25,6 +25,13 @@ function initialState() {
 
     telegramRoomId: '',
 
+    twilioAccountSid: '',
+    twilioAuth: '',
+    twilioToNumber: '',
+    twilioFromNumber: '',
+
+    pagertreeIntegrationUrl: '',
+
     snsTopicArn: '',
     snsAwsAccessKeyId: '',
     snsAwsSecretAccessKey: '',
@@ -150,6 +157,26 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_TWILIO_ACCOUNT_SID(state, twilioAccountSid) {
+      state.twilioAccountSid = twilioAccountSid;
+    },
+
+    UPDATE_TWILIO_AUTH_TOKEN(state, twilioAuth) {
+      state.twilioAuth = twilioAuth;
+    },
+
+    UPDATE_TWILIO_TO_NUMBER(state, twilioToNumber) {
+      state.twilioToNumber = twilioToNumber;
+    },
+
+    UPDATE_TWILIO_FROM_NUMBER(state, twilioFromNumber) {
+      state.twilioFromNumber = twilioFromNumber;
+    },
+
+    UPDATE_PAGERTREE_INTEGRATION_URL(state, pagertreeIntegrationUrl) {
+      state.pagertreeIntegrationUrl = pagertreeIntegrationUrl;
     },
 
     UPDATE_SNS_TOPIC_ARN(state, snsTopicArn) {
