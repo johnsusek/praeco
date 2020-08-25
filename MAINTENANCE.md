@@ -3,6 +3,7 @@
 ## Elastalert (if neccessary)
 
 - Stash all changes in elastalert-server project
+- `npm run precommit`
 - `make build v=master`
 - `docker tag <image> praecoapp/elastalert-server:<yyyymmdd>`
 - `docker push praecoapp/elastalert-server`
