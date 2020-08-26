@@ -196,6 +196,7 @@ Configure the elastalert `config.yaml` with:
 ```
 cd ~/elastalert
 mkdir rules rule_templates
+chmod -R 777 rules rule_templates
 touch rules/BaseRule.config
 pip install -r requirements-dev.txt
 cp config.yaml.example config.yaml
