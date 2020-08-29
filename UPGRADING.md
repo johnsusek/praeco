@@ -44,7 +44,7 @@ For example:
 ```yaml
   elastalert:
     container_name: elastalert
-    image: johnsusek/elastalert-server:latest
+    image: praecoapp/elastalert-server:latest
     ports:
       - 3030:3030
       - 3333:3333
