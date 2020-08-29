@@ -6,7 +6,7 @@
 
 <img align="left" src="https://user-images.githubusercontent.com/611996/52907999-50fca900-3232-11e9-8aee-40f7dc37ec65.jpg">
 
-**Praeco** is an alerting tool for Elasticsearch – a GUI for [ElastAlert](https://github.com/yelp/elastalert), using the [ElastAlert API](https://github.com/bitsensor/elastalert).
+**Praeco** is an alerting tool for Elasticsearch – a GUI for [ElastAlert](https://github.com/yelp/elastalert), using the [ElastAlert API is a fork](https://github.com/johnsusek/elastalert-server).
 
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
@@ -55,7 +55,7 @@ You may need to update your config files when a new version comes out. Please se
 
 ## Configuration
 
-Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/bitsensor/elastalert#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information.
+Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/johnsusek/elastalert-server#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information.
 
 Any Elastalert option you put into `rules/BaseRule.config` will be applied to every rule.
 
@@ -159,7 +159,7 @@ Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#jira for h
 
 ![](https://user-images.githubusercontent.com/611996/52892144-90a19300-3155-11e9-8050-cb4a440411a4.png)
 
-Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [elastalert api](https://github.com/bitsensor/elastalert) (running in another docker container) to view/edit rules.
+Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [elastalert api](https://github.com/johnsusek/elastalert-server) (running in another docker container) to view/edit rules.
 The elastalert api interacts with the included [elastalert](https://github.com/Yelp/elastalert) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
 rule files in the rules/ directory.
 
