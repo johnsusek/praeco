@@ -7,6 +7,91 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.3.0
+
+- New options for Twilio, PagerTree added.
+
+
+## -> 1.2.0
+
+- New options for Zabbix added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#zabbix for how to configure your `BaseRule.config`.
+```yaml
+zbx_sender_host: ''
+zbx_sender_port: 10051
+```
+- New options for SNS added. 
+
+**./praeco/aws/config**
+
+For example:
+```
+[default]
+region = ap-northeast-1
+```
+
+**./praeco/aws/credentials**
+
+For example:
+```
+[default]
+aws_access_key_id = xxxxxxxxxxxxxxxxx
+aws_secret_access_key = xxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**Part of docker-compose.yml**
+
+For example:
+```yaml
+  elastalert:
+    container_name: elastalert
+    image: johnsusek/elastalert-server:latest
+    ports:
+      - 3030:3030
+      - 3333:3333
+    restart: always
+    volumes:
+      - ./elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml
+      - ./elastalert/config/api.config.json:/opt/elastalert-server/config/config.json
+      - ./elastalert/rules:/opt/elastalert/rules
+      - ./elastalert/rule_templates:/opt/elastalert/rule_templates
+      - ./elastalert/aws/config:/home/node/.aws/config
+      - ./elastalert/aws/credentials:/home/node/.aws/credentials
+```
+
+
+## -> 1.1.0
+
+- New options for MS Teams added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#ms-teams for how to configure your `BaseRule.config`.
+```yaml
+ms_teams_alert_summary:
+ms_teams_proxy:
+ms_teams_alert_fixed_width:
+```
+
+- New options for Mattermost added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config`.
+```yaml
+mattermost_webhook_url: ''
+mattermost_proxy:
+mattermost_ignore_ssl_errors:
+mattermost_icon_url_override:
+mattermost_msg_pretext:
+mattermost_msg_fields: 
+```
+
+- New options for Command added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#command for how to configure your `BaseRule.config`.
+```yaml
+pipe_match_json:
+pipe_alert_text:
+``` 
+
+- New options for Gitter added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#gitter for how to configure your `BaseRule.config`.
+```yaml
+gitter_webhook_url: ''
+```
+
+- New options for Line Notify added.
+
+
 ## -> 1.0.0
 
 - New options for JIRA added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config`.
