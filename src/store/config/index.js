@@ -210,6 +210,12 @@ export default {
 
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
+        commit('alert/UPDATE_EXOTEL_ACCOUNT_SID', config.exotel_account_sid);
+        commit('alert/UPDATE_EXOTEL_AUTH_TOKEN', config.exotel_auth_token);
+        commit('alert/UPDATE_EXOTEL_TO_NUMBER', config.exotel_to_number);
+        commit('alert/UPDATE_EXOTEL_FROM_NUMBER', config.exotel_from_number);
+        commit('alert/UPDATE_EXOTEL_MESSAGE_BODY', config.exotel_message_body);
+
         commit('alert/UPDATE_TWILIO_ACCOUNT_SID', config.twilio_account_sid);
         commit('alert/UPDATE_TWILIO_AUTH_TOKEN', config.twilio_auth_token);
         commit('alert/UPDATE_TWILIO_TO_NUMBER', config.twilio_to_number);
@@ -731,6 +737,32 @@ export default {
       return config;
     },
 
+    exotel(state) {
+      let config = {};
+
+      if (state.alert.exotelAccountSid) {
+        config.exotel_account_sid = state.alert.exotelAccountSid;
+      }
+
+      if (state.alert.exotelAuthToken) {
+        config.exotel_auth_token = state.alert.exotelAuthToken;
+      }
+
+      if (state.alert.exotelToNumber) {
+        config.exotel_to_number = state.alert.exotelToNumber;
+      }
+
+      if (state.alert.exotelFromNumber) {
+        config.exotel_from_number = state.alert.exotelFromNumber;
+      }
+
+      if (state.alert.exotelMessageBody) {
+        config.exotel_message_body = state.alert.exotelMessageBody;
+      }
+
+      return config;
+    },
+
     twilio(state) {
       let config = {};
 
@@ -986,6 +1018,10 @@ export default {
         config = { ...config, ...getters.telegram };
       }
 
+      if (state.alert.alert.includes('exotel')) {
+        config = { ...config, ...getters.exotel };
+      }
+
       if (state.alert.alert.includes('twilio')) {
         config = { ...config, ...getters.twilio };
       }
@@ -1027,13 +1063,9 @@ export default {
           || state.alert.alert.includes('ms_teams')
           || state.alert.alert.includes('telegram')
           || state.alert.alert.includes('jira')
-          || state.alert.alert.includes('twilio')
           || state.alert.alert.includes('pagertree')
           || state.alert.alert.includes('sns')
-          || state.alert.alert.includes('zabbix')
-          || state.alert.alert.includes('linenotify')
           || state.alert.alert.includes('mattermost')
-          || state.alert.alert.includes('command')
           || state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.subjectBody };
       }

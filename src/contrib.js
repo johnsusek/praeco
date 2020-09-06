@@ -21,7 +21,9 @@ import {
   faQuestionCircle,
   faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons';
-import { faSlack, faMicrosoft } from '@fortawesome/free-brands-svg-icons';
+import {
+  faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira
+} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
@@ -37,6 +39,11 @@ library.add(
   faFileAlt,
   faSlack,
   faMicrosoft,
+  faGitter,
+  faAws,
+  faLine,
+  faTelegram,
+  faJira,
   faGlobe,
   faEnvelope,
   faChevronUp,

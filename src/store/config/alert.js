@@ -25,6 +25,12 @@ function initialState() {
 
     telegramRoomId: '',
 
+    exotelAccountSid: '',
+    exotelAuthToken: '',
+    exotelToNumber: '',
+    exotelFromNumber: '',
+    exotelMessageBody: '',
+
     twilioAccountSid: '',
     twilioAuth: '',
     twilioToNumber: '',
@@ -157,6 +163,26 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_EXOTEL_ACCOUNT_SID(state, exotelAccountSid) {
+      state.exotelAccountSid = exotelAccountSid;
+    },
+
+    UPDATE_EXOTEL_AUTH_TOKEN(state, exotelAuthToken) {
+      state.exotelAuthToken = exotelAuthToken;
+    },
+
+    UPDATE_EXOTEL_TO_NUMBER(state, exotelToNumber) {
+      state.exotelToNumber = exotelToNumber;
+    },
+
+    UPDATE_EXOTEL_FROM_NUMBER(state, exotelFromNumber) {
+      state.exotelFromNumber = exotelFromNumber;
+    },
+
+    UPDATE_EXOTEL_MESSAGE_BODY(state, exotelMessageBody) {
+      state.exotelMessageBody = exotelMessageBody;
     },
 
     UPDATE_TWILIO_ACCOUNT_SID(state, twilioAccountSid) {
