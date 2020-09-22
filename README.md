@@ -76,7 +76,9 @@ The following config settings are available in praeco.config.json:
 
 #### How do I connect to elasticsearch using SSL?
 
-Edit `config/api.config.json` and set/add `"es_ssl": true`.
+Edit `config/api.config.json` and set/add `"es_ssl": true`.<br>
+option `"es_ca_certs"`, `"es_client_cert"`, `"es_client_key"`.<br>
+[configuration](https://github.com/johnsusek/elastalert-server#configuration)
 
 #### How do I connect to elasticsearch with a username and password?
 
