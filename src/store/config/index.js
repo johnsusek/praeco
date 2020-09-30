@@ -97,7 +97,11 @@ export default {
           commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
           commit('query/UPDATE_TYPE', 'tree');
         } else {
-          commit('query/UPDATE_MANUAL', config.filter[0].query.query_string.query);
+          try {
+            commit('query/UPDATE_MANUAL', config.filter[0].query.query_string.query);
+          } catch (error) {
+            console.error(error);
+          }
           commit('query/UPDATE_TYPE', 'manual');
         }
 
