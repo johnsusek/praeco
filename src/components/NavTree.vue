@@ -179,7 +179,7 @@ export default {
           this.$router.push({
             name: 'ruleview',
             params: { id: node.id }
-          });
+          }).catch(() => {});
         }
       } else if (node.isDirectory) {
         this.$router.push({
@@ -192,7 +192,7 @@ export default {
       } else if (node.id === '_templates') {
         this.$router.push('/templates');
       } else if (node.id === '_rules') {
-        this.$router.push('/rules');
+        this.$router.push('/rules').catch(() => {});
       }
     },
     async loadOptions(context) {
