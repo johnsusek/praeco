@@ -1244,7 +1244,7 @@ export default {
     },
 
     defaultFilter() {
-      return `${this.timeField}:*`;
+      return [`${this.timeField}:*`];
     }
   },
 
