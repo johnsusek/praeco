@@ -83,10 +83,10 @@ export default {
 
     manual: {
       get() {
-        return this.$store.state.config.query.manual;
+        return JSON.stringify(this.$store.state.config.query.manual);
       },
       set(value) {
-        this.$store.commit('config/query/UPDATE_MANUAL', value);
+        this.$store.commit('config/query/UPDATE_MANUAL', JSON.parse(value));
       }
     },
 
