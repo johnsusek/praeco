@@ -102,7 +102,6 @@ gitter_webhook_url: ''
 - New options for telegram added to `BaseRule.config`. Add these lines and customize as needed:
 ```yaml
 telegram_bot_token: ''
-telegram_api_url: ''
 telegram_proxy: ''
 ```
 [Here are](https://elastalert.readthedocs.io/en/latest/ruletypes.html#telegram) the elastalert docs on these options.
