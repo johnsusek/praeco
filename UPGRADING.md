@@ -103,6 +103,8 @@ gitter_webhook_url: ''
 ```yaml
 telegram_bot_token: ''
 telegram_proxy: ''
+telegram_proxy_login: ''
+telegram_proxy_pass: ''
 ```
 [Here are](https://elastalert.readthedocs.io/en/latest/ruletypes.html#telegram) the elastalert docs on these options.
 
@@ -136,4 +138,11 @@ See [the default config file](https://github.com/johnsusek/praeco/blob/master/ng
 ## v0.1 -> v0.2
 
 - Create file rules/BaseRule.config and paste in contents from https://raw.githubusercontent.com/johnsusek/praeco/develop/rules/BaseRule.config, change as neccessary.
+
+```yaml
+slack_webhook_url: ''
+smtp_host: ''
+smtp_port: 25
+slack_emoji_override: ':postal_horn:'
+```
 
