@@ -153,6 +153,79 @@ You will see this error when launching if praeco cannot find elasticsearch at th
 
 Make sure the channel/username you are trying to post to exists.
 
+#### How to setup Slack?
+
+Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#slack for how to configure your BaseRule.config file.
+
+Replace slack_webhook_url with the URL of your channel.
+
+```yaml
+slack_webhook_url: 'https://hooks.slack.com/services/xxxxxxxxx/xxxxxxxx/xxxxxxxxxxxxxxxxxxx'
+slack_emoji_override: ':postal_horn:'
+```
+
+#### How to setup Telegram?
+
+telegram_room_id can be set on the praeco screen.
+
+Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#telegram for how to configure your BaseRule.config file.
+
+Replace telegram_bot_token with the your bot token.
+
+telegram_proxy, telegram_proxy_login and telegram_proxy_pass do not need to be written in BaseRule.config if they do not need to be set.
+
+```yaml
+telegram_bot_token: 'xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+telegram_proxy: ''
+telegram_proxy_login: ''
+telegram_proxy_pass: ''
+```
+#### How to setup Gitter?
+
+Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#gitter for how to configure your `BaseRule.config` file.
+
+Replace gitter_webhook_url with the URL of your webhook.
+
+```yaml
+gitter_webhook_url: 'https://webhooks.gitter.im/e/xxxxxxxxxxxxxxxx'
+```
+
+#### How to setup Mattermost? 
+
+Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config` file.
+
+Replace mattermost_webhook_url with the URL of your webhook.
+
+```yaml
+mattermost_webhook_url: 'https://xxxxxx/hooks/xxxxxxxxxxxxxxxx'
+```
+
+#### How to setup Zabbix?
+
+Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#zabbix for how to configure your `BaseRule.config` file.
+
+Replace zbx_sender_host and zbx_sender_port with your environment's host name and port.
+
+```yaml
+zbx_sender_host: 'zabbix-server'
+zbx_sender_port: 10051
+```
+
+#### How to setup Email?
+
+Sorry Not Support email_format.
+
+Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#email for how to configure your `BaseRule.config` file.
+
+[example setting](https://github.com/johnsusek/praeco/issues/245#issuecomment-691523706)
+
+```yaml
+smtp_host: 'smtp.mail.yahoo.co.jp'
+smtp_port: 465 
+smtp_ssl: true
+smtp_auth_file: '/opt/elastalert/pass/smtp_auth_user.yaml'
+```
+
 #### How to setup Jira?
 
 Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config` file.
