@@ -585,23 +585,25 @@ export default {
       let query = {
         query: {
           bool: {
-            filter: {
-              bool: {
-                must: this.query.concat([{
-                  range: {
-                    [this.timeField]: {
-                      lte,
-                      gte
-                    }
+            must: [
+              {
+                query_string: { query: this.query }
+              },
+              {
+                range: {
+                  [this.timeField]: {
+                    lte,
+                    gte
                   }
-                }])
+                }
               }
-            }
+            ]
           }
         },
         size: 0,
         aggs: this.aggs
       };
+
       this.loading = true;
       this.searchError = '';
 

@@ -327,7 +327,7 @@ export default {
         this.$router.push({
           path: `/rules/${newPath}`,
           query: { refreshTree: true }
-        }).catch(() => {});
+        });
       } else {
         this.$message.warning(`Could not move the rule. Perhaps a rule with
                               the same name already exists at this location?`);
@@ -355,7 +355,7 @@ export default {
         this.$router.push({
           path: `/rules/${res}`,
           query: { refreshTree: true }
-        }).catch(() => {});
+        });
       } else {
         this.$message.warning(`Could not rename the rule. Perhaps a rule
                               already exists with that name?`);
@@ -385,7 +385,7 @@ export default {
         this.$router.push({
           path: `/rules/${encodeURIComponent(path)}`,
           query: { refreshTree: true }
-        }).catch(() => {});
+        });
       } else {
         this.$message.warning('Could not duplicate the rule.');
       }
@@ -417,7 +417,7 @@ export default {
           type: 'success',
           message: 'Rule deleted'
         });
-        this.$router.push({ path: '/rules', query: { refreshTree: true } }).catch(() => {});
+        this.$router.push({ path: '/rules', query: { refreshTree: true } });
       } else {
         this.$message.warning('Could not delete the rule.');
       }

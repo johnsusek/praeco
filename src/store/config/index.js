@@ -97,17 +97,7 @@ export default {
           commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
           commit('query/UPDATE_TYPE', 'tree');
         } else {
-          // Remove top level `query`
-          // https://github.com/Yelp/elastalert/blob/master/elastalert/elastalert.py#L1053
-          let manual = [];
-          config.filter.forEach(filter => {
-            if (filter.query != null) {
-              manual.push(filter.query);
-            } else {
-              manual.push(filter);
-            }
-          });
-          commit('query/UPDATE_MANUAL', manual);
+          commit('query/UPDATE_MANUAL', config.filter[0].query.query_string.query);
           commit('query/UPDATE_TYPE', 'manual');
         }
 
@@ -341,7 +331,11 @@ export default {
       let search = {
         query: {
           bool: {
-            must: getters['query/queryString'] || `${state.settings.timeField}:*`
+            must: [
+              {
+                query_string: { query: getters['query/queryString'] || `${state.settings.timeField}:*` }
+              }
+            ]
           }
         },
         sort: [{ [state.settings.timeField]: { order: 'desc' } }],
@@ -597,19 +591,31 @@ export default {
     },
 
     queryString(state, getters) {
-      let qs = getters['query/queryString'] || `${state.settings.timeField}:*`;
+      let qs = {
+        query: getters['query/queryString'] || `${state.settings.timeField}:*`
+      };
 
       // the new term rule triggers a bug in elastalert
       // so we need to slightly change the way queries are sent
       // https://github.com/Yelp/elastalert/issues/1042
       if (state.match.type === 'new_term') {
         return {
-          filter: qs
+          filter: [
+            {
+              query_string: qs
+            }
+          ]
         };
       }
 
       return {
-        filter: qs
+        filter: [
+          {
+            query: {
+              query_string: qs
+            }
+          }
+        ]
       };
     },
 

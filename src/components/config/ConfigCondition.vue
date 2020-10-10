@@ -332,7 +332,7 @@
 
     <span class="pop-trigger" @click="popFilterVisible = true">
       <span v-if="queryString === defaultFilter">UNFILTERED</span>
-      <span v-else>WITH FILTERS</span>
+      <span v-else>WITH FILTER</span>
       <span v-if="queryString !== defaultFilter"> {{ queryString }}</span>
     </span>
 
@@ -1244,7 +1244,7 @@ export default {
     },
 
     defaultFilter() {
-      return [`${this.timeField}:*`];
+      return `${this.timeField}:*`;
     }
   },
 
