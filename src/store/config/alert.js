@@ -56,7 +56,7 @@ function initialState() {
     jiraComponents: '',
 
     googleChatWebhookUrl: '',
-    googleChatFormat: '',
+    googleChatFormat: 'basic',
     googleChatHeaderTitle: '',
 
     mattermostChannelOverride: '',

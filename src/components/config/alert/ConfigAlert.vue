@@ -256,7 +256,7 @@
 
       <el-tab-pane v-if="alert.includes('googlechat')">
         <template slot="label">
-          <icon :icon="['fab', 'googlechat']" size="1x" /> GOOGLE CHAT
+          GOOGLE CHAT
         </template>
 
         <praeco-form-item label="GoogleChat Webhook" prop="googleChatWebhookUrl" required>
@@ -265,7 +265,7 @@
         </praeco-form-item>
         <praeco-form-item label="GoogleChat Format" prop="googleChatFormat" required>
           <el-input id="googleChatFormat" v-model="googleChatFormat" :disabled="viewOnly" />
-          <label>GoogleChat format(card or null)</label>
+          <label>GoogleChat format(card or basic)</label>
         </praeco-form-item>
         <praeco-form-item label="GoogleChat Header Title" prop="googleChatHeaderTitle" required>
           <el-input id="googleChatHeaderTitle" v-model="googleChatHeaderTitle" :disabled="viewOnly" />
