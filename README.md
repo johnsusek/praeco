@@ -104,8 +104,6 @@ Then, using powershell, run these commands:
 
 ```
 $Env:PRAECO_ELASTICSEARCH="1.2.3.4"
-mkdir -p rules rule_templates
-chmod -R 777 rules rule_templates
 docker-compose.exe up
 ```
 
@@ -130,6 +128,8 @@ IP address for PRAECO_ELASTICSEARCH. Here's a working example:
 ```
 elasticsearch -E network.host=_site_
 export PRAECO_ELASTICSEARCH=192.168.1.145
+mkdir -p rules rule_templates
+chmod -R 777 rules rule_templates
 docker-compose up
 ```
 
