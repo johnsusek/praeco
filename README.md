@@ -48,8 +48,6 @@ A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e
 ```
 docker pull praecoapp/praeco
 docker pull praecoapp/elastalert-server
-mkdir -p rules rule_templates
-chmod -R 777 rules rule_templates
 docker-compose up --force-recreate --build
 ```
 
@@ -106,6 +104,8 @@ Then, using powershell, run these commands:
 
 ```
 $Env:PRAECO_ELASTICSEARCH="1.2.3.4"
+mkdir -p rules rule_templates
+chmod -R 777 rules rule_templates
 docker-compose.exe up
 ```
 
