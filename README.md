@@ -48,6 +48,8 @@ A [walkthrough article](https://medium.com/@john_8166/praeco-walkthrough-5aada7e
 ```
 docker pull praecoapp/praeco
 docker pull praecoapp/elastalert-server
+mkdir -p rules rule_templates
+chmod -R 777 rules rule_templates
 docker-compose up --force-recreate --build
 ```
 
@@ -270,10 +272,11 @@ Configure the elastalert `config.yaml` with:
 
 ```
 cd ~/elastalert
-mkdir rules rule_templates
+mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
 touch rules/BaseRule.config
-pip install -r requirements-dev.txt
+pip install "setuptools>=11.3"
+python setup.py install
 cp config.yaml.example config.yaml
 vi config.yaml
 ```
