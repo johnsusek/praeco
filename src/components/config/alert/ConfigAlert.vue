@@ -264,10 +264,16 @@
           <label>Google Webhook Url</label>
         </praeco-form-item>
         <praeco-form-item label="GoogleChat Format" prop="googleChatFormat" required>
-          <el-input id="googleChatFormat" v-model="googleChatFormat" :disabled="viewOnly" />
-          <label>GoogleChat format(card or basic)</label>
+          <el-radio-group v-model="googleChatFormat" :disabled="viewOnly">
+            <el-radio id="googleChatFormatBasic" label="basic" border>
+              basic
+            </el-radio>
+            <el-radio id="googleChatFormatCard" label="card" border>
+              card
+            </el-radio>
+          </el-radio-group>
         </praeco-form-item>
-        <praeco-form-item label="GoogleChat Header Title" prop="googleChatHeaderTitle" required>
+        <praeco-form-item label="GoogleChat Header Title" prop="googleChatHeaderTitle">
           <el-input id="googleChatHeaderTitle" v-model="googleChatHeaderTitle" :disabled="viewOnly" />
           <label>GoogleChat Header Title</label>
         </praeco-form-item>
