@@ -55,6 +55,10 @@ function initialState() {
     jiraIssueType: '',
     jiraComponents: '',
 
+    googleChatWebhookUrl: '',
+    googleChatFormat: 'basic',
+    googleChatHeaderTitle: '',
+
     mattermostChannelOverride: '',
     mattermostUsernameOverride: 'Praeco',
     mattermostMsgColor: 'danger',
@@ -255,6 +259,18 @@ export default {
 
     UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
       state.jiraComponents = jiraComponents;
+    },
+
+    UPDATE_GOOGLE_CHAT_WEBHOOK_URL(state, googleChatWebhookUrl) {
+      state.googleChatWebhookUrl = googleChatWebhookUrl;
+    },
+
+    UPDATE_GOOGLE_CHAT_FORMAT(state, googleChatFormat) {
+      state.googleChatFormat = googleChatFormat;
+    },
+
+    UPDATE_GOOGLE_CHAT_HEADER_TITLE(state, googleChatHeaderTitle) {
+      state.googleChatHeaderTitle = googleChatHeaderTitle;
     },
 
     UPDATE_MATTERMOST_CHANNEL_OVERRIDE(state, mattermostChannelOverride) {

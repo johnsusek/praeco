@@ -249,6 +249,10 @@ export default {
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
 
+        commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
+        commit('alert/UPDATE_GOOGLE_CHAT_FORMAT', config.googlechat_format);
+        commit('alert/UPDATE_GOOGLE_CHAT_HEADER_TITLE', config.googlechat_header_title);
+
         commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
         commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', config.mattermost_username_override);
         commit('alert/UPDATE_MATTERMOST_MSG_COLOR', config.mattermost_msg_color);
@@ -880,6 +884,23 @@ export default {
       return config;
     },
 
+    googlechat(state) {
+      let config = {};
+      if (state.alert.googleChatWebhookUrl) {
+        config.googlechat_webhook_url = state.alert.googleChatWebhookUrl;
+      }
+
+      if (state.alert.googleChatFormat) {
+        config.googlechat_format = state.alert.googleChatFormat;
+      }
+
+      if (state.alert.googleChatHeaderTitle) {
+        config.googlechat_header_title = state.alert.googleChatHeaderTitle;
+      }
+
+      return config;
+    },
+
     mattermost(state, getters) {
       let config = {};
 
@@ -1054,6 +1075,10 @@ export default {
         config = { ...config, ...getters.jira };
       }
 
+      if (state.alert.alert.includes('googlechat')) {
+        config = { ...config, ...getters.googlechat };
+      }
+
       if (state.alert.alert.includes('mattermost')) {
         config = { ...config, ...getters.mattermost };
       }
@@ -1063,6 +1088,7 @@ export default {
           || state.alert.alert.includes('ms_teams')
           || state.alert.alert.includes('telegram')
           || state.alert.alert.includes('jira')
+          || state.alert.alert.includes('googlechat')
           || state.alert.alert.includes('pagertree')
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('mattermost')

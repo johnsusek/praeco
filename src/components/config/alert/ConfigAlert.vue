@@ -59,6 +59,9 @@
         <el-checkbox id="destinationJira" label="jira" border>
           JIRA
         </el-checkbox>
+        <el-checkbox id="destinationGoogleChats" label="googlechat" border>
+          GOOGLE CHAT
+        </el-checkbox>
         <el-checkbox id="destinationlineNotify" label="linenotify" border>
           LineNotify
         </el-checkbox>
@@ -92,7 +95,7 @@
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
-        alert.includes('sns') || alert.includes('pagertree') || alert.includes('gitter')">
+        alert.includes('sns') || alert.includes('pagertree') || alert.includes('gitter') || alert.includes('googlechat')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -248,6 +251,31 @@
         <praeco-form-item label="Components" prop="jiraComponents">
           <el-input id="jiraComponents" v-model="jiraComponents" :disabled="viewOnly" />
           <label>Jira issue components</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('googlechat')">
+        <template slot="label">
+          GOOGLE CHAT
+        </template>
+
+        <praeco-form-item label="GoogleChat Webhook" prop="googleChatWebhookUrl" required>
+          <el-input id="googleChatWebhookUrl" v-model="googleChatWebhookUrl" :disabled="viewOnly" />
+          <label>Google Webhook Url</label>
+        </praeco-form-item>
+        <praeco-form-item label="GoogleChat Format" prop="googleChatFormat" required>
+          <el-radio-group v-model="googleChatFormat" :disabled="viewOnly">
+            <el-radio id="googleChatFormatBasic" label="basic" border>
+              basic
+            </el-radio>
+            <el-radio id="googleChatFormatCard" label="card" border>
+              card
+            </el-radio>
+          </el-radio-group>
+        </praeco-form-item>
+        <praeco-form-item label="GoogleChat Header Title" prop="googleChatHeaderTitle">
+          <el-input id="googleChatHeaderTitle" v-model="googleChatHeaderTitle" :disabled="viewOnly" />
+          <label>GoogleChat Header Title</label>
         </praeco-form-item>
       </el-tab-pane>
 
@@ -950,6 +978,42 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_JIRA_COMPONENTS',
+          value
+        );
+      }
+    },
+
+    googleChatWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.googleChatWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL',
+          value
+        );
+      }
+    },
+
+    googleChatFormat: {
+      get() {
+        return this.$store.state.config.alert.googleChatFormat;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_GOOGLE_CHAT_FORMAT',
+          value
+        );
+      }
+    },
+
+    googleChatHeaderTitle: {
+      get() {
+        return this.$store.state.config.alert.googleChatHeaderTitle;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_GOOGLE_CHAT_HEADER_TITLE',
           value
         );
       }
