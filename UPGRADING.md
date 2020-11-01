@@ -7,6 +7,11 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.4.0
+
+- New options for Exotel, GoogleChat added.
+
+
 ## -> 1.3.0
 
 - New options for Twilio, PagerTree added.
