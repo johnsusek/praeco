@@ -89,6 +89,12 @@
         <el-checkbox id="destinationExotel" label="exotel" border>
           Exotel
         </el-checkbox>
+        <el-checkbox id="destinationStomp" label="stomp" border>
+          Stomp
+        </el-checkbox>
+        <el-checkbox id="destinationVictorOps" label="victorops" border>
+          VictorOps
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -475,6 +481,84 @@
         <praeco-form-item label="Exotel Message Body" prop="exotelMessageBody">
           <el-input id="exotelMessageBody" v-model="exotelMessageBody" :disabled="viewOnly" />
           <label>Message you want to send in the sms, is you don’t specify this argument only the rule name is sent</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('stomp')">
+        <template slot="label">
+          Stomp
+        </template>
+
+        <praeco-form-item label="Stomp Hostname" prop="stompHostname" required>
+          <el-input id="stompHostname" v-model="stompHostname" :disabled="viewOnly" />
+          <label>The STOMP host to use, defaults to localhost.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Stomp Hostport" prop="stompHostport" required>
+          <el-input id="stompHostport" v-model="stompHostport" type="number" :disabled="viewOnly" />
+          <label>The STOMP port to use, defaults to 61613.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Stomp Login" prop="stompLogin" required>
+          <el-input id="stompLogin" v-model="stompLogin" :disabled="viewOnly" />
+          <label>The STOMP login to use, defaults to admin.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Stomp Password" prop="stompPassword" required>
+          <el-input id="stompPassword" v-model="stompPassword" :disabled="viewOnly" />
+          <label>The STOMP password to use, defaults to admin.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Stomp Destination" prop="stompDestination">
+          <el-input id="stompDestination" v-model="stompDestination" :disabled="viewOnly" />
+          <label>The STOMP destination to use, defaults to /queue/ALERT</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('victorops')">
+        <template slot="label">
+          VictorOps
+        </template>
+
+        <praeco-form-item label="VictorOps ApiKey" prop="victoropsApiKey" required>
+          <el-input id="victoropsApiKey" v-model="victoropsApiKey" :disabled="viewOnly" />
+          <label>API key generated under the ‘REST Endpoint’ in the Integrations settings.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="VictorOps RoutingKey" prop="victoropsRoutingKey" required>
+          <el-input id="victoropsRoutingKey" v-model="victoropsRoutingKey" :disabled="viewOnly" />
+          <label>VictorOps routing key to route the alert to.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="VictorOps MessageType" prop="victoropsMessageType" required>
+          <el-radio-group v-model="victoropsMessageType" :disabled="viewOnly">
+            <el-radio id="victoropsMessageTypeInfo" label="INFO" border>
+              INFO
+            </el-radio>
+            <el-radio id="victoropsMessageTypeWarning" label="WARNING" border>
+              WARNING
+            </el-radio>
+            <el-radio id="victoropsMessageTypeAcknowledgement" label="ACKNOWLEDGEMENT" border>
+              ACKNOWLEDGEMENT
+            </el-radio>
+            <el-radio id="victoropsMessageTypeCritical" label="CRITICAL" border>
+              CRITICAL
+            </el-radio>
+            <el-radio id="victoropsMessageTypeRecovery" label="RECOVERY" border>
+              RECOVERY
+            </el-radio>
+          </el-radio-group>
+          <label>VictorOps field to specify severity level. Must be one of the following: INFO, WARNING, ACKNOWLEDGEMENT, CRITICAL, RECOVERY</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="VictorOps EntityId" prop="victoropsEntityId">
+          <el-input id="victoropsEntityId" v-model="victoropsEntityId" :disabled="viewOnly" />
+          <label>The identity of the incident used by VictorOps to correlate incidents throughout the alert lifecycle. If not defined, VictorOps will assign a random string to each alert.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="VictorOps EntityDisplayName" prop="victoropsEntityDisplayName">
+          <el-input id="victoropsEntityDisplayName" v-model="victoropsEntityDisplayName" :disabled="viewOnly" />
+          <label>Human-readable name of alerting entity to summarize incidents without affecting the life-cycle workflow.</label>
         </praeco-form-item>
       </el-tab-pane>
     </el-tabs>
@@ -978,6 +1062,126 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_JIRA_COMPONENTS',
+          value
+        );
+      }
+    },
+
+    victoropsApiKey: {
+      get() {
+        return this.$store.state.config.alert.victoropsApiKey;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_VICTOROPS_API_KEY',
+          value
+        );
+      }
+    },
+
+    victoropsRoutingKey: {
+      get() {
+        return this.$store.state.config.alert.victoropsRoutingKey;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_VICTOROPS_ROUTING_KEY',
+          value
+        );
+      }
+    },
+
+    victoropsMessageType: {
+      get() {
+        return this.$store.state.config.alert.victoropsMessageType;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_VICTOROPS_MESSAGE_TYPE',
+          value
+        );
+      }
+    },
+
+    victoropsEntityId: {
+      get() {
+        return this.$store.state.config.alert.victoropsEntityId;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_VICTOROPS_ENTITY_ID',
+          value
+        );
+      }
+    },
+
+    victoropsEntityDisplayName: {
+      get() {
+        return this.$store.state.config.alert.victoropsEntityDisplayName;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_VICTOROPS_ENTITY_DISPLAY_NAME',
+          value
+        );
+      }
+    },
+
+    stompHostname: {
+      get() {
+        return this.$store.state.config.alert.stompHostname;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_STOMP_HOSTNAME',
+          value
+        );
+      }
+    },
+
+    stompHostport: {
+      get() {
+        return this.$store.state.config.alert.stompHostport;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_STOMP_HOSTPORT',
+          value
+        );
+      }
+    },
+
+    stompLogin: {
+      get() {
+        return this.$store.state.config.alert.stompLogin;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_STOMP_LOGIN',
+          value
+        );
+      }
+    },
+
+    stompPassword: {
+      get() {
+        return this.$store.state.config.alert.stompPassword;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_STOMP_PASSWORD',
+          value
+        );
+      }
+    },
+
+    stompDestination: {
+      get() {
+        return this.$store.state.config.alert.stompDestination;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_STOMP_DESTINATION',
           value
         );
       }

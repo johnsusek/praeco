@@ -249,6 +249,47 @@ export default {
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
 
+        commit('alert/UPDATE_VICTOROPS_API_KEY', config.victorops_api_key);
+        commit('alert/UPDATE_VICTOROPS_ROUTING_KEY', config.victorops_routing_key);
+        commit('alert/UPDATE_VICTOROPS_MESSAGE_TYPE', config.victorops_message_type);
+        commit('alert/UPDATE_VICTOROPS_ENTITY_ID', config.victorops_entity_id);
+
+        if (config.victorops_entity_display_name) {
+          commit('alert/UPDATE_VICTOROPS_ENTITY_DISPLAY_NAME', config.victorops_entity_display_name);
+        } else {
+          commit('alert/UPDATE_VICTOROPS_ENTITY_DISPLAY_NAME', 'no entity display name');
+        }
+
+        if (config.stomp_hostname) {
+          commit('alert/UPDATE_STOMP_HOSTNAME', config.stomp_hostname);
+        } else {
+          commit('alert/UPDATE_STOMP_HOSTNAME', 'localhost');
+        }
+
+        if (config.stomp_hostport) {
+          commit('alert/UPDATE_STOMP_HOSTPORT', config.stomp_hostport);
+        } else {
+          commit('alert/UPDATE_STOMP_HOSTPORT', 61613);
+        }
+
+        if (config.stomp_login) {
+          commit('alert/UPDATE_STOMP_LOGIN', config.stomp_login);
+        } else {
+          commit('alert/UPDATE_STOMP_LOGIN', 'admin');
+        }
+
+        if (config.stomp_password) {
+          commit('alert/UPDATE_STOMP_PASSWORD', config.stomp_password);
+        } else {
+          commit('alert/UPDATE_STOMP_PASSWORD', 'admin');
+        }
+
+        if (config.stomp_destination) {
+          commit('alert/UPDATE_STOMP_DESTINATION', config.stomp_destination);
+        } else {
+          commit('alert/UPDATE_STOMP_DESTINATION', '/queue/ALERT');
+        }
+
         commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
         commit('alert/UPDATE_GOOGLE_CHAT_FORMAT', config.googlechat_format);
         commit('alert/UPDATE_GOOGLE_CHAT_HEADER_TITLE', config.googlechat_header_title);
@@ -884,6 +925,56 @@ export default {
       return config;
     },
 
+    victorops(state) {
+      let config = {};
+      if (state.alert.victoropsApiKey) {
+        config.victorops_api_key = state.alert.victoropsApiKey;
+      }
+
+      if (state.alert.victoropsRoutingKey) {
+        config.victorops_routing_key = state.alert.victoropsRoutingKey;
+      }
+
+      if (state.alert.victoropsMessageType) {
+        config.victorops_message_type = state.alert.victoropsMessageType;
+      }
+
+      if (state.alert.victoropsEntityId) {
+        config.victorops_entity_id = state.alert.victoropsEntityId;
+      }
+
+      if (state.alert.victoropsEntityDisplayName) {
+        config.victorops_entity_display_name = state.alert.victoropsEntityDisplayName;
+      }
+
+      return config;
+    },
+
+    stomp(state) {
+      let config = {};
+      if (state.alert.stompHostname) {
+        config.stomp_hostname = state.alert.stompHostname;
+      }
+
+      if (state.alert.stompHostport) {
+        config.stomp_hostport = state.alert.stompHostport;
+      }
+
+      if (state.alert.stompLogin) {
+        config.stomp_login = state.alert.stompLogin;
+      }
+
+      if (state.alert.stompPassword) {
+        config.stomp_password = state.alert.stompPassword;
+      }
+
+      if (state.alert.stompDestination) {
+        config.stomp_destination = state.alert.stompDestination;
+      }
+
+      return config;
+    },
+
     googlechat(state) {
       let config = {};
       if (state.alert.googleChatWebhookUrl) {
@@ -1073,6 +1164,14 @@ export default {
 
       if (state.alert.alert.includes('jira')) {
         config = { ...config, ...getters.jira };
+      }
+
+      if (state.alert.alert.includes('victorops')) {
+        config = { ...config, ...getters.victorops };
+      }
+
+      if (state.alert.alert.includes('stomp')) {
+        config = { ...config, ...getters.stomp };
       }
 
       if (state.alert.alert.includes('googlechat')) {

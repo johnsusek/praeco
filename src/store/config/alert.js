@@ -55,6 +55,18 @@ function initialState() {
     jiraIssueType: '',
     jiraComponents: '',
 
+    victoropsApiKey: '',
+    victoropsRoutingKey: '',
+    victoropsMessageType: '',
+    victoropsEntityId: '',
+    victoropsEntityDisplayName: '',
+
+    stompHostname: '',
+    stompHostport: '',
+    stompLogin: '',
+    stompPassword: '',
+    stompDestination: '',
+
     googleChatWebhookUrl: '',
     googleChatFormat: 'basic',
     googleChatHeaderTitle: '',
@@ -259,6 +271,46 @@ export default {
 
     UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
       state.jiraComponents = jiraComponents;
+    },
+
+    UPDATE_VICTOROPS_API_KEY(state, victoropsApiKey) {
+      state.victoropsApiKey = victoropsApiKey;
+    },
+
+    UPDATE_VICTOROPS_ROUTING_KEY(state, victoropsRoutingKey) {
+      state.victoropsRoutingKey = victoropsRoutingKey;
+    },
+
+    UPDATE_VICTOROPS_MESSAGE_TYPE(state, victoropsMessageType) {
+      state.victoropsMessageType = victoropsMessageType;
+    },
+
+    UPDATE_VICTOROPS_ENTITY_ID(state, victoropsEntityId) {
+      state.victoropsEntityId = victoropsEntityId;
+    },
+
+    UPDATE_VICTOROPS_ENTITY_DISPLAY_NAME(state, victoropsEntityDisplayName) {
+      state.victoropsEntityDisplayName = victoropsEntityDisplayName;
+    },
+
+    UPDATE_STOMP_HOSTNAME(state, stompHostname) {
+      state.stompHostname = stompHostname;
+    },
+
+    UPDATE_STOMP_HOSTPORT(state, stompHostport) {
+      state.stompHostport = stompHostport;
+    },
+
+    UPDATE_STOMP_LOGIN(state, stompLogin) {
+      state.stompLogin = stompLogin;
+    },
+
+    UPDATE_STOMP_PASSWORD(state, stompPassword) {
+      state.stompPassword = stompPassword;
+    },
+
+    UPDATE_STOMP_DESTINATION(state, stompDestination) {
+      state.stompDestination = stompDestination;
     },
 
     UPDATE_GOOGLE_CHAT_WEBHOOK_URL(state, googleChatWebhookUrl) {
