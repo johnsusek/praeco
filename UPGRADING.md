@@ -9,8 +9,14 @@ Some version upgrades require further configuration. Version specific upgrade in
 
 ## -> 1.4.0
 
-- New options for Exotel, GoogleChat added.
+- New options for Exotel added.
 
+- New options for GoogleChat added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#googlechat for how to configure your `BaseRule.config`.
+```yaml
+googlechat_header_subtitle:
+googlechat_header_image:
+googlechat_footer_kibanalink:
+```
 
 ## -> 1.3.0
 
@@ -21,7 +27,7 @@ Some version upgrades require further configuration. Version specific upgrade in
 
 - New options for Zabbix added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#zabbix for how to configure your `BaseRule.config`.
 ```yaml
-zbx_sender_host: ''
+zbx_sender_host: 'hostname'
 zbx_sender_port: 10051
 ```
 - New options for SNS added. 
@@ -75,7 +81,7 @@ ms_teams_alert_fixed_width:
 
 - New options for Mattermost added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config`.
 ```yaml
-mattermost_webhook_url: ''
+mattermost_webhook_url: 'https://xxxxxx/hooks/xxxxxxxxxxxxxxxx'
 mattermost_proxy:
 mattermost_ignore_ssl_errors:
 mattermost_icon_url_override:
@@ -91,7 +97,7 @@ pipe_alert_text:
 
 - New options for Gitter added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#gitter for how to configure your `BaseRule.config`.
 ```yaml
-gitter_webhook_url: ''
+gitter_webhook_url: 'https://webhooks.gitter.im/e/xxxxxxxxxxxxxxxx'
 ```
 
 - New options for Line Notify added.
@@ -106,7 +112,7 @@ gitter_webhook_url: ''
 
 - New options for telegram added to `BaseRule.config`. Add these lines and customize as needed:
 ```yaml
-telegram_bot_token: ''
+telegram_bot_token: 'xxxxxxxxxxxxxxxxx'
 telegram_proxy: ''
 telegram_proxy_login: ''
 telegram_proxy_pass: ''
@@ -145,7 +151,7 @@ See [the default config file](https://github.com/johnsusek/praeco/blob/master/ng
 - Create file rules/BaseRule.config and paste in contents from https://raw.githubusercontent.com/johnsusek/praeco/develop/rules/BaseRule.config, change as neccessary.
 
 ```yaml
-slack_webhook_url: ''
+slack_webhook_url: 'https://hooks.slack.com/services/xxxxxx/xxxxxx/xxxxxx'
 smtp_host: ''
 smtp_port: 25
 slack_emoji_override: ':postal_horn:'
