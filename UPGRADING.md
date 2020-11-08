@@ -7,6 +7,18 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.5.0
+
+- New options for VictorOps added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#victorops for how to configure your `BaseRule.config`.
+```yaml
+victorops_proxy:
+```
+
+- New options for Stomp added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#stomp for how to configure your `BaseRule.config`.
+```yaml
+stomp_ssl: True # default False
+```
+
 ## -> 1.4.0
 
 - New options for Exotel added.
@@ -113,9 +125,9 @@ gitter_webhook_url: 'https://webhooks.gitter.im/e/xxxxxxxxxxxxxxxx'
 - New options for telegram added to `BaseRule.config`. Add these lines and customize as needed:
 ```yaml
 telegram_bot_token: 'xxxxxxxxxxxxxxxxx'
-telegram_proxy: ''
-telegram_proxy_login: ''
-telegram_proxy_pass: ''
+telegram_proxy:
+telegram_proxy_login:
+telegram_proxy_pass:
 ```
 [Here are](https://elastalert.readthedocs.io/en/latest/ruletypes.html#telegram) the elastalert docs on these options.
 
