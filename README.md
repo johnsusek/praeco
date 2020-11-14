@@ -228,6 +228,47 @@ smtp_ssl: true
 smtp_auth_file: '/opt/elastalert/pass/smtp_auth_user.yaml'
 ```
 
+smtp_auth_user.yaml
+
+```yaml
+user: xxx@yahoo.co.jp
+password: xxx
+```
+
+Access the Google settings screen on the ElastAlertServer / Praeco server and go to your Google account in advance → Apps that can access your account → Allow less secure apps: Disabled → Enabled
+When I specified the Gmail address with from_addr and checked the operation, it worked without problems.
+
+smtp_port: 587
+
+```yaml
+smtp_host: "smtp.gmail.com" 
+smtp_port: 587 
+smtp_ssl: false
+smtp_auth_file: '/opt/elastalert/smtp/smtp_auth_user.yaml"
+```
+smtp_auth_user.yaml
+
+```yaml
+user: xxx@gmail
+password: xxx
+```
+
+smtp_port: 465
+
+```yaml
+smtp_host: "smtp.gmail.com" 
+smtp_port: 465 
+smtp_ssl: true
+smtp_auth_file: '/opt/elastalert/smtp/smtp_auth_user.yaml"
+```
+
+smtp_auth_user.yaml
+
+```yaml
+user: xxx@gmail
+password: xxx
+```
+
 #### How to setup Jira?
 
 Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config` file.
