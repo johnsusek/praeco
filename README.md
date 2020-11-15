@@ -235,8 +235,7 @@ user: xxx@yahoo.co.jp
 password: xxx
 ```
 
-Access the Google settings screen on the ElastAlertServer / Praeco server and go to your Google account in advance → Apps that can access your account → Allow less secure apps: Disabled → Enabled
-When I specified the Gmail address with from_addr and checked the operation, it worked without problems.
+Google account in advance → Apps that can access your account → Allow less secure apps: Disabled → Enabled When I specified the Gmail address with from_addr and checked the operation, it worked without problems.
 
 smtp_port: 587
 
