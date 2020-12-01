@@ -88,6 +88,17 @@ Edit `es_username` and `es_password` in `config/api.config.json` and `config/ela
 
 The praeco UI is served by an included nginx server (see Dockerfile). Configure it as you would any nginx project by editing the files in `nginx_config`. Then update your docker-compose.yml and add your certificate files (under webapp volumes). Another option is using a reverse proxy.
 
+#### How do I serve the praeco UI under a custom base path, i.e. `http://www.my-domain.com:8080/my-path/`
+
+Uncomment the declaration of the `VUE_APP_BASE_URL` environment variable in `docker-compose.yml` and define the path you want.
+```yaml
+    environment:
+      VUE_APP_BASE_URL: /my-path/
+```
+Uncomment the rewrite command in `nginx.config/default.conf` and define the same path as in teh environment variable above.
+```
+rewrite ^/my-path(/.*)$ $1 last;
+```
 #### How do I change the writeback index?
 
 Edit `config/elastalert.yaml` and `config/api.config.json` and change the writeback_index values.
