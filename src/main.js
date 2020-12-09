@@ -61,6 +61,7 @@ function startApp(config) {
 // First get the config from the server
 // In development this will be in /public and served by webpack
 // In prod it is linked into the docker container
+axios.defaults.baseURL = process.env.BASE_URL;
 axios
   .get('/praeco.config.json')
   .then(res => {
