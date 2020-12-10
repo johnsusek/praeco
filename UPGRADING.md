@@ -7,6 +7,10 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.5.1
+
+- New options for ServiceNow added.
+
 ## -> 1.5.0
 
 - New options for VictorOps added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#victorops for how to configure your `BaseRule.config`.
