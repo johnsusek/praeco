@@ -1,6 +1,6 @@
 {
   "name": "praeco",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -34,6 +34,7 @@
     "debounce": "1.2.0",
     "echarts": "4.9.0",
     "element-ui": "2.13.2",
+    "email-validator": "^2.0.4",
     "emoji-mart-vue": "2.6.6",
     "js-yaml": "3.14.0",
     "later": "1.2.0",

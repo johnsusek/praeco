@@ -97,7 +97,11 @@ export default {
           commit('query/UPDATE_TREE', config.__praeco_query_builder.query);
           commit('query/UPDATE_TYPE', 'tree');
         } else {
-          commit('query/UPDATE_MANUAL', config.filter[0].query.query_string.query);
+          try {
+            commit('query/UPDATE_MANUAL', config.filter[0].query.query_string.query);
+          } catch (error) {
+            console.error(error);
+          }
           commit('query/UPDATE_TYPE', 'manual');
         }
 
@@ -248,6 +252,17 @@ export default {
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
+
+        commit('alert/UPDATE_SERVICENOW_USERNAME', config.username);
+        commit('alert/UPDATE_SERVICENOW_PASSWORD', config.password);
+        commit('alert/UPDATE_SERVICENOW_REST_URL', config.servicenow_rest_url);
+        commit('alert/UPDATE_SERVICENOW_SHORT_DESCRIPTION', config.short_description);
+        commit('alert/UPDATE_SERVICENOW_COMMENTS', config.comments);
+        commit('alert/UPDATE_SERVICENOW_ASSIGNMENT_GROUP', config.assignment_group);
+        commit('alert/UPDATE_SERVICENOW_CATEGORY', config.category);
+        commit('alert/UPDATE_SERVICENOW_SUBCATEGORY', config.subcategory);
+        commit('alert/UPDATE_SERVICENOW_CMDB_CI', config.cmdb_ci);
+        commit('alert/UPDATE_SERVICENOW_CALLER_ID', config.caller_id);
 
         commit('alert/UPDATE_VICTOROPS_API_KEY', config.victorops_api_key);
         commit('alert/UPDATE_VICTOROPS_ROUTING_KEY', config.victorops_routing_key);
@@ -925,6 +940,51 @@ export default {
       return config;
     },
 
+    servicenow(state) {
+      let config = {};
+      if (state.alert.serviceNowUsername) {
+        config.username = state.alert.serviceNowUsername;
+      }
+
+      if (state.alert.serviceNowPassword) {
+        config.password = state.alert.serviceNowPassword;
+      }
+
+      if (state.alert.servicenowRestUrl) {
+        config.servicenow_rest_url = state.alert.servicenowRestUrl;
+      }
+
+      if (state.alert.servicenowShortDescription) {
+        config.short_description = state.alert.servicenowShortDescription;
+      }
+
+      if (state.alert.servicenowComments) {
+        config.comments = state.alert.servicenowComments;
+      }
+
+      if (state.alert.servicenowAssignmentGroup) {
+        config.assignment_group = state.alert.servicenowAssignmentGroup;
+      }
+
+      if (state.alert.servicenowCategory) {
+        config.category = state.alert.servicenowCategory;
+      }
+
+      if (state.alert.servicenowSubcategory) {
+        config.subcategory = state.alert.servicenowSubcategory;
+      }
+
+      if (state.alert.servicenowCmdbCi) {
+        config.cmdb_ci = state.alert.servicenowCmdbCi;
+      }
+
+      if (state.alert.servicenowCallerId) {
+        config.caller_id = state.alert.servicenowCallerId;
+      }
+
+      return config;
+    },
+
     victorops(state) {
       let config = {};
       if (state.alert.victoropsApiKey) {
@@ -1170,6 +1230,10 @@ export default {
         config = { ...config, ...getters.victorops };
       }
 
+      if (state.alert.alert.includes('servicenow')) {
+        config = { ...config, ...getters.servicenow };
+      }
+
       if (state.alert.alert.includes('stomp')) {
         config = { ...config, ...getters.stomp };
       }
@@ -1187,6 +1251,7 @@ export default {
           || state.alert.alert.includes('ms_teams')
           || state.alert.alert.includes('telegram')
           || state.alert.alert.includes('jira')
+          || state.alert.alert.includes('servicenow')
           || state.alert.alert.includes('googlechat')
           || state.alert.alert.includes('pagertree')
           || state.alert.alert.includes('sns')

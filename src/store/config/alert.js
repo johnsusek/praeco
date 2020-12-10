@@ -55,6 +55,17 @@ function initialState() {
     jiraIssueType: '',
     jiraComponents: '',
 
+    serviceNowUsername: '',
+    serviceNowPassword: '',
+    servicenowRestUrl: '',
+    servicenowShortDescription: '',
+    servicenowComments: '',
+    servicenowAssignmentGroup: '',
+    servicenowCategory: '',
+    servicenowSubcategory: '',
+    servicenowCmdbCi: '',
+    servicenowCallerId: '',
+
     victoropsApiKey: '',
     victoropsRoutingKey: '',
     victoropsMessageType: '',
@@ -271,6 +282,46 @@ export default {
 
     UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
       state.jiraComponents = jiraComponents;
+    },
+
+    UPDATE_SERVICENOW_USERNAME(state, serviceNowUsername) {
+      state.serviceNowUsername = serviceNowUsername;
+    },
+
+    UPDATE_SERVICENOW_PASSWORD(state, serviceNowPassword) {
+      state.serviceNowPassword = serviceNowPassword;
+    },
+
+    UPDATE_SERVICENOW_REST_URL(state, servicenowRestUrl) {
+      state.servicenowRestUrl = servicenowRestUrl;
+    },
+
+    UPDATE_SERVICENOW_SHORT_DESCRIPTION(state, servicenowShortDescription) {
+      state.servicenowShortDescription = servicenowShortDescription;
+    },
+
+    UPDATE_SERVICENOW_COMMENTS(state, servicenowComments) {
+      state.servicenowComments = servicenowComments;
+    },
+
+    UPDATE_SERVICENOW_ASSIGNMENT_GROUP(state, servicenowAssignmentGroup) {
+      state.servicenowAssignmentGroup = servicenowAssignmentGroup;
+    },
+
+    UPDATE_SERVICENOW_CATEGORY(state, servicenowCategory) {
+      state.servicenowCategory = servicenowCategory;
+    },
+
+    UPDATE_SERVICENOW_SUBCATEGORY(state, servicenowSubcategory) {
+      state.servicenowSubcategory = servicenowSubcategory;
+    },
+
+    UPDATE_SERVICENOW_CMDB_CI(state, servicenowCmdbCi) {
+      state.servicenowCmdbCi = servicenowCmdbCi;
+    },
+
+    UPDATE_SERVICENOW_CALLER_ID(state, servicenowCallerId) {
+      state.servicenowCallerId = servicenowCallerId;
     },
 
     UPDATE_VICTOROPS_API_KEY(state, victoropsApiKey) {

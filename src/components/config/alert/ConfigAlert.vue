@@ -95,6 +95,9 @@
         <el-checkbox id="destinationVictorOps" label="victorops" border>
           VictorOps
         </el-checkbox>
+        <el-checkbox id="destinationServiceNow" label="servicenow" border>
+          ServiceNow
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -561,11 +564,69 @@
           <label>Human-readable name of alerting entity to summarize incidents without affecting the life-cycle workflow.</label>
         </praeco-form-item>
       </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('servicenow')">
+        <template slot="label">
+          ServiceNow
+        </template>
+
+        <praeco-form-item label="ServiceNow Username" prop="serviceNowUsername" required>
+          <el-input id="serviceNowUsername" v-model="serviceNowUsername" :disabled="viewOnly" />
+          <label>The ServiceNow Username to access the api.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow Password" prop="serviceNowPassword" required>
+          <el-input id="serviceNowPassword" v-model="serviceNowPassword" :disabled="viewOnly" />
+          <label>The ServiceNow password to access the api.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow RestUrl" prop="servicenowRestUrl" required>
+          <el-input id="servicenowRestUrl" v-model="servicenowRestUrl" :disabled="viewOnly" />
+          <label>The ServiceNow RestApi url.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow ShortDescription" prop="servicenowShortDescription" required>
+          <el-input id="servicenowShortDescription" v-model="servicenowShortDescription" :disabled="viewOnly" />
+          <label>The ServiceNow password to access the api.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow Comments" prop="servicenowComments" required>
+          <el-input id="servicenowComments" v-model="servicenowComments" :disabled="viewOnly" />
+          <label>Comments to be attached to the incident, this is the equivilant of work notes.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow AssignmentGroup" prop="servicenowAssignmentGroup" required>
+          <el-input id="servicenowAssignmentGroup" v-model="servicenowAssignmentGroup" :disabled="viewOnly" />
+          <label>The group to assign the incident to.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow Category" prop="servicenowCategory" required>
+          <el-input id="servicenowCategory" v-model="servicenowCategory" :disabled="viewOnly" />
+          <label>The category to attach the incident to, use an existing category.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow Subcategory" prop="servicenowSubcategory" required>
+          <el-input id="servicenowSubcategory" v-model="servicenowSubcategory" :disabled="viewOnly" />
+          <label>The subcategory to attach the incident to, use an existing subcategory.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow CmdbCi" prop="servicenowCmdbCi" required>
+          <el-input id="servicenowCmdbCi" v-model="servicenowCmdbCi" :disabled="viewOnly" />
+          <label>The configuration item to attach the incident to.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="ServiceNow CallerId" prop="servicenowCallerId" required>
+          <el-input id="servicenowCallerId" v-model="servicenowCallerId" :disabled="viewOnly" />
+          <label>The caller id (email address) of the user that created the incident.</label>
+        </praeco-form-item>
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
 
 <script>
+
+import * as EmailValidator from 'email-validator';
 import validUrl from 'valid-url';
 import { Picker } from 'emoji-mart-vue';
 import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
@@ -596,7 +657,7 @@ let validateMSTeamsDestination = (rule, value, callback) => {
 };
 
 let validateEmail = (rule, value, callback) => {
-  if (!value || value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
+  if (!value || EmailValidator.validate(value)) {
     callback();
   } else {
     callback(new Error('Invalid email address'));
@@ -628,7 +689,7 @@ let validateEmailCommaSeparated = (rule, value, callback) => {
   emails.forEach(email => {
     if (
       email
-      && !email.trim().match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)
+      && !EmailValidator.validate(email.trim())
     ) {
       return callback(new Error('Invalid email address'));
     }
@@ -1062,6 +1123,126 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_JIRA_COMPONENTS',
+          value
+        );
+      }
+    },
+
+    serviceNowUsername: {
+      get() {
+        return this.$store.state.config.alert.serviceNowUsername;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_USERNAME',
+          value
+        );
+      }
+    },
+
+    serviceNowPassword: {
+      get() {
+        return this.$store.state.config.alert.serviceNowPassword;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_PASSWORD',
+          value
+        );
+      }
+    },
+
+    servicenowRestUrl: {
+      get() {
+        return this.$store.state.config.alert.servicenowRestUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_REST_URL',
+          value
+        );
+      }
+    },
+
+    servicenowShortDescription: {
+      get() {
+        return this.$store.state.config.alert.servicenowShortDescription;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_SHORT_DESCRIPTION',
+          value
+        );
+      }
+    },
+
+    servicenowComments: {
+      get() {
+        return this.$store.state.config.alert.servicenowComments;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_COMMENTS',
+          value
+        );
+      }
+    },
+
+    servicenowAssignmentGroup: {
+      get() {
+        return this.$store.state.config.alert.servicenowAssignmentGroup;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_ASSIGNMENT_GROUP',
+          value
+        );
+      }
+    },
+
+    servicenowCategory: {
+      get() {
+        return this.$store.state.config.alert.servicenowCategory;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_CATEGORY',
+          value
+        );
+      }
+    },
+
+    servicenowSubcategory: {
+      get() {
+        return this.$store.state.config.alert.servicenowSubcategory;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_SUBCATEGORY',
+          value
+        );
+      }
+    },
+
+    servicenowCmdbCi: {
+      get() {
+        return this.$store.state.config.alert.servicenowCmdbCi;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_CMDB_CI',
+          value
+        );
+      }
+    },
+
+    servicenowCallerId: {
+      get() {
+        return this.$store.state.config.alert.servicenowCallerId;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_CALLER_ID',
           value
         );
       }
