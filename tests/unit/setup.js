@@ -23,7 +23,7 @@ export function mountComponent(comp, opts = {}) {
   localVue.use(Vuex);
 
   return mount(comp, {
-    attachToDocument: false,
+    attachTo: false,
     sync: false,
     localVue,
     router,
@@ -39,7 +39,7 @@ export function shallowMountComponent(comp, opts = {}) {
   localVue.use(Vuex);
 
   return shallowMount(comp, {
-    attachToDocument: false,
+    attachTo: false,
     sync: false,
     localVue,
     router,
