@@ -3,6 +3,7 @@
 ## Elastalert (if neccessary)
 
 - Stash all changes in elastalert-server project
+- `nvm use "$(cat .nvmrc)"`
 - `npm run precommit`
 - `make build v=master`
 - `docker tag <image> praecoapp/elastalert-server:<yyyymmdd>`
@@ -10,6 +11,7 @@
 
 ## Praeco
 
+- `nvm use "$(cat .nvmrc)"`
 - `npm run test:unit`
 - Bump version number in package.json, if not already done
 - Push to master
