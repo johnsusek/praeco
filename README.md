@@ -74,6 +74,12 @@ The following config settings are available in praeco.config.json:
 
 ## FAQ
 
+#### [Third Party Tools] ElastAlert Server & Praeco Helm Chart
+
+[ElastAlert Server Helm Chart](https://github.com/daichi703n/elastalert-helm)<br>
+[Praeco Helm Chart](https://github.com/daichi703n/praeco-helm)<br>
+[Installing Praeco (ElastAlert GUI) into Kubernetes with Helm](https://en-designetwork.daichi703n.com/entry/2020/02/24/praeco-helm-kubernetes)
+
 #### How do I connect to elasticsearch using SSL?
 
 Edit `config/api.config.json` and set/add `"es_ssl": true`.<br>
