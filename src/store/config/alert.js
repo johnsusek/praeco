@@ -51,6 +51,12 @@ function initialState() {
     command: [],
     gitterMsgLevel: 'error',
 
+    //time_window_change
+    useTimeWindow: false,
+    timeWindowStartTime: '',
+    timeWindowEndTime: '',
+    timeWindowDropIf: '',
+
     jiraProject: '',
     jiraIssueType: '',
     jiraComponents: '',
@@ -270,6 +276,20 @@ export default {
 
     UPDATE_GITTER_MSG_LEVEL(state, gitterMsgLevel) {
       state.gitterMsgLevel = gitterMsgLevel;
+    },
+
+    //time_window_change
+    UPDATE_USE_TIME_WINDOW(state, useTimeWindow) {
+      state.useTimeWindow = useTimeWindow;
+    },
+    UPDATE_TIME_WINDOW_START_TIME(state, timeWindowStartTime) {
+      state.timeWindowStartTime = timeWindowStartTime;
+    },
+    UPDATE_TIME_WINDOW_END_TIME(state, timeWindowEndTime) {
+      state.timeWindowEndTime = timeWindowEndTime;
+    },
+    UPDATE_TIME_WINDOW_DROP_IF(state, timeWindowDropIf) {
+      state.timeWindowDropIf = timeWindowDropIf;
     },
 
     UPDATE_JIRA_PROJECT(state, jiraProject) {
