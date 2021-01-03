@@ -158,7 +158,7 @@ export default {
         this.$router.push({
           path: `/templates/${newPath}`,
           query: { refreshTree: true }
-        });
+        }).catch(() => {});
       } else {
         this.$message.warning(`Could not move the template. Perhaps a rule
                                with the same name already exists at this location?`);
@@ -186,7 +186,7 @@ export default {
         this.$router.push({
           path: `/templates/${res}`,
           query: { refreshTree: true }
-        });
+        }).catch(() => {});
       } else {
         this.$message.warning(`Could not rename the template. Perhaps a rule 
                                already exists with that name?`);
@@ -216,7 +216,7 @@ export default {
         this.$router.push({
           path: `/templates/${encodeURIComponent(path)}`,
           query: { refreshTree: true }
-        });
+        }).catch(() => {});
       } else {
         this.$message.warning('Could not duplicate the template.');
       }
@@ -252,7 +252,7 @@ export default {
           type: 'success',
           message: 'Template deleted'
         });
-        this.$router.push({ path: '/templates', query: { refreshTree: true } });
+        this.$router.push({ path: '/templates', query: { refreshTree: true } }).catch(() => {});
       } else {
         this.$message.warning('Could not delete the template.');
       }
