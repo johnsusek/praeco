@@ -51,7 +51,7 @@ function initialState() {
     command: [],
     gitterMsgLevel: 'error',
 
-    //time_window_change
+    // time_window_change
     useTimeWindow: false,
     timeWindowStartTime: '',
     timeWindowEndTime: '',
@@ -278,7 +278,7 @@ export default {
       state.gitterMsgLevel = gitterMsgLevel;
     },
 
-    //time_window_change
+    // time_window_change
     UPDATE_USE_TIME_WINDOW(state, useTimeWindow) {
       state.useTimeWindow = useTimeWindow;
     },

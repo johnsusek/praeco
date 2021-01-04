@@ -249,7 +249,7 @@ export default {
 
         commit('alert/UPDATE_GITTER_MSG_LEVEL', config.gitter_msg_level);
 
-        //time_window_change
+        // time_window_change
         if (config.start_time && config.end_time && config.drop_if) {
           commit('alert/UPDATE_USE_TIME_WINDOW', true);
           commit('alert/UPDATE_TIME_WINDOW_START_TIME', config.start_time);
@@ -1198,7 +1198,7 @@ export default {
         config.realert = state.alert.realert;
       }
 
-      //time_window_change
+      // time_window_change
       const existingMatchEnhancements = config.match_enhancements ?? [];
       const timeWindowMatchEnhancements = getters.timeWindow.match_enhancements ?? [];
       config = {
