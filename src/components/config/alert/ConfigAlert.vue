@@ -1116,7 +1116,7 @@ export default {
       }
     },
 
-    <!-- time_window_change  -->
+    // time_window_change
     useTimeWindow: {
       get() {
         return this.$store.state.config.alert.useTimeWindow;
@@ -1578,7 +1578,7 @@ export default {
   },
 
   methods: {
-    <!-- time_window_change  -->
+    // time_window_change
     changeTimeWindow(val) {
     },
 
