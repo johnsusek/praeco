@@ -314,13 +314,38 @@ NOTE: If you're just interested in developing Praeco UI features locally (and no
 First, you need a local copy of the elastalert api server running, which itself needs elastalert. Start by cloning the neccessary repos
 
 ```
-cd
-git clone https://github.com/Yelp/elastalert.git
-git clone https://github.com/johnsusek/elastalert-server.git
-git clone https://github.com/johnsusek/praeco.git
+$ cd
+$ git clone https://github.com/Yelp/elastalert.git
+$ git clone https://github.com/johnsusek/elastalert-server.git
+$ git clone https://github.com/johnsusek/praeco.git
 ```
 
 ### Setting up elastalert
+
+with hundreds of open PRs and over 1000 open issues.
+
+**Doesn't work due to a bug**
+
+Line Notify, Zabbix, PagerTree, Stomp
+
+**Main bugs**
+
+- SNS<br>
+- Email(smtp_host is not work smtp.gmail.com and smtp.office365.com)<br>
+- Jira Custom Field has some items that don't work properly<br>
+- tzlocal 3.0b1 not work apscheduler(Adding 'tzlocal<3.0', to setup.py)
+- docker test error<br>
+- slack ssl verification<br>
+- Python 3.9 not work(Change Library blist to sortedcontainers)<br>
+
+**Python Support version**
+
+3.6, 3.7, 3.8<br>
+Not Support 3.9(blist not work Python 3.9)
+
+**Elasticsearch Support version**
+
+6.x, 7.x
 
 Configure the elastalert `config.yaml` with:
 - Your `es_host`
