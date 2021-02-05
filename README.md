@@ -328,14 +328,14 @@ Configure the elastalert `config.yaml` with:
 - Change the rules_folder to `rules`
 
 ```
-cd ~/elastalert
-mkdir -p rules rule_templates
-chmod -R 777 rules rule_templates
-touch rules/BaseRule.config
-pip install "setuptools>=11.3"
-python setup.py install
-cp config.yaml.example config.yaml
-vi config.yaml
+$ cd ~/elastalert
+$ mkdir -p rules rule_templates
+$ chmod -R 777 rules rule_templates
+$ touch rules/BaseRule.config
+$ pip install "setuptools>=11.3"
+$ python setup.py install
+$ cp config.yaml.example config.yaml
+$ vi config.yaml
 ```
 
 ### Setting up the API server
@@ -346,10 +346,27 @@ Configure the api server `config.json` with:
 - The same `writeback_index` from the config.yaml
 
 ```
-cd ~/elastalert-server
-vi config/config.json
-npm install
-npm run start
+# nvm install
+# https://github.com/nvm-sh/nvm#install--update-script
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+$ vi ~/.bash_profile
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+$ source ~/.bash_profile
+
+# npm & node install
+$ npm install -g npm@7.2.0
+$ nvm install 14.15.0
+```
+
+```
+$ cd ~/elastalert-server
+$ vi config/config.json
+$ nvm use "$(cat .nvmrc)"
+$ npm install
+$ npm run start
 ```
 
 You should see this line if it started successfully:
@@ -362,10 +379,28 @@ INFO elastalert-server: Server:  Server started
 Finally, run praeco:
 
 ```
-cd ~/praeco
-npm install
-export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
-npm run serve
+# No need to implement if the environment is the same as elastalert-server
+# nvm install
+# https://github.com/nvm-sh/nvm#install--update-script
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+$ vi ~/.bash_profile
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+$ source ~/.bash_profile
+
+# npm & node install
+$ npm install -g npm@7.2.0
+$ nvm install 14.15.0
+```
+
+```
+$ cd ~/praeco
+$ nvm use "$(cat .nvmrc)"
+$ npm install
+$ export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
+$ npm run serve
 ```
 
 You should now see the UI running at [http://localhost:8080](http://localhost:8080).
