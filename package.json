@@ -36,7 +36,7 @@
     "element-ui": "2.14.1",
     "email-validator": "^2.0.4",
     "emoji-mart-vue": "2.6.6",
-    "js-yaml": "3.14.1",
+    "js-yaml": "4.0.0",
     "later": "1.2.0",
     "lodash.clonedeep": "4.5.0",
     "lodash.get": "4.4.2",

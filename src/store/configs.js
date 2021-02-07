@@ -45,7 +45,7 @@ export default {
     FETCHED_CONFIG(state, { path, config, type, isYaml = true }) {
       /* eslint-enable */
       try {
-        let conf = isYaml ? yaml.safeLoad(config, 'utf8') : config;
+        let conf = isYaml ? yaml.load(config, 'utf8') : config;
 
         if (isYaml) {
           // The config from the server has yaml formatted alert subject/text
@@ -236,7 +236,7 @@ export default {
     async createConfigFinal({ commit, state }, { type, path, conf }) {
       try {
         let res = await axios.post(`/api/${type}/${path}`, {
-          yaml: yaml.safeDump(conf)
+          yaml: yaml.dump(conf)
         });
 
         if (!res.data.created) {
@@ -309,7 +309,7 @@ export default {
 
       try {
         let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
-          yaml: yaml.safeDump(conf)
+          yaml: yaml.dump(conf)
         });
 
         if (res.data.created) {
@@ -332,7 +332,7 @@ export default {
 
       try {
         let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
-          yaml: yaml.safeDump(conf)
+          yaml: yaml.dump(conf)
         });
 
         if (res.data.created) {

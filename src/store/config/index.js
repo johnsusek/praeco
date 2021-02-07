@@ -1296,6 +1296,6 @@ export default {
       return conf;
     },
 
-    yaml: (state, getters) => forTest => yaml.safeDump(getters.config(forTest))
+    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest))
   }
 };
