@@ -6,6 +6,6 @@ module.exports = {
   },
   rules: {
     strict: 'off',
-    'max-len': ['error', { ignoreStrings: true, code: 120 }]
+    'max-len': 'off'
   }
 };
