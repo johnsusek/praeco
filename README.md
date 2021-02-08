@@ -326,7 +326,7 @@ with hundreds of open PRs and over 1000 open issues.
 
 **Doesn't work due to a bug**
 
-Line Notify, Zabbix, PagerTree, Stomp
+Line Notify, Zabbix, PagerTree, Stomp, SNS
 
 **Main bugs**
 
