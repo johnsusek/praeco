@@ -223,7 +223,7 @@
         </el-form-item>
 
         <el-form-item label="Color" prop="ms_teamsThemeColor" required>
-          <el-input id="ms_teamsThemeColor" v-model="ms_teamsThemeColor" :disabled="viewOnly" />
+          <el-input id="ms_teamsThemeColor" v-model="ms_teamsThemeColor" type="color" :disabled="viewOnly" />
           <label>
             HTML color name in form of <b>#RRGGBB</b>
           </label>
