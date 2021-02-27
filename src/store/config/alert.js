@@ -48,12 +48,22 @@ function initialState() {
     zbxKey: '',
 
     linenotifyAccessToken: '',
+
     command: [],
+
     gitterMsgLevel: 'error',
 
     jiraProject: '',
     jiraIssueType: '',
     jiraComponents: '',
+
+    chatworkApikey: '',
+    chatworkRoomId: '',
+
+    discordWebhookUrl: '',
+    discordEmojiTitle: '',
+    discordEmbedFooter: '',
+    discordEmbedIconUrl: '',
 
     serviceNowUsername: '',
     serviceNowPassword: '',
@@ -190,6 +200,30 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_CHATWORK_API_KEY(state, chatworkApikey) {
+      state.chatworkApikey = chatworkApikey;
+    },
+
+    UPDATE_CHATWORK_ROOM_ID(state, chatworkRoomId) {
+      state.chatworkRoomId = chatworkRoomId;
+    },
+
+    UPDATE_DISCORD_WEBHOOK_URL(state, discordWebhookUrl) {
+      state.discordWebhookUrl = discordWebhookUrl;
+    },
+
+    UPDATE_DISCORD_EMOJI_TITLE(state, discordEmojiTitle) {
+      state.discordEmojiTitle = discordEmojiTitle;
+    },
+
+    UPDATE_DISCORD_EMBED_FOOTER(state, discordEmbedFooter) {
+      state.discordEmbedFooter = discordEmbedFooter;
+    },
+
+    UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
+      state.discordEmbedIconUrl = discordEmbedIconUrl;
     },
 
     UPDATE_EXOTEL_ACCOUNT_SID(state, exotelAccountSid) {

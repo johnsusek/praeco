@@ -214,6 +214,14 @@ export default {
 
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
+        commit('alert/UPDATE_CHATWORK_API_KEY', config.chatwork_apikey);
+        commit('alert/UPDATE_CHATWORK_ROOM_ID', config.chatwork_room_id);
+
+        commit('alert/UPDATE_DISCORD_WEBHOOK_URL', config.discord_webhook_url);
+        commit('alert/UPDATE_DISCORD_EMOJI_TITLE', config.discord_emoji_title);
+        commit('alert/UPDATE_DISCORD_EMBED_FOOTER', config.discord_embed_footer);
+        commit('alert/UPDATE_DISCORD_EMBED_ICON_URL', config.discord_embed_icon_url);
+
         commit('alert/UPDATE_EXOTEL_ACCOUNT_SID', config.exotel_account_sid);
         commit('alert/UPDATE_EXOTEL_AUTH_TOKEN', config.exotel_auth_token);
         commit('alert/UPDATE_EXOTEL_TO_NUMBER', config.exotel_to_number);
@@ -797,6 +805,40 @@ export default {
       return config;
     },
 
+    chatwork(state) {
+      let config = {};
+      if (state.alert.chatworkApikey) {
+        config.chatwork_apikey = state.alert.chatworkApikey;
+      }
+
+      if (state.alert.chatworkRoomId) {
+        config.chatwork_room_id = state.alert.chatworkRoomId;
+      }
+
+      return config;
+    },
+
+    discord(state) {
+      let config = {};
+      if (state.alert.discordWebhookUrl) {
+        config.discord_webhook_url = state.alert.discordWebhookUrl;
+      }
+
+      if (state.alert.discordEmojiTitle) {
+        config.discord_emoji_title = state.alert.discordEmojiTitle;
+      }
+
+      if (state.alert.discordEmbedFooter) {
+        config.discord_embed_footer = state.alert.discordEmbedFooter;
+      }
+
+      if (state.alert.discordEmbedIconUrl) {
+        config.discord_embed_icon_url = state.alert.discordEmbedIconUrl;
+      }
+
+      return config;
+    },
+
     exotel(state) {
       let config = {};
 
@@ -1246,6 +1288,18 @@ export default {
         config = { ...config, ...getters.mattermost };
       }
 
+      if (state.alert.alert.includes('chatwork')) {
+        config = { ...config, ...getters.chatwork };
+      }
+
+      if (state.alert.alert.includes('discord')) {
+        config = { ...config, ...getters.discord };
+      }
+
+      if (state.alert.alert.includes('ms_teams')) {
+        config = { ...config, ...getters.ms_teams };
+      }
+
       if (state.alert.alert.includes('email')
           || state.alert.alert.includes('slack')
           || state.alert.alert.includes('ms_teams')
@@ -1256,12 +1310,10 @@ export default {
           || state.alert.alert.includes('pagertree')
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('mattermost')
+          || state.alert.alert.includes('chatwork')
+          || state.alert.alert.includes('discord')
           || state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.subjectBody };
-      }
-
-      if (state.alert.alert.includes('ms_teams')) {
-        config = { ...config, ...getters.ms_teams };
       }
 
       if (state.match.type === 'blacklist') {
@@ -1296,6 +1348,6 @@ export default {
       return conf;
     },
 
-    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest))
+    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest), { quotingType: '"' })
   }
 };

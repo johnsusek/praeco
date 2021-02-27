@@ -7,6 +7,20 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.6.0
+
+- Change yaml output settings. single quotes to double quotes.
+
+- New options for Chatwork added.
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#chatwork
+
+- New options for Discord added.
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#discord
+`BaseRule.config`.
+```yaml
+discord_embed_color: 0xE24D42
+```
+
 ## -> 1.5.1
 
 - New options for ServiceNow added.

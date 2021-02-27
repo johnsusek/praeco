@@ -98,13 +98,20 @@
         <el-checkbox id="destinationServiceNow" label="servicenow" border>
           ServiceNow
         </el-checkbox>
+        <el-checkbox id="destinationChatwork" label="chatwork" border>
+          Chatwork
+        </el-checkbox>
+        <el-checkbox id="destinationDiscord" label="discord" border>
+          Discord
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
-        alert.includes('sns') || alert.includes('pagertree') || alert.includes('gitter') || alert.includes('googlechat')">
+        alert.includes('sns') || alert.includes('pagertree') || alert.includes('gitter') || alert.includes('googlechat') ||
+        alert.includes('chatwork') || alert.includes('discord')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -620,6 +627,55 @@
           <label>The caller id (email address) of the user that created the incident.</label>
         </praeco-form-item>
       </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('chatwork')">
+        <template slot="label">
+          Chatwork
+        </template>
+
+        <praeco-form-item label="Chatwork Apikey" prop="chatworkApikey" required>
+          <el-input id="chatworkApikey" v-model="chatworkApikey" :disabled="viewOnly" />
+          <label>ChatWork API KEY.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Chatwork RoomId" prop="chatworkRoomId" required>
+          <el-input id="chatworkRoomId" v-model="chatworkRoomId" :disabled="viewOnly" />
+          <label>The ID of the room you are talking to in Chatwork. How to find the room ID is the part of the number after "rid" at the end of the URL of the browser.</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('discord')">
+        <template slot="label">
+          Discord
+        </template>
+
+        <praeco-form-item label="Discord WebhookUrl" prop="discordWebhookUrl" required>
+          <el-input id="discordWebhookUrl" v-model="discordWebhookUrl" :disabled="viewOnly" />
+          <label>The webhook URL.</label>
+        </praeco-form-item>
+
+        <praeco-form-item
+          v-if="!(viewOnly && !discordEmojiTitle)"
+          :class="{ 'disabled': viewOnly }"
+          label="Icon"
+          prop="discordEmojiTitle">
+          <picker
+            :emoji="discordEmojiTitle || 'arrow_up'"
+            :title="discordEmojiTitle || 'Pick your icon...'"
+            color="#189acc"
+            @select="addDiscordEmoji" />
+        </praeco-form-item>
+
+        <praeco-form-item label="Discord Embed Footer" prop="discordEmbedFooter">
+          <el-input id="discordEmbedFooter" v-model="discordEmbedFooter" :disabled="viewOnly" />
+          <label>embed footer.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Discord Embed IconUrl" prop="discordEmbedIconUrl">
+          <el-input id="discordEmbedIconUrl" v-model="discordEmbedIconUrl" :disabled="viewOnly" />
+          <label>You can provide icon_url to use custom image. Provide absolute address of the pciture.(exampmle : http://domain/picure.png)</label>
+        </praeco-form-item>
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -649,11 +705,6 @@ let validateMattermostDestination = (rule, value, callback) => {
   } else {
     callback();
   }
-};
-
-let validateMSTeamsDestination = (rule, value, callback) => {
-  console.log(value);
-  callback(); // FIXME
 };
 
 let validateEmail = (rule, value, callback) => {
@@ -770,6 +821,12 @@ export default {
           }
         ],
         pagertreeIntegrationUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        discordWebhookUrl: [
           {
             validator: validateUrl,
             trigger: ['change', 'blur']
@@ -1123,6 +1180,77 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_JIRA_COMPONENTS',
+          value
+        );
+      }
+    },
+
+    discordWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.discordWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_WEBHOOK_URL',
+          value
+        );
+      }
+    },
+
+    discordEmojiTitle: {
+      get() {
+        return this.$store.state.config.alert.discordEmojiTitle;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_EMOJI_TITLE',
+          value
+        );
+      }
+    },
+
+    discordEmbedFooter: {
+      get() {
+        return this.$store.state.config.alert.discordEmbedFooter;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_EMBED_FOOTER',
+          value
+        );
+      }
+    },
+
+    discordEmbedIconUrl: {
+      get() {
+        return this.$store.state.config.alert.discordEmbedIconUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_EMBED_ICON_URL',
+          value
+        );
+      }
+    },
+
+    chatworkApikey: {
+      get() {
+        return this.$store.state.config.alert.chatworkApikey;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_CHATWORK_API_KEY',
+          value
+        );
+      }
+    },
+    chatworkRoomId: {
+      get() {
+        return this.$store.state.config.alert.chatworkRoomId;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_CHATWORK_ROOM_ID',
           value
         );
       }
@@ -1513,6 +1641,10 @@ export default {
   methods: {
     addEmoji(value) {
       this.slackEmojiOverride = value.colons;
+    },
+
+    addDiscordEmoji(value) {
+      this.discordEmojiTitle = value.colons;
     },
 
     changeSns() {

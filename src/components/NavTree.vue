@@ -14,7 +14,7 @@
     @click.native="handleClick">
     <label
       slot="option-label"
-      slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
+      slot-scope="{ node, shouldShowCount, count, labelClassName }"
       :class="labelClassName">
       <span v-if="node.children !== undefined">
         <icon :icon="node.isExpanded ? 'folder-open' : 'folder'" />
