@@ -11,6 +11,14 @@ function initialState() {
     aggregationKey: '',
     summaryTableFields: [],
 
+    generateKibanaDiscoverUrl: false,
+    kibanaDiscoverAppUrl: '',
+    kibanaDiscoverVersion: '',
+    kibanaDiscoverIndexPatternId: '',
+    kibanaDiscoverColumns: [],
+    kibanaDiscoverFromTimedelta: { minutes: 10 },
+    kibanaDiscoverToTimedelta: { minutes: 10 },
+
     subject: '',
     body: '',
     bodyType: 'alert_text_only',
@@ -19,6 +27,9 @@ function initialState() {
     slackUsernameOverride: 'Praeco',
     slackEmojiOverride: '',
     slackMsgColor: 'danger',
+    slackAttachKibanaDiscoverUrl: false,
+    slackKibanaDiscoverColor: '#ec4b98',
+    slackKibanaDiscoverTitle: 'Discover in Kibana',
 
     ms_teamsWebhookUrl: '',
     ms_teamsThemeColor: '#ff0000',
@@ -438,12 +449,69 @@ export default {
       state.slackMsgColor = slackMsgColor;
     },
 
+    UPDATE_SLACK_ATTACH_KIBANA_DISCOVER_URL(state, slackAttachKibanaDiscoverUrl) {
+      state.slackAttachKibanaDiscoverUrl = slackAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_SLACK_KIBANA_DISCOVER_COLOR(state, slackKibanaDiscoverColor) {
+      state.slackKibanaDiscoverColor = slackKibanaDiscoverColor;
+    },
+
+    UPDATE_SLACK_KIBANA_DISCOVER_TITLE(state, slackKibanaDiscoverTitle) {
+      state.slackKibanaDiscoverTitle = slackKibanaDiscoverTitle;
+    },
+
     UPDATE_MS_TEAMS_WEBHOOK_URL(state, ms_teamsWebhookUrl) {
       state.ms_teamsWebhookUrl = ms_teamsWebhookUrl;
     },
 
     UPDATE_MS_TEAMS_THEME_COLOR(state, ms_teamsThemeColor) {
       state.ms_teamsThemeColor = ms_teamsThemeColor;
+    },
+
+    UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
+      state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
+    },
+
+    UPDATE_KIBANA_DISCOVER_APP_URL(state, kibanaDiscoverAppUrl) {
+      state.kibanaDiscoverAppUrl = kibanaDiscoverAppUrl;
+    },
+
+    UPDATE_KIBANA_DISCOVER_VERSION(state, kibanaDiscoverVersion) {
+      state.kibanaDiscoverVersion = kibanaDiscoverVersion;
+    },
+
+    UPDATE_KIBANA_DISCOVER_INDEX_PATTERN_ID(state, kibanaDiscoverIndexPatternId) {
+      state.kibanaDiscoverIndexPatternId = kibanaDiscoverIndexPatternId;
+    },
+
+    UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA(state, kibanaDiscoverFromTimedelta) {
+      state.kibanaDiscoverFromTimedelta = kibanaDiscoverFromTimedelta;
+    },
+
+    UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA(state, kibanaDiscoverToTimedelta) {
+      state.kibanaDiscoverToTimedelta = kibanaDiscoverToTimedelta;
+    },
+
+    UPDATE_KIBANA_DISCOVER_COLUMNS(state, kibanaDiscoverColumns) {
+      state.kibanaDiscoverColumns = kibanaDiscoverColumns;
+    },
+
+    ADD_KIBANA_DISCOVER_COLUMNS_ENTRY(state) {
+      state.kibanaDiscoverColumns.push('');
+    },
+
+    ADD_KIBANA_DISCOVER_COLUMNS_ENTRY_VALUE(state, value) {
+      state.kibanaDiscoverColumns.push(value);
+    },
+
+    REMOVE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, entry) {
+      state.kibanaDiscoverColumns = state.kibanaDiscoverColumns.filter(b => b !== entry);
+    },
+
+    UPDATE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, { entry, index }) {
+      if (!state.kibanaDiscoverColumns) return;
+      state.kibanaDiscoverColumns[index] = entry;
     },
 
     UPDATE_REALERT(state, realert) {
