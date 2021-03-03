@@ -142,7 +142,6 @@ export default {
 
   data() {
     return {
-      // TODO: enableKibanaDiscover: false,
       popKibanaDiscoverColumnsVisible: false,
       popKibanaDiscoverColumnsValid: true,
       kibanaVersionOptions: [{
@@ -277,12 +276,6 @@ export default {
 
   mounted() {
     this.generateKibanaDiscoverUrl = this.$store.state.config.alert.generateKibanaDiscoverUrl;
-    // TODO:
-    /*
-    if (this.kibanaDiscoverAppUrl && this.kibanaDiscoverVersion && this.kibanaDiscoverIndexPatternId) {
-      this.enableKibanaDiscover = true;
-    }
-    */
 
     this.$nextTick(() => {
       setTimeout(() => {
