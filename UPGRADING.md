@@ -25,6 +25,14 @@ hive_connection is set in BaseRule.config.
 ```
 ## -> 1.6.0
 
+- kibana discover support
+  - kibana 5.6, 6.0～6.8, 7.0～7.11 
+
+- Addition of items that can be set on the slack screen
+  - generate_kibana_discover_url
+  - slack_kibana_discover_color
+  - slack_kibana_discover_title
+
 - Change yaml output settings. single quotes to double quotes.
 
 - New options for Chatwork added.

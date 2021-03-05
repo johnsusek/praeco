@@ -35,6 +35,12 @@
       </el-col>
     </el-row>
 
+    <el-row class="m-s-sm">
+      <el-col :span="24">
+        <ConfigKibanaDiscover ref="kibanaDiscover" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
     <el-form-item
       v-if="!viewOnly"
       :label="`Destination${alert.length > 1 ? 's' : ''}`"
@@ -165,6 +171,25 @@
               Good
             </el-radio>
           </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="Slack Attach Kibana Discover Url" prop="slackAttachKibanaDiscoverUrl">
+          <el-switch
+            id="slackAttachKibanaDiscoverUrl"
+            v-model="slackAttachKibanaDiscoverUrl"
+            :disabled="viewOnly"
+            @change="changeSlackAttachKibanaDiscoverUrl" />
+        </el-form-item>
+
+        <el-form-item label="Slack Kibana Discover Color" prop="slackKibanaDiscoverColor">
+          <el-input
+            v-model="slackKibanaDiscoverColor" type="color" :disabled="viewOnly" />
+          <label>The color of the Kibana Discover url attachment.</label>
+        </el-form-item>
+
+        <el-form-item label="Slack Kibana Discover Title" prop="slackKibanaDiscoverTitle">
+          <el-input v-model="slackKibanaDiscoverTitle" :disabled="viewOnly" />
+          <label>The title of the Kibana Discover url attachment.</label>
         </el-form-item>
       </el-tab-pane>
 
@@ -1688,6 +1713,33 @@ export default {
       }
     },
 
+    slackAttachKibanaDiscoverUrl: {
+      get() {
+        return this.$store.state.config.alert.slackAttachKibanaDiscoverUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_ATTACH_KIBANA_DISCOVER_URL', value);
+      }
+    },
+
+    slackKibanaDiscoverColor: {
+      get() {
+        return this.$store.state.config.alert.slackKibanaDiscoverColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_KIBANA_DISCOVER_COLOR', value);
+      }
+    },
+
+    slackKibanaDiscoverTitle: {
+      get() {
+        return this.$store.state.config.alert.slackKibanaDiscoverTitle;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_KIBANA_DISCOVER_TITLE', value);
+      }
+    },
+
     mattermostChannelOverride: {
       get() {
         return this.$store.state.config.alert.mattermostChannelOverride;
@@ -1914,6 +1966,14 @@ export default {
     updateRealert(value) {
       this.realert = {};
       this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
+    },
+
+    changeSlackAttachKibanaDiscoverUrl(val) {
+      if (val) {
+        this.slackAttachKibanaDiscoverUrl = true;
+      } else {
+        this.slackAttachKibanaDiscoverUrl = false;
+      }
     }
   }
 };

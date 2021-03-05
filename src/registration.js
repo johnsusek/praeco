@@ -14,6 +14,7 @@ import ElastalertTimeView from '@/components/ElastalertTimeView';
 import ConfigQuery from '@/components/config/ConfigQuery.vue';
 import ConfigAggregation from '@/components/config/ConfigAggregation.vue';
 import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
+import ConfigKibanaDiscover from '@/components/config/ConfigKibanaDiscover.vue';
 import ConfigSettings from '@/components/config/ConfigSettings.vue';
 import ConfigCondition from '@/components/config/ConfigCondition.vue';
 
@@ -23,6 +24,7 @@ Vue.component('ConfigQuery', ConfigQuery);
 Vue.component('ConfigAlert', ConfigAlert);
 Vue.component('ConfigAggregation', ConfigAggregation);
 Vue.component('ConfigSettings', ConfigSettings);
+Vue.component('ConfigKibanaDiscover', ConfigKibanaDiscover);
 Vue.component('ConfigCondition', ConfigCondition);
 Vue.component('DefinitionTable', DefinitionTable);
 Vue.component('ElastalertTimePicker', ElastalertTimePicker);

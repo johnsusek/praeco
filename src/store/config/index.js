@@ -184,6 +184,18 @@ export default {
 
         commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
 
+        commit('alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', config.generate_kibana_discover_url);
+        commit('alert/UPDATE_KIBANA_DISCOVER_APP_URL', config.kibana_discover_app_url);
+        commit('alert/UPDATE_KIBANA_DISCOVER_VERSION', config.kibana_discover_version);
+        commit('alert/UPDATE_KIBANA_DISCOVER_INDEX_PATTERN_ID', config.kibana_discover_index_pattern_id);
+
+        if (config.kibana_discover_columns) {
+          config.kibana_discover_columns.forEach(entry => commit('alert/ADD_KIBANA_DISCOVER_COLUMNS_ENTRY_VALUE', entry));
+        }
+
+        commit('alert/UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA', config.kibana_discover_from_timedelta);
+        commit('alert/UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA', config.kibana_discover_to_timedelta);
+
         /* HTTP POST */
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
 
@@ -391,6 +403,18 @@ export default {
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
         commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
         commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
+        
+        if (config.slack_attach_kibana_discover_url) {
+          commit('alert/UPDATE_SLACK_ATTACH_KIBANA_DISCOVER_URL', config.slack_attach_kibana_discover_url);
+        }
+
+        if (config.slack_kibana_discover_color) {
+          commit('alert/UPDATE_SLACK_KIBANA_DISCOVER_COLOR', config.slack_kibana_discover_color);
+        }
+
+        if (config.slack_kibana_discover_color) {
+          commit('alert/UPDATE_SLACK_KIBANA_DISCOVER_TITLE', config.slack_kibana_discover_title);
+        }
 
         /* MS Teams */
         commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
@@ -782,6 +806,43 @@ export default {
       return config;
     },
 
+    kibanaDiscover(state) {
+      let config = {};
+
+      if (state.alert.generateKibanaDiscoverUrl) {
+        config.generate_kibana_discover_url = state.alert.generateKibanaDiscoverUrl;
+      } else {
+        config.generate_kibana_discover_url = false;
+        config.slack_attach_kibana_discover_url = false;
+      }
+
+      if (state.alert.kibanaDiscoverAppUrl) {
+        config.kibana_discover_app_url = state.alert.kibanaDiscoverAppUrl;
+      }
+
+      if (state.alert.kibanaDiscoverVersion) {
+        config.kibana_discover_version = state.alert.kibanaDiscoverVersion;
+      }
+
+      if (state.alert.kibanaDiscoverIndexPatternId) {
+        config.kibana_discover_index_pattern_id = state.alert.kibanaDiscoverIndexPatternId;
+      }
+
+      if (state.alert.kibanaDiscoverColumns && state.alert.kibanaDiscoverColumns.length) {
+        config.kibana_discover_columns = state.alert.kibanaDiscoverColumns;
+      }
+
+      if (state.alert.kibanaDiscoverFromTimedelta) {
+        config.kibana_discover_from_timedelta = state.alert.kibanaDiscoverFromTimedelta;
+      }
+
+      if (state.alert.kibanaDiscoverToTimedelta) {
+        config.kibana_discover_to_timedelta = state.alert.kibanaDiscoverToTimedelta;
+      }
+
+      return config;
+    },
+
     email(state) {
       let config = {};
 
@@ -841,6 +902,20 @@ export default {
 
       if (getters['alert/slackTitleLink']) {
         config.slack_title_link = getters['alert/slackTitleLink'];
+      }
+
+      if (state.alert.slackAttachKibanaDiscoverUrl) {
+        config.slack_attach_kibana_discover_url = state.alert.slackAttachKibanaDiscoverUrl;
+      } else {
+        config.slack_attach_kibana_discover_url = false;
+      }
+
+      if (state.alert.slackKibanaDiscoverColor) {
+        config.slack_kibana_discover_color = state.alert.slackKibanaDiscoverColor;
+      }
+
+      if (state.alert.slackKibanaDiscoverTitle) {
+        config.slack_kibana_discover_title = state.alert.slackKibanaDiscoverTitle;
       }
 
       return config;
@@ -1452,6 +1527,8 @@ export default {
       } else if (state.match.type === 'cardinality') {
         config = { ...config, ...getters.cardinality };
       }
+
+      config = { ...config, ...getters.kibanaDiscover };
 
       // Sort the keys in the object so it appears alphabetically in the UI
       let conf = {};
