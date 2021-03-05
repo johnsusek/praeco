@@ -7,6 +7,22 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.7.0
+
+- New options for TheHive added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#thehive for how to configure your
+
+hive_alert_config is set on the Praeco screen.<br>
+hive_connection is set in BaseRule.config.
+```yaml
+ hive_connection:
+   hive_host: http://localhost
+   hive_port: <hive_port>
+   hive_apikey: <hive_apikey>
+   hive_verify: false
+   hive_proxies:
+     http: ''
+     https: ''
+```
 ## -> 1.6.0
 
 - Change yaml output settings. single quotes to double quotes.
