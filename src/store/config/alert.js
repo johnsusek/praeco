@@ -552,6 +552,8 @@ export default {
 
     UPDATE_HIVE_ALERT_CONFIG_FOLLOW(state, hiveAlertConfigFollow) {
       state.hiveAlertConfigFollow = hiveAlertConfigFollow;
+    },
+
     UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
       state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
     },
