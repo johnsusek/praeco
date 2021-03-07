@@ -7,6 +7,44 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.7.0
+
+- New options for TheHive added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#thehive for how to configure your
+
+hive_alert_config is set on the Praeco screen.<br>
+hive_connection is set in BaseRule.config.
+```yaml
+ hive_connection:
+   hive_host: http://localhost
+   hive_port: <hive_port>
+   hive_apikey: <hive_apikey>
+   hive_verify: false
+   hive_proxies:
+     http: ''
+     https: ''
+```
+## -> 1.6.0
+
+- kibana discover support
+  - kibana 5.6, 6.0～6.8, 7.0～7.11 
+
+- Addition of items that can be set on the slack screen
+  - generate_kibana_discover_url
+  - slack_kibana_discover_color
+  - slack_kibana_discover_title
+
+- Change yaml output settings. single quotes to double quotes.
+
+- New options for Chatwork added.
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#chatwork
+
+- New options for Discord added.
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#discord
+`BaseRule.config`.
+```yaml
+discord_embed_color: 0xE24D42
+```
+
 ## -> 1.5.1
 
 - New options for ServiceNow added.

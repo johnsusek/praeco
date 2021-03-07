@@ -11,7 +11,7 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter, SNS, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, VictorOps, ServiceNow or an HTTP POST endpoint
+- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter, SNS, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, VictorOps, ServiceNow, Chatwork, Discord, TheHive or an HTTP POST endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -142,7 +142,7 @@ Praeco, running within a docker container, cannot communicate with your ES bound
 to something different. The value of `_site_` is suggested, that will bind to a local network IP on your machine. Then use that
 IP address for PRAECO_ELASTICSEARCH. Here's a working example:
 
-```
+```sh
 elasticsearch -E network.host=_site_
 export PRAECO_ELASTICSEARCH=192.168.1.145
 mkdir -p rules rule_templates
@@ -313,21 +313,62 @@ NOTE: If you're just interested in developing Praeco UI features locally (and no
 
 First, you need a local copy of the elastalert api server running, which itself needs elastalert. Start by cloning the neccessary repos
 
-```
-cd
-git clone https://github.com/Yelp/elastalert.git
-git clone https://github.com/johnsusek/elastalert-server.git
-git clone https://github.com/johnsusek/praeco.git
+```sh
+$ cd
+$ git clone https://github.com/Yelp/elastalert.git
+$ git clone https://github.com/johnsusek/elastalert-server.git
+$ git clone https://github.com/johnsusek/praeco.git
 ```
 
 ### Setting up elastalert
+
+with hundreds of open PRs and over 1000 open issues.
+
+**Doesn't work due to a bug**
+
+- Line Notify<br>
+- Zabbix<br>
+- PagerTree<br>
+- Stomp<br>
+- SNS
+
+**Not Support**
+
+- Chatwork<br>
+- Discord 
+
+**Main bugs**
+
+- SNS(Duplicate setting name. Profile implementation bug, etc)<br>
+- Email(smtp_host is not work smtp.gmail.com and smtp.office365.com)<br>
+- Jira Custom Field has some items that don't work properly<br>
+- tzlocal 3.0b1 not work apscheduler(Adding 'tzlocal<3.0', to setup.py)
+- docker test error<br>
+- slack ssl verification<br>
+- Python 3.9 not work(Change Library blist to sortedcontainers)<br>
+- Even if the rule is disabled, it is not disabled<br>
+- Remains even if the rule is deleted<br>
+- ElastAlert Not enabled even if Disabled to Enabled after restarting<br>
+- Mattermost 400 BAD request error
+
+**Python Support version**
+
+- 3.6<br>
+- 3.7<br>
+- 3.8<br>
+- Not Support 3.9(blist not work Python 3.9)
+
+**Elasticsearch Support version**
+
+- 6.x
+- 7.x
 
 Configure the elastalert `config.yaml` with:
 - Your `es_host`
 - A unique `writeback_index`
 - Change the rules_folder to `rules`
 
-```
+```sh
 cd ~/elastalert
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
@@ -345,9 +386,26 @@ Configure the api server `config.json` with:
 - The address of your elasticsearch instance for `es_host`
 - The same `writeback_index` from the config.yaml
 
+```sh
+# nvm install
+# https://github.com/nvm-sh/nvm#install--update-script
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+$ vi ~/.bash_profile
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+source ~/.bash_profile
+
+# npm & node install
+npm install -g npm@7.2.0
+nvm install 14.15.0
 ```
+
+```sh
 cd ~/elastalert-server
 vi config/config.json
+nvm use "$(cat .nvmrc)"
 npm install
 npm run start
 ```
@@ -361,8 +419,26 @@ INFO elastalert-server: Server:  Server started
 
 Finally, run praeco:
 
+```sh
+# No need to implement if the environment is the same as elastalert-server
+# nvm install
+# https://github.com/nvm-sh/nvm#install--update-script
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+$ vi ~/.bash_profile
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+source ~/.bash_profile
+
+# npm & node install
+npm install -g npm@7.2.0
+nvm install 14.15.0
 ```
+
+```sh
 cd ~/praeco
+nvm use "$(cat .nvmrc)"
 npm install
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 npm run serve

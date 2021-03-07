@@ -32,10 +32,8 @@ module.exports = {
     'vue/max-attributes-per-line': 'off',
     'import/prefer-default-export': 'off',
     'vue/no-template-shadow': 'off',
-    'no-unused-vars': 'off',
     'import/no-cycle': 'off',
     'vue/return-in-computed-property': 'off',
-    'vue/no-unused-vars': 'off',
     'import/extensions': [
       'off',
       'always',

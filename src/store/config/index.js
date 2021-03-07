@@ -184,7 +184,22 @@ export default {
 
         commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
 
+        commit('alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', config.generate_kibana_discover_url);
+        commit('alert/UPDATE_KIBANA_DISCOVER_APP_URL', config.kibana_discover_app_url);
+        commit('alert/UPDATE_KIBANA_DISCOVER_VERSION', config.kibana_discover_version);
+        commit('alert/UPDATE_KIBANA_DISCOVER_INDEX_PATTERN_ID', config.kibana_discover_index_pattern_id);
+
+        if (config.kibana_discover_columns) {
+          config.kibana_discover_columns.forEach(entry => commit('alert/ADD_KIBANA_DISCOVER_COLUMNS_ENTRY_VALUE', entry));
+        }
+
+        commit('alert/UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA', config.kibana_discover_from_timedelta);
+        commit('alert/UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA', config.kibana_discover_to_timedelta);
+
+        /* HTTP POST */
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
+
+        /* Email */
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.email_reply_to);
 
@@ -212,32 +227,50 @@ export default {
           }
         }
 
+        /* Telegram */
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
 
+        /* Chatwork */
+        commit('alert/UPDATE_CHATWORK_API_KEY', config.chatwork_apikey);
+        commit('alert/UPDATE_CHATWORK_ROOM_ID', config.chatwork_room_id);
+
+        /* Discord */
+        commit('alert/UPDATE_DISCORD_WEBHOOK_URL', config.discord_webhook_url);
+        commit('alert/UPDATE_DISCORD_EMOJI_TITLE', config.discord_emoji_title);
+        commit('alert/UPDATE_DISCORD_EMBED_FOOTER', config.discord_embed_footer);
+        commit('alert/UPDATE_DISCORD_EMBED_ICON_URL', config.discord_embed_icon_url);
+
+        /* Exotel */
         commit('alert/UPDATE_EXOTEL_ACCOUNT_SID', config.exotel_account_sid);
         commit('alert/UPDATE_EXOTEL_AUTH_TOKEN', config.exotel_auth_token);
         commit('alert/UPDATE_EXOTEL_TO_NUMBER', config.exotel_to_number);
         commit('alert/UPDATE_EXOTEL_FROM_NUMBER', config.exotel_from_number);
         commit('alert/UPDATE_EXOTEL_MESSAGE_BODY', config.exotel_message_body);
 
+        /* Twilio */
         commit('alert/UPDATE_TWILIO_ACCOUNT_SID', config.twilio_account_sid);
         commit('alert/UPDATE_TWILIO_AUTH_TOKEN', config.twilio_auth_token);
         commit('alert/UPDATE_TWILIO_TO_NUMBER', config.twilio_to_number);
         commit('alert/UPDATE_TWILIO_FROM_NUMBER', config.twilio_from_number);
 
+        /* PagerTree */
         commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
 
+        /* AWS SNS */
         commit('alert/UPDATE_SNS_TOPIC_ARN', config.sns_topic_arn);
         commit('alert/UPDATE_SNS_AWS_ACCESS_KEY_ID', config.sns_aws_access_key_id);
         commit('alert/UPDATE_SNS_AWS_SECRET_ACCESS_KEY', config.sns_aws_secret_access_key);
         commit('alert/UPDATE_SNS_AWS_REGION', config.sns_aws_region);
         commit('alert/UPDATE_SNS_AWS_PROFILE', config.sns_aws_profile);
 
+        /* Zabbix */
         commit('alert/UPDATE_ZBX_HOST', config.zbx_host);
         commit('alert/UPDATE_ZBX_KEY', config.zbx_key);
 
+        /* Line Notify */
         commit('alert/UPDATE_LINENOTIFY_ACCESS_TOKEN', config.linenotify_access_token);
 
+        /* Command */
         if (config.command) {
           if (Array.isArray(config.command)) {
             config.command.forEach((value, index, array) => {
@@ -247,9 +280,10 @@ export default {
           commit('alert/UPDATE_COMMAND', config.command);
         }
 
+        /* Gitter */
         commit('alert/UPDATE_GITTER_MSG_LEVEL', config.gitter_msg_level);
 
-        // time_window_change
+        /* time_window_change */
         if (config.start_time && config.end_time && config.drop_if) {
           commit('alert/UPDATE_USE_TIME_WINDOW', true);
           commit('alert/UPDATE_TIME_WINDOW_START_TIME', config.start_time);
@@ -259,10 +293,12 @@ export default {
           commit('alert/UPDATE_USE_TIME_WINDOW', false);
         }
 
+        /* Jira */
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
 
+        /* ServiceNow */
         commit('alert/UPDATE_SERVICENOW_USERNAME', config.username);
         commit('alert/UPDATE_SERVICENOW_PASSWORD', config.password);
         commit('alert/UPDATE_SERVICENOW_REST_URL', config.servicenow_rest_url);
@@ -274,6 +310,7 @@ export default {
         commit('alert/UPDATE_SERVICENOW_CMDB_CI', config.cmdb_ci);
         commit('alert/UPDATE_SERVICENOW_CALLER_ID', config.caller_id);
 
+        /* VictorOps */
         commit('alert/UPDATE_VICTOROPS_API_KEY', config.victorops_api_key);
         commit('alert/UPDATE_VICTOROPS_ROUTING_KEY', config.victorops_routing_key);
         commit('alert/UPDATE_VICTOROPS_MESSAGE_TYPE', config.victorops_message_type);
@@ -285,6 +322,7 @@ export default {
           commit('alert/UPDATE_VICTOROPS_ENTITY_DISPLAY_NAME', 'no entity display name');
         }
 
+        /* Stomp */
         if (config.stomp_hostname) {
           commit('alert/UPDATE_STOMP_HOSTNAME', config.stomp_hostname);
         } else {
@@ -315,19 +353,80 @@ export default {
           commit('alert/UPDATE_STOMP_DESTINATION', '/queue/ALERT');
         }
 
+        /* GoogleChat */
         commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
         commit('alert/UPDATE_GOOGLE_CHAT_FORMAT', config.googlechat_format);
         commit('alert/UPDATE_GOOGLE_CHAT_HEADER_TITLE', config.googlechat_header_title);
 
+        /* Mattermost */
         commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
         commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', config.mattermost_username_override);
         commit('alert/UPDATE_MATTERMOST_MSG_COLOR', config.mattermost_msg_color);
 
+        /* TheHive */
+        if (config.hive_alert_config && config.hive_alert_config.title) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_TITLE', config.hive_alert_config.title);
+        }
+
+        if (config.hive_alert_config && config.hive_alert_config.type) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_TYPE', config.hive_alert_config.type);
+        }
+
+        if (config.hive_alert_config && config.hive_alert_config.source) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_SOURCE', config.hive_alert_config.source);
+        }
+
+        if (config.hive_alert_config && config.hive_alert_config.description) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_DESCRIPTION', config.hive_alert_config.description);
+        }
+
+        if (config.hive_alert_config && config.hive_alert_config.severity) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_SEVERITY', config.hive_alert_config.severity);
+        } else {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_SEVERITY', 2);
+        }
+
+        if (config.hive_alert_config && config.hive_alert_config.tags) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_TAGS', config.hive_alert_config.tags);
+        }
+
+        if (config.hive_alert_config && config.hive_alert_config.tlp) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_TLP', config.hive_alert_config.tlp);
+        } else {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_TLP', 2);
+        }
+
+        if (config.hive_alert_config && config.hive_alert_config.status) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_STATUS', config.hive_alert_config.status);
+        } else {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_STATUS', 'Waiting');
+        }
+
+        if (config.hive_alert_config && config.hive_alert_config.follow) {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_FOLLOW', config.hive_alert_config.follow);
+        } else {
+          commit('alert/UPDATE_HIVE_ALERT_CONFIG_FOLLOW', false);
+        }
+
+        /* Slack */
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
         commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
         commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
 
+        if (config.slack_attach_kibana_discover_url) {
+          commit('alert/UPDATE_SLACK_ATTACH_KIBANA_DISCOVER_URL', config.slack_attach_kibana_discover_url);
+        }
+
+        if (config.slack_kibana_discover_color) {
+          commit('alert/UPDATE_SLACK_KIBANA_DISCOVER_COLOR', config.slack_kibana_discover_color);
+        }
+
+        if (config.slack_kibana_discover_color) {
+          commit('alert/UPDATE_SLACK_KIBANA_DISCOVER_TITLE', config.slack_kibana_discover_title);
+        }
+
+        /* MS Teams */
         commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
         commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
 
@@ -717,6 +816,43 @@ export default {
       return config;
     },
 
+    kibanaDiscover(state) {
+      let config = {};
+
+      if (state.alert.generateKibanaDiscoverUrl) {
+        config.generate_kibana_discover_url = state.alert.generateKibanaDiscoverUrl;
+      } else {
+        config.generate_kibana_discover_url = false;
+        config.slack_attach_kibana_discover_url = false;
+      }
+
+      if (state.alert.kibanaDiscoverAppUrl) {
+        config.kibana_discover_app_url = state.alert.kibanaDiscoverAppUrl;
+      }
+
+      if (state.alert.kibanaDiscoverVersion) {
+        config.kibana_discover_version = state.alert.kibanaDiscoverVersion;
+      }
+
+      if (state.alert.kibanaDiscoverIndexPatternId) {
+        config.kibana_discover_index_pattern_id = state.alert.kibanaDiscoverIndexPatternId;
+      }
+
+      if (state.alert.kibanaDiscoverColumns && state.alert.kibanaDiscoverColumns.length) {
+        config.kibana_discover_columns = state.alert.kibanaDiscoverColumns;
+      }
+
+      if (state.alert.kibanaDiscoverFromTimedelta) {
+        config.kibana_discover_from_timedelta = state.alert.kibanaDiscoverFromTimedelta;
+      }
+
+      if (state.alert.kibanaDiscoverToTimedelta) {
+        config.kibana_discover_to_timedelta = state.alert.kibanaDiscoverToTimedelta;
+      }
+
+      return config;
+    },
+
     email(state) {
       let config = {};
 
@@ -778,6 +914,20 @@ export default {
         config.slack_title_link = getters['alert/slackTitleLink'];
       }
 
+      if (state.alert.slackAttachKibanaDiscoverUrl) {
+        config.slack_attach_kibana_discover_url = state.alert.slackAttachKibanaDiscoverUrl;
+      } else {
+        config.slack_attach_kibana_discover_url = false;
+      }
+
+      if (state.alert.slackKibanaDiscoverColor) {
+        config.slack_kibana_discover_color = state.alert.slackKibanaDiscoverColor;
+      }
+
+      if (state.alert.slackKibanaDiscoverTitle) {
+        config.slack_kibana_discover_title = state.alert.slackKibanaDiscoverTitle;
+      }
+
       return config;
     },
 
@@ -802,6 +952,40 @@ export default {
 
       if (state.alert.telegramRoomId) {
         config.telegram_room_id = state.alert.telegramRoomId;
+      }
+
+      return config;
+    },
+
+    chatwork(state) {
+      let config = {};
+      if (state.alert.chatworkApikey) {
+        config.chatwork_apikey = state.alert.chatworkApikey;
+      }
+
+      if (state.alert.chatworkRoomId) {
+        config.chatwork_room_id = state.alert.chatworkRoomId;
+      }
+
+      return config;
+    },
+
+    discord(state) {
+      let config = {};
+      if (state.alert.discordWebhookUrl) {
+        config.discord_webhook_url = state.alert.discordWebhookUrl;
+      }
+
+      if (state.alert.discordEmojiTitle) {
+        config.discord_emoji_title = state.alert.discordEmojiTitle;
+      }
+
+      if (state.alert.discordEmbedFooter) {
+        config.discord_embed_footer = state.alert.discordEmbedFooter;
+      }
+
+      if (state.alert.discordEmbedIconUrl) {
+        config.discord_embed_icon_url = state.alert.discordEmbedIconUrl;
       }
 
       return config;
@@ -1099,6 +1283,51 @@ export default {
       return config;
     },
 
+    hivealerter(state) {
+      let config = {};
+      config.hive_alert_config = {};
+
+      if (state.alert.hiveAlertConfigTitle) {
+        config.hive_alert_config.title = state.alert.hiveAlertConfigTitle;
+      }
+
+      if (state.alert.hiveAlertConfigType) {
+        config.hive_alert_config.type = state.alert.hiveAlertConfigType;
+      }
+
+      if (state.alert.hiveAlertConfigSource) {
+        config.hive_alert_config.source = state.alert.hiveAlertConfigSource;
+      }
+
+      if (state.alert.hiveAlertConfigDescription) {
+        config.hive_alert_config.description = state.alert.hiveAlertConfigDescription;
+      }
+
+      if (state.alert.hiveAlertConfigSeverity) {
+        config.hive_alert_config.severity = state.alert.hiveAlertConfigSeverity;
+      }
+
+      if (state.alert.hiveAlertConfigTags && state.alert.hiveAlertConfigTags.length) {
+        config.hive_alert_config.tags = state.alert.hiveAlertConfigTags;
+      }
+
+      if (state.alert.hiveAlertConfigTlp) {
+        config.hive_alert_config.tlp = state.alert.hiveAlertConfigTlp;
+      }
+
+      if (state.alert.hiveAlertConfigStatus) {
+        config.hive_alert_config.status = state.alert.hiveAlertConfigStatus;
+      }
+
+      if (state.alert.hiveAlertConfigFollow) {
+        config.hive_alert_config.follow = state.alert.hiveAlertConfigFollow;
+      } else {
+        config.hive_alert_config.follow = false;
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
@@ -1279,6 +1508,22 @@ export default {
         config = { ...config, ...getters.mattermost };
       }
 
+      if (state.alert.alert.includes('hivealerter')) {
+        config = { ...config, ...getters.hivealerter };
+      }
+
+      if (state.alert.alert.includes('chatwork')) {
+        config = { ...config, ...getters.chatwork };
+      }
+
+      if (state.alert.alert.includes('discord')) {
+        config = { ...config, ...getters.discord };
+      }
+
+      if (state.alert.alert.includes('ms_teams')) {
+        config = { ...config, ...getters.ms_teams };
+      }
+
       if (state.alert.alert.includes('email')
           || state.alert.alert.includes('slack')
           || state.alert.alert.includes('ms_teams')
@@ -1289,12 +1534,11 @@ export default {
           || state.alert.alert.includes('pagertree')
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('mattermost')
+          || state.alert.alert.includes('hivealerter')
+          || state.alert.alert.includes('chatwork')
+          || state.alert.alert.includes('discord')
           || state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.subjectBody };
-      }
-
-      if (state.alert.alert.includes('ms_teams')) {
-        config = { ...config, ...getters.ms_teams };
       }
 
       if (state.match.type === 'blacklist') {
@@ -1317,6 +1561,8 @@ export default {
         config = { ...config, ...getters.cardinality };
       }
 
+      config = { ...config, ...getters.kibanaDiscover };
+
       // Sort the keys in the object so it appears alphabetically in the UI
       let conf = {};
 
@@ -1329,6 +1575,6 @@ export default {
       return conf;
     },
 
-    yaml: (state, getters) => forTest => yaml.safeDump(getters.config(forTest))
+    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest), { quotingType: '"' })
   }
 };

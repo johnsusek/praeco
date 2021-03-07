@@ -68,6 +68,12 @@
       </el-col>
     </el-row>
 
+    <el-row class="m-s-sm">
+      <el-col :span="24">
+        <ConfigKibanaDiscover ref="kibanaDiscover" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
     <el-form-item
       v-if="!viewOnly"
       :label="`Destination${alert.length > 1 ? 's' : ''}`"
@@ -131,13 +137,23 @@
         <el-checkbox id="destinationServiceNow" label="servicenow" border>
           ServiceNow
         </el-checkbox>
+        <el-checkbox id="destinationChatwork" label="chatwork" border>
+          Chatwork
+        </el-checkbox>
+        <el-checkbox id="destinationDiscord" label="discord" border>
+          Discord
+        </el-checkbox>
+        <el-checkbox id="destinationHivealerter" label="hivealerter" border>
+          TheHive
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
-        alert.includes('sns') || alert.includes('pagertree') || alert.includes('gitter') || alert.includes('googlechat')">
+        alert.includes('sns') || alert.includes('pagertree') || alert.includes('gitter') || alert.includes('googlechat') ||
+        alert.includes('chatwork') || alert.includes('discord') || alert.includes('hivealerter')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -188,6 +204,25 @@
               Good
             </el-radio>
           </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="Slack Attach Kibana Discover Url" prop="slackAttachKibanaDiscoverUrl">
+          <el-switch
+            id="slackAttachKibanaDiscoverUrl"
+            v-model="slackAttachKibanaDiscoverUrl"
+            :disabled="viewOnly"
+            @change="changeSlackAttachKibanaDiscoverUrl" />
+        </el-form-item>
+
+        <el-form-item label="Slack Kibana Discover Color" prop="slackKibanaDiscoverColor">
+          <el-input
+            v-model="slackKibanaDiscoverColor" type="color" :disabled="viewOnly" />
+          <label>The color of the Kibana Discover url attachment.</label>
+        </el-form-item>
+
+        <el-form-item label="Slack Kibana Discover Title" prop="slackKibanaDiscoverTitle">
+          <el-input v-model="slackKibanaDiscoverTitle" :disabled="viewOnly" />
+          <label>The title of the Kibana Discover url attachment.</label>
         </el-form-item>
       </el-tab-pane>
 
@@ -256,7 +291,7 @@
         </el-form-item>
 
         <el-form-item label="Color" prop="ms_teamsThemeColor" required>
-          <el-input id="ms_teamsThemeColor" v-model="ms_teamsThemeColor" :disabled="viewOnly" />
+          <el-input id="ms_teamsThemeColor" v-model="ms_teamsThemeColor" type="color" :disabled="viewOnly" />
           <label>
             HTML color name in form of <b>#RRGGBB</b>
           </label>
@@ -653,6 +688,167 @@
           <label>The caller id (email address) of the user that created the incident.</label>
         </praeco-form-item>
       </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('chatwork')">
+        <template slot="label">
+          Chatwork
+        </template>
+
+        <praeco-form-item label="Chatwork Apikey" prop="chatworkApikey" required>
+          <el-input id="chatworkApikey" v-model="chatworkApikey" :disabled="viewOnly" />
+          <label>ChatWork API KEY.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Chatwork RoomId" prop="chatworkRoomId" required>
+          <el-input id="chatworkRoomId" v-model="chatworkRoomId" :disabled="viewOnly" />
+          <label>The ID of the room you are talking to in Chatwork. How to find the room ID is the part of the number after "rid" at the end of the URL of the browser.</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('discord')">
+        <template slot="label">
+          Discord
+        </template>
+
+        <praeco-form-item label="Discord WebhookUrl" prop="discordWebhookUrl" required>
+          <el-input id="discordWebhookUrl" v-model="discordWebhookUrl" :disabled="viewOnly" />
+          <label>The webhook URL.</label>
+        </praeco-form-item>
+
+        <praeco-form-item
+          v-if="!(viewOnly && !discordEmojiTitle)"
+          :class="{ 'disabled': viewOnly }"
+          label="Icon"
+          prop="discordEmojiTitle">
+          <picker
+            :emoji="discordEmojiTitle || 'arrow_up'"
+            :title="discordEmojiTitle || 'Pick your icon...'"
+            color="#189acc"
+            @select="addDiscordEmoji" />
+        </praeco-form-item>
+
+        <praeco-form-item label="Discord Embed Footer" prop="discordEmbedFooter">
+          <el-input id="discordEmbedFooter" v-model="discordEmbedFooter" :disabled="viewOnly" />
+          <label>embed footer.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Discord Embed IconUrl" prop="discordEmbedIconUrl">
+          <el-input id="discordEmbedIconUrl" v-model="discordEmbedIconUrl" :disabled="viewOnly" />
+          <label>You can provide icon_url to use custom image. Provide absolute address of the pciture.(exampmle : http://domain/picure.png)</label>
+        </praeco-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('hivealerter')">
+        <template slot="label">
+          TheHive
+        </template>
+
+        <praeco-form-item label="Hive Alert Config Title" prop="hiveAlertConfigTitle">
+          <el-input id="hiveAlertConfigTitle" v-model="hiveAlertConfigTitle" :disabled="viewOnly" />
+          <label>Alert's description.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Hive Alert Config Type" prop="hiveAlertConfigType">
+          <el-input id="hiveAlertConfigType" v-model="hiveAlertConfigType" :disabled="viewOnly" />
+          <label>Alert's type.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Hive Alert Config Source" prop="hiveAlertConfigSource">
+          <el-input id="hiveAlertConfigSource" v-model="hiveAlertConfigSource" :disabled="viewOnly" />
+          <label>Alert's source.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Hive Alert Config Description" prop="hiveAlertConfigDescription">
+          <el-input id="hiveAlertConfigDescription" v-model="hiveAlertConfigDescription" :disabled="viewOnly" />
+          <label>Alert's description.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Hive Alert Config Severity" prop="hiveAlertConfigSeverity">
+          <el-input id="hiveAlertConfigSeverity" v-model.number="hiveAlertConfigSeverity" type="number" min="1" max="4" :disabled="viewOnly" />
+          <label>Alert's severity: 1, 2, 3, 4 for LOW, MEDIUM, HIGH, CRTICAL.</label>
+        </praeco-form-item>
+
+        <el-popover v-model="pophiveAlertConfigTagsVisible" :class="{ 'is-invalid': !pophiveAlertConfigTagsValid }">
+          <span slot="reference" class="pop-trigger">
+            <el-tooltip v-if="hiveAlertConfigTags.length" :content="hiveAlertConfigTags.join(', ')" placement="top">
+              <span>Tags ({{ hiveAlertConfigTags.length }})</span>
+            </el-tooltip>
+            <span v-else>Tags ({{ hiveAlertConfigTags.length }})</span>
+          </span>
+          <template>
+            <el-form
+              ref="hiveAlertConfigTags"
+              :model="$store.state.config.alert"
+              label-position="top"
+              style="width: 360px"
+              @submit.native.prevent>
+              <el-form-item
+                v-for="(entry, index) in hiveAlertConfigTags"
+                :key="index"
+                :prop="'hiveAlertConfigTags.' + index"
+                :disabled="viewOnly"
+                class="el-form-item-list"
+                label=""
+                required>
+                <el-row :gutter="5" type="flex" justify="space-between">
+                  <el-col :span="20">
+                    <el-input
+                      v-model="hiveAlertConfigTags[index]"
+                      :disabled="viewOnly"
+                      placeholder="Tags"
+                      @input="(val) => updateHiveAlertConfigTags(val, index)" />
+                  </el-col>
+                  <el-col :span="4">
+                    <el-button
+                      :disabled="viewOnly"
+                      type="danger"
+                      icon="el-icon-delete"
+                      circle
+                      plain
+                      @click="removeHiveAlertConfigTagsEntry(entry)" />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </el-form>
+
+            <el-button :disabled="viewOnly" class="m-n-sm" @click="addHiveAlertConfigTagsEntry">
+              Add tags
+            </el-button>
+          </template>
+        </el-popover>
+
+        <praeco-form-item label="Hive Alert Config Tlp" prop="hiveAlertConfigTlp">
+          <el-input id="hiveAlertConfigTlp" v-model.number="hiveAlertConfigTlp" type="number" min="0" max="3" :disabled="viewOnly" />
+          <label>Alert's TLP: 0, 1, 2, 3 for WHITE, GREEN, AMBER, RED.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Hive Alert Config Status" prop="hiveAlertConfigStatus">
+          <el-radio-group v-model="hiveAlertConfigStatus" :disabled="viewOnly">
+            <el-radio id="hiveAlertConfigStatusWaiting" label="Waiting" border>
+              Waiting
+            </el-radio>
+            <el-radio id="hiveAlertConfigStatusInProgress" label="InProgress" border>
+              InProgress
+            </el-radio>
+            Cancel
+            <el-radio id="hiveAlertConfigStatusCancel" label="Cancel" border>
+              Cancel
+            </el-radio>
+            <el-radio id="hiveAlertConfigStatusCompleted" label="Completed" border>
+              Completed
+            </el-radio>
+          </el-radio-group>
+          <label>Task's status: Waiting, InProgress, Cancel, Completed.</label>
+        </praeco-form-item>
+
+        <el-form-item label="Hive Alert Config Follow" prop="hiveAlertConfigFollow">
+          <el-switch
+            id="hiveAlertConfigFollow"
+            v-model="hiveAlertConfigFollow"
+            :disabled="viewOnly"
+            @change="changeHiveAlertConfigFollow" />
+        </el-form-item>
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -682,11 +878,6 @@ let validateMattermostDestination = (rule, value, callback) => {
   } else {
     callback();
   }
-};
-
-let validateMSTeamsDestination = (rule, value, callback) => {
-  console.log(value);
-  callback(); // FIXME
 };
 
 let validateEmail = (rule, value, callback) => {
@@ -745,6 +936,8 @@ export default {
       groupSnsValue = 'notProfile';
     }
     return {
+      popHiveAlertConfigTagsVisible: false,
+      popHiveAlertConfigTagsValid: true,
       groupSns: groupSnsValue,
       visibleTabPane: '',
       rules: {
@@ -803,6 +996,12 @@ export default {
           }
         ],
         pagertreeIntegrationUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        discordWebhookUrl: [
           {
             validator: validateUrl,
             trigger: ['change', 'blur']
@@ -1195,6 +1394,77 @@ export default {
       }
     },
 
+    discordWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.discordWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_WEBHOOK_URL',
+          value
+        );
+      }
+    },
+
+    discordEmojiTitle: {
+      get() {
+        return this.$store.state.config.alert.discordEmojiTitle;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_EMOJI_TITLE',
+          value
+        );
+      }
+    },
+
+    discordEmbedFooter: {
+      get() {
+        return this.$store.state.config.alert.discordEmbedFooter;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_EMBED_FOOTER',
+          value
+        );
+      }
+    },
+
+    discordEmbedIconUrl: {
+      get() {
+        return this.$store.state.config.alert.discordEmbedIconUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_EMBED_ICON_URL',
+          value
+        );
+      }
+    },
+
+    chatworkApikey: {
+      get() {
+        return this.$store.state.config.alert.chatworkApikey;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_CHATWORK_API_KEY',
+          value
+        );
+      }
+    },
+    chatworkRoomId: {
+      get() {
+        return this.$store.state.config.alert.chatworkRoomId;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_CHATWORK_ROOM_ID',
+          value
+        );
+      }
+    },
+
     serviceNowUsername: {
       get() {
         return this.$store.state.config.alert.serviceNowUsername;
@@ -1510,6 +1780,33 @@ export default {
       }
     },
 
+    slackAttachKibanaDiscoverUrl: {
+      get() {
+        return this.$store.state.config.alert.slackAttachKibanaDiscoverUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_ATTACH_KIBANA_DISCOVER_URL', value);
+      }
+    },
+
+    slackKibanaDiscoverColor: {
+      get() {
+        return this.$store.state.config.alert.slackKibanaDiscoverColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_KIBANA_DISCOVER_COLOR', value);
+      }
+    },
+
+    slackKibanaDiscoverTitle: {
+      get() {
+        return this.$store.state.config.alert.slackKibanaDiscoverTitle;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_KIBANA_DISCOVER_TITLE', value);
+      }
+    },
+
     mattermostChannelOverride: {
       get() {
         return this.$store.state.config.alert.mattermostChannelOverride;
@@ -1558,6 +1855,87 @@ export default {
       }
     },
 
+    hiveAlertConfigTitle: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigTitle;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_TITLE', value);
+      }
+    },
+
+    hiveAlertConfigType: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigType;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_TYPE', value);
+      }
+    },
+
+    hiveAlertConfigSource: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigSource;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_SOURCE', value);
+      }
+    },
+
+    hiveAlertConfigDescription: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigDescription;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_DESCRIPTION', value);
+      }
+    },
+
+    hiveAlertConfigSeverity: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigSeverity;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_SEVERITY', value);
+      }
+    },
+
+    hiveAlertConfigTags: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigTags;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_TAGS', value);
+      }
+    },
+
+    hiveAlertConfigTlp: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigTlp;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_TLP', value);
+      }
+    },
+
+    hiveAlertConfigStatus: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigStatus;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_STATUS', value);
+      }
+    },
+
+    hiveAlertConfigFollow: {
+      get() {
+        return this.$store.state.config.alert.hiveAlertConfigFollow;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_FOLLOW', value);
+      }
+    },
+
     realert: {
       get() {
         return this.$store.state.config.alert.realert || { minutes: 5 };
@@ -1579,11 +1957,15 @@ export default {
 
   methods: {
     // time_window_change
-    changeTimeWindow(val) {
+    changeTimeWindow() {
     },
 
     addEmoji(value) {
       this.slackEmojiOverride = value.colons;
+    },
+
+    addDiscordEmoji(value) {
+      this.discordEmojiTitle = value.colons;
     },
 
     changeSns() {
@@ -1593,9 +1975,76 @@ export default {
       this.snsAwsProfile = '';
     },
 
+    changeHiveAlertConfigFollow(val) {
+      if (val) {
+        this.hiveAlertConfigFollow = true;
+      } else {
+        this.hiveAlertConfigFollow = false;
+      }
+    },
+
+    async validate() {
+      try {
+        if (this.$refs.hiveAlertConfigTags) {
+          await this.validateHiveAlertConfigTags();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validateHiveAlertConfigTags() {
+      if (!this.hiveAlertConfigTags.length) {
+        this.popHiveAlertConfigTagsValid = false;
+        return;
+      }
+      try {
+        this.popHiveAlertConfigTagsValid = await this.$refs.hiveAlertConfigTags.validate();
+      } catch (error) {
+        this.popHiveAlertConfigTagsValid = false;
+        throw error;
+      }
+    },
+
+    updateHiveAlertConfigTags(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_HIVE_ALERT_CONFIG_TAGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeHiveAlertConfigTagsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_HIVE_ALERT_CONFIG_TAGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addHiveAlertConfigTagsEntry() {
+      this.$store.commit('config/alert/ADD_HIVE_ALERT_CONFIG_TAGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     updateRealert(value) {
       this.realert = {};
       this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
+    },
+
+    changeSlackAttachKibanaDiscoverUrl(val) {
+      if (val) {
+        this.slackAttachKibanaDiscoverUrl = true;
+      } else {
+        this.slackAttachKibanaDiscoverUrl = false;
+      }
     }
   }
 };

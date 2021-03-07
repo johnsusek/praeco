@@ -11,56 +11,92 @@ function initialState() {
     aggregationKey: '',
     summaryTableFields: [],
 
+    generateKibanaDiscoverUrl: false,
+    kibanaDiscoverAppUrl: '',
+    kibanaDiscoverVersion: '',
+    kibanaDiscoverIndexPatternId: '',
+    kibanaDiscoverColumns: [],
+    kibanaDiscoverFromTimedelta: { minutes: 10 },
+    kibanaDiscoverToTimedelta: { minutes: 10 },
+
     subject: '',
     body: '',
     bodyType: 'alert_text_only',
 
+    /* Slack */
     slackChannelOverride: '',
     slackUsernameOverride: 'Praeco',
     slackEmojiOverride: '',
     slackMsgColor: 'danger',
+    slackAttachKibanaDiscoverUrl: false,
+    slackKibanaDiscoverColor: '#ec4b98',
+    slackKibanaDiscoverTitle: 'Discover in Kibana',
 
+    /* MS Teams */
     ms_teamsWebhookUrl: '',
     ms_teamsThemeColor: '#ff0000',
 
+    /* Telegram */
     telegramRoomId: '',
 
+    /* Exotel */
     exotelAccountSid: '',
     exotelAuthToken: '',
     exotelToNumber: '',
     exotelFromNumber: '',
     exotelMessageBody: '',
 
+    /* Twilio */
     twilioAccountSid: '',
     twilioAuth: '',
     twilioToNumber: '',
     twilioFromNumber: '',
 
+    /* PagerTree */
     pagertreeIntegrationUrl: '',
 
+    /* AWS SNS */
     snsTopicArn: '',
     snsAwsAccessKeyId: '',
     snsAwsSecretAccessKey: '',
     snsAwsRegion: '',
     snsAwsProfile: '',
 
+    /* Zabbix */
     zbxHost: '',
     zbxKey: '',
 
+    /* Line Notify */
     linenotifyAccessToken: '',
+
+    /* Command */
     command: [],
+
+    /* Gitter */
     gitterMsgLevel: 'error',
 
-    // time_window_change
+    /* time_window_change */
     useTimeWindow: false,
     timeWindowStartTime: '',
     timeWindowEndTime: '',
     timeWindowDropIf: '',
 
+    /* Jira */
     jiraProject: '',
     jiraIssueType: '',
     jiraComponents: '',
 
+    /* Chatwork */
+    chatworkApikey: '',
+    chatworkRoomId: '',
+
+    /* Discord */
+    discordWebhookUrl: '',
+    discordEmojiTitle: '',
+    discordEmbedFooter: '',
+    discordEmbedIconUrl: '',
+
+    /* ServiceNow */
     serviceNowUsername: '',
     serviceNowPassword: '',
     servicenowRestUrl: '',
@@ -72,32 +108,49 @@ function initialState() {
     servicenowCmdbCi: '',
     servicenowCallerId: '',
 
+    /* VictorOps */
     victoropsApiKey: '',
     victoropsRoutingKey: '',
     victoropsMessageType: '',
     victoropsEntityId: '',
     victoropsEntityDisplayName: '',
 
+    /* Stomp */
     stompHostname: '',
     stompHostport: '',
     stompLogin: '',
     stompPassword: '',
     stompDestination: '',
 
+    /* GoogleChat */
     googleChatWebhookUrl: '',
     googleChatFormat: 'basic',
     googleChatHeaderTitle: '',
 
+    /* Mattermost */
     mattermostChannelOverride: '',
     mattermostUsernameOverride: 'Praeco',
     mattermostMsgColor: 'danger',
 
+    /* TheHive */
+    hiveAlertConfigTitle: '',
+    hiveAlertConfigType: '',
+    hiveAlertConfigSource: '',
+    hiveAlertConfigDescription: '',
+    hiveAlertConfigSeverity: 2,
+    hiveAlertConfigTags: [],
+    hiveAlertConfigTlp: 2,
+    hiveAlertConfigStatus: 'Waiting',
+    hiveAlertConfigFollow: false,
+
+    /* Email */
     fromAddr: '',
     replyTo: '',
     email: '',
     cc: '',
     bcc: '',
 
+    /* HTTP POST */
     httpPostUrl: ''
   };
 }
@@ -196,6 +249,30 @@ export default {
 
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
+    },
+
+    UPDATE_CHATWORK_API_KEY(state, chatworkApikey) {
+      state.chatworkApikey = chatworkApikey;
+    },
+
+    UPDATE_CHATWORK_ROOM_ID(state, chatworkRoomId) {
+      state.chatworkRoomId = chatworkRoomId;
+    },
+
+    UPDATE_DISCORD_WEBHOOK_URL(state, discordWebhookUrl) {
+      state.discordWebhookUrl = discordWebhookUrl;
+    },
+
+    UPDATE_DISCORD_EMOJI_TITLE(state, discordEmojiTitle) {
+      state.discordEmojiTitle = discordEmojiTitle;
+    },
+
+    UPDATE_DISCORD_EMBED_FOOTER(state, discordEmbedFooter) {
+      state.discordEmbedFooter = discordEmbedFooter;
+    },
+
+    UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
+      state.discordEmbedIconUrl = discordEmbedIconUrl;
     },
 
     UPDATE_EXOTEL_ACCOUNT_SID(state, exotelAccountSid) {
@@ -424,12 +501,122 @@ export default {
       state.slackMsgColor = slackMsgColor;
     },
 
+    UPDATE_SLACK_ATTACH_KIBANA_DISCOVER_URL(state, slackAttachKibanaDiscoverUrl) {
+      state.slackAttachKibanaDiscoverUrl = slackAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_SLACK_KIBANA_DISCOVER_COLOR(state, slackKibanaDiscoverColor) {
+      state.slackKibanaDiscoverColor = slackKibanaDiscoverColor;
+    },
+
+    UPDATE_SLACK_KIBANA_DISCOVER_TITLE(state, slackKibanaDiscoverTitle) {
+      state.slackKibanaDiscoverTitle = slackKibanaDiscoverTitle;
+    },
+
     UPDATE_MS_TEAMS_WEBHOOK_URL(state, ms_teamsWebhookUrl) {
       state.ms_teamsWebhookUrl = ms_teamsWebhookUrl;
     },
 
     UPDATE_MS_TEAMS_THEME_COLOR(state, ms_teamsThemeColor) {
       state.ms_teamsThemeColor = ms_teamsThemeColor;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_TITLE(state, hiveAlertConfigTitle) {
+      state.hiveAlertConfigTitle = hiveAlertConfigTitle;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_TYPE(state, hiveAlertConfigType) {
+      state.hiveAlertConfigType = hiveAlertConfigType;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_SOURCE(state, hiveAlertConfigSource) {
+      state.hiveAlertConfigSource = hiveAlertConfigSource;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_DESCRIPTION(state, hiveAlertConfigDescription) {
+      state.hiveAlertConfigDescription = hiveAlertConfigDescription;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_SEVERITY(state, hiveAlertConfigSeverity) {
+      state.hiveAlertConfigSeverity = hiveAlertConfigSeverity;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_TAGS(state, hiveAlertConfigTags) {
+      state.hiveAlertConfigTags = hiveAlertConfigTags;
+    },
+
+    ADD_HIVE_ALERT_CONFIG_TAGS_ENTRY(state) {
+      state.hiveAlertConfigTags.push('');
+    },
+
+    ADD_HIVE_ALERT_CONFIG_TAGS_ENTRY_VALUE(state, value) {
+      state.hiveAlertConfigTags.push(value);
+    },
+
+    REMOVE_HIVE_ALERT_CONFIG_TAGS_ENTRY(state, entry) {
+      state.hiveAlertConfigTags = state.hiveAlertConfigTags.filter(b => b !== entry);
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_TAGS_ENTRY(state, { entry, index }) {
+      if (!state.hiveAlertConfigTags) return;
+      state.hiveAlertConfigTags[index] = entry;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_TLP(state, hiveAlertConfigTlp) {
+      state.hiveAlertConfigTlp = hiveAlertConfigTlp;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_STATUS(state, hiveAlertConfigStatus) {
+      state.hiveAlertConfigStatus = hiveAlertConfigStatus;
+    },
+
+    UPDATE_HIVE_ALERT_CONFIG_FOLLOW(state, hiveAlertConfigFollow) {
+      state.hiveAlertConfigFollow = hiveAlertConfigFollow;
+    },
+
+    UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
+      state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
+    },
+
+    UPDATE_KIBANA_DISCOVER_APP_URL(state, kibanaDiscoverAppUrl) {
+      state.kibanaDiscoverAppUrl = kibanaDiscoverAppUrl;
+    },
+
+    UPDATE_KIBANA_DISCOVER_VERSION(state, kibanaDiscoverVersion) {
+      state.kibanaDiscoverVersion = kibanaDiscoverVersion;
+    },
+
+    UPDATE_KIBANA_DISCOVER_INDEX_PATTERN_ID(state, kibanaDiscoverIndexPatternId) {
+      state.kibanaDiscoverIndexPatternId = kibanaDiscoverIndexPatternId;
+    },
+
+    UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA(state, kibanaDiscoverFromTimedelta) {
+      state.kibanaDiscoverFromTimedelta = kibanaDiscoverFromTimedelta;
+    },
+
+    UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA(state, kibanaDiscoverToTimedelta) {
+      state.kibanaDiscoverToTimedelta = kibanaDiscoverToTimedelta;
+    },
+
+    UPDATE_KIBANA_DISCOVER_COLUMNS(state, kibanaDiscoverColumns) {
+      state.kibanaDiscoverColumns = kibanaDiscoverColumns;
+    },
+
+    ADD_KIBANA_DISCOVER_COLUMNS_ENTRY(state) {
+      state.kibanaDiscoverColumns.push('');
+    },
+
+    ADD_KIBANA_DISCOVER_COLUMNS_ENTRY_VALUE(state, value) {
+      state.kibanaDiscoverColumns.push(value);
+    },
+
+    REMOVE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, entry) {
+      state.kibanaDiscoverColumns = state.kibanaDiscoverColumns.filter(b => b !== entry);
+    },
+
+    UPDATE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, { entry, index }) {
+      if (!state.kibanaDiscoverColumns) return;
+      state.kibanaDiscoverColumns[index] = entry;
     },
 
     UPDATE_REALERT(state, realert) {

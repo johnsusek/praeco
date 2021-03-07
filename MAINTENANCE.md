@@ -12,7 +12,7 @@
 ## Praeco
 
 - `nvm use "$(cat .nvmrc)"`
-- `npm run test:unit`
+- `./run_tests.sh`
 - Bump version number in package.json, if not already done
 - Push to master
 - `docker build . -t praecoapp/praeco`

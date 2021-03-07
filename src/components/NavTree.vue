@@ -14,7 +14,7 @@
     @click.native="handleClick">
     <label
       slot="option-label"
-      slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
+      slot-scope="{ node, shouldShowCount, count, labelClassName }"
       :class="labelClassName">
       <span v-if="node.children !== undefined">
         <icon :icon="node.isExpanded ? 'folder-open' : 'folder'" />
@@ -174,7 +174,7 @@ export default {
           this.$router.push({
             name: 'templateview',
             params: { id: node.id }
-          });
+          }).catch(() => {});
         } else {
           this.$router.push({
             name: 'ruleview',
@@ -188,9 +188,9 @@ export default {
             type: node.isRule ? 'rules' : 'templates',
             path: node.id
           }
-        });
+        }).catch(() => {});
       } else if (node.id === '_templates') {
-        this.$router.push('/templates');
+        this.$router.push('/templates').catch(() => {});
       } else if (node.id === '_rules') {
         this.$router.push('/rules').catch(() => {});
       }
