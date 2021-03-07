@@ -11,6 +11,8 @@ function initialState() {
     aggregationKey: '',
     summaryTableFields: [],
 
+    limitExcecution: '*/1 * * * *',
+
     generateKibanaDiscoverUrl: false,
     kibanaDiscoverAppUrl: '',
     kibanaDiscoverVersion: '',
@@ -552,6 +554,10 @@ export default {
 
     UPDATE_HIVE_ALERT_CONFIG_FOLLOW(state, hiveAlertConfigFollow) {
       state.hiveAlertConfigFollow = hiveAlertConfigFollow;
+    },
+
+    UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {
+      state.limitExcecution = limitExcecution;
     },
 
     UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {

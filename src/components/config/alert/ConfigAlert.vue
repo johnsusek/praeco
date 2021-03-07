@@ -36,6 +36,31 @@
     </el-row>
 
     <el-row class="m-s-sm">
+      <el-col :span="enableLimitExcecution ? 6 : 24">
+        <el-form-item label="Limit Excecution">
+          <el-switch
+            id="enableLimitExcecution"
+            v-model="enableLimitExcecution"
+            :disabled="viewOnly"
+            @change="changeLimitExcecution" />
+          <label>Limit Excecution Setting.</label>
+        </el-form-item>
+      </el-col>
+
+      <el-col v-if="enableLimitExcecution" :span="20">
+        <el-form-item label="" prop="limitExcecution">
+          <div class="limit-excecution" v-if="!viewOnly">
+            <VueCronEditorBuefy v-model="limitExcecution" /><br>
+            {{ limitExcecution }}
+          </div>
+          <div v-else>
+            {{ limitExcecution }}
+          </div>
+        </el-form-item>
+      </el-col>
+    </el-row>
+
+    <el-row class="m-s-sm">
       <el-col :span="24">
         <ConfigKibanaDiscover ref="kibanaDiscover" :view-only="viewOnly" />
       </el-col>
@@ -821,7 +846,7 @@
 </template>
 
 <script>
-
+import VueCronEditorBuefy from 'vue-cron-editor-buefy';
 import * as EmailValidator from 'email-validator';
 import validUrl from 'valid-url';
 import { Picker } from 'emoji-mart-vue';
@@ -892,6 +917,7 @@ let validateEmailCommaSeparated = (rule, value, callback) => {
 export default {
   components: {
     ConfigAlertSubjectBody,
+    VueCronEditorBuefy,
     Picker
   },
 
@@ -903,6 +929,7 @@ export default {
       groupSnsValue = 'notProfile';
     }
     return {
+      enableLimitExcecution: false,
       popHiveAlertConfigTagsVisible: false,
       popHiveAlertConfigTagsValid: true,
       groupSns: groupSnsValue,
@@ -985,6 +1012,15 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_AGGREGATION_SCHEDULE', value);
+      }
+    },
+
+    limitExcecution: {
+      get() {
+        return this.$store.state.config.alert.limitExcecution;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_LIMIT_EXCECUTION', value);
       }
     },
 
@@ -1888,6 +1924,12 @@ export default {
     }
   },
 
+  mounted() {
+    if (this.limitExcecution) {
+      this.enableLimitExcecution = true;
+    }
+  },
+
   methods: {
     addEmoji(value) {
       this.slackEmojiOverride = value.colons;
@@ -1902,6 +1944,15 @@ export default {
       this.snsAwsSecretAccessKey = '';
       this.snsAwsRegion = '';
       this.snsAwsProfile = '';
+    },
+
+    changeLimitExcecution(val) {
+      if (val) {
+        this.enableLimitExcecution = true;
+      } else {
+        this.enableLimitExcecution = false;
+        this.limitExcecution = '';
+      }
     },
 
     changeHiveAlertConfigFollow(val) {
@@ -2135,5 +2186,14 @@ export default {
     color: green !important;
     border-color: blue !important;
   }
+}
+
+.limit-excecution {
+  margin: 0 auto;
+  min-height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 </style>

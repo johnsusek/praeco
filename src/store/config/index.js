@@ -184,6 +184,8 @@ export default {
 
         commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
 
+        commit('alert/UPDATE_LIMIT_EXCECUTION', config.limit_execution);
+
         commit('alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', config.generate_kibana_discover_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_APP_URL', config.kibana_discover_app_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_VERSION', config.kibana_discover_version);
@@ -801,6 +803,16 @@ export default {
 
       if (state.alert.aggregationKey) {
         config.aggregation_key = state.alert.aggregationKey;
+      }
+
+      return config;
+    },
+
+    limitExcecution(state) {
+      let config = {};
+
+      if (state.alert.limitExcecution) {
+        config.limit_execution = state.alert.limitExcecution;
       }
 
       return config;
@@ -1529,6 +1541,8 @@ export default {
       }
 
       config = { ...config, ...getters.kibanaDiscover };
+
+      config = { ...config, ...getters.limitExcecution };
 
       // Sort the keys in the object so it appears alphabetically in the UI
       let conf = {};

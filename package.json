@@ -1,6 +1,6 @@
 {
   "name": "praeco",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -51,6 +51,7 @@
     "valid-url": "1.0.9",
     "vue": "2.6.12",
     "vue-at": "2.5.0-beta.2",
+    "vue-cron-editor-buefy": "^0.2.14",
     "vue-echarts": "3.1.2",
     "vue-infinite-scroll": "2.0.2",
     "vue-json-pretty": "1.7.1",
