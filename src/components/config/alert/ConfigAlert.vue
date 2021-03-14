@@ -173,7 +173,54 @@
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item label="Slack Attach Kibana Discover Url" prop="slackAttachKibanaDiscoverUrl">
+        <el-form-item label="Parse Override" prop="slackParseOverride">
+          <el-radio-group v-model="slackParseOverride" :disabled="viewOnly">
+            <el-radio id="slackParseOverrideNone" label="none" border>
+              none
+            </el-radio>
+            <el-radio id="slackParseOverrideFull" label="full" border>
+              full
+            </el-radio>
+          </el-radio-group>
+          <label>By default the notification message is escaped ‘none’. You can also use ‘full’.</label>
+        </el-form-item>
+
+        <el-form-item label="Text String" prop="slackTextString">
+          <el-input id="slackTextString" v-model="slackTextString" :disabled="viewOnly" />
+          <label>Notification message you want to add.</label>
+        </el-form-item>
+
+        <el-form-item label="Ignore SSL Errors" prop="slackIgnoreSslErrors">
+          <el-switch
+            id="slackIgnoreSslErrors"
+            v-model="slackIgnoreSslErrors"
+            :disabled="viewOnly"
+            @change="changeSlackIgnoreSslErrors" />
+        </el-form-item>
+
+        <el-form-item label="Icon URL Override" prop="slackIconUrlOverride">
+          <el-input id="slackIconUrlOverride" v-model="slackIconUrlOverride" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will use the default webhook icon when posting to the channel.
+            You can provide icon_url to use custom image.
+            Provide absolute address of the picture or Base64 data url.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="CA Certs" prop="slackCaCerts">
+          <el-input id="slackCaCerts" v-model="slackCaCerts" :disabled="viewOnly" />
+          <label>path to a CA cert bundle to use to verify SSL connections.</label>
+        </el-form-item>
+
+        <el-form-item label="Timeout" prop="slackTimeout">
+          <el-input-number id="slackTimeout" v-model="slackTimeout" :disabled="viewOnly" />
+          <label>
+            You can specify a timeout value, in seconds, for making communicating with Slack.
+            The default is 10. If a timeout occurs, the alert will be retried next time elastalert cycles.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Attach Kibana Discover URL" prop="slackAttachKibanaDiscoverUrl">
           <el-switch
             id="slackAttachKibanaDiscoverUrl"
             v-model="slackAttachKibanaDiscoverUrl"
@@ -181,16 +228,24 @@
             @change="changeSlackAttachKibanaDiscoverUrl" />
         </el-form-item>
 
-        <el-form-item label="Slack Kibana Discover Color" prop="slackKibanaDiscoverColor">
-          <el-input
-            v-model="slackKibanaDiscoverColor" type="color" :disabled="viewOnly" />
+        <el-form-item label="Kibana Discover Color" prop="slackKibanaDiscoverColor">
+          <el-color-picker
+            v-model="slackKibanaDiscoverColor" :disabled="viewOnly" />
           <label>The color of the Kibana Discover url attachment.</label>
         </el-form-item>
 
-        <el-form-item label="Slack Kibana Discover Title" prop="slackKibanaDiscoverTitle">
+        <el-form-item label="Kibana Discover Title" prop="slackKibanaDiscoverTitle">
           <el-input v-model="slackKibanaDiscoverTitle" :disabled="viewOnly" />
           <label>The title of the Kibana Discover url attachment.</label>
         </el-form-item>
+
+        <praeco-form-item label="Proxy" prop="slackProxy">
+          <el-input id="slackProxy" v-model="slackProxy" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will not use a network proxy to send notifications to Slack.
+            Set this option using hostname:port if you need to use a proxy.
+          </label>
+        </praeco-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('email')">
@@ -235,6 +290,56 @@
           <el-input v-model="bcc" :disabled="viewOnly" />
           <label>Comma separated list of email addresses</label>
         </el-form-item>
+
+        <el-form-item label="SMTP SSL" prop="smtpSsl">
+          <el-switch
+            id="smtpSsl"
+            v-model="smtpSsl"
+            :disabled="viewOnly"
+            @change="changeSmtpSsl" />
+          <label>
+            Connect the SMTP host using TLS, defaults to false.
+            If smtp_ssl is not used, ElastAlert will still attempt STARTTLS.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="SMTP Host" prop="smtpHost">
+          <el-input v-model="smtpHost" :disabled="viewOnly" />
+          <label>The SMTP host to use, defaults to localhost.</label>
+        </el-form-item>
+
+        <el-form-item label="SMTP Port" prop="smtpPort">
+          <el-input-number id="smtpPort" v-model="smtpPort" :disabled="viewOnly" />
+          <label>The port to use. Default is 25.</label>
+        </el-form-item>
+
+        <el-form-item label="SMTP Auth File" prop="smtpAuthFile">
+          <el-input v-model="smtpAuthFile" :disabled="viewOnly" />
+          <label>
+            The path to a file which contains SMTP authentication credentials.
+            The path can be either absolute or relative to the given rule.
+            It should be YAML formatted and contain two fields, user and password.
+            If this is not present, no authentication will be attempted.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="SMTP Key File" prop="smtpKeyFile">
+          <el-input v-model="smtpKeyFile" :disabled="viewOnly" />
+          <label>Connect the SMTP host using the given path to a TLS key file, default to None.</label>
+        </el-form-item>
+
+        <el-form-item label="SMTP Cert File" prop="smtpCertFile">
+          <el-input v-model="smtpCertFile" :disabled="viewOnly" />
+          <label> Connect the SMTP host using the given path to a TLS certificate file, default to None.</label>
+        </el-form-item>
+
+        <el-form-item label="Email From Field" prop="emailFromField">
+          <el-input v-model="emailFromField" :disabled="viewOnly" />
+        </el-form-item>
+
+        <el-form-item label="Email Add Domain" prop="emailAddDomain">
+          <el-input v-model="emailAddDomain" :disabled="viewOnly" />
+        </el-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('post')" label="HTTP">
@@ -242,6 +347,20 @@
         <el-form-item label="HTTP POST URL" prop="httpPostUrl" required>
           <el-input v-model="httpPostUrl" :disabled="viewOnly" />
           <label>JSON results will be POSTed to this URL</label>
+        </el-form-item>
+
+        <el-form-item label="Timeout" prop="httpPostTimeout">
+          <el-input-number id="httpPostTimeout" v-model="httpPostTimeout" :disabled="viewOnly" />
+          <label>
+            The timeout value, in seconds, for making the post.
+            The default is 10.
+            If a timeout occurs, the alert will be retried next time elastalert cycles.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Proxy" prop="httpPostProxy">
+          <el-input id="httpPostProxy" v-model="httpPostProxy" :disabled="viewOnly" />
+          <label>URL of proxy, if required.</label>
         </el-form-item>
       </el-tab-pane>
 
@@ -258,9 +377,35 @@
         </el-form-item>
 
         <el-form-item label="Color" prop="ms_teamsThemeColor" required>
-          <el-input id="ms_teamsThemeColor" v-model="ms_teamsThemeColor" type="color" :disabled="viewOnly" />
+          <el-color-picker id="ms_teamsThemeColor" v-model="ms_teamsThemeColor" :disabled="viewOnly" />
+        </el-form-item>
+
+        <el-form-item label="Alert Summary" prop="ms_teamsAlertSummary" required>
+          <el-input id="ms_teamsAlertSummary" v-model="ms_teamsAlertSummary" :disabled="viewOnly" />
           <label>
-            HTML color name in form of <b>#RRGGBB</b>
+            Summary should be configured according to MS documentation, although it seems not displayed by Teams currently.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Alert Fixed Width" prop="ms_teamsAlertFixedWidth">
+          <el-switch
+            id="ms_teamsAlertFixedWidth"
+            v-model="ms_teamsAlertFixedWidth"
+            :disabled="viewOnly"
+            @change="changemsTeamsAlertFixedWidth" />
+          <label>
+            By default this is False and the notification will be sent to MS Teams as-is.
+            Teams supports a partial Markdown implementation, which means asterisk, underscore and other characters may be interpreted as Markdown.
+            Currenlty, Teams does not fully implement code blocks. Setting this attribute to True will enable line by line code blocks.
+            It is recommended to enable this to get clearer notifications in Teams.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Proxy" prop="ms_teamsProxy">
+          <el-input id="ms_teamsProxy" v-model="ms_teamsProxy" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will not use a network proxy to send notifications to MS Teams.
+            Set this option using hostname:port if you need to use a proxy.
           </label>
         </el-form-item>
       </el-tab-pane>
@@ -276,6 +421,24 @@
             Unique identifier for the target chat or username of the
             target channel using telegram chat_id (in the format “-xxxxxxxx”)
           </label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Proxy" prop="telegramProxy">
+          <el-input id="telegramProxy" v-model="telegramProxy" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will not use a network proxy to send notifications to Telegram.
+            Set this option using hostname:port if you need to use a proxy.
+          </label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Proxy Login" prop="telegramProxyLogin">
+          <el-input id="telegramProxyLogin" v-model="telegramProxyLogin" :disabled="viewOnly" />
+          <label>The Telegram proxy auth username.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Proxy Password" prop="telegramProxyPass">
+          <el-input id="telegramProxyPass" v-model="telegramProxyPass" :disabled="viewOnly" />
+          <label>The Telegram proxy auth password.</label>
         </praeco-form-item>
       </el-tab-pane>
 
@@ -364,6 +527,36 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
+
+        <el-form-item label="Ignore SSL Errors" prop="mattermostIgnoreSslErrors">
+          <el-switch
+            id="mattermostIgnoreSslErrors"
+            v-model="mattermostIgnoreSslErrors"
+            :disabled="viewOnly"
+            @change="changeMattermostIgnoreSslErrors" />
+        </el-form-item>
+
+        <el-form-item label="Icon URL Override" prop="mattermostIconUrlOverride">
+          <el-input id="mattermostIconUrlOverride" v-model="mattermostIconUrlOverride" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will use the default webhook icon when posting to the channel.
+            You can provide icon_url to use custom image.
+            Provide absolute address of the picture or Base64 data url.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Msg Pretext" prop="mattermostMsgPretext">
+          <el-input id="mattermostMsgPretext" v-model="mattermostMsgPretext" :disabled="viewOnly" />
+          <label>You can set the message attachment pretext using this option.</label>
+        </el-form-item>
+
+        <el-form-item label="Proxy" prop="mattermostProxy">
+          <el-input id="mattermostProxy" v-model="mattermostProxy" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will not use a network proxy to send notifications to Mattermost.
+            Set this option using hostname:port if you need to use a proxy.
+          </label>
+        </el-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('command')">
@@ -380,13 +573,48 @@
             format, /path/program name ,argument1,argument2,argument3
           </label>
         </praeco-form-item>
+
+        <el-form-item label="Pipe Match Json" prop="pipeMatchJson">
+          <el-switch
+            id="pipeMatchJson"
+            v-model="pipeMatchJson"
+            :disabled="viewOnly"
+            @change="changePipeMatchJson" />
+          <label>
+            If true, the match will be converted to JSON and passed to stdin of the command.
+            Note that this will cause ElastAlert to block until the command exits or sends an EOF to stdout.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Pipe Alert Text" prop="pipeAlertText">
+          <el-switch
+            id="pipeAlertText"
+            v-model="pipeAlertText"
+            :disabled="viewOnly"
+            @change="changePipeAlertText" />
+          <label>
+            If true, the standard alert body text will be passed to stdin of the command.
+            Note that this will cause ElastAlert to block until the command exits or sends an EOF to stdout.
+            It cannot be used at the same time as pipe_match_json.
+          </label>
+        </el-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('gitter')">
         <template slot="label">
           <icon :icon="['fab', 'gitter']" size="1x" /> Gitter
         </template>
-        <el-form-item label="Message level" prop="gitterMsgLevel" required>
+
+        <praeco-form-item label="Webhook URL" prop="gitterWebhookUrl" required>
+          <el-input id="gitterWebhookUrl" v-model="gitterWebhookUrl" :disabled="viewOnly" />
+          <label>
+            The webhook URL that includes your auth data and the ID of the channel (room) you want to post to.
+            Go to the Integration Settings of the channel: (example  https://gitter.im/ORGA/CHANNEL#integrations ) ,
+            click ‘CUSTOM’ and copy the resulting URL.
+          </label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Message level" prop="gitterMsgLevel" required>
           <el-radio-group v-model="gitterMsgLevel" :disabled="viewOnly">
             <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">
               Error
@@ -395,7 +623,15 @@
               Info
             </el-radio>
           </el-radio-group>
-        </el-form-item>
+        </praeco-form-item>
+
+        <praeco-form-item label="Proxy" prop="gitterProxy">
+          <el-input id="gitterProxy" v-model="gitterProxy" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will not use a network proxy to send notifications to Gitter.
+            Set this option using hostname:port if you need to use a proxy.
+          </label>
+        </praeco-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('sns')">
@@ -443,11 +679,21 @@
         <template slot="label">
           Zabbix
         </template>
+        <praeco-form-item label="Zbx Sender Host" prop="zbxSenderHost" required>
+          <el-input id="zbxSenderHost" v-model="zbxSenderHost" :disabled="viewOnly" />
+          <label>The address where zabbix server is running.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Zbx Sender Port" prop="zbxSenderPort" required>
+          <el-input-number id="zbxSenderPort" v-model="zbxSenderPort" :disabled="viewOnly" />
+          <label>The port where zabbix server is listenning.</label>
+        </praeco-form-item>
 
         <praeco-form-item label="ZbxHost" prop="zbxHost" required>
           <el-input id="zbxHost" v-model="zbxHost" :disabled="viewOnly" />
           <label>This field setup the host in zabbix that receives the value sent by Elastalert.</label>
         </praeco-form-item>
+
         <praeco-form-item label="ZbxKey" prop="zbxKey" required>
           <el-input id="zbxKey" v-model="zbxKey" :disabled="viewOnly" />
           <label>This field setup the key in the host that receives the value sent by Elastalert.</label>
@@ -533,7 +779,7 @@
         </praeco-form-item>
 
         <praeco-form-item label="Stomp Hostport" prop="stompHostport" required>
-          <el-input id="stompHostport" v-model="stompHostport" type="number" :disabled="viewOnly" />
+          <el-input-number id="stompHostport" v-model="stompHostport" :disabled="viewOnly" />
           <label>The STOMP port to use, defaults to 61613.</label>
         </praeco-form-item>
 
@@ -551,6 +797,15 @@
           <el-input id="stompDestination" v-model="stompDestination" :disabled="viewOnly" />
           <label>The STOMP destination to use, defaults to /queue/ALERT</label>
         </praeco-form-item>
+
+        <praeco-form-item label="Stomp SSL" prop="stompSsl">
+          <el-switch
+            id="stompSsl"
+            v-model="stompSsl"
+            :disabled="viewOnly"
+            @change="changestompSsl" />
+          <label>Connect the STOMP host using TLS.</label>
+        </praeco-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('victorops')">
@@ -558,17 +813,17 @@
           VictorOps
         </template>
 
-        <praeco-form-item label="VictorOps ApiKey" prop="victoropsApiKey" required>
+        <praeco-form-item label="Api Key" prop="victoropsApiKey" required>
           <el-input id="victoropsApiKey" v-model="victoropsApiKey" :disabled="viewOnly" />
           <label>API key generated under the ‘REST Endpoint’ in the Integrations settings.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="VictorOps RoutingKey" prop="victoropsRoutingKey" required>
+        <praeco-form-item label="Routing Key" prop="victoropsRoutingKey" required>
           <el-input id="victoropsRoutingKey" v-model="victoropsRoutingKey" :disabled="viewOnly" />
           <label>VictorOps routing key to route the alert to.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="VictorOps MessageType" prop="victoropsMessageType" required>
+        <praeco-form-item label="Message Type" prop="victoropsMessageType" required>
           <el-radio-group v-model="victoropsMessageType" :disabled="viewOnly">
             <el-radio id="victoropsMessageTypeInfo" label="INFO" border>
               INFO
@@ -586,17 +841,32 @@
               RECOVERY
             </el-radio>
           </el-radio-group>
-          <label>VictorOps field to specify severity level. Must be one of the following: INFO, WARNING, ACKNOWLEDGEMENT, CRITICAL, RECOVERY</label>
+          <label>
+            VictorOps field to specify severity level.
+            Must be one of the following: INFO, WARNING, ACKNOWLEDGEMENT, CRITICAL, RECOVERY
+          </label>
         </praeco-form-item>
 
-        <praeco-form-item label="VictorOps EntityId" prop="victoropsEntityId">
+        <praeco-form-item label="Entity Id" prop="victoropsEntityId">
           <el-input id="victoropsEntityId" v-model="victoropsEntityId" :disabled="viewOnly" />
-          <label>The identity of the incident used by VictorOps to correlate incidents throughout the alert lifecycle. If not defined, VictorOps will assign a random string to each alert.</label>
+          <label>
+            The identity of the incident used by VictorOps to correlate incidents throughout the alert lifecycle.
+            If not defined, VictorOps will assign a random string to each alert.
+            /label>
+          </label>
         </praeco-form-item>
 
-        <praeco-form-item label="VictorOps EntityDisplayName" prop="victoropsEntityDisplayName">
+        <praeco-form-item label="Entity Display Name" prop="victoropsEntityDisplayName">
           <el-input id="victoropsEntityDisplayName" v-model="victoropsEntityDisplayName" :disabled="viewOnly" />
           <label>Human-readable name of alerting entity to summarize incidents without affecting the life-cycle workflow.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Proxy" prop="victoropsProxy">
+          <el-input id="victoropsProxy" v-model="victoropsProxy" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will not use a network proxy to send notifications to VictorOps.
+            Set this option using hostname:port if you need to use a proxy.
+          </label>
         </praeco-form-item>
       </el-tab-pane>
 
@@ -605,54 +875,62 @@
           ServiceNow
         </template>
 
-        <praeco-form-item label="ServiceNow Username" prop="serviceNowUsername" required>
+        <praeco-form-item label="Username" prop="serviceNowUsername" required>
           <el-input id="serviceNowUsername" v-model="serviceNowUsername" :disabled="viewOnly" />
           <label>The ServiceNow Username to access the api.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow Password" prop="serviceNowPassword" required>
+        <praeco-form-item label="Password" prop="serviceNowPassword" required>
           <el-input id="serviceNowPassword" v-model="serviceNowPassword" :disabled="viewOnly" />
           <label>The ServiceNow password to access the api.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow RestUrl" prop="servicenowRestUrl" required>
+        <praeco-form-item label="RestUrl" prop="servicenowRestUrl" required>
           <el-input id="servicenowRestUrl" v-model="servicenowRestUrl" :disabled="viewOnly" />
           <label>The ServiceNow RestApi url.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow ShortDescription" prop="servicenowShortDescription" required>
+        <praeco-form-item label="ShortDescription" prop="servicenowShortDescription" required>
           <el-input id="servicenowShortDescription" v-model="servicenowShortDescription" :disabled="viewOnly" />
           <label>The ServiceNow password to access the api.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow Comments" prop="servicenowComments" required>
+        <praeco-form-item label="Comments" prop="servicenowComments" required>
           <el-input id="servicenowComments" v-model="servicenowComments" :disabled="viewOnly" />
           <label>Comments to be attached to the incident, this is the equivilant of work notes.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow AssignmentGroup" prop="servicenowAssignmentGroup" required>
+        <praeco-form-item label="AssignmentGroup" prop="servicenowAssignmentGroup" required>
           <el-input id="servicenowAssignmentGroup" v-model="servicenowAssignmentGroup" :disabled="viewOnly" />
           <label>The group to assign the incident to.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow Category" prop="servicenowCategory" required>
+        <praeco-form-item label="Category" prop="servicenowCategory" required>
           <el-input id="servicenowCategory" v-model="servicenowCategory" :disabled="viewOnly" />
           <label>The category to attach the incident to, use an existing category.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow Subcategory" prop="servicenowSubcategory" required>
+        <praeco-form-item label="Subcategory" prop="servicenowSubcategory" required>
           <el-input id="servicenowSubcategory" v-model="servicenowSubcategory" :disabled="viewOnly" />
           <label>The subcategory to attach the incident to, use an existing subcategory.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow CmdbCi" prop="servicenowCmdbCi" required>
+        <praeco-form-item label="CmdbCi" prop="servicenowCmdbCi" required>
           <el-input id="servicenowCmdbCi" v-model="servicenowCmdbCi" :disabled="viewOnly" />
           <label>The configuration item to attach the incident to.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="ServiceNow CallerId" prop="servicenowCallerId" required>
+        <praeco-form-item label="CallerId" prop="servicenowCallerId" required>
           <el-input id="servicenowCallerId" v-model="servicenowCallerId" :disabled="viewOnly" />
           <label>The caller id (email address) of the user that created the incident.</label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Proxy" prop="servicenowProxy">
+          <el-input id="servicenowProxy" v-model="servicenowProxy" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert will not use a network proxy to send notifications to ServiceNow.
+            Set this option using hostname:port if you need to use a proxy.
+          </label>
         </praeco-form-item>
       </el-tab-pane>
 
@@ -661,14 +939,17 @@
           Chatwork
         </template>
 
-        <praeco-form-item label="Chatwork Apikey" prop="chatworkApikey" required>
+        <praeco-form-item label="Api Key" prop="chatworkApikey" required>
           <el-input id="chatworkApikey" v-model="chatworkApikey" :disabled="viewOnly" />
           <label>ChatWork API KEY.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="Chatwork RoomId" prop="chatworkRoomId" required>
+        <praeco-form-item label="Room Id" prop="chatworkRoomId" required>
           <el-input id="chatworkRoomId" v-model="chatworkRoomId" :disabled="viewOnly" />
-          <label>The ID of the room you are talking to in Chatwork. How to find the room ID is the part of the number after "rid" at the end of the URL of the browser.</label>
+          <label>
+            The ID of the room you are talking to in Chatwork.
+            How to find the room ID is the part of the number after "rid" at the end of the URL of the browser.
+          </label>
         </praeco-form-item>
       </el-tab-pane>
 
@@ -677,7 +958,7 @@
           Discord
         </template>
 
-        <praeco-form-item label="Discord WebhookUrl" prop="discordWebhookUrl" required>
+        <praeco-form-item label="WebhookURL" prop="discordWebhookUrl" required>
           <el-input id="discordWebhookUrl" v-model="discordWebhookUrl" :disabled="viewOnly" />
           <label>The webhook URL.</label>
         </praeco-form-item>
@@ -699,9 +980,12 @@
           <label>embed footer.</label>
         </praeco-form-item>
 
-        <praeco-form-item label="Discord Embed IconUrl" prop="discordEmbedIconUrl">
+        <praeco-form-item label="Embed IconUrl" prop="discordEmbedIconUrl">
           <el-input id="discordEmbedIconUrl" v-model="discordEmbedIconUrl" :disabled="viewOnly" />
-          <label>You can provide icon_url to use custom image. Provide absolute address of the pciture.(exampmle : http://domain/picure.png)</label>
+          <label>
+            You can provide icon_url to use custom image.
+            Provide absolute address of the pciture.(exampmle : http://domain/picure.png)
+          </label>
         </praeco-form-item>
       </el-tab-pane>
 
@@ -731,7 +1015,7 @@
         </praeco-form-item>
 
         <praeco-form-item label="Hive Alert Config Severity" prop="hiveAlertConfigSeverity">
-          <el-input id="hiveAlertConfigSeverity" v-model.number="hiveAlertConfigSeverity" type="number" min="1" max="4" :disabled="viewOnly" />
+          <el-input-number id="hiveAlertConfigSeverity" v-model.number="hiveAlertConfigSeverity" :min="1" :max="4" :disabled="viewOnly" />
           <label>Alert's severity: 1, 2, 3, 4 for LOW, MEDIUM, HIGH, CRTICAL.</label>
         </praeco-form-item>
 
@@ -785,7 +1069,7 @@
         </el-popover>
 
         <praeco-form-item label="Hive Alert Config Tlp" prop="hiveAlertConfigTlp">
-          <el-input id="hiveAlertConfigTlp" v-model.number="hiveAlertConfigTlp" type="number" min="0" max="3" :disabled="viewOnly" />
+          <el-input-number id="hiveAlertConfigTlp" v-model.number="hiveAlertConfigTlp" :min="0" :max="3" :disabled="viewOnly" />
           <label>Alert's TLP: 0, 1, 2, 3 for WHITE, GREEN, AMBER, RED.</label>
         </praeco-form-item>
 
@@ -797,7 +1081,6 @@
             <el-radio id="hiveAlertConfigStatusInProgress" label="InProgress" border>
               InProgress
             </el-radio>
-            Cancel
             <el-radio id="hiveAlertConfigStatusCancel" label="Cancel" border>
               Cancel
             </el-radio>
@@ -973,6 +1256,12 @@ export default {
             validator: validateUrl,
             trigger: ['change', 'blur']
           }
+        ],
+        gitterWebhookUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
         ]
       }
     };
@@ -994,6 +1283,30 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_HTTP_POST_URL', value);
+      }
+    },
+
+    httpPostTimeout: {
+      get() {
+        return this.$store.state.config.alert.httpPostTimeout;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_HTTP_POST_TIMEOUT',
+          value
+        );
+      }
+    },
+
+    httpPostProxy: {
+      get() {
+        return this.$store.state.config.alert.httpPostProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_HTTP_POST_PROXY',
+          value
+        );
       }
     },
 
@@ -1042,6 +1355,88 @@ export default {
       }
     },
 
+    smtpSsl: {
+      get() {
+        return this.$store.state.config.alert.smtpSsl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SMTP_SSL', value);
+      }
+    },
+
+    smtpHost: {
+      get() {
+        return this.$store.state.config.alert.smtpHost;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SMTP_HOST', value);
+      }
+    },
+
+    smtpPort: {
+      get() {
+        return this.$store.state.config.alert.smtpPort;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SMTP_PORT', value);
+      }
+    },
+
+    smtpAuthFile: {
+      get() {
+        return this.$store.state.config.alert.smtpAuthFile;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SMTP_AUTH_FILE', value);
+      }
+    },
+
+    smtpKeyFile: {
+      get() {
+        return this.$store.state.config.alert.smtpKeyFile;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SMTP_KEY_FILE', value);
+      }
+    },
+
+    smtpCertFile: {
+      get() {
+        return this.$store.state.config.alert.smtpCertFile;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SMTP_CERT_FILE', value);
+      }
+    },
+
+    emailFromField: {
+      get() {
+        return this.$store.state.config.alert.emailFromField;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_EMAIL_FROM_FIELD', value);
+      }
+    },
+
+    emailAddDomain: {
+      get() {
+        return this.$store.state.config.alert.emailAddDomain;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_EMAIL_ADD_DOMAIN', value);
+      }
+    },
+
+    // TODO:
+    // emailFormat: {
+    //   get() {
+    //     return this.$store.state.config.alert.emailFormat;
+    //   },
+    //   set(value) {
+    //     this.$store.commit('config/alert/UPDATE_EMAIL_FORMAT', value);
+    //   }
+    // },
+
     telegramRoomId: {
       get() {
         return this.$store.state.config.alert.telegramRoomId;
@@ -1049,6 +1444,42 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_TELEGRAM_ROOM_ID',
+          value
+        );
+      }
+    },
+
+    telegramProxy: {
+      get() {
+        return this.$store.state.config.alert.telegramProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_TELEGRAM_PROXY',
+          value
+        );
+      }
+    },
+
+    telegramProxyLogin: {
+      get() {
+        return this.$store.state.config.alert.telegramProxyLogin;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_TELEGRAM_PROXY_LOGIN',
+          value
+        );
+      }
+    },
+
+    telegramProxyPass: {
+      get() {
+        return this.$store.state.config.alert.telegramProxyPass;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_TELEGRAM_PROXY_PASS',
           value
         );
       }
@@ -1234,6 +1665,30 @@ export default {
       }
     },
 
+    zbxSenderHost: {
+      get() {
+        return this.$store.state.config.alert.zbxSenderHost;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ZBX_SENDER_HOST',
+          value
+        );
+      }
+    },
+
+    zbxSenderPort: {
+      get() {
+        return this.$store.state.config.alert.zbxSenderPort;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ZBX_SENDER_PORT',
+          value
+        );
+      }
+    },
+
     zbxHost: {
       get() {
         return this.$store.state.config.alert.zbxHost;
@@ -1282,12 +1737,57 @@ export default {
       }
     },
 
+    pipeMatchJson: {
+      get() {
+        return this.$store.state.config.alert.pipeMatchJson;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_PIPE_MATCH_JSON',
+          value
+        );
+      }
+    },
+
+    pipeAlertText: {
+      get() {
+        return this.$store.state.config.alert.pipeAlertText;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_PIPE_ALERT_TEXT',
+          value
+        );
+      }
+    },
+
+    gitterWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.gitterWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_GITTER_WEBHOOK_URL', value);
+      }
+    },
+
     gitterMsgLevel: {
       get() {
         return this.$store.state.config.alert.gitterMsgLevel;
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_GITTER_MSG_LEVEL', value);
+      }
+    },
+
+    gitterProxy: {
+      get() {
+        return this.$store.state.config.alert.gitterProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_GITTER_PROXY',
+          value
+        );
       }
     },
 
@@ -1518,6 +2018,18 @@ export default {
       }
     },
 
+    servicenowProxy: {
+      get() {
+        return this.$store.state.config.alert.servicenowProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_PROXY',
+          value
+        );
+      }
+    },
+
     victoropsApiKey: {
       get() {
         return this.$store.state.config.alert.victoropsApiKey;
@@ -1578,6 +2090,18 @@ export default {
       }
     },
 
+    victoropsProxy: {
+      get() {
+        return this.$store.state.config.alert.victoropsProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_VICTOROPS_PROXY',
+          value
+        );
+      }
+    },
+
     stompHostname: {
       get() {
         return this.$store.state.config.alert.stompHostname;
@@ -1633,6 +2157,18 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_STOMP_DESTINATION',
+          value
+        );
+      }
+    },
+
+    stompSsl: {
+      get() {
+        return this.$store.state.config.alert.stompSsl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_STOMP_SSL',
           value
         );
       }
@@ -1704,6 +2240,75 @@ export default {
       }
     },
 
+    slackParseOverride: {
+      get() {
+        return this.$store.state.config.alert.slackParseOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_PARSE_OVERRIDE', value);
+      }
+    },
+
+    slackTextString: {
+      get() {
+        return this.$store.state.config.alert.slackTextString;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_TEXT_STRING',
+          value
+        );
+      }
+    },
+
+    slackIgnoreSslErrors: {
+      get() {
+        return this.$store.state.config.alert.slackIgnoreSslErrors;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_IGNORE_SSL_ERRORS',
+          value
+        );
+      }
+    },
+
+    slackIconUrlOverride: {
+      get() {
+        return this.$store.state.config.alert.slackIconUrlOverride;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_ICON_URL_OVERRIDE',
+          value
+        );
+      }
+    },
+
+    slackCaCerts: {
+      get() {
+        return this.$store.state.config.alert.slackCaCerts;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_CA_CERTS',
+          value
+        );
+      }
+    },
+
+    slackTimeout: {
+      get() {
+        return this.$store.state.config.alert.slackTimeout;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_TIMEOUT',
+          value
+        );
+      }
+    },
+
     slackMsgColor: {
       get() {
         return this.$store.state.config.alert.slackMsgColor;
@@ -1740,6 +2345,18 @@ export default {
       }
     },
 
+    slackProxy: {
+      get() {
+        return this.$store.state.config.alert.slackProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_PROXY',
+          value
+        );
+      }
+    },
+
     mattermostChannelOverride: {
       get() {
         return this.$store.state.config.alert.mattermostChannelOverride;
@@ -1770,6 +2387,54 @@ export default {
       }
     },
 
+    mattermostIconUrlOverride: {
+      get() {
+        return this.$store.state.config.alert.mattermostIconUrlOverride;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_ICON_URL_OVERRIDE',
+          value
+        );
+      }
+    },
+
+    mattermostMsgPretext: {
+      get() {
+        return this.$store.state.config.alert.mattermostMsgPretext;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_MSG_PRETEXT',
+          value
+        );
+      }
+    },
+
+    mattermostIgnoreSslErrors: {
+      get() {
+        return this.$store.state.config.alert.mattermostIgnoreSslErrors;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_IGNORE_SSL_ERRORS',
+          value
+        );
+      }
+    },
+
+    mattermostProxy: {
+      get() {
+        return this.$store.state.config.alert.mattermostProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_PROXY',
+          value
+        );
+      }
+    },
+
     ms_teamsWebhookUrl: {
       get() {
         return this.$store.state.config.alert.ms_teamsWebhookUrl;
@@ -1785,6 +2450,33 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_MS_TEAMS_THEME_COLOR', value);
+      }
+    },
+
+    ms_teamsAlertFixedWidth: {
+      get() {
+        return this.$store.state.config.alert.ms_teamsAlertFixedWidth;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH', value);
+      }
+    },
+
+    ms_teamsAlertSummary: {
+      get() {
+        return this.$store.state.config.alert.ms_teamsAlertSummary;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', value);
+      }
+    },
+
+    ms_teamsProxy: {
+      get() {
+        return this.$store.state.config.alert.ms_teamsProxy;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MS_TEAMS_PROXY', value);
       }
     },
 
@@ -1909,6 +2601,46 @@ export default {
         this.hiveAlertConfigFollow = true;
       } else {
         this.hiveAlertConfigFollow = false;
+      }
+    },
+
+    changeSmtpSsl(val) {
+      if (val) {
+        this.smtpSsl = true;
+      } else {
+        this.smtpSsl = false;
+      }
+    },
+
+    changeSlackIgnoreSslErrors(val) {
+      if (val) {
+        this.slackIgnoreSslErrors = true;
+      } else {
+        this.slackIgnoreSslErrors = false;
+      }
+    },
+
+    changeMattermostIgnoreSslErrors(val) {
+      if (val) {
+        this.mattermostIgnoreSslErrors = true;
+      } else {
+        this.mattermostIgnoreSslErrors = false;
+      }
+    },
+
+    changestompSsl(val) {
+      if (val) {
+        this.stompSsl = true;
+      } else {
+        this.stompSsl = false;
+      }
+    },
+
+    changemsTeamsAlertFixedWidth(val) {
+      if (val) {
+        this.ms_teamsAlertFixedWidth = true;
+      } else {
+        this.ms_teamsAlertFixedWidth = false;
       }
     },
 

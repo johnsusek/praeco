@@ -184,6 +184,7 @@ export default {
 
         commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
 
+        /* Kibana Discover */
         commit('alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', config.generate_kibana_discover_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_APP_URL', config.kibana_discover_app_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_VERSION', config.kibana_discover_version);
@@ -199,7 +200,15 @@ export default {
         /* HTTP POST */
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
 
-        /* Email */
+        if (config.http_post_timeout) {
+          commit('alert/UPDATE_HTTP_POST_TIMEOUT', config.http_post_timeout);
+        } else {
+          commit('alert/UPDATE_HTTP_POST_TIMEOUT', 10);
+        }
+
+        commit('alert/UPDATE_HTTP_POST_PROXY', config.http_post_proxy);
+
+        /* EMail */
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.email_reply_to);
 
@@ -227,8 +236,38 @@ export default {
           }
         }
 
+        if (config.smtp_ssl) {
+          commit('alert/UPDATE_SMTP_SSL', config.smtp_ssl);
+        } else {
+          commit('alert/UPDATE_SMTP_SSL', false);
+        }
+
+        commit('alert/UPDATE_SMTP_HOST', config.smtp_host);
+
+        if (config.smtp_port) {
+          commit('alert/UPDATE_SMTP_PORT', config.smtp_port);
+        } else {
+          commit('alert/UPDATE_SMTP_PORT', 25);
+        }
+
+        commit('alert/UPDATE_SMTP_AUTH_FILE', config.smtp_auth_file);
+        commit('alert/UPDATE_SMTP_KEY_FILE', config.smtp_key_file);
+        commit('alert/UPDATE_SMTP_CERT_FILE', config.smtp_cert_file);
+        commit('alert/UPDATE_EMAIL_FROM_FIELD', config.email_from_field);
+        commit('alert/UPDATE_EMAIL_ADD_DOMAIN', config.email_add_domain);
+
+        // TODO:
+        // if (config.email_format === 'html') {
+        //   commit('alert/UPDATE_EMAIL_FORMAT', true);
+        // } else {
+        //   commit('alert/UPDATE_EMAIL_FORMAT', false);
+        // }
+
         /* Telegram */
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
+        commit('alert/UPDATE_TELEGRAM_PROXY', config.telegram_proxy);
+        commit('alert/UPDATE_TELEGRAM_PROXY_LOGIN', config.telegram_proxy_login);
+        commit('alert/UPDATE_TELEGRAM_PROXY_PASS', config.telegram_proxy_pass);
 
         /* Chatwork */
         commit('alert/UPDATE_CHATWORK_API_KEY', config.chatwork_apikey);
@@ -264,6 +303,18 @@ export default {
         commit('alert/UPDATE_SNS_AWS_PROFILE', config.sns_aws_profile);
 
         /* Zabbix */
+        if (config.zbx_sender_host) {
+          commit('alert/UPDATE_ZBX_SENDER_HOST', config.zbx_sender_host);
+        } else {
+          commit('alert/UPDATE_ZBX_SENDER_HOST', 'localhost');
+        }
+
+        if (config.zbx_sender_port) {
+          commit('alert/UPDATE_ZBX_SENDER_PORT', config.zbx_sender_port);
+        } else {
+          commit('alert/UPDATE_ZBX_SENDER_PORT', 10051);
+        }
+
         commit('alert/UPDATE_ZBX_HOST', config.zbx_host);
         commit('alert/UPDATE_ZBX_KEY', config.zbx_key);
 
@@ -280,8 +331,19 @@ export default {
           commit('alert/UPDATE_COMMAND', config.command);
         }
 
+        commit('alert/UPDATE_PIPE_MATCH_JSON', config.pipe_match_json);
+        commit('alert/UPDATE_PIPE_ALERT_TEXT', config.pipe_alert_text);
+
         /* Gitter */
-        commit('alert/UPDATE_GITTER_MSG_LEVEL', config.gitter_msg_level);
+        commit('alert/UPDATE_GITTER_WEBHOOK_URL', config.gitter_webhook_url);
+
+        if (config.gitter_msg_level) {
+          commit('alert/UPDATE_GITTER_MSG_LEVEL', config.gitter_msg_level);
+        } else {
+          commit('alert/UPDATE_GITTER_MSG_LEVEL', 'error');
+        }
+
+        commit('alert/UPDATE_GITTER_PROXY', config.gitter_proxy);
 
         /* Jira */
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
@@ -299,12 +361,14 @@ export default {
         commit('alert/UPDATE_SERVICENOW_SUBCATEGORY', config.subcategory);
         commit('alert/UPDATE_SERVICENOW_CMDB_CI', config.cmdb_ci);
         commit('alert/UPDATE_SERVICENOW_CALLER_ID', config.caller_id);
+        commit('alert/UPDATE_SERVICENOW_PROXY', config.servicenow_proxy);
 
         /* VictorOps */
         commit('alert/UPDATE_VICTOROPS_API_KEY', config.victorops_api_key);
         commit('alert/UPDATE_VICTOROPS_ROUTING_KEY', config.victorops_routing_key);
         commit('alert/UPDATE_VICTOROPS_MESSAGE_TYPE', config.victorops_message_type);
         commit('alert/UPDATE_VICTOROPS_ENTITY_ID', config.victorops_entity_id);
+        commit('alert/UPDATE_VICTOROPS_PROXY', config.victorops_proxy);
 
         if (config.victorops_entity_display_name) {
           commit('alert/UPDATE_VICTOROPS_ENTITY_DISPLAY_NAME', config.victorops_entity_display_name);
@@ -343,15 +407,48 @@ export default {
           commit('alert/UPDATE_STOMP_DESTINATION', '/queue/ALERT');
         }
 
+        if (config.stomp_ssl) {
+          commit('alert/UPDATE_STOMP_SSL', config.stomp_ssl);
+        } else {
+          commit('alert/UPDATE_STOMP_SSL', false);
+        }
+
         /* GoogleChat */
         commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
-        commit('alert/UPDATE_GOOGLE_CHAT_FORMAT', config.googlechat_format);
+
+        if (config.googlechat_format) {
+          commit('alert/UPDATE_GOOGLE_CHAT_FORMAT', config.googlechat_format);
+        } else {
+          commit('alert/UPDATE_GOOGLE_CHAT_FORMAT', 'basic');
+        }
+
         commit('alert/UPDATE_GOOGLE_CHAT_HEADER_TITLE', config.googlechat_header_title);
 
         /* Mattermost */
         commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
-        commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', config.mattermost_username_override);
-        commit('alert/UPDATE_MATTERMOST_MSG_COLOR', config.mattermost_msg_color);
+
+        if (config.mattermost_username_override) {
+          commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', config.mattermost_username_override);
+        } else {
+          commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', 'elastalert');
+        }
+
+        if (config.mattermost_msg_color) {
+          commit('alert/UPDATE_MATTERMOST_MSG_COLOR', config.mattermost_msg_color);
+        } else {
+          commit('alert/UPDATE_MATTERMOST_MSG_COLOR', 'danger');
+        }
+
+        commit('alert/UPDATE_MATTERMOST_ICON_URL_OVERRIDE', config.mattermost_icon_url_override);
+        commit('alert/UPDATE_MATTERMOST_MSG_PRETEXT', config.mattermost_msg_pretext);
+
+        if (config.mattermost_ignore_ssl_errors) {
+          commit('alert/UPDATE_MATTERMOST_IGNORE_SSL_ERRORS', config.mattermost_ignore_ssl_errors);
+        } else {
+          commit('alert/UPDATE_MATTERMOST_IGNORE_SSL_ERRORS', false);
+        }
+
+        commit('alert/UPDATE_MATTERMOST_PROXY', config.mattermost_proxy);
 
         /* TheHive */
         if (config.hive_alert_config && config.hive_alert_config.title) {
@@ -400,9 +497,47 @@ export default {
 
         /* Slack */
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
-        commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
-        commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
-        commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
+
+        if (config.slack_username_override) {
+          commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
+        } else {
+          commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', 'elastalert');
+        }
+
+        if (config.slack_emoji_override) {
+          commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', config.slack_emoji_override);
+        } else {
+          commit('alert/UPDATE_SLACK_EMOJI_OVERRIDE', ':ghost:');
+        }
+
+        if (config.slack_msg_color) {
+          commit('alert/UPDATE_SLACK_MSG_COLOR', config.slack_msg_color);
+        } else {
+          commit('alert/UPDATE_SLACK_MSG_COLOR', 'danger');
+        }
+
+        commit('alert/UPDATE_SLACK_CA_CERTS', config.slack_ca_certs);
+        commit('alert/UPDATE_SLACK_ICON_URL_OVERRIDE', config.slack_icon_url_override);
+
+        if (config.slack_timeout) {
+          commit('alert/UPDATE_SLACK_TIMEOUT', config.slack_timeout);
+        } else {
+          commit('alert/UPDATE_SLACK_TIMEOUT', 10);
+        }
+
+        if (config.slack_parse_override) {
+          commit('alert/UPDATE_SLACK_PARSE_OVERRIDE', config.slack_parse_override);
+        } else {
+          commit('alert/UPDATE_SLACK_PARSE_OVERRIDE', 'none');
+        }
+
+        commit('alert/UPDATE_SLACK_TEXT_STRING', config.slack_text_string);
+
+        if (config.slack_ignore_ssl_errors) {
+          commit('alert/UPDATE_SLACK_IGNORE_SSL_ERRORS', config.slack_ignore_ssl_errors);
+        } else {
+          commit('alert/UPDATE_SLACK_IGNORE_SSL_ERRORS', false);
+        }
 
         if (config.slack_attach_kibana_discover_url) {
           commit('alert/UPDATE_SLACK_ATTACH_KIBANA_DISCOVER_URL', config.slack_attach_kibana_discover_url);
@@ -416,9 +551,20 @@ export default {
           commit('alert/UPDATE_SLACK_KIBANA_DISCOVER_TITLE', config.slack_kibana_discover_title);
         }
 
+        commit('alert/UPDATE_SLACK_PROXY', config.slack_proxy);
+
         /* MS Teams */
         commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
         commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
+
+        if (config.ms_teams_alert_summary) {
+          commit('alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', config.ms_teams_alert_summary);
+        } else {
+          commit('alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', 'ElastAlert Message');
+        }
+
+        commit('alert/UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH', config.ms_teams_alert_fixed_width);
+        commit('alert/UPDATE_MS_TEAMS_PROXY', config.ms_teams_proxy);
 
         commit('alert/UPDATE_REALERT', config.realert);
         commit('alert/UPDATE_ALERT', config.alert);
@@ -780,9 +926,19 @@ export default {
 
     http(state) {
       let config = {};
+
       if (state.alert.httpPostUrl) {
         config.http_post_url = state.alert.httpPostUrl;
       }
+
+      if (state.alert.httpPostTimeout) {
+        config.http_post_timeout = state.alert.httpPostTimeout;
+      }
+
+      if (state.alert.httpPostProxy) {
+        config.http_post_proxy = state.alert.httpPostProxy;
+      }
+
       return config;
     },
 
@@ -878,6 +1034,43 @@ export default {
         }
       }
 
+      if (state.alert.smtpSsl) {
+        config.smtp_ssl = state.alert.smtpSsl;
+      }
+
+      if (state.alert.smtpHost) {
+        config.smtp_host = state.alert.smtpHost;
+      }
+
+      if (state.alert.smtpPort) {
+        config.smtp_port = state.alert.smtpPort;
+      }
+
+      if (state.alert.smtpAuthFile) {
+        config.smtp_auth_file = state.alert.smtpAuthFile;
+      }
+
+      if (state.alert.smtpKeyFile) {
+        config.smtp_key_file = state.alert.smtpKeyFile;
+      }
+
+      if (state.alert.smtpCertFile) {
+        config.smtp_cert_file = state.alert.smtpCertFile;
+      }
+
+      if (state.alert.emailFromField) {
+        config.email_from_field = state.alert.emailFromField;
+      }
+
+      if (state.alert.emailAddDomain) {
+        config.email_add_domain = state.alert.emailAddDomain;
+      }
+
+      // TODO:
+      // if (state.alert.emailFormat) {
+      //   config.email_format = 'html';
+      // }
+
       return config;
     },
 
@@ -904,11 +1097,29 @@ export default {
         config.slack_title_link = getters['alert/slackTitleLink'];
       }
 
-      if (state.alert.slackAttachKibanaDiscoverUrl) {
-        config.slack_attach_kibana_discover_url = state.alert.slackAttachKibanaDiscoverUrl;
-      } else {
-        config.slack_attach_kibana_discover_url = false;
+      if (state.alert.slackParseOverride) {
+        config.slack_parse_override = state.alert.slackParseOverride;
       }
+
+      if (state.alert.slackTextString) {
+        config.slack_text_string = state.alert.slackTextString;
+      }
+
+      config.slack_ignore_ssl_errors = state.alert.slackIgnoreSslErrors;
+
+      if (state.alert.slackCaCerts) {
+        config.slack_ca_certs = state.alert.slackCaCerts;
+      }
+
+      if (state.alert.slackIconUrlOverride) {
+        config.slack_icon_url_override = state.alert.slackIconUrlOverride;
+      }
+
+      if (state.alert.slackTimeout) {
+        config.slack_timeout = state.alert.slackTimeout;
+      }
+
+      config.slack_attach_kibana_discover_url = state.alert.slackAttachKibanaDiscoverUrl;
 
       if (state.alert.slackKibanaDiscoverColor) {
         config.slack_kibana_discover_color = state.alert.slackKibanaDiscoverColor;
@@ -916,6 +1127,10 @@ export default {
 
       if (state.alert.slackKibanaDiscoverTitle) {
         config.slack_kibana_discover_title = state.alert.slackKibanaDiscoverTitle;
+      }
+
+      if (state.alert.slackProxy) {
+        config.slack_proxy = state.alert.slackProxy;
       }
 
       return config;
@@ -932,7 +1147,17 @@ export default {
         config.ms_teams_theme_color = state.alert.ms_teamsThemeColor;
       }
 
-      config.ms_teams_alert_summary = 'Alert';
+      if (state.alert.ms_teamsAlertFixedWidth) {
+        config.ms_teams_alert_fixed_width = state.alert.ms_teamsAlertFixedWidth;
+      }
+
+      if (state.alert.ms_teamsAlertSummary) {
+        config.ms_teams_alert_summary = state.alert.ms_teamsAlertSummary;
+      }
+
+      if (state.alert.ms_teamsProxy) {
+        config.ms_teams_proxy = state.alert.ms_teamsProxy;
+      }
 
       return config;
     },
@@ -942,6 +1167,18 @@ export default {
 
       if (state.alert.telegramRoomId) {
         config.telegram_room_id = state.alert.telegramRoomId;
+      }
+
+      if (state.alert.telegramProxy) {
+        config.telegram_proxy = state.alert.telegramProxy;
+      }
+
+      if (state.alert.telegramProxyLogin) {
+        config.telegram_proxy_login = state.alert.telegramProxyLogin;
+      }
+
+      if (state.alert.telegramProxyPass) {
+        config.telegram_proxy_pass = state.alert.telegramProxyPass;
       }
 
       return config;
@@ -1068,6 +1305,14 @@ export default {
     zabbix(state) {
       let config = {};
 
+      if (state.alert.zbxSenderHost) {
+        config.zbx_sender_host = state.alert.zbxSenderHost;
+      }
+
+      if (state.alert.zbxSenderPort) {
+        config.zbx_sender_port = state.alert.zbxSenderPort;
+      }
+
       if (state.alert.zbxHost) {
         config.zbx_host = state.alert.zbxHost;
       }
@@ -1096,14 +1341,30 @@ export default {
         config.command = state.alert.command;
       }
 
+      if (state.alert.pipeMatchJson) {
+        config.pipe_match_json = state.alert.pipeMatchJson;
+      }
+
+      if (state.alert.pipeAlertText) {
+        config.pipe_alert_text = state.alert.pipeAlertText;
+      }
+
       return config;
     },
 
     gitter(state) {
       let config = {};
 
+      if (state.alert.gitterWebhookUrl) {
+        config.gitter_webhook_url = state.alert.gitterWebhookUrl;
+      }
+
       if (state.alert.gitterMsgLevel) {
         config.gitter_msg_level = state.alert.gitterMsgLevel;
+      }
+
+      if (state.alert.gitterProxy) {
+        config.gitter_proxy = state.alert.gitterProxy;
       }
 
       return config;
@@ -1166,6 +1427,10 @@ export default {
         config.caller_id = state.alert.servicenowCallerId;
       }
 
+      if (state.alert.servicenowProxy) {
+        config.servicenow_proxy = state.alert.servicenowProxy;
+      }
+
       return config;
     },
 
@@ -1189,6 +1454,10 @@ export default {
 
       if (state.alert.victoropsEntityDisplayName) {
         config.victorops_entity_display_name = state.alert.victoropsEntityDisplayName;
+      }
+
+      if (state.alert.victoropsProxy) {
+        config.victorops_proxy = state.alert.victoropsProxy;
       }
 
       return config;
@@ -1216,6 +1485,8 @@ export default {
         config.stomp_destination = state.alert.stompDestination;
       }
 
+      config.stomp_ssl = state.alert.stompSsl;
+
       return config;
     },
 
@@ -1236,7 +1507,7 @@ export default {
       return config;
     },
 
-    mattermost(state, getters) {
+    mattermost(state) {
       let config = {};
 
       if (state.alert.mattermostChannelOverride) {
@@ -1251,8 +1522,18 @@ export default {
         config.mattermost_msg_color = state.alert.mattermostMsgColor;
       }
 
-      if (getters['alert/mattermostTitleLink']) {
-        config.mattermost_title_link = getters['alert/mattermostTitleLink'];
+      if (state.alert.mattermostIconUrlOverride) {
+        config.mattermost_icon_url_override = state.alert.mattermostIconUrlOverride;
+      }
+
+      if (state.alert.mattermostMsgPretext) {
+        config.mattermost_msg_pretext = state.alert.mattermostMsgPretext;
+      }
+
+      config.mattermost_ignore_ssl_errors = state.alert.mattermostIgnoreSslErrors;
+
+      if (state.alert.mattermostProxy) {
+        config.mattermost_proxy = state.alert.mattermostProxy;
       }
 
       return config;
