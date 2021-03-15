@@ -137,6 +137,16 @@ function initialState() {
     hiveAlertConfigStatus: 'Waiting',
     hiveAlertConfigFollow: false,
 
+    /* Alerta */
+    alertaApiUrl: '',
+    alertaApiKey: '',
+    alertaSeverity: 'warning',
+    alertaResource: 'elastalert',
+    alertaText: 'elastalert',
+    alertaEvent: 'elastalert',
+    alertaGroup: '',
+    alertaTags: [],
+
     /* Email */
     fromAddr: '',
     replyTo: '',
@@ -552,6 +562,55 @@ export default {
 
     UPDATE_HIVE_ALERT_CONFIG_FOLLOW(state, hiveAlertConfigFollow) {
       state.hiveAlertConfigFollow = hiveAlertConfigFollow;
+    },
+
+    UPDATE_ALERTA_API_URL(state, alertaApiUrl) {
+      state.alertaApiUrl = alertaApiUrl;
+    },
+
+    UPDATE_ALERTA_API_KEY(state, alertaApiKey) {
+      state.alertaApiKey = alertaApiKey;
+    },
+
+    UPDATE_ALERTA_SEVERITY(state, alertaSeverity) {
+      state.alertaSeverity = alertaSeverity;
+    },
+
+    UPDATE_ALERTA_RESOURCE(state, alertaResource) {
+      state.alertaResource = alertaResource;
+    },
+
+    UPDATE_ALERTA_TEXT(state, alertaText) {
+      state.alertaText = alertaText;
+    },
+
+    UPDATE_ALERTA_EVENT(state, alertaEvent) {
+      state.alertaEvent = alertaEvent;
+    },
+
+    UPDATE_ALERTA_GROUP(state, alertaGroup) {
+      state.alertaGroup = alertaGroup;
+    },
+
+    UPDATE_ALERTA_TAGS(state, alertaTags) {
+      state.alertaTags = alertaTags;
+    },
+
+    ADD_ALERTA_TAGS_ENTRY(state) {
+      state.alertaTags.push('');
+    },
+
+    ADD_ALERTA_TAGS_ENTRY_VALUE(state, value) {
+      state.alertaTags.push(value);
+    },
+
+    REMOVE_ALERTA_TAGS_ENTRY(state, entry) {
+      state.alertaTags = state.alertaTags.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_TAGS_ENTRY(state, { entry, index }) {
+      if (!state.alertaTags) return;
+      state.alertaTags[index] = entry;
     },
 
     UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
