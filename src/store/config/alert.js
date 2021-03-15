@@ -11,6 +11,8 @@ function initialState() {
     aggregationKey: '',
     summaryTableFields: [],
 
+    limitExcecution: '*/1 * * * *',
+
     generateKibanaDiscoverUrl: false,
     kibanaDiscoverAppUrl: '',
     kibanaDiscoverVersion: '',
@@ -611,6 +613,10 @@ export default {
     UPDATE_ALERTA_TAGS_ENTRY(state, { entry, index }) {
       if (!state.alertaTags) return;
       state.alertaTags[index] = entry;
+    },
+
+    UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {
+      state.limitExcecution = limitExcecution;
     },
 
     UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
