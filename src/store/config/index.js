@@ -398,6 +398,40 @@ export default {
           commit('alert/UPDATE_HIVE_ALERT_CONFIG_FOLLOW', false);
         }
 
+        /* Alerta */
+        commit('alert/UPDATE_ALERTA_API_URL', config.alerta_api_url);
+        commit('alert/UPDATE_ALERTA_API_KEY', config.alerta_api_key);
+
+        if (config.alerta_severity) {
+          commit('alert/UPDATE_ALERTA_SEVERITY', config.alerta_severity);
+        } else {
+          commit('alert/UPDATE_ALERTA_SEVERITY', 'warning');
+        }
+
+        if (config.alerta_resource) {
+          commit('alert/UPDATE_ALERTA_RESOURCE', config.alerta_resource);
+        } else {
+          commit('alert/UPDATE_ALERTA_RESOURCE', 'elastalert');
+        }
+
+        if (config.alerta_text) {
+          commit('alert/UPDATE_ALERTA_TEXT', config.alerta_text);
+        } else {
+          commit('alert/UPDATE_ALERTA_TEXT', 'elastalert');
+        }
+
+        if (config.alerta_event) {
+          commit('alert/UPDATE_ALERTA_EVENT', config.alerta_event);
+        } else {
+          commit('alert/UPDATE_ALERTA_EVENT', 'elastalert');
+        }
+
+        commit('alert/UPDATE_ALERTA_GROUP', config.alerta_group);
+
+        if (config.alerta_tags) {
+          commit('alert/UPDATE_ALERTA_TAGS', config.alerta_tags);
+        }
+
         /* Slack */
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
@@ -1303,6 +1337,44 @@ export default {
       return config;
     },
 
+    alerta(state) {
+      let config = {};
+
+      if (state.alert.alertaApiUrl) {
+        config.alerta_api_url = state.alert.alertaApiUrl;
+      }
+
+      if (state.alert.alertaApiKey) {
+        config.alerta_api_key = state.alert.alertaApiKey;
+      }
+
+      if (state.alert.alertaSeverity) {
+        config.alerta_severity = state.alert.alertaSeverity;
+      }
+
+      if (state.alert.alertaResource) {
+        config.alerta_resource = state.alert.alertaResource;
+      }
+
+      if (state.alert.alertaText) {
+        config.alerta_text = state.alert.alertaText;
+      }
+
+      if (state.alert.alertaEvent) {
+        config.alerta_event = state.alert.alertaEvent;
+      }
+
+      if (state.alert.alertaGroup) {
+        config.alerta_group = state.alert.alertaGroup;
+      }
+
+      if (state.alert.alertaTags && state.alert.alertaTags.length) {
+        config.alerta_tags = state.alert.alertaTags;
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
@@ -1479,6 +1551,10 @@ export default {
         config = { ...config, ...getters.hivealerter };
       }
 
+      if (state.alert.alert.includes('alerta')) {
+        config = { ...config, ...getters.alerta };
+      }
+
       if (state.alert.alert.includes('chatwork')) {
         config = { ...config, ...getters.chatwork };
       }
@@ -1502,6 +1578,7 @@ export default {
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('mattermost')
           || state.alert.alert.includes('hivealerter')
+          || state.alert.alert.includes('alerta')
           || state.alert.alert.includes('chatwork')
           || state.alert.alert.includes('discord')
           || state.alert.alert.includes('gitter')) {
