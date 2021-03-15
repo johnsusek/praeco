@@ -49,7 +49,7 @@
 
       <el-col v-if="enableLimitExcecution" :span="20">
         <el-form-item label="" prop="limitExcecution">
-          <div class="limit-excecution" v-if="!viewOnly">
+          <div v-if="!viewOnly" class="limit-excecution">
             <VueCronEditorBuefy v-model="limitExcecution" /><br>
             {{ limitExcecution }}
           </div>
@@ -1038,12 +1038,9 @@ export default {
       groupSnsValue = 'notProfile';
     }
     return {
-<<<<<<< HEAD
       enableLimitExcecution: false,
-=======
       popAlertaTagsVisible: false,
       popAlertaTagsValid: true,
->>>>>>> 3e3a9b95327e4b61a50cd313f03b20a2640dc101
       popHiveAlertConfigTagsVisible: false,
       popHiveAlertConfigTagsValid: true,
       groupSns: groupSnsValue,

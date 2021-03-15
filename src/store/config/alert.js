@@ -618,7 +618,7 @@ export default {
     UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {
       state.limitExcecution = limitExcecution;
     },
-    
+
     UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
       state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
     },
