@@ -7,6 +7,11 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.0
+
+- New options for Alerta added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#alerta for how to configure your
+- Limit execution support
+
 ## -> 1.7.0
 
 - New options for TheHive added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#thehive for how to configure your
