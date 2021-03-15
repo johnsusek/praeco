@@ -12,7 +12,7 @@ describe('YAML parsing', () => {
     let yaml = store.getters['config/yaml']();
 
     let expected = `__praeco_full_path: test123
-__praeco_query_builder: '{"query":{"logicalOperator":"all","children":[]}}'
+__praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
   - slack
 alert_subject: this is a test subject
@@ -24,7 +24,7 @@ doc_type: syslog
 filter:
   - query:
       query_string:
-        query: '@timestamp:*'
+        query: "@timestamp:*"
 generate_kibana_discover_url: false
 import: BaseRule.config
 index: hannibal-*
@@ -34,8 +34,8 @@ num_events: 10000
 realert:
   minutes: 5
 slack_attach_kibana_discover_url: false
-slack_channel_override: '#elastalert-debugging'
-slack_kibana_discover_color: '#ec4b98'
+slack_channel_override: "#elastalert-debugging"
+slack_kibana_discover_color: "#ec4b98"
 slack_kibana_discover_title: Discover in Kibana
 slack_msg_color: danger
 slack_title_link: undefined/rules/test123
@@ -43,7 +43,7 @@ slack_username_override: Praeco
 terms_size: 50
 timeframe:
   minutes: 5
-timestamp_field: '@timestamp'
+timestamp_field: "@timestamp"
 timestamp_type: iso
 type: frequency
 use_count_query: true
