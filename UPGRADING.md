@@ -15,7 +15,7 @@ Some version upgrades require further configuration. Version specific upgrade in
 
 - Alerta
  - add alerta_environment
- - 
+
 ## -> 1.8.0
 
 - New options for Alerta added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#alerta for how to configure your
