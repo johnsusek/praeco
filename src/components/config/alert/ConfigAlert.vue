@@ -35,6 +35,13 @@
       </el-col>
     </el-row>
 
+    <!-- time_window_change  -->
+    <el-row class="m-s-sm">
+      <el-col :span="19">
+        <ConfigTimeWindowFeature ref="timeWindowFeature" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
     <el-row class="m-s-sm">
       <el-col :span="enableLimitExcecution ? 6 : 24">
         <el-form-item label="Limit Excecution">

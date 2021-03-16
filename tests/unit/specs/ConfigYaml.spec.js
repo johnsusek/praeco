@@ -29,6 +29,7 @@ generate_kibana_discover_url: false
 import: BaseRule.config
 index: hannibal-*
 is_enabled: false
+match_enhancements: []
 name: test123
 num_events: 10000
 realert:
