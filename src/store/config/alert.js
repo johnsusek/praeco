@@ -154,6 +154,7 @@ function initialState() {
     alertaEvent: 'elastalert',
     alertaGroup: '',
     alertaTags: [],
+    alertaEnvironment: 'Production',
 
     /* Email */
     fromAddr: '',
@@ -633,6 +634,10 @@ export default {
     UPDATE_ALERTA_TAGS_ENTRY(state, { entry, index }) {
       if (!state.alertaTags) return;
       state.alertaTags[index] = entry;
+    },
+
+    UPDATE_ALERTA_ENVIRONMENT(state, alertaEnvironment) {
+      state.alertaEnvironment = alertaEnvironment;
     },
 
     UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {

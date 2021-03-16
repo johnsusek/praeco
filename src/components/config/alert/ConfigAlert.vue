@@ -956,6 +956,11 @@
             </el-button>
           </template>
         </el-popover>
+
+        <el-form-item label="Environment" prop="alertaEnvironment">
+          <el-input id="alertaEnvironment" v-model="alertaEnvironment" :disabled="viewOnly" />
+          <label>Defaults to “Production”.</label>
+        </el-form-item>
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -2135,6 +2140,15 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_ALERTA_TAGS', value);
+      }
+    },
+
+    alertaEnvironment: {
+      get() {
+        return this.$store.state.config.alert.alertaEnvironment;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_ENVIRONMENT', value);
       }
     },
 

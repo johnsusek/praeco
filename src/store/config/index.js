@@ -444,6 +444,12 @@ export default {
           commit('alert/UPDATE_ALERTA_TAGS', config.alerta_tags);
         }
 
+        if (config.alerta_environment) {
+          commit('alert/UPDATE_ALERTA_ENVIRONMENT', config.alerta_environment);
+        } else {
+          commit('alert/UPDATE_ALERTA_ENVIRONMENT', 'Production');
+        }
+
         /* Slack */
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
         commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
@@ -1407,6 +1413,10 @@ export default {
 
       if (state.alert.alertaTags && state.alert.alertaTags.length) {
         config.alerta_tags = state.alert.alertaTags;
+      }
+
+      if (state.alert.alertaEnvironment) {
+        config.alerta_environment = state.alert.alertaEnvironment;
       }
 
       return config;
