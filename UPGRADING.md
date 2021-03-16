@@ -7,6 +7,15 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.1
+
+- Add Time Window 
+  - the user can use it to send alerts only during specific time range.
+  - elastalert_module in elastalert.
+
+- Alerta
+ - add alerta_environment
+
 ## -> 1.8.0
 
 - New options for Alerta added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#alerta for how to configure your
