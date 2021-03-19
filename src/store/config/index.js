@@ -483,6 +483,14 @@ export default {
 
         commit('alert/UPDATE_BODY', config.alert_text);
         commit('alert/UPDATE_SUBJECT', config.alert_subject);
+
+        if (config.alert_subject_args) {
+          commit('alert/UPDATE_ALERT_SUBJECT_ARGS', config.alert_subject_args);
+        }
+
+        if (config.alert_text_args) {
+          commit('alert/UPDATE_ALERT_TEXT_ARGS', config.alert_text_args);
+        }
       }
     },
 
@@ -1428,13 +1436,25 @@ export default {
       if (state.alert.subject) {
         let formattedSubject = htmlToConfigFormat(state.alert.subject);
         config.alert_subject = formattedSubject.alertText.trim();
-        config.alert_subject_args = formattedSubject.alertArgs;
+
+        if (state.alert.alertSubjectArgs && state.alert.alertSubjectArgs.length) {
+          config.alert_subject_args = state.alert.alertSubjectArgs;
+        }
+
+        // TODO: Comment out once
+        // config.alert_subject_args = formattedSubject.alertArgs;
       }
 
       if (state.alert.body) {
         let formattedText = htmlToConfigFormat(state.alert.body);
         config.alert_text = formattedText.alertText;
-        config.alert_text_args = formattedText.alertArgs;
+
+        if (state.alert.alertTextArgs && state.alert.alertTextArgs.length) {
+          config.alert_text_args = state.alert.alertTextArgs;
+        }
+
+        // TODO: Comment out once
+        // config.alert_text_args = formattedText.alertArgs;
       }
 
       if (state.alert.bodyType && state.alert.bodyType !== 'default') {
@@ -1676,6 +1696,6 @@ export default {
       return conf;
     },
 
-    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest), { quotingType: '"' })
+    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest), { quotingType: '"', forceQuotes: true })
   }
 };

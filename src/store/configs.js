@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import cloneDeep from 'lodash.clonedeep';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
-import { configFormatToHtml } from '../lib/alertText';
+// TODO: import { configFormatToHtml } from '../lib/alertText';
 
 export default {
   namespaced: true,
@@ -48,11 +48,12 @@ export default {
         let conf = isYaml ? yaml.load(config, 'utf8') : config;
 
         if (isYaml) {
+          // TODO: Comment out once
           // The config from the server has yaml formatted alert subject/text
           // We need it in html so convert it here. When saving the config,
           // it will be converted back to yaml format.
-          conf.alert_subject = configFormatToHtml(conf.alert_subject, conf.alert_subject_args);
-          conf.alert_text = configFormatToHtml(conf.alert_text, conf.alert_text_args);
+          // conf.alert_subject = configFormatToHtml(conf.alert_subject, conf.alert_subject_args);
+          // conf.alert_text = configFormatToHtml(conf.alert_text, conf.alert_text_args);
 
           // The configuration for the querybuilder widget that we saved to the rule
           // gets parsed here for use later.
@@ -236,7 +237,7 @@ export default {
     async createConfigFinal({ commit, state }, { type, path, conf }) {
       try {
         let res = await axios.post(`/api/${type}/${path}`, {
-          yaml: yaml.dump(conf, { quotingType: '"' })
+          yaml: yaml.dump(conf, { quotingType: '"', forceQuotes: true })
         });
 
         if (!res.data.created) {
@@ -309,7 +310,7 @@ export default {
 
       try {
         let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
-          yaml: yaml.dump(conf, { quotingType: '"' })
+          yaml: yaml.dump(conf, { quotingType: '"', forceQuotes: true })
         });
 
         if (res.data.created) {
@@ -332,7 +333,7 @@ export default {
 
       try {
         let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
-          yaml: yaml.dump(conf, { quotingType: '"' })
+          yaml: yaml.dump(conf, { quotingType: '"', forceQuotes: true })
         });
 
         if (res.data.created) {

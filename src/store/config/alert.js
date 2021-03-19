@@ -24,6 +24,8 @@ function initialState() {
     subject: '',
     body: '',
     bodyType: 'alert_text_only',
+    alertSubjectArgs: [],
+    alertTextArgs: [],
 
     /* Slack */
     slackChannelOverride: '',
@@ -703,6 +705,48 @@ export default {
 
     UPDATE_SUBJECT(state, subject) {
       state.subject = subject;
+    },
+
+    UPDATE_ALERT_SUBJECT_ARGS(state, alertSubjectArgs) {
+      state.alertSubjectArgs = alertSubjectArgs;
+    },
+
+    ADD_ALERT_SUBJECT_ARGS_ENTRY(state) {
+      state.alertSubjectArgs.push('');
+    },
+
+    ADD_ALERT_SUBJECT_ARGS_ENTRY_VALUE(state, value) {
+      state.alertSubjectArgs.push(value);
+    },
+
+    REMOVE_ALERT_SUBJECT_ARGS_ENTRY(state, entry) {
+      state.alertSubjectArgs = state.alertSubjectArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERT_SUBJECT_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.alertSubjectArgs) return;
+      state.alertSubjectArgs[index] = entry;
+    },
+
+    UPDATE_ALERT_TEXT_ARGS(state, alertTextArgs) {
+      state.alertTextArgs = alertTextArgs;
+    },
+
+    ADD_ALERT_TEXT_ARGS_ENTRY(state) {
+      state.alertTextArgs.push('');
+    },
+
+    ADD_ALERT_TEXT_ARGS_ENTRY_VALUE(state, value) {
+      state.alertTextArgs.push(value);
+    },
+
+    REMOVE_ALERT_TEXT_ARGS_ENTRY(state, entry) {
+      state.alertTextArgs = state.alertTextArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERT_TEXT_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.alertTextArgs) return;
+      state.alertTextArgs[index] = entry;
     },
 
     UPDATE_ALERT(state, alert) {
