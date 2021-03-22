@@ -7,6 +7,13 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.3
+
+- Add option to use multiple query keys
+## -> 1.8.2
+
+- alert_subject_args & alert_text_args support
+- Forced double quotes
 ## -> 1.8.1
 
 - Add Time Window 
