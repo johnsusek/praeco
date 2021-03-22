@@ -9,7 +9,10 @@ Some version upgrades require further configuration. Version specific upgrade in
 
 ## -> 1.8.3
 
-- Add option to use multiple query keys
+- Add option to use multiple query keys<br>
+　Since query_key has been changed to an array, if it has already been set, an error will occur when reading the rule. <br>
+　Please delete query_key from the rule before the version upgrade and set it again after the version upgrade.
+  
 ## -> 1.8.2
 
 - alert_subject_args & alert_text_args support
