@@ -9,7 +9,7 @@ function initialState() {
     compareKey: null,
     ignoreNull: false,
 
-    queryKey: '',
+    queryKey: [],
     timeframe: { minutes: 5 },
     useTimeframe: false,
     docType: '',
@@ -282,6 +282,23 @@ export default {
 
     UPDATE_QUERY_KEY(state, queryKey) {
       state.queryKey = queryKey;
+    },
+
+    ADD_QUERY_KEY_ENTRY(state) {
+      state.queryKey.push('');
+    },
+
+    ADD_QUERY_KEY_ENTRY_VALUE(state, value) {
+      state.queryKey.push(value);
+    },
+
+    REMOVE_QUERY_KEY_ENTRY(state, entry) {
+      state.queryKey = state.queryKey.filter(b => b !== entry);
+    },
+
+    UPDATE_QUERY_KEY_ENTRY(state, { entry, index }) {
+      if (!state.queryKey) return;
+      state.queryKey[index] = entry;
     },
 
     UPDATE_COMPARE_KEY(state, compareKey) {

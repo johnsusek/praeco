@@ -116,7 +116,9 @@ export default {
         commit('match/UPDATE_TYPE', config.type);
         commit('match/UPDATE_IGNORE_NULL', config.ignore_null);
         commit('match/UPDATE_DOC_TYPE', config.doc_type);
-        commit('match/UPDATE_QUERY_KEY', config.query_key);
+        if (config.query_key) {
+          config.query_key.forEach(entry => commit('match/ADD_QUERY_KEY_ENTRY_VALUE', entry));
+        }
         commit('match/UPDATE_COMPARE_KEY', config.compare_key);
         commit('match/UPDATE_TIMEFRAME', config.timeframe);
 
@@ -1525,7 +1527,7 @@ export default {
 
       config.use_strftime_index = getters['settings/strftime'];
 
-      if (state.match.queryKey) {
+      if (state.match.queryKey && state.match.queryKey.length) {
         config.query_key = state.match.queryKey;
       }
 

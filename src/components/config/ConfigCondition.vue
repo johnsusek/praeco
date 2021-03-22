@@ -139,9 +139,12 @@
         </div>
         <div v-if="groupedOver === 'field'">
           <el-form ref="over" :model="$store.state.config.match">
-            <el-form-item prop="queryKey" required>
+            <el-form-item
+              v-for="(entry, index) in queryKey"
+              :key="index"
+              :prop="'queryKey.' + index" required>
               <el-select
-                v-model="queryKey"
+                v-model="queryKey[index]"
                 filterable
                 clearable
                 placeholder="Select field"
@@ -154,8 +157,20 @@
                   :label="field"
                   :value="field" />
               </el-select>
+              <el-col :span="4">
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeQueryKeyEntry(entry)" />
+              </el-col>
             </el-form-item>
           </el-form>
+
+          <el-button class="m-n-sm" @click="addQueryKeyEntry">
+            Add querykey
+          </el-button>
         </div>
 
         <label class="m-n-xs mini">
@@ -218,9 +233,12 @@
         <span>{{ queryKey }}</span>
       </span>
       <el-form ref="group" :model="$store.state.config.match">
-        <el-form-item prop="queryKey" required>
+        <el-form-item
+          v-for="(entry, index) in queryKey"
+          :key="index"
+          :prop="'queryKey.' + index" required>
           <el-select
-            v-model="queryKey"
+            v-model="queryKey[index]"
             filterable
             clearable
             placeholder="Select field"
@@ -233,9 +251,21 @@
               :label="field"
               :value="field" />
           </el-select>
+          <el-col :span="4">
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              plain
+              @click="removeQueryKeyEntry(entry)" />
+          </el-col>
           <label v-if="metricAggType === 'field changes'">Field change will be checked per-group.</label>
         </el-form-item>
       </el-form>
+
+      <el-button class="m-n-sm" @click="addQueryKeyEntry">
+        Add querykey
+      </el-button>
     </el-popover>
 
     <el-popover v-if="showPopBlacklist" v-model="popBlacklistVisible" :class="{ 'is-invalid': !popBlacklistValid }">
@@ -1311,7 +1341,7 @@ export default {
 
       if (this.groupedOver === 'all') {
         this.groupByValue = '';
-        this.queryKey = '';
+        this.queryKey = [];
       }
     },
 
@@ -1528,6 +1558,20 @@ export default {
     refreshOptionsPop() {
       this.$nextTick(() => {
         this.$refs.optionsPop.updatePopper();
+      });
+    },
+
+    removeQueryKeyEntry(entry) {
+      this.$store.commit('config/match/REMOVE_QUERY_KEY_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addQueryKeyEntry() {
+      this.$store.commit('config/match/ADD_QUERY_KEY_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
       });
     },
 
