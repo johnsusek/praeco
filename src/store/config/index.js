@@ -294,6 +294,7 @@ export default {
 
         /* PagerTree */
         commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
+        commit('alert/UPDATE_PAGERTREE_PROXY', config.pagertree_proxy);
 
         /* AWS SNS */
         commit('alert/UPDATE_SNS_TOPIC_ARN', config.sns_topic_arn);
@@ -323,12 +324,7 @@ export default {
 
         /* Command */
         if (config.command) {
-          if (Array.isArray(config.command)) {
-            config.command.forEach((value, index, array) => {
-              array[index] = value.replace(/"/g, '').replace(/'/g, '').trim();
-            });
-          }
-          commit('alert/UPDATE_COMMAND', config.command);
+          config.command.forEach(entry => commit('alert/ADD_COMMAND_ENTRY_VALUE', entry));
         }
 
         commit('alert/UPDATE_PIPE_MATCH_JSON', config.pipe_match_json);
@@ -423,6 +419,9 @@ export default {
         }
 
         commit('alert/UPDATE_GOOGLE_CHAT_HEADER_TITLE', config.googlechat_header_title);
+        commit('alert/UPDATE_GOOGLECHAT_HEADER_SUBTITLE', config.googlechat_header_subtitle);
+        commit('alert/UPDATE_GOOGLECHAT_HEADER_IMAGE', config.googlechat_header_image);
+        commit('alert/UPDATE_GOOGLECHAT_FOOTER_KIBANALINK', config.googlechat_footer_kibanalink);
 
         /* Mattermost */
         commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
@@ -1273,6 +1272,10 @@ export default {
         config.pagertree_integration_url = state.alert.pagertreeIntegrationUrl;
       }
 
+      if (state.alert.pagertreeProxy) {
+        config.pagertree_proxy = state.alert.pagertreeProxy;
+      }
+
       return config;
     },
 
@@ -1337,7 +1340,7 @@ export default {
     command(state) {
       let config = {};
 
-      if (state.alert.command) {
+      if (state.alert.command && state.alert.command.length) {
         config.command = state.alert.command;
       }
 
@@ -1502,6 +1505,18 @@ export default {
 
       if (state.alert.googleChatHeaderTitle) {
         config.googlechat_header_title = state.alert.googleChatHeaderTitle;
+      }
+
+      if (state.alert.googleChatHeaderSubtitle) {
+        config.googlechat_header_subtitle = state.alert.googleChatHeaderSubtitle;
+      }
+
+      if (state.alert.googleChatHeaderImage) {
+        config.googlechat_header_image = state.alert.googleChatHeaderImage;
+      }
+
+      if (state.alert.googleFooterKibanalink) {
+        config.googlechat_footer_kibanalink = state.alert.googleFooterKibanalink;
       }
 
       return config;

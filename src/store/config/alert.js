@@ -67,6 +67,7 @@ function initialState() {
 
     /* PagerTree */
     pagertreeIntegrationUrl: '',
+    pagertreeProxy: '',
 
     /* AWS SNS */
     snsTopicArn: '',
@@ -142,6 +143,9 @@ function initialState() {
     googleChatWebhookUrl: '',
     googleChatFormat: 'basic',
     googleChatHeaderTitle: '',
+    googleChatHeaderSubtitle: '',
+    googleChatHeaderImage: '',
+    googleFooterKibanalink: '',
 
     /* Mattermost */
     mattermostChannelOverride: '',
@@ -401,6 +405,10 @@ export default {
       state.pagertreeIntegrationUrl = pagertreeIntegrationUrl;
     },
 
+    UPDATE_PAGERTREE_PROXY(state, pagertreeProxy) {
+      state.pagertreeProxy = pagertreeProxy;
+    },
+
     /* AWS SNS */
     UPDATE_SNS_TOPIC_ARN(state, snsTopicArn) {
       state.snsTopicArn = snsTopicArn;
@@ -447,6 +455,23 @@ export default {
     /* Command */
     UPDATE_COMMAND(state, command) {
       state.command = command;
+    },
+
+    ADD_COMMAND_ENTRY(state) {
+      state.command.push('');
+    },
+
+    ADD_COMMAND_ENTRY_VALUE(state, value) {
+      state.command.push(value);
+    },
+
+    REMOVE_COMMAND_ENTRY(state, entry) {
+      state.command = state.command.filter(b => b !== entry);
+    },
+
+    UPDATE_COMMAND_ENTRY(state, { entry, index }) {
+      if (!state.command) return;
+      state.command[index] = entry;
     },
 
     UPDATE_PIPE_MATCH_JSON(state, pipeMatchJson) {
@@ -589,6 +614,18 @@ export default {
 
     UPDATE_GOOGLE_CHAT_HEADER_TITLE(state, googleChatHeaderTitle) {
       state.googleChatHeaderTitle = googleChatHeaderTitle;
+    },
+
+    UPDATE_GOOGLECHAT_HEADER_SUBTITLE(state, googleChatHeaderSubtitle) {
+      state.googleChatHeaderSubtitle = googleChatHeaderSubtitle;
+    },
+
+    UPDATE_GOOGLECHAT_HEADER_IMAGE(state, googleChatHeaderImage) {
+      state.googleChatHeaderImage = googleChatHeaderImage;
+    },
+
+    UPDATE_GOOGLECHAT_FOOTER_KIBANALINK(state, googleFooterKibanalink) {
+      state.googleFooterKibanalink = googleFooterKibanalink;
     },
 
     /* Mattermost */
