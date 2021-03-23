@@ -25,6 +25,55 @@
           </at>
         </el-form-item>
 
+        <el-popover v-model="popAlertSubjectArgsVisible" :class="{ 'is-invalid': !popAlertSubjectArgsValid }">
+          <span slot="reference" class="pop-trigger">
+            <el-tooltip v-if="alertSubjectArgs.length" :content="alertSubjectArgs.join(', ')" placement="top">
+              <span>AlertSubjectArgs ({{ alertSubjectArgs.length }})</span>
+            </el-tooltip>
+            <span v-else>AlertSubjectArgs ({{ alertSubjectArgs.length }})</span>
+          </span>
+          <template>
+            <el-form
+              ref="alertSubjectArgs"
+              :model="$store.state.config.alert"
+              label-position="top"
+              style="width: 360px"
+              @submit.native.prevent>
+              <el-form-item
+                v-for="(entry, index) in alertSubjectArgs"
+                :key="index"
+                :prop="'alertSubjectArgs.' + index"
+                :disabled="viewOnly"
+                class="el-form-item-list"
+                label=""
+                required>
+                <el-row :gutter="5" type="flex" justify="space-between">
+                  <el-col :span="20">
+                    <el-input
+                      v-model="alertSubjectArgs[index]"
+                      :disabled="viewOnly"
+                      placeholder=""
+                      @input="(val) => updateAlertSubjectArgs(val, index)" />
+                  </el-col>
+                  <el-col :span="4">
+                    <el-button
+                      :disabled="viewOnly"
+                      type="danger"
+                      icon="el-icon-delete"
+                      circle
+                      plain
+                      @click="removeAlertSubjectArgsEntry(entry)" />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </el-form>
+
+            <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertSubjectArgsEntry">
+              Add alert_subject_args
+            </el-button>
+          </template>
+        </el-popover>
+
         <el-form-item
           v-if="bodyType !== 'aggregation_summary_only'"
           id="body"
@@ -43,6 +92,58 @@
             <label v-if="!viewOnly">Insert fields by typing '%' followed by the field name</label>
           </at>
         </el-form-item>
+
+        <el-popover
+          v-if="bodyType !== 'aggregation_summary_only'"
+          v-model="popAlertTextArgsVisible"
+          :class="{ 'is-invalid': !popAlertTextArgsValid }">
+          <span slot="reference" class="pop-trigger">
+            <el-tooltip v-if="alertTextArgs.length" :content="alertTextArgs.join(', ')" placement="top">
+              <span>alertTextArgs ({{ alertTextArgs.length }})</span>
+            </el-tooltip>
+            <span v-else>alertTextArgs ({{ alertTextArgs.length }})</span>
+          </span>
+          <template>
+            <el-form
+              ref="alertTextArgs"
+              :model="$store.state.config.alert"
+              label-position="top"
+              style="width: 360px"
+              @submit.native.prevent>
+              <el-form-item
+                v-for="(entry, index) in alertTextArgs"
+                :key="index"
+                :prop="'alertTextArgs.' + index"
+                :disabled="viewOnly"
+                class="el-form-item-list"
+                label=""
+                required>
+                <el-row :gutter="5" type="flex" justify="space-between">
+                  <el-col :span="20">
+                    <el-input
+                      v-model="alertTextArgs[index]"
+                      :disabled="viewOnly"
+                      placeholder=""
+                      @input="(val) => updateAlertTextArgs(val, index)" />
+                  </el-col>
+                  <el-col :span="4">
+                    <el-button
+                      :disabled="viewOnly"
+                      type="danger"
+                      icon="el-icon-delete"
+                      circle
+                      plain
+                      @click="removeAlertTextArgsEntry(entry)" />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </el-form>
+
+            <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertTextArgsEntry">
+              Add alert_text_args
+            </el-button>
+          </template>
+        </el-popover>
 
         <el-form-item required label="Include">
           <el-row>
@@ -112,6 +213,15 @@ export default {
 
   props: ['viewOnly'],
 
+  data() {
+    return {
+      popAlertSubjectArgsVisible: false,
+      popAlertSubjectArgsValid: true,
+      popAlertTextArgsVisible: false,
+      popAlertTextArgsValid: true,
+    };
+  },
+
   computed: {
     queryString() {
       return this.$store.getters['config/query/queryString'];
@@ -127,6 +237,24 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_SUBJECT', value);
+      }
+    },
+
+    alertSubjectArgs: {
+      get() {
+        return this.$store.state.config.alert.alertSubjectArgs;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERT_SUBJECT_ARGS', value);
+      }
+    },
+
+    alertTextArgs: {
+      get() {
+        return this.$store.state.config.alert.alertTextArgs;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERT_TEXT_ARGS', value);
       }
     },
 
@@ -174,6 +302,98 @@ export default {
       e.preventDefault();
       let text = (e.originalEvent || e).clipboardData.getData('text/plain');
       document.execCommand('insertHTML', false, text);
+    },
+
+    async validate() {
+      try {
+        if (this.$refs.alertSubjectArgs) {
+          await this.validateAlertSubjectArgs();
+        }
+        if (this.$refs.alertTextArgs) {
+          await this.validateAlertaTags();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validateAlertSubjectArgs() {
+      if (!this.alertSubjectArgs.length) {
+        this.popAlertSubjectArgsValid = false;
+        return;
+      }
+      try {
+        this.popAlertSubjectArgsValid = await this.$refs.alertSubjectArgs.validate();
+      } catch (error) {
+        this.popAlertSubjectArgsValid = false;
+        throw error;
+      }
+    },
+
+    async validateAlertTextArgs() {
+      if (!this.alertTextArgs.length) {
+        this.popAlertTextArgsValid = false;
+        return;
+      }
+      try {
+        this.popAlertTextArgsValid = await this.$refs.alertTextArgs.validate();
+      } catch (error) {
+        this.popAlertTextArgsValid = false;
+        throw error;
+      }
+    },
+
+    updateAlertSubjectArgs(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ALERT_SUBJECT_ARGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    updateAlertTextArgs(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ALERT_TEXT_ARGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeAlertSubjectArgsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ALERT_SUBJECT_ARGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeAlertTextArgsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ALERT_TEXT_ARGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addAlertSubjectArgsEntry() {
+      this.$store.commit('config/alert/ADD_ALERT_SUBJECT_ARGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addAlertTextArgsEntry() {
+      this.$store.commit('config/alert/ADD_ALERT_TEXT_ARGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
     }
   }
 };

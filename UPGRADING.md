@@ -7,6 +7,30 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.3
+
+- Add option to use multiple query keys<br>
+　Since query_key has been changed to an array, if it has already been set, an error will occur when reading the rule. <br>
+　Please delete query_key from the rule before the version upgrade and set it again after the version upgrade.
+  
+## -> 1.8.2
+
+- alert_subject_args & alert_text_args support
+- Forced double quotes
+## -> 1.8.1
+
+- Add Time Window 
+  - the user can use it to send alerts only during specific time range.
+  - elastalert_module in elastalert.
+
+- Alerta
+ - add alerta_environment
+
+## -> 1.8.0
+
+- New options for Alerta added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#alerta for how to configure your
+- Limit execution support
+
 ## -> 1.7.0
 
 - New options for TheHive added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#thehive for how to configure your

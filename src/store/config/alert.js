@@ -11,6 +11,8 @@ function initialState() {
     aggregationKey: '',
     summaryTableFields: [],
 
+    limitExcecution: '*/1 * * * *',
+
     generateKibanaDiscoverUrl: false,
     kibanaDiscoverAppUrl: '',
     kibanaDiscoverVersion: '',
@@ -22,6 +24,8 @@ function initialState() {
     subject: '',
     body: '',
     bodyType: 'alert_text_only',
+    alertSubjectArgs: [],
+    alertTextArgs: [],
 
     /* Slack */
     slackChannelOverride: '',
@@ -95,6 +99,12 @@ function initialState() {
     gitterMsgLevel: 'error',
     gitterProxy: '',
 
+    /* time_window_change */
+    useTimeWindow: false,
+    timeWindowStartTime: '',
+    timeWindowEndTime: '',
+    timeWindowDropIf: '',
+
     /* Jira */
     jiraProject: '',
     jiraIssueType: '',
@@ -166,6 +176,17 @@ function initialState() {
     hiveAlertConfigTlp: 2,
     hiveAlertConfigStatus: 'Waiting',
     hiveAlertConfigFollow: false,
+
+    /* Alerta */
+    alertaApiUrl: '',
+    alertaApiKey: '',
+    alertaSeverity: 'warning',
+    alertaResource: 'elastalert',
+    alertaText: 'elastalert',
+    alertaEvent: 'elastalert',
+    alertaGroup: '',
+    alertaTags: [],
+    alertaEnvironment: 'Production',
 
     /* Email */
     fromAddr: '',
@@ -495,6 +516,20 @@ export default {
       state.gitterProxy = gitterProxy;
     },
 
+    /* time_window_change */
+    UPDATE_USE_TIME_WINDOW(state, useTimeWindow) {
+      state.useTimeWindow = useTimeWindow;
+    },
+    UPDATE_TIME_WINDOW_START_TIME(state, timeWindowStartTime) {
+      state.timeWindowStartTime = timeWindowStartTime;
+    },
+    UPDATE_TIME_WINDOW_END_TIME(state, timeWindowEndTime) {
+      state.timeWindowEndTime = timeWindowEndTime;
+    },
+    UPDATE_TIME_WINDOW_DROP_IF(state, timeWindowDropIf) {
+      state.timeWindowDropIf = timeWindowDropIf;
+    },
+    
     /* Jira */
     UPDATE_JIRA_PROJECT(state, jiraProject) {
       state.jiraProject = jiraProject;
@@ -789,6 +824,65 @@ export default {
       state.hiveAlertConfigFollow = hiveAlertConfigFollow;
     },
 
+    /* Alerta */
+    UPDATE_ALERTA_API_URL(state, alertaApiUrl) {
+      state.alertaApiUrl = alertaApiUrl;
+    },
+
+    UPDATE_ALERTA_API_KEY(state, alertaApiKey) {
+      state.alertaApiKey = alertaApiKey;
+    },
+
+    UPDATE_ALERTA_SEVERITY(state, alertaSeverity) {
+      state.alertaSeverity = alertaSeverity;
+    },
+
+    UPDATE_ALERTA_RESOURCE(state, alertaResource) {
+      state.alertaResource = alertaResource;
+    },
+
+    UPDATE_ALERTA_TEXT(state, alertaText) {
+      state.alertaText = alertaText;
+    },
+
+    UPDATE_ALERTA_EVENT(state, alertaEvent) {
+      state.alertaEvent = alertaEvent;
+    },
+
+    UPDATE_ALERTA_GROUP(state, alertaGroup) {
+      state.alertaGroup = alertaGroup;
+    },
+
+    UPDATE_ALERTA_TAGS(state, alertaTags) {
+      state.alertaTags = alertaTags;
+    },
+
+    ADD_ALERTA_TAGS_ENTRY(state) {
+      state.alertaTags.push('');
+    },
+
+    ADD_ALERTA_TAGS_ENTRY_VALUE(state, value) {
+      state.alertaTags.push(value);
+    },
+
+    REMOVE_ALERTA_TAGS_ENTRY(state, entry) {
+      state.alertaTags = state.alertaTags.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_TAGS_ENTRY(state, { entry, index }) {
+      if (!state.alertaTags) return;
+      state.alertaTags[index] = entry;
+    },
+
+    UPDATE_ALERTA_ENVIRONMENT(state, alertaEnvironment) {
+      state.alertaEnvironment = alertaEnvironment;
+    },
+
+    /* limitExcecution */
+    UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {
+      state.limitExcecution = limitExcecution;
+    },
+
     /* Kibana Discover */
     UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
       state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
@@ -849,6 +943,48 @@ export default {
 
     UPDATE_SUBJECT(state, subject) {
       state.subject = subject;
+    },
+
+    UPDATE_ALERT_SUBJECT_ARGS(state, alertSubjectArgs) {
+      state.alertSubjectArgs = alertSubjectArgs;
+    },
+
+    ADD_ALERT_SUBJECT_ARGS_ENTRY(state) {
+      state.alertSubjectArgs.push('');
+    },
+
+    ADD_ALERT_SUBJECT_ARGS_ENTRY_VALUE(state, value) {
+      state.alertSubjectArgs.push(value);
+    },
+
+    REMOVE_ALERT_SUBJECT_ARGS_ENTRY(state, entry) {
+      state.alertSubjectArgs = state.alertSubjectArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERT_SUBJECT_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.alertSubjectArgs) return;
+      state.alertSubjectArgs[index] = entry;
+    },
+
+    UPDATE_ALERT_TEXT_ARGS(state, alertTextArgs) {
+      state.alertTextArgs = alertTextArgs;
+    },
+
+    ADD_ALERT_TEXT_ARGS_ENTRY(state) {
+      state.alertTextArgs.push('');
+    },
+
+    ADD_ALERT_TEXT_ARGS_ENTRY_VALUE(state, value) {
+      state.alertTextArgs.push(value);
+    },
+
+    REMOVE_ALERT_TEXT_ARGS_ENTRY(state, entry) {
+      state.alertTextArgs = state.alertTextArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERT_TEXT_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.alertTextArgs) return;
+      state.alertTextArgs[index] = entry;
     },
 
     UPDATE_ALERT(state, alert) {

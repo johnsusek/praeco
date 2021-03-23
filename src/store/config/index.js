@@ -116,7 +116,9 @@ export default {
         commit('match/UPDATE_TYPE', config.type);
         commit('match/UPDATE_IGNORE_NULL', config.ignore_null);
         commit('match/UPDATE_DOC_TYPE', config.doc_type);
-        commit('match/UPDATE_QUERY_KEY', config.query_key);
+        if (config.query_key) {
+          config.query_key.forEach(entry => commit('match/ADD_QUERY_KEY_ENTRY_VALUE', entry));
+        }
         commit('match/UPDATE_COMPARE_KEY', config.compare_key);
         commit('match/UPDATE_TIMEFRAME', config.timeframe);
 
@@ -184,7 +186,10 @@ export default {
 
         commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
 
-        /* Kibana Discover */
+        /* limit_execution */
+        commit('alert/UPDATE_LIMIT_EXCECUTION', config.limit_execution);
+
+         /* Kibana Discover */
         commit('alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', config.generate_kibana_discover_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_APP_URL', config.kibana_discover_app_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_VERSION', config.kibana_discover_version);
@@ -341,6 +346,16 @@ export default {
 
         commit('alert/UPDATE_GITTER_PROXY', config.gitter_proxy);
 
+        /* time_window_change */
+        if (config.start_time && config.end_time && config.drop_if) {
+          commit('alert/UPDATE_USE_TIME_WINDOW', true);
+          commit('alert/UPDATE_TIME_WINDOW_START_TIME', config.start_time);
+          commit('alert/UPDATE_TIME_WINDOW_END_TIME', config.end_time);
+          commit('alert/UPDATE_TIME_WINDOW_DROP_IF', config.drop_if);
+        } else {
+          commit('alert/UPDATE_USE_TIME_WINDOW', false);
+        }
+
         /* Jira */
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
@@ -494,6 +509,46 @@ export default {
           commit('alert/UPDATE_HIVE_ALERT_CONFIG_FOLLOW', false);
         }
 
+        /* Alerta */
+        commit('alert/UPDATE_ALERTA_API_URL', config.alerta_api_url);
+        commit('alert/UPDATE_ALERTA_API_KEY', config.alerta_api_key);
+
+        if (config.alerta_severity) {
+          commit('alert/UPDATE_ALERTA_SEVERITY', config.alerta_severity);
+        } else {
+          commit('alert/UPDATE_ALERTA_SEVERITY', 'warning');
+        }
+
+        if (config.alerta_resource) {
+          commit('alert/UPDATE_ALERTA_RESOURCE', config.alerta_resource);
+        } else {
+          commit('alert/UPDATE_ALERTA_RESOURCE', 'elastalert');
+        }
+
+        if (config.alerta_text) {
+          commit('alert/UPDATE_ALERTA_TEXT', config.alerta_text);
+        } else {
+          commit('alert/UPDATE_ALERTA_TEXT', 'elastalert');
+        }
+
+        if (config.alerta_event) {
+          commit('alert/UPDATE_ALERTA_EVENT', config.alerta_event);
+        } else {
+          commit('alert/UPDATE_ALERTA_EVENT', 'elastalert');
+        }
+
+        commit('alert/UPDATE_ALERTA_GROUP', config.alerta_group);
+
+        if (config.alerta_tags) {
+          commit('alert/UPDATE_ALERTA_TAGS', config.alerta_tags);
+        }
+
+        if (config.alerta_environment) {
+          commit('alert/UPDATE_ALERTA_ENVIRONMENT', config.alerta_environment);
+        } else {
+          commit('alert/UPDATE_ALERTA_ENVIRONMENT', 'Production');
+        }
+
         /* Slack */
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
 
@@ -576,6 +631,14 @@ export default {
 
         commit('alert/UPDATE_BODY', config.alert_text);
         commit('alert/UPDATE_SUBJECT', config.alert_subject);
+
+        if (config.alert_subject_args) {
+          commit('alert/UPDATE_ALERT_SUBJECT_ARGS', config.alert_subject_args);
+        }
+
+        if (config.alert_text_args) {
+          commit('alert/UPDATE_ALERT_TEXT_ARGS', config.alert_text_args);
+        }
       }
     },
 
@@ -956,6 +1019,16 @@ export default {
 
       if (state.alert.aggregationKey) {
         config.aggregation_key = state.alert.aggregationKey;
+      }
+
+      return config;
+    },
+
+    limitExcecution(state) {
+      let config = {};
+
+      if (state.alert.limitExcecution) {
+        config.limit_execution = state.alert.limitExcecution;
       }
 
       return config;
@@ -1373,6 +1446,21 @@ export default {
       return config;
     },
 
+    // time_window_change
+    timeWindow(state) {
+      let config = {};
+
+      if (state.alert.useTimeWindow) {
+        config.start_time = state.alert.timeWindowStartTime;
+        config.end_time = state.alert.timeWindowEndTime;
+        config.drop_if = state.alert.timeWindowDropIf;
+        // This will work only if HourRangeEnhancement exists in elastalert - sent different merge request.
+        config.match_enhancements = ['elastalert_modules.hour_range_enhancement.HourRangeEnhancement'];
+      }
+
+      return config;
+    },
+
     jira(state) {
       let config = {};
 
@@ -1599,19 +1687,73 @@ export default {
       return config;
     },
 
+    alerta(state) {
+      let config = {};
+
+      if (state.alert.alertaApiUrl) {
+        config.alerta_api_url = state.alert.alertaApiUrl;
+      }
+
+      if (state.alert.alertaApiKey) {
+        config.alerta_api_key = state.alert.alertaApiKey;
+      }
+
+      if (state.alert.alertaSeverity) {
+        config.alerta_severity = state.alert.alertaSeverity;
+      }
+
+      if (state.alert.alertaResource) {
+        config.alerta_resource = state.alert.alertaResource;
+      }
+
+      if (state.alert.alertaText) {
+        config.alerta_text = state.alert.alertaText;
+      }
+
+      if (state.alert.alertaEvent) {
+        config.alerta_event = state.alert.alertaEvent;
+      }
+
+      if (state.alert.alertaGroup) {
+        config.alerta_group = state.alert.alertaGroup;
+      }
+
+      if (state.alert.alertaTags && state.alert.alertaTags.length) {
+        config.alerta_tags = state.alert.alertaTags;
+      }
+
+      if (state.alert.alertaEnvironment) {
+        config.alerta_environment = state.alert.alertaEnvironment;
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
       if (state.alert.subject) {
         let formattedSubject = htmlToConfigFormat(state.alert.subject);
         config.alert_subject = formattedSubject.alertText.trim();
-        config.alert_subject_args = formattedSubject.alertArgs;
+
+        if (state.alert.alertSubjectArgs && state.alert.alertSubjectArgs.length) {
+          config.alert_subject_args = state.alert.alertSubjectArgs;
+        }
+
+        // TODO: Comment out once
+        // config.alert_subject_args = formattedSubject.alertArgs;
       }
 
       if (state.alert.body) {
         let formattedText = htmlToConfigFormat(state.alert.body);
         config.alert_text = formattedText.alertText;
-        config.alert_text_args = formattedText.alertArgs;
+
+        if (state.alert.alertTextArgs && state.alert.alertTextArgs.length) {
+          config.alert_text_args = state.alert.alertTextArgs;
+        }
+
+        // TODO: Comment out once
+        // config.alert_text_args = formattedText.alertArgs;
       }
 
       if (state.alert.bodyType && state.alert.bodyType !== 'default') {
@@ -1682,7 +1824,7 @@ export default {
 
       config.use_strftime_index = getters['settings/strftime'];
 
-      if (state.match.queryKey) {
+      if (state.match.queryKey && state.match.queryKey.length) {
         config.query_key = state.match.queryKey;
       }
 
@@ -1698,7 +1840,15 @@ export default {
         config.realert = state.alert.realert;
       }
 
-      config = { ...config, ...getters.aggregation };
+      // time_window_change
+      const existingMatchEnhancements = config.match_enhancements ?? [];
+      const timeWindowMatchEnhancements = getters.timeWindow.match_enhancements ?? [];
+      config = {
+        ...config,
+        ...getters.aggregation,
+        ...getters.timeWindow,
+        match_enhancements: [...existingMatchEnhancements, ...timeWindowMatchEnhancements]
+      };
 
       if (state.alert.alert.includes('post')) {
         config = { ...config, ...getters.http };
@@ -1775,6 +1925,10 @@ export default {
         config = { ...config, ...getters.hivealerter };
       }
 
+      if (state.alert.alert.includes('alerta')) {
+        config = { ...config, ...getters.alerta };
+      }
+
       if (state.alert.alert.includes('chatwork')) {
         config = { ...config, ...getters.chatwork };
       }
@@ -1798,6 +1952,7 @@ export default {
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('mattermost')
           || state.alert.alert.includes('hivealerter')
+          || state.alert.alert.includes('alerta')
           || state.alert.alert.includes('chatwork')
           || state.alert.alert.includes('discord')
           || state.alert.alert.includes('gitter')) {
@@ -1826,6 +1981,8 @@ export default {
 
       config = { ...config, ...getters.kibanaDiscover };
 
+      config = { ...config, ...getters.limitExcecution };
+
       // Sort the keys in the object so it appears alphabetically in the UI
       let conf = {};
 
@@ -1838,6 +1995,6 @@ export default {
       return conf;
     },
 
-    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest), { quotingType: '"' })
+    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest), { quotingType: '"', forceQuotes: true })
   }
 };

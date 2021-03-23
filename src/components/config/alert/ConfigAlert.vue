@@ -35,6 +35,38 @@
       </el-col>
     </el-row>
 
+    <!-- time_window_change  -->
+    <el-row class="m-s-sm">
+      <el-col :span="19">
+        <ConfigTimeWindowFeature ref="timeWindowFeature" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
+    <el-row class="m-s-sm">
+      <el-col :span="enableLimitExcecution ? 6 : 24">
+        <el-form-item label="Limit Excecution">
+          <el-switch
+            id="enableLimitExcecution"
+            v-model="enableLimitExcecution"
+            :disabled="viewOnly"
+            @change="changeLimitExcecution" />
+          <label>Limit Excecution Setting.</label>
+        </el-form-item>
+      </el-col>
+
+      <el-col v-if="enableLimitExcecution" :span="20">
+        <el-form-item label="" prop="limitExcecution">
+          <div v-if="!viewOnly" class="limit-excecution">
+            <VueCronEditorBuefy v-model="limitExcecution" /><br>
+            {{ limitExcecution }}
+          </div>
+          <div v-else>
+            {{ limitExcecution }}
+          </div>
+        </el-form-item>
+      </el-col>
+    </el-row>
+
     <el-row class="m-s-sm">
       <el-col :span="24">
         <ConfigKibanaDiscover ref="kibanaDiscover" :view-only="viewOnly" />
@@ -113,6 +145,9 @@
         <el-checkbox id="destinationHivealerter" label="hivealerter" border>
           TheHive
         </el-checkbox>
+        <el-checkbox id="destinationAlerta" label="alerta" border>
+          Alerta
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -120,7 +155,8 @@
       <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
         alert.includes('sns') || alert.includes('pagertree') || alert.includes('gitter') || alert.includes('googlechat') ||
-        alert.includes('chatwork') || alert.includes('discord') || alert.includes('hivealerter')">
+        alert.includes('chatwork') || alert.includes('discord') || alert.includes('hivealerter') ||
+        alert.includes('alerta')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -1164,12 +1200,122 @@
             @change="changeHiveAlertConfigFollow" />
         </el-form-item>
       </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('alerta')">
+        <template slot="label">
+          Alerta
+        </template>
+
+        <el-form-item label="API URL" prop="alertaApiUrl" required>
+          <el-input id="alertaApiUrl" v-model="alertaApiUrl" :disabled="viewOnly" />
+          <label>API server URL.</label>
+        </el-form-item>
+
+        <el-form-item label="API Key" prop="alertaApiKey">
+          <el-input id="alertaApiKey" v-model="alertaApiKey" :disabled="viewOnly" />
+          <label>
+            This is the api key for alerta server, sent in an Authorization HTTP header.
+            If not defined, no Authorization header is sent.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Severity" prop="alertaSeverity">
+          <el-select
+            v-model="alertaSeverity"
+            :disabled="viewOnly"
+            placeholder=""
+            class="el-select-wide">
+            <el-option
+              v-for="v in alertaSeverityOptions"
+              :key="v.code"
+              :label="v.name"
+              :value="v.code" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="Resource" prop="alertaResource">
+          <el-input id="alertaResource" v-model="alertaResource" :disabled="viewOnly" />
+          <label>If true and query_key is present, this will override alerta_resource field with the query_key value (Can be useful if query_key is a hostname).</label>
+        </el-form-item>
+
+        <el-form-item label="Text" prop="alertaText">
+          <el-input id="alertaText" v-model="alertaText" :disabled="viewOnly" />
+          <label>
+            This is the api key for alerta server, sent in an Authorization HTTP header.
+            If not defined, no Authorization header is sent.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Event" prop="alertaEvent">
+          <el-input id="alertaEvent" v-model="alertaEvent" :disabled="viewOnly" />
+          <label>Defaults to “elastalert”.</label>
+        </el-form-item>
+
+        <el-form-item label="Group" prop="alertaGroup">
+          <el-input id="alertaGroup" v-model="alertaGroup" :disabled="viewOnly" />
+          <label>Defaults to “”.</label>
+        </el-form-item>
+
+        <el-popover v-model="popAlertaTagsVisible" :class="{ 'is-invalid': !popAlertaTagsValid }">
+          <span slot="reference" class="pop-trigger">
+            <el-tooltip v-if="alertaTags.length" :content="alertaTags.join(', ')" placement="top">
+              <span>Tags ({{ alertaTags.length }})</span>
+            </el-tooltip>
+            <span v-else>Tags ({{ alertaTags.length }})</span>
+          </span>
+          <template>
+            <el-form
+              ref="alertaTags"
+              :model="$store.state.config.alert"
+              label-position="top"
+              style="width: 360px"
+              @submit.native.prevent>
+              <el-form-item
+                v-for="(entry, index) in alertaTags"
+                :key="index"
+                :prop="'alertaTags.' + index"
+                :disabled="viewOnly"
+                class="el-form-item-list"
+                label=""
+                required>
+                <el-row :gutter="5" type="flex" justify="space-between">
+                  <el-col :span="20">
+                    <el-input
+                      v-model="alertaTags[index]"
+                      :disabled="viewOnly"
+                      placeholder="Tags"
+                      @input="(val) => updateAlertaTags(val, index)" />
+                  </el-col>
+                  <el-col :span="4">
+                    <el-button
+                      :disabled="viewOnly"
+                      type="danger"
+                      icon="el-icon-delete"
+                      circle
+                      plain
+                      @click="removeAlertaTagsEntry(entry)" />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </el-form>
+
+            <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertaTagsEntry">
+              Add tags
+            </el-button>
+          </template>
+        </el-popover>
+
+        <el-form-item label="Environment" prop="alertaEnvironment">
+          <el-input id="alertaEnvironment" v-model="alertaEnvironment" :disabled="viewOnly" />
+          <label>Defaults to “Production”.</label>
+        </el-form-item>
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
 
 <script>
-
+import VueCronEditorBuefy from 'vue-cron-editor-buefy';
 import * as EmailValidator from 'email-validator';
 import validUrl from 'valid-url';
 import { Picker } from 'emoji-mart-vue';
@@ -1240,6 +1386,7 @@ let validateEmailCommaSeparated = (rule, value, callback) => {
 export default {
   components: {
     ConfigAlertSubjectBody,
+    VueCronEditorBuefy,
     Picker
   },
 
@@ -1251,12 +1398,52 @@ export default {
       groupSnsValue = 'notProfile';
     }
     return {
+      enableLimitExcecution: false,
+      popAlertaTagsVisible: false,
+      popAlertaTagsValid: true,
       popHiveAlertConfigTagsVisible: false,
       popHiveAlertConfigTagsValid: true,
       popCommandVisible: false,
       popCommandValid: true,
       groupSns: groupSnsValue,
       visibleTabPane: '',
+      alertaSeverityOptions: [{
+        code: 'unknown',
+        name: 'unknown'
+      }, {
+        code: 'security',
+        name: 'security'
+      }, {
+        code: 'debug',
+        name: 'debug'
+      }, {
+        code: 'informational',
+        name: 'informational'
+      }, {
+        code: 'ok',
+        name: 'ok'
+      }, {
+        code: 'normal',
+        name: 'normal'
+      }, {
+        code: 'cleared',
+        name: 'cleared'
+      }, {
+        code: 'indeterminate',
+        name: 'indeterminate'
+      }, {
+        code: 'warning',
+        name: 'warning'
+      }, {
+        code: 'minor',
+        name: 'minor'
+      }, {
+        code: 'major',
+        name: 'major'
+      }, {
+        code: 'critical',
+        name: 'critical'
+      }],
       rules: {
         alert: [
           {
@@ -1329,6 +1516,12 @@ export default {
             validator: validateUrl,
             trigger: ['change', 'blur']
           }
+        ],
+        alertaApiUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
         ]
       }
     };
@@ -1341,6 +1534,15 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_AGGREGATION_SCHEDULE', value);
+      }
+    },
+
+    limitExcecution: {
+      get() {
+        return this.$store.state.config.alert.limitExcecution;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_LIMIT_EXCECUTION', value);
       }
     },
 
@@ -2676,6 +2878,87 @@ export default {
       }
     },
 
+    alertaApiUrl: {
+      get() {
+        return this.$store.state.config.alert.alertaApiUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_API_URL', value);
+      }
+    },
+
+    alertaApiKey: {
+      get() {
+        return this.$store.state.config.alert.alertaApiKey;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_API_KEY', value);
+      }
+    },
+
+    alertaSeverity: {
+      get() {
+        return this.$store.state.config.alert.alertaSeverity;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_SEVERITY', value);
+      }
+    },
+
+    alertaResource: {
+      get() {
+        return this.$store.state.config.alert.alertaResource;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_RESOURCE', value);
+      }
+    },
+
+    alertaText: {
+      get() {
+        return this.$store.state.config.alert.alertaText;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_TEXT', value);
+      }
+    },
+
+    alertaEvent: {
+      get() {
+        return this.$store.state.config.alert.alertaEvent;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_EVENT', value);
+      }
+    },
+
+    alertaGroup: {
+      get() {
+        return this.$store.state.config.alert.alertaGroup;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_GROUP', value);
+      }
+    },
+
+    alertaTags: {
+      get() {
+        return this.$store.state.config.alert.alertaTags;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_TAGS', value);
+      }
+    },
+
+    alertaEnvironment: {
+      get() {
+        return this.$store.state.config.alert.alertaEnvironment;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_ENVIRONMENT', value);
+      }
+    },
+
     realert: {
       get() {
         return this.$store.state.config.alert.realert || { minutes: 5 };
@@ -2695,6 +2978,12 @@ export default {
     }
   },
 
+  mounted() {
+    if (this.limitExcecution) {
+      this.enableLimitExcecution = true;
+    }
+  },
+
   methods: {
     addEmoji(value) {
       this.slackEmojiOverride = value.colons;
@@ -2709,6 +2998,15 @@ export default {
       this.snsAwsSecretAccessKey = '';
       this.snsAwsRegion = '';
       this.snsAwsProfile = '';
+    },
+
+    changeLimitExcecution(val) {
+      if (val) {
+        this.enableLimitExcecution = true;
+      } else {
+        this.enableLimitExcecution = false;
+        this.limitExcecution = '';
+      }
     },
 
     changeHiveAlertConfigFollow(val) {
@@ -2767,6 +3065,9 @@ export default {
         if (this.$refs.command) {
           await this.validateCommand();
         }
+        if (this.$refs.alertaTags) {
+          await this.validateAlertaTags();
+        }
         this.$emit('validate', true);
         return true;
       } catch (error) {
@@ -2780,16 +3081,10 @@ export default {
         this.popHiveAlertConfigTagsValid = false;
         return;
       }
-      if (!this.command.length) {
-        this.popCommandValid = false;
-        return;
-      }
       try {
         this.popHiveAlertConfigTagsValid = await this.$refs.hiveAlertConfigTags.validate();
-        this.popCommandValid = await this.$refs.command.validate();
       } catch (error) {
         this.popHiveAlertConfigTagsValid = false;
-        this.popCommandValid = false;
         throw error;
       }
     },
@@ -2819,6 +3114,19 @@ export default {
       });
     },
 
+    async validateCommand() {
+      if (!this.command.length) {
+        this.popCommandValid = false;
+        return;
+      }
+      try {
+        this.popCommandValid = await this.$refs.command.validate();
+      } catch (error) {
+        this.popCommandValid = false;
+        throw error;
+      }
+    },
+
     updateCommand(entry, index) {
       if (Number.isNaN(entry)) return;
       this.$store.commit('config/alert/UPDATE_COMMAND_ENTRY', {
@@ -2839,6 +3147,44 @@ export default {
 
     addCommandEntry() {
       this.$store.commit('config/alert/ADD_COMMAND_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    
+    async validateAlertaTags() {
+      if (!this.alertaTags.length) {
+        this.popAlertaTagsValid = false;
+        return;
+      }
+      try {
+        this.popAlertaTagsValid = await this.$refs.alertaTags.validate();
+      } catch (error) {
+        this.popAlertaTagsValid = false;
+        throw error;
+      }
+    },
+
+    updateAlertaTags(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ALERTA_TAGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeAlertaTagsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ALERTA_TAGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addAlertaTagsEntry() {
+      this.$store.commit('config/alert/ADD_ALERTA_TAGS_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });
@@ -3016,5 +3362,14 @@ export default {
     color: green !important;
     border-color: blue !important;
   }
+}
+
+.limit-excecution {
+  margin: 0 auto;
+  min-height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 </style>
