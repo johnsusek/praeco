@@ -189,7 +189,7 @@ export default {
         /* limit_execution */
         commit('alert/UPDATE_LIMIT_EXCECUTION', config.limit_execution);
 
-         /* Kibana Discover */
+        /* Kibana Discover */
         commit('alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', config.generate_kibana_discover_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_APP_URL', config.kibana_discover_app_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_VERSION', config.kibana_discover_version);

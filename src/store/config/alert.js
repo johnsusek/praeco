@@ -529,7 +529,7 @@ export default {
     UPDATE_TIME_WINDOW_DROP_IF(state, timeWindowDropIf) {
       state.timeWindowDropIf = timeWindowDropIf;
     },
-    
+
     /* Jira */
     UPDATE_JIRA_PROJECT(state, jiraProject) {
       state.jiraProject = jiraProject;

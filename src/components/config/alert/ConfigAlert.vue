@@ -3151,7 +3151,7 @@ export default {
         this.validate();
       });
     },
-    
+
     async validateAlertaTags() {
       if (!this.alertaTags.length) {
         this.popAlertaTagsValid = false;
