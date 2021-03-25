@@ -32,16 +32,29 @@ function initialState() {
     slackUsernameOverride: 'Praeco',
     slackEmojiOverride: '',
     slackMsgColor: 'danger',
+    slackParseOverride: 'none',
+    slackTextString: '',
+    slackIgnoreSslErrors: false,
+    slackCaCerts: '',
+    slackIconUrlOverride: '',
+    slackTimeout: 10,
     slackAttachKibanaDiscoverUrl: false,
     slackKibanaDiscoverColor: '#ec4b98',
     slackKibanaDiscoverTitle: 'Discover in Kibana',
+    slackProxy: '',
 
     /* MS Teams */
     ms_teamsWebhookUrl: '',
     ms_teamsThemeColor: '#ff0000',
+    ms_teamsAlertFixedWidth: false,
+    ms_teamsAlertSummary: 'ElastAlert Message',
+    ms_teamsProxy: '',
 
     /* Telegram */
     telegramRoomId: '',
+    telegramProxy: '',
+    telegramProxyLogin: '',
+    telegramProxyPass: '',
 
     /* Exotel */
     exotelAccountSid: '',
@@ -58,6 +71,7 @@ function initialState() {
 
     /* PagerTree */
     pagertreeIntegrationUrl: '',
+    pagertreeProxy: '',
 
     /* AWS SNS */
     snsTopicArn: '',
@@ -67,6 +81,8 @@ function initialState() {
     snsAwsProfile: '',
 
     /* Zabbix */
+    zbxSenderHost: 'localhost',
+    zbxSenderPort: 10051,
     zbxHost: '',
     zbxKey: '',
 
@@ -75,9 +91,13 @@ function initialState() {
 
     /* Command */
     command: [],
+    pipeMatchJson: false,
+    pipeAlertText: false,
 
     /* Gitter */
+    gitterWebhookUrl: '',
     gitterMsgLevel: 'error',
+    gitterProxy: '',
 
     /* time_window_change */
     useTimeWindow: false,
@@ -111,6 +131,7 @@ function initialState() {
     servicenowSubcategory: '',
     servicenowCmdbCi: '',
     servicenowCallerId: '',
+    servicenowProxy: '',
 
     /* VictorOps */
     victoropsApiKey: '',
@@ -118,6 +139,7 @@ function initialState() {
     victoropsMessageType: '',
     victoropsEntityId: '',
     victoropsEntityDisplayName: '',
+    victoropsProxy: '',
 
     /* Stomp */
     stompHostname: '',
@@ -125,16 +147,24 @@ function initialState() {
     stompLogin: '',
     stompPassword: '',
     stompDestination: '',
+    stompSsl: false,
 
     /* GoogleChat */
     googleChatWebhookUrl: '',
     googleChatFormat: 'basic',
     googleChatHeaderTitle: '',
+    googleChatHeaderSubtitle: '',
+    googleChatHeaderImage: '',
+    googleFooterKibanalink: '',
 
     /* Mattermost */
     mattermostChannelOverride: '',
     mattermostUsernameOverride: 'Praeco',
     mattermostMsgColor: 'danger',
+    mattermostIconUrlOverride: '',
+    mattermostMsgPretext: '',
+    mattermostIgnoreSslErrors: false,
+    mattermostProxy: '',
 
     /* TheHive */
     hiveAlertConfigTitle: '',
@@ -164,9 +194,21 @@ function initialState() {
     email: '',
     cc: '',
     bcc: '',
+    smtpSsl: false,
+    smtpHost: '',
+    smtpPort: 25,
+    smtpAuthFile: '',
+    smtpKeyFile: '',
+    smtpCertFile: '',
+    emailFromField: '',
+    emailAddDomain: '',
+    // TODO:
+    // emailFormat: false,
 
     /* HTTP POST */
-    httpPostUrl: ''
+    httpPostUrl: '',
+    httpPostTimeout: '',
+    httpPostProxy: '',
   };
 }
 
@@ -179,17 +221,6 @@ export default {
 
   getters: {
     slackTitleLink(state, getters, rootState) {
-      let appUrl = rootState.appconfig.config.appUrl;
-      let path = rootState.config.settings.name;
-
-      if (rootState.config.path) {
-        path = `${rootState.config.path}/${path}`;
-      }
-
-      return `${appUrl}/rules/${encodeURIComponent(path)}`;
-    },
-
-    mattermostTitleLink(state, getters, rootState) {
       let appUrl = rootState.appconfig.config.appUrl;
       let path = rootState.config.settings.name;
 
@@ -238,10 +269,20 @@ export default {
       state.summaryTableFields = fields;
     },
 
+    /* HTTP POST */
     UPDATE_HTTP_POST_URL(state, httpPostUrl) {
       state.httpPostUrl = httpPostUrl;
     },
 
+    UPDATE_HTTP_POST_TIMEOUT(state, httpPostTimeout) {
+      state.httpPostTimeout = httpPostTimeout;
+    },
+
+    UPDATE_HTTP_POST_PROXY(state, httpPostProxy) {
+      state.httpPostProxy = httpPostProxy;
+    },
+
+    /* EMail */
     UPDATE_FROM_ADDR(state, fromAddr) {
       state.fromAddr = fromAddr;
     },
@@ -262,10 +303,61 @@ export default {
       state.bcc = bcc;
     },
 
+    UPDATE_SMTP_SSL(state, smtpSsl) {
+      state.smtpSsl = smtpSsl;
+    },
+
+    UPDATE_SMTP_HOST(state, smtpHost) {
+      state.smtpHost = smtpHost;
+    },
+
+    UPDATE_SMTP_PORT(state, smtpPort) {
+      state.smtpPort = smtpPort;
+    },
+
+    UPDATE_SMTP_AUTH_FILE(state, smtpAuthFile) {
+      state.smtpAuthFile = smtpAuthFile;
+    },
+
+    UPDATE_SMTP_KEY_FILE(state, smtpKeyFile) {
+      state.smtpKeyFile = smtpKeyFile;
+    },
+
+    UPDATE_SMTP_CERT_FILE(state, smtpCertFile) {
+      state.smtpCertFile = smtpCertFile;
+    },
+
+    UPDATE_EMAIL_FROM_FIELD(state, emailFromField) {
+      state.emailFromField = emailFromField;
+    },
+
+    UPDATE_EMAIL_ADD_DOMAIN(state, emailAddDomain) {
+      state.emailAddDomain = emailAddDomain;
+    },
+
+    // TODO:
+    // UPDATE_EMAIL_FORMAT(state, emailFormat) {
+    //   state.emailFormat = emailFormat;
+    // },
+
+    /* Telegram */
     UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
       state.telegramRoomId = telegramRoomId;
     },
 
+    UPDATE_TELEGRAM_PROXY(state, telegramProxy) {
+      state.telegramProxy = telegramProxy;
+    },
+
+    UPDATE_TELEGRAM_PROXY_LOGIN(state, telegramProxyLogin) {
+      state.telegramProxyLogin = telegramProxyLogin;
+    },
+
+    UPDATE_TELEGRAM_PROXY_PASS(state, telegramProxyPass) {
+      state.telegramProxyPass = telegramProxyPass;
+    },
+
+    /* Chatwork */
     UPDATE_CHATWORK_API_KEY(state, chatworkApikey) {
       state.chatworkApikey = chatworkApikey;
     },
@@ -274,6 +366,7 @@ export default {
       state.chatworkRoomId = chatworkRoomId;
     },
 
+    /* Discord */
     UPDATE_DISCORD_WEBHOOK_URL(state, discordWebhookUrl) {
       state.discordWebhookUrl = discordWebhookUrl;
     },
@@ -290,6 +383,7 @@ export default {
       state.discordEmbedIconUrl = discordEmbedIconUrl;
     },
 
+    /* Exotel */
     UPDATE_EXOTEL_ACCOUNT_SID(state, exotelAccountSid) {
       state.exotelAccountSid = exotelAccountSid;
     },
@@ -310,6 +404,7 @@ export default {
       state.exotelMessageBody = exotelMessageBody;
     },
 
+    /* Twilio */
     UPDATE_TWILIO_ACCOUNT_SID(state, twilioAccountSid) {
       state.twilioAccountSid = twilioAccountSid;
     },
@@ -326,10 +421,16 @@ export default {
       state.twilioFromNumber = twilioFromNumber;
     },
 
+    /* Pagertree */
     UPDATE_PAGERTREE_INTEGRATION_URL(state, pagertreeIntegrationUrl) {
       state.pagertreeIntegrationUrl = pagertreeIntegrationUrl;
     },
 
+    UPDATE_PAGERTREE_PROXY(state, pagertreeProxy) {
+      state.pagertreeProxy = pagertreeProxy;
+    },
+
+    /* AWS SNS */
     UPDATE_SNS_TOPIC_ARN(state, snsTopicArn) {
       state.snsTopicArn = snsTopicArn;
     },
@@ -350,6 +451,15 @@ export default {
       state.snsAwsProfile = snsAwsProfile;
     },
 
+    /* Zabbix */
+    UPDATE_ZBX_SENDER_HOST(state, zbxSenderHost) {
+      state.zbxSenderHost = zbxSenderHost;
+    },
+
+    UPDATE_ZBX_SENDER_PORT(state, zbxSenderPort) {
+      state.zbxSenderPort = zbxSenderPort;
+    },
+
     UPDATE_ZBX_HOST(state, zbxHost) {
       state.zbxHost = zbxHost;
     },
@@ -358,19 +468,55 @@ export default {
       state.zbxKey = zbxKey;
     },
 
+    /* LineNotify */
     UPDATE_LINENOTIFY_ACCESS_TOKEN(state, linenotifyAccessToken) {
       state.linenotifyAccessToken = linenotifyAccessToken;
     },
 
+    /* Command */
     UPDATE_COMMAND(state, command) {
       state.command = command;
+    },
+
+    ADD_COMMAND_ENTRY(state) {
+      state.command.push('');
+    },
+
+    ADD_COMMAND_ENTRY_VALUE(state, value) {
+      state.command.push(value);
+    },
+
+    REMOVE_COMMAND_ENTRY(state, entry) {
+      state.command = state.command.filter(b => b !== entry);
+    },
+
+    UPDATE_COMMAND_ENTRY(state, { entry, index }) {
+      if (!state.command) return;
+      state.command[index] = entry;
+    },
+
+    UPDATE_PIPE_MATCH_JSON(state, pipeMatchJson) {
+      state.pipeMatchJson = pipeMatchJson;
+    },
+
+    UPDATE_PIPE_ALERT_TEXT(state, pipeAlertText) {
+      state.pipeAlertText = pipeAlertText;
+    },
+
+    /* Gitter */
+    UPDATE_GITTER_WEBHOOK_URL(state, gitterWebhookUrl) {
+      state.gitterWebhookUrl = gitterWebhookUrl;
     },
 
     UPDATE_GITTER_MSG_LEVEL(state, gitterMsgLevel) {
       state.gitterMsgLevel = gitterMsgLevel;
     },
 
-    // time_window_change
+    UPDATE_GITTER_PROXY(state, gitterProxy) {
+      state.gitterProxy = gitterProxy;
+    },
+
+    /* time_window_change */
     UPDATE_USE_TIME_WINDOW(state, useTimeWindow) {
       state.useTimeWindow = useTimeWindow;
     },
@@ -384,6 +530,7 @@ export default {
       state.timeWindowDropIf = timeWindowDropIf;
     },
 
+    /* Jira */
     UPDATE_JIRA_PROJECT(state, jiraProject) {
       state.jiraProject = jiraProject;
     },
@@ -396,6 +543,7 @@ export default {
       state.jiraComponents = jiraComponents;
     },
 
+    /* ServiceNow */
     UPDATE_SERVICENOW_USERNAME(state, serviceNowUsername) {
       state.serviceNowUsername = serviceNowUsername;
     },
@@ -436,6 +584,11 @@ export default {
       state.servicenowCallerId = servicenowCallerId;
     },
 
+    UPDATE_SERVICENOW_PROXY(state, servicenowProxy) {
+      state.servicenowProxy = servicenowProxy;
+    },
+
+    /* VictorOps */
     UPDATE_VICTOROPS_API_KEY(state, victoropsApiKey) {
       state.victoropsApiKey = victoropsApiKey;
     },
@@ -456,6 +609,11 @@ export default {
       state.victoropsEntityDisplayName = victoropsEntityDisplayName;
     },
 
+    UPDATE_VICTOROPS_PROXY(state, victoropsProxy) {
+      state.victoropsProxy = victoropsProxy;
+    },
+
+    /* Stomp */
     UPDATE_STOMP_HOSTNAME(state, stompHostname) {
       state.stompHostname = stompHostname;
     },
@@ -476,6 +634,11 @@ export default {
       state.stompDestination = stompDestination;
     },
 
+    UPDATE_STOMP_SSL(state, stompSsl) {
+      state.stompSsl = stompSsl;
+    },
+
+    /* GoogleChat */
     UPDATE_GOOGLE_CHAT_WEBHOOK_URL(state, googleChatWebhookUrl) {
       state.googleChatWebhookUrl = googleChatWebhookUrl;
     },
@@ -488,6 +651,19 @@ export default {
       state.googleChatHeaderTitle = googleChatHeaderTitle;
     },
 
+    UPDATE_GOOGLECHAT_HEADER_SUBTITLE(state, googleChatHeaderSubtitle) {
+      state.googleChatHeaderSubtitle = googleChatHeaderSubtitle;
+    },
+
+    UPDATE_GOOGLECHAT_HEADER_IMAGE(state, googleChatHeaderImage) {
+      state.googleChatHeaderImage = googleChatHeaderImage;
+    },
+
+    UPDATE_GOOGLECHAT_FOOTER_KIBANALINK(state, googleFooterKibanalink) {
+      state.googleFooterKibanalink = googleFooterKibanalink;
+    },
+
+    /* Mattermost */
     UPDATE_MATTERMOST_CHANNEL_OVERRIDE(state, mattermostChannelOverride) {
       state.mattermostChannelOverride = mattermostChannelOverride;
     },
@@ -500,6 +676,23 @@ export default {
       state.mattermostMsgColor = mattermostMsgColor;
     },
 
+    UPDATE_MATTERMOST_ICON_URL_OVERRIDE(state, mattermostIconUrlOverride) {
+      state.mattermostIconUrlOverride = mattermostIconUrlOverride;
+    },
+
+    UPDATE_MATTERMOST_MSG_PRETEXT(state, mattermostMsgPretext) {
+      state.mattermostMsgPretext = mattermostMsgPretext;
+    },
+
+    UPDATE_MATTERMOST_IGNORE_SSL_ERRORS(state, mattermostIgnoreSslErrors) {
+      state.mattermostIgnoreSslErrors = mattermostIgnoreSslErrors;
+    },
+
+    UPDATE_MATTERMOST_PROXY(state, mattermostProxy) {
+      state.mattermostProxy = mattermostProxy;
+    },
+
+    /* Slack */
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {
       state.slackChannelOverride = slackChannelOverride;
     },
@@ -516,6 +709,30 @@ export default {
       state.slackMsgColor = slackMsgColor;
     },
 
+    UPDATE_SLACK_PARSE_OVERRIDE(state, slackParseOverride) {
+      state.slackParseOverride = slackParseOverride;
+    },
+
+    UPDATE_SLACK_TEXT_STRING(state, slackTextString) {
+      state.slackTextString = slackTextString;
+    },
+
+    UPDATE_SLACK_IGNORE_SSL_ERRORS(state, slackIgnoreSslErrors) {
+      state.slackIgnoreSslErrors = slackIgnoreSslErrors;
+    },
+
+    UPDATE_SLACK_CA_CERTS(state, slackCaCerts) {
+      state.slackCaCerts = slackCaCerts;
+    },
+
+    UPDATE_SLACK_ICON_URL_OVERRIDE(state, slackIconUrlOverride) {
+      state.slackIconUrlOverride = slackIconUrlOverride;
+    },
+
+    UPDATE_SLACK_TIMEOUT(state, slackTimeout) {
+      state.slackTimeout = slackTimeout;
+    },
+
     UPDATE_SLACK_ATTACH_KIBANA_DISCOVER_URL(state, slackAttachKibanaDiscoverUrl) {
       state.slackAttachKibanaDiscoverUrl = slackAttachKibanaDiscoverUrl;
     },
@@ -528,6 +745,11 @@ export default {
       state.slackKibanaDiscoverTitle = slackKibanaDiscoverTitle;
     },
 
+    UPDATE_SLACK_PROXY(state, slackProxy) {
+      state.slackProxy = slackProxy;
+    },
+
+    /* MS Teams */
     UPDATE_MS_TEAMS_WEBHOOK_URL(state, ms_teamsWebhookUrl) {
       state.ms_teamsWebhookUrl = ms_teamsWebhookUrl;
     },
@@ -536,6 +758,19 @@ export default {
       state.ms_teamsThemeColor = ms_teamsThemeColor;
     },
 
+    UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH(state, ms_teamsAlertFixedWidth) {
+      state.ms_teamsAlertFixedWidth = ms_teamsAlertFixedWidth;
+    },
+
+    UPDATE_MS_TEAMS_ALERT_SUMMARY(state, ms_teamsAlertSummary) {
+      state.ms_teamsAlertSummary = ms_teamsAlertSummary;
+    },
+
+    UPDATE_MS_TEAMS_PROXY(state, ms_teamsProxy) {
+      state.ms_teamsProxy = ms_teamsProxy;
+    },
+
+    /* TheHive */
     UPDATE_HIVE_ALERT_CONFIG_TITLE(state, hiveAlertConfigTitle) {
       state.hiveAlertConfigTitle = hiveAlertConfigTitle;
     },
@@ -589,6 +824,7 @@ export default {
       state.hiveAlertConfigFollow = hiveAlertConfigFollow;
     },
 
+    /* Alerta */
     UPDATE_ALERTA_API_URL(state, alertaApiUrl) {
       state.alertaApiUrl = alertaApiUrl;
     },
@@ -642,10 +878,12 @@ export default {
       state.alertaEnvironment = alertaEnvironment;
     },
 
+    /* limitExcecution */
     UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {
       state.limitExcecution = limitExcecution;
     },
 
+    /* Kibana Discover */
     UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
       state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
     },
