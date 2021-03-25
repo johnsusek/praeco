@@ -7,6 +7,10 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.4
+
+- fix multiple query keys bug
+
 ## -> 1.8.3
 
 - Add option to use multiple query keys<br>
