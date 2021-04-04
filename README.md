@@ -195,18 +195,6 @@ telegram_proxy, telegram_proxy_login and telegram_proxy_pass do not need to be w
 
 ```yaml
 telegram_bot_token: 'xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-telegram_proxy: ''
-telegram_proxy_login: ''
-telegram_proxy_pass: ''
-```
-#### How to setup Gitter?
-
-Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#gitter for how to configure your `BaseRule.config` file.
-
-Replace gitter_webhook_url with the URL of your webhook.
-
-```yaml
-gitter_webhook_url: 'https://webhooks.gitter.im/e/xxxxxxxxxxxxxxxx'
 ```
 
 #### How to setup Mattermost? 
@@ -219,17 +207,6 @@ Replace mattermost_webhook_url with the URL of your webhook.
 mattermost_webhook_url: 'https://xxxxxx/hooks/xxxxxxxxxxxxxxxx'
 ```
 
-#### How to setup Zabbix?
-
-Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#zabbix for how to configure your `BaseRule.config` file.
-
-Replace zbx_sender_host and zbx_sender_port with your environment's host name and port.
-
-```yaml
-zbx_sender_host: 'zabbix-server'
-zbx_sender_port: 10051
-```
-
 #### How to setup Email?
 
 Sorry Not Support email_format.
@@ -239,9 +216,6 @@ Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#email for 
 [example setting](https://github.com/johnsusek/praeco/issues/245#issuecomment-691523706)
 
 ```yaml
-smtp_host: 'smtp.mail.yahoo.co.jp'
-smtp_port: 465 
-smtp_ssl: true
 smtp_auth_file: '/opt/elastalert/pass/smtp_auth_user.yaml'
 ```
 
@@ -254,30 +228,9 @@ password: xxx
 
 Google account in advance → Apps that can access your account → Allow less secure apps: Disabled → Enabled When I specified the Gmail address with from_addr and checked the operation, it worked without problems.
 
-smtp_port: 587
-
 ```yaml
-smtp_host: "smtp.gmail.com" 
-smtp_port: 587 
-smtp_ssl: false
 smtp_auth_file: '/opt/elastalert/smtp/smtp_auth_user.yaml"
 ```
-smtp_auth_user.yaml
-
-```yaml
-user: xxx@gmail
-password: xxx
-```
-
-smtp_port: 465
-
-```yaml
-smtp_host: "smtp.gmail.com" 
-smtp_port: 465 
-smtp_ssl: true
-smtp_auth_file: '/opt/elastalert/smtp/smtp_auth_user.yaml"
-```
-
 smtp_auth_user.yaml
 
 ```yaml
