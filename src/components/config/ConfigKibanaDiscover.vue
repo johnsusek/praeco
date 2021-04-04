@@ -16,7 +16,7 @@
         <el-input
           v-model="kibanaDiscoverAppUrl"
           :disabled="viewOnly"
-          placeholder="http://kibana:5601/#/discover" />
+          placeholder="http://localhost:5601/app/discover#/" />
         <label>The url of the Kibana Discover application used to generate the kibana_discover_url variable.</label>
       </el-form-item>
     </el-col>
@@ -210,6 +210,9 @@ export default {
       }, {
         code: '7.11',
         name: '7.11'
+      }, {
+        code: '7.12',
+        name: '7.12'
       }],
     };
   },

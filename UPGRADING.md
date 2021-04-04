@@ -7,6 +7,94 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.5
+
+Add UI Setting
+
+**Command**
+
+- command change UI to add / update / delete key
+- pipe_match_json
+- pipe_alert_text
+
+**Email**
+
+- smtp_host
+- smtp_ssl
+- smtp_auth_file
+- smtp_key_file
+- smtp_cert_file
+- email_from_field
+- email_add_domain
+
+**MS Teams**
+
+- ms_teams_proxy
+- ms_teams_alert_summary
+- ms_teams_alert_fixed_width
+
+**Slack**
+
+- slack_proxy
+- slack_icon_url_override
+- slack_parse_override
+- slack_text_string
+- slack_ignore_ssl_errors
+- slack_timeout
+- slack_ca_certs
+- kibana discover support
+  - kibana 7.12 
+
+**Mattermost**
+
+- mattermost_proxy
+- mattermost_ignore_ssl_errors
+- mattermost_icon_url_override
+- mattermost_msg_pretext
+
+**Telegram**
+
+- telegram_proxy
+- telegram_proxy_login
+- telegram_proxy_pass
+
+**VictorOps**
+
+- victorops_proxy
+
+**Gitter**
+
+- gitter_webhook_url
+- gitter_proxy
+
+**Stomp**
+
+- stomp_ssl
+
+**HTTP POST**
+
+- http_post_proxy
+- http_post_timeout
+
+**Zabbix**
+
+- zbx_sender_host
+- zbx_sender_port
+
+**ServiceNow**
+
+- servicenow_proxy
+
+
+**PagerTree**
+
+- pagertree_proxy
+
+**GoogleChat**
+
+- googlechat_header_subtitle
+- googlechat_header_image
+- googlechat_footer_kibanalink
 ## -> 1.8.4
 
 - fix multiple query keys bug
