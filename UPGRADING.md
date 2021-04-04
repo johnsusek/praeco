@@ -9,7 +9,11 @@ Some version upgrades require further configuration. Version specific upgrade in
 
 ## -> 1.8.5
 
-Add UI Setting
+**kibana discover**
+
+- kibana 7.12  support
+
+**Add UI Setting**
 
 **Command**
 
@@ -42,8 +46,6 @@ Add UI Setting
 - slack_ignore_ssl_errors
 - slack_timeout
 - slack_ca_certs
-- kibana discover support
-  - kibana 7.12 
 
 **Mattermost**
 
