@@ -6,7 +6,7 @@
 
 <img align="left" src="https://user-images.githubusercontent.com/611996/52907999-50fca900-3232-11e9-8aee-40f7dc37ec65.jpg">
 
-**Praeco** is an alerting tool for Elasticsearch – a GUI for [ElastAlert](https://github.com/yelp/elastalert), using the [ElastAlert API is a fork](https://github.com/johnsusek/elastalert-server).
+**Praeco** is an alerting tool for Elasticsearch – a GUI for [jertel/elastalert](https://github.com/jertel/elastalert), using the [ElastAlert API](https://github.com/johnsusek/elastalert-server).
 
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
@@ -55,7 +55,7 @@ You may need to update your config files when a new version comes out. Please se
 
 ## Configuration
 
-Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/johnsusek/elastalert-server#configuration) and the [example elastalert config](https://github.com/Yelp/elastalert/blob/master/config.yaml.example) for more information.
+Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/johnsusek/elastalert-server#configuration) and the [example elastalert config](https://github.com/jertel/elastalert/blob/alt/config.yaml.example) for more information.
 
 Any Elastalert option you put into `rules/BaseRule.config` will be applied to every rule.
 
@@ -179,7 +179,7 @@ First of all, try to test your alert with varying time frames and see if that is
 
 If the test is returning results, but you are not receiving any alerts, check the error log. There may be a problem with your alerter settings. Make sure you edited rules/BaseRule.config and have correct values in there.
 
-If the test is not returning results, even though you think it should, try reading the [elastalert docs](https://elastalert.readthedocs.io/en/latest/ruletypes.html#rule-types) for your rule type. Compare the yaml from praeco with the options from the docs to make sure the rule is being created as expected. If praeco is generating the wrong yaml, please file an issue.
+If the test is not returning results, even though you think it should, try reading the [elastalert docs](https://elastalert2.readthedocs.io/en/latest/ruletypes.html#rule-types) for your rule type. Compare the yaml from praeco with the options from the docs to make sure the rule is being created as expected. If praeco is generating the wrong yaml, please file an issue.
 
 #### Failed to establish a new connection: [Errno 111] Connection refused
 
@@ -191,7 +191,7 @@ Make sure the channel/username you are trying to post to exists.
 
 #### How to setup Slack?
 
-Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#slack for how to configure your BaseRule.config file.
+Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#slack for how to configure your BaseRule.config file.
 
 Replace slack_webhook_url with the URL of your channel.
 
@@ -204,7 +204,7 @@ slack_emoji_override: ':postal_horn:'
 
 telegram_room_id can be set on the praeco screen.
 
-Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#telegram for how to configure your BaseRule.config file.
+Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#telegram for how to configure your BaseRule.config file.
 
 Replace telegram_bot_token with the your bot token.
 
@@ -216,7 +216,7 @@ telegram_bot_token: 'xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 #### How to setup Mattermost? 
 
-Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config` file.
+Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config` file.
 
 Replace mattermost_webhook_url with the URL of your webhook.
 
@@ -228,7 +228,7 @@ mattermost_webhook_url: 'https://xxxxxx/hooks/xxxxxxxxxxxxxxxx'
 
 Sorry Not Support email_format.
 
-Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#email for how to configure your `BaseRule.config` file.
+Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#email for how to configure your `BaseRule.config` file.
 
 [example setting](https://github.com/johnsusek/praeco/issues/245#issuecomment-691523706)
 
@@ -257,14 +257,14 @@ password: xxx
 
 #### How to setup Jira?
 
-Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config` file.
+Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config` file.
 
 ## Architecture details
 
 ![](https://user-images.githubusercontent.com/611996/52892144-90a19300-3155-11e9-8050-cb4a440411a4.png)
 
 Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [elastalert api](https://github.com/johnsusek/elastalert-server) (running in another docker container) to view/edit rules.
-The elastalert api interacts with the included [elastalert](https://github.com/Yelp/elastalert) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
+The elastalert api interacts with the included [jertel/elastalert](https://github.com/jertel/elastalert) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
 rule files in the rules/ directory.
 
 When you run praeco using the quickstart instructions, it runs these two docker containers, per the docker-compose.yml file.
@@ -285,7 +285,7 @@ First, you need a local copy of the elastalert api server running, which itself 
 
 ```sh
 $ cd
-$ git clone https://github.com/Yelp/elastalert.git
+$ git clone https://github.com/jertel/elastalert.git
 $ git clone https://github.com/johnsusek/elastalert-server.git
 $ git clone https://github.com/johnsusek/praeco.git
 ```
@@ -294,43 +294,15 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 with hundreds of open PRs and over 1000 open issues.
 
-**Doesn't work due to a bug**
-
-- Line Notify<br>
-- Zabbix<br>
-- PagerTree<br>
-- Stomp<br>
-- SNS
-
-**Not Support**
-
-- Chatwork<br>
-- Discord 
-
-**Main bugs**
-
-- SNS(Duplicate setting name. Profile implementation bug, etc)<br>
-- Email(smtp_host is not work smtp.gmail.com and smtp.office365.com)<br>
-- Jira Custom Field has some items that don't work properly<br>
-- tzlocal 3.0b1 not work apscheduler(Adding 'tzlocal<3.0', to setup.py)
-- docker test error<br>
-- slack ssl verification<br>
-- Python 3.9 not work(Change Library blist to sortedcontainers)<br>
-- Even if the rule is disabled, it is not disabled<br>
-- Remains even if the rule is deleted<br>
-- ElastAlert Not enabled even if Disabled to Enabled after restarting<br>
-- Mattermost 400 BAD request error
-
 **Python Support version**
 
 - 3.6<br>
 - 3.7<br>
 - 3.8<br>
-- Not Support 3.9(blist not work Python 3.9)
+- 3.9
 
 **Elasticsearch Support version**
 
-- 6.x
 - 7.x
 
 Configure the elastalert `config.yaml` with:
