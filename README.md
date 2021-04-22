@@ -71,6 +71,11 @@ The following config settings are available in praeco.config.json:
 // Hide these fields when editing rules, if they are already filled in template
 "hidePreconfiguredFields": []
 ```
+## DockerHub
+
+[Praeco](https://hub.docker.com/r/praecoapp/praeco)
+
+[ElastAlertServer](https://hub.docker.com/r/praecoapp/elastalert-server)
 
 ## FAQ
 
