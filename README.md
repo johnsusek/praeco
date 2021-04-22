@@ -280,8 +280,6 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 ### Setting up elastalert
 
-with hundreds of open PRs and over 1000 open issues.
-
 **Python Support version**
 
 - 3.6<br>
@@ -292,6 +290,8 @@ with hundreds of open PRs and over 1000 open issues.
 **Elasticsearch Support version**
 
 - 7.x
+
+For use with elasticsearch 6.x, `pip uninstall elaticsearch` and `pin install elaticsearch==7.0.0`
 
 Configure the elastalert `config.yaml` with:
 - Your `es_host`
