@@ -122,7 +122,7 @@ Some version upgrades require further configuration. Version specific upgrade in
 
 ## -> 1.8.0
 
-- New options for Alerta added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#alerta for how to configure your
+- New options for Alerta added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#alerta for how to configure your
 - Limit execution support
 
 ## -> 1.7.0
@@ -169,12 +169,12 @@ discord_embed_color: 0xE24D42
 
 ## -> 1.5.0
 
-- New options for VictorOps added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#victorops for how to configure your `BaseRule.config`.
+- New options for VictorOps added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#victorops for how to configure your `BaseRule.config`.
 ```yaml
 victorops_proxy:
 ```
 
-- New options for Stomp added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#stomp for how to configure your `BaseRule.config`.
+- New options for Stomp added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#stomp for how to configure your `BaseRule.config`.
 ```yaml
 stomp_ssl: True # default False
 ```
@@ -183,7 +183,7 @@ stomp_ssl: True # default False
 
 - New options for Exotel added.
 
-- New options for GoogleChat added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#googlechat for how to configure your `BaseRule.config`.
+- New options for GoogleChat added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#googlechat for how to configure your `BaseRule.config`.
 ```yaml
 googlechat_header_subtitle:
 googlechat_header_image:
@@ -197,7 +197,7 @@ googlechat_footer_kibanalink:
 
 ## -> 1.2.0
 
-- New options for Zabbix added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#zabbix for how to configure your `BaseRule.config`.
+- New options for Zabbix added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#zabbix for how to configure your `BaseRule.config`.
 ```yaml
 zbx_sender_host: 'hostname'
 zbx_sender_port: 10051
@@ -244,14 +244,14 @@ For example:
 
 ## -> 1.1.0
 
-- New options for MS Teams added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#ms-teams for how to configure your `BaseRule.config`.
+- New options for MS Teams added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#ms-teams for how to configure your `BaseRule.config`.
 ```yaml
 ms_teams_alert_summary:
 ms_teams_proxy:
 ms_teams_alert_fixed_width:
 ```
 
-- New options for Mattermost added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config`.
+- New options for Mattermost added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config`.
 ```yaml
 mattermost_webhook_url: 'https://xxxxxx/hooks/xxxxxxxxxxxxxxxx'
 mattermost_proxy:
@@ -261,13 +261,13 @@ mattermost_msg_pretext:
 mattermost_msg_fields: 
 ```
 
-- New options for Command added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#command for how to configure your `BaseRule.config`.
+- New options for Command added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#command for how to configure your `BaseRule.config`.
 ```yaml
 pipe_match_json:
 pipe_alert_text:
 ``` 
 
-- New options for Gitter added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#gitter for how to configure your `BaseRule.config`.
+- New options for Gitter added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#gitter for how to configure your `BaseRule.config`.
 ```yaml
 gitter_webhook_url: 'https://webhooks.gitter.im/e/xxxxxxxxxxxxxxxx'
 ```
@@ -277,7 +277,7 @@ gitter_webhook_url: 'https://webhooks.gitter.im/e/xxxxxxxxxxxxxxxx'
 
 ## -> 1.0.0
 
-- New options for JIRA added. Please see https://elastalert.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config`.
+- New options for JIRA added. Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#jira for how to configure your `BaseRule.config`.
 
 
 ## v0.3.9 -> v0.4.0
@@ -289,7 +289,7 @@ telegram_proxy:
 telegram_proxy_login:
 telegram_proxy_pass:
 ```
-[Here are](https://elastalert.readthedocs.io/en/latest/ruletypes.html#telegram) the elastalert docs on these options.
+[Here are](https://elastalert2.readthedocs.io/en/latest/ruletypes.html#telegram) the elastalert docs on these options.
 
 ## v0.3.0 -> v0.3.1
 
