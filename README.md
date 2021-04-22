@@ -79,18 +79,6 @@ The following config settings are available in praeco.config.json:
 
 ## FAQ
 
-#### Elasticsearch Support version
-
-###### Elasticsearch 7.x Support version docker image
-
-praecoapp/elastalert-server:latest
-
-praecoapp/elastalert-server:yyyymmdd
-
-###### Elasticsearch 6.x Support version docker image
-
-praecoapp/elastalert-server:yyyymmdd_es6
-
 #### [Third Party Tools] ElastAlert Server & Praeco Helm Chart
 
 [ElastAlert Server Helm Chart](https://github.com/daichi703n/elastalert-helm)<br>
