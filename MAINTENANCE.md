@@ -5,9 +5,10 @@
 - Stash all changes in elastalert-server project
 - `nvm use "$(cat .nvmrc)"`
 - `npm run precommit`
-- `make build v=master`
+- `make build v=0.2.4-alt3`
 - `docker tag <image> praecoapp/elastalert-server:<yyyymmdd>`
-- `docker push praecoapp/elastalert-server`
+- `docker push praecoapp/elastalert-server:latest`
+- `docker push praecoapp/elastalert-server:<yyyymmdd>`
 
 ## Praeco
 
@@ -17,5 +18,6 @@
 - Push to master
 - `docker build . -t praecoapp/praeco`
 - `docker tag <image> praecoapp/praeco:<version>`
-- `docker push praecoapp/praeco`
+- `docker push praecoapp/praeco:latest`
+- `docker push praecoapp/praeco:<version>`
 - Tag release in github, add release notes
