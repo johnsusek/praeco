@@ -291,7 +291,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 - 7.x
 
-For use with elasticsearch 6.x, `pip uninstall elaticsearch` and `pin install elaticsearch==7.0.0`
+For use with elasticsearch 6.x, `pip uninstall elaticsearch` and `pin install elasticsearch>=6.0.0,<7.0.0`
 
 Configure the elastalert `config.yaml` with:
 - Your `es_host`
