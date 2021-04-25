@@ -252,7 +252,7 @@ Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#jira for 
 ![](https://user-images.githubusercontent.com/611996/52892144-90a19300-3155-11e9-8050-cb4a440411a4.png)
 
 Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [Elastalert API](https://github.com/johnsusek/elastalert-server) (running in another docker container) to view/edit rules.
-The elastalert api interacts with the included [Elastalert 2](https://github.com/jertel/elastalert) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
+The elastalert api interacts with the included [Elastalert 2](https://github.com/jertel/elastalert2) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
 rule files in the rules/ directory.
 
 When you run praeco using the quickstart instructions, it runs these two docker containers, per the docker-compose.yml file.
