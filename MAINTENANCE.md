@@ -1,6 +1,6 @@
 # Checklist for new prod release
 
-## Elastalert Server (if neccessary)
+## ElastAlert Server (if neccessary)
 
 - Stash all changes in elastalert-server project
 - `nvm use "$(cat .nvmrc)"`
