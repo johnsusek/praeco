@@ -6,7 +6,7 @@
 
 <img align="left" src="https://user-images.githubusercontent.com/611996/52907999-50fca900-3232-11e9-8aee-40f7dc37ec65.jpg">
 
-**Praeco** is an alerting tool for Elasticsearch – a GUI for [Elastalert 2](https://github.com/jertel/elastalert2), using the [ElastAlert API](https://github.com/johnsusek/elastalert-server).
+**Praeco** is an alerting tool for Elasticsearch – a GUI for [Elastalert 2](https://github.com/jertel/elastalert2), using the [Elastalert API](https://github.com/johnsusek/elastalert-server).
 
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
