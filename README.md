@@ -55,7 +55,7 @@ You may need to update your config files when a new version comes out. Please se
 
 ## Configuration
 
-Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/johnsusek/elastalert-server#configuration) and the [example elastalert config](https://github.com/jertel/elastalert/blob/alt/config.yaml.example) for more information.
+Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/johnsusek/elastalert-server#configuration) and the [example Elastalert 2 config](https://github.com/jertel/elastalert/blob/alt/config.yaml.example) for more information.
 
 Any Elastalert 2 option you put into `rules/BaseRule.config` will be applied to every rule.
 
