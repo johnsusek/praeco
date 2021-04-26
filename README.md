@@ -290,8 +290,9 @@ $ git clone https://github.com/johnsusek/praeco.git
 **Elasticsearch Support version**
 
 - 7.x
+- 6.x
 
-For use with elasticsearch 6.x, `pip uninstall elaticsearch` and `pip install elasticsearch>=6.0.0,<7.0.0`
+`pip uninstall elaticsearch` and `pip install elasticsearch>==7.0.0`
 
 Configure the elastalert 2 `config.yaml` with:
 - Your `es_host`
