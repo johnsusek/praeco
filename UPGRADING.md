@@ -7,6 +7,11 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.6
+
+- New options for Datadog added.
+https://github.com/jertel/elastalert2/blob/master/docs/source/ruletypes.rst#datadog
+
 ## -> 1.8.5
 
 **kibana discover**
