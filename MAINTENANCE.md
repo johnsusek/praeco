@@ -9,7 +9,6 @@
 - `docker tag <image> praecoapp/elastalert-server:<yyyymmdd>`
 - `docker push praecoapp/elastalert-server:latest`
 - `docker push praecoapp/elastalert-server:<yyyymmdd>`
-- `docker push praecoapp/elastalert-server:<yyyymmdd>_es6`
 
 ## Praeco
 
