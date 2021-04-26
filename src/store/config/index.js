@@ -549,6 +549,10 @@ export default {
           commit('alert/UPDATE_ALERTA_ENVIRONMENT', 'Production');
         }
 
+        /* Datadog */
+        commit('alert/UPDATE_DATADOG_API_KEY', config.datadog_api_key);
+        commit('alert/UPDATE_DATADOG_APP_KEY', config.datadog_app_key);
+
         /* Slack */
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
 
@@ -1729,6 +1733,20 @@ export default {
       return config;
     },
 
+    datadog(state) {
+      let config = {};
+
+      if (state.alert.datadogApiKey) {
+        config.datadog_api_key = state.alert.datadogApiKey;
+      }
+
+      if (state.alert.datadogAppKey) {
+        config.datadog_app_key = state.alert.datadogAppKey;
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
@@ -1929,6 +1947,10 @@ export default {
         config = { ...config, ...getters.alerta };
       }
 
+      if (state.alert.alert.includes('datadog')) {
+        config = { ...config, ...getters.datadog };
+      }
+
       if (state.alert.alert.includes('chatwork')) {
         config = { ...config, ...getters.chatwork };
       }
@@ -1953,6 +1975,7 @@ export default {
           || state.alert.alert.includes('mattermost')
           || state.alert.alert.includes('hivealerter')
           || state.alert.alert.includes('alerta')
+          || state.alert.alert.includes('datadog')
           || state.alert.alert.includes('chatwork')
           || state.alert.alert.includes('discord')
           || state.alert.alert.includes('gitter')) {

@@ -868,16 +868,16 @@ export default {
   computed: {
     helpLinkForType() {
       let helpLinks = {
-        any: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#any',
-        blacklist: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#blacklist',
-        whitelist: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#whitelist',
-        change: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#change',
-        frequency: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#frequency',
-        flatline: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#flatline',
-        spike: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#spike',
-        new_term: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#new-term',
-        metric_aggregation: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#metric-aggregation',
-        cardinality: 'https://elastalert.readthedocs.io/en/latest/ruletypes.html#cardinality'
+        any: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#any',
+        blacklist: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#blacklist',
+        whitelist: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#whitelist',
+        change: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#change',
+        frequency: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#frequency',
+        flatline: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#flatline',
+        spike: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#spike',
+        new_term: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#new-term',
+        metric_aggregation: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#metric-aggregation',
+        cardinality: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#cardinality'
       };
 
       return helpLinks[this.type];

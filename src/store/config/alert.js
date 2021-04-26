@@ -188,6 +188,10 @@ function initialState() {
     alertaTags: [],
     alertaEnvironment: 'Production',
 
+    /* Datadog */
+    datadogApiKey: '',
+    datadogAppKey: '',
+
     /* Email */
     fromAddr: '',
     replyTo: '',
@@ -876,6 +880,15 @@ export default {
 
     UPDATE_ALERTA_ENVIRONMENT(state, alertaEnvironment) {
       state.alertaEnvironment = alertaEnvironment;
+    },
+
+    /* Datadog */
+    UPDATE_DATADOG_API_KEY(state, datadogApiKey) {
+      state.datadogApiKey = datadogApiKey;
+    },
+
+    UPDATE_DATADOG_APP_KEY(state, datadogAppKey) {
+      state.datadogAppKey = datadogAppKey;
     },
 
     /* limitExcecution */

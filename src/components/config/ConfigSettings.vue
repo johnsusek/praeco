@@ -36,7 +36,7 @@
             @input="getMappingDebounced" />
           <label v-if="!viewOnly">
             e.g. logstash-* or logstash-%Y.%m.%d
-            [<a href="https://elastalert.readthedocs.io/en/latest/ruletypes.html#index" target="_blank">?</a>]
+            [<a href="https://elastalert2.readthedocs.io/en/latest/ruletypes.html#index" target="_blank">?</a>]
           </label>
         </el-form-item>
       </el-col>

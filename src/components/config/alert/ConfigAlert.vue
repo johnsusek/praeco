@@ -148,6 +148,9 @@
         <el-checkbox id="destinationAlerta" label="alerta" border>
           Alerta
         </el-checkbox>
+        <el-checkbox id="destinationDatadog" label="datadog" border>
+          Datadog
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -156,7 +159,7 @@
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
         alert.includes('sns') || alert.includes('pagertree') || alert.includes('gitter') || alert.includes('googlechat') ||
         alert.includes('chatwork') || alert.includes('discord') || alert.includes('hivealerter') ||
-        alert.includes('alerta')">
+        alert.includes('alerta') || alert.includes('datadog')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -1308,6 +1311,22 @@
         <el-form-item label="Environment" prop="alertaEnvironment">
           <el-input id="alertaEnvironment" v-model="alertaEnvironment" :disabled="viewOnly" />
           <label>Defaults to “Production”.</label>
+        </el-form-item>
+      </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('datadog')">
+        <template slot="label">
+          Datadog
+        </template>
+
+        <el-form-item label="API KEY" prop="datadogApiKey" required>
+          <el-input id="datadogApiKey" v-model="datadogApiKey" :disabled="viewOnly" />
+          <label>Datadog API key.</label>
+        </el-form-item>
+
+        <el-form-item label="APP KEY" prop="datadogAppKey" required>
+          <el-input id="datadogAppKey" v-model="datadogAppKey" :disabled="viewOnly" />
+          <label>Datadog application key.</label>
         </el-form-item>
       </el-tab-pane>
     </el-tabs>
@@ -2956,6 +2975,24 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_ALERTA_ENVIRONMENT', value);
+      }
+    },
+
+    datadogApiKey: {
+      get() {
+        return this.$store.state.config.alert.datadogApiKey;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_DATADOG_API_KEY', value);
+      }
+    },
+
+    datadogAppKey: {
+      get() {
+        return this.$store.state.config.alert.datadogAppKey;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_DATADOG_APP_KEY', value);
       }
     },
 
