@@ -79,6 +79,10 @@ The following config settings are available in praeco.config.json:
 
 ## FAQ
 
+#### mulit-Elasticsearch instances
+
+Not Support
+
 #### [Third Party Tools] ElastAlert Server & Praeco Helm Chart
 
 [ElastAlert Server Helm Chart](https://github.com/daichi703n/elastalert-helm)<br>
