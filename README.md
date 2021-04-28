@@ -79,7 +79,7 @@ The following config settings are available in praeco.config.json:
 
 ## FAQ
 
-#### mulit-Elasticsearch instances
+#### Mulit-elasticsearch instances
 
 Not Support
 
