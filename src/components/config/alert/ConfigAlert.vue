@@ -800,6 +800,12 @@
         <template slot="label">
           Twilio
         </template>
+        <el-radio id="groupTwilio" v-model="groupTwilio" :disabled="viewOnly" label="sms" border @change="changeTwilio">
+          SMS
+        </el-radio>
+        <el-radio id="groupTwilio" v-model="groupTwilio" :disabled="viewOnly" label="copilot" border @change="changeTwilio">
+          Copilot
+        </el-radio>
 
         <praeco-form-item label="Twilio Account Sid" prop="twilioAccountSid" required>
           <el-input id="twilioAccountSid" v-model="twilioAccountSid" :disabled="viewOnly" />
@@ -816,10 +822,19 @@
           <label>The phone number where you would like send the notification. </label>
         </praeco-form-item>
 
-        <praeco-form-item label="Twilio From Number" prop="twilioFromNumber" required>
-          <el-input id="twilioFromNumber" v-model="twilioFromNumber" :disabled="viewOnly" />
-          <label>Your twilio phone number from which message will be sent. </label>
-        </praeco-form-item>
+        <div v-if="groupTwilio === 'sms'">
+          <praeco-form-item label="Twilio From Number" prop="twilioFromNumber" required>
+            <el-input id="twilioFromNumber" v-model="twilioFromNumber" :disabled="viewOnly" />
+            <label>Your twilio phone number from which message will be sent. </label>
+          </praeco-form-item>
+        </div>
+
+        <div v-if="groupTwilio === 'copilot'">
+          <praeco-form-item label="Twilio Message Service Sid" prop="twilioMessageServiceSid" required>
+            <el-input id="twilioMessageServiceSid" v-model="twilioMessageServiceSid" :disabled="viewOnly" />
+            <label>The SID of your twilio message service.</label>
+          </praeco-form-item>
+        </div>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('pagertree')">
@@ -1416,6 +1431,10 @@ export default {
     if (typeof this.$store.state.config.alert.snsAwsProfile === 'undefined' || this.$store.state.config.alert.snsAwsProfile === '') {
       groupSnsValue = 'notProfile';
     }
+    let groupTwilioValue = 'copilot';
+    if (typeof this.$store.state.config.alert.twilio_message_service_sid === 'undefined' || this.$store.state.config.alert.twilio_message_service_sid === '') {
+      groupTwilioValue = 'sms';
+    }
     return {
       enableLimitExcecution: false,
       popAlertaTagsVisible: false,
@@ -1425,6 +1444,7 @@ export default {
       popCommandVisible: false,
       popCommandValid: true,
       groupSns: groupSnsValue,
+      groupTwilio: groupTwilioValue,
       visibleTabPane: '',
       alertaSeverityOptions: [{
         code: 'unknown',
@@ -1876,6 +1896,18 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_TWILIO_FROM_NUMBER',
+          value
+        );
+      }
+    },
+
+    twilioMessageServiceSid: {
+      get() {
+        return this.$store.state.config.alert.twilioMessageServiceSid;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_TWILIO_MESSAGE_SERVICE_SID',
           value
         );
       }
@@ -3035,6 +3067,11 @@ export default {
       this.snsAwsSecretAccessKey = '';
       this.snsAwsRegion = '';
       this.snsAwsProfile = '';
+    },
+
+    changeTwilio() {
+      this.twilioFromNumber = '';
+      this.twilioMessageServiceSid = '';
     },
 
     changeLimitExcecution(val) {

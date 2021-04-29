@@ -296,6 +296,7 @@ export default {
         commit('alert/UPDATE_TWILIO_AUTH_TOKEN', config.twilio_auth_token);
         commit('alert/UPDATE_TWILIO_TO_NUMBER', config.twilio_to_number);
         commit('alert/UPDATE_TWILIO_FROM_NUMBER', config.twilio_from_number);
+        commit('alert/UPDATE_TWILIO_MESSAGE_SERVICE_SID', config.twilio_message_service_sid);
 
         /* PagerTree */
         commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
@@ -1336,7 +1337,13 @@ export default {
       }
 
       if (state.alert.twilioFromNumber) {
+        config.twilio_use_copilot = false;
         config.twilio_from_number = state.alert.twilioFromNumber;
+      }
+
+      if (state.alert.twilioMessageServiceSid) {
+        config.twilio_use_copilot = true;
+        config.twilio_message_service_sid = state.alert.twilioMessageServiceSid;
       }
 
       return config;

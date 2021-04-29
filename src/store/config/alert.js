@@ -68,6 +68,7 @@ function initialState() {
     twilioAuth: '',
     twilioToNumber: '',
     twilioFromNumber: '',
+    twilioMessageServiceSid: '',
 
     /* PagerTree */
     pagertreeIntegrationUrl: '',
@@ -423,6 +424,10 @@ export default {
 
     UPDATE_TWILIO_FROM_NUMBER(state, twilioFromNumber) {
       state.twilioFromNumber = twilioFromNumber;
+    },
+
+    UPDATE_TWILIO_MESSAGE_SERVICE_SID(state, twilioMessageServiceSid) {
+      state.twilioMessageServiceSid = twilioMessageServiceSid;
     },
 
     /* Pagertree */
