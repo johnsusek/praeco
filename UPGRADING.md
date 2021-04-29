@@ -12,6 +12,9 @@ Some version upgrades require further configuration. Version specific upgrade in
 - New options for Datadog added.
 https://github.com/jertel/elastalert2/blob/master/docs/source/ruletypes.rst#datadog
 
+- Add Support for Twilio Copilot.
+https://github.com/jertel/elastalert2/blob/master/docs/source/ruletypes.rst#twilio
+
 ## -> 1.8.5
 
 **kibana discover**
