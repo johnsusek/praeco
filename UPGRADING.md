@@ -126,7 +126,7 @@ https://github.com/jertel/elastalert2/blob/master/docs/source/ruletypes.rst#twil
   - elastalert_module in elastalert.
 
 - Alerta
- - add alerta_environment
+  - add alerta_environment
 
 ## -> 1.8.0
 
