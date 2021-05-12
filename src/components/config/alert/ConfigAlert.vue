@@ -247,8 +247,11 @@
         </el-form-item>
 
         <el-form-item label="CA Certs" prop="slackCaCerts">
-          <el-input id="slackCaCerts" v-model="slackCaCerts" :disabled="viewOnly" />
-          <label>path to a CA cert bundle to use to verify SSL connections.</label>
+          <el-switch
+            id="slackCaCerts"
+            v-model="slackCaCerts"
+            :disabled="viewOnly"
+            @change="changeSlackCaCerts" />
         </el-form-item>
 
         <el-form-item label="Timeout" prop="slackTimeout">
@@ -3048,9 +3051,7 @@ export default {
   },
 
   mounted() {
-    if (this.limitExcecution) {
-      this.enableLimitExcecution = true;
-    }
+    this.limitExcecution = this.$store.state.config.alert.limitExcecution;
   },
 
   methods: {
@@ -3274,6 +3275,14 @@ export default {
         this.slackAttachKibanaDiscoverUrl = true;
       } else {
         this.slackAttachKibanaDiscoverUrl = false;
+      }
+    },
+
+    changeSlackCaCerts(val) {
+      if (val) {
+        this.slackCaCerts = true;
+      } else {
+        this.slackCaCerts = false;
       }
     }
   }

@@ -1341,7 +1341,7 @@ export default {
 
       if (this.groupedOver === 'all') {
         this.groupByValue = '';
-        this.queryKey = '';
+        this.queryKey = [];
       }
     },
 
