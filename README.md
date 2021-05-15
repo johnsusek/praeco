@@ -79,6 +79,18 @@ The following config settings are available in praeco.config.json:
 
 ## FAQ
 
+#### Is it possible to set Percentage Match on the screen?
+
+Not Support
+
+#### Is it possible to set Spike Aggregation on the screen?
+
+Not Support
+
+#### Is it possible to set custom format (timestamp_type, timestamp_format, timestamp_format_expr) on the screen?
+
+Not Support
+
 #### Mulit-elasticsearch instances
 
 Not Support
@@ -181,6 +193,13 @@ You will see this error when launching if praeco cannot find elasticsearch at th
 
 Make sure the channel/username you are trying to post to exists.
 
+#### How to setup TheHive?
+
+Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#thehive for how to configure your BaseRule.config file.
+
+- Set hive_connection in BaseRule.config.
+- Please set hive_alert_config on the screen.
+
 #### How to setup Slack?
 
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#slack for how to configure your BaseRule.config file.
@@ -189,7 +208,6 @@ Replace slack_webhook_url with the URL of your channel.
 
 ```yaml
 slack_webhook_url: 'https://hooks.slack.com/services/xxxxxxxxx/xxxxxxxx/xxxxxxxxxxxxxxxxxxx'
-slack_emoji_override: ':postal_horn:'
 ```
 
 #### How to setup Telegram?
@@ -286,14 +304,16 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 **Python Support version**
 
-- 3.6<br>
-- 3.7<br>
-- 3.8<br>
+- 3.6
+- 3.7
+- 3.8
 - 3.9
 
 **Elasticsearch Support version**
 
 - 7.x
+
+I think it works with 6.x, but I haven't confirmed the operation.
 
 Configure the elastalert 2 `config.yaml` with:
 - Your `es_host`
