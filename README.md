@@ -99,6 +99,37 @@ Not Support
 
 Not Support
 
+#### I can't send an email when I specify a gmail or office365 address in from_addr of Email. Is there a workaround?
+
+- For Gmail, you need to set Allow insecure apps.
+- There is no workaround for office365.
+
+#### Is it possible to raise an alert only during a specific time period?
+
+It is possible to set within or outside the time zone specified in the Use Time Window.
+
+![2](https://user-images.githubusercontent.com/22293449/118377946-557bbc00-b60b-11eb-8d3d-1b420b018f52.PNG)
+
+#### Is it possible to execute the rule only at a specific time?
+
+It can be set with Limit Excecution.
+
+![2](https://user-images.githubusercontent.com/22293449/118377997-a1c6fc00-b60b-11eb-802d-16587434db9d.PNG)
+
+#### When using the field specified by alert_subject_args in alert_subject, how do you set it on the screen?
+
+- Click the Alert Subject Args link for the number of fields you want to add and press the "Add alert_textargs" button. Enter the field you want to add.
+- When embedding a field in Subject, specify a serial number from 0, such as {0} for the first and {1} for the second.
+
+![1](https://user-images.githubusercontent.com/22293449/118377731-1305af80-b60a-11eb-9f41-3c8d698e8fb1.PNG)
+
+#### When using the field specified by alert_text_args in alert_text, how do you set it on the screen?
+
+- Click the AlertTextArgs link for as many fields as you want to add and press the "Add alert_textargs" button. Enter the field you want to add.
+- When embedding a field in Body text, specify a serial number from 0, such as {0} for the first and {1} for the second.
+
+![2](https://user-images.githubusercontent.com/22293449/118377737-18fb9080-b60a-11eb-84a5-1facfdc5bca9.PNG)
+
 #### [Third Party Tools] ElastAlert Server & Praeco Helm Chart
 
 [ElastAlert Server Helm Chart](https://github.com/daichi703n/elastalert-helm)<br>
