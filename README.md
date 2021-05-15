@@ -79,6 +79,10 @@ The following config settings are available in praeco.config.json:
 
 ## FAQ
 
+#### Please tell me the response status of the alert notification destination.
+
+👉 [ElastAlert 2 Alerts support status](https://github.com/johnsusek/praeco/wiki/ElastAlert-2-Alerts-support-status)
+
 #### Is it possible to set Percentage Match on the screen?
 
 Not Support
@@ -204,7 +208,8 @@ Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#thehive f
 
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#slack for how to configure your BaseRule.config file.
 
-Replace slack_webhook_url with the URL of your channel.
+- Replace slack_webhook_url with the URL of your channel.
+- Describe the following settings in BaseRule.config. Please set other settings on the screen.
 
 ```yaml
 slack_webhook_url: 'https://hooks.slack.com/services/xxxxxxxxx/xxxxxxxx/xxxxxxxxxxxxxxxxxxx'
@@ -216,9 +221,8 @@ telegram_room_id can be set on the praeco screen.
 
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#telegram for how to configure your BaseRule.config file.
 
-Replace telegram_bot_token with the your bot token.
-
-telegram_proxy, telegram_proxy_login and telegram_proxy_pass do not need to be written in BaseRule.config if they do not need to be set.
+- Replace telegram_bot_token with the your bot token.
+- Describe the following settings in BaseRule.config. Please set other settings on the screen.
 
 ```yaml
 telegram_bot_token: 'xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -228,7 +232,8 @@ telegram_bot_token: 'xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config` file.
 
-Replace mattermost_webhook_url with the URL of your webhook.
+- Replace mattermost_webhook_url with the URL of your webhook.
+- Describe the following settings in BaseRule.config. Please set other settings on the screen.
 
 ```yaml
 mattermost_webhook_url: 'https://xxxxxx/hooks/xxxxxxxxxxxxxxxx'
@@ -241,6 +246,8 @@ Sorry Not Support email_format.
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#email for how to configure your `BaseRule.config` file.
 
 [example setting](https://github.com/johnsusek/praeco/issues/245#issuecomment-691523706)
+
+Describe the following settings in BaseRule.config. Please set other settings on the screen.
 
 ```yaml
 smtp_auth_file: '/opt/elastalert/pass/smtp_auth_user.yaml'
