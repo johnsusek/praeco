@@ -99,6 +99,14 @@ Not Support
 
 Not Support
 
+#### Are you planning to add a login screen?
+
+There are no plans to support this at this time.
+
+#### Are you planning to support Email_format for Email?
+
+There are no plans to support this at this time.
+
 #### I can't send an email when I specify a gmail or office365 address in from_addr of Email. Is there a workaround?
 
 - For Gmail, you need to set Allow insecure apps.
@@ -232,8 +240,20 @@ Make sure the channel/username you are trying to post to exists.
 
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#thehive for how to configure your BaseRule.config file.
 
-- Set hive_connection in BaseRule.config.
-- Please set hive_alert_config on the screen.
+- ``hive_connection`` is set in BaseRule.config.
+
+```yaml
+ hive_connection:
+   hive_host: http://localhost
+   hive_port: <hive_port>
+   hive_apikey: <hive_apikey>
+   hive_proxies:
+     http: ''
+     https: ''
+```
+
+- ``hive_alert_config`` is set on the Praeco screen.
+- Not Support ``hive_observable_data_mapping``.
 
 #### How to setup Slack?
 
