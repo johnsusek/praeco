@@ -464,6 +464,14 @@ export default {
         }
 
         commit('alert/UPDATE_MATTERMOST_PROXY', config.mattermost_proxy);
+        commit('alert/UPDATE_MATTERMOST_TITLE_LINK', config.mattermost_title_link);
+        commit('alert/UPDATE_MATTERMOST_FOOTER', config.mattermost_footer);
+        commit('alert/UPDATE_MATTERMOST_FOOTER_ICON', config.mattermost_footer_icon);
+        commit('alert/UPDATE_MATTERMOST_IMAGE_URL', config.mattermost_image_url);
+        commit('alert/UPDATE_MATTERMOST_THUMB_URL', config.mattermost_thumb_url);
+        commit('alert/UPDATE_MATTERMOST_AUTHOR_NAME', config.mattermost_author_name);
+        commit('alert/UPDATE_MATTERMOST_AUTHOR_LINK', config.mattermost_author_link);
+        commit('alert/UPDATE_MATTERMOST_AUTHOR_ICON', config.mattermost_author_icon);
 
         /* TheHive */
         if (config.hive_alert_config && config.hive_alert_config.title) {
@@ -1688,6 +1696,38 @@ export default {
 
       if (state.alert.mattermostProxy) {
         config.mattermost_proxy = state.alert.mattermostProxy;
+      }
+
+      if (state.alert.mattermostTitleLink) {
+        config.mattermost_title_link = state.alert.mattermostTitleLink;
+      }
+
+      if (state.alert.mattermostFooter) {
+        config.mattermost_footer = state.alert.mattermostFooter;
+      }
+
+      if (state.alert.mattermostFooterIcon) {
+        config.mattermost_footer_icon = state.alert.mattermostFooterIcon;
+      }
+
+      if (state.alert.mattermostImageUrl) {
+        config.mattermost_image_url = state.alert.mattermostImageUrl;
+      }
+
+      if (state.alert.mattermostThumbUrl) {
+        config.mattermost_thumb_url = state.alert.mattermostThumbUrl;
+      }
+
+      if (state.alert.mattermostAuthorName) {
+        config.mattermost_author_name = state.alert.mattermostAuthorName;
+      }
+
+      if (state.alert.mattermostAuthorLink) {
+        config.mattermost_author_link = state.alert.mattermostAuthorLink;
+      }
+
+      if (state.alert.mattermostAuthorIcon) {
+        config.mattermost_author_icon = state.alert.mattermostAuthorIcon;
       }
 
       return config;

@@ -657,6 +657,46 @@
             Set this option using hostname:port if you need to use a proxy.
           </label>
         </el-form-item>
+
+        <el-form-item label="Title Link" prop="mattermostTitleLink">
+          <el-input v-model="mattermostTitleLink" :disabled="viewOnly" />
+          <label>You can add a link in your Mattermost notification by setting this to a valid URL.</label>
+        </el-form-item>
+
+        <el-form-item label="Footer" prop="mattermostFooter">
+          <el-input v-model="mattermostFooter" :disabled="viewOnly" />
+          <label>Add a static footer text for alert.</label>
+        </el-form-item>
+
+        <el-form-item label="Footer Icon" prop="mattermostFooterIcon">
+          <el-input v-model="mattermostFooterIcon" :disabled="viewOnly" />
+          <label>A Public Url for a footer icon.</label>
+        </el-form-item>
+
+        <el-form-item label="Image URL" prop="mattermostImageUrl">
+          <el-input v-model="mattermostImageUrl" :disabled="viewOnly" />
+          <label>An optional URL to an image file (GIF, JPEG, PNG, BMP, or SVG).</label>
+        </el-form-item>
+
+        <el-form-item label="Thumb URL" prop="mattermostThumbUrl">
+          <el-input v-model="mattermostThumbUrl" :disabled="viewOnly" />
+          <label>An optional URL to an image file (GIF, JPEG, PNG, BMP, or SVG) that is displayed as thumbnail.</label>
+        </el-form-item>
+
+        <el-form-item label="Author Name" prop="mattermostAuthorName">
+          <el-input v-model="mattermostAuthorName" :disabled="viewOnly" />
+          <label>An optional name used to identify the author.</label>
+        </el-form-item>
+
+        <el-form-item label="Author Link" prop="mattermostAuthorLink">
+          <el-input v-model="mattermostAuthorLink" :disabled="viewOnly" />
+          <label>An optional URL used to hyperlink the author_name.</label>
+        </el-form-item>
+
+        <el-form-item label="Author Icon" prop="mattermostAuthorIcon">
+          <el-input v-model="mattermostAuthorIcon" :disabled="viewOnly" />
+          <label>An optional URL used to display a 16x16 pixel icon beside the author_name.</label>
+        </el-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('command')">
@@ -2937,6 +2977,102 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_MATTERMOST_PROXY',
+          value
+        );
+      }
+    },
+
+    mattermostTitleLink: {
+      get() {
+        return this.$store.state.config.alert.mattermostTitleLink;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_TITLE_LINK',
+          value
+        );
+      }
+    },
+
+    mattermostFooter: {
+      get() {
+        return this.$store.state.config.alert.mattermostFooter;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_FOOTER',
+          value
+        );
+      }
+    },
+
+    mattermostFooterIcon: {
+      get() {
+        return this.$store.state.config.alert.mattermostFooterIcon;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_FOOTER_ICON',
+          value
+        );
+      }
+    },
+
+    mattermostImageUrl: {
+      get() {
+        return this.$store.state.config.alert.mattermostImageUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_IMAGE_URL',
+          value
+        );
+      }
+    },
+
+    mattermostThumbUrl: {
+      get() {
+        return this.$store.state.config.alert.mattermostThumbUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_THUMB_URL',
+          value
+        );
+      }
+    },
+
+    mattermostAuthorName: {
+      get() {
+        return this.$store.state.config.alert.mattermostAuthorName;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_AUTHOR_NAME',
+          value
+        );
+      }
+    },
+
+    mattermostAuthorLink: {
+      get() {
+        return this.$store.state.config.alert.mattermostAuthorLink;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_AUTHOR_LINK',
+          value
+        );
+      }
+    },
+
+    mattermostAuthorIcon: {
+      get() {
+        return this.$store.state.config.alert.mattermostAuthorIcon;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_AUTHOR_ICON',
           value
         );
       }

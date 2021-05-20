@@ -174,6 +174,14 @@ function initialState() {
     mattermostMsgPretext: '',
     mattermostIgnoreSslErrors: false,
     mattermostProxy: '',
+    mattermostTitleLink: '',
+    mattermostFooter: '',
+    mattermostFooterIcon: '',
+    mattermostImageUrl: '',
+    mattermostThumbUrl: '',
+    mattermostAuthorName: '',
+    mattermostAuthorLink: '',
+    mattermostAuthorIcon: '',
 
     /* TheHive */
     hiveAlertConfigTitle: '',
@@ -707,6 +715,38 @@ export default {
 
     UPDATE_MATTERMOST_PROXY(state, mattermostProxy) {
       state.mattermostProxy = mattermostProxy;
+    },
+
+    UPDATE_MATTERMOST_TITLE_LINK(state, mattermostTitleLink) {
+      state.mattermostFooter = mattermostTitleLink;
+    },
+
+    UPDATE_MATTERMOST_FOOTER(state, mattermostFooter) {
+      state.mattermostFooter = mattermostFooter;
+    },
+
+    UPDATE_MATTERMOST_FOOTER_ICON(state, mattermostFooterIcon) {
+      state.mattermostFooterIcon = mattermostFooterIcon;
+    },
+
+    UPDATE_MATTERMOST_IMAGE_URL(state, mattermostImageUrl) {
+      state.mattermostImageUrl = mattermostImageUrl;
+    },
+
+    UPDATE_MATTERMOST_THUMB_URL(state, mattermostThumbUrl) {
+      state.mattermostThumbUrl = mattermostThumbUrl;
+    },
+
+    UPDATE_MATTERMOST_AUTHOR_NAME(state, mattermostAuthorName) {
+      state.mattermostAuthorName = mattermostAuthorName;
+    },
+
+    UPDATE_MATTERMOST_AUTHOR_LINK(state, mattermostAuthorLink) {
+      state.mattermostAuthorLink = mattermostAuthorLink;
+    },
+
+    UPDATE_MATTERMOST_AUTHOR_ICON(state, mattermostAuthorIcon) {
+      state.mattermostAuthorIcon = mattermostAuthorIcon;
     },
 
     /* Slack */
