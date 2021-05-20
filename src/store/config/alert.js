@@ -42,6 +42,14 @@ function initialState() {
     slackKibanaDiscoverColor: '#ec4b98',
     slackKibanaDiscoverTitle: 'Discover in Kibana',
     slackProxy: '',
+    slackFooter: '',
+    slackFooterIcon: '',
+    slackImageUrl: '',
+    slackThumbUrl: '',
+    slackAuthorName: '',
+    slackAuthorLink: '',
+    slackAuthorIcon: '',
+    slackMsgPretext: '',
 
     /* MS Teams */
     ms_teamsWebhookUrl: '',
@@ -756,6 +764,38 @@ export default {
 
     UPDATE_SLACK_PROXY(state, slackProxy) {
       state.slackProxy = slackProxy;
+    },
+
+    UPDATE_SLACK_FOOTER(state, slackFooter) {
+      state.slackFooter = slackFooter;
+    },
+
+    UPDATE_SLACK_FOOTER_ICON(state, slackFooterIcon) {
+      state.slackFooterIcon = slackFooterIcon;
+    },
+
+    UPDATE_SLACK_IMAGE_URL(state, slackImageUrl) {
+      state.slackImageUrl = slackImageUrl;
+    },
+
+    UPDATE_SLACK_THUMB_URL(state, slackThumbUrl) {
+      state.slackThumbUrl = slackThumbUrl;
+    },
+
+    UPDATE_SLACK_AUTHOR_NAME(state, slackAuthorName) {
+      state.slackAuthorName = slackAuthorName;
+    },
+
+    UPDATE_SLACK_AUTHOR_LINK(state, slackAuthorLink) {
+      state.slackAuthorLink = slackAuthorLink;
+    },
+
+    UPDATE_SLACK_AUTHOR_ICON(state, slackAuthorIcon) {
+      state.slackAuthorIcon = slackAuthorIcon;
+    },
+
+    UPDATE_SLACK_MSG_PRETEXT(state, slackMsgPretext) {
+      state.slackMsgPretext = slackMsgPretext;
     },
 
     /* MS Teams */

@@ -611,6 +611,14 @@ export default {
         }
 
         commit('alert/UPDATE_SLACK_PROXY', config.slack_proxy);
+        commit('alert/UPDATE_SLACK_FOOTER', config.slack_footer);
+        commit('alert/UPDATE_SLACK_FOOTER_ICON', config.slack_footer_icon);
+        commit('alert/UPDATE_SLACK_IMAGE_URL', config.slack_image_url);
+        commit('alert/UPDATE_SLACK_THUMB_URL', config.slack_thumb_url);
+        commit('alert/UPDATE_SLACK_AUTHOR_NAME', config.slack_author_name);
+        commit('alert/UPDATE_SLACK_AUTHOR_LINK', config.slack_author_link);
+        commit('alert/UPDATE_SLACK_AUTHOR_ICON', config.slack_author_icon);
+        commit('alert/UPDATE_SLACK_MSG_PRETEXT', config.slack_msg_pretext);
 
         /* MS Teams */
         commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
@@ -1208,6 +1216,38 @@ export default {
 
       if (state.alert.slackProxy) {
         config.slack_proxy = state.alert.slackProxy;
+      }
+
+      if (state.alert.slackFooter) {
+        config.slack_footer = state.alert.slackFooter;
+      }
+
+      if (state.alert.slackFooterIcon) {
+        config.slack_footer_icon = state.alert.slackFooterIcon;
+      }
+
+      if (state.alert.slackImageUrl) {
+        config.slack_image_url = state.alert.slackImageUrl;
+      }
+
+      if (state.alert.slackThumbUrl) {
+        config.slack_thumb_url = state.alert.slackThumbUrl;
+      }
+
+      if (state.alert.slackAuthorName) {
+        config.slack_author_name = state.alert.slackAuthorName;
+      }
+
+      if (state.alert.slackAuthorLink) {
+        config.slack_author_link = state.alert.slackAuthorLink;
+      }
+
+      if (state.alert.slackAuthorIcon) {
+        config.slack_author_icon = state.alert.slackAuthorIcon;
+      }
+
+      if (state.alert.slackMsgPretext) {
+        config.slack_msg_pretext = state.alert.slackMsgPretext;
       }
 
       return config;

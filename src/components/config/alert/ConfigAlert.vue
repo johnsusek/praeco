@@ -281,13 +281,53 @@
           <label>The title of the Kibana Discover url attachment.</label>
         </el-form-item>
 
-        <praeco-form-item label="Proxy" prop="slackProxy">
+        <el-form-item label="Proxy" prop="slackProxy">
           <el-input id="slackProxy" v-model="slackProxy" :disabled="viewOnly" />
           <label>
             By default ElastAlert will not use a network proxy to send notifications to Slack.
             Set this option using hostname:port if you need to use a proxy.
           </label>
-        </praeco-form-item>
+        </el-form-item>
+
+        <el-form-item label="Footer" prop="slackFooter">
+          <el-input v-model="slackFooter" :disabled="viewOnly" />
+          <label>Add a static footer text for alert.</label>
+        </el-form-item>
+
+        <el-form-item label="Footer Icon" prop="slackFooterIcon">
+          <el-input v-model="slackFooterIcon" :disabled="viewOnly" />
+          <label>A Public Url for a footer icon.</label>
+        </el-form-item>
+
+        <el-form-item label="Image URL" prop="slackImageUrl">
+          <el-input v-model="slackImageUrl" :disabled="viewOnly" />
+          <label>An optional URL to an image file (GIF, JPEG, PNG, BMP, or SVG).</label>
+        </el-form-item>
+
+        <el-form-item label="Thumb URL" prop="slackThumbUrl">
+          <el-input v-model="slackThumbUrl" :disabled="viewOnly" />
+          <label>An optional URL to an image file (GIF, JPEG, PNG, BMP, or SVG) that is displayed as thumbnail.</label>
+        </el-form-item>
+
+        <el-form-item label="Author Name" prop="slackAuthorName">
+          <el-input v-model="slackAuthorName" :disabled="viewOnly" />
+          <label>An optional name used to identify the author.</label>
+        </el-form-item>
+
+        <el-form-item label="Author Link" prop="slackAuthorLink">
+          <el-input v-model="slackAuthorLink" :disabled="viewOnly" />
+          <label>An optional URL used to hyperlink the author_name.</label>
+        </el-form-item>
+
+        <el-form-item label="Author Icon" prop="slackAuthorIcon">
+          <el-input v-model="slackAuthorIcon" :disabled="viewOnly" />
+          <label>An optional URL used to display a 16x16 pixel icon beside the author_name.</label>
+        </el-form-item>
+
+        <el-form-item label="Msg Pretext" prop="slackMsgPretext">
+          <el-input v-model="slackMsgPretext" :disabled="viewOnly" />
+          <label>You can set the message attachment pretext using this option.</label>
+        </el-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('email')">
@@ -2723,6 +2763,102 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_SLACK_PROXY',
+          value
+        );
+      }
+    },
+
+    slackFooter: {
+      get() {
+        return this.$store.state.config.alert.slackFooter;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_FOOTER',
+          value
+        );
+      }
+    },
+
+    slackFooterIcon: {
+      get() {
+        return this.$store.state.config.alert.slackFooterIcon;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_FOOTER_ICON',
+          value
+        );
+      }
+    },
+
+    slackImageUrl: {
+      get() {
+        return this.$store.state.config.alert.slackImageUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_IMAGE_URL',
+          value
+        );
+      }
+    },
+
+    slackThumbUrl: {
+      get() {
+        return this.$store.state.config.alert.slackThumbUrl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_THUMB_URL',
+          value
+        );
+      }
+    },
+
+    slackAuthorName: {
+      get() {
+        return this.$store.state.config.alert.slackAuthorName;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_AUTHOR_NAME',
+          value
+        );
+      }
+    },
+
+    slackAuthorLink: {
+      get() {
+        return this.$store.state.config.alert.slackAuthorLink;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_AUTHOR_LINK',
+          value
+        );
+      }
+    },
+
+    slackAuthorIcon: {
+      get() {
+        return this.$store.state.config.alert.slackAuthorIcon;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_AUTHOR_ICON',
+          value
+        );
+      }
+    },
+
+    slackMsgPretext: {
+      get() {
+        return this.$store.state.config.alert.slackMsgPretext;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SLACK_MSG_PRETEXT',
           value
         );
       }
