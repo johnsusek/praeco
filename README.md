@@ -77,6 +77,10 @@ The following config settings are available in praeco.config.json:
 
 [ElastAlert Server](https://hub.docker.com/r/praecoapp/elastalert-server)
 
+[praeco & elastalert server docker image relations table](https://github.com/johnsusek/praeco/wiki/praeco-&-elastalert-server-docker-image-relations-table)
+
+[praecoapp/elastalert-server ChangeLog](https://github.com/johnsusek/elastalert-server/blob/master/DockerImageLog.md)
+
 ## FAQ
 
 #### Please tell me the response status of the alert notification destination.
