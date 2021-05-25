@@ -16,14 +16,6 @@ labels: question
 - version of praeco
 - elastalert-server docker image tag name
 
-## 🆗 Expected
-
-(State required to be Closed)
-
-## 🚑 Actual
-
-(State at the time of creating the issue)
-
 ## 📎 Images (optional)
 
 (Image when a bug occurs)
