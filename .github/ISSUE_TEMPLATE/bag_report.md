@@ -1,5 +1,6 @@
 ---
 name: Bug report
+about: Detailed bug information
 
 ---
 
