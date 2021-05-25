@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Detailed bug information
+about: If you are confident you have discovered a legitimate issue, attach logs and reproduction steps to this issue. Failure to provide sufficient information will likely cause this issue to go stale and eventually be deleted.
 
 ---
 
