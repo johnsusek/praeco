@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Detailed feature request
+about: We may check the screen image and recognize the request.
 
 ---
 
