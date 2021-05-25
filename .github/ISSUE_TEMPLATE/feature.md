@@ -1,5 +1,6 @@
 ---
 name: Feature request
+about: Detailed feature request
 
 ---
 
