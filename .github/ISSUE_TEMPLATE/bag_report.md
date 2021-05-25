@@ -1,6 +1,7 @@
 ---
 name: Bug report
 about: If you do not provide enough information, this issue may become obsolete and eventually be removed.
+labels: bug
 
 ---
 
