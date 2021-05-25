@@ -1,6 +1,7 @@
 ---
 name: Feature request
 about: We may check the screen image and recognize the request.
+labels: enhancement
 
 ---
 
