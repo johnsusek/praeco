@@ -1,5 +1,6 @@
 ---
 name: Task
+about: Detailed task
 
 ---
 
