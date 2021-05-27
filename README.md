@@ -85,6 +85,10 @@ The following config settings are available in praeco.config.json:
 
 ## FAQ
 
+#### Is there a sample to start elasticsearch, kibana, elastalert-server, praeco with docker-compose?
+
+[docker compose sample(telegram)](https://github.com/johnsusek/praeco/wiki/docker-compose-sample(telegram))
+
 #### Please tell me the response status of the alert notification destination.
 
 👉 [ElastAlert 2 Alerts support status](https://github.com/johnsusek/praeco/wiki/ElastAlert-2-Alerts-support-status)
