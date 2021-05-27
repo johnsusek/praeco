@@ -30,6 +30,8 @@
 Run the app using Docker compose. Praeco includes everything you need to get started. Just provide it the IP address of your Elasticsearch instance.
 
 ```bash
+mkdir -p rules rule_templates
+chmod -R 777 rules rule_templates
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
 ```
