@@ -11,7 +11,7 @@ function initialState() {
     aggregationKey: '',
     summaryTableFields: [],
 
-    limitExcecution: '*/1 * * * *',
+    limitExcecution: '',
 
     generateKibanaDiscoverUrl: false,
     kibanaDiscoverAppUrl: '',
@@ -30,12 +30,12 @@ function initialState() {
     /* Slack */
     slackChannelOverride: '',
     slackUsernameOverride: 'Praeco',
-    slackEmojiOverride: '',
+    slackEmojiOverride: ':ghost:',
     slackMsgColor: 'danger',
     slackParseOverride: 'none',
     slackTextString: '',
     slackIgnoreSslErrors: false,
-    slackCaCerts: '',
+    slackCaCerts: false,
     slackIconUrlOverride: '',
     slackTimeout: 10,
     slackAttachKibanaDiscoverUrl: false,

@@ -187,7 +187,9 @@ export default {
         commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
 
         /* limit_execution */
-        commit('alert/UPDATE_LIMIT_EXCECUTION', config.limit_execution);
+        if (config.limit_execution) {
+          commit('alert/UPDATE_LIMIT_EXCECUTION', config.limit_execution);
+        }
 
         /* Kibana Discover */
         commit('alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', config.generate_kibana_discover_url);
@@ -583,8 +585,15 @@ export default {
           commit('alert/UPDATE_SLACK_MSG_COLOR', 'danger');
         }
 
-        commit('alert/UPDATE_SLACK_CA_CERTS', config.slack_ca_certs);
-        commit('alert/UPDATE_SLACK_ICON_URL_OVERRIDE', config.slack_icon_url_override);
+        if (config.slack_ca_certs) {
+          commit('alert/UPDATE_SLACK_CA_CERTS', config.slack_ca_certs);
+        } else {
+          commit('alert/UPDATE_SLACK_CA_CERTS', false);
+        }
+
+        if (config.slack_icon_url_override) {
+          commit('alert/UPDATE_SLACK_ICON_URL_OVERRIDE', config.slack_icon_url_override);
+        }
 
         if (config.slack_timeout) {
           commit('alert/UPDATE_SLACK_TIMEOUT', config.slack_timeout);
@@ -1192,6 +1201,8 @@ export default {
 
       if (state.alert.slackParseOverride) {
         config.slack_parse_override = state.alert.slackParseOverride;
+      } else {
+        config.slack_parse_override = 'none';
       }
 
       if (state.alert.slackTextString) {
@@ -1199,10 +1210,7 @@ export default {
       }
 
       config.slack_ignore_ssl_errors = state.alert.slackIgnoreSslErrors;
-
-      if (state.alert.slackCaCerts) {
-        config.slack_ca_certs = state.alert.slackCaCerts;
-      }
+      config.slack_ca_certs = state.alert.slackCaCerts;
 
       if (state.alert.slackIconUrlOverride) {
         config.slack_icon_url_override = state.alert.slackIconUrlOverride;

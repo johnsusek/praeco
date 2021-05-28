@@ -3323,7 +3323,9 @@ export default {
   },
 
   mounted() {
-    this.limitExcecution = this.$store.state.config.alert.limitExcecution;
+    if (this.limitExcecution) {
+      this.enableLimitExcecution = true;
+    }
   },
 
   methods: {
