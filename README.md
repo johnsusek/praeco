@@ -32,6 +32,7 @@ Run the app using Docker compose. Praeco includes everything you need to get sta
 ```bash
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
+sudo cp /dev/null rules/BaseRule.config
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
 ```
