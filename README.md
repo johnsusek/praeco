@@ -32,7 +32,7 @@ Run the app using Docker compose. Praeco includes everything you need to get sta
 ```bash
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
-sudo cp /dev/null rules/BaseRule.config
+echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
 ```
@@ -94,6 +94,16 @@ The following config settings are available in praeco.config.json:
 
 👉 [ElastAlert 2 Alerts support status](https://github.com/johnsusek/praeco/wiki/ElastAlert-2-Alerts-support-status)
 
+#### Will elastalert-server / praeco be supported forever?
+
+First of all, please understand that it is open source software.
+If you need generous support, please consider paid support software.
+
+- We are not responsible for fixing bugs.
+- There is no obligation to respond to your request.
+- There is no obligation to add features.
+- We do not always answer issues.
+
 #### Is it possible to set Percentage Match on the screen?
 
 Not Support
@@ -109,6 +119,14 @@ Not Support
 #### Mulit-elasticsearch instances
 
 Not Support
+
+#### If the contents of BaseRule.config are empty, an error will occur.
+
+Currently, an error will occur when BaseRule.config is empty, so please make it as described below.
+
+```
+echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
+```
 
 #### Are you planning to add a login screen?
 
@@ -393,7 +411,7 @@ Configure the elastalert 2 `config.yaml` with:
 cd ~/elastalert2
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
-touch rules/BaseRule.config
+echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
 pip install "setuptools>=11.3"
 python setup.py install
 cp config.yaml.example config.yaml
