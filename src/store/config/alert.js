@@ -82,12 +82,25 @@ function initialState() {
     pagertreeIntegrationUrl: '',
     pagertreeProxy: '',
 
-    /* AWS SNS */
+    /* Amazon SNS */
     snsTopicArn: '',
     snsAwsAccessKeyId: '',
     snsAwsSecretAccessKey: '',
     snsAwsRegion: '',
     snsAwsProfile: '',
+
+    /* Amazon SES */
+    sesFromAddr: '',
+    sesEmailReplyTo: '',
+    sesEmail: '',
+    sesCc: '',
+    sesBcc: '',
+    sesEmailFromField: '',
+    sesEmailAddDomain: '',
+    sesAwsAccessKeyId: '',
+    sesAwsSecretAccessKey: '',
+    sesAwsRegion: '',
+    sesAwsProfile: '',
 
     /* Zabbix */
     zbxSenderHost: 'localhost',
@@ -455,7 +468,7 @@ export default {
       state.pagertreeProxy = pagertreeProxy;
     },
 
-    /* AWS SNS */
+    /* Amazon SNS */
     UPDATE_SNS_TOPIC_ARN(state, snsTopicArn) {
       state.snsTopicArn = snsTopicArn;
     },
@@ -474,6 +487,51 @@ export default {
 
     UPDATE_SNS_AWS_PROFILE(state, snsAwsProfile) {
       state.snsAwsProfile = snsAwsProfile;
+    },
+
+    /* Amazon SES */
+    UPDATE_SES_FROM_ADDR(state, sesFromAddr) {
+      state.sesFromAddr = sesFromAddr;
+    },
+
+    UPDATE_SES_EMAIL_REPLY_TO(state, sesEmailReplyTo) {
+      state.sesEmailReplyTo = sesEmailReplyTo;
+    },
+
+    UPDATE_SES_EMAIL(state, sesEmail) {
+      state.sesEmail = sesEmail;
+    },
+
+    UPDATE_SES_CC(state, sesCc) {
+      state.sesCc = sesCc;
+    },
+
+    UPDATE_SES_BCC(state, sesBcc) {
+      state.sesBcc = sesBcc;
+    },
+
+    UPDATE_SES_EMAIL_FROM_FIELD(state, sesEmailFromField) {
+      state.sesEmailFromField = sesEmailFromField;
+    },
+
+    UPDATE_SES_EMAIL_ADD_DOMAIN(state, sesEmailAddDomain) {
+      state.sesEmailAddDomain = sesEmailAddDomain;
+    },
+
+    UPDATE_SES_AWS_ACCESS_KEY_ID(state, sesAwsAccessKeyId) {
+      state.sesAwsAccessKeyId = sesAwsAccessKeyId;
+    },
+
+    UPDATE_SES_AWS_SECRET_ACCESS_KEY(state, sesAwsSecretAccessKey) {
+      state.sesAwsSecretAccessKey = sesAwsSecretAccessKey;
+    },
+
+    UPDATE_SES_AWS_REGION(state, sesAwsRegion) {
+      state.sesAwsRegion = sesAwsRegion;
+    },
+
+    UPDATE_SES_AWS_PROFILE(state, sesAwsProfile) {
+      state.sesAwsProfile = sesAwsProfile;
     },
 
     /* Zabbix */

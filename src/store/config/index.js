@@ -304,12 +304,47 @@ export default {
         commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
         commit('alert/UPDATE_PAGERTREE_PROXY', config.pagertree_proxy);
 
-        /* AWS SNS */
+        /* Amazon SNS */
         commit('alert/UPDATE_SNS_TOPIC_ARN', config.sns_topic_arn);
         commit('alert/UPDATE_SNS_AWS_ACCESS_KEY_ID', config.sns_aws_access_key_id);
         commit('alert/UPDATE_SNS_AWS_SECRET_ACCESS_KEY', config.sns_aws_secret_access_key);
         commit('alert/UPDATE_SNS_AWS_REGION', config.sns_aws_region);
         commit('alert/UPDATE_SNS_AWS_PROFILE', config.sns_aws_profile);
+
+        /* Amazon SES */
+        commit('alert/UPDATE_SES_AWS_ACCESS_KEY_ID', config.ses_aws_access_key_id);
+        commit('alert/UPDATE_SES_AWS_SECRET_ACCESS_KEY', config.ses_aws_secret_access_key);
+        commit('alert/UPDATE_SES_AWS_REGION', config.ses_aws_region);
+        commit('alert/UPDATE_SES_AWS_PROFILE', config.ses_aws_profile);
+        commit('alert/UPDATE_SES_FROM_ADDR', config.ses_from_addr);
+        commit('alert/UPDATE_SES_EMAIL_REPLY_TO', config.ses_email_reply_to);
+
+        if (config.ses_email) {
+          if (Array.isArray(config.ses_email)) {
+            commit('alert/UPDATE_SES_EMAIL', config.ses_email.join(','));
+          } else {
+            commit('alert/UPDATE_SES_EMAIL', config.ses_email);
+          }
+        }
+
+        if (config.ses_cc) {
+          if (Array.isArray(config.ses_cc)) {
+            commit('alert/UPDATE_SES_CC', config.ses_cc.join(','));
+          } else {
+            commit('alert/UPDATE_SES_CC', config.ses_cc);
+          }
+        }
+
+        if (config.ses_bcc) {
+          if (Array.isArray(config.ses_bcc)) {
+            commit('alert/UPDATE_SES_BCC', config.ses_bcc.join(','));
+          } else {
+            commit('alert/UPDATE_SES_BCC', config.ses_bcc);
+          }
+        }
+
+        commit('alert/UPDATE_SES_EMAIL_FROM_FIELD', config.ses_email_from_field);
+        commit('alert/UPDATE_SES_EMAIL_ADD_DOMAIN', config.ses_email_add_domain);
 
         /* Zabbix */
         if (config.zbx_sender_host) {
@@ -1467,6 +1502,68 @@ export default {
       return config;
     },
 
+    ses(state) {
+      let config = {};
+
+      if (state.alert.sesFromAddr) {
+        config.ses_from_addr = state.alert.sesFromAddr;
+      }
+
+      if (state.alert.sesEmailReplyTo) {
+        config.ses_email_reply_to = state.alert.sesEmailReplyTo;
+      }
+
+      if (state.alert.sesEmail) {
+        if (typeof state.alert.sesEmail === 'string') {
+          config.ses_email = state.alert.sesEmail.split(',');
+        } else {
+          console.warn('Local ses email state is not a string!');
+        }
+      }
+
+      if (state.alert.sesCc) {
+        if (typeof state.alert.sesCc === 'string') {
+          config.ses_cc = state.alert.sesCc.split(',');
+        } else {
+          console.warn('Local ses cc state is not a string!');
+        }
+      }
+
+      if (state.alert.sesBcc) {
+        if (typeof state.alert.sesBcc === 'string') {
+          config.ses_bcc = state.alert.sesBcc.split(',');
+        } else {
+          console.warn('Local ses bcc state is not a string!');
+        }
+      }
+
+      if (state.alert.sesEmailFromField) {
+        config.ses_email_from_field = state.alert.sesEmailFromField;
+      }
+
+      if (state.alert.sesEmailAddDomain) {
+        config.ses_email_add_domain = state.alert.sesEmailAddDomain;
+      }
+
+      if (state.alert.sesAwsProfile) {
+        config.ses_aws_profile = state.alert.sesAwsProfile;
+      } else {
+        if (state.alert.sesAwsAccessKeyId) {
+          config.ses_aws_access_key_id = state.alert.sesAwsAccessKeyId;
+        }
+
+        if (state.alert.sesAwsSecretAccessKey) {
+          config.ses_aws_secret_access_key = state.alert.sesAwsSecretAccessKey;
+        }
+
+        if (state.alert.sesAwsRegion) {
+          config.ses_aws_region = state.alert.sesAwsRegion;
+        }
+      }
+
+      return config;
+    },
+
     linenotify(state) {
       let config = {};
 
@@ -1994,6 +2091,10 @@ export default {
         config = { ...config, ...getters.sns };
       }
 
+      if (state.alert.alert.includes('ses')) {
+        config = { ...config, ...getters.ses };
+      }
+
       if (state.alert.alert.includes('zabbix')) {
         config = { ...config, ...getters.zabbix };
       }
@@ -2067,6 +2168,7 @@ export default {
           || state.alert.alert.includes('googlechat')
           || state.alert.alert.includes('pagertree')
           || state.alert.alert.includes('sns')
+          || state.alert.alert.includes('ses')
           || state.alert.alert.includes('mattermost')
           || state.alert.alert.includes('hivealerter')
           || state.alert.alert.includes('alerta')
