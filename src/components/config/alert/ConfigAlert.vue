@@ -981,7 +981,7 @@
         </praeco-form-item>
 
         <praeco-form-item label="Host Port" prop="stompHostport" required>
-          <el-input-number id="stompHostport" v-model="stompHostport" :disabled="viewOnly" />
+          <el-input id="stompHostport" v-model="stompHostport" :disabled="viewOnly" />
           <label>The STOMP port to use, defaults to 61613.</label>
         </praeco-form-item>
 
