@@ -187,6 +187,7 @@ function initialState() {
     mattermostMsgPretext: '',
     mattermostIgnoreSslErrors: false,
     mattermostProxy: '',
+    mattermostTitle: '',
     mattermostTitleLink: '',
     mattermostFooter: '',
     mattermostFooterIcon: '',
@@ -195,6 +196,9 @@ function initialState() {
     mattermostAuthorName: '',
     mattermostAuthorLink: '',
     mattermostAuthorIcon: '',
+    mattermostAttachKibanaDiscoverUrl: false,
+    mattermostKibanaDiscoverColor: '#ec4b98',
+    mattermostKibanaDiscoverTitle: 'Discover in Kibana',
 
     /* TheHive */
     hiveAlertConfigTitle: '',
@@ -775,8 +779,12 @@ export default {
       state.mattermostProxy = mattermostProxy;
     },
 
+    UPDATE_MATTERMOST_TITLE(state, mattermostTitle) {
+      state.mattermostTitle = mattermostTitle;
+    },
+
     UPDATE_MATTERMOST_TITLE_LINK(state, mattermostTitleLink) {
-      state.mattermostFooter = mattermostTitleLink;
+      state.mattermostTitleLink = mattermostTitleLink;
     },
 
     UPDATE_MATTERMOST_FOOTER(state, mattermostFooter) {
@@ -805,6 +813,18 @@ export default {
 
     UPDATE_MATTERMOST_AUTHOR_ICON(state, mattermostAuthorIcon) {
       state.mattermostAuthorIcon = mattermostAuthorIcon;
+    },
+
+    UPDATE_MATTERMOST_ATTACH_KIBANA_DISCOVER_URL(state, mattermostAttachKibanaDiscoverUrl) {
+      state.mattermostAttachKibanaDiscoverUrl = mattermostAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_MATTERMOST_KIBANA_DISCOVER_COLOR(state, mattermostKibanaDiscoverColor) {
+      state.mattermostKibanaDiscoverColor = mattermostKibanaDiscoverColor;
+    },
+
+    UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE(state, mattermostKibanaDiscoverTitle) {
+      state.mattermostKibanaDiscoverTitle = mattermostKibanaDiscoverTitle;
     },
 
     /* Slack */

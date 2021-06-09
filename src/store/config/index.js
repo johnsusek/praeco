@@ -501,6 +501,7 @@ export default {
         }
 
         commit('alert/UPDATE_MATTERMOST_PROXY', config.mattermost_proxy);
+        commit('alert/UPDATE_MATTERMOST_TITLE', config.mattermost_title);
         commit('alert/UPDATE_MATTERMOST_TITLE_LINK', config.mattermost_title_link);
         commit('alert/UPDATE_MATTERMOST_FOOTER', config.mattermost_footer);
         commit('alert/UPDATE_MATTERMOST_FOOTER_ICON', config.mattermost_footer_icon);
@@ -509,6 +510,18 @@ export default {
         commit('alert/UPDATE_MATTERMOST_AUTHOR_NAME', config.mattermost_author_name);
         commit('alert/UPDATE_MATTERMOST_AUTHOR_LINK', config.mattermost_author_link);
         commit('alert/UPDATE_MATTERMOST_AUTHOR_ICON', config.mattermost_author_icon);
+
+        if (config.mattermost_attach_kibana_discover_url) {
+          commit('alert/UPDATE_MATTERMOST_ATTACH_KIBANA_DISCOVER_URL', config.mattermost_attach_kibana_discover_url);
+        }
+
+        if (config.mattermost_kibana_discover_color) {
+          commit('alert/UPDATE_MATTERMOST_KIBANA_DISCOVER_COLOR', config.mattermost_kibana_discover_color);
+        }
+
+        if (config.mattermost_kibana_discover_color) {
+          commit('alert/UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE', config.mattermost_kibana_discover_title);
+        }
 
         /* TheHive */
         if (config.hive_alert_config && config.hive_alert_config.title) {
@@ -1803,6 +1816,10 @@ export default {
         config.mattermost_proxy = state.alert.mattermostProxy;
       }
 
+      if (state.alert.mattermostTitle) {
+        config.mattermost_title = state.alert.mattermostTitle;
+      }
+
       if (state.alert.mattermostTitleLink) {
         config.mattermost_title_link = state.alert.mattermostTitleLink;
       }
@@ -1833,6 +1850,16 @@ export default {
 
       if (state.alert.mattermostAuthorIcon) {
         config.mattermost_author_icon = state.alert.mattermostAuthorIcon;
+      }
+
+      config.mattermost_attach_kibana_discover_url = state.alert.mattermostAttachKibanaDiscoverUrl;
+
+      if (state.alert.mattermostKibanaDiscoverColor) {
+        config.mattermost_kibana_discover_color = state.alert.mattermostKibanaDiscoverColor;
+      }
+
+      if (state.alert.mattermostKibanaDiscoverTitle) {
+        config.mattermost_kibana_discover_title = state.alert.mattermostKibanaDiscoverTitle;
       }
 
       return config;

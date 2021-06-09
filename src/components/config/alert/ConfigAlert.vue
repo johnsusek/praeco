@@ -661,6 +661,11 @@
           </label>
         </el-form-item>
 
+        <el-form-item label="Title" prop="mattermostTitle">
+          <el-input v-model="mattermostTitle" :disabled="viewOnly" />
+          <label>Sets a title for the message, this shows up as a blue text at the start of the message.</label>
+        </el-form-item>
+
         <el-form-item label="Title Link" prop="mattermostTitleLink">
           <el-input v-model="mattermostTitleLink" :disabled="viewOnly" />
           <label>You can add a link in your Mattermost notification by setting this to a valid URL.</label>
@@ -699,6 +704,25 @@
         <el-form-item label="Author Icon" prop="mattermostAuthorIcon">
           <el-input v-model="mattermostAuthorIcon" :disabled="viewOnly" />
           <label>An optional URL used to display a 16x16 pixel icon beside the author_name.</label>
+        </el-form-item>
+
+        <el-form-item label="Attach Kibana Discover URL" prop="mattermostAttachKibanaDiscoverUrl">
+          <el-switch
+            id="mattermostAttachKibanaDiscoverUrl"
+            v-model="mattermostAttachKibanaDiscoverUrl"
+            :disabled="viewOnly"
+            @change="changeMattermostAttachKibanaDiscoverUrl" />
+        </el-form-item>
+
+        <el-form-item label="Kibana Discover Color" prop="mattermostKibanaDiscoverColor">
+          <el-color-picker
+            v-model="mattermostKibanaDiscoverColor" :disabled="viewOnly" />
+          <label>The color of the Kibana Discover url attachment.</label>
+        </el-form-item>
+
+        <el-form-item label="Kibana Discover Title" prop="mattermostKibanaDiscoverTitle">
+          <el-input v-model="mattermostKibanaDiscoverTitle" :disabled="viewOnly" />
+          <label>The title of the Kibana Discover url attachment.</label>
         </el-form-item>
       </el-tab-pane>
 
@@ -3214,6 +3238,18 @@ export default {
       }
     },
 
+    mattermostTitle: {
+      get() {
+        return this.$store.state.config.alert.mattermostTitle;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_MATTERMOST_TITLE',
+          value
+        );
+      }
+    },
+
     mattermostTitleLink: {
       get() {
         return this.$store.state.config.alert.mattermostTitleLink;
@@ -3307,6 +3343,33 @@ export default {
           'config/alert/UPDATE_MATTERMOST_AUTHOR_ICON',
           value
         );
+      }
+    },
+
+    mattermostAttachKibanaDiscoverUrl: {
+      get() {
+        return this.$store.state.config.alert.mattermostAttachKibanaDiscoverUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_ATTACH_KIBANA_DISCOVER_URL', value);
+      }
+    },
+
+    mattermostKibanaDiscoverColor: {
+      get() {
+        return this.$store.state.config.alert.mattermostKibanaDiscoverColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_KIBANA_DISCOVER_COLOR', value);
+      }
+    },
+
+    mattermostKibanaDiscoverTitle: {
+      get() {
+        return this.$store.state.config.alert.mattermostKibanaDiscoverTitle;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE', value);
       }
     },
 
@@ -3781,6 +3844,14 @@ export default {
     updateRealert(value) {
       this.realert = {};
       this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
+    },
+
+    changeMattermostAttachKibanaDiscoverUrl(val) {
+      if (val) {
+        this.mattermostAttachKibanaDiscoverUrl = true;
+      } else {
+        this.mattermostAttachKibanaDiscoverUrl = false;
+      }
     },
 
     changeSlackAttachKibanaDiscoverUrl(val) {
