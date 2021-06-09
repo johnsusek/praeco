@@ -48,6 +48,8 @@ Praeco should now be available on http://127.0.0.1:8080
 
 ## Upgrading
 
+If you use docker-compose.yml published on github as it is, it will be the current latest version instead of a specific version. If you want to specify a specific version, edit it yourself and then run "docker-compose up --force-recreate --build".
+
 ```
 docker-compose down 
 docker rmi praecoapp/praeco:latest
