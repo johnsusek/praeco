@@ -213,6 +213,9 @@ export default {
       }, {
         code: '7.12',
         name: '7.12'
+      }, {
+        code: '7.13',
+        name: '7.13'
       }],
     };
   },
