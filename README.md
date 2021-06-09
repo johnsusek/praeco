@@ -49,8 +49,11 @@ Praeco should now be available on http://127.0.0.1:8080
 ## Upgrading
 
 ```
-docker pull praecoapp/praeco
-docker pull praecoapp/elastalert-server
+docker-compose down 
+docker rmi praecoapp/praeco:latest
+docker rmi praecoapp/elastalert-server:latest
+docker pull praecoapp/praeco:latest
+docker pull praecoapp/elastalert-server:latest
 docker-compose up --force-recreate --build
 ```
 
