@@ -7,12 +7,94 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.7
+
+**kibana discover**
+
+- kibana 7.13  support
+
+**New options**
+
+- Add options for Rocket.Chat.
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#rocket-chat
+
+```yaml
+rocket_chat_webhook_url: 'https://xxxxxx/xxxxx/xxxxxxxxxxxxxxxx'
+```
+
+- New options for Amazon SES.
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#aws-ses-amazon-simple-email-service
+
+**./praeco/aws/config**
+
+For example:
+```
+[default]
+region = ap-northeast-1
+```
+
+**./praeco/aws/credentials**
+
+For example:
+```
+[default]
+aws_access_key_id = xxxxxxxxxxxxxxxxx
+aws_secret_access_key = xxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**Part of docker-compose.yml**
+
+For example:
+```yaml
+  elastalert:
+    container_name: elastalert
+    image: praecoapp/elastalert-server:latest
+    ports:
+      - 3030:3030
+      - 3333:3333
+    restart: always
+    volumes:
+      - ./elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml
+      - ./elastalert/config/api.config.json:/opt/elastalert-server/config/config.json
+      - ./elastalert/rules:/opt/elastalert/rules
+      - ./elastalert/rule_templates:/opt/elastalert/rule_templates
+      - ./elastalert/aws/config:/home/node/.aws/config
+      - ./elastalert/aws/credentials:/home/node/.aws/credentials
+```
+
+**Add UI Setting**
+
+**Mattermost**
+
+- mattermostAttachKibanaDiscoverUrl
+- mattermostKibanaDiscoverColor
+- mattermostKibanaDiscoverTitle
+- mattermost_title
+- mattermost_title_link
+- mattermost_footer
+- mattermost_footer_icon
+- mattermost_image_url
+- mattermost_thumb_url
+- mattermost_author_name
+- mattermost_author_link
+- mattermost_author_icon
+
+**Slack**
+
+- slack_footer
+- slack_footer_icon
+- slack_image_url
+- slack_thumb_url
+- slack_author_name
+- slack_author_link
+- slack_author_icon
+- slack_msg_pretext
 ## -> 1.8.6
 
-- New options for Datadog added.
+- Add options for Datadog.
 https://github.com/jertel/elastalert2/blob/master/docs/source/ruletypes.rst#datadog
 
-- Add Support for Twilio Copilot.
+- Add options for Twilio Copilot.
 https://github.com/jertel/elastalert2/blob/master/docs/source/ruletypes.rst#twilio
 
 ## -> 1.8.5

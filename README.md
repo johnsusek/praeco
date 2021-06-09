@@ -11,7 +11,7 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog or an HTTP POST endpoint
+- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat or an HTTP POST endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -322,6 +322,17 @@ Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#mattermos
 
 ```yaml
 mattermost_webhook_url: 'https://xxxxxx/hooks/xxxxxxxxxxxxxxxx'
+```
+
+#### How to setup Rocket.Chat? 
+
+Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#rocket-chat for how to configure your `BaseRule.config` file.
+
+- Replace rocket_chat_webhook_url with the URL of your webhook.
+- Describe the following settings in BaseRule.config. Please set other settings on the screen.
+
+```yaml
+rocket_chat_webhook_url: 'https://xxxxxx/xxxxx/xxxxxxxxxxxxxxxx'
 ```
 
 #### How to setup Email?
