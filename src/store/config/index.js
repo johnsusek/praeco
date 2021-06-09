@@ -523,6 +523,30 @@ export default {
           commit('alert/UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE', config.mattermost_kibana_discover_title);
         }
 
+        /* Rocket.Chat */
+        if (config.rocket_chat_username_override) {
+          commit('alert/UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE', config.rocket_chat_username_override);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE', 'elastalert2');
+        }
+
+        commit('alert/UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE', config.rocket_chat_channel_override);
+
+        if (config.rocket_chat_emoji_override) {
+          commit('alert/UPDATE_ROCKET_CHAT_EMOJI_OVERRIDE', config.rocket_chat_emoji_override);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_EMOJI_OVERRIDE', ':ghost:');
+        }
+
+        if (config.rocket_chat_msg_color) {
+          commit('alert/UPDATE_ROCKET_CHAT_MSG_COLOR', config.rocket_chat_msg_color);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_MSG_COLOR', 'danger');
+        }
+
+        commit('alert/UPDATE_ROCKET_CHAT_TEXT_STRING', config.rocket_chat_text_string);
+        commit('alert/UPDATE_ROCKET_CHAT_PROXY', config.rocket_chat_proxy);
+
         /* TheHive */
         if (config.hive_alert_config && config.hive_alert_config.title) {
           commit('alert/UPDATE_HIVE_ALERT_CONFIG_TITLE', config.hive_alert_config.title);
@@ -1865,6 +1889,36 @@ export default {
       return config;
     },
 
+    rocketchat(state) {
+      let config = {};
+
+      if (state.alert.rocketChatUsernameOverride) {
+        config.rocket_chat_username_override = state.alert.rocketChatUsernameOverride;
+      }
+
+      if (state.alert.rocketChatChannelOverride) {
+        config.rocket_chat_channel_override = state.alert.rocketChatChannelOverride;
+      }
+
+      if (state.alert.rocketChatEmojiOverride) {
+        config.rocket_chat_emoji_override = state.alert.rocketChatEmojiOverride;
+      }
+
+      if (state.alert.rocketChatMsgColor) {
+        config.rocket_chat_msg_color = state.alert.rocketChatMsgColor;
+      }
+
+      if (state.alert.rocketChatTextString) {
+        config.rocket_chat_text_string = state.alert.rocketChatTextString;
+      }
+
+      if (state.alert.rocketChatProxy) {
+        config.rocket_chat_proxy = state.alert.rocketChatProxy;
+      }
+
+      return config;
+    },
+
     hivealerter(state) {
       let config = {};
       config.hive_alert_config = {};
@@ -2162,6 +2216,10 @@ export default {
         config = { ...config, ...getters.mattermost };
       }
 
+      if (state.alert.alert.includes('rocketchat')) {
+        config = { ...config, ...getters.rocketchat };
+      }
+
       if (state.alert.alert.includes('hivealerter')) {
         config = { ...config, ...getters.hivealerter };
       }
@@ -2197,6 +2255,7 @@ export default {
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('ses')
           || state.alert.alert.includes('mattermost')
+          || state.alert.alert.includes('rocketchat')
           || state.alert.alert.includes('hivealerter')
           || state.alert.alert.includes('alerta')
           || state.alert.alert.includes('datadog')

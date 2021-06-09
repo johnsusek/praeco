@@ -200,6 +200,14 @@ function initialState() {
     mattermostKibanaDiscoverColor: '#ec4b98',
     mattermostKibanaDiscoverTitle: 'Discover in Kibana',
 
+    /* Rocket.Chat */
+    rocketChatChannelOverride: '',
+    rocketChatUsernameOverride: 'Praeco',
+    rocketChatEmojiOverride: ':ghost:',
+    rocketChatMsgColor: 'danger',
+    rocketChatTextString: '',
+    rocketChatProxy: '',
+
     /* TheHive */
     hiveAlertConfigTitle: '',
     hiveAlertConfigType: '',
@@ -825,6 +833,31 @@ export default {
 
     UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE(state, mattermostKibanaDiscoverTitle) {
       state.mattermostKibanaDiscoverTitle = mattermostKibanaDiscoverTitle;
+    },
+
+    /* Rocket.Chat */
+    UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE(state, rocketChatChannelOverride) {
+      state.rocketChatChannelOverride = rocketChatChannelOverride;
+    },
+
+    UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE(state, rocketChatUsernameOverride) {
+      state.rocketChatUsernameOverride = rocketChatUsernameOverride;
+    },
+
+    UPDATE_ROCKET_CHAT_EMOJI_OVERRIDE(state, rocketChatEmojiOverride) {
+      state.rocketChatEmojiOverride = rocketChatEmojiOverride;
+    },
+
+    UPDATE_ROCKET_CHAT_MSG_COLOR(state, rocketChatMsgColor) {
+      state.rocketChatMsgColor = rocketChatMsgColor;
+    },
+
+    UPDATE_ROCKET_CHAT_TEXT_STRING(state, rocketChatTextString) {
+      state.rocketChatTextString = rocketChatTextString;
+    },
+
+    UPDATE_ROCKET_CHAT_PROXY(state, rocketChatProxy) {
+      state.rocketChatProxy = rocketChatProxy;
     },
 
     /* Slack */

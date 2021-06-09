@@ -154,6 +154,9 @@
         <el-checkbox id="destinationDatadog" label="datadog" border>
           Datadog
         </el-checkbox>
+        <el-checkbox id="destinationRocketChat" label="rocketchat" border>
+          Rocket.Chat
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -162,7 +165,8 @@
         alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
         alert.includes('sns') || alert.includes('ses') || alert.includes('pagertree') || alert.includes('gitter') ||
         alert.includes('googlechat') || alert.includes('chatwork') || alert.includes('discord') ||
-        alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog')">
+        alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog') ||
+        alert.includes('rocketchat')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -1537,6 +1541,63 @@
           <label>Datadog application key.</label>
         </el-form-item>
       </el-tab-pane>
+
+      <el-tab-pane v-if="alert.includes('rocketchat')">
+        <template slot="label">
+          <icon :icon="['fab', 'rocketchat']" size="1x" /> Rocket.Chat
+        </template>
+        <el-form-item label="Channel or username" prop="rocketChatChannelOverride" required>
+          <el-input id="rocketChatChannelOverride" v-model="rocketChatChannelOverride" :disabled="viewOnly" />
+          <label>
+            The @username or #channel to send the alert. Tip: Create new channels
+            for your alerts, to have fine-grained control of Slack notifications.
+          </label>
+        </el-form-item>
+
+        <praeco-form-item label="Post as" prop="rocketChatUsernameOverride" required>
+          <el-input id="rocketChatUsernameOverride" v-model="rocketChatUsernameOverride" :disabled="viewOnly" />
+          <label>This is the username that will appear in Slack for the alert</label>
+        </praeco-form-item>
+
+        <praeco-form-item
+          v-if="!(viewOnly && !rocketChatEmojiOverride)"
+          :class="{ 'disabled': viewOnly }"
+          label="Icon"
+          prop="rocketChatEmojiOverride">
+          <picker
+            :emoji="rocketChatEmojiOverride || 'arrow_up'"
+            :title="rocketChatEmojiOverride || 'Pick your icon...'"
+            color="#189acc"
+            @select="addEmoji" />
+        </praeco-form-item>
+
+        <el-form-item label="Message color" prop="rocketChatMsgColor" required>
+          <el-radio-group v-model="rocketChatMsgColor" :disabled="viewOnly">
+            <el-radio id="rocketChatMsgColorDanger" label="danger" border class="rocketChat-danger">
+              Danger
+            </el-radio>
+            <el-radio id="rocketChatMsgColorWarning" label="warning" border class="rocketChat-warning">
+              Warning
+            </el-radio>
+            <el-radio id="rocketChatMsgColorGood" label="good" border class="rocketChat-good">
+              Good
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="Text String" prop="rocketChatTextString">
+          <el-input id="rocketChatTextString" v-model="rocketChatTextString" :disabled="viewOnly" />
+          <label>Notification message you want to add.</label>
+        </el-form-item>
+
+        <el-form-item label="Proxy" prop="rocketChatProxy">
+          <el-input id="rocketChatProxy" v-model="rocketChatProxy" :disabled="viewOnly" />
+          <label>
+            By default ElastAlert2 will not use a network proxy to send notifications to Slack.
+            Set this option using hostname:port if you need to use a proxy.
+          </label>
+        </el-form-item>
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -1549,16 +1610,6 @@ import { Picker } from 'emoji-mart-vue';
 import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
 
 let validateSlackDestination = (rule, value, callback) => {
-  if (value.length < 2) {
-    callback(new Error('Please enter a @username or #channel'));
-  } else if (!value.startsWith('@') && !value.startsWith('#')) {
-    callback(new Error('Please enter a @username or #channel'));
-  } else {
-    callback();
-  }
-};
-
-let validateMattermostDestination = (rule, value, callback) => {
   if (value.length < 2) {
     callback(new Error('Please enter a @username or #channel'));
   } else if (!value.startsWith('@') && !value.startsWith('#')) {
@@ -1696,7 +1747,13 @@ export default {
         ],
         mattermostChannelOverride: [
           {
-            validator: validateMattermostDestination,
+            validator: validateSlackDestination,
+            trigger: 'change'
+          }
+        ],
+        rocketChatChannelOverride: [
+          {
+            validator: validateSlackDestination,
             trigger: 'change'
           }
         ],
@@ -3373,6 +3430,69 @@ export default {
       }
     },
 
+    rocketChatChannelOverride: {
+      get() {
+        return this.$store.state.config.alert.rocketChatChannelOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE', value);
+      }
+    },
+
+    rocketChatUsernameOverride: {
+      get() {
+        return this.$store.state.config.alert.rocketChatUsernameOverride;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE',
+          value
+        );
+      }
+    },
+
+    rocketChatEmojiOverride: {
+      get() {
+        return this.$store.state.config.alert.rocketChatEmojiOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_EMOJI_OVERRIDE', value);
+      }
+    },
+
+    rocketChatTextString: {
+      get() {
+        return this.$store.state.config.alert.rocketChatTextString;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_TEXT_STRING',
+          value
+        );
+      }
+    },
+
+    rocketChatMsgColor: {
+      get() {
+        return this.$store.state.config.alert.rocketChatMsgColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_MSG_COLOR', value);
+      }
+    },
+
+    rocketChatProxy: {
+      get() {
+        return this.$store.state.config.alert.rocketChatProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_PROXY',
+          value
+        );
+      }
+    },
+
     ms_teamsWebhookUrl: {
       get() {
         return this.$store.state.config.alert.ms_teamsWebhookUrl;
@@ -4002,6 +4122,42 @@ export default {
   }
   &.mattermost-good .el-radio__input.is-checked + .el-radio__label,
   &.mattermost-good {
+    color: green !important;
+    border-color: green !important;
+  }
+  &.rocketChat-danger .el-radio__inner:hover {
+    border-color: red;
+  }
+  &.rocketChat-danger .el-radio__input.is-checked .el-radio__inner {
+    border-color: red;
+    background: red;
+  }
+  &.rocketChat-danger .el-radio__input.is-checked + .el-radio__label,
+  &.rocketChat-danger {
+    color: red !important;
+    border-color: red !important;
+  }
+  &.rocketChat-warning .el-radio__inner:hover {
+    border-color: orange;
+  }
+  &.rocketChat-warning .el-radio__input.is-checked .el-radio__inner {
+    border-color: orange;
+    background: orange;
+  }
+  &.rocketChat-warning .el-radio__input.is-checked + .el-radio__label,
+  &.rocketChat-warning {
+    color: orange !important;
+    border-color: orange !important;
+  }
+  &.rocketChat-good .el-radio__inner:hover {
+    border-color: green;
+  }
+  &.rocketChat-good .el-radio__input.is-checked .el-radio__inner {
+    border-color: green;
+    background: green;
+  }
+  &.rocketChat-good .el-radio__input.is-checked + .el-radio__label,
+  &.rocketChat-good {
     color: green !important;
     border-color: green !important;
   }

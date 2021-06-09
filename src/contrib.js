@@ -22,7 +22,7 @@ import {
   faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira
+  faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -38,6 +38,7 @@ library.add(
   faFile,
   faFileAlt,
   faSlack,
+  faRocketchat,
   faMicrosoft,
   faGitter,
   faAws,
