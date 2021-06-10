@@ -24,6 +24,8 @@ praecoapp/elastalert-server:20210517
 
 (Bug reproduction procedure)
 
+Please write as much as you can remember the detailed procedure. This is because I want to check if it can be reproduced in the same way.
+
 1. Do action
 2. Do another action
 3. Wrong Behavior !!
