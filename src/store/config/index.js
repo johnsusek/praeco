@@ -435,7 +435,7 @@ export default {
         if (config.stomp_hostport) {
           commit('alert/UPDATE_STOMP_HOSTPORT', config.stomp_hostport);
         } else {
-          commit('alert/UPDATE_STOMP_HOSTPORT', 61613);
+          commit('alert/UPDATE_STOMP_HOSTPORT', '61613');
         }
 
         if (config.stomp_login) {
