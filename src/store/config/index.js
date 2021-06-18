@@ -1144,6 +1144,7 @@ export default {
       } else {
         config.generate_kibana_discover_url = false;
         config.slack_attach_kibana_discover_url = false;
+        config.mattermost_attach_kibana_discover_url = false;
       }
 
       if (state.alert.kibanaDiscoverAppUrl) {
