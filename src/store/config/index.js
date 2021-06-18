@@ -547,6 +547,18 @@ export default {
         commit('alert/UPDATE_ROCKET_CHAT_TEXT_STRING', config.rocket_chat_text_string);
         commit('alert/UPDATE_ROCKET_CHAT_PROXY', config.rocket_chat_proxy);
 
+        if (config.rocket_chat_attach_kibana_discover_url) {
+          commit('alert/UPDATE_ROCKET_CHAT_ATTACH_KIBANA_DISCOVER_URL', config.rocket_chat_attach_kibana_discover_url);
+        }
+
+        if (config.rocket_chat_kibana_discover_color) {
+          commit('alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR', config.rocket_chat_kibana_discover_color);
+        }
+
+        if (config.rocket_chat_kibana_discover_color) {
+          commit('alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE', config.rocket_chat_kibana_discover_title);
+        }
+
         /* TheHive */
         if (config.hive_alert_config && config.hive_alert_config.title) {
           commit('alert/UPDATE_HIVE_ALERT_CONFIG_TITLE', config.hive_alert_config.title);
@@ -1144,6 +1156,7 @@ export default {
       } else {
         config.generate_kibana_discover_url = false;
         config.slack_attach_kibana_discover_url = false;
+        config.rocket_chat_attach_kibana_discover_url = false;
       }
 
       if (state.alert.kibanaDiscoverAppUrl) {
@@ -1914,6 +1927,16 @@ export default {
 
       if (state.alert.rocketChatProxy) {
         config.rocket_chat_proxy = state.alert.rocketChatProxy;
+      }
+
+      config.rocket_chat_attach_kibana_discover_url = state.alert.rocketChatAttachKibanaDiscoverUrl;
+
+      if (state.alert.rocketChatKibanaDiscoverColor) {
+        config.rocket_chat_kibana_discover_color = state.alert.rocketChatKibanaDiscoverColor;
+      }
+
+      if (state.alert.rocketChatKibanaDiscoverTitle) {
+        config.rocket_chat_kibana_discover_title = state.alert.rocketChatKibanaDiscoverTitle;
       }
 
       return config;

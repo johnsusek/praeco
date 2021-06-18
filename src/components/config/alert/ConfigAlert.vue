@@ -1597,6 +1597,25 @@
             Set this option using hostname:port if you need to use a proxy.
           </label>
         </el-form-item>
+
+        <el-form-item label="Attach Kibana Discover URL" prop="rocketChatAttachKibanaDiscoverUrl">
+          <el-switch
+            id="rocketChatAttachKibanaDiscoverUrl"
+            v-model="rocketChatAttachKibanaDiscoverUrl"
+            :disabled="viewOnly"
+            @change="changeRocketChatAttachKibanaDiscoverUrl" />
+        </el-form-item>
+
+        <el-form-item label="Kibana Discover Color" prop="rocketChatKibanaDiscoverColor">
+          <el-color-picker
+            v-model="rocketChatKibanaDiscoverColor" :disabled="viewOnly" />
+          <label>The color of the Kibana Discover url attachment.</label>
+        </el-form-item>
+
+        <el-form-item label="Kibana Discover Title" prop="rocketChatKibanaDiscoverTitle">
+          <el-input v-model="rocketChatKibanaDiscoverTitle" :disabled="viewOnly" />
+          <label>The title of the Kibana Discover url attachment.</label>
+        </el-form-item>
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -3493,6 +3512,33 @@ export default {
       }
     },
 
+    rocketChatAttachKibanaDiscoverUrl: {
+      get() {
+        return this.$store.state.config.alert.rocketChatAttachKibanaDiscoverUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_ATTACH_KIBANA_DISCOVER_URL', value);
+      }
+    },
+
+    rocketChatKibanaDiscoverColor: {
+      get() {
+        return this.$store.state.config.alert.rocketChatKibanaDiscoverColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR', value);
+      }
+    },
+
+    rocketChatKibanaDiscoverTitle: {
+      get() {
+        return this.$store.state.config.alert.rocketChatKibanaDiscoverTitle;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE', value);
+      }
+    },
+
     ms_teamsWebhookUrl: {
       get() {
         return this.$store.state.config.alert.ms_teamsWebhookUrl;
@@ -3964,6 +4010,14 @@ export default {
     updateRealert(value) {
       this.realert = {};
       this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
+    },
+
+    changeRocketChatAttachKibanaDiscoverUrl(val) {
+      if (val) {
+        this.rocketChatAttachKibanaDiscoverUrl = true;
+      } else {
+        this.rocketChatAttachKibanaDiscoverUrl = false;
+      }
     },
 
     changeMattermostAttachKibanaDiscoverUrl(val) {

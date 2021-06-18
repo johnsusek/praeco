@@ -207,6 +207,9 @@ function initialState() {
     rocketChatMsgColor: 'danger',
     rocketChatTextString: '',
     rocketChatProxy: '',
+    rocketChatAttachKibanaDiscoverUrl: false,
+    rocketChatKibanaDiscoverColor: '#ec4b98',
+    rocketChatKibanaDiscoverTitle: 'Discover in Kibana',
 
     /* TheHive */
     hiveAlertConfigTitle: '',
@@ -858,6 +861,18 @@ export default {
 
     UPDATE_ROCKET_CHAT_PROXY(state, rocketChatProxy) {
       state.rocketChatProxy = rocketChatProxy;
+    },
+
+    UPDATE_ROCKET_CHAT_ATTACH_KIBANA_DISCOVER_URL(state, rocketChatAttachKibanaDiscoverUrl) {
+      state.rocketChatAttachKibanaDiscoverUrl = rocketChatAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR(state, rocketChatKibanaDiscoverColor) {
+      state.rocketChatKibanaDiscoverColor = rocketChatKibanaDiscoverColor;
+    },
+
+    UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE(state, rocketChatKibanaDiscoverTitle) {
+      state.rocketChatKibanaDiscoverTitle = rocketChatKibanaDiscoverTitle;
     },
 
     /* Slack */
