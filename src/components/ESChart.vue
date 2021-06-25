@@ -320,11 +320,29 @@ export default {
     aggs() {
       let aggs = {};
 
-      if (this.groupBy) {
+      if (this.groupBy && this.groupBy.length === 1) {
         aggs = {
           group_by_field: {
             terms: {
-              field: this.groupBy
+              field: this.groupBy[0]
+            },
+            aggs: this.byMinuteAgg
+          }
+        };
+      } else if (this.groupBy && this.groupBy.length > 1) {
+        let composite_sources = this.groupBy.map(x => (
+          {
+            [x]: {
+              terms: {
+                field: x
+              }
+            }
+          }
+        ));
+        aggs = {
+          group_by_field: {
+            composite: {
+              sources: composite_sources
             },
             aggs: this.byMinuteAgg
           }
@@ -648,6 +666,8 @@ export default {
               }));
 
               y = buckets[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
+
+              buckets.forEach(item => { item.key = (typeof item.key === 'object') ? Object.values(item.key).join(' - ') : item.key; });
 
               this.groups = buckets;
 
