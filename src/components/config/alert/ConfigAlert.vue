@@ -73,6 +73,24 @@
       </el-col>
     </el-row>
 
+    <el-row class="m-s-sm">
+      <el-col :span="24">
+        <ConfigOwner ref="configOwner" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
+    <el-row class="m-s-sm">
+      <el-col :span="24">
+        <ConfigPriority ref="configPriority" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
+    <el-row class="m-s-sm">
+      <el-col :span="24">
+        <ConfigDescription ref="configDescription" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
     <el-form-item
       v-if="!viewOnly"
       :label="`Destination${alert.length > 1 ? 's' : ''}`"

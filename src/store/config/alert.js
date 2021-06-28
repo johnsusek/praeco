@@ -127,6 +127,18 @@ function initialState() {
     timeWindowEndTime: '',
     timeWindowDropIf: '',
 
+    /* Description */
+    useDescription: false,
+    configDescription: '',
+
+    /* Priority */
+    usePriority: false,
+    configPriority: 2,
+
+    /* Owner */
+    useOwner: false,
+    configOwner: '',
+
     /* Jira */
     jiraProject: '',
     jiraIssueType: '',
@@ -615,6 +627,33 @@ export default {
 
     UPDATE_GITTER_PROXY(state, gitterProxy) {
       state.gitterProxy = gitterProxy;
+    },
+
+    /* Description */
+    UPDATE_USE_DESCRIPTION(state, useDescription) {
+      state.useDescription = useDescription;
+    },
+
+    UPDATE_DESCRIPTION(state, configDescription) {
+      state.configDescription = configDescription;
+    },
+
+    /* Priority */
+    UPDATE_USE_PRIORITY(state, usePriority) {
+      state.usePriority = usePriority;
+    },
+
+    UPDATE_PRIORITY(state, configPriority) {
+      state.configPriority = configPriority;
+    },
+
+    /* Owner */
+    UPDATE_USE_OWNER(state, useOwner) {
+      state.useOwner = useOwner;
+    },
+
+    UPDATE_OWNER(state, configOwner) {
+      state.configOwner = configOwner;
     },
 
     /* time_window_change */

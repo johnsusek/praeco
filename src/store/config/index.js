@@ -204,6 +204,15 @@ export default {
         commit('alert/UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA', config.kibana_discover_from_timedelta);
         commit('alert/UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA', config.kibana_discover_to_timedelta);
 
+        /* Description */
+        commit('alert/UPDATE_DESCRIPTION', config.description);
+
+        /* Priority */
+        commit('alert/UPDATE_PRIORITY', config.priority);
+
+        /* Owner */
+        commit('alert/UPDATE_OWNER', config.owner);
+
         /* HTTP POST */
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
 
@@ -1701,6 +1710,39 @@ export default {
       return config;
     },
 
+    // Description
+    description(state) {
+      let config = {};
+
+      if (state.alert.useDescription) {
+        config.description = state.alert.configDescription;
+      }
+
+      return config;
+    },
+
+    // Priority
+    priority(state) {
+      let config = {};
+
+      if (state.alert.usePriority) {
+        config.priority = state.alert.configPriority;
+      }
+
+      return config;
+    },
+
+    // Owner
+    owner(state) {
+      let config = {};
+
+      if (state.alert.useOwner) {
+        config.owner = state.alert.configOwner;
+      }
+
+      return config;
+    },
+
     jira(state) {
       let config = {};
 
@@ -2337,6 +2379,12 @@ export default {
       config = { ...config, ...getters.kibanaDiscover };
 
       config = { ...config, ...getters.limitExcecution };
+
+      config = { ...config, ...getters.description };
+
+      config = { ...config, ...getters.priority };
+
+      config = { ...config, ...getters.owner };
 
       // Sort the keys in the object so it appears alphabetically in the UI
       let conf = {};

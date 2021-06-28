@@ -129,6 +129,7 @@
                 v-model="docType"
                 filterable
                 clearable
+                allow-create
                 class="el-select-wide m-n-sm"
                 placeholder="Select doc type"
                 @change="validate">
@@ -708,6 +709,7 @@
               v-model="docType"
               filterable
               clearable
+              allow-create
               placeholder=""
               @change="validateFreqFlatlineOptions">
               <el-option v-for="type in types" :key="type" :label="type" :value="type" />
