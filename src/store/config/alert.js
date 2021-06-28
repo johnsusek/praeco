@@ -210,6 +210,9 @@ function initialState() {
     rocketChatAttachKibanaDiscoverUrl: false,
     rocketChatKibanaDiscoverColor: '#ec4b98',
     rocketChatKibanaDiscoverTitle: 'Discover in Kibana',
+    rocketChatIgnoreSslErrors: false,
+    rocketChatCaCerts: false,
+    rocketChatTimeout: 10,
 
     /* TheHive */
     hiveAlertConfigTitle: '',
@@ -873,6 +876,18 @@ export default {
 
     UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE(state, rocketChatKibanaDiscoverTitle) {
       state.rocketChatKibanaDiscoverTitle = rocketChatKibanaDiscoverTitle;
+    },
+
+    UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS(state, rocketChatIgnoreSslErrors) {
+      state.rocketChatIgnoreSslErrors = rocketChatIgnoreSslErrors;
+    },
+
+    UPDATE_ROCKET_CHAT_CA_CERTS(state, rocketChatCaCerts) {
+      state.rocketChatCaCerts = rocketChatCaCerts;
+    },
+
+    UPDATE_ROCKET_CHAT_TIMEOUT(state, rocketChatTimeout) {
+      state.rocketChatTimeout = rocketChatTimeout;
     },
 
     /* Slack */

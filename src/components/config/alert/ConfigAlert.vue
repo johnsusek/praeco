@@ -1616,6 +1616,30 @@
           <el-input v-model="rocketChatKibanaDiscoverTitle" :disabled="viewOnly" />
           <label>The title of the Kibana Discover url attachment.</label>
         </el-form-item>
+
+        <el-form-item label="Ignore SSL Errors" prop="rocketChatIgnoreSslErrors">
+          <el-switch
+            id="rocketChatIgnoreSslErrors"
+            v-model="rocketChatIgnoreSslErrors"
+            :disabled="viewOnly"
+            @change="changeRocketChatIgnoreSslErrors" />
+        </el-form-item>
+
+        <el-form-item label="CA Certs" prop="rocketChatCaCerts">
+          <el-switch
+            id="rocketChatCaCerts"
+            v-model="rocketChatCaCerts"
+            :disabled="viewOnly"
+            @change="changeRocketChatCaCerts" />
+        </el-form-item>
+
+        <el-form-item label="Timeout" prop="rocketChatTimeout">
+          <el-input-number id="rocketChatTimeout" v-model="rocketChatTimeout" :disabled="viewOnly" />
+          <label>
+            You can specify a timeout value, in seconds, for making communicating with Rocket.Chat.
+            The default is 10. If a timeout occurs, the alert will be retried next time elastalert cycles.
+          </label>
+        </el-form-item>
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -3548,6 +3572,41 @@ export default {
       }
     },
 
+    rocketChatIgnoreSslErrors: {
+      get() {
+        return this.$store.state.config.alert.rocketChatIgnoreSslErrors;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS',
+          value
+        );
+      }
+    },
+
+    rocketChatCaCerts: {
+      get() {
+        return this.$store.state.config.alert.rocketChatCaCerts;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_CA_CERTS',
+          value
+        );
+      }
+    },
+    rocketChatTimeout: {
+      get() {
+        return this.$store.state.config.alert.rocketChatTimeout;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_TIMEOUT',
+          value
+        );
+      }
+    },
+
     ms_teamsThemeColor: {
       get() {
         return this.$store.state.config.alert.ms_teamsThemeColor;
@@ -3871,6 +3930,22 @@ export default {
         this.ms_teamsAlertFixedWidth = true;
       } else {
         this.ms_teamsAlertFixedWidth = false;
+      }
+    },
+
+    changeRocketChatIgnoreSslErrors(val) {
+      if (val) {
+        this.rocketChatIgnoreSslErrors = true;
+      } else {
+        this.rocketChatIgnoreSslErrors = false;
+      }
+    },
+
+    changeRocketChatCaCerts(val) {
+      if (val) {
+        this.rocketChatCaCerts = true;
+      } else {
+        this.rocketChatCaCerts = false;
       }
     },
 

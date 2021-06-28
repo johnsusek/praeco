@@ -559,6 +559,24 @@ export default {
           commit('alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE', config.rocket_chat_kibana_discover_title);
         }
 
+        if (config.rocket_chat_ignore_ssl_errors) {
+          commit('alert/UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS', config.rocket_chat_ignore_ssl_errors);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS', false);
+        }
+
+        if (config.rocket_chat_timeout) {
+          commit('alert/UPDATE_ROCKET_CHAT_TIMEOUT', config.rocket_chat_timeout);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_TIMEOUT', 10);
+        }
+
+        if (config.rocket_chat_ca_certs) {
+          commit('alert/UPDATE_ROCKET_CHAT_CA_CERTS', config.rocket_chat_ca_certs);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_CA_CERTS', false);
+        }
+
         /* TheHive */
         if (config.hive_alert_config && config.hive_alert_config.title) {
           commit('alert/UPDATE_HIVE_ALERT_CONFIG_TITLE', config.hive_alert_config.title);
@@ -1182,6 +1200,13 @@ export default {
 
       if (state.alert.kibanaDiscoverToTimedelta) {
         config.kibana_discover_to_timedelta = state.alert.kibanaDiscoverToTimedelta;
+      }
+
+      config.rocket_chat_ignore_ssl_errors = state.alert.rocketChatIgnoreSslErrors;
+      config.rocket_chat_ca_certs = state.alert.rocketChatCaCerts;
+
+      if (state.alert.rocketChatTimeout) {
+        config.rocket_chat_timeout = state.alert.rocketChatTimeout;
       }
 
       return config;
