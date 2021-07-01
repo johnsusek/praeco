@@ -1266,6 +1266,22 @@
             Set this option using hostname:port if you need to use a proxy.
           </label>
         </praeco-form-item>
+
+        <praeco-form-item label="Impact" prop="servicenowImpact">
+          <el-input-number id="servicenowImpact" v-model="servicenowImpact" :disabled="viewOnly" :min="1" :max="3" />
+          <label>
+            An integer 1, 2, or 3 representing high, medium, and low respectively.
+            This measures the effect of an incident on business processes.
+          </label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Urgency" prop="servicenowUrgency">
+          <el-input-number id="servicenowUrgency" v-model="servicenowUrgency" :disabled="viewOnly" :min="1" :max="3" />
+          <label>
+            An integer 1, 2, or 3 representing high, medium, and low respecitvely.
+            This measures how long this incident can be delayed until there is a significant business impact.
+          </label>
+        </praeco-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('chatwork')">
@@ -2814,6 +2830,30 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_SERVICENOW_PROXY',
+          value
+        );
+      }
+    },
+
+    servicenowImpact: {
+      get() {
+        return this.$store.state.config.alert.servicenowImpact;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_IMPACT',
+          value
+        );
+      }
+    },
+
+    servicenowUrgency: {
+      get() {
+        return this.$store.state.config.alert.servicenowUrgency;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_URGENCY',
           value
         );
       }

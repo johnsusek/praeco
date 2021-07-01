@@ -420,6 +420,8 @@ export default {
         commit('alert/UPDATE_SERVICENOW_CMDB_CI', config.cmdb_ci);
         commit('alert/UPDATE_SERVICENOW_CALLER_ID', config.caller_id);
         commit('alert/UPDATE_SERVICENOW_PROXY', config.servicenow_proxy);
+        commit('alert/UPDATE_SERVICENOW_IMPACT', config.servicenow_impact);
+        commit('alert/UPDATE_SERVICENOW_URGENCY', config.servicenow_urgency);
 
         /* VictorOps */
         commit('alert/UPDATE_VICTOROPS_API_KEY', config.victorops_api_key);
@@ -1802,6 +1804,14 @@ export default {
 
       if (state.alert.servicenowProxy) {
         config.servicenow_proxy = state.alert.servicenowProxy;
+      }
+
+      if (state.alert.servicenowImpact) {
+        config.servicenow_impact = state.alert.servicenowImpact;
+      }
+
+      if (state.alert.servicenowUrgency) {
+        config.servicenow_urgency = state.alert.servicenowUrgency;
       }
 
       return config;

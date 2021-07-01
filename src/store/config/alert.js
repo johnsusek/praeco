@@ -166,6 +166,8 @@ function initialState() {
     servicenowCmdbCi: '',
     servicenowCallerId: '',
     servicenowProxy: '',
+    servicenowImpact: 1,
+    servicenowUrgency: 1,
 
     /* VictorOps */
     victoropsApiKey: '',
@@ -726,6 +728,14 @@ export default {
 
     UPDATE_SERVICENOW_PROXY(state, servicenowProxy) {
       state.servicenowProxy = servicenowProxy;
+    },
+
+    UPDATE_SERVICENOW_IMPACT(state, servicenowImpact) {
+      state.servicenowImpact = servicenowImpact;
+    },
+
+    UPDATE_SERVICENOW_URGENCY(state, servicenowUrgency) {
+      state.servicenowUrgency = servicenowUrgency;
     },
 
     /* VictorOps */
