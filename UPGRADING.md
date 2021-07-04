@@ -7,6 +7,32 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.8
+
+**Add UI Setting**
+
+**Add description, priority and owner fields**
+
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#owner
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#priority
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#description
+
+**Rocket.Chat**
+
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#rocket-chat
+- rocket_chat_attach_kibana_discover_url
+- rocket_chat_kibana_discover_color
+- rocket_chat_kibana_discover_color
+- rocket_chat_ca_certs
+- rocket_chat_ignore_ssl_errors
+- rocket_chat_timeout
+
+**ServiceNow**
+
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#servicenow
+- servicenow_impact
+- servicenow_urgency 
+
 ## -> 1.8.7
 
 **kibana discover**
