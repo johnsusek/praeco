@@ -166,6 +166,8 @@ function initialState() {
     servicenowCmdbCi: '',
     servicenowCallerId: '',
     servicenowProxy: '',
+    servicenowImpact: 1,
+    servicenowUrgency: 1,
 
     /* VictorOps */
     victoropsApiKey: '',
@@ -219,6 +221,12 @@ function initialState() {
     rocketChatMsgColor: 'danger',
     rocketChatTextString: '',
     rocketChatProxy: '',
+    rocketChatAttachKibanaDiscoverUrl: false,
+    rocketChatKibanaDiscoverColor: '#ec4b98',
+    rocketChatKibanaDiscoverTitle: 'Discover in Kibana',
+    rocketChatIgnoreSslErrors: false,
+    rocketChatCaCerts: false,
+    rocketChatTimeout: 10,
 
     /* TheHive */
     hiveAlertConfigTitle: '',
@@ -722,6 +730,14 @@ export default {
       state.servicenowProxy = servicenowProxy;
     },
 
+    UPDATE_SERVICENOW_IMPACT(state, servicenowImpact) {
+      state.servicenowImpact = servicenowImpact;
+    },
+
+    UPDATE_SERVICENOW_URGENCY(state, servicenowUrgency) {
+      state.servicenowUrgency = servicenowUrgency;
+    },
+
     /* VictorOps */
     UPDATE_VICTOROPS_API_KEY(state, victoropsApiKey) {
       state.victoropsApiKey = victoropsApiKey;
@@ -897,6 +913,30 @@ export default {
 
     UPDATE_ROCKET_CHAT_PROXY(state, rocketChatProxy) {
       state.rocketChatProxy = rocketChatProxy;
+    },
+
+    UPDATE_ROCKET_CHAT_ATTACH_KIBANA_DISCOVER_URL(state, rocketChatAttachKibanaDiscoverUrl) {
+      state.rocketChatAttachKibanaDiscoverUrl = rocketChatAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR(state, rocketChatKibanaDiscoverColor) {
+      state.rocketChatKibanaDiscoverColor = rocketChatKibanaDiscoverColor;
+    },
+
+    UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE(state, rocketChatKibanaDiscoverTitle) {
+      state.rocketChatKibanaDiscoverTitle = rocketChatKibanaDiscoverTitle;
+    },
+
+    UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS(state, rocketChatIgnoreSslErrors) {
+      state.rocketChatIgnoreSslErrors = rocketChatIgnoreSslErrors;
+    },
+
+    UPDATE_ROCKET_CHAT_CA_CERTS(state, rocketChatCaCerts) {
+      state.rocketChatCaCerts = rocketChatCaCerts;
+    },
+
+    UPDATE_ROCKET_CHAT_TIMEOUT(state, rocketChatTimeout) {
+      state.rocketChatTimeout = rocketChatTimeout;
     },
 
     /* Slack */

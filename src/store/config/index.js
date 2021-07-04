@@ -420,6 +420,8 @@ export default {
         commit('alert/UPDATE_SERVICENOW_CMDB_CI', config.cmdb_ci);
         commit('alert/UPDATE_SERVICENOW_CALLER_ID', config.caller_id);
         commit('alert/UPDATE_SERVICENOW_PROXY', config.servicenow_proxy);
+        commit('alert/UPDATE_SERVICENOW_IMPACT', config.servicenow_impact);
+        commit('alert/UPDATE_SERVICENOW_URGENCY', config.servicenow_urgency);
 
         /* VictorOps */
         commit('alert/UPDATE_VICTOROPS_API_KEY', config.victorops_api_key);
@@ -555,6 +557,36 @@ export default {
 
         commit('alert/UPDATE_ROCKET_CHAT_TEXT_STRING', config.rocket_chat_text_string);
         commit('alert/UPDATE_ROCKET_CHAT_PROXY', config.rocket_chat_proxy);
+
+        if (config.rocket_chat_attach_kibana_discover_url) {
+          commit('alert/UPDATE_ROCKET_CHAT_ATTACH_KIBANA_DISCOVER_URL', config.rocket_chat_attach_kibana_discover_url);
+        }
+
+        if (config.rocket_chat_kibana_discover_color) {
+          commit('alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR', config.rocket_chat_kibana_discover_color);
+        }
+
+        if (config.rocket_chat_kibana_discover_color) {
+          commit('alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE', config.rocket_chat_kibana_discover_title);
+        }
+
+        if (config.rocket_chat_ignore_ssl_errors) {
+          commit('alert/UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS', config.rocket_chat_ignore_ssl_errors);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS', false);
+        }
+
+        if (config.rocket_chat_timeout) {
+          commit('alert/UPDATE_ROCKET_CHAT_TIMEOUT', config.rocket_chat_timeout);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_TIMEOUT', 10);
+        }
+
+        if (config.rocket_chat_ca_certs) {
+          commit('alert/UPDATE_ROCKET_CHAT_CA_CERTS', config.rocket_chat_ca_certs);
+        } else {
+          commit('alert/UPDATE_ROCKET_CHAT_CA_CERTS', false);
+        }
 
         /* TheHive */
         if (config.hive_alert_config && config.hive_alert_config.title) {
@@ -1153,6 +1185,7 @@ export default {
       } else {
         config.generate_kibana_discover_url = false;
         config.slack_attach_kibana_discover_url = false;
+        config.rocket_chat_attach_kibana_discover_url = false;
         config.mattermost_attach_kibana_discover_url = false;
       }
 
@@ -1178,6 +1211,13 @@ export default {
 
       if (state.alert.kibanaDiscoverToTimedelta) {
         config.kibana_discover_to_timedelta = state.alert.kibanaDiscoverToTimedelta;
+      }
+
+      config.rocket_chat_ignore_ssl_errors = state.alert.rocketChatIgnoreSslErrors;
+      config.rocket_chat_ca_certs = state.alert.rocketChatCaCerts;
+
+      if (state.alert.rocketChatTimeout) {
+        config.rocket_chat_timeout = state.alert.rocketChatTimeout;
       }
 
       return config;
@@ -1766,6 +1806,14 @@ export default {
         config.servicenow_proxy = state.alert.servicenowProxy;
       }
 
+      if (state.alert.servicenowImpact) {
+        config.servicenow_impact = state.alert.servicenowImpact;
+      }
+
+      if (state.alert.servicenowUrgency) {
+        config.servicenow_urgency = state.alert.servicenowUrgency;
+      }
+
       return config;
     },
 
@@ -1957,6 +2005,16 @@ export default {
 
       if (state.alert.rocketChatProxy) {
         config.rocket_chat_proxy = state.alert.rocketChatProxy;
+      }
+
+      config.rocket_chat_attach_kibana_discover_url = state.alert.rocketChatAttachKibanaDiscoverUrl;
+
+      if (state.alert.rocketChatKibanaDiscoverColor) {
+        config.rocket_chat_kibana_discover_color = state.alert.rocketChatKibanaDiscoverColor;
+      }
+
+      if (state.alert.rocketChatKibanaDiscoverTitle) {
+        config.rocket_chat_kibana_discover_title = state.alert.rocketChatKibanaDiscoverTitle;
       }
 
       return config;

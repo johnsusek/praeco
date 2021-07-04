@@ -1266,6 +1266,22 @@
             Set this option using hostname:port if you need to use a proxy.
           </label>
         </praeco-form-item>
+
+        <praeco-form-item label="Impact" prop="servicenowImpact">
+          <el-input-number id="servicenowImpact" v-model="servicenowImpact" :disabled="viewOnly" :min="1" :max="3" />
+          <label>
+            An integer 1, 2, or 3 representing high, medium, and low respectively.
+            This measures the effect of an incident on business processes.
+          </label>
+        </praeco-form-item>
+
+        <praeco-form-item label="Urgency" prop="servicenowUrgency">
+          <el-input-number id="servicenowUrgency" v-model="servicenowUrgency" :disabled="viewOnly" :min="1" :max="3" />
+          <label>
+            An integer 1, 2, or 3 representing high, medium, and low respecitvely.
+            This measures how long this incident can be delayed until there is a significant business impact.
+          </label>
+        </praeco-form-item>
       </el-tab-pane>
 
       <el-tab-pane v-if="alert.includes('chatwork')">
@@ -1613,6 +1629,49 @@
           <label>
             By default ElastAlert2 will not use a network proxy to send notifications to Slack.
             Set this option using hostname:port if you need to use a proxy.
+          </label>
+        </el-form-item>
+
+        <el-form-item label="Attach Kibana Discover URL" prop="rocketChatAttachKibanaDiscoverUrl">
+          <el-switch
+            id="rocketChatAttachKibanaDiscoverUrl"
+            v-model="rocketChatAttachKibanaDiscoverUrl"
+            :disabled="viewOnly"
+            @change="changeRocketChatAttachKibanaDiscoverUrl" />
+        </el-form-item>
+
+        <el-form-item label="Kibana Discover Color" prop="rocketChatKibanaDiscoverColor">
+          <el-color-picker
+            v-model="rocketChatKibanaDiscoverColor" :disabled="viewOnly" />
+          <label>The color of the Kibana Discover url attachment.</label>
+        </el-form-item>
+
+        <el-form-item label="Kibana Discover Title" prop="rocketChatKibanaDiscoverTitle">
+          <el-input v-model="rocketChatKibanaDiscoverTitle" :disabled="viewOnly" />
+          <label>The title of the Kibana Discover url attachment.</label>
+        </el-form-item>
+
+        <el-form-item label="Ignore SSL Errors" prop="rocketChatIgnoreSslErrors">
+          <el-switch
+            id="rocketChatIgnoreSslErrors"
+            v-model="rocketChatIgnoreSslErrors"
+            :disabled="viewOnly"
+            @change="changeRocketChatIgnoreSslErrors" />
+        </el-form-item>
+
+        <el-form-item label="CA Certs" prop="rocketChatCaCerts">
+          <el-switch
+            id="rocketChatCaCerts"
+            v-model="rocketChatCaCerts"
+            :disabled="viewOnly"
+            @change="changeRocketChatCaCerts" />
+        </el-form-item>
+
+        <el-form-item label="Timeout" prop="rocketChatTimeout">
+          <el-input-number id="rocketChatTimeout" v-model="rocketChatTimeout" :disabled="viewOnly" />
+          <label>
+            You can specify a timeout value, in seconds, for making communicating with Rocket.Chat.
+            The default is 10. If a timeout occurs, the alert will be retried next time elastalert cycles.
           </label>
         </el-form-item>
       </el-tab-pane>
@@ -2776,6 +2835,30 @@ export default {
       }
     },
 
+    servicenowImpact: {
+      get() {
+        return this.$store.state.config.alert.servicenowImpact;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_IMPACT',
+          value
+        );
+      }
+    },
+
+    servicenowUrgency: {
+      get() {
+        return this.$store.state.config.alert.servicenowUrgency;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_SERVICENOW_URGENCY',
+          value
+        );
+      }
+    },
+
     victoropsApiKey: {
       get() {
         return this.$store.state.config.alert.victoropsApiKey;
@@ -3511,12 +3594,74 @@ export default {
       }
     },
 
+    rocketChatAttachKibanaDiscoverUrl: {
+      get() {
+        return this.$store.state.config.alert.rocketChatAttachKibanaDiscoverUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_ATTACH_KIBANA_DISCOVER_URL', value);
+      }
+    },
+
+    rocketChatKibanaDiscoverColor: {
+      get() {
+        return this.$store.state.config.alert.rocketChatKibanaDiscoverColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR', value);
+      }
+    },
+
+    rocketChatKibanaDiscoverTitle: {
+      get() {
+        return this.$store.state.config.alert.rocketChatKibanaDiscoverTitle;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE', value);
+      }
+    },
+
     ms_teamsWebhookUrl: {
       get() {
         return this.$store.state.config.alert.ms_teamsWebhookUrl;
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_MS_TEAMS_WEBHOOK_URL', value);
+      }
+    },
+
+    rocketChatIgnoreSslErrors: {
+      get() {
+        return this.$store.state.config.alert.rocketChatIgnoreSslErrors;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS',
+          value
+        );
+      }
+    },
+
+    rocketChatCaCerts: {
+      get() {
+        return this.$store.state.config.alert.rocketChatCaCerts;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_CA_CERTS',
+          value
+        );
+      }
+    },
+    rocketChatTimeout: {
+      get() {
+        return this.$store.state.config.alert.rocketChatTimeout;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ROCKET_CHAT_TIMEOUT',
+          value
+        );
       }
     },
 
@@ -3846,6 +3991,22 @@ export default {
       }
     },
 
+    changeRocketChatIgnoreSslErrors(val) {
+      if (val) {
+        this.rocketChatIgnoreSslErrors = true;
+      } else {
+        this.rocketChatIgnoreSslErrors = false;
+      }
+    },
+
+    changeRocketChatCaCerts(val) {
+      if (val) {
+        this.rocketChatCaCerts = true;
+      } else {
+        this.rocketChatCaCerts = false;
+      }
+    },
+
     async validate() {
       try {
         if (this.$refs.hiveAlertConfigTags) {
@@ -3982,6 +4143,14 @@ export default {
     updateRealert(value) {
       this.realert = {};
       this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
+    },
+
+    changeRocketChatAttachKibanaDiscoverUrl(val) {
+      if (val) {
+        this.rocketChatAttachKibanaDiscoverUrl = true;
+      } else {
+        this.rocketChatAttachKibanaDiscoverUrl = false;
+      }
     },
 
     changeMattermostAttachKibanaDiscoverUrl(val) {
