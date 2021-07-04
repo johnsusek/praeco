@@ -22,7 +22,7 @@ https://elastalert2.readthedocs.io/en/latest/ruletypes.html#description
 https://elastalert2.readthedocs.io/en/latest/ruletypes.html#rocket-chat
 - rocket_chat_attach_kibana_discover_url
 - rocket_chat_kibana_discover_color
-- rocket_chat_kibana_discover_color
+- rocket_chat_kibana_discover_title
 - rocket_chat_ca_certs
 - rocket_chat_ignore_ssl_errors
 - rocket_chat_timeout
