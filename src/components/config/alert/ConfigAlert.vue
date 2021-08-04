@@ -75,6 +75,12 @@
 
     <el-row class="m-s-sm">
       <el-col :span="24">
+        <ConfigScanEntireTimeframe ref="scanEntireTimeframe" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
+    <el-row class="m-s-sm">
+      <el-col :span="24">
         <ConfigOwner ref="configOwner" :view-only="viewOnly" />
       </el-col>
     </el-row>
