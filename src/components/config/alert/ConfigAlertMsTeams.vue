@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form-item label="Team webhook" prop="ms_teamsWebhookUrl" required>
-      <el-input id="ms_teamsWebhookUrl" v-model="ms_teamsWebhookUrl" :disabled="viewOnly" />
+      <el-input v-model="ms_teamsWebhookUrl" :disabled="viewOnly" />
       <label>
         See<a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook">
           https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook</a>
@@ -9,11 +9,11 @@
     </el-form-item>
 
     <el-form-item label="Color" prop="ms_teamsThemeColor" required>
-      <el-color-picker id="ms_teamsThemeColor" v-model="ms_teamsThemeColor" :disabled="viewOnly" />
+      <el-color-picker v-model="ms_teamsThemeColor" :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="Alert Summary" prop="ms_teamsAlertSummary" required>
-      <el-input id="ms_teamsAlertSummary" v-model="ms_teamsAlertSummary" :disabled="viewOnly" />
+      <el-input v-model="ms_teamsAlertSummary" :disabled="viewOnly" />
       <label>
         Summary should be configured according to MS documentation, although it seems not displayed by Teams currently.
       </label>
@@ -34,7 +34,7 @@
     </el-form-item>
 
     <el-form-item label="Proxy" prop="ms_teamsProxy">
-      <el-input id="ms_teamsProxy" v-model="ms_teamsProxy" :disabled="viewOnly" />
+      <el-input v-model="ms_teamsProxy" :disabled="viewOnly" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to MS Teams.
         Set this option using hostname:port if you need to use a proxy.
@@ -44,6 +44,25 @@
 </template>
 
 <script>
+import validUrl from 'valid-url';
+
+let validateUrl = (rule, value, callback) => {
+  if (validUrl.isUri(value)) {
+    try {
+      let url = new URL(value);
+      if (['http:', 'https:'].includes(url.protocol)) {
+        callback();
+      } else {
+        callback(new Error('Invalid URL'));
+      }
+    } catch (error) {
+      callback(new Error('Invalid URL'));
+    }
+  } else {
+    callback(new Error('Invalid URL'));
+  }
+};
+
 export default {
   components: {
   },
@@ -53,6 +72,12 @@ export default {
   data() {
     return {
       rules: {
+        ms_teamsWebhookUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ]
       }
     };
   },

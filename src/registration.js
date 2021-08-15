@@ -48,6 +48,7 @@ import ConfigDescription from '@/components/config/ConfigDescription.vue';
 import ConfigSettings from '@/components/config/ConfigSettings.vue';
 import ConfigCondition from '@/components/config/ConfigCondition.vue';
 import ConfigScanEntireTimeframe from '@/components/config/ConfigScanEntireTimeframe.vue';
+import ConfigLimitExcecution from '@/components/config/ConfigLimitExcecution.vue';
 
 Vue.component('Bulb', Bulb);
 Vue.component('DateTime', DateTime);
@@ -88,6 +89,7 @@ Vue.component('ConfigPriority', ConfigPriority);
 Vue.component('ConfigDescription', ConfigDescription);
 Vue.component('ConfigCondition', ConfigCondition);
 Vue.component('ConfigScanEntireTimeframe', ConfigScanEntireTimeframe);
+Vue.component('ConfigLimitExcecution', ConfigLimitExcecution);
 Vue.component('DefinitionTable', DefinitionTable);
 Vue.component('ElastalertTimePicker', ElastalertTimePicker);
 Vue.component('ESChart', ESChart);

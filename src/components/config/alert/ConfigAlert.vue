@@ -44,27 +44,8 @@
 
     <!-- Limit Excecution -->
     <el-row class="m-s-sm">
-      <el-col :span="enableLimitExcecution ? 6 : 24">
-        <el-form-item label="Limit Excecution">
-          <el-switch
-            id="enableLimitExcecution"
-            v-model="enableLimitExcecution"
-            :disabled="viewOnly"
-            @change="changeLimitExcecution" />
-          <label>Limit Excecution Setting.</label>
-        </el-form-item>
-      </el-col>
-
-      <el-col v-if="enableLimitExcecution" :span="20">
-        <el-form-item label="" prop="limitExcecution">
-          <div v-if="!viewOnly" class="limit-excecution">
-            <VueCronEditorBuefy v-model="limitExcecution" /><br>
-            {{ limitExcecution }}
-          </div>
-          <div v-else>
-            {{ limitExcecution }}
-          </div>
-        </el-form-item>
+      <el-col :span="24">
+        <ConfigLimitExcecution ref="limitExcecution" :view-only="viewOnly" />
       </el-col>
     </el-row>
 
@@ -414,7 +395,6 @@
 </template>
 
 <script>
-import VueCronEditorBuefy from 'vue-cron-editor-buefy';
 import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
 import ConfigAlertAlerta from './ConfigAlertAlerta';
 import ConfigAlertAmazonSes from './ConfigAlertAmazonSes';
@@ -471,15 +451,13 @@ export default {
     ConfigAlertTheHive,
     ConfigAlertTwilio,
     ConfigAlertVictorOps,
-    ConfigAlertZabbix,
-    VueCronEditorBuefy
+    ConfigAlertZabbix
   },
 
   props: ['viewOnly'],
 
   data() {
     return {
-      enableLimitExcecution: false,
       visibleTabPane: '',
       rules: {
         alert: [
@@ -499,15 +477,6 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_AGGREGATION_SCHEDULE', value);
-      }
-    },
-
-    limitExcecution: {
-      get() {
-        return this.$store.state.config.alert.limitExcecution;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_LIMIT_EXCECUTION', value);
       }
     },
 
@@ -531,21 +500,9 @@ export default {
   },
 
   mounted() {
-    if (this.limitExcecution) {
-      this.enableLimitExcecution = true;
-    }
   },
 
   methods: {
-    changeLimitExcecution(val) {
-      if (val) {
-        this.enableLimitExcecution = true;
-      } else {
-        this.enableLimitExcecution = false;
-        this.limitExcecution = '';
-      }
-    },
-
     async validate() {
       try {
         this.$emit('validate', true);

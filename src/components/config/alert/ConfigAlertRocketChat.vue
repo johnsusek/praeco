@@ -19,10 +19,10 @@
       label="Icon"
       prop="rocketChatEmojiOverride">
       <picker
-        :emoji="rocketChatEmojiOverride || 'arrow_up'"
-        :title="rocketChatEmojiOverride || 'Pick your icon...'"
+        :emoji="rocketChatEmojiOverride"
+        :title="rocketChatEmojiOverride"
         color="#189acc"
-        @select="addEmoji" />
+        @select="addRocketChatEmoji" />
     </praeco-form-item>
 
     <el-form-item label="Message color" prop="rocketChatMsgColor" required>
@@ -258,6 +258,10 @@ export default {
   },
 
   methods: {
+    addRocketChatEmoji(value) {
+      this.rocketChatEmojiOverride = value.colons;
+    },
+
     changeRocketChatIgnoreSslErrors(val) {
       if (val) {
         this.rocketChatIgnoreSslErrors = true;
