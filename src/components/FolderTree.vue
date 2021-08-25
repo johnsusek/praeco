@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { loadChildrenOptions } from '@/lib/tree';
 import * as changeCase from 'change-case';
+import { loadChildrenOptions } from '@/lib/tree';
 
 export default {
   props: ['type'],

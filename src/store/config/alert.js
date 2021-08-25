@@ -139,6 +139,9 @@ function initialState() {
     useOwner: false,
     configOwner: '',
 
+    /* scanEntireTimeframe */
+    scanEntireTimeframe: false,
+
     /* Jira */
     jiraProject: '',
     jiraIssueType: '',
@@ -1215,6 +1218,11 @@ export default {
     UPDATE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, { entry, index }) {
       if (!state.kibanaDiscoverColumns) return;
       state.kibanaDiscoverColumns[index] = entry;
+    },
+
+    /* scan_entire_timeframe */
+    UPDATE_SCAN_ENTIRE_TIMEFRAME(state, scanEntireTimeframe) {
+      state.scanEntireTimeframe = scanEntireTimeframe;
     },
 
     UPDATE_REALERT(state, realert) {

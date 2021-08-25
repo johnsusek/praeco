@@ -669,7 +669,7 @@
                 :disabled="useTermsQuery"
                 @input="refreshOptionsPop" />
               <label>
-                If true, ElastAlert will poll Elasticsearch using the count api,
+                If true, ElastAlert 2 will poll Elasticsearch using the count api,
                 and not download all of the matching documents.
                 This is useful is you care only about numbers and not the actual data.
                 It should also be used if you expect a large number of query hits, in the order of
@@ -681,18 +681,18 @@
           <el-form-item v-if="type !== 'spike'" :class="{ 'm-n-sm': type === 'new_term' }" label="Use terms query">
             <el-switch v-model="useTermsQuery" :disabled="useCountQuery" @input="refreshOptionsPop" />
             <label v-if="type === 'new_term'">
-              If true, ElastAlert will use aggregation queries to get terms instead of regular search queries.
+              If true, ElastAlert 2 will use aggregation queries to get terms instead of regular search queries.
               This is faster than regular searching if there is a large number of documents.
               <span v-if="useTermsQuery">
                 When using use_terms_query, make sure that the field you are using is not analyzed.
                 If it is, the results of each terms query may return tokens rather than full values.
-                ElastAlert will by default turn on use_keyword_postfix, which attempts to use the non-analyzed version
+                ElastAlert 2 will by default turn on use_keyword_postfix, which attempts to use the non-analyzed version
                 (.keyword or .raw) to gather initial terms. These will not match the partial values and result
                 in false positives.
               </span>
             </label>
             <label v-else>
-              If true, ElastAlert will make an aggregation query against Elasticsearch
+              If true, ElastAlert 2 will make an aggregation query against Elasticsearch
               to get counts of documents matching each unique value of "query key". This
               must be used with "query key" and "doc type". This will only return a maximum
               of "terms size", default 50, unique terms.
@@ -735,7 +735,7 @@
           <el-form-item label="Use keyword postfix">
             <el-switch id="useKeywordPostfix" v-model="useKeywordPostfix" />
             <label>
-              If true, ElastAlert will automatically try to add .keyword (ES5+) or
+              If true, ElastAlert 2 will automatically try to add .keyword (ES5+) or
               .raw to the fields when making an initial query.
               These are non-analyzed fields added by Logstash.
               If the field used is analyzed, the initial query will return only the tokenized values,

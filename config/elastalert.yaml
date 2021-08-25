@@ -9,12 +9,12 @@ es_port: 9200
 # Any .yaml file will be loaded as a rule
 rules_folder: rules
 
-# How often ElastAlert will query elasticsearch
+# How often ElastAlert 2 will query elasticsearch
 # The unit can be anything from weeks to seconds
 run_every:
   seconds: 60
 
-# ElastAlert will buffer results from the most recent
+# ElastAlert 2 will buffer results from the most recent
 # period of time, in case some log sources are not in real time
 buffer_time:
   minutes: 1

@@ -204,6 +204,9 @@ export default {
         commit('alert/UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA', config.kibana_discover_from_timedelta);
         commit('alert/UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA', config.kibana_discover_to_timedelta);
 
+        /* scan_entire_timeframe */
+        commit('alert/UPDATE_SCAN_ENTIRE_TIMEFRAME', config.scan_entire_timeframe);
+
         /* Description */
         commit('alert/UPDATE_DESCRIPTION', config.description);
 
@@ -1723,6 +1726,17 @@ export default {
       return config;
     },
 
+    // scan_entire_timeframe
+    scanEntireTimeframe(state) {
+      let config = {};
+
+      if (state.alert.scanEntireTimeframe) {
+        config.scan_entire_timeframe = state.alert.scanEntireTimeframe;
+      }
+
+      return config;
+    },
+
     // Priority
     priority(state) {
       let config = {};
@@ -2395,6 +2409,8 @@ export default {
       config = { ...config, ...getters.priority };
 
       config = { ...config, ...getters.owner };
+
+      config = { ...config, ...getters.scanEntireTimeframe };
 
       // Sort the keys in the object so it appears alphabetically in the UI
       let conf = {};
