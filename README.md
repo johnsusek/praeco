@@ -6,7 +6,7 @@
 
 <img align="left" src="https://user-images.githubusercontent.com/611996/52907999-50fca900-3232-11e9-8aee-40f7dc37ec65.jpg">
 
-**Praeco** is an alerting tool for Elasticsearch – a GUI for [Elastalert 2](https://github.com/jertel/elastalert2), using the [Elastalert API](https://github.com/johnsusek/elastalert-server).
+**Praeco** is an alerting tool for Elasticsearch – a GUI for [ElastAlert 2](https://github.com/jertel/elastalert2), using the [ElastAlert API](https://github.com/johnsusek/elastalert-server).
 
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
@@ -63,14 +63,14 @@ You may need to update your config files when a new version comes out. Please se
 
 ## Configuration
 
-Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/johnsusek/elastalert-server#configuration) and the [example Elastalert 2 config](https://github.com/jertel/elastalert/blob/alt/config.yaml.example) for more information.
+Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/johnsusek/elastalert-server#configuration) and the [example ElastAlert 2 config](https://github.com/jertel/elastalert/blob/alt/config.yaml.example) for more information.
 
-Any Elastalert 2 option you put into `rules/BaseRule.config` will be applied to every rule.
+Any ElastAlert 2 option you put into `rules/BaseRule.config` will be applied to every rule.
 
 The following config settings are available in praeco.config.json:
 
 ```
-// Link back to your praeco instance, used in Slack alerts
+// Link back to your Praeco instance, used in Slack alerts
 "appUrl": "http://praeco-app-url:8080",
 
 // A recordatus (https://github.com/johnsusek/recordatus) instance for javascript error reporting
@@ -85,13 +85,13 @@ The following config settings are available in praeco.config.json:
 
 [ElastAlert Server](https://hub.docker.com/r/praecoapp/elastalert-server)
 
-[praeco & elastalert server docker image relations table](https://github.com/johnsusek/praeco/wiki/praeco-&-elastalert-server-docker-image-relations-table)
+[Praeco & elastalert server docker image relations table](https://github.com/johnsusek/praeco/wiki/praeco-&-elastalert-server-docker-image-relations-table)
 
 [praecoapp/elastalert-server ChangeLog](https://github.com/johnsusek/elastalert-server/blob/master/DockerImageLog.md)
 
 ## FAQ
 
-#### Is there a sample to start elasticsearch, kibana, elastalert-server, praeco with docker-compose?
+#### Is there a sample to start elasticsearch, kibana, elastalert-server, Praeco with docker-compose?
 
 [docker compose sample(telegram)](https://github.com/johnsusek/praeco/wiki/docker-compose-sample(telegram))
 
@@ -99,7 +99,7 @@ The following config settings are available in praeco.config.json:
 
 👉 [ElastAlert 2 Alerts support status](https://github.com/johnsusek/praeco/wiki/ElastAlert-2-Alerts-support-status)
 
-#### Will elastalert-server / praeco be supported forever?
+#### Will elastalert-server / Praeco be supported forever?
 
 First of all, please understand that it is open source software.
 If you need generous support, please consider paid support software.
@@ -118,6 +118,26 @@ Not Support
 Not Support
 
 #### Is it possible to set custom format (timestamp_type, timestamp_format, timestamp_format_expr) on the screen?
+
+Not Support
+
+#### Does elastalert-server support Amazon Elasticsearch Service?
+
+Not Support
+
+#### Does elastalert-server support Elastic Cloud Cloud ID?
+
+Not Support
+
+#### Does elastalert-server support Elasticsearch ApiKey authentication connections?
+
+Not Support
+
+#### Does elastalert-server support Elasticsearch Bearer authentication connections?
+
+Not Support
+
+#### Does elastalert-server support Elasticsearch proxy connections?
 
 Not Support
 
@@ -141,10 +161,10 @@ There are no plans to support this at this time.
 
 There are no plans to support this at this time.
 
-#### I can't send an email when I specify a gmail or office365 address in from_addr of Email. Is there a workaround?
+#### I can't send an email when I specify a gmail or Microsoft 365 address in from_addr of Email. Is there a workaround?
 
 - For Gmail, you need to set Allow insecure apps.
-- There is no workaround for office365.
+- There is no workaround for Microsoft 365.
 
 #### Is it possible to raise an alert only during a specific time period?
 
@@ -178,13 +198,17 @@ It can be set with Limit Excecution.
 [Praeco Helm Chart](https://github.com/daichi703n/praeco-helm)<br>
 [Installing Praeco (ElastAlert GUI) into Kubernetes with Helm](https://en-designetwork.daichi703n.com/entry/2020/02/24/praeco-helm-kubernetes)
 
-#### How do I connect to elasticsearch using SSL?
+#### How do I change ElastAlert 2 options, like SSL, user/pass, etc?
+
+Edit `config/elastalert.yaml` and uncomment the appropriate lines.
+
+#### [elastalert-server] How do I connect to elasticsearch using SSL?
 
 Edit `config/api.config.json` and set/add `"es_ssl": true`.<br>
 option `"es_ca_certs"`, `"es_client_cert"`, `"es_client_key"`.<br>
 [configuration](https://github.com/johnsusek/elastalert-server#configuration)
 
-#### How do I connect to elasticsearch with a username and password?
+#### [elastalert-server] How do I connect to elasticsearch with a username and password?
 
 Edit `es_username` and `es_password` in `config/api.config.json` and `config/elastalert.yaml`.
 
@@ -207,10 +231,6 @@ rewrite ^/my-path(/.*)$ $1 last;
 
 Edit `config/elastalert.yaml` and `config/api.config.json` and change the writeback_index values.
 
-#### How do I change elastalert 2 options, like SSL, user/pass, etc?
-
-Edit `config/elastalert.yaml` and uncomment the appropriate lines.
-
 #### How do I run this on Windows?
 
 First, install docker and docker-compose.
@@ -224,9 +244,9 @@ docker-compose.exe up
 
 Replace 1.2.3.4 with your Elasticsearch IP.
 
-#### Can I import my current elastalert 2 rules into praeco?
+#### Can I import my current ElastAlert 2 rules into praeco?
 
-Unfortunately this is not a possibility for two reasons. First, praeco only supports a subset of elastalert 2 features, so only certain rules would work. Second, praeco cannot automatically create the query builder ui from an arbitrary elastalert 2 `filter` entry, due to the potential complexity and combinations of filters someone can put in their rule file.
+Unfortunately this is not a possibility for two reasons. First, praeco only supports a subset of ElastAlert 2 features, so only certain rules would work. Second, praeco cannot automatically create the query builder ui from an arbitrary ElastAlert 2 `filter` entry, due to the potential complexity and combinations of filters someone can put in their rule file.
 
 #### Can I export my praeco rules into another elastalert  2 instance?
 
@@ -260,7 +280,7 @@ First of all, try to test your alert with varying time frames and see if that is
 
 If the test is returning results, but you are not receiving any alerts, check the error log. There may be a problem with your alerter settings. Make sure you edited rules/BaseRule.config and have correct values in there.
 
-If the test is not returning results, even though you think it should, try reading the [elastalert 2 docs](https://elastalert2.readthedocs.io/en/latest/ruletypes.html#rule-types) for your rule type. Compare the yaml from praeco with the options from the docs to make sure the rule is being created as expected. If praeco is generating the wrong yaml, please file an issue.
+If the test is not returning results, even though you think it should, try reading the [ElastAlert 2 docs](https://elastalert2.readthedocs.io/en/latest/ruletypes.html#rule-types) for your rule type. Compare the yaml from praeco with the options from the docs to make sure the rule is being created as expected. If praeco is generating the wrong yaml, please file an issue.
 
 #### Failed to establish a new connection: [Errno 111] Connection refused
 
@@ -376,25 +396,25 @@ Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#jira for 
 
 ![](https://user-images.githubusercontent.com/611996/52892144-90a19300-3155-11e9-8050-cb4a440411a4.png)
 
-Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [Elastalert API](https://github.com/johnsusek/elastalert-server) (running in another docker container) to view/edit rules.
-The elastalert api interacts with the included [Elastalert 2](https://github.com/jertel/elastalert2) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
+Praeco is a vue.js app (hosted in an nginx docker container) that communicates with the [ElastAlert API](https://github.com/johnsusek/elastalert-server) (running in another docker container) to view/edit rules.
+The elastalert api interacts with the included [ElastAlert 2](https://github.com/jertel/elastalert2) python daemon directly for various tasks including testing and silencing rules, and indirectly by modifying or creating
 rule files in the rules/ directory.
 
 When you run praeco using the quickstart instructions, it runs these two docker containers, per the docker-compose.yml file.
 
 Praeco uses a fork of the elastalert _api server_, which is why the docker image source is [johnsusek/elastalert-server](https://github.com/johnsusek/elastalert-server).
 
-NOTE: Only the _api server_ is a fork, the elastalert 2 daemon itself is built from the `master` branch whenever a new version of the `johnsusek/elastalert-server` docker image is created.
+NOTE: Only the _api server_ is a fork, the ElastAlert 2 daemon itself is built from the `master` branch whenever a new version of the `johnsusek/elastalert-server` docker image is created.
 
 Please see the development section below if you're interested in running these services separately.
 
 ## Manual/Dev installation
 
-NOTE: If you're just interested in developing Praeco UI features locally (and not changing elastalert 2 or the api), you can skip right to Praeco setup and just run the internal Elastalert server with `docker-compose up elastalert-server` .
+NOTE: If you're just interested in developing Praeco UI features locally (and not changing ElastAlert 2 or the api), you can skip right to Praeco setup and just run the internal Elastalert server with `docker-compose up elastalert-server` .
 
 ---
 
-First, you need a local copy of the elastalert api server running, which itself needs elastalert 2. Start by cloning the neccessary repos
+First, you need a local copy of the elastalert api server running, which itself needs ElastAlert 2. Start by cloning the neccessary repos
 
 ```sh
 $ cd
@@ -403,7 +423,7 @@ $ git clone https://github.com/johnsusek/elastalert-server.git
 $ git clone https://github.com/johnsusek/praeco.git
 ```
 
-### Setting up Elastalert 2
+### Setting up ElastAlert 2
 
 **Python Support version**
 
@@ -415,7 +435,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 I think it works with 6.x, but I haven't confirmed the operation.
 
-Configure the elastalert 2 `config.yaml` with:
+Configure the ElastAlert 2 `config.yaml` with:
 - Your `es_host`
 - A unique `writeback_index`
 - Change the rules_folder to `rules`
@@ -434,7 +454,7 @@ vi config.yaml
 ### Setting up the API server
 
 Configure the api server `config.json` with:
-- An _absolute path_ to your elastalert 2 folder for `elastalertPath`
+- An _absolute path_ to your ElastAlert 2 folder for `elastalertPath`
 - The address of your elasticsearch instance for `es_host`
 - The same `writeback_index` from the config.yaml
 
