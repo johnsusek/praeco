@@ -205,7 +205,7 @@ Edit `config/elastalert.yaml` and uncomment the appropriate lines.
 #### [elastalert-server] How do I connect to elasticsearch using SSL?
 
 Edit `config/api.config.json` and set/add `"es_ssl": true`.<br>
-option `"es_ca_certs"`, `"es_client_cert"`, `"es_client_key"`.<br>
+option `"ea_verify_certs"`, `"es_ca_certs"`, `"es_client_cert"`, `"es_client_key"`.<br>
 [configuration](https://github.com/johnsusek/elastalert-server#configuration)
 
 #### [elastalert-server] How do I connect to elasticsearch with a username and password?
