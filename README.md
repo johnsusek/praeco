@@ -121,7 +121,7 @@ Not Support
 
 Not Support
 
-#### Does elastalert-server support Amazon Elasticsearch Service?
+#### Does elastalert-server support Amazon OpenSearch Service (formerly Amazon Elasticsearch)?
 
 Not Support
 
