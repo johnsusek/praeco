@@ -1216,13 +1216,6 @@ export default {
         config.kibana_discover_to_timedelta = state.alert.kibanaDiscoverToTimedelta;
       }
 
-      config.rocket_chat_ignore_ssl_errors = state.alert.rocketChatIgnoreSslErrors;
-      config.rocket_chat_ca_certs = state.alert.rocketChatCaCerts;
-
-      if (state.alert.rocketChatTimeout) {
-        config.rocket_chat_timeout = state.alert.rocketChatTimeout;
-      }
-
       return config;
     },
 
@@ -2029,6 +2022,13 @@ export default {
 
       if (state.alert.rocketChatKibanaDiscoverTitle) {
         config.rocket_chat_kibana_discover_title = state.alert.rocketChatKibanaDiscoverTitle;
+      }
+
+      config.rocket_chat_ignore_ssl_errors = state.alert.rocketChatIgnoreSslErrors;
+      config.rocket_chat_ca_certs = state.alert.rocketChatCaCerts;
+
+      if (state.alert.rocketChatTimeout) {
+        config.rocket_chat_timeout = state.alert.rocketChatTimeout;
       }
 
       return config;
