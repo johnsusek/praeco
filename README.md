@@ -125,7 +125,15 @@ Not Support
 
 Not Support
 
-#### Does elastalert-server support Elastic Cloud Cloud ID?
+#### Does elastalert-server support Open Distro for Elasticsearch?
+
+Not Support
+
+#### Does elastalert-server support OpenSearch?
+
+Not Support
+
+#### Does elastalert-server support Elastic Cloud CloudID connections?
 
 Not Support
 
