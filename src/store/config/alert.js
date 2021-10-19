@@ -78,6 +78,19 @@ function initialState() {
     twilioFromNumber: '',
     twilioMessageServiceSid: '',
 
+    /* PagerDuty */
+    pagerdutyServiceKey: '',
+    pagerdutyClientName: '',
+    pagerdutyEventType: 'trigger',
+    pagerdutyIncidentKey: '',
+    pagerdutyProxy: '',
+    pagerdutyApiVersion: 'v1',
+    pagerdutyV2PayloadClass: '',
+    pagerdutyV2PayloadComponent: '',
+    pagerdutyV2PayloadGroup: '',
+    pagerdutyV2PayloadSeverity: 'critical',
+    pagerdutyV2PayloadSource: 'ElastAlert',
+
     /* PagerTree */
     pagertreeIntegrationUrl: '',
     pagertreeProxy: '',
@@ -492,6 +505,51 @@ export default {
 
     UPDATE_TWILIO_MESSAGE_SERVICE_SID(state, twilioMessageServiceSid) {
       state.twilioMessageServiceSid = twilioMessageServiceSid;
+    },
+
+    /* PagerDuty */
+    UPDATE_PAGERDUTY_SERVICE_KEY(state, pagerdutyServiceKey) {
+      state.pagerdutyServiceKey = pagerdutyServiceKey;
+    },
+
+    UPDATE_PAGERDUTY_CLIENT_NAME(state, pagerdutyClientName) {
+      state.pagerdutyClientName = pagerdutyClientName;
+    },
+
+    UPDATE_PAGERDUTY_EVENT_TYPE(state, pagerdutyEventType) {
+      state.pagerdutyEventType = pagerdutyEventType;
+    },
+
+    UPDATE_PAGERDUTY_INCIDENT_KEY(state, pagerdutyIncidentKey) {
+      state.pagerdutyIncidentKey = pagerdutyIncidentKey;
+    },
+
+    UPDATE_PAGERDUTY_PROXYY(state, pagerdutyProxy) {
+      state.pagerdutyProxy = pagerdutyProxy;
+    },
+
+    UPDATE_PAGERDUTY_API_VERSION(state, pagerdutyApiVersion) {
+      state.pagerdutyApiVersion = pagerdutyApiVersion;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS(state, pagerdutyV2PayloadClass) {
+      state.pagerdutyV2PayloadClass = pagerdutyV2PayloadClass;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT(state, pagerdutyV2PayloadComponent) {
+      state.pagerdutyV2PayloadComponent = pagerdutyV2PayloadComponent;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP(state, pagerdutyV2PayloadGroup) {
+      state.pagerdutyV2PayloadGroup = pagerdutyV2PayloadGroup;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY(state, pagerdutyV2PayloadSeverity) {
+      state.pagerdutyV2PayloadSeverity = pagerdutyV2PayloadSeverity;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE(state, pagerdutyV2PayloadSource) {
+      state.pagerdutyV2PayloadSource = pagerdutyV2PayloadSource;
     },
 
     /* Pagertree */

@@ -168,6 +168,9 @@
         <el-checkbox id="destinationRocketChat" label="rocketchat" border>
           Rocket.Chat
         </el-checkbox>
+        <el-checkbox id="destinationPagerDuty" label="pagerduty" border>
+          PagerDuty
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -177,7 +180,7 @@
         alert.includes('sns') || alert.includes('ses') || alert.includes('pagertree') || alert.includes('gitter') ||
         alert.includes('googlechat') || alert.includes('chatwork') || alert.includes('discord') ||
         alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog') ||
-        alert.includes('rocketchat')">
+        alert.includes('rocketchat') || alert.includes('pagerduty')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -390,6 +393,14 @@
         </template>
         <ConfigAlertRocketChat ref="rocketchat" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- PagerDuty -->
+      <el-tab-pane v-if="alert.includes('pagerduty')">
+        <template slot="label">
+          PagerDuty
+        </template>
+        <ConfigAlertPagerDuty ref="pagerduty" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -412,6 +423,7 @@ import ConfigAlertJira from './ConfigAlertJira';
 import ConfigAlertLineNotify from './ConfigAlertLineNotify';
 import ConfigAlertMattermost from './ConfigAlertMattermost';
 import ConfigAlertMsTeams from './ConfigAlertMsTeams';
+import ConfigAlertPagerDuty from './ConfigAlertPagerDuty';
 import ConfigAlertPagerTree from './ConfigAlertPagerTree';
 import ConfigAlertRocketChat from './ConfigAlertRocketChat';
 import ConfigAlertServiceNow from './ConfigAlertServiceNow';
@@ -442,6 +454,7 @@ export default {
     ConfigAlertLineNotify,
     ConfigAlertMattermost,
     ConfigAlertMsTeams,
+    ConfigAlertPagerDuty,
     ConfigAlertPagerTree,
     ConfigAlertRocketChat,
     ConfigAlertServiceNow,

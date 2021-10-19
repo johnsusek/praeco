@@ -257,8 +257,6 @@ export default {
 
         if (config.smtp_ssl) {
           commit('alert/UPDATE_SMTP_SSL', config.smtp_ssl);
-        } else {
-          commit('alert/UPDATE_SMTP_SSL', false);
         }
 
         commit('alert/UPDATE_SMTP_HOST', config.smtp_host);
@@ -311,6 +309,39 @@ export default {
         commit('alert/UPDATE_TWILIO_TO_NUMBER', config.twilio_to_number);
         commit('alert/UPDATE_TWILIO_FROM_NUMBER', config.twilio_from_number);
         commit('alert/UPDATE_TWILIO_MESSAGE_SERVICE_SID', config.twilio_message_service_sid);
+
+        /* PagerDuty */
+        commit('alert/UPDATE_PAGERDUTY_SERVICE_KEY', config.pagerduty_service_key);
+        commit('alert/UPDATE_PAGERDUTY_CLIENT_NAME', config.pagerduty_client_name);
+
+        if (config.pagerduty_event_type) {
+          commit('alert/UPDATE_PAGERDUTY_EVENT_TYPE', config.pagerduty_event_type);
+        } else {
+          commit('alert/UPDATE_PAGERDUTY_EVENT_TYPE', 'trigger');
+        }
+
+        commit('alert/UPDATE_PAGERDUTY_INCIDENT_KEY', config.pagerduty_incident_key);
+        commit('alert/UPDATE_PAGERDUTY_PROXYY', config.pagerduty_proxy);
+        commit('alert/UPDATE_PAGERDUTY_API_VERSION', config.pagerduty_api_version);
+
+        commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS', config.pagerduty_v2_payload_class);
+        commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT', config.pagerduty_v2_payload_component);
+        commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP', config.pagerduty_v2_payload_group);
+        commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY', config.pagerduty_v2_payload_severity);
+
+        if (config.pagerduty_v2_payload_severity) {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY', config.pagerduty_v2_payload_severity);
+        } else {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY', 'critical');
+        }
+
+        commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE', config.pagerduty_v2_payload_source);
+
+        if (config.pagerduty_v2_payload_source) {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE', config.pagerduty_v2_payload_source);
+        } else {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE', 'ElastAlert');
+        }
 
         /* PagerTree */
         commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
@@ -472,8 +503,6 @@ export default {
 
         if (config.stomp_ssl) {
           commit('alert/UPDATE_STOMP_SSL', config.stomp_ssl);
-        } else {
-          commit('alert/UPDATE_STOMP_SSL', false);
         }
 
         /* GoogleChat */
@@ -510,8 +539,6 @@ export default {
 
         if (config.mattermost_ignore_ssl_errors) {
           commit('alert/UPDATE_MATTERMOST_IGNORE_SSL_ERRORS', config.mattermost_ignore_ssl_errors);
-        } else {
-          commit('alert/UPDATE_MATTERMOST_IGNORE_SSL_ERRORS', false);
         }
 
         commit('alert/UPDATE_MATTERMOST_PROXY', config.mattermost_proxy);
@@ -575,8 +602,6 @@ export default {
 
         if (config.rocket_chat_ignore_ssl_errors) {
           commit('alert/UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS', config.rocket_chat_ignore_ssl_errors);
-        } else {
-          commit('alert/UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS', false);
         }
 
         if (config.rocket_chat_timeout) {
@@ -587,8 +612,6 @@ export default {
 
         if (config.rocket_chat_ca_certs) {
           commit('alert/UPDATE_ROCKET_CHAT_CA_CERTS', config.rocket_chat_ca_certs);
-        } else {
-          commit('alert/UPDATE_ROCKET_CHAT_CA_CERTS', false);
         }
 
         /* TheHive */
@@ -703,8 +726,6 @@ export default {
 
         if (config.slack_ca_certs) {
           commit('alert/UPDATE_SLACK_CA_CERTS', config.slack_ca_certs);
-        } else {
-          commit('alert/UPDATE_SLACK_CA_CERTS', false);
         }
 
         if (config.slack_icon_url_override) {
@@ -727,8 +748,6 @@ export default {
 
         if (config.slack_ignore_ssl_errors) {
           commit('alert/UPDATE_SLACK_IGNORE_SSL_ERRORS', config.slack_ignore_ssl_errors);
-        } else {
-          commit('alert/UPDATE_SLACK_IGNORE_SSL_ERRORS', false);
         }
 
         if (config.slack_attach_kibana_discover_url) {
@@ -1327,8 +1346,13 @@ export default {
         config.slack_text_string = state.alert.slackTextString;
       }
 
-      config.slack_ignore_ssl_errors = state.alert.slackIgnoreSslErrors;
-      config.slack_ca_certs = state.alert.slackCaCerts;
+      if (state.alert.slackIgnoreSslErrors) {
+        config.slack_ignore_ssl_errors = state.alert.slackIgnoreSslErrors;
+      }
+
+      if (state.alert.slackCaCerts) {
+        config.slack_ca_certs = state.alert.slackCaCerts;
+      }
 
       if (state.alert.slackIconUrlOverride) {
         config.slack_icon_url_override = state.alert.slackIconUrlOverride;
@@ -1518,6 +1542,58 @@ export default {
       if (state.alert.twilioMessageServiceSid) {
         config.twilio_use_copilot = true;
         config.twilio_message_service_sid = state.alert.twilioMessageServiceSid;
+      }
+
+      return config;
+    },
+
+    pagerduty(state) {
+      let config = {};
+
+      if (state.alert.pagerdutyServiceKey) {
+        config.pagerduty_service_key = state.alert.pagerdutyServiceKey;
+      }
+
+      if (state.alert.pagerdutyClientName) {
+        config.pagerduty_client_name = state.alert.pagerdutyClientName;
+      }
+
+      if (state.alert.pagerdutyEventType) {
+        config.pagerduty_event_type = state.alert.pagerdutyEventType;
+      }
+
+      if (state.alert.pagerdutyIncidentKey) {
+        config.pagerduty_incident_key = state.alert.pagerdutyIncidentKey;
+      }
+
+      if (state.alert.pagerdutyProxy) {
+        config.pagerduty_proxy = state.alert.pagerdutyProxy;
+      }
+
+      if (state.alert.pagerdutyApiVersion) {
+        config.pagerduty_api_version = state.alert.pagerdutyApiVersion;
+      }
+
+      if (state.alert.pagerdutyApiVersion === 'v2') {
+        if (state.alert.pagerdutyV2PayloadClass) {
+          config.pagerduty_v2_payload_class = state.alert.pagerdutyV2PayloadClass;
+        }
+
+        if (state.alert.pagerdutyV2PayloadComponent) {
+          config.pagerduty_v2_payload_component = state.alert.pagerdutyV2PayloadComponent;
+        }
+
+        if (state.alert.pagerdutyV2PayloadGroup) {
+          config.pagerduty_v2_payload_group = state.alert.pagerdutyV2PayloadGroup;
+        }
+
+        if (state.alert.pagerdutyV2PayloadSeverity) {
+          config.pagerduty_v2_payload_severity = state.alert.pagerdutyV2PayloadSeverity;
+        }
+
+        if (state.alert.pagerdutyV2PayloadSource) {
+          config.pagerduty_v2_payload_source = state.alert.pagerdutyV2PayloadSource;
+        }
       }
 
       return config;
@@ -1875,7 +1951,9 @@ export default {
         config.stomp_destination = state.alert.stompDestination;
       }
 
-      config.stomp_ssl = state.alert.stompSsl;
+      if (state.alert.stompSsl) {
+        config.stomp_ssl = state.alert.stompSsl;
+      }
 
       return config;
     },
@@ -1932,7 +2010,9 @@ export default {
         config.mattermost_msg_pretext = state.alert.mattermostMsgPretext;
       }
 
-      config.mattermost_ignore_ssl_errors = state.alert.mattermostIgnoreSslErrors;
+      if (state.alert.mattermostIgnoreSslErrors) {
+        config.mattermost_ignore_ssl_errors = state.alert.mattermostIgnoreSslErrors;
+      }
 
       if (state.alert.mattermostProxy) {
         config.mattermost_proxy = state.alert.mattermostProxy;
@@ -2024,8 +2104,13 @@ export default {
         config.rocket_chat_kibana_discover_title = state.alert.rocketChatKibanaDiscoverTitle;
       }
 
-      config.rocket_chat_ignore_ssl_errors = state.alert.rocketChatIgnoreSslErrors;
-      config.rocket_chat_ca_certs = state.alert.rocketChatCaCerts;
+      if (state.alert.rocketChatIgnoreSslErrors) {
+        config.rocket_chat_ignore_ssl_errors = state.alert.rocketChatIgnoreSslErrors;
+      }
+
+      if (state.alert.rocketChatCaCerts) {
+        config.rocket_chat_ca_certs = state.alert.rocketChatCaCerts;
+      }
 
       if (state.alert.rocketChatTimeout) {
         config.rocket_chat_timeout = state.alert.rocketChatTimeout;
@@ -2277,6 +2362,10 @@ export default {
 
       if (state.alert.alert.includes('twilio')) {
         config = { ...config, ...getters.twilio };
+      }
+
+      if (state.alert.alert.includes('pagerduty')) {
+        config = { ...config, ...getters.pagerduty };
       }
 
       if (state.alert.alert.includes('pagertree')) {

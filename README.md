@@ -478,8 +478,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 source ~/.bash_profile
 
 # npm & node install
-npm install -g npm@7.18.1
-nvm install 16.4.2
+npm install -g npm@8.0.0
+nvm install 16.11.1
 ```
 
 ```sh
@@ -512,8 +512,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 source ~/.bash_profile
 
 # npm & node install
-npm install -g npm@7.18.1
-nvm install 16.4.2
+npm install -g npm@8.0.0
+nvm install 16.11.1
 ```
 
 ```sh
