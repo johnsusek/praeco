@@ -1206,9 +1206,18 @@ export default {
         config.generate_kibana_discover_url = state.alert.generateKibanaDiscoverUrl;
       } else {
         config.generate_kibana_discover_url = false;
-        config.slack_attach_kibana_discover_url = false;
-        config.rocket_chat_attach_kibana_discover_url = false;
-        config.mattermost_attach_kibana_discover_url = false;
+
+        if (state.alert.alert.includes('slack')) {
+          config.slack_attach_kibana_discover_url = false;
+        }
+
+        if (state.alert.alert.includes('rocketchat')) {
+          config.rocket_chat_attach_kibana_discover_url = false;
+        }
+
+        if (state.alert.alert.includes('mattermost')) {
+          config.mattermost_attach_kibana_discover_url = false;
+        }
       }
 
       if (state.alert.kibanaDiscoverAppUrl) {
