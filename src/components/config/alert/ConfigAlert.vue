@@ -171,6 +171,9 @@
         <el-checkbox id="destinationPagerDuty" label="pagerduty" border>
           PagerDuty
         </el-checkbox>
+        <el-checkbox id="destinationTencentSms" label="tencentsms" border>
+          TencentSMS
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -180,7 +183,7 @@
         alert.includes('sns') || alert.includes('ses') || alert.includes('pagertree') || alert.includes('gitter') ||
         alert.includes('googlechat') || alert.includes('chatwork') || alert.includes('discord') ||
         alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog') ||
-        alert.includes('rocketchat') || alert.includes('pagerduty')">
+        alert.includes('rocketchat') || alert.includes('pagerduty') || alert.includes('tencentsms')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -401,6 +404,14 @@
         </template>
         <ConfigAlertPagerDuty ref="pagerduty" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Tencent SMS -->
+      <el-tab-pane v-if="alert.includes('tencentsms')">
+        <template slot="label">
+          TencentSMS
+        </template>
+        <ConfigAlertTencentSms ref="tencentsms" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -429,6 +440,7 @@ import ConfigAlertRocketChat from './ConfigAlertRocketChat';
 import ConfigAlertServiceNow from './ConfigAlertServiceNow';
 import ConfigAlertSlack from './ConfigAlertSlack';
 import ConfigAlertStomp from './ConfigAlertStomp';
+import ConfigAlertTencentSms from './ConfigAlertTencentSms';
 import ConfigAlertTelegram from './ConfigAlertTelegram';
 import ConfigAlertTheHive from './ConfigAlertTheHive';
 import ConfigAlertTwilio from './ConfigAlertTwilio';
@@ -460,6 +472,7 @@ export default {
     ConfigAlertServiceNow,
     ConfigAlertSlack,
     ConfigAlertStomp,
+    ConfigAlertTencentSms,
     ConfigAlertTelegram,
     ConfigAlertTheHive,
     ConfigAlertTwilio,

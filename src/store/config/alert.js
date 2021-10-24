@@ -64,6 +64,16 @@ function initialState() {
     telegramProxyLogin: '',
     telegramProxyPass: '',
 
+    /* Tencent SMS */
+    tencentSmsSecretId: '',
+    tencentSmsSecretKey: '',
+    tencentSmsSdkAppid: '',
+    tencentSmsToNumber: [],
+    tencentSmsRegion: '',
+    tencentSmsSignName: '',
+    tencentSmsTemplateId: '',
+    tencentSmsTemplateParm: [],
+
     /* Exotel */
     exotelAccountSid: '',
     exotelAuthToken: '',
@@ -437,6 +447,73 @@ export default {
 
     UPDATE_TELEGRAM_PROXY_PASS(state, telegramProxyPass) {
       state.telegramProxyPass = telegramProxyPass;
+    },
+
+    /* Tencent SMS */
+    UPDATE_TENCENT_SMS_SECRET_ID(state, tencentSmsSecretId) {
+      state.tencentSmsSecretId = tencentSmsSecretId;
+    },
+
+    UPDATE_TENCENT_SMS_SECRET_KEY(state, tencentSmsSecretKey) {
+      state.tencentSmsSecretKey = tencentSmsSecretKey;
+    },
+
+    UPDATE_TENCENT_SMS_SDK_APPID(state, tencentSmsSdkAppid) {
+      state.tencentSmsSdkAppid = tencentSmsSdkAppid;
+    },
+
+    UPDATE_TENCENT_SMS_TO_NUMBER(state, tencentSmsToNumber) {
+      state.tencentSmsToNumber = tencentSmsToNumber;
+    },
+
+    ADD_TENCENT_SMS_TO_NUMBER_ENTRY(state) {
+      state.tencentSmsToNumber.push('');
+    },
+
+    ADD_TENCENT_SMS_TO_NUMBER_ENTRY_VALUE(state, value) {
+      state.tencentSmsToNumber.push(value);
+    },
+
+    UPDATE_TENCENT_SMS_TO_NUMBER_ENTRY(state, { entry, index }) {
+      if (!state.tencentSmsToNumber) return;
+      state.tencentSmsToNumber[index] = entry;
+    },
+
+    REMOVE_TENCENT_SMS_TO_NUMBER_ENTRY(state, entry) {
+      state.tencentSmsToNumber = state.tencentSmsToNumber.filter(b => b !== entry);
+    },
+
+    UPDATE_TENCENT_SMS_REGION(state, tencentSmsRegion) {
+      state.tencentSmsRegion = tencentSmsRegion;
+    },
+
+    UPDATE_TENCENT_SMS_SIGN_NAME(state, tencentSmsSignName) {
+      state.tencentSmsSignName = tencentSmsSignName;
+    },
+
+    UPDATE_TENCENT_SMS_TEMPLATE_ID(state, tencentSmsTemplateId) {
+      state.tencentSmsTemplateId = tencentSmsTemplateId;
+    },
+
+    UPDATE_TENCENT_SMS_TEMPLATE_PARM(state, tencentSmsTemplateParm) {
+      state.tencentSmsTemplateParm = tencentSmsTemplateParm;
+    },
+
+    ADD_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state) {
+      state.tencentSmsTemplateParm.push('');
+    },
+
+    ADD_TENCENT_SMS_TEMPLATE_PARM_ENTRY_VALUE(state, value) {
+      state.tencentSmsTemplateParm.push(value);
+    },
+
+    UPDATE_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state, { entry, index }) {
+      if (!state.tencentSmsTemplateParm) return;
+      state.tencentSmsTemplateParm[index] = entry;
+    },
+
+    REMOVE_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state, entry) {
+      state.tencentSmsTemplateParm = state.tencentSmsTemplateParm.filter(b => b !== entry);
     },
 
     /* Chatwork */

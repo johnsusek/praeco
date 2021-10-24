@@ -286,6 +286,23 @@ export default {
         commit('alert/UPDATE_TELEGRAM_PROXY_LOGIN', config.telegram_proxy_login);
         commit('alert/UPDATE_TELEGRAM_PROXY_PASS', config.telegram_proxy_pass);
 
+        /* Tencent SMS */
+        commit('alert/UPDATE_TENCENT_SMS_SECRET_ID', config.tencent_sms_secret_id);
+        commit('alert/UPDATE_TENCENT_SMS_SECRET_KEY', config.tencent_sms_secret_key);
+        commit('alert/UPDATE_TENCENT_SMS_SDK_APPID', config.tencent_sms_sdk_appid);
+
+        if (config.tencent_sms_to_number) {
+          commit('alert/UPDATE_TENCENT_SMS_TO_NUMBER', config.tencent_sms_to_number);
+        }
+
+        commit('alert/UPDATE_TENCENT_SMS_REGION', config.tencent_sms_region);
+        commit('alert/UPDATE_TENCENT_SMS_SIGN_NAME', config.tencent_sms_sign_name);
+        commit('alert/UPDATE_TENCENT_SMS_TEMPLATE_ID', config.tencent_sms_template_id);
+
+        if (config.tencent_sms_template_parm) {
+          commit('alert/UPDATE_TENCENT_SMS_TEMPLATE_PARM', config.tencent_sms_template_parm);
+        }
+
         /* Chatwork */
         commit('alert/UPDATE_CHATWORK_API_KEY', config.chatwork_apikey);
         commit('alert/UPDATE_CHATWORK_ROOM_ID', config.chatwork_room_id);
@@ -1468,6 +1485,44 @@ export default {
       return config;
     },
 
+    tencentsms(state) {
+      let config = {};
+
+      if (state.alert.tencentSmsSecretId) {
+        config.tencent_sms_secret_id = state.alert.tencentSmsSecretId;
+      }
+
+      if (state.alert.tencentSmsSecretKey) {
+        config.tencent_sms_secret_key = state.alert.tencentSmsSecretKey;
+      }
+
+      if (state.alert.tencentSmsSdkAppid) {
+        config.tencent_sms_sdk_appid = state.alert.tencentSmsSdkAppid;
+      }
+
+      if (state.alert.tencentSmsToNumber && state.alert.tencentSmsToNumber.length) {
+        config.tencent_sms_to_number = state.alert.tencentSmsToNumber;
+      }
+
+      if (state.alert.tencentSmsRegion) {
+        config.tencent_sms_region = state.alert.tencentSmsRegion;
+      }
+
+      if (state.alert.tencentSmsSignName) {
+        config.tencent_sms_sign_name = state.alert.tencentSmsSignName;
+      }
+
+      if (state.alert.tencentSmsTemplateId) {
+        config.tencent_sms_template_id = state.alert.tencentSmsTemplateId;
+      }
+
+      if (state.alert.tencentSmsTemplateParm && state.alert.tencentSmsTemplateParm.length) {
+        config.tencent_sms_template_parm = state.alert.tencentSmsTemplateParm;
+      }
+
+      return config;
+    },
+
     chatwork(state) {
       let config = {};
       if (state.alert.chatworkApikey) {
@@ -2361,8 +2416,13 @@ export default {
       if (state.alert.alert.includes('slack')) {
         config = { ...config, ...getters.slack };
       }
+
       if (state.alert.alert.includes('telegram')) {
         config = { ...config, ...getters.telegram };
+      }
+
+      if (state.alert.alert.includes('tencentsms')) {
+        config = { ...config, ...getters.tencentsms };
       }
 
       if (state.alert.alert.includes('exotel')) {
@@ -2461,6 +2521,7 @@ export default {
           || state.alert.alert.includes('slack')
           || state.alert.alert.includes('ms_teams')
           || state.alert.alert.includes('telegram')
+          || state.alert.alert.includes('tencentsms')
           || state.alert.alert.includes('jira')
           || state.alert.alert.includes('servicenow')
           || state.alert.alert.includes('googlechat')

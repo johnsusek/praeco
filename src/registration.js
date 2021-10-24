@@ -36,6 +36,7 @@ import ConfigAlertRocketChat from '@/components/config/alert/ConfigAlertRocketCh
 import ConfigAlertServiceNow from '@/components/config/alert/ConfigAlertServiceNow.vue';
 import ConfigAlertSlack from '@/components/config/alert/ConfigAlertSlack.vue';
 import ConfigAlertStomp from '@/components/config/alert/ConfigAlertStomp.vue';
+import ConfigAlertTencentSms from '@/components/config/alert/ConfigAlertTencentSms.vue';
 import ConfigAlertTelegram from '@/components/config/alert/ConfigAlertTelegram.vue';
 import ConfigAlertTheHive from '@/components/config/alert/ConfigAlertTheHive.vue';
 import ConfigAlertTwilio from '@/components/config/alert/ConfigAlertTwilio.vue';
@@ -77,6 +78,7 @@ Vue.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
 Vue.component('ConfigAlertServiceNow', ConfigAlertServiceNow);
 Vue.component('ConfigAlertSlack', ConfigAlertSlack);
 Vue.component('ConfigAlertStomp', ConfigAlertStomp);
+Vue.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
 Vue.component('ConfigAlertTelegram', ConfigAlertTelegram);
 Vue.component('ConfigAlertTheHive', ConfigAlertTheHive);
 Vue.component('ConfigAlertTwilio', ConfigAlertTwilio);
