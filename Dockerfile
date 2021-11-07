@@ -1,4 +1,4 @@
-FROM node:lts AS base
+FROM node:lts-fermium AS base
 
 RUN apt-get update
 RUN apt-get install -y nginx
@@ -11,7 +11,7 @@ WORKDIR /tmp/nginx/praeco
 COPY package.json .
 
 FROM base AS dependencies
-RUN npm install --loglevel error
+RUN npm install --legacy-peer-deps --loglevel error
 
 FROM base AS release
 COPY --from=dependencies /tmp/nginx/praeco/node_modules ./node_modules
