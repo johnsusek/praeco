@@ -31,8 +31,8 @@
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent
-          required>
+          required
+          @submit.native.prevent>
           <el-form-item
             v-for="(entry, index) in tencentSmsToNumber"
             :key="index"

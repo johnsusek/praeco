@@ -360,6 +360,10 @@ export default {
           commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE', 'ElastAlert');
         }
 
+        if (config.pagerduty_v2_payload_include_all_info) {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_INCLUDE_ALL_INFO', config.pagerduty_v2_payload_include_all_info);
+        }
+
         /* PagerTree */
         commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
         commit('alert/UPDATE_PAGERTREE_PROXY', config.pagertree_proxy);
@@ -1657,6 +1661,10 @@ export default {
 
         if (state.alert.pagerdutyV2PayloadSource) {
           config.pagerduty_v2_payload_source = state.alert.pagerdutyV2PayloadSource;
+        }
+
+        if (state.alert.pagerdutyV2PayloadIncludeAllInfo) {
+          config.pagerduty_v2_payload_include_all_info = state.alert.pagerdutyV2PayloadIncludeAllInfo;
         }
       }
 

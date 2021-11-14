@@ -91,6 +91,14 @@
           Sets the source of the event, preferably the hostname or fqdn.
         </label>
       </el-form-item>
+
+      <el-form-item label="Payload include All Info" prop="pagerdutyV2PayloadIncludeAllInfo">
+        <el-switch
+          id="pagerdutyV2PayloadIncludeAllInfo"
+          v-model="pagerdutyV2PayloadIncludeAllInfo"
+          :disabled="viewOnly"
+          @change="changePagerdutyV2PayloadIncludeAllInfo" />
+      </el-form-item>
     </div>
   </div>
 </template>
@@ -248,7 +256,19 @@ export default {
           value
         );
       }
-    }
+    },
+
+    pagerdutyV2PayloadIncludeAllInfo: {
+      get() {
+        return this.$store.state.config.alert.pagerdutyV2PayloadIncludeAllInfo;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_INCLUDE_ALL_INFO',
+          value
+        );
+      }
+    },
 
     // TODO: pagerduty_v2_payload_class_args
 
@@ -267,6 +287,7 @@ export default {
       this.pagerdutyV2PayloadGroup = '';
       this.pagerdutyV2PayloadSeverity = 'critical';
       this.pagerdutyV2PayloadSource = 'ElastAlert';
+      this.pagerdutyV2PayloadIncludeAllInfo = false;
     },
 
     changePagerDutyV2() {
@@ -276,6 +297,15 @@ export default {
       this.pagerdutyV2PayloadGroup = '';
       this.pagerdutyV2PayloadSeverity = 'critical';
       this.pagerdutyV2PayloadSource = 'ElastAlert';
+      this.pagerdutyV2PayloadIncludeAllInfo = false;
+    },
+
+    changePagerdutyV2PayloadIncludeAllInfo(val) {
+      if (val) {
+        this.pagerdutyV2PayloadIncludeAllInfo = true;
+      } else {
+        this.pagerdutyV2PayloadIncludeAllInfo = false;
+      }
     }
   }
 };

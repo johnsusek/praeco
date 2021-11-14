@@ -100,6 +100,7 @@ function initialState() {
     pagerdutyV2PayloadGroup: '',
     pagerdutyV2PayloadSeverity: 'critical',
     pagerdutyV2PayloadSource: 'ElastAlert',
+    pagerdutyV2PayloadIncludeAllInfo: false,
 
     /* PagerTree */
     pagertreeIntegrationUrl: '',
@@ -627,6 +628,10 @@ export default {
 
     UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE(state, pagerdutyV2PayloadSource) {
       state.pagerdutyV2PayloadSource = pagerdutyV2PayloadSource;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_INCLUDE_ALL_INFO(state, pagerdutyV2PayloadIncludeAllInfo) {
+      state.pagerdutyV2PayloadIncludeAllInfo = pagerdutyV2PayloadIncludeAllInfo;
     },
 
     /* Pagertree */
