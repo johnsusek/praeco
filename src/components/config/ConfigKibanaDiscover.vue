@@ -99,7 +99,7 @@
     </el-col>
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
-      <el-form-item :class="{'view-only': viewOnly }" label="rom Timedelta">
+      <el-form-item :class="{'view-only': viewOnly }" label="From Timedelta">
         <ElastalertTimeView v-if="viewOnly" :time="kibanaDiscoverFromTimedelta" />
         <ElastalertTimePicker
           v-else-if="kibanaDiscoverFromTimedelta"
