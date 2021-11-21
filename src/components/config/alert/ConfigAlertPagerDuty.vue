@@ -35,6 +35,15 @@
       </el-radio-group>
     </el-form-item>
 
+    <el-form-item label="Incident Key" prop="pagerdutyIncidentKey">
+      <el-input id="pagerdutyIncidentKey" v-model="pagerdutyIncidentKey" :disabled="viewOnly" />
+      <label>
+        If not set PagerDuty will trigger a new incident for each alert sent.
+        If set to a unique string per rule PagerDuty will identify the incident that this event should be applied. If there’s no open (i.e. unresolved) incident with this key, a new one will be created.
+        If there’s already an open incident with a matching key, this event will be appended to that incident’s log.
+      </label>
+    </el-form-item>
+
     <el-form-item label="Proxy" prop="pagerdutyProxy">
       <el-input id="pagerdutyProxy" v-model="pagerdutyProxy" :disabled="viewOnly" />
       <label>
