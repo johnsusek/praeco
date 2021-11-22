@@ -353,7 +353,17 @@ export default {
         }
 
         commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT', config.pagerduty_v2_payload_component);
+
+        if (config.pagerduty_v2_payload_component_args) {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS', config.pagerduty_v2_payload_component_args);
+        }
+
         commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP', config.pagerduty_v2_payload_group);
+
+        if (config.pagerduty_v2_payload_group_args) {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS', config.pagerduty_v2_payload_group_args);
+        }
+
         commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY', config.pagerduty_v2_payload_severity);
 
         if (config.pagerduty_v2_payload_severity) {
@@ -368,6 +378,10 @@ export default {
           commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE', config.pagerduty_v2_payload_source);
         } else {
           commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE', 'ElastAlert');
+        }
+
+        if (config.pagerduty_v2_payload_source_args) {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS', config.pagerduty_v2_payload_source_args);
         }
 
         if (config.pagerduty_v2_payload_include_all_info) {
@@ -1661,11 +1675,15 @@ export default {
           config.pagerduty_v2_payload_class = state.alert.pagerdutyV2PayloadClass;
         }
 
-        if (state.alert.pagerdutyV2PayloadComponent) {
+        if (state.alert.pagerdutyV2PayloadComponentArgs && state.alert.pagerdutyV2PayloadComponentArgs.length) {
+          config.pagerduty_v2_payload_component_args = state.alert.pagerdutyV2PayloadComponentArgs;
+        } else if (state.alert.pagerdutyV2PayloadComponent) {
           config.pagerduty_v2_payload_component = state.alert.pagerdutyV2PayloadComponent;
         }
 
-        if (state.alert.pagerdutyV2PayloadGroup) {
+        if (state.alert.pagerdutyV2PayloadGroupArgs && state.alert.pagerdutyV2PayloadGroupArgs.length) {
+          config.pagerduty_v2_payload_group_args = state.alert.pagerdutyV2PayloadGroupArgs;
+        } else if (state.alert.pagerdutyV2PayloadGroup) {
           config.pagerduty_v2_payload_group = state.alert.pagerdutyV2PayloadGroup;
         }
 
@@ -1673,7 +1691,9 @@ export default {
           config.pagerduty_v2_payload_severity = state.alert.pagerdutyV2PayloadSeverity;
         }
 
-        if (state.alert.pagerdutyV2PayloadSource) {
+        if (state.alert.pagerdutyV2PayloadSourceArgs && state.alert.pagerdutyV2PayloadSourceArgs.length) {
+          config.pagerduty_v2_payload_source_args = state.alert.pagerdutyV2PayloadSourceArgs;
+        } else if (state.alert.pagerdutyV2PayloadSource) {
           config.pagerduty_v2_payload_source = state.alert.pagerdutyV2PayloadSource;
         }
 

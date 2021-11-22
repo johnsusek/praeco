@@ -47,7 +47,7 @@
     <el-popover v-model="popPagerdutyIncidentKeyArgsVisible" :class="{ 'is-invalid': !popPagerdutyIncidentKeyArgsValid }">
       <span slot="reference" class="pop-trigger">
         <el-tooltip v-if="pagerdutyIncidentKeyArgs.length" :content="pagerdutyIncidentKeyArgs.join(', ')" placement="top">
-          <span>Tags ({{ pagerdutyIncidentKeyArgs.length }})</span>
+          <span>Incident Key Args ({{ pagerdutyIncidentKeyArgs.length }})</span>
         </el-tooltip>
         <span v-else>Incident Key Args ({{ pagerdutyIncidentKeyArgs.length }})</span>
       </span>
@@ -72,7 +72,7 @@
                   v-model="pagerdutyIncidentKeyArgs[index]"
                   :disabled="viewOnly"
                   placeholder="Incident Key Args"
-                  @input="(val) => updatepagerdutyIncidentKeyArgs(val, index)" />
+                  @input="(val) => updatePagerdutyIncidentKeyArgs(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -81,13 +81,13 @@
                   icon="el-icon-delete"
                   circle
                   plain
-                  @click="removepagerdutyIncidentKeyArgsEntry(entry)" />
+                  @click="removePagerdutyIncidentKeyArgsEntry(entry)" />
               </el-col>
             </el-row>
           </el-form-item>
         </el-form>
 
-        <el-button :disabled="viewOnly" class="m-n-sm" @click="addpagerdutyIncidentKeyArgsEntry">
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyIncidentKeyArgsEntry">
           Add Incident Key Args
         </el-button>
       </template>
@@ -112,7 +112,7 @@
       <el-popover v-model="popPagerdutyV2PayloadClassArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadClassArgsValid }">
         <span slot="reference" class="pop-trigger">
           <el-tooltip v-if="pagerdutyV2PayloadClassArgs.length" :content="pagerdutyV2PayloadClassArgs.join(', ')" placement="top">
-            <span>Tags ({{ pagerdutyV2PayloadClassArgs.length }})</span>
+            <span>Payload Class Args ({{ pagerdutyV2PayloadClassArgs.length }})</span>
           </el-tooltip>
           <span v-else>Payload Class Args ({{ pagerdutyV2PayloadClassArgs.length }})</span>
         </span>
@@ -137,7 +137,7 @@
                     v-model="pagerdutyV2PayloadClassArgs[index]"
                     :disabled="viewOnly"
                     placeholder="Payload Class Args"
-                    @input="(val) => updatepagerdutyV2PayloadClassArgs(val, index)" />
+                    @input="(val) => updatePagerdutyV2PayloadClassArgs(val, index)" />
                 </el-col>
                 <el-col :span="4">
                   <el-button
@@ -146,13 +146,13 @@
                     icon="el-icon-delete"
                     circle
                     plain
-                    @click="removepagerdutyV2PayloadClassArgsEntry(entry)" />
+                    @click="removePagerdutyV2PayloadClassArgsEntry(entry)" />
                 </el-col>
               </el-row>
             </el-form-item>
           </el-form>
 
-          <el-button :disabled="viewOnly" class="m-n-sm" @click="addpagerdutyV2PayloadClassArgsEntry">
+          <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadClassArgsEntry">
             Add Payload Class Args
           </el-button>
         </template>
@@ -165,12 +165,110 @@
         </label>
       </el-form-item>
 
+      <el-popover v-model="popPagerdutyV2PayloadComponentArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadComponentArgsValid }">
+        <span slot="reference" class="pop-trigger">
+          <el-tooltip v-if="pagerdutyV2PayloadComponentArgs.length" :content="pagerdutyV2PayloadComponentArgs.join(', ')" placement="top">
+            <span>Payload Component Args ({{ pagerdutyV2PayloadComponentArgs.length }})</span>
+          </el-tooltip>
+          <span v-else>Payload Component Args ({{ pagerdutyV2PayloadComponentArgs.length }})</span>
+        </span>
+        <template>
+          <el-form
+            ref="pagerdutyV2PayloadComponentArgs"
+            :model="$store.state.config.alert"
+            label-position="top"
+            style="width: 360px"
+            @submit.native.prevent>
+            <el-form-item
+              v-for="(entry, index) in pagerdutyV2PayloadComponentArgs"
+              :key="index"
+              :prop="'pagerdutyV2PayloadComponentArgs.' + index"
+              :disabled="viewOnly"
+              class="el-form-item-list"
+              label=""
+              required>
+              <el-row :gutter="5" type="flex" justify="space-between">
+                <el-col :span="20">
+                  <el-input
+                    v-model="pagerdutyV2PayloadComponentArgs[index]"
+                    :disabled="viewOnly"
+                    placeholder="Payload Component Args"
+                    @input="(val) => updatePagerdutyV2PayloadComponentArgs(val, index)" />
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    :disabled="viewOnly"
+                    type="danger"
+                    icon="el-icon-delete"
+                    circle
+                    plain
+                    @click="removePagerdutyV2PayloadComponentArgsEntry(entry)" />
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-form>
+
+          <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadComponentArgsEntry">
+            Add Payload Component Args
+          </el-button>
+        </template>
+      </el-popover>
+
       <el-form-item label="Payload Group" prop="pagerdutyV2PayloadGroup">
         <el-input id="pagerdutyV2PayloadGroup" v-model="pagerdutyV2PayloadGroup" :disabled="viewOnly" />
         <label>
           Sets the logical grouping (e.g. app-stack)
         </label>
       </el-form-item>
+
+      <el-popover v-model="popPagerdutyV2PayloadGroupArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadGroupArgsValid }">
+        <span slot="reference" class="pop-trigger">
+          <el-tooltip v-if="pagerdutyV2PayloadGroupArgs.length" :content="pagerdutyV2PayloadGroupArgs.join(', ')" placement="top">
+            <span>Payload Group Args ({{ pagerdutyV2PayloadGroupArgs.length }})</span>
+          </el-tooltip>
+          <span v-else>Payload Group Args ({{ pagerdutyV2PayloadGroupArgs.length }})</span>
+        </span>
+        <template>
+          <el-form
+            ref="pagerdutyV2PayloadGroupArgs"
+            :model="$store.state.config.alert"
+            label-position="top"
+            style="width: 360px"
+            @submit.native.prevent>
+            <el-form-item
+              v-for="(entry, index) in pagerdutyV2PayloadGroupArgs"
+              :key="index"
+              :prop="'pagerdutyV2PayloadGroupArgs.' + index"
+              :disabled="viewOnly"
+              class="el-form-item-list"
+              label=""
+              required>
+              <el-row :gutter="5" type="flex" justify="space-between">
+                <el-col :span="20">
+                  <el-input
+                    v-model="pagerdutyV2PayloadGroupArgs[index]"
+                    :disabled="viewOnly"
+                    placeholder="Payload Group Args"
+                    @input="(val) => updatePagerdutyV2PayloadGroupArgs(val, index)" />
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    :disabled="viewOnly"
+                    type="danger"
+                    icon="el-icon-delete"
+                    circle
+                    plain
+                    @click="removePagerdutyV2PayloadGroupArgsEntry(entry)" />
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-form>
+
+          <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadGroupArgsEntry">
+            Add Payload Group Args
+          </el-button>
+        </template>
+      </el-popover>
 
       <el-form-item label="Severity" prop="pagerdutyV2PayloadSeverity">
         <el-radio-group v-model="pagerdutyV2PayloadSeverity" :disabled="viewOnly">
@@ -198,6 +296,55 @@
           Sets the source of the event, preferably the hostname or fqdn.
         </label>
       </el-form-item>
+
+      <el-popover v-model="poppagerdutyV2PayloadSourceArgsVisible" :class="{ 'is-invalid': !poppagerdutyV2PayloadSourceArgsValid }">
+        <span slot="reference" class="pop-trigger">
+          <el-tooltip v-if="pagerdutyV2PayloadSourceArgs.length" :content="pagerdutyV2PayloadSourceArgs.join(', ')" placement="top">
+            <span>Payload Source Args ({{ pagerdutyV2PayloadSourceArgs.length }})</span>
+          </el-tooltip>
+          <span v-else>Payload Source Args ({{ pagerdutyV2PayloadSourceArgs.length }})</span>
+        </span>
+        <template>
+          <el-form
+            ref="pagerdutyV2PayloadSourceArgs"
+            :model="$store.state.config.alert"
+            label-position="top"
+            style="width: 360px"
+            @submit.native.prevent>
+            <el-form-item
+              v-for="(entry, index) in pagerdutyV2PayloadSourceArgs"
+              :key="index"
+              :prop="'pagerdutyV2PayloadSourceArgs.' + index"
+              :disabled="viewOnly"
+              class="el-form-item-list"
+              label=""
+              required>
+              <el-row :gutter="5" type="flex" justify="space-between">
+                <el-col :span="20">
+                  <el-input
+                    v-model="pagerdutyV2PayloadSourceArgs[index]"
+                    :disabled="viewOnly"
+                    placeholder="Payload Source Args"
+                    @input="(val) => updatePagerdutyV2PayloadSourceArgs(val, index)" />
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    :disabled="viewOnly"
+                    type="danger"
+                    icon="el-icon-delete"
+                    circle
+                    plain
+                    @click="removePagerdutyV2PayloadSourceArgsEntry(entry)" />
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-form>
+
+          <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadSourceArgsEntry">
+            Add Payload Source Args
+          </el-button>
+        </template>
+      </el-popover>
 
       <el-form-item label="Payload include All Info" prop="pagerdutyV2PayloadIncludeAllInfo">
         <el-switch
@@ -230,6 +377,12 @@ export default {
       popPagerdutyIncidentKeyArgsValid: true,
       popPagerdutyV2PayloadClassArgsVisible: false,
       popPagerdutyV2PayloadClassArgsValid: true,
+      popPagerdutyV2PayloadComponentArgsVisible: false,
+      popPagerdutyV2PayloadComponentArgsValid: true,
+      popPagerdutyV2PayloadGroupArgsVisible: false,
+      popPagerdutyV2PayloadGroupArgsValid: true,
+      poppagerdutyV2PayloadSourceArgsVisible: false,
+      poppagerdutyV2PayloadSourceArgsValid: true,
       groupPagerduty: groupPagerdutyValue,
       rules: {
       }
@@ -351,6 +504,15 @@ export default {
       }
     },
 
+    pagerdutyV2PayloadComponentArgs: {
+      get() {
+        return this.$store.state.config.alert.pagerdutyV2PayloadComponentArgs;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_pagerduty_v2_payload_component_args', value);
+      }
+    },
+
     pagerdutyV2PayloadGroup: {
       get() {
         return this.$store.state.config.alert.pagerdutyV2PayloadGroup;
@@ -360,6 +522,15 @@ export default {
           'config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP',
           value
         );
+      }
+    },
+
+    pagerdutyV2PayloadGroupArgs: {
+      get() {
+        return this.$store.state.config.alert.pagerdutyV2PayloadGroupArgs;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS', value);
       }
     },
 
@@ -387,6 +558,15 @@ export default {
       }
     },
 
+    pagerdutyV2PayloadSourceArgs: {
+      get() {
+        return this.$store.state.config.alert.pagerdutyV2PayloadSourceArgs;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_pagerduty_v2_payload_source_args', value);
+      }
+    },
+
     pagerdutyV2PayloadIncludeAllInfo: {
       get() {
         return this.$store.state.config.alert.pagerdutyV2PayloadIncludeAllInfo;
@@ -398,24 +578,25 @@ export default {
         );
       }
     },
-
-    // TODO: pagerduty_v2_payload_class_args
-
-    // TODO: pagerduty_v2_payload_component_args
-
-    // TODO: pagerduty_v2_payload_group_args
-
-    // TODO: pagerduty_v2_payload_source_args
   },
 
   methods: {
     async validate() {
       try {
         if (this.$refs.pagerdutyIncidentKeyArgs) {
-          await this.validatepagerdutyIncidentKeyArgs();
+          await this.validatePagerdutyIncidentKeyArgs();
         }
         if (this.$refs.pagerdutyV2PayloadClassArgs) {
-          await this.validatepagerdutyV2PayloadClassArgs();
+          await this.validatePagerdutyV2PayloadClassArgs();
+        }
+        if (this.$refs.pagerdutyV2PayloadComponentArgs) {
+          await this.validatePagerdutyV2PayloadComponentArgs();
+        }
+        if (this.$refs.pagerdutyV2PayloadGroupArgs) {
+          await this.validatePagerdutyV2PayloadGroupArgs();
+        }
+        if (this.$refs.pagerdutyV2PayloadSourceArgs) {
+          await this.validatePagerdutyV2PayloadSourceArgs();
         }
         this.$emit('validate', true);
         return true;
@@ -425,7 +606,7 @@ export default {
       }
     },
 
-    async validatepagerdutyIncidentKeyArgs() {
+    async validatePagerdutyIncidentKeyArgs() {
       if (!this.pagerdutyIncidentKeyArgs.length) {
         this.popPagerdutyIncidentKeyArgsValid = false;
         return;
@@ -437,7 +618,7 @@ export default {
         throw error;
       }
     },
-    updatepagerdutyIncidentKeyArgs(entry, index) {
+    updatePagerdutyIncidentKeyArgs(entry, index) {
       if (Number.isNaN(entry)) return;
       this.$store.commit('config/alert/UPDATE_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY', {
         entry,
@@ -447,20 +628,20 @@ export default {
         this.validate();
       });
     },
-    removepagerdutyIncidentKeyArgsEntry(entry) {
+    removePagerdutyIncidentKeyArgsEntry(entry) {
       this.$store.commit('config/alert/REMOVE_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY', entry);
       this.$nextTick(() => {
         this.validate();
       });
     },
-    addpagerdutyIncidentKeyArgsEntry() {
+    addPagerdutyIncidentKeyArgsEntry() {
       this.$store.commit('config/alert/ADD_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });
     },
 
-    async validatepagerdutyV2PayloadClassArgs() {
+    async validatePagerdutyV2PayloadClassArgs() {
       if (!this.pagerdutyV2PayloadClassArgs.length) {
         this.popPagerdutyV2PayloadClassArgsValid = false;
         return;
@@ -472,7 +653,7 @@ export default {
         throw error;
       }
     },
-    updatepagerdutyV2PayloadClassArgs(entry, index) {
+    updatePagerdutyV2PayloadClassArgs(entry, index) {
       if (Number.isNaN(entry)) return;
       this.$store.commit('config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY', {
         entry,
@@ -482,14 +663,119 @@ export default {
         this.validate();
       });
     },
-    removepagerdutyV2PayloadClassArgsEntry(entry) {
+    removePagerdutyV2PayloadClassArgsEntry(entry) {
       this.$store.commit('config/alert/REMOVE_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY', entry);
       this.$nextTick(() => {
         this.validate();
       });
     },
-    addpagerdutyV2PayloadClassArgsEntry() {
+    addPagerdutyV2PayloadClassArgsEntry() {
       this.$store.commit('config/alert/ADD_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatePagerdutyV2PayloadComponentArgs() {
+      if (!this.pagerdutyV2PayloadComponentArgs.length) {
+        this.popPagerdutyV2PayloadComponentArgsValid = false;
+        return;
+      }
+      try {
+        this.popPagerdutyV2PayloadComponentArgsValid = await this.$refs.pagerdutyV2PayloadComponentArgs.validate();
+      } catch (error) {
+        this.popPagerdutyV2PayloadComponentArgsValid = false;
+        throw error;
+      }
+    },
+    updatePagerdutyV2PayloadComponentArgs(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    removePagerdutyV2PayloadComponentArgsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    addPagerdutyV2PayloadComponentArgsEntry() {
+      this.$store.commit('config/alert/ADD_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatePagerdutyV2PayloadGroupArgs() {
+      if (!this.pagerdutyV2PayloadGroupArgs.length) {
+        this.popPagerdutyV2PayloadGroupArgsValid = false;
+        return;
+      }
+      try {
+        this.popPagerdutyV2PayloadGroupArgsValid = await this.$refs.pagerdutyV2PayloadGroupArgs.validate();
+      } catch (error) {
+        this.popPagerdutyV2PayloadGroupArgsValid = false;
+        throw error;
+      }
+    },
+    updatePagerdutyV2PayloadGroupArgs(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    removePagerdutyV2PayloadGroupArgsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    addPagerdutyV2PayloadGroupArgsEntry() {
+      this.$store.commit('config/alert/ADD_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatePagerdutyV2PayloadSourceArgs() {
+      if (!this.pagerdutyV2PayloadSourceArgs.length) {
+        this.poppagerdutyV2PayloadSourceArgsValid = false;
+        return;
+      }
+      try {
+        this.poppagerdutyV2PayloadSourceArgsValid = await this.$refs.pagerdutyV2PayloadSourceArgs.validate();
+      } catch (error) {
+        this.poppagerdutyV2PayloadSourceArgsValid = false;
+        throw error;
+      }
+    },
+    updatePagerdutyV2PayloadSourceArgs(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    removePagerdutyV2PayloadSourceArgsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    addPagerdutyV2PayloadSourceArgsEntry() {
+      this.$store.commit('config/alert/ADD_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });

@@ -99,9 +99,12 @@ function initialState() {
     pagerdutyV2PayloadClass: '',
     pagerdutyV2PayloadClassArgs: [],
     pagerdutyV2PayloadComponent: '',
+    pagerdutyV2PayloadComponentArgs: [],
     pagerdutyV2PayloadGroup: '',
+    pagerdutyV2PayloadGroupArgs: [],
     pagerdutyV2PayloadSeverity: 'critical',
     pagerdutyV2PayloadSource: 'ElastAlert',
+    pagerdutyV2PayloadSourceArgs: [],
     pagerdutyV2PayloadIncludeAllInfo: false,
 
     /* PagerTree */
@@ -662,8 +665,50 @@ export default {
       state.pagerdutyV2PayloadComponent = pagerdutyV2PayloadComponent;
     },
 
+    UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS(state, pagerdutyV2PayloadComponentArgs) {
+      state.pagerdutyV2PayloadComponentArgs = pagerdutyV2PayloadComponentArgs;
+    },
+
+    ADD_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS_ENTRY(state) {
+      state.pagerdutyV2PayloadComponentArgs.push('');
+    },
+
+    ADD_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS_ENTRY_VALUE(state, value) {
+      state.pagerdutyV2PayloadComponentArgs.push(value);
+    },
+
+    REMOVE_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS_ENTRY(state, entry) {
+      state.pagerdutyV2PayloadComponentArgs = state.pagerdutyV2PayloadComponentArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.pagerdutyV2PayloadComponentArgs) return;
+      state.pagerdutyV2PayloadComponentArgs[index] = entry;
+    },
+
     UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP(state, pagerdutyV2PayloadGroup) {
       state.pagerdutyV2PayloadGroup = pagerdutyV2PayloadGroup;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS(state, pagerdutyV2PayloadGroupArgs) {
+      state.pagerdutyV2PayloadGroupArgs = pagerdutyV2PayloadGroupArgs;
+    },
+
+    ADD_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS_ENTRY(state) {
+      state.pagerdutyV2PayloadGroupArgs.push('');
+    },
+
+    ADD_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS_ENTRY_VALUE(state, value) {
+      state.pagerdutyV2PayloadGroupArgs.push(value);
+    },
+
+    REMOVE_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS_ENTRY(state, entry) {
+      state.pagerdutyV2PayloadGroupArgs = state.pagerdutyV2PayloadGroupArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.pagerdutyV2PayloadGroupArgs) return;
+      state.pagerdutyV2PayloadGroupArgs[index] = entry;
     },
 
     UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY(state, pagerdutyV2PayloadSeverity) {
@@ -672,6 +717,27 @@ export default {
 
     UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE(state, pagerdutyV2PayloadSource) {
       state.pagerdutyV2PayloadSource = pagerdutyV2PayloadSource;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS(state, pagerdutyV2PayloadSourceArgs) {
+      state.pagerdutyV2PayloadSourceArgs = pagerdutyV2PayloadSourceArgs;
+    },
+
+    ADD_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS_ENTRY(state) {
+      state.pagerdutyV2PayloadSourceArgs.push('');
+    },
+
+    ADD_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS_ENTRY_VALUE(state, value) {
+      state.pagerdutyV2PayloadSourceArgs.push(value);
+    },
+
+    REMOVE_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS_ENTRY(state, entry) {
+      state.pagerdutyV2PayloadSourceArgs = state.pagerdutyV2PayloadSourceArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.pagerdutyV2PayloadSourceArgs) return;
+      state.pagerdutyV2PayloadSourceArgs[index] = entry;
     },
 
     UPDATE_PAGERDUTY_V2_PAYLOAD_INCLUDE_ALL_INFO(state, pagerdutyV2PayloadIncludeAllInfo) {
