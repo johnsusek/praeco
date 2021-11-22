@@ -97,6 +97,7 @@ function initialState() {
     pagerdutyProxy: '',
     pagerdutyApiVersion: 'v1',
     pagerdutyV2PayloadClass: '',
+    pagerdutyV2PayloadClassArgs: [],
     pagerdutyV2PayloadComponent: '',
     pagerdutyV2PayloadGroup: '',
     pagerdutyV2PayloadSeverity: 'critical',
@@ -634,6 +635,27 @@ export default {
 
     UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS(state, pagerdutyV2PayloadClass) {
       state.pagerdutyV2PayloadClass = pagerdutyV2PayloadClass;
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS(state, pagerdutyV2PayloadClassArgs) {
+      state.pagerdutyV2PayloadClassArgs = pagerdutyV2PayloadClassArgs;
+    },
+
+    ADD_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY(state) {
+      state.pagerdutyV2PayloadClassArgs.push('');
+    },
+
+    ADD_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY_VALUE(state, value) {
+      state.pagerdutyV2PayloadClassArgs.push(value);
+    },
+
+    REMOVE_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY(state, entry) {
+      state.pagerdutyV2PayloadClassArgs = state.pagerdutyV2PayloadClassArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.pagerdutyV2PayloadClassArgs) return;
+      state.pagerdutyV2PayloadClassArgs[index] = entry;
     },
 
     UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT(state, pagerdutyV2PayloadComponent) {

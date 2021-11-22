@@ -347,6 +347,11 @@ export default {
         commit('alert/UPDATE_PAGERDUTY_API_VERSION', config.pagerduty_api_version);
 
         commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS', config.pagerduty_v2_payload_class);
+
+        if (config.pagerduty_v2_payload_class_args) {
+          commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS', config.pagerduty_v2_payload_class_args);
+        }
+
         commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_COMPONENT', config.pagerduty_v2_payload_component);
         commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP', config.pagerduty_v2_payload_group);
         commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY', config.pagerduty_v2_payload_severity);
@@ -1650,7 +1655,9 @@ export default {
       }
 
       if (state.alert.pagerdutyApiVersion === 'v2') {
-        if (state.alert.pagerdutyV2PayloadClass) {
+        if (state.alert.pagerdutyV2PayloadClassArgs && state.alert.pagerdutyV2PayloadClassArgs.length) {
+          config.pagerduty_v2_payload_class_args = state.alert.pagerdutyV2PayloadClassArgs;
+        } else if (state.alert.pagerdutyV2PayloadClass) {
           config.pagerduty_v2_payload_class = state.alert.pagerdutyV2PayloadClass;
         }
 

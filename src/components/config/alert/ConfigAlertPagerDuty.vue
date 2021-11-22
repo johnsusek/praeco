@@ -71,7 +71,7 @@
                 <el-input
                   v-model="pagerdutyIncidentKeyArgs[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="Incident Key Args"
                   @input="(val) => updatepagerdutyIncidentKeyArgs(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -88,7 +88,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addpagerdutyIncidentKeyArgsEntry">
-          Add tags
+          Add Incident Key Args
         </el-button>
       </template>
     </el-popover>
@@ -108,6 +108,55 @@
           Sets the class of the payload. (the event type in PagerDuty)
         </label>
       </el-form-item>
+
+      <el-popover v-model="popPagerdutyV2PayloadClassArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadClassArgsValid }">
+        <span slot="reference" class="pop-trigger">
+          <el-tooltip v-if="pagerdutyV2PayloadClassArgs.length" :content="pagerdutyV2PayloadClassArgs.join(', ')" placement="top">
+            <span>Tags ({{ pagerdutyV2PayloadClassArgs.length }})</span>
+          </el-tooltip>
+          <span v-else>Payload Class Args ({{ pagerdutyV2PayloadClassArgs.length }})</span>
+        </span>
+        <template>
+          <el-form
+            ref="pagerdutyV2PayloadClassArgs"
+            :model="$store.state.config.alert"
+            label-position="top"
+            style="width: 360px"
+            @submit.native.prevent>
+            <el-form-item
+              v-for="(entry, index) in pagerdutyV2PayloadClassArgs"
+              :key="index"
+              :prop="'pagerdutyV2PayloadClassArgs.' + index"
+              :disabled="viewOnly"
+              class="el-form-item-list"
+              label=""
+              required>
+              <el-row :gutter="5" type="flex" justify="space-between">
+                <el-col :span="20">
+                  <el-input
+                    v-model="pagerdutyV2PayloadClassArgs[index]"
+                    :disabled="viewOnly"
+                    placeholder="Payload Class Args"
+                    @input="(val) => updatepagerdutyV2PayloadClassArgs(val, index)" />
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    :disabled="viewOnly"
+                    type="danger"
+                    icon="el-icon-delete"
+                    circle
+                    plain
+                    @click="removepagerdutyV2PayloadClassArgsEntry(entry)" />
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-form>
+
+          <el-button :disabled="viewOnly" class="m-n-sm" @click="addpagerdutyV2PayloadClassArgsEntry">
+            Add Payload Class Args
+          </el-button>
+        </template>
+      </el-popover>
 
       <el-form-item label="Payload Component" prop="pagerdutyV2PayloadComponent">
         <el-input id="pagerdutyV2PayloadComponent" v-model="pagerdutyV2PayloadComponent" :disabled="viewOnly" />
@@ -179,6 +228,8 @@ export default {
     return {
       popPagerdutyIncidentKeyArgsVisible: false,
       popPagerdutyIncidentKeyArgsValid: true,
+      popPagerdutyV2PayloadClassArgsVisible: false,
+      popPagerdutyV2PayloadClassArgsValid: true,
       groupPagerduty: groupPagerdutyValue,
       rules: {
       }
@@ -279,6 +330,15 @@ export default {
       }
     },
 
+    pagerdutyV2PayloadClassArgs: {
+      get() {
+        return this.$store.state.config.alert.pagerdutyV2PayloadClassArgs;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_pagerduty_v2_payload_class_args', value);
+      }
+    },
+
     pagerdutyV2PayloadComponent: {
       get() {
         return this.$store.state.config.alert.pagerdutyV2PayloadComponent;
@@ -354,6 +414,9 @@ export default {
         if (this.$refs.pagerdutyIncidentKeyArgs) {
           await this.validatepagerdutyIncidentKeyArgs();
         }
+        if (this.$refs.pagerdutyV2PayloadClassArgs) {
+          await this.validatepagerdutyV2PayloadClassArgs();
+        }
         this.$emit('validate', true);
         return true;
       } catch (error) {
@@ -392,6 +455,41 @@ export default {
     },
     addpagerdutyIncidentKeyArgsEntry() {
       this.$store.commit('config/alert/ADD_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatepagerdutyV2PayloadClassArgs() {
+      if (!this.pagerdutyV2PayloadClassArgs.length) {
+        this.popPagerdutyV2PayloadClassArgsValid = false;
+        return;
+      }
+      try {
+        this.popPagerdutyV2PayloadClassArgsValid = await this.$refs.pagerdutyV2PayloadClassArgs.validate();
+      } catch (error) {
+        this.popPagerdutyV2PayloadClassArgsValid = false;
+        throw error;
+      }
+    },
+    updatepagerdutyV2PayloadClassArgs(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    removepagerdutyV2PayloadClassArgsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    addpagerdutyV2PayloadClassArgsEntry() {
+      this.$store.commit('config/alert/ADD_PAGERDUTY_V2_PAYLOAD_CLASS_ARGS_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });
