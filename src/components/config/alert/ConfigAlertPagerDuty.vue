@@ -44,6 +44,55 @@
       </label>
     </el-form-item>
 
+    <el-popover v-model="popPagerdutyIncidentKeyArgsVisible" :class="{ 'is-invalid': !popPagerdutyIncidentKeyArgsValid }">
+      <span slot="reference" class="pop-trigger">
+        <el-tooltip v-if="pagerdutyIncidentKeyArgs.length" :content="pagerdutyIncidentKeyArgs.join(', ')" placement="top">
+          <span>Tags ({{ pagerdutyIncidentKeyArgs.length }})</span>
+        </el-tooltip>
+        <span v-else>Incident Key Args ({{ pagerdutyIncidentKeyArgs.length }})</span>
+      </span>
+      <template>
+        <el-form
+          ref="pagerdutyIncidentKeyArgs"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in pagerdutyIncidentKeyArgs"
+            :key="index"
+            :prop="'pagerdutyIncidentKeyArgs.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="pagerdutyIncidentKeyArgs[index]"
+                  :disabled="viewOnly"
+                  placeholder="Tags"
+                  @input="(val) => updatepagerdutyIncidentKeyArgs(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removepagerdutyIncidentKeyArgsEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addpagerdutyIncidentKeyArgsEntry">
+          Add tags
+        </el-button>
+      </template>
+    </el-popover>
+
     <el-form-item label="Proxy" prop="pagerdutyProxy">
       <el-input id="pagerdutyProxy" v-model="pagerdutyProxy" :disabled="viewOnly" />
       <label>
@@ -128,6 +177,8 @@ export default {
       groupPagerdutyValue = this.$store.state.config.alert.pagerdutyApiVersion;
     }
     return {
+      popPagerdutyIncidentKeyArgsVisible: false,
+      popPagerdutyIncidentKeyArgsValid: true,
       groupPagerduty: groupPagerdutyValue,
       rules: {
       }
@@ -180,6 +231,15 @@ export default {
           'config/alert/UPDATE_PAGERDUTY_INCIDENT_KEY',
           value
         );
+      }
+    },
+
+    pagerdutyIncidentKeyArgs: {
+      get() {
+        return this.$store.state.config.alert.pagerdutyIncidentKeyArgs;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_PAGERDUTY_INCIDENT_KEY_ARGS', value);
       }
     },
 
@@ -289,6 +349,54 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.pagerdutyIncidentKeyArgs) {
+          await this.validatepagerdutyIncidentKeyArgs();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validatepagerdutyIncidentKeyArgs() {
+      if (!this.pagerdutyIncidentKeyArgs.length) {
+        this.popPagerdutyIncidentKeyArgsValid = false;
+        return;
+      }
+      try {
+        this.popPagerdutyIncidentKeyArgsValid = await this.$refs.pagerdutyIncidentKeyArgs.validate();
+      } catch (error) {
+        this.popPagerdutyIncidentKeyArgsValid = false;
+        throw error;
+      }
+    },
+    updatepagerdutyIncidentKeyArgs(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    removepagerdutyIncidentKeyArgsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    addpagerdutyIncidentKeyArgsEntry() {
+      this.$store.commit('config/alert/ADD_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     changePagerDutyV1() {
       this.pagerdutyApiVersion = 'v1';
       this.pagerdutyV2PayloadClass = '';

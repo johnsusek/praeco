@@ -338,6 +338,11 @@ export default {
         }
 
         commit('alert/UPDATE_PAGERDUTY_INCIDENT_KEY', config.pagerduty_incident_key);
+
+        if (config.pagerduty_incident_key_args) {
+          commit('alert/UPDATE_PAGERDUTY_INCIDENT_KEY_ARGS', config.pagerduty_incident_key_args);
+        }
+
         commit('alert/UPDATE_PAGERDUTY_PROXYY', config.pagerduty_proxy);
         commit('alert/UPDATE_PAGERDUTY_API_VERSION', config.pagerduty_api_version);
 
@@ -1630,7 +1635,9 @@ export default {
         config.pagerduty_event_type = state.alert.pagerdutyEventType;
       }
 
-      if (state.alert.pagerdutyIncidentKey) {
+      if (state.alert.pagerdutyIncidentKeyArgs && state.alert.pagerdutyIncidentKeyArgs.length) {
+        config.pagerduty_incident_key_args = state.alert.pagerdutyIncidentKeyArgs;
+      } else if (state.alert.pagerdutyIncidentKey) {
         config.pagerduty_incident_key = state.alert.pagerdutyIncidentKey;
       }
 

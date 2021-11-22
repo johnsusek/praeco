@@ -93,6 +93,7 @@ function initialState() {
     pagerdutyClientName: '',
     pagerdutyEventType: 'trigger',
     pagerdutyIncidentKey: '',
+    pagerdutyIncidentKeyArgs: [],
     pagerdutyProxy: '',
     pagerdutyApiVersion: 'v1',
     pagerdutyV2PayloadClass: '',
@@ -600,6 +601,27 @@ export default {
 
     UPDATE_PAGERDUTY_INCIDENT_KEY(state, pagerdutyIncidentKey) {
       state.pagerdutyIncidentKey = pagerdutyIncidentKey;
+    },
+
+    UPDATE_PAGERDUTY_INCIDENT_KEY_ARGS(state, pagerdutyIncidentKeyArgs) {
+      state.pagerdutyIncidentKeyArgs = pagerdutyIncidentKeyArgs;
+    },
+
+    ADD_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY(state) {
+      state.pagerdutyIncidentKeyArgs.push('');
+    },
+
+    ADD_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY_VALUE(state, value) {
+      state.pagerdutyIncidentKeyArgs.push(value);
+    },
+
+    REMOVE_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY(state, entry) {
+      state.pagerdutyIncidentKeyArgs = state.pagerdutyIncidentKeyArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_PAGERDUTY_INCIDENT_KEY_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.pagerdutyIncidentKeyArgs) return;
+      state.pagerdutyIncidentKeyArgs[index] = entry;
     },
 
     UPDATE_PAGERDUTY_PROXYY(state, pagerdutyProxy) {
