@@ -5,6 +5,22 @@
       <label>JSON results will be POSTed to this URL</label>
     </el-form-item>
 
+    <el-form-item label="CA Certs" prop="httpPostCaCerts">
+      <el-switch
+        id="httpPostCaCerts"
+        v-model="httpPostCaCerts"
+        :disabled="viewOnly"
+        @change="changeHttpPostCaCerts" />
+    </el-form-item>
+
+    <el-form-item label="Ignore SSL Errors" prop="httpPostIgnoreSslErrors">
+      <el-switch
+        id="httpPostIgnoreSslErrors"
+        v-model="httpPostIgnoreSslErrors"
+        :disabled="viewOnly"
+        @change="changeHttpPostIgnoreSslErrors" />
+    </el-form-item>
+
     <el-form-item label="Timeout" prop="httpPostTimeout">
       <el-input-number id="httpPostTimeout" v-model="httpPostTimeout" :disabled="viewOnly" />
       <label>
@@ -70,6 +86,30 @@ export default {
       }
     },
 
+    httpPostIgnoreSslErrors: {
+      get() {
+        return this.$store.state.config.alert.httpPostIgnoreSslErrors;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_HTTP_POST_IGNORE_SSL_ERRORS',
+          value
+        );
+      }
+    },
+
+    httpPostCaCerts: {
+      get() {
+        return this.$store.state.config.alert.httpPostCaCerts;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_HTTP_POST_CA_CERTS',
+          value
+        );
+      }
+    },
+
     httpPostTimeout: {
       get() {
         return this.$store.state.config.alert.httpPostTimeout;
@@ -96,6 +136,21 @@ export default {
   },
 
   methods: {
+    changeHttpPostIgnoreSslErrors(val) {
+      if (val) {
+        this.httpPostIgnoreSslErrors = true;
+      } else {
+        this.httpPostIgnoreSslErrors = false;
+      }
+    },
+
+    changeHttpPostCaCerts(val) {
+      if (val) {
+        this.httpPostCaCerts = true;
+      } else {
+        this.httpPostCaCerts = false;
+      }
+    }
   }
 };
 </script>

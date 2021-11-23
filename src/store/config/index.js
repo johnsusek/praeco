@@ -219,6 +219,14 @@ export default {
         /* HTTP POST */
         commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
 
+        if (config.http_post_ignore_ssl_errors) {
+          commit('alert/UPDATE_HTTP_POST_IGNORE_SSL_ERRORS', config.http_post_ignore_ssl_errors);
+        }
+
+        if (config.http_post_ca_certs) {
+          commit('alert/UPDATE_HTTP_POST_CA_CERTS', config.http_post_ca_certs);
+        }
+
         if (config.http_post_timeout) {
           commit('alert/UPDATE_HTTP_POST_TIMEOUT', config.http_post_timeout);
         } else {
@@ -1201,6 +1209,14 @@ export default {
 
       if (state.alert.httpPostUrl) {
         config.http_post_url = state.alert.httpPostUrl;
+      }
+
+      if (state.alert.httpPostIgnoreSslErrors) {
+        config.http_post_ignore_ssl_errors = state.alert.httpPostIgnoreSslErrors;
+      }
+
+      if (state.alert.httpPostCaCerts) {
+        config.http_post_ca_certs = state.alert.httpPostCaCerts;
       }
 
       if (state.alert.httpPostTimeout) {

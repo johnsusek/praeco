@@ -305,6 +305,8 @@ function initialState() {
 
     /* HTTP POST */
     httpPostUrl: '',
+    httpPostIgnoreSslErrors: false,
+    httpPostCaCerts: false,
     httpPostTimeout: '',
     httpPostProxy: '',
   };
@@ -370,6 +372,14 @@ export default {
     /* HTTP POST */
     UPDATE_HTTP_POST_URL(state, httpPostUrl) {
       state.httpPostUrl = httpPostUrl;
+    },
+
+    UPDATE_HTTP_POST_IGNORE_SSL_ERRORS(state, httpPostIgnoreSslErrors) {
+      state.httpPostIgnoreSslErrors = httpPostIgnoreSslErrors;
+    },
+
+    UPDATE_HTTP_POST_CA_CERTS(state, httpPostCaCerts) {
+      state.httpPostCaCerts = httpPostCaCerts;
     },
 
     UPDATE_HTTP_POST_TIMEOUT(state, httpPostTimeout) {
