@@ -7,6 +7,37 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.10
+
+**PagerDuty**
+
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#pagerduty
+
+**HTTP POST 2**
+
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#http-post-2
+
+**Tencent SMS**
+
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#tencent-sms
+
+**HTTP POST**
+
+add settings.
+
+- http_post_ca_certs
+- http_post_ignore_ssl_errors
+
+**kibana discover**
+
+- kibana 7.15  support
+
+## -> 1.8.9
+
+**kibana discover**
+
+- kibana 7.14  support
+
 ## -> 1.8.8
 
 **Add UI Setting**
