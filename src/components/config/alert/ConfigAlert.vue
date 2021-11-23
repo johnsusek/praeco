@@ -100,7 +100,10 @@
           Email
         </el-checkbox>
         <el-checkbox id="destinationPost" label="post" border>
-          HTTP
+          HTTP POST
+        </el-checkbox>
+        <el-checkbox id="destinationPost2" label="post2" border>
+          HTTP POST 2
         </el-checkbox>
         <el-checkbox id="destinationTelegram" label="telegram" border>
           Telegram
@@ -124,10 +127,10 @@
           Gitter
         </el-checkbox>
         <el-checkbox id="destinationSns" label="sns" border>
-          Amazon SNS
+          AWS SNS (Amazon Simple Notification Service)
         </el-checkbox>
         <el-checkbox id="destinationSes" label="ses" border>
-          Amazon SES
+          AWS SES (Amazon Simple Email Service)
         </el-checkbox>
         <el-checkbox id="destinationZabbix" label="zabbix" border>
           Zabbix
@@ -145,7 +148,7 @@
           Stomp
         </el-checkbox>
         <el-checkbox id="destinationVictorOps" label="victorops" border>
-          VictorOps
+          Splunk On-Call (Formerly VictorOps)
         </el-checkbox>
         <el-checkbox id="destinationServiceNow" label="servicenow" border>
           ServiceNow
@@ -183,7 +186,8 @@
         alert.includes('sns') || alert.includes('ses') || alert.includes('pagertree') || alert.includes('gitter') ||
         alert.includes('googlechat') || alert.includes('chatwork') || alert.includes('discord') ||
         alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog') ||
-        alert.includes('rocketchat') || alert.includes('pagerduty') || alert.includes('tencentsms')">
+        alert.includes('rocketchat') || alert.includes('pagerduty') || alert.includes('tencentsms') ||
+        alert.includes('post2')">
         <template slot="label">
           <icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
@@ -209,8 +213,14 @@
 
       <!-- HTTP POST -->
       <el-tab-pane v-if="alert.includes('post')" label="HTTP">
-        <span slot="label"><icon icon="globe" /> HTTP</span>
+        <span slot="label"><icon icon="globe" /> HTTP POST</span>
         <ConfigAlertHttpPost ref="post" :view-only="viewOnly" />
+      </el-tab-pane>
+
+      <!-- HTTP POST 2 -->
+      <el-tab-pane v-if="alert.includes('post2')" label="HTTP2">
+        <span slot="label"><icon icon="globe" /> HTTP POST 2</span>
+        <ConfigAlertHttpPost2 ref="post2" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- MS Teams -->
@@ -430,6 +440,7 @@ import ConfigAlertExotel from './ConfigAlertExotel';
 import ConfigAlertGitter from './ConfigAlertGitter';
 import ConfigAlertGoogleChat from './ConfigAlertGoogleChat';
 import ConfigAlertHttpPost from './ConfigAlertHttpPost';
+import ConfigAlertHttpPost2 from './ConfigAlertHttpPost2';
 import ConfigAlertJira from './ConfigAlertJira';
 import ConfigAlertLineNotify from './ConfigAlertLineNotify';
 import ConfigAlertMattermost from './ConfigAlertMattermost';
@@ -462,6 +473,7 @@ export default {
     ConfigAlertGitter,
     ConfigAlertGoogleChat,
     ConfigAlertHttpPost,
+    ConfigAlertHttpPost2,
     ConfigAlertJira,
     ConfigAlertLineNotify,
     ConfigAlertMattermost,

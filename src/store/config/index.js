@@ -235,6 +235,25 @@ export default {
 
         commit('alert/UPDATE_HTTP_POST_PROXY', config.http_post_proxy);
 
+        /* HTTP POST 2 */
+        commit('alert/UPDATE_HTTP_POST2_URL', config.http_post2_url);
+
+        if (config.http_post2_ignore_ssl_errors) {
+          commit('alert/UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS', config.http_post2_ignore_ssl_errors);
+        }
+
+        if (config.http_post2_ca_certs) {
+          commit('alert/UPDATE_HTTP_POST2_CA_CERTS', config.http_post2_ca_certs);
+        }
+
+        if (config.http_post2_timeout) {
+          commit('alert/UPDATE_HTTP_POST2_TIMEOUT', config.http_post2_timeout);
+        } else {
+          commit('alert/UPDATE_HTTP_POST2_TIMEOUT', 10);
+        }
+
+        commit('alert/UPDATE_HTTP_POST2_PROXY', config.http_post2_proxy);
+
         /* EMail */
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.email_reply_to);
@@ -1225,6 +1244,32 @@ export default {
 
       if (state.alert.httpPostProxy) {
         config.http_post_proxy = state.alert.httpPostProxy;
+      }
+
+      return config;
+    },
+
+    http2(state) {
+      let config = {};
+
+      if (state.alert.httpPost2Url) {
+        config.http_post2_url = state.alert.httpPost2Url;
+      }
+
+      if (state.alert.httpPost2IgnoreSslErrors) {
+        config.http_post2_ignore_ssl_errors = state.alert.httpPost2IgnoreSslErrors;
+      }
+
+      if (state.alert.httpPost2CaCerts) {
+        config.http_post2_ca_certs = state.alert.httpPost2CaCerts;
+      }
+
+      if (state.alert.httpPost2Timeout) {
+        config.http_post2_timeout = state.alert.httpPost2Timeout;
+      }
+
+      if (state.alert.httpPost2Proxy) {
+        config.http_post2_proxy = state.alert.httpPost2Proxy;
       }
 
       return config;
@@ -2467,6 +2512,10 @@ export default {
         config = { ...config, ...getters.http };
       }
 
+      if (state.alert.alert.includes('post2')) {
+        config = { ...config, ...getters.http2 };
+      }
+
       if (state.alert.alert.includes('email')) {
         config = { ...config, ...getters.email };
       }
@@ -2576,6 +2625,7 @@ export default {
       }
 
       if (state.alert.alert.includes('email')
+          || state.alert.alert.includes('post2')
           || state.alert.alert.includes('slack')
           || state.alert.alert.includes('ms_teams')
           || state.alert.alert.includes('telegram')

@@ -309,6 +309,13 @@ function initialState() {
     httpPostCaCerts: false,
     httpPostTimeout: '',
     httpPostProxy: '',
+
+    /* HTTP POST 2 */
+    httpPost2Url: '',
+    httpPost2IgnoreSslErrors: false,
+    httpPost2CaCerts: false,
+    httpPost2Timeout: '',
+    httpPost2Proxy: '',
   };
 }
 
@@ -388,6 +395,27 @@ export default {
 
     UPDATE_HTTP_POST_PROXY(state, httpPostProxy) {
       state.httpPostProxy = httpPostProxy;
+    },
+
+    /* HTTP POST 2 */
+    UPDATE_HTTP_POST2_URL(state, httpPost2Url) {
+      state.httpPost2Url = httpPost2Url;
+    },
+
+    UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS(state, httpPost2IgnoreSslErrors) {
+      state.httpPost2IgnoreSslErrors = httpPost2IgnoreSslErrors;
+    },
+
+    UPDATE_HTTP_POST2_CA_CERTS(state, httpPost2CaCerts) {
+      state.httpPost2CaCerts = httpPost2CaCerts;
+    },
+
+    UPDATE_HTTP_POST2_TIMEOUT(state, httpPost2Timeout) {
+      state.httpPost2Timeout = httpPost2Timeout;
+    },
+
+    UPDATE_HTTP_POST2_PROXY(state, httpPost2Proxy) {
+      state.httpPost2Proxy = httpPost2Proxy;
     },
 
     /* EMail */
