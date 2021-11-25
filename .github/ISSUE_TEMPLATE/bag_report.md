@@ -5,9 +5,7 @@ labels: bug
 
 ---
 
-## 🐛 Summary
-
-(Bug summary)
+## 🐛 Describe the bug
 
 - Docker image and tag names for praeco and elastalert
 Example)
@@ -20,7 +18,7 @@ praecoapp/elastalert-server:20210517
 
 - Please provide if there is an error in elastalert-server.
 
-## 👀 Steps
+## 👀 Steps to reproduce
 
 (Bug reproduction procedure)
 
@@ -30,14 +28,15 @@ Please write as much as you can remember the detailed procedure. This is because
 2. Do another action
 3. Wrong Behavior !!
 
-## 🆗 Expected
+## 🆗 Expected behavior
 
 (State required to be Closed)
 
-## 🚑 Actual
+## Screenshots
 
-(State at the time of creating the issue)
 
-## 📎 Images (optional)
+## Environments
 
-(Image when a bug occurs)
+
+## Additional context
+
