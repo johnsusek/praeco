@@ -427,6 +427,8 @@
 </template>
 
 <script>
+import isURL from 'validator/lib/isURL';
+import isEmail from 'validator/lib/isEmail';
 import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
 import ConfigAlertAlerta from './ConfigAlertAlerta';
 import ConfigAlertAmazonSes from './ConfigAlertAmazonSes';
@@ -457,6 +459,86 @@ import ConfigAlertTheHive from './ConfigAlertTheHive';
 import ConfigAlertTwilio from './ConfigAlertTwilio';
 import ConfigAlertVictorOps from './ConfigAlertVictorOps';
 import ConfigAlertZabbix from './ConfigAlertZabbix';
+
+let validateEmail = (rule, value, callback) => {
+  if (!value || isEmail(value)) {
+    callback();
+  } else {
+    callback(new Error('Invalid email address'));
+  }
+};
+
+let validateEmailCommaSeparated = (rule, value, callback) => {
+  let emails = [];
+
+  if (value) emails = value.split(',');
+
+  emails.forEach(email => {
+    if (
+      email
+      && !isEmail(email.trim())
+    ) {
+      return callback(new Error('Invalid email address'));
+    }
+  });
+
+  return callback();
+};
+
+let validateUrl = (rule, value, callback) => {
+  if (!value) {
+    callback();
+  } else if (isURL(value)) {
+    try {
+      let url = new URL(value);
+      if (['http:', 'https:'].includes(url.protocol)) {
+        callback();
+      } else {
+        callback(new Error('Invalid URL'));
+      }
+    } catch (error) {
+      callback(new Error('Invalid URL'));
+    }
+  } else {
+    callback(new Error('Invalid URL'));
+  }
+};
+
+let validateMattermostkDestination = (rule, value, callback) => {
+  if (!value) {
+    callback();
+  } else if (value.length < 2) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else if (!value.startsWith('@') && !value.startsWith('#')) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else {
+    callback();
+  }
+};
+
+let validateRocketChatDestination = (rule, value, callback) => {
+  if (!value) {
+    callback();
+  } else if (value.length < 2) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else if (!value.startsWith('@') && !value.startsWith('#')) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else {
+    callback();
+  }
+};
+
+let validateSlackDestination = (rule, value, callback) => {
+  if (!value) {
+    callback();
+  } else if (value.length < 2) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else if (!value.startsWith('@') && !value.startsWith('#')) {
+    callback(new Error('Please enter a @username or #channel'));
+  } else {
+    callback();
+  }
+};
 
 export default {
   components: {
@@ -503,7 +585,109 @@ export default {
             required: true,
             message: 'You must choose at least one alert type'
           }
-        ]
+        ],
+        alertaApiUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        discordWebhookUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        gitterWebhookUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        googleChatWebhookUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        httpPostUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        httpPost2Url: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        mattermostChannelOverride: [
+          {
+            validator: validateMattermostkDestination,
+            trigger: 'change'
+          }
+        ],
+        ms_teamsWebhookUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        pagertreeIntegrationUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        rocketChatChannelOverride: [
+          {
+            validator: validateRocketChatDestination,
+            trigger: 'change'
+          }
+        ],
+        sesFromAddr: [
+          {
+            validator: validateEmail,
+            trigger: 'change'
+          }
+        ],
+        sesEmailReplyTo: [
+          {
+            validator: validateEmail,
+            trigger: 'change'
+          }
+        ],
+        sesEmail: [
+          {
+            validator: validateEmailCommaSeparated,
+            trigger: 'change'
+          }
+        ],
+        sesCc: [
+          {
+            validator: validateEmailCommaSeparated,
+            trigger: 'change'
+          }
+        ],
+        sesBcc: [
+          {
+            validator: validateEmailCommaSeparated,
+            trigger: 'change'
+          }
+        ],
+        servicenowRestUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        slackChannelOverride: [
+          {
+            validator: validateSlackDestination,
+            trigger: 'change'
+          }
+        ],
       }
     };
   },

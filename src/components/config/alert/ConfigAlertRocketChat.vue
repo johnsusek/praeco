@@ -100,35 +100,12 @@
 <script>
 import { Picker } from 'emoji-mart-vue';
 
-let validateRocketChatDestination = (rule, value, callback) => {
-  if (value.length < 2) {
-    callback(new Error('Please enter a @username or #channel'));
-  } else if (!value.startsWith('@') && !value.startsWith('#')) {
-    callback(new Error('Please enter a @username or #channel'));
-  } else {
-    callback();
-  }
-};
-
 export default {
   components: {
     Picker
   },
 
   props: ['viewOnly'],
-
-  data() {
-    return {
-      rules: {
-        rocketChatChannelOverride: [
-          {
-            validator: validateRocketChatDestination,
-            trigger: 'change'
-          }
-        ]
-      }
-    };
-  },
 
   computed: {
     rocketChatChannelOverride: {

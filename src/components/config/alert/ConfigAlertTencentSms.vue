@@ -144,9 +144,6 @@
 
 <script>
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
 
   data() {
@@ -155,8 +152,6 @@ export default {
       popTencentSmsToNumberValid: true,
       popTencentSmsTemplateParmVisible: false,
       popTencentSmsTemplateParmValid: true,
-      rules: {
-      }
     };
   },
 

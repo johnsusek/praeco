@@ -16,43 +16,8 @@
 </template>
 
 <script>
-import validUrl from 'valid-url';
-
-let validateUrl = (rule, value, callback) => {
-  if (validUrl.isUri(value)) {
-    try {
-      let url = new URL(value);
-      if (['http:', 'https:'].includes(url.protocol)) {
-        callback();
-      } else {
-        callback(new Error('Invalid URL'));
-      }
-    } catch (error) {
-      callback(new Error('Invalid URL'));
-    }
-  } else {
-    callback(new Error('Invalid URL'));
-  }
-};
-
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
-
-  data() {
-    return {
-      rules: {
-        pagertreeIntegrationUrl: [
-          {
-            validator: validateUrl,
-            trigger: ['change', 'blur']
-          }
-        ]
-      }
-    };
-  },
 
   computed: {
     pagertreeIntegrationUrl: {

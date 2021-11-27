@@ -109,17 +109,12 @@
 
 <script>
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
 
   data() {
     return {
       popHiveAlertConfigTagsVisible: false,
       popHiveAlertConfigTagsValid: true,
-      rules: {
-      }
     };
   },
 

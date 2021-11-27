@@ -40,9 +40,6 @@
 
 <script>
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
 
   data() {
@@ -52,8 +49,6 @@ export default {
     }
     return {
       groupTwilio: groupTwilioValue,
-      rules: {
-      }
     };
   },
 

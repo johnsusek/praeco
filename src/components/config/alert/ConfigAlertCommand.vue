@@ -77,19 +77,13 @@
 </template>
 
 <script>
-
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
 
   data() {
     return {
       popCommandVisible: false,
       popCommandValid: true,
-      rules: {
-      }
     };
   },
 

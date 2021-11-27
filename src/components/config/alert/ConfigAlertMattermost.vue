@@ -124,34 +124,8 @@
 </template>
 
 <script>
-let validateMattermostkDestination = (rule, value, callback) => {
-  if (value.length < 2) {
-    callback(new Error('Please enter a @username or #channel'));
-  } else if (!value.startsWith('@') && !value.startsWith('#')) {
-    callback(new Error('Please enter a @username or #channel'));
-  } else {
-    callback();
-  }
-};
-
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
-
-  data() {
-    return {
-      rules: {
-        mattermostChannelOverride: [
-          {
-            validator: validateMattermostkDestination,
-            trigger: 'change'
-          }
-        ]
-      }
-    };
-  },
 
   computed: {
     mattermostChannelOverride: {

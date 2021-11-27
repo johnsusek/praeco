@@ -41,9 +41,6 @@
 <script>
 
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
 
   data() {
@@ -53,8 +50,6 @@ export default {
     }
     return {
       groupSns: groupSnsValue,
-      rules: {
-      }
     };
   },
 

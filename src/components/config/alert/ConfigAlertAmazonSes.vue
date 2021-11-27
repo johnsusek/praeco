@@ -80,37 +80,7 @@
 </template>
 
 <script>
-import * as EmailValidator from 'email-validator';
-
-let validateEmail = (rule, value, callback) => {
-  if (!value || EmailValidator.validate(value)) {
-    callback();
-  } else {
-    callback(new Error('Invalid email address'));
-  }
-};
-
-let validateEmailCommaSeparated = (rule, value, callback) => {
-  let emails = [];
-
-  if (value) emails = value.split(',');
-
-  emails.forEach(email => {
-    if (
-      email
-      && !EmailValidator.validate(email.trim())
-    ) {
-      return callback(new Error('Invalid email address'));
-    }
-  });
-
-  return callback();
-};
-
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
 
   data() {
@@ -120,38 +90,6 @@ export default {
     }
     return {
       groupSes: groupSesValue,
-      rules: {
-        sesFromAddr: [
-          {
-            validator: validateEmail,
-            trigger: 'change'
-          }
-        ],
-        sesEmailReplyTo: [
-          {
-            validator: validateEmail,
-            trigger: 'change'
-          }
-        ],
-        sesEmail: [
-          {
-            validator: validateEmailCommaSeparated,
-            trigger: 'change'
-          }
-        ],
-        sesCc: [
-          {
-            validator: validateEmailCommaSeparated,
-            trigger: 'change'
-          }
-        ],
-        sesBcc: [
-          {
-            validator: validateEmailCommaSeparated,
-            trigger: 'change'
-          }
-        ]
-      }
     };
   },
 

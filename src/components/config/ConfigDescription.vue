@@ -26,10 +26,6 @@
 export default {
   props: ['viewOnly'],
 
-  data() {
-    return {};
-  },
-
   computed: {
     useDescription: {
       get() {

@@ -94,10 +94,10 @@
 </template>
 
 <script>
-import * as EmailValidator from 'email-validator';
+import isEmail from 'validator/lib/isEmail';
 
 let validateEmail = (rule, value, callback) => {
-  if (!value || EmailValidator.validate(value)) {
+  if (!value || isEmail(value)) {
     callback();
   } else {
     callback(new Error('Invalid email address'));
@@ -112,7 +112,7 @@ let validateEmailCommaSeparated = (rule, value, callback) => {
   emails.forEach(email => {
     if (
       email
-      && !EmailValidator.validate(email.trim())
+      && !isEmail(email.trim())
     ) {
       return callback(new Error('Invalid email address'));
     }

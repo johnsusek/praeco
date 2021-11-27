@@ -78,17 +78,7 @@
 
 <script>
 export default {
-  components: {
-  },
-
   props: ['viewOnly'],
-
-  data() {
-    return {
-      rules: {
-      }
-    };
-  },
 
   computed: {
     serviceNowUsername: {
