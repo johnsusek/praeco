@@ -484,7 +484,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 14.18.1
+nvm install 16.13.0
 ```
 
 ```sh
@@ -518,7 +518,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 14.18.1
+nvm install 16.13.0
 ```
 
 ```sh
