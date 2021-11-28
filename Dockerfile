@@ -1,4 +1,4 @@
-FROM node:lts-fermium AS base
+FROM node:lts-gallium AS base
 
 RUN apt-get update
 RUN apt-get install -y nginx

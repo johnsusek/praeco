@@ -44,6 +44,8 @@
     "normalize.css": "8.0.1",
     "prettycron": "0.10.0",
     "prismjs": "1.25.0",
+    "sass": "^1.43.5",
+    "sass-loader": "^10.1.0",
     "semver": "7.3.5",
     "string-format": "2.0.0",
     "validator": "^13.7.0",
@@ -87,9 +89,7 @@
     "jsdom": "18.1.1",
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",
-    "node-sass": "5.0.0",
     "nyc": "15.1.0",
-    "sass-loader": "10.1.0",
     "vue-template-compiler": "2.6.14"
   },
   "nyc": {
