@@ -31,7 +31,7 @@ import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
-let ECharts = require('vue-echarts');
+import ECharts from 'vue-echarts';
 
 library.add(
   faBell,
