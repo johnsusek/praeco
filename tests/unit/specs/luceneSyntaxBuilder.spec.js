@@ -13,8 +13,8 @@ let filledTree = {
       type: 'query-builder-rule',
       query: {
         rule: 'message',
-        selectedOperator: 'contains',
-        selectedOperand: 'message',
+        operator: 'contains',
+        operand: 'message',
         value: 'error'
       }
     },
@@ -22,8 +22,8 @@ let filledTree = {
       type: 'query-builder-rule',
       query: {
         rule: 'syslog_message',
-        selectedOperator: 'contains',
-        selectedOperand: 'syslog_message',
+        operator: 'contains',
+        operand: 'syslog_message',
         value: null
       }
     },
@@ -36,8 +36,8 @@ let filledTree = {
             type: 'query-builder-rule',
             query: {
               rule: 'message',
-              selectedOperator: 'contains',
-              selectedOperand: 'message',
+              operator: 'contains',
+              operand: 'message',
               value: 'new'
             }
           },
@@ -45,8 +45,8 @@ let filledTree = {
             type: 'query-builder-rule',
             query: {
               rule: 'message',
-              selectedOperator: 'contains',
-              selectedOperand: 'message',
+              operator: 'contains',
+              operand: 'message',
               value: 'info'
             }
           }
@@ -63,8 +63,8 @@ let completelyFilledTree = {
       type: 'query-builder-rule',
       query: {
         rule: '084d87f):_remoteMoRef',
-        selectedOperator: 'does not contain',
-        selectedOperand: '084d87f):_remoteMoRef',
+        operator: 'does not contain',
+        operand: '084d87f):_remoteMoRef',
         value: '^'
       }
     },
@@ -72,8 +72,8 @@ let completelyFilledTree = {
       type: 'query-builder-rule',
       query: {
         rule: '255',
-        selectedOperator: 'is empty',
-        selectedOperand: '255',
+        operator: 'is empty',
+        operand: '255',
         value: null
       }
     },
@@ -81,8 +81,8 @@ let completelyFilledTree = {
       type: 'query-builder-rule',
       query: {
         rule: '255',
-        selectedOperator: 'is not empty',
-        selectedOperand: '255',
+        operator: 'is not empty',
+        operand: '255',
         value: null
       }
     },
@@ -90,8 +90,8 @@ let completelyFilledTree = {
       type: 'query-builder-rule',
       query: {
         rule: '255',
-        selectedOperator: 'regex',
-        selectedOperand: '255',
+        operator: 'regex',
+        operand: '255',
         value: '.*'
       }
     },
@@ -99,8 +99,8 @@ let completelyFilledTree = {
       type: 'query-builder-rule',
       query: {
         rule: 'syslog_severity_code',
-        selectedOperator: 'less than',
-        selectedOperand: 'syslog_severity_code',
+        operator: 'less than',
+        operand: 'syslog_severity_code',
         value: '111'
       }
     },
@@ -108,8 +108,8 @@ let completelyFilledTree = {
       type: 'query-builder-rule',
       query: {
         rule: 'syslog_severity_code',
-        selectedOperator: 'greater than',
-        selectedOperand: 'syslog_severity_code',
+        operator: 'greater than',
+        operand: 'syslog_severity_code',
         value: '33'
       }
     },
@@ -122,8 +122,8 @@ let completelyFilledTree = {
             type: 'query-builder-rule',
             query: {
               rule: ' actualProtected',
-              selectedOperator: 'contains',
-              selectedOperand: ' actualProtected',
+              operator: 'contains',
+              operand: ' actualProtected',
               value: null
             }
           },
@@ -131,8 +131,8 @@ let completelyFilledTree = {
             type: 'query-builder-rule',
             query: {
               rule: ' appHB',
-              selectedOperator: 'contains',
-              selectedOperand: ' appHB',
+              operator: 'contains',
+              operand: ' appHB',
               value: null
             }
           },
@@ -145,8 +145,8 @@ let completelyFilledTree = {
                   type: 'query-builder-rule',
                   query: {
                     rule: 'location',
-                    selectedOperator: 'contains',
-                    selectedOperand: 'location',
+                    operator: 'contains',
+                    operand: 'location',
                     value: null
                   }
                 },
@@ -154,8 +154,8 @@ let completelyFilledTree = {
                   type: 'query-builder-rule',
                   query: {
                     rule: 'location',
-                    selectedOperator: 'contains',
-                    selectedOperand: 'location',
+                    operator: 'contains',
+                    operand: 'location',
                     value: null
                   }
                 }
@@ -174,8 +174,8 @@ let completelyFilledTree = {
             type: 'query-builder-rule',
             query: {
               rule: ' (7febabbf-1f22-477b-b486-c8c1dc5ce3ac):_remoteMoRef',
-              selectedOperator: 'contains',
-              selectedOperand: ' (7febabbf-1f22-477b-b486-c8c1dc5ce3ac):_remoteMoRef',
+              operator: 'contains',
+              operand: ' (7febabbf-1f22-477b-b486-c8c1dc5ce3ac):_remoteMoRef',
               value: null
             }
           },
@@ -183,8 +183,8 @@ let completelyFilledTree = {
             type: 'query-builder-rule',
             query: {
               rule: ' Priority',
-              selectedOperator: 'contains',
-              selectedOperand: ' Priority',
+              operator: 'contains',
+              operand: ' Priority',
               value: null
             }
           }

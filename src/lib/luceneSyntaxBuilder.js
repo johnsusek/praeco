@@ -36,8 +36,8 @@ function luceneSyntaxFromQueryBuilderRule(qbRule) {
   //   type: "query-builder-rule",
   //   query: {
   //     rule: "message",
-  //     selectedOperator: "contains",
-  //     selectedOperand: "message",
+  //     operator: "contains",
+  //     operand: "message",
   //     value: "ahci"
   //   }
   // }
@@ -49,7 +49,7 @@ function luceneSyntaxFromQueryBuilderRule(qbRule) {
 
   let rule = escapeLuceneSyntax(qbRule.query.rule); // like 'message'
   let value = qbRule.query.value || '*'; // like 'ahci'
-  let operator = qbRule.query.selectedOperator; // like 'contains'
+  let operator = qbRule.query.operator; // like 'contains'
 
   if (operator === 'contains') {
     syntax += `${rule}:${value}`; // 'message:"ahci"`
@@ -85,8 +85,8 @@ function luceneSyntaxFromQueryBuilderGroup(group) {
   //         type: "query-builder-rule",
   //         query: {
   //           rule: "message",
-  //           selectedOperator: "contains",
-  //           selectedOperand: "message",
+  //           operator: "contains",
+  //           operand: "message",
   //           value: "error"
   //         }
   //       }
