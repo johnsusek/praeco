@@ -24,8 +24,8 @@ module.exports = {
         .include.add(`${__dirname}apollo-server`)
         .add(`${__dirname}src`)
         .end()
-        .use('istanbul-instrumenter-loader')
-        .loader('istanbul-instrumenter-loader')
+        .use('@jsdevtools/coverage-istanbul-loader')
+        .loader('@jsdevtools/coverage-istanbul-loader')
         .options({ esModules: true })
         .end();
     }
