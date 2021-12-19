@@ -23,7 +23,7 @@
             <v-chart
               ref="chart"
               v-loading="loading"
-              :options="chart"
+              :option="chart"
               autoresize
               @click="ev => $emit('click', ev)" />
           </el-tab-pane>
@@ -34,7 +34,7 @@
         <v-chart
           ref="chart"
           v-loading="loading"
-          :options="chart"
+          :option="chart"
           autoresize
           @click="ev => $emit('click', ev)" />
 
@@ -81,17 +81,46 @@ import Vue from 'vue';
 import axios from 'axios';
 import moment from 'moment-timezone';
 import debounce from 'debounce';
-import 'echarts/lib/chart/bar';
-import 'echarts/lib/chart/line';
-import 'echarts/lib/component/title';
-import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/grid';
-import 'echarts/lib/component/dataZoom';
-import 'echarts/lib/component/markPoint';
-import 'echarts/lib/component/markLine';
+// import 'echarts/lib/chart/bar';
+// import 'echarts/lib/chart/line';
+// import 'echarts/lib/component/title';
+// import 'echarts/lib/component/tooltip';
+// import 'echarts/lib/component/grid';
+// import 'echarts/lib/component/dataZoom';
+// import 'echarts/lib/component/markPoint';
+// import 'echarts/lib/component/markLine';
+import { use } from 'echarts/core';
+import {
+  BarChart,
+  LineChart
+} from 'echarts/charts';
+import { CanvasRenderer } from 'echarts/renderers';
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  DataZoomComponent,
+  MarkPointComponent,
+  MarkLineComponent
+} from 'echarts/components';
+import VChart from 'vue-echarts';
 import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
+
+use([
+  CanvasRenderer,
+  BarChart,
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  DataZoomComponent,
+  MarkPointComponent,
+  MarkLineComponent
+]);
 
 const CancelToken = axios.CancelToken;
 
@@ -117,6 +146,9 @@ function getColorForIndex(index, data, spikeHeight) {
 }
 
 export default {
+  components: {
+    VChart
+  },
   props: [
     'index',
     'query',
@@ -182,10 +214,10 @@ export default {
             barCategoryGap: '0',
             symbol: 'none',
             itemStyle: {
-              color: '#555',
-              emphasis: {
-                color: '#999'
-              }
+              color: '#555'
+            },
+            emphasis: {
+              color: '#999'
             },
             markPoint: {
               silent: true,
