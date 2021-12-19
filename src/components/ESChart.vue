@@ -81,14 +81,6 @@ import Vue from 'vue';
 import axios from 'axios';
 import moment from 'moment-timezone';
 import debounce from 'debounce';
-// import 'echarts/lib/chart/bar';
-// import 'echarts/lib/chart/line';
-// import 'echarts/lib/component/title';
-// import 'echarts/lib/component/tooltip';
-// import 'echarts/lib/component/grid';
-// import 'echarts/lib/component/dataZoom';
-// import 'echarts/lib/component/markPoint';
-// import 'echarts/lib/component/markLine';
 import { use } from 'echarts/core';
 import {
   BarChart,
