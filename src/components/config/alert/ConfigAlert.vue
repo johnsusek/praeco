@@ -181,15 +181,16 @@
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
-      <el-tab-pane v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
-        alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
-        alert.includes('sns') || alert.includes('ses') || alert.includes('pagertree') || alert.includes('gitter') ||
-        alert.includes('googlechat') || alert.includes('chatwork') || alert.includes('discord') ||
-        alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog') ||
-        alert.includes('rocketchat') || alert.includes('pagerduty') || alert.includes('tencentsms') ||
-        alert.includes('post2')">
+      <el-tab-pane
+        v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
+          alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
+          alert.includes('sns') || alert.includes('ses') || alert.includes('pagertree') || alert.includes('gitter') ||
+          alert.includes('googlechat') || alert.includes('chatwork') || alert.includes('discord') ||
+          alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog') ||
+          alert.includes('rocketchat') || alert.includes('pagerduty') || alert.includes('tencentsms') ||
+          alert.includes('post2')">
         <template slot="label">
-          <icon :icon="['fa', 'bell']" size="1x" /> Alert
+          <Icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
         <ConfigAlertSubjectBody
           ref="subjectBody"
@@ -200,33 +201,33 @@
       <!-- Slack -->
       <el-tab-pane v-if="alert.includes('slack')">
         <template slot="label">
-          <icon :icon="['fab', 'slack']" size="1x" /> Slack
+          <Icon :icon="['fab', 'slack']" size="1x" /> Slack
         </template>
         <ConfigAlertSlack ref="slack" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- Email -->
       <el-tab-pane v-if="alert.includes('email')">
-        <span slot="label"><icon icon="envelope" size="1x" /> Email</span>
+        <span slot="label"><Icon icon="envelope" size="1x" /> Email</span>
         <ConfigAlertEmail ref="email" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- HTTP POST -->
       <el-tab-pane v-if="alert.includes('post')" label="HTTP">
-        <span slot="label"><icon icon="globe" /> HTTP POST</span>
+        <span slot="label"><Icon icon="globe" /> HTTP POST</span>
         <ConfigAlertHttpPost ref="post" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- HTTP POST 2 -->
       <el-tab-pane v-if="alert.includes('post2')" label="HTTP2">
-        <span slot="label"><icon icon="globe" /> HTTP POST 2</span>
+        <span slot="label"><Icon icon="globe" /> HTTP POST 2</span>
         <ConfigAlertHttpPost2 ref="post2" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- MS Teams -->
       <el-tab-pane v-if="alert.includes('ms_teams')">
         <template slot="label">
-          <icon :icon="['fab', 'microsoft']" size="1x" /> MS Teams
+          <Icon :icon="['fab', 'microsoft']" size="1x" /> MS Teams
         </template>
         <ConfigAlertMsTeams ref="ms_teams" :view-only="viewOnly" />
       </el-tab-pane>
@@ -234,7 +235,7 @@
       <!-- Telegram -->
       <el-tab-pane v-if="alert.includes('telegram')">
         <template slot="label">
-          <icon :icon="['fab', 'telegram']" size="1x" /> Telegram
+          <Icon :icon="['fab', 'telegram']" size="1x" /> Telegram
         </template>
         <ConfigAlertTelegram ref="telegram" :view-only="viewOnly" />
       </el-tab-pane>
@@ -242,7 +243,7 @@
       <!-- Jira -->
       <el-tab-pane v-if="alert.includes('jira')">
         <template slot="label">
-          <icon :icon="['fab', 'jira']" size="1x" /> Jira
+          <Icon :icon="['fab', 'jira']" size="1x" /> Jira
         </template>
         <ConfigAlertJira ref="jira" :view-only="viewOnly" />
       </el-tab-pane>
@@ -258,7 +259,7 @@
       <!-- Line Notify -->
       <el-tab-pane v-if="alert.includes('linenotify')">
         <template slot="label">
-          <icon :icon="['fab', 'line']" size="1x" /> Line Notify
+          <Icon :icon="['fab', 'line']" size="1x" /> Line Notify
         </template>
         <ConfigAlertLineNotify ref="linenotify" :view-only="viewOnly" />
       </el-tab-pane>
@@ -282,7 +283,7 @@
       <!-- Gitter -->
       <el-tab-pane v-if="alert.includes('gitter')">
         <template slot="label">
-          <icon :icon="['fab', 'gitter']" size="1x" /> Gitter
+          <Icon :icon="['fab', 'gitter']" size="1x" /> Gitter
         </template>
         <ConfigAlertGitter ref="gitter" :view-only="viewOnly" />
       </el-tab-pane>
@@ -290,7 +291,7 @@
       <!-- Amazon SNS -->
       <el-tab-pane v-if="alert.includes('sns')">
         <template slot="label">
-          <icon :icon="['fab', 'aws']" size="1x" /> Amazon SNS
+          <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SNS
         </template>
         <ConfigAlertAmazonSns ref="sns" :view-only="viewOnly" />
       </el-tab-pane>
@@ -298,7 +299,7 @@
       <!-- Amazon SES -->
       <el-tab-pane v-if="alert.includes('ses')">
         <template slot="label">
-          <icon :icon="['fab', 'aws']" size="1x" /> Amazon SES
+          <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SES
         </template>
         <ConfigAlertAmazonSes ref="ses" :view-only="viewOnly" />
       </el-tab-pane>
@@ -402,7 +403,7 @@
       <!-- Rocket.Chat -->
       <el-tab-pane v-if="alert.includes('rocketchat')">
         <template slot="label">
-          <icon :icon="['fab', 'rocketchat']" size="1x" /> Rocket.Chat
+          <Icon :icon="['fab', 'rocketchat']" size="1x" /> Rocket.Chat
         </template>
         <ConfigAlertRocketChat ref="rocketchat" :view-only="viewOnly" />
       </el-tab-pane>

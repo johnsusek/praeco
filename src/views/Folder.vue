@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>
-      <icon icon="folder" transform="left-0" />
+      <Icon icon="folder" transform="left-0" />
       {{ type.capitalize() }}/{{ path }}
     </h1>
 
@@ -10,7 +10,7 @@
       type="primary"
       plain
       @click="$router.push('/rule/add/' + encodeURIComponent(path))">
-      <icon icon="file-alt" transform="left-4" />
+      <Icon icon="file-alt" transform="left-4" />
       Add rule
     </el-button>
 
@@ -19,12 +19,12 @@
       type="primary"
       plain
       @click="$router.push('/template/add/' + encodeURIComponent(path))">
-      <icon icon="file" transform="left-4" />
+      <Icon icon="file" transform="left-4" />
       Add template
     </el-button>
 
     <el-button type="info" plain @click="addFolder">
-      <icon icon="folder" transform="left-4" />
+      <Icon icon="folder" transform="left-4" />
       Add folder
     </el-button>
 
@@ -35,7 +35,7 @@
     <el-table :data="type === 'templates' ? templatesForFolder : rulesForFolder" class="m-n-sm" style="width: 100%">
       <el-table-column :label="type.capitalize()">
         <template slot-scope="scope">
-          <icon icon="file-alt" style="padding-right: 4px" />
+          <Icon icon="file-alt" style="padding-right: 4px" />
           <router-link :to="`/${type}/${encodeURIComponent(scope.row.val)}`">
             {{ scope.row.label }}
           </router-link>

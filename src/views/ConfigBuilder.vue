@@ -34,7 +34,7 @@
         </div>
       </el-row>
 
-    <!-- <vue-json-pretty :data="$store.getters['config/config']" /> -->
+    <!-- <VueJsonPretty :data="$store.getters['config/config']" /> -->
     </template>
   </div>
 </template>

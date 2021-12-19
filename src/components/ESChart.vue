@@ -20,7 +20,7 @@
             v-model="activeGroupIndex"
             :label="group.key.toString()"
             :name="index.toString()">
-            <v-chart
+            <VChart
               ref="chart"
               v-loading="loading"
               :option="chart"
@@ -31,7 +31,7 @@
       </div>
 
       <div v-else>
-        <v-chart
+        <VChart
           ref="chart"
           v-loading="loading"
           :option="chart"
@@ -96,7 +96,6 @@ import {
   MarkPointComponent,
   MarkLineComponent
 } from 'echarts/components';
-import VChart from 'vue-echarts';
 import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
@@ -138,9 +137,6 @@ function getColorForIndex(index, data, spikeHeight) {
 }
 
 export default {
-  components: {
-    VChart
-  },
   props: [
     'index',
     'query',

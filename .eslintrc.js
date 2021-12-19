@@ -30,6 +30,9 @@ module.exports = {
     'vue/require-v-for-key': 'off',
     'vue/require-prop-types': 'off',
     'vue/max-attributes-per-line': 'off',
+    // TODO: 'vue/component-api-style': ['error', ['composition-vue2']],
+    'vue/no-lone-template': 'off', // TODO:
+    'vue/multi-word-component-names': 'off', // TODO:
     'import/prefer-default-export': 'off',
     'vue/no-template-shadow': 'off',
     'import/no-cycle': 'off',

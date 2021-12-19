@@ -14,10 +14,10 @@
     @click.native="handleClick">
     <label
       slot="option-label"
-      slot-scope="{ node, shouldShowCount, count, labelClassName }"
+      slot-scope="{ node, labelClassName }"
       :class="labelClassName">
       <span v-if="node.children !== undefined">
-        <icon :icon="node.isExpanded ? 'folder-open' : 'folder'" />
+        <Icon :icon="node.isExpanded ? 'folder-open' : 'folder'" />
       </span>
       {{ node.label }}
     </label>

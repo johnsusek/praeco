@@ -27,7 +27,7 @@
         :width="widthForCol(col, i)"
         resizable>
         <template slot-scope="scope">
-          <vue-json-pretty
+          <VueJsonPretty
             v-if="typeof scope.row[col] === 'object'"
             :data="scope.row[col]"
             :deep="0" />
@@ -47,7 +47,7 @@
 
     <el-popover title="Hide columns">
       <el-button slot="reference" circle class="show-columns-button">
-        <icon icon="ellipsis-h" />
+        <Icon icon="ellipsis-h" />
       </el-button>
       <el-checkbox-group v-model="hidden">
         <div v-for="col in columns" :key="col">

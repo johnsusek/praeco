@@ -42,7 +42,7 @@
     </el-popover>
 
     <a v-if="helpLinkForType" :href="helpLinkForType" target="_blank" class="pop-when-link">
-      <icon icon="question-circle" class="pop-when-help" />
+      <Icon icon="question-circle" class="pop-when-help" />
     </a>
 
     <el-popover

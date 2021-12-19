@@ -59,8 +59,8 @@ library.add(
 Vue.use(ElementUI, { locale, size: 'mini' });
 Vue.use(infiniteScroll);
 
-Vue.component('v-chart', ECharts);
-Vue.component('icon', FontAwesomeIcon);
-Vue.component('vue-json-pretty', VueJsonPretty);
-Vue.component('prism', Prism);
+Vue.component('VChart', ECharts);
+Vue.component('Icon', FontAwesomeIcon);
+Vue.component('VueJsonPretty', VueJsonPretty);
+Vue.component('Prism', Prism);
 Vue.component('Treeselect', Treeselect);

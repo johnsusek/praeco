@@ -38,9 +38,10 @@
       <el-alert v-if="silenceNotice" :closable="false" :title="silenceNotice" show-icon type="info" />
 
       <el-row>
-        <router-link :to="{
-          name: 'ruleconfigeditor',
-          params: { action: 'edit', path: id } }">
+        <router-link
+          :to="{
+            name: 'ruleconfigeditor',
+            params: { action: 'edit', path: id } }">
           <el-button icon="el-icon-edit" plain type="primary">
             Edit
           </el-button>
@@ -216,9 +217,9 @@
             <a href="https://github.com/jertel/elastalert2" target="_blank">Elastalert 2</a> server.
             You may copy/paste this yaml and run it in any outside Elastalert 2 instance.
           </div>
-          <prism language="javascript">
+          <Prism language="javascript">
             {{ yaml }}
-          </prism>
+          </Prism>
         </el-tab-pane>
       </el-tabs>
     </template>

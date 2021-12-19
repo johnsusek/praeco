@@ -28,18 +28,20 @@
       </h1>
 
       <el-row>
-        <router-link :to="{
-          name: 'ruleconfigbuilder',
-          params: { action: 'add' }, query: { prefill: id }
-        }">
+        <router-link
+          :to="{
+            name: 'ruleconfigbuilder',
+            params: { action: 'add' }, query: { prefill: id }
+          }">
           <el-button icon="el-icon-plus" plain type="primary">
             Create rule from template
           </el-button>
         </router-link>
 
-        <router-link :to="{
-          name: 'templateconfigeditor',
-          params: { action: 'edit', path: id } }">
+        <router-link
+          :to="{
+            name: 'templateconfigeditor',
+            params: { action: 'edit', path: id } }">
           <el-button type="primary" icon="el-icon-edit" plain>
             Edit
           </el-button>
