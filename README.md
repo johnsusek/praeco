@@ -109,6 +109,10 @@ If you need generous support, please consider paid support software.
 - There is no obligation to add features.
 - We do not always answer issues.
 
+#### Can you support a version that is not the latest version?
+
+Not Support
+
 #### Is it possible to set Percentage Match on the screen?
 
 Not Support
