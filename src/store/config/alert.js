@@ -162,7 +162,7 @@ function initialState() {
 
     /* Priority */
     usePriority: false,
-    configPriority: 2,
+    configPriority: '',
 
     /* Owner */
     useOwner: false,
