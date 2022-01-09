@@ -4,6 +4,7 @@
 
 - Stash all changes in elastalert-server project
 - `nvm use "$(cat .nvmrc)"`
+- `npm install`
 - `npm run precommit`
 - `make build v=<elastalert2 version>`
 - `docker tag <image> praecoapp/elastalert-server:<yyyymmdd>`
@@ -13,6 +14,7 @@
 ## Praeco
 
 - `nvm use "$(cat .nvmrc)"`
+- `npm install`
 - `npm run lint:fix`
 - `./run_tests.sh`
 - Bump version number in package.json, if not already done
