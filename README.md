@@ -426,7 +426,7 @@ Please see the development section below if you're interested in running these s
 
 ## Manual/Dev installation
 
-NOTE: If you're just interested in developing Praeco UI features locally (and not changing ElastAlert 2 or the api), you can skip right to Praeco setup and just run the internal Elastalert server with `docker-compose up elastalert-server` .
+NOTE: If you're just interested in developing Praeco UI features locally (and not changing ElastAlert 2 or the api), you can skip right to Praeco setup and just run the internal ElastAlert Server with `docker-compose up elastalert-server` .
 
 ---
 
