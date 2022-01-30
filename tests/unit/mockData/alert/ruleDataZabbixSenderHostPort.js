@@ -1,17 +1,12 @@
 export const ruleYaml = `__praeco_query_builder: '{"query":{"logicalOperator":"all","children":[]}}'
 alert:
-  - exotel
+  - zabbix
 alert_subject: this is a test subject
 alert_subject_args: []
 alert_text: this is a test body
 alert_text_args: []
 alert_text_type: alert_text_only
 doc_type: syslog
-exotel_account_sid: xxxxx1
-exotel_auth_token: xxxxx2
-exotel_from_number: xxxxx4
-exotel_to_number: xxxxx3
-exotel_message_body: message
 filter:
   - query:
       query_string:
@@ -30,4 +25,8 @@ timestamp_type: iso
 type: frequency
 use_count_query: true
 use_strftime_index: false
+zbx_host: test001
+zbx_key: sender_load1
+zbx_sender_host: test-server
+zbx_sender_port: 20000
 `;

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import store from '@/store';
 import { mockAxios } from '../../setup';
-import { ruleYaml } from '../../mockData/alert/ruleDataExotelMessageBody.js';
+import { ruleYaml } from '../../mockData/alert/ruleDataZabbixSenderHostPort.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
@@ -14,13 +14,8 @@ describe('YAML parsing', () => {
     let expected = `__praeco_full_path: "test123"
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
-  - "exotel"
+  - "zabbix"
 doc_type: "syslog"
-exotel_account_sid: "xxxxx1"
-exotel_auth_token: "xxxxx2"
-exotel_from_number: "xxxxx4"
-exotel_message_body: "message"
-exotel_to_number: "xxxxx3"
 filter:
   - query:
       query_string:
@@ -42,6 +37,10 @@ timestamp_type: "iso"
 type: "frequency"
 use_count_query: true
 use_strftime_index: false
+zbx_host: "test001"
+zbx_key: "sender_load1"
+zbx_sender_host: "test-server"
+zbx_sender_port: 20000
 `;
 
     return expect(yaml).to.equal(expected);
