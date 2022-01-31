@@ -2625,7 +2625,6 @@ export default {
       }
 
       if (state.alert.alert.includes('email')
-          || state.alert.alert.includes('post2')
           || state.alert.alert.includes('slack')
           || state.alert.alert.includes('ms_teams')
           || state.alert.alert.includes('telegram')

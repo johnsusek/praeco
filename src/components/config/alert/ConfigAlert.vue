@@ -187,8 +187,7 @@
           alert.includes('sns') || alert.includes('ses') || alert.includes('pagertree') || alert.includes('gitter') ||
           alert.includes('googlechat') || alert.includes('chatwork') || alert.includes('discord') ||
           alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog') ||
-          alert.includes('rocketchat') || alert.includes('pagerduty') || alert.includes('tencentsms') ||
-          alert.includes('post2')">
+          alert.includes('rocketchat') || alert.includes('pagerduty') || alert.includes('tencentsms')">
         <template slot="label">
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
