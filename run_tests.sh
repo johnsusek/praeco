@@ -3,6 +3,7 @@
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alertText.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigAlert.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigYaml.spec.js &&
+./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlChatwork.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlExotel.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlHttpPost.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlHttpPostOpt.spec.js &&

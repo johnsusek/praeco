@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import store from '@/store';
 import { mockAxios } from '../../setup';
-import { ruleYaml } from '../../mockData/alert/ruleDataStomp.js';
+import { ruleYaml } from '../../mockData/alert/ruleDataChatwork.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
@@ -14,10 +14,12 @@ describe('YAML parsing', () => {
     let expected = `__praeco_full_path: "test123"
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
-  - "stomp"
+  - "chatwork"
 alert_subject: "this is a test subject"
 alert_text: "this is a test body"
 alert_text_type: "alert_text_only"
+chatwork_apikey: "xxxxxx1"
+chatwork_room_id: "xxxxxx2"
 doc_type: "syslog"
 filter:
   - query:
@@ -32,11 +34,6 @@ name: "test123"
 num_events: 10000
 realert:
   minutes: 5
-stomp_destination: "/queue/ALERT"
-stomp_hostname: "localhost"
-stomp_hostport: "61613"
-stomp_login: "admin"
-stomp_password: "admin"
 terms_size: 50
 timeframe:
   minutes: 5

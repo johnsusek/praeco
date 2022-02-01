@@ -15,6 +15,9 @@ describe('YAML parsing', () => {
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
   - "stomp"
+alert_subject: "this is a test subject"
+alert_text: "this is a test body"
+alert_text_type: "alert_text_only"
 doc_type: "syslog"
 filter:
   - query:

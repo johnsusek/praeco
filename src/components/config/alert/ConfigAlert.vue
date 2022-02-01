@@ -182,12 +182,26 @@
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane
-        v-if="alert.includes('slack') || alert.includes('email') || alert.includes('ms_teams') ||
-          alert.includes('telegram') || alert.includes('jira') || alert.includes('mattermost') ||
-          alert.includes('sns') || alert.includes('ses') || alert.includes('pagertree') || alert.includes('gitter') ||
-          alert.includes('googlechat') || alert.includes('chatwork') || alert.includes('discord') ||
-          alert.includes('hivealerter') || alert.includes('alerta') || alert.includes('datadog') ||
-          alert.includes('rocketchat') || alert.includes('pagerduty') || alert.includes('tencentsms')">
+        v-if="alert.includes('alerta') ||
+          alert.includes('chatwork') ||
+          alert.includes('datadog') ||
+          alert.includes('discord') ||
+          alert.includes('email') ||
+          alert.includes('gitter') ||
+          alert.includes('googlechat') ||
+          alert.includes('hivealerter') ||
+          alert.includes('jira') ||
+          alert.includes('mattermost') ||
+          alert.includes('ms_teams') ||
+          alert.includes('pagerduty') ||
+          alert.includes('pagertree') ||
+          alert.includes('rocketchat') ||
+          alert.includes('ses') ||
+          alert.includes('slack') ||
+          alert.includes('sns') ||
+          alert.includes('stomp') ||
+          alert.includes('tencentsms') ||
+          alert.includes('telegram')">
         <template slot="label">
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>

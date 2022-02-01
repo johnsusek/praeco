@@ -2635,6 +2635,7 @@ export default {
           || state.alert.alert.includes('pagertree')
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('ses')
+          || state.alert.alert.includes('stomp')
           || state.alert.alert.includes('mattermost')
           || state.alert.alert.includes('rocketchat')
           || state.alert.alert.includes('hivealerter')
