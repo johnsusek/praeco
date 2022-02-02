@@ -13,6 +13,7 @@
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlPagerTree.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlStomp.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlStompModRequiredAndOpt.spec.js &&
+./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlTelegram.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlZabbix.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlZabbixSenderHostPort.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ErrorsLog.spec.js &&
