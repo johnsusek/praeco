@@ -191,6 +191,7 @@
           alert.includes('googlechat') ||
           alert.includes('hivealerter') ||
           alert.includes('jira') ||
+          alert.includes('linenotify') ||
           alert.includes('mattermost') ||
           alert.includes('ms_teams') ||
           alert.includes('pagerduty') ||

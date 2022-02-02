@@ -2633,6 +2633,7 @@ export default {
           || state.alert.alert.includes('servicenow')
           || state.alert.alert.includes('googlechat')
           || state.alert.alert.includes('pagertree')
+          || state.alert.alert.includes('linenotify')
           || state.alert.alert.includes('sns')
           || state.alert.alert.includes('ses')
           || state.alert.alert.includes('stomp')
