@@ -109,6 +109,10 @@ If you need generous support, please consider paid support software.
 - There is no obligation to add features.
 - We do not always answer issues.
 
+#### It does not work with the combination of karql / elastalert2-server and praeco. Is it a bug?
+
+Do not use `karql/elastalert2-server` as it does not implement the features required by praeco. Use `praecoapp/elastalert-server`.
+
 #### Can you support a version that is not the latest version?
 
 Not Support
