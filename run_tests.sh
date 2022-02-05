@@ -4,6 +4,7 @@
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigAlert.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigYaml.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlChatwork.spec.js &&
+./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlDatadog.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlExotel.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlGitter.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlGitterOpt.spec.js &&
