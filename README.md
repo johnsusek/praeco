@@ -468,7 +468,7 @@ chmod -R 777 rules rule_templates
 echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
 pip install "setuptools>=11.3"
 python setup.py install
-cp config.yaml.example config.yaml
+cp ./examples/config.yaml.example ./
 vi config.yaml
 ```
 
