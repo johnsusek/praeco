@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import store from '@/store';
 import { mockAxios } from '../../setup';
-import { ruleYaml } from '../../mockData/alert/ruleDataTencentSms.js';
+import { ruleYaml } from '../../mockData/alert/ruleDataVictorOps.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
@@ -14,7 +14,7 @@ describe('YAML parsing', () => {
     let expected = `__praeco_full_path: "test123"
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
-  - "tencent_sms"
+  - "victorops"
 alert_subject: "this is a test subject"
 alert_text: "this is a test body"
 alert_text_type: "alert_text_only"
@@ -32,16 +32,6 @@ name: "test123"
 num_events: 10000
 realert:
   minutes: 5
-tencent_sms_region: "ap-guangzhou"
-tencent_sms_sdk_appid: "xxxx1"
-tencent_sms_secret_id: "xxxx2"
-tencent_sms_secret_key: "xxxx3"
-tencent_sms_sign_name: "xxxx4"
-tencent_sms_template_id: "xxxx5"
-tencent_sms_template_parm:
-  - "/kubernetes/pod_name"
-tencent_sms_to_number:
-  - "xxxx6"
 terms_size: 50
 timeframe:
   minutes: 5
@@ -50,6 +40,12 @@ timestamp_type: "iso"
 type: "frequency"
 use_count_query: true
 use_strftime_index: false
+victorops_api_key: "xxxx1"
+victorops_entity_display_name: "no entity display name"
+victorops_entity_id: "xxxx2"
+victorops_message_type: "xxxx3"
+victorops_proxy: "xxxx4"
+victorops_routing_key: "xxxx5"
 `;
 
     return expect(yaml).to.equal(expected);

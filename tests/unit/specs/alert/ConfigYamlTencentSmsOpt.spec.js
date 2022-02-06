@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import store from '@/store';
 import { mockAxios } from '../../setup';
-import { ruleYaml } from '../../mockData/alert/ruleDataTencentSms.js';
+import { ruleYaml } from '../../mockData/alert/ruleDataTencentSmsOpt.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
@@ -32,7 +32,7 @@ name: "test123"
 num_events: 10000
 realert:
   minutes: 5
-tencent_sms_region: "ap-guangzhou"
+tencent_sms_region: "ap-guangzhou2"
 tencent_sms_sdk_appid: "xxxx1"
 tencent_sms_secret_id: "xxxx2"
 tencent_sms_secret_key: "xxxx3"

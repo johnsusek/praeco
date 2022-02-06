@@ -174,7 +174,7 @@
         <el-checkbox id="destinationPagerDuty" label="pagerduty" border>
           PagerDuty
         </el-checkbox>
-        <el-checkbox id="destinationTencentSms" label="tencentsms" border>
+        <el-checkbox id="destinationTencentSms" label="tencent_sms" border>
           TencentSMS
         </el-checkbox>
       </el-checkbox-group>
@@ -201,7 +201,8 @@
           alert.includes('slack') ||
           alert.includes('sns') ||
           alert.includes('stomp') ||
-          alert.includes('tencentsms') ||
+          alert.includes('tencent_sms') ||
+          alert.includes('victorops') ||
           alert.includes('telegram')">
         <template slot="label">
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
@@ -431,11 +432,11 @@
       </el-tab-pane>
 
       <!-- Tencent SMS -->
-      <el-tab-pane v-if="alert.includes('tencentsms')">
+      <el-tab-pane v-if="alert.includes('tencent_sms')">
         <template slot="label">
           TencentSMS
         </template>
-        <ConfigAlertTencentSms ref="tencentsms" :view-only="viewOnly" />
+        <ConfigAlertTencentSms ref="tencent_sms" :view-only="viewOnly" />
       </el-tab-pane>
     </el-tabs>
   </el-form>

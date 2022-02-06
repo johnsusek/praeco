@@ -2539,7 +2539,7 @@ export default {
         config = { ...config, ...getters.telegram };
       }
 
-      if (state.alert.alert.includes('tencentsms')) {
+      if (state.alert.alert.includes('tencent_sms')) {
         config = { ...config, ...getters.tencentsms };
       }
 
@@ -2639,8 +2639,9 @@ export default {
           || state.alert.alert.includes('slack')
           || state.alert.alert.includes('ms_teams')
           || state.alert.alert.includes('telegram')
-          || state.alert.alert.includes('tencentsms')
+          || state.alert.alert.includes('tencent_sms')
           || state.alert.alert.includes('jira')
+          || state.alert.alert.includes('victorops')
           || state.alert.alert.includes('servicenow')
           || state.alert.alert.includes('googlechat')
           || state.alert.alert.includes('pagertree')
