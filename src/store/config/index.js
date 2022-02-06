@@ -336,7 +336,13 @@ export default {
 
         /* Discord */
         commit('alert/UPDATE_DISCORD_WEBHOOK_URL', config.discord_webhook_url);
-        commit('alert/UPDATE_DISCORD_EMOJI_TITLE', config.discord_emoji_title);
+
+        if (config.discord_emoji_title) {
+          commit('alert/UPDATE_DISCORD_EMOJI_TITLE', config.discord_emoji_title);
+        } else {
+          commit('alert/UPDATE_DISCORD_EMOJI_TITLE', ':warning:');
+        }
+
         commit('alert/UPDATE_DISCORD_EMBED_FOOTER', config.discord_embed_footer);
         commit('alert/UPDATE_DISCORD_EMBED_ICON_URL', config.discord_embed_icon_url);
 
