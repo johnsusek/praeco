@@ -322,7 +322,12 @@ export default {
           commit('alert/UPDATE_TENCENT_SMS_TO_NUMBER', config.tencent_sms_to_number);
         }
 
-        commit('alert/UPDATE_TENCENT_SMS_REGION', config.tencent_sms_region);
+        if (config.tencent_sms_region) {
+          commit('alert/UPDATE_TENCENT_SMS_REGION', config.tencent_sms_region);
+        } else {
+          commit('alert/UPDATE_TENCENT_SMS_REGION', 'ap-guangzhou');
+        }
+
         commit('alert/UPDATE_TENCENT_SMS_SIGN_NAME', config.tencent_sms_sign_name);
         commit('alert/UPDATE_TENCENT_SMS_TEMPLATE_ID', config.tencent_sms_template_id);
 
