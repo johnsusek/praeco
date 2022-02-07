@@ -123,9 +123,9 @@ For example:
 
 **Mattermost**
 
-- mattermostAttachKibanaDiscoverUrl
-- mattermostKibanaDiscoverColor
-- mattermostKibanaDiscoverTitle
+- mattermost_attach_kibana_discover_url
+- mattermost_kibana_discover_color
+- mattermost_kibana_discover_title
 - mattermost_title
 - mattermost_title_link
 - mattermost_footer
