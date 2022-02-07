@@ -225,6 +225,9 @@ export default {
       }, {
         code: '7.16',
         name: '7.16'
+      }, {
+        code: '7.17',
+        name: '7.17'
       }],
     };
   },
