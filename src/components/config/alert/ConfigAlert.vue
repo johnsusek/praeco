@@ -197,6 +197,7 @@
           alert.includes('pagerduty') ||
           alert.includes('pagertree') ||
           alert.includes('rocketchat') ||
+          alert.includes('servicenow') ||
           alert.includes('ses') ||
           alert.includes('slack') ||
           alert.includes('sns') ||

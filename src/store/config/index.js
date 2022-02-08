@@ -2519,36 +2519,60 @@ export default {
         match_enhancements: [...existingMatchEnhancements, ...timeWindowMatchEnhancements]
       };
 
-      if (state.alert.alert.includes('post')) {
-        config = { ...config, ...getters.http };
+      if (state.alert.alert.includes('alerta')) {
+        config = { ...config, ...getters.alerta };
       }
 
-      if (state.alert.alert.includes('post2')) {
-        config = { ...config, ...getters.http2 };
+      if (state.alert.alert.includes('chatwork')) {
+        config = { ...config, ...getters.chatwork };
+      }
+
+      if (state.alert.alert.includes('command')) {
+        config = { ...config, ...getters.command };
+      }
+
+      if (state.alert.alert.includes('datadog')) {
+        config = { ...config, ...getters.datadog };
+      }
+
+      if (state.alert.alert.includes('discord')) {
+        config = { ...config, ...getters.discord };
       }
 
       if (state.alert.alert.includes('email')) {
         config = { ...config, ...getters.email };
       }
 
-      if (state.alert.alert.includes('slack')) {
-        config = { ...config, ...getters.slack };
-      }
-
-      if (state.alert.alert.includes('telegram')) {
-        config = { ...config, ...getters.telegram };
-      }
-
-      if (state.alert.alert.includes('tencent_sms')) {
-        config = { ...config, ...getters.tencentsms };
-      }
-
       if (state.alert.alert.includes('exotel')) {
         config = { ...config, ...getters.exotel };
       }
 
-      if (state.alert.alert.includes('twilio')) {
-        config = { ...config, ...getters.twilio };
+      if (state.alert.alert.includes('gitter')) {
+        config = { ...config, ...getters.gitter };
+      }
+
+      if (state.alert.alert.includes('googlechat')) {
+        config = { ...config, ...getters.googlechat };
+      }
+
+      if (state.alert.alert.includes('hivealerter')) {
+        config = { ...config, ...getters.hivealerter };
+      }
+
+      if (state.alert.alert.includes('jira')) {
+        config = { ...config, ...getters.jira };
+      }
+
+      if (state.alert.alert.includes('linenotify')) {
+        config = { ...config, ...getters.linenotify };
+      }
+
+      if (state.alert.alert.includes('mattermost')) {
+        config = { ...config, ...getters.mattermost };
+      }
+
+      if (state.alert.alert.includes('ms_teams')) {
+        config = { ...config, ...getters.ms_teams };
       }
 
       if (state.alert.alert.includes('pagerduty')) {
@@ -2559,104 +2583,80 @@ export default {
         config = { ...config, ...getters.pagertree };
       }
 
-      if (state.alert.alert.includes('sns')) {
-        config = { ...config, ...getters.sns };
+      if (state.alert.alert.includes('post')) {
+        config = { ...config, ...getters.http };
       }
 
-      if (state.alert.alert.includes('ses')) {
-        config = { ...config, ...getters.ses };
-      }
-
-      if (state.alert.alert.includes('zabbix')) {
-        config = { ...config, ...getters.zabbix };
-      }
-
-      if (state.alert.alert.includes('linenotify')) {
-        config = { ...config, ...getters.linenotify };
-      }
-
-      if (state.alert.alert.includes('command')) {
-        config = { ...config, ...getters.command };
-      }
-
-      if (state.alert.alert.includes('gitter')) {
-        config = { ...config, ...getters.gitter };
-      }
-
-      if (state.alert.alert.includes('jira')) {
-        config = { ...config, ...getters.jira };
-      }
-
-      if (state.alert.alert.includes('victorops')) {
-        config = { ...config, ...getters.victorops };
-      }
-
-      if (state.alert.alert.includes('servicenow')) {
-        config = { ...config, ...getters.servicenow };
-      }
-
-      if (state.alert.alert.includes('stomp')) {
-        config = { ...config, ...getters.stomp };
-      }
-
-      if (state.alert.alert.includes('googlechat')) {
-        config = { ...config, ...getters.googlechat };
-      }
-
-      if (state.alert.alert.includes('mattermost')) {
-        config = { ...config, ...getters.mattermost };
+      if (state.alert.alert.includes('post2')) {
+        config = { ...config, ...getters.http2 };
       }
 
       if (state.alert.alert.includes('rocketchat')) {
         config = { ...config, ...getters.rocketchat };
       }
 
-      if (state.alert.alert.includes('hivealerter')) {
-        config = { ...config, ...getters.hivealerter };
+      if (state.alert.alert.includes('ses')) {
+        config = { ...config, ...getters.ses };
       }
 
-      if (state.alert.alert.includes('alerta')) {
-        config = { ...config, ...getters.alerta };
+      if (state.alert.alert.includes('servicenow')) {
+        config = { ...config, ...getters.servicenow };
       }
 
-      if (state.alert.alert.includes('datadog')) {
-        config = { ...config, ...getters.datadog };
+      if (state.alert.alert.includes('slack')) {
+        config = { ...config, ...getters.slack };
       }
 
-      if (state.alert.alert.includes('chatwork')) {
-        config = { ...config, ...getters.chatwork };
+      if (state.alert.alert.includes('sns')) {
+        config = { ...config, ...getters.sns };
       }
 
-      if (state.alert.alert.includes('discord')) {
-        config = { ...config, ...getters.discord };
+      if (state.alert.alert.includes('stomp')) {
+        config = { ...config, ...getters.stomp };
       }
 
-      if (state.alert.alert.includes('ms_teams')) {
-        config = { ...config, ...getters.ms_teams };
+      if (state.alert.alert.includes('telegram')) {
+        config = { ...config, ...getters.telegram };
       }
 
-      if (state.alert.alert.includes('email')
-          || state.alert.alert.includes('slack')
-          || state.alert.alert.includes('ms_teams')
-          || state.alert.alert.includes('telegram')
-          || state.alert.alert.includes('tencent_sms')
-          || state.alert.alert.includes('jira')
-          || state.alert.alert.includes('victorops')
-          || state.alert.alert.includes('servicenow')
-          || state.alert.alert.includes('googlechat')
-          || state.alert.alert.includes('pagertree')
-          || state.alert.alert.includes('linenotify')
-          || state.alert.alert.includes('sns')
-          || state.alert.alert.includes('ses')
-          || state.alert.alert.includes('stomp')
-          || state.alert.alert.includes('mattermost')
-          || state.alert.alert.includes('rocketchat')
-          || state.alert.alert.includes('hivealerter')
-          || state.alert.alert.includes('alerta')
-          || state.alert.alert.includes('datadog')
-          || state.alert.alert.includes('chatwork')
-          || state.alert.alert.includes('discord')
-          || state.alert.alert.includes('gitter')) {
+      if (state.alert.alert.includes('tencent_sms')) {
+        config = { ...config, ...getters.tencentsms };
+      }
+
+      if (state.alert.alert.includes('twilio')) {
+        config = { ...config, ...getters.twilio };
+      }
+
+      if (state.alert.alert.includes('victorops')) {
+        config = { ...config, ...getters.victorops };
+      }
+
+      if (state.alert.alert.includes('zabbix')) {
+        config = { ...config, ...getters.zabbix };
+      }
+
+      if (state.alert.alert.includes('alerta')
+        || state.alert.alert.includes('chatwork')
+        || state.alert.alert.includes('datadog')
+        || state.alert.alert.includes('discord')
+        || state.alert.alert.includes('email')
+        || state.alert.alert.includes('gitter')
+        || state.alert.alert.includes('googlechat')
+        || state.alert.alert.includes('hivealerter')
+        || state.alert.alert.includes('jira')
+        || state.alert.alert.includes('linenotify')
+        || state.alert.alert.includes('mattermost')
+        || state.alert.alert.includes('ms_teams')
+        || state.alert.alert.includes('pagertree')
+        || state.alert.alert.includes('rocketchat')
+        || state.alert.alert.includes('servicenow')
+        || state.alert.alert.includes('ses')
+        || state.alert.alert.includes('slack')
+        || state.alert.alert.includes('sns')
+        || state.alert.alert.includes('stomp')
+        || state.alert.alert.includes('telegram')
+        || state.alert.alert.includes('tencent_sms')
+        || state.alert.alert.includes('victorops')) {
         config = { ...config, ...getters.subjectBody };
       }
 
