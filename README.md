@@ -113,6 +113,10 @@ If you need generous support, please consider paid support software.
 
 Do not use `karql/elastalert2-server` as it does not implement the features required by praeco. Use `praecoapp/elastalert-server`.
 
+#### Does it support elasticsearch 8?
+
+We plan to address it, but we are currently experiencing a variety of issues and elasticsearch 8 will not be supported until the issues are resolved.
+
 #### Can you support a version that is not the latest version?
 
 Not Support
