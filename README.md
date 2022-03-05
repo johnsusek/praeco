@@ -113,7 +113,19 @@ If you need generous support, please consider paid support software.
 
 Do not use `karql/elastalert2-server` as it does not implement the features required by praeco. Use `praecoapp/elastalert-server`.
 
-#### Does it support elasticsearch 8?
+#### Does it support elasticsearch 5.x?
+
+Not Support
+
+#### Does it support elasticsearch 6.x?
+
+Not Support
+
+#### Does it support elasticsearch 7.x?
+
+Support
+
+#### Does it support elasticsearch 8.x?
 
 We plan to address it, but we are currently experiencing a variety of issues and elasticsearch 8 will not be supported until the issues are resolved.
 
@@ -458,8 +470,6 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 - 7.x
 
-I think it works with 6.x, but I haven't confirmed the operation.
-
 Configure the ElastAlert 2 `config.yaml` with:
 - Your `es_host`
 - A unique `writeback_index`
@@ -470,7 +480,7 @@ cd ~/elastalert2
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
 echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
-pip install "setuptools>=11.3"
+pip install "setuptools>=60.9.3"
 python setup.py install
 cp ./examples/config.yaml.example ./config.yaml
 vi config.yaml
