@@ -119,7 +119,7 @@ Do not use `karql/elastalert2-server` as it does not implement the features requ
 
 #### Does [yelp/elastalert](https://github.com/Yelp/elastalert) support it?
 
-yelp is no longer supported as maintenance has been discontinued.
+yelp/elastalert is no longer supported as maintenance has been discontinued.
 
 Main challenges of yelp/elastalert
 - It does not work with Python 3.9 and 3.10.
