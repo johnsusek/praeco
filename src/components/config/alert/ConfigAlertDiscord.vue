@@ -29,6 +29,24 @@
         Provide absolute address of the pciture.(exampmle : http://domain/picure.png)
       </label>
     </praeco-form-item>
+
+    <praeco-form-item label="Proxy" prop="discordProxy">
+      <el-input id="discordProxy" v-model="discordProxy" :disabled="viewOnly" />
+      <label>
+        By default ElastAlert 2 will not use a network proxy to send notifications to Discord.
+        Set this option using hostname:port if you need to use a proxy.
+      </label>
+    </praeco-form-item>
+
+    <praeco-form-item label="Proxy Login" prop="discordProxyLogin">
+      <el-input id="discordProxyLogin" v-model="discordProxyLogin" :disabled="viewOnly" />
+      <label>The Discord proxy auth username.</label>
+    </praeco-form-item>
+
+    <praeco-form-item label="Proxy Password" prop="discordProxyPassword">
+      <el-input id="discordProxyPassword" v-model="discordProxyPassword" :disabled="viewOnly" />
+      <label>The Discord proxy auth password.</label>
+    </praeco-form-item>
   </div>
 </template>
 
@@ -80,6 +98,42 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_DISCORD_EMBED_ICON_URL',
+          value
+        );
+      }
+    },
+
+    discordProxy: {
+      get() {
+        return this.$store.state.config.alert.discordProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_PROXY',
+          value
+        );
+      }
+    },
+
+    discordProxyLogin: {
+      get() {
+        return this.$store.state.config.alert.discordProxyLogin;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_PROXY_LOGIN',
+          value
+        );
+      }
+    },
+
+    discordProxyPassword: {
+      get() {
+        return this.$store.state.config.alert.discordProxyPassword;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_DISCORD_PROXY_PASSWORD',
           value
         );
       }

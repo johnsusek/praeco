@@ -185,6 +185,9 @@ function initialState() {
     discordEmojiTitle: '',
     discordEmbedFooter: '',
     discordEmbedIconUrl: '',
+    discordProxy: '',
+    discordProxyLogin: '',
+    discordProxyPassword: '',
 
     /* ServiceNow */
     serviceNowUsername: '',
@@ -584,6 +587,18 @@ export default {
 
     UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
       state.discordEmbedIconUrl = discordEmbedIconUrl;
+    },
+
+    UPDATE_DISCORD_PROXY(state, discordProxy) {
+      state.discordProxy = discordProxy;
+    },
+
+    UPDATE_DISCORD_PROXY_LOGIN(state, discordProxyLogin) {
+      state.discordProxyLogin = discordProxyLogin;
+    },
+
+    UPDATE_DISCORD_PROXY_PASSWORD(state, discordProxyPassword) {
+      state.discordProxyPassword = discordProxyPassword;
     },
 
     /* Exotel */

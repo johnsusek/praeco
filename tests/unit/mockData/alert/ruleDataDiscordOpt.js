@@ -9,6 +9,9 @@ alert_text_type: alert_text_only
 discord_emoji_title: ':error:'
 discord_embed_footer: footer
 discord_embed_icon_url: http://testserver/xxx/test.png
+discord_proxy: https://hostname:8080/
+discord_proxy_login: user
+discord_proxy_password: password
 discord_webhook_url: http://testserver/xxx/
 doc_type: syslog
 filter:

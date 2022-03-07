@@ -350,6 +350,9 @@ export default {
 
         commit('alert/UPDATE_DISCORD_EMBED_FOOTER', config.discord_embed_footer);
         commit('alert/UPDATE_DISCORD_EMBED_ICON_URL', config.discord_embed_icon_url);
+        commit('alert/UPDATE_DISCORD_PROXY', config.discord_proxy);
+        commit('alert/UPDATE_DISCORD_PROXY_LOGIN', config.discord_proxy_login);
+        commit('alert/UPDATE_DISCORD_PROXY_PASSWORD', config.discord_proxy_password);
 
         /* Exotel */
         commit('alert/UPDATE_EXOTEL_ACCOUNT_SID', config.exotel_account_sid);
@@ -1652,6 +1655,18 @@ export default {
 
       if (state.alert.discordEmbedIconUrl) {
         config.discord_embed_icon_url = state.alert.discordEmbedIconUrl;
+      }
+
+      if (state.alert.discordProxy) {
+        config.discord_proxy = state.alert.discordProxy;
+      }
+
+      if (state.alert.discordProxyLogin) {
+        config.discord_proxy_login = state.alert.discordProxyLogin;
+      }
+
+      if (state.alert.discordProxyPassword) {
+        config.discord_proxy_password = state.alert.discordProxyPassword;
       }
 
       return config;
