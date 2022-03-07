@@ -7,6 +7,9 @@ alert_text: this is a test body
 alert_text_args: []
 alert_text_type: alert_text_only
 chatwork_apikey: xxxxxx1
+chatwork_proxy: https://hostname:8080/
+chatwork_proxy_login: user
+chatwork_proxy_pass: password
 chatwork_room_id: xxxxxx2
 doc_type: syslog
 filter:

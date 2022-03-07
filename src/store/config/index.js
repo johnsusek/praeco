@@ -338,6 +338,9 @@ export default {
         /* Chatwork */
         commit('alert/UPDATE_CHATWORK_API_KEY', config.chatwork_apikey);
         commit('alert/UPDATE_CHATWORK_ROOM_ID', config.chatwork_room_id);
+        commit('alert/UPDATE_CHATWORK_PROXY', config.chatwork_proxy);
+        commit('alert/UPDATE_CHATWORK_PROXY_LOGIN', config.chatwork_proxy_login);
+        commit('alert/UPDATE_CHATWORK_PROXY_PASS', config.chatwork_proxy_pass);
 
         /* Discord */
         commit('alert/UPDATE_DISCORD_WEBHOOK_URL', config.discord_webhook_url);
@@ -1634,6 +1637,18 @@ export default {
 
       if (state.alert.chatworkRoomId) {
         config.chatwork_room_id = state.alert.chatworkRoomId;
+      }
+
+      if (state.alert.chatworkProxy) {
+        config.chatwork_proxy = state.alert.chatworkProxy;
+      }
+
+      if (state.alert.chatworkProxyLogin) {
+        config.chatwork_proxy_login = state.alert.chatworkProxyLogin;
+      }
+
+      if (state.alert.chatworkProxyPass) {
+        config.chatwork_proxy_pass = state.alert.chatworkProxyPass;
       }
 
       return config;

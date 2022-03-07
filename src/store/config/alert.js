@@ -179,6 +179,9 @@ function initialState() {
     /* Chatwork */
     chatworkApikey: '',
     chatworkRoomId: '',
+    chatworkProxy: '',
+    chatworkProxyLogin: '',
+    chatworkProxyPass: '',
 
     /* Discord */
     discordWebhookUrl: '',
@@ -570,6 +573,18 @@ export default {
 
     UPDATE_CHATWORK_ROOM_ID(state, chatworkRoomId) {
       state.chatworkRoomId = chatworkRoomId;
+    },
+
+    UPDATE_CHATWORK_PROXY(state, chatworkProxy) {
+      state.chatworkProxy = chatworkProxy;
+    },
+
+    UPDATE_CHATWORK_PROXY_LOGIN(state, chatworkProxyLogin) {
+      state.chatworkProxyLogin = chatworkProxyLogin;
+    },
+
+    UPDATE_CHATWORK_PROXY_PASS(state, chatworkProxyPass) {
+      state.chatworkProxyPass = chatworkProxyPass;
     },
 
     /* Discord */
