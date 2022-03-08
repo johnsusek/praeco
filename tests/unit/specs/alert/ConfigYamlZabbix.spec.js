@@ -5,7 +5,7 @@ import { ruleYaml } from '../../mockData/alert/ruleDataZabbix.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
-describe('YAML parsing', () => {
+describe('Zabbix YAML parsing', () => {
   it('renders the correct yaml', async () => {
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
 

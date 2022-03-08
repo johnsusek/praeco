@@ -5,7 +5,7 @@ import { ruleYaml } from '../../mockData/alert/ruleDataHttpPostOpt.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
-describe('YAML parsing', () => {
+describe('HttpPostOpt YAML parsing', () => {
   it('renders the correct yaml', async () => {
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
 
