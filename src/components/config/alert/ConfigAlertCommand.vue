@@ -126,6 +126,22 @@ export default {
   },
 
   methods: {
+    changePipeMatchJson(val) {
+      if (val) {
+        this.pipeMatchJson = true;
+      } else {
+        this.pipeMatchJson = false;
+      }
+    },
+
+    changePipeAlertText(val) {
+      if (val) {
+        this.pipeAlertText = true;
+      } else {
+        this.pipeAlertText = false;
+      }
+    },
+
     async validate() {
       try {
         if (this.$refs.command) {
