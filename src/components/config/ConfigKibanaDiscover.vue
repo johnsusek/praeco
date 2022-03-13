@@ -236,13 +236,14 @@ export default {
         name: '8.1'
       }],
     };
-  7,
-  7   }, {
-        code: '7.16',8.0     name: '7.16'
-  computed8.0     generateKibanaDiscoverUrl: {
+  },
+
+  computed: {
+    generateKibanaDiscoverUrl: {
       get() {
-        re8.1 this.$store.state.config.alert.generateKibanaDiscoverUrl;
-     8.1      set(value) {
+        return this.$store.state.config.alert.generateKibanaDiscoverUrl;
+      },
+      set(value) {
         this.$store.commit('config/alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', value);
       }
     },
