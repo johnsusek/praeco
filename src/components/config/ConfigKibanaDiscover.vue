@@ -145,36 +145,6 @@ export default {
       popKibanaDiscoverColumnsVisible: false,
       popKibanaDiscoverColumnsValid: true,
       kibanaVersionOptions: [{
-        code: '5.6',
-        name: '5.6'
-      }, {
-        code: '6.0',
-        name: '6.0'
-      }, {
-        code: '6.1',
-        name: '6.1'
-      }, {
-        code: '6.2',
-        name: '6.2'
-      }, {
-        code: '6.3',
-        name: '6.3'
-      }, {
-        code: '6.4',
-        name: '6.4'
-      }, {
-        code: '6.5',
-        name: '6.5'
-      }, {
-        code: '6.6',
-        name: '6.6'
-      }, {
-        code: '6.7',
-        name: '6.7'
-      }, {
-        code: '6.8',
-        name: '6.8'
-      }, {
         code: '7.0',
         name: '7.0'
       }, {
