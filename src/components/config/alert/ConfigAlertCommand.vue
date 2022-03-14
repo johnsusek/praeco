@@ -73,6 +73,18 @@
         It cannot be used at the same time as pipe_match_json.
       </label>
     </el-form-item>
+
+    <el-form-item label="fail_on_non_zero_exit" prop="failOnNonZeroExit">
+      <el-switch
+        id="failOnNonZeroExit"
+        v-model="failOnNonZeroExit"
+        :disabled="viewOnly"
+        @change="changeFailOnNonZeroExit" />
+      <label>
+        By default this is False. Allows monitoring of when commands fail to run.
+        When a command returns a non-zero exit status, the alert raises an exception.
+      </label>
+    </el-form-item>
   </div>
 </template>
 
@@ -122,6 +134,18 @@ export default {
           value
         );
       }
+    },
+
+    failOnNonZeroExit: {
+      get() {
+        return this.$store.state.config.alert.failOnNonZeroExit;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_FAIL_ON_NON_ZERO_EXIT',
+          value
+        );
+      }
     }
   },
 
@@ -139,6 +163,14 @@ export default {
         this.pipeAlertText = true;
       } else {
         this.pipeAlertText = false;
+      }
+    },
+
+    changeFailOnNonZeroExit(val) {
+      if (val) {
+        this.failOnNonZeroExit = true;
+      } else {
+        this.failOnNonZeroExit = false;
       }
     },
 

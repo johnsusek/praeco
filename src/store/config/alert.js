@@ -144,6 +144,7 @@ function initialState() {
     command: [],
     pipeMatchJson: false,
     pipeAlertText: false,
+    failOnNonZeroExit: false,
 
     /* Gitter */
     gitterWebhookUrl: '',
@@ -937,6 +938,10 @@ export default {
 
     UPDATE_PIPE_ALERT_TEXT(state, pipeAlertText) {
       state.pipeAlertText = pipeAlertText;
+    },
+
+    UPDATE_FAIL_ON_NON_ZERO_EXIT(state, failOnNonZeroExit) {
+      state.failOnNonZeroExit = failOnNonZeroExit;
     },
 
     /* Gitter */

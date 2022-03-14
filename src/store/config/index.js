@@ -504,6 +504,7 @@ export default {
 
         commit('alert/UPDATE_PIPE_MATCH_JSON', config.pipe_match_json);
         commit('alert/UPDATE_PIPE_ALERT_TEXT', config.pipe_alert_text);
+        commit('alert/UPDATE_FAIL_ON_NON_ZERO_EXIT', config.fail_on_non_zero_exit);
 
         /* Gitter */
         commit('alert/UPDATE_GITTER_WEBHOOK_URL', config.gitter_webhook_url);
@@ -1954,6 +1955,10 @@ export default {
 
       if (state.alert.pipeAlertText) {
         config.pipe_alert_text = state.alert.pipeAlertText;
+      }
+
+      if (state.alert.failOnNonZeroExit) {
+        config.fail_on_non_zero_exit = state.alert.failOnNonZeroExit;
       }
 
       return config;
