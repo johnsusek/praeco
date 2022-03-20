@@ -645,7 +645,7 @@ export default {
             trigger: 'change'
           }
         ],
-        ms_teamsWebhookUrl: [
+        msTeamsWebhookUrl: [
           {
             validator: validateUrl,
             trigger: ['change', 'blur']

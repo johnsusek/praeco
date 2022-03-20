@@ -23,13 +23,16 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
+generate_kibana_discover_url: true
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
 match_enhancements: []
 ms_teams_alert_fixed_width: true
 ms_teams_alert_summary: "Message"
+ms_teams_attach_kibana_discover_url: true
+ms_teams_ca_certs: true
+ms_teams_kibana_discover_title: "Discover in Kibana2"
 ms_teams_proxy: "hostname:8080"
 ms_teams_webhook_url: "https://xxxxxxxxxxxxxxxxxxxxxx/xxxx"
 name: "test123"

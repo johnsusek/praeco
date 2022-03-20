@@ -29,6 +29,8 @@ index: "hannibal-*"
 is_enabled: false
 match_enhancements: []
 ms_teams_alert_summary: "ElastAlert Message"
+ms_teams_attach_kibana_discover_url: false
+ms_teams_kibana_discover_title: "Discover in Kibana"
 ms_teams_webhook_url: "https://xxxxxxxxxxxxxxxxxxxxxx/xxxx"
 name: "test123"
 num_events: 10000

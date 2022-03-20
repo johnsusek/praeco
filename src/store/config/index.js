@@ -650,7 +650,7 @@ export default {
           commit('alert/UPDATE_MATTERMOST_KIBANA_DISCOVER_COLOR', config.mattermost_kibana_discover_color);
         }
 
-        if (config.mattermost_kibana_discover_color) {
+        if (config.mattermost_kibana_discover_title) {
           commit('alert/UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE', config.mattermost_kibana_discover_title);
         }
 
@@ -686,7 +686,7 @@ export default {
           commit('alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR', config.rocket_chat_kibana_discover_color);
         }
 
-        if (config.rocket_chat_kibana_discover_color) {
+        if (config.rocket_chat_kibana_discover_title) {
           commit('alert/UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE', config.rocket_chat_kibana_discover_title);
         }
 
@@ -848,7 +848,7 @@ export default {
           commit('alert/UPDATE_SLACK_KIBANA_DISCOVER_COLOR', config.slack_kibana_discover_color);
         }
 
-        if (config.slack_kibana_discover_color) {
+        if (config.slack_kibana_discover_title) {
           commit('alert/UPDATE_SLACK_KIBANA_DISCOVER_TITLE', config.slack_kibana_discover_title);
         }
 
@@ -875,6 +875,23 @@ export default {
         commit('alert/UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH', config.ms_teams_alert_fixed_width);
         commit('alert/UPDATE_MS_TEAMS_PROXY', config.ms_teams_proxy);
 
+        if (config.ms_teams_ca_certs) {
+          commit('alert/UPDATE_MS_TEAMS_CA_CERTS', config.ms_teams_ca_certs);
+        }
+
+        if (config.ms_teams_ignore_ssl_errors) {
+          commit('alert/UPDATE_MS_TEAMS_IGNORE_SSL_ERRORS', config.ms_teams_ignore_ssl_errors);
+        }
+
+        if (config.ms_teams_attach_kibana_discover_url) {
+          commit('alert/UPDATE_MS_TEAMS_ATTACH_KIBANA_DISCOVER_URL', config.ms_teams_attach_kibana_discover_url);
+        }
+
+        if (config.ms_teams_kibana_discover_title) {
+          commit('alert/UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE', config.ms_teams_kibana_discover_title);
+        }
+
+        /* realert, alert, alert_text_type, alert_text, alert_subject, alert_subject_args, alert_text_args */
         commit('alert/UPDATE_REALERT', config.realert);
         commit('alert/UPDATE_ALERT', config.alert);
 
@@ -1342,6 +1359,10 @@ export default {
         if (state.alert.alert.includes('mattermost')) {
           config.mattermost_attach_kibana_discover_url = false;
         }
+
+        if (state.alert.alert.includes('ms_teams')) {
+          config.ms_teams_attach_kibana_discover_url = false;
+        }
       }
 
       if (state.alert.kibanaDiscoverAppUrl) {
@@ -1547,24 +1568,38 @@ export default {
     ms_teams(state) {
       let config = {};
 
-      if (state.alert.ms_teamsWebhookUrl) {
-        config.ms_teams_webhook_url = state.alert.ms_teamsWebhookUrl;
+      if (state.alert.msTeamsWebhookUrl) {
+        config.ms_teams_webhook_url = state.alert.msTeamsWebhookUrl;
       }
 
-      if (state.alert.ms_teamsThemeColor) {
-        config.ms_teams_theme_color = state.alert.ms_teamsThemeColor;
+      if (state.alert.msTeamsThemeColor) {
+        config.ms_teams_theme_color = state.alert.msTeamsThemeColor;
       }
 
-      if (state.alert.ms_teamsAlertFixedWidth) {
-        config.ms_teams_alert_fixed_width = state.alert.ms_teamsAlertFixedWidth;
+      if (state.alert.msTeamsAlertFixedWidth) {
+        config.ms_teams_alert_fixed_width = state.alert.msTeamsAlertFixedWidth;
       }
 
-      if (state.alert.ms_teamsAlertSummary) {
-        config.ms_teams_alert_summary = state.alert.ms_teamsAlertSummary;
+      if (state.alert.msTeamsAlertSummary) {
+        config.ms_teams_alert_summary = state.alert.msTeamsAlertSummary;
       }
 
-      if (state.alert.ms_teamsProxy) {
-        config.ms_teams_proxy = state.alert.ms_teamsProxy;
+      if (state.alert.msTeamsProxy) {
+        config.ms_teams_proxy = state.alert.msTeamsProxy;
+      }
+
+      if (state.alert.msTeamsIgnoreSslErrors) {
+        config.ms_teams_ignore_ssl_errors = state.alert.msTeamsIgnoreSslErrors;
+      }
+
+      if (state.alert.msTeamsCaCerts) {
+        config.ms_teams_ca_certs = state.alert.msTeamsCaCerts;
+      }
+
+      config.ms_teams_attach_kibana_discover_url = state.alert.msTeamsAttachKibanaDiscoverUrl;
+
+      if (state.alert.msTeamsKibanaDiscoverTitle) {
+        config.ms_teams_kibana_discover_title = state.alert.msTeamsKibanaDiscoverTitle;
       }
 
       return config;

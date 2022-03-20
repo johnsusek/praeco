@@ -52,11 +52,15 @@ function initialState() {
     slackMsgPretext: '',
 
     /* MS Teams */
-    ms_teamsWebhookUrl: '',
-    ms_teamsThemeColor: '#ff0000',
-    ms_teamsAlertFixedWidth: false,
-    ms_teamsAlertSummary: 'ElastAlert Message',
-    ms_teamsProxy: '',
+    msTeamsWebhookUrl: '',
+    msTeamsThemeColor: '#ff0000',
+    msTeamsAlertFixedWidth: false,
+    msTeamsAlertSummary: 'ElastAlert Message',
+    msTeamsProxy: '',
+    msTeamsIgnoreSslErrors: false,
+    msTeamsCaCerts: false,
+    msTeamsAttachKibanaDiscoverUrl: false,
+    msTeamsKibanaDiscoverTitle: 'Discover in Kibana',
 
     /* Telegram */
     telegramRoomId: '',
@@ -1355,24 +1359,40 @@ export default {
     },
 
     /* MS Teams */
-    UPDATE_MS_TEAMS_WEBHOOK_URL(state, ms_teamsWebhookUrl) {
-      state.ms_teamsWebhookUrl = ms_teamsWebhookUrl;
+    UPDATE_MS_TEAMS_WEBHOOK_URL(state, msTeamsWebhookUrl) {
+      state.msTeamsWebhookUrl = msTeamsWebhookUrl;
     },
 
-    UPDATE_MS_TEAMS_THEME_COLOR(state, ms_teamsThemeColor) {
-      state.ms_teamsThemeColor = ms_teamsThemeColor;
+    UPDATE_MS_TEAMS_THEME_COLOR(state, msTeamsThemeColor) {
+      state.msTeamsThemeColor = msTeamsThemeColor;
     },
 
-    UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH(state, ms_teamsAlertFixedWidth) {
-      state.ms_teamsAlertFixedWidth = ms_teamsAlertFixedWidth;
+    UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH(state, msTeamsAlertFixedWidth) {
+      state.msTeamsAlertFixedWidth = msTeamsAlertFixedWidth;
     },
 
-    UPDATE_MS_TEAMS_ALERT_SUMMARY(state, ms_teamsAlertSummary) {
-      state.ms_teamsAlertSummary = ms_teamsAlertSummary;
+    UPDATE_MS_TEAMS_ALERT_SUMMARY(state, msTeamsAlertSummary) {
+      state.msTeamsAlertSummary = msTeamsAlertSummary;
     },
 
-    UPDATE_MS_TEAMS_PROXY(state, ms_teamsProxy) {
-      state.ms_teamsProxy = ms_teamsProxy;
+    UPDATE_MS_TEAMS_PROXY(state, msTeamsProxy) {
+      state.msTeamsProxy = msTeamsProxy;
+    },
+
+    UPDATE_MS_TEAMS_IGNORE_SSL_ERRORS(state, msTeamsIgnoreSslErrors) {
+      state.msTeamsIgnoreSslErrors = msTeamsIgnoreSslErrors;
+    },
+
+    UPDATE_MS_TEAMS_CA_CERTS(state, msTeamsCaCerts) {
+      state.msTeamsCaCerts = msTeamsCaCerts;
+    },
+
+    UPDATE_MS_TEAMS_ATTACH_KIBANA_DISCOVER_URL(state, msTeamsAttachKibanaDiscoverUrl) {
+      state.msTeamsAttachKibanaDiscoverUrl = msTeamsAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE(state, msTeamsKibanaDiscoverTitle) {
+      state.msTeamsKibanaDiscoverTitle = msTeamsKibanaDiscoverTitle;
     },
 
     /* TheHive */
