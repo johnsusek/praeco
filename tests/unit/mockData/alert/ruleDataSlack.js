@@ -19,9 +19,7 @@ num_events: 10000
 realert:
   minutes: 5
 slack_channel_override: '#elastalert-debugging'
-slack_msg_color: danger
 slack_title_link: 'http://localhost:8080/rules/test123'
-slack_username_override: Praeco
 timeframe:
   minutes: 5
 timestamp_field: '@timestamp'
