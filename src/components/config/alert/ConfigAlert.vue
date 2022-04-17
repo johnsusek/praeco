@@ -177,12 +177,16 @@
         <el-checkbox id="destinationTencentSms" label="tencent_sms" border>
           TencentSMS
         </el-checkbox>
+        <el-checkbox id="destinationAlertmanager" label="alertmanager" border>
+          Alertmanager
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane
         v-if="alert.includes('alerta') ||
+          alert.includes('alertmanager') ||
           alert.includes('chatwork') ||
           alert.includes('datadog') ||
           alert.includes('discord') ||
@@ -439,6 +443,14 @@
         </template>
         <ConfigAlertTencentSms ref="tencent_sms" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Alertmanager -->
+      <el-tab-pane v-if="alert.includes('alertmanager')">
+        <template slot="label">
+          Alertmanager
+        </template>
+        <ConfigAlertAlertmanager ref="alertmanager" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -448,6 +460,7 @@ import isURL from 'validator/lib/isURL';
 import isEmail from 'validator/lib/isEmail';
 import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
 import ConfigAlertAlerta from './ConfigAlertAlerta';
+import ConfigAlertAlertmanager from './ConfigAlertAlertmanager';
 import ConfigAlertAmazonSes from './ConfigAlertAmazonSes';
 import ConfigAlertAmazonSns from './ConfigAlertAmazonSns';
 import ConfigAlertChatwork from './ConfigAlertChatwork';
@@ -561,6 +574,7 @@ export default {
   components: {
     ConfigAlertSubjectBody,
     ConfigAlertAlerta,
+    ConfigAlertAlertmanager,
     ConfigAlertAmazonSes,
     ConfigAlertAmazonSns,
     ConfigAlertChatwork,

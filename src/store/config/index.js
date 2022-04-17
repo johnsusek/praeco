@@ -436,6 +436,33 @@ export default {
         commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
         commit('alert/UPDATE_PAGERTREE_PROXY', config.pagertree_proxy);
 
+        /* Alertmanager */
+        if (config.alertmanager_alert_subject_labelname) {
+          commit('alert/UPDATE_ALERTMANAGER_ALERT_SUBJECT_LABELNAME', config.alertmanager_alert_subject_labelname);
+        } else {
+          commit('alert/UPDATE_ALERTMANAGER_ALERT_SUBJECT_LABELNAME', 'summary');
+        }
+
+        if (config.alertmanager_alert_text_labelname) {
+          commit('alert/UPDATE_ALERTMANAGER_ALERT_TEXT_LABELNAME', config.alertmanager_alert_text_labelname);
+        } else {
+          commit('alert/UPDATE_ALERTMANAGER_ALERT_TEXT_LABELNAME', 'description');
+        }
+
+        commit('alert/UPDATE_ALERTMANAGER_PROXY', config.alertmanager_proxy);
+        commit('alert/UPDATE_ALERTMANAGER_BASIC_AUTH_LOGIN', config.alertmanager_basic_auth_login);
+        commit('alert/UPDATE_ALERTMANAGER_BASIC_AUTH_PASSWORD', config.alertmanager_basic_auth_password);
+
+        if (config.alertmanager_ca_certs) {
+          commit('alert/UPDATE_ALERTMANAGER_CA_CERTS', config.alertmanager_ca_certs);
+        }
+
+        if (config.alertmanager_ignore_ssl_errors) {
+          commit('alert/UPDATE_ALERTMANAGER_IGNORE_SSL_ERRORS', config.alertmanager_ignore_ssl_errors);
+        }
+
+        commit('alert/UPDATE_ALERTMANAGER_TIMEOUT', config.alertmanager_timeout);
+
         /* Amazon SNS */
         commit('alert/UPDATE_SNS_TOPIC_ARN', config.sns_topic_arn);
         commit('alert/UPDATE_SNS_AWS_ACCESS_KEY_ID', config.sns_aws_access_key_id);
@@ -2454,6 +2481,44 @@ export default {
       return config;
     },
 
+    alertmanager(state) {
+      let config = {};
+
+      if (state.alert.alertmanagerAlertSubjectLabelname) {
+        config.alertmanager_alert_subject_labelname = state.alert.alertmanagerAlertSubjectLabelname;
+      }
+
+      if (state.alert.alertmanagerAlertTextLabelname) {
+        config.alertmanager_alert_text_labelname = state.alert.alertmanagerAlertTextLabelname;
+      }
+
+      if (state.alert.alertmanagerProxy) {
+        config.alertmanager_proxy = state.alert.alertmanagerProxy;
+      }
+
+      if (state.alert.alertmanagerBasicAuthLogin) {
+        config.alertmanager_basic_auth_login = state.alert.alertmanagerBasicAuthLogin;
+      }
+
+      if (state.alert.alertmanagerBasicAuthPassword) {
+        config.alertmanager_basic_auth_password = state.alert.alertmanagerBasicAuthPassword;
+      }
+
+      if (state.alert.alertmanagerCaCerts) {
+        config.alertmanager_ca_certs = state.alert.alertmanagerCaCerts;
+      }
+
+      if (state.alert.alertmanagerIgnoreSslErrors) {
+        config.alertmanager_ignore_ssl_errors = state.alert.alertmanagerIgnoreSslErrors;
+      }
+
+      if (state.alert.alertmanagerTimeout) {
+        config.alertmanager_timeout = state.alert.alertmanagerTimeout;
+      }
+
+      return config;
+    },
+
     datadog(state) {
       let config = {};
 
@@ -2593,6 +2658,10 @@ export default {
         config = { ...config, ...getters.alerta };
       }
 
+      if (state.alert.alert.includes('alertmanager')) {
+        config = { ...config, ...getters.alertmanager };
+      }
+
       if (state.alert.alert.includes('chatwork')) {
         config = { ...config, ...getters.chatwork };
       }
@@ -2706,6 +2775,7 @@ export default {
       }
 
       if (state.alert.alert.includes('alerta')
+        || state.alert.alert.includes('alertmanager')
         || state.alert.alert.includes('chatwork')
         || state.alert.alert.includes('datadog')
         || state.alert.alert.includes('discord')

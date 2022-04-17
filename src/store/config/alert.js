@@ -115,6 +115,16 @@ function initialState() {
     pagertreeIntegrationUrl: '',
     pagertreeProxy: '',
 
+    /* Alertmanager */
+    alertmanagerAlertSubjectLabelname: 'summary',
+    alertmanagerAlertTextLabelname: 'description',
+    alertmanagerProxy: '',
+    alertmanagerBasicAuthLogin: '',
+    alertmanagerBasicAuthPassword: '',
+    alertmanagerCaCerts: false,
+    alertmanagerIgnoreSslErrors: false,
+    alertmanagerTimeout: 10,
+
     /* Amazon SNS */
     snsTopicArn: '',
     snsAwsAccessKeyId: '',
@@ -824,6 +834,39 @@ export default {
 
     UPDATE_PAGERTREE_PROXY(state, pagertreeProxy) {
       state.pagertreeProxy = pagertreeProxy;
+    },
+
+    /* Alertmanager */
+    UPDATE_ALERTMANAGER_ALERT_SUBJECT_LABELNAME(state, alertmanagerAlertSubjectLabelname) {
+      state.alertmanagerAlertSubjectLabelname = alertmanagerAlertSubjectLabelname;
+    },
+
+    UPDATE_ALERTMANAGER_ALERT_TEXT_LABELNAME(state, alertmanagerAlertTextLabelname) {
+      state.alertmanagerAlertTextLabelname = alertmanagerAlertTextLabelname;
+    },
+
+    UPDATE_ALERTMANAGER_PROXY(state, alertmanagerProxy) {
+      state.alertmanagerProxy = alertmanagerProxy;
+    },
+
+    UPDATE_ALERTMANAGER_BASIC_AUTH_LOGIN(state, alertmanagerBasicAuthLogin) {
+      state.alertmanagerBasicAuthLogin = alertmanagerBasicAuthLogin;
+    },
+
+    UPDATE_ALERTMANAGER_BASIC_AUTH_PASSWORD(state, alertmanagerBasicAuthPassword) {
+      state.alertmanagerBasicAuthPassword = alertmanagerBasicAuthPassword;
+    },
+
+    UPDATE_ALERTMANAGER_CA_CERTS(state, alertmanagerCaCerts) {
+      state.alertmanagerCaCerts = alertmanagerCaCerts;
+    },
+
+    UPDATE_ALERTMANAGER_IGNORE_SSL_ERRORS(state, alertmanagerIgnoreSslErrors) {
+      state.alertmanagerIgnoreSslErrors = alertmanagerIgnoreSslErrors;
+    },
+
+    UPDATE_ALERTMANAGER_TIMEOUT(state, alertmanagerTimeout) {
+      state.alertmanagerTimeout = alertmanagerTimeout;
     },
 
     /* Amazon SNS */
