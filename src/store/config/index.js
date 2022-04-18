@@ -911,13 +911,7 @@ export default {
         /* MS Teams */
         commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
         commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
-
-        if (config.ms_teams_alert_summary) {
-          commit('alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', config.ms_teams_alert_summary);
-        } else {
-          commit('alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', 'ElastAlert Message');
-        }
-
+        commit('alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', config.ms_teams_alert_summary);
         commit('alert/UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH', config.ms_teams_alert_fixed_width);
         commit('alert/UPDATE_MS_TEAMS_PROXY', config.ms_teams_proxy);
 
