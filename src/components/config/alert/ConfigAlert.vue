@@ -180,6 +180,9 @@
         <el-checkbox id="destinationAlertmanager" label="alertmanager" border>
           Alertmanager
         </el-checkbox>
+        <el-checkbox id="destinationDingtalk" label="dingtalk" border>
+          Dingtalk
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -189,6 +192,7 @@
           alert.includes('alertmanager') ||
           alert.includes('chatwork') ||
           alert.includes('datadog') ||
+          alert.includes('dingtalk') ||
           alert.includes('discord') ||
           alert.includes('email') ||
           alert.includes('gitter') ||
@@ -451,6 +455,14 @@
         </template>
         <ConfigAlertAlertmanager ref="alertmanager" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Dingtalk -->
+      <el-tab-pane v-if="alert.includes('dingtalk')">
+        <template slot="label">
+          Dingtalk
+        </template>
+        <ConfigAlertDingtalk ref="dingtalk" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -465,6 +477,7 @@ import ConfigAlertAmazonSes from './ConfigAlertAmazonSes';
 import ConfigAlertAmazonSns from './ConfigAlertAmazonSns';
 import ConfigAlertChatwork from './ConfigAlertChatwork';
 import ConfigAlertCommand from './ConfigAlertCommand';
+import ConfigAlertDingtalk from './ConfigAlertDingtalk';
 import ConfigAlertDatadog from './ConfigAlertDatadog';
 import ConfigAlertDiscord from './ConfigAlertDiscord';
 import ConfigAlertEmail from './ConfigAlertEmail';
@@ -579,6 +592,7 @@ export default {
     ConfigAlertAmazonSns,
     ConfigAlertChatwork,
     ConfigAlertCommand,
+    ConfigAlertDingtalk,
     ConfigAlertDatadog,
     ConfigAlertDiscord,
     ConfigAlertEmail,

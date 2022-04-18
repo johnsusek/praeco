@@ -21,6 +21,7 @@ import ConfigAlertAmazonSns from '@/components/config/alert/ConfigAlertAmazonSns
 import ConfigAlertChatwork from '@/components/config/alert/ConfigAlertChatwork.vue';
 import ConfigAlertCommand from '@/components/config/alert/ConfigAlertCommand.vue';
 import ConfigAlertDatadog from '@/components/config/alert/ConfigAlertDatadog.vue';
+import ConfigAlertDingtalk from '@/components/config/alert/ConfigAlertDingtalk.vue';
 import ConfigAlertDiscord from '@/components/config/alert/ConfigAlertDiscord.vue';
 import ConfigAlertEmail from '@/components/config/alert/ConfigAlertEmail.vue';
 import ConfigAlertExotel from '@/components/config/alert/ConfigAlertExotel.vue';
@@ -65,6 +66,7 @@ Vue.component('ConfigAlertAmazonSns', ConfigAlertAmazonSns);
 Vue.component('ConfigAlertChatwork', ConfigAlertChatwork);
 Vue.component('ConfigAlertCommand', ConfigAlertCommand);
 Vue.component('ConfigAlertDatadog', ConfigAlertDatadog);
+Vue.component('ConfigAlertDingtalk', ConfigAlertDingtalk);
 Vue.component('ConfigAlertDiscord', ConfigAlertDiscord);
 Vue.component('ConfigAlertEmail', ConfigAlertEmail);
 Vue.component('ConfigAlertExotel', ConfigAlertExotel);

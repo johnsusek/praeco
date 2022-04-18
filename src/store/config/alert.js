@@ -303,6 +303,13 @@ function initialState() {
     alertaTags: [],
     alertaEnvironment: 'Production',
 
+    /* Dingtalk */
+    dingtalkAccessToken: '',
+    dingtalkMsgtype: '',
+    dingtalkSingleTitle: '',
+    dingtalkSingleUrl: '',
+    dingtalkBtnOrientation: '0',
+
     /* Datadog */
     datadogApiKey: '',
     datadogAppKey: '',
@@ -1544,6 +1551,27 @@ export default {
 
     UPDATE_ALERTA_ENVIRONMENT(state, alertaEnvironment) {
       state.alertaEnvironment = alertaEnvironment;
+    },
+
+    /* Dingtalk */
+    UPDATE_DINGTALK_ACCESS_TOKEN(state, dingtalkAccessToken) {
+      state.dingtalkAccessToken = dingtalkAccessToken;
+    },
+
+    UPDATE_DINGTALK_MSGTYPE(state, dingtalkMsgtype) {
+      state.dingtalkMsgtype = dingtalkMsgtype;
+    },
+
+    UPDATE_DINGTALK_SINGLE_TITLE(state, dingtalkSingleTitle) {
+      state.dingtalkSingleTitle = dingtalkSingleTitle;
+    },
+
+    UPDATE_DINGTALK_SINGLE_URL(state, dingtalkSingleUrl) {
+      state.dingtalkSingleUrl = dingtalkSingleUrl;
+    },
+
+    UPDATE_DINGTALK_BTN_ORIENTATION(state, dingtalkBtnOrientation) {
+      state.dingtalkBtnOrientation = dingtalkBtnOrientation;
     },
 
     /* Datadog */

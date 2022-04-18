@@ -820,6 +820,25 @@ export default {
         commit('alert/UPDATE_DATADOG_API_KEY', config.datadog_api_key);
         commit('alert/UPDATE_DATADOG_APP_KEY', config.datadog_app_key);
 
+        /* Dingtalk */
+        commit('alert/UPDATE_DINGTALK_ACCESS_TOKEN', config.dingtalk_access_token);
+
+        if (config.dingtalk_msgtype) {
+          commit('alert/UPDATE_DINGTALK_MSGTYPE', config.dingtalk_msgtype);
+        } else {
+          commit('alert/UPDATE_DINGTALK_MSGTYPE', 'text');
+        }
+
+        if (config.dingtalk_single_title) {
+          commit('alert/UPDATE_DINGTALK_SINGLE_TITLE', config.dingtalk_single_title);
+        } else {
+          commit('alert/UPDATE_DINGTALK_SINGLE_TITLE', 'elastalert');
+        }
+
+        commit('alert/UPDATE_DINGTALK_SINGLE_URL', config.dingtalk_single_url);
+
+        commit('alert/UPDATE_DINGTALK_BTN_ORIENTATION', config.dingtalk_btn_orientation);
+
         /* Slack */
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
 
@@ -2519,6 +2538,42 @@ export default {
       return config;
     },
 
+    dingtalk(state) {
+      let config = {};
+
+      if (state.alert.dingtalkAccessToken) {
+        config.dingtalk_access_token = state.alert.dingtalkAccessToken;
+      }
+
+      if (state.alert.dingtalkMsgtype) {
+        config.dingtalk_msgtype = state.alert.dingtalkMsgtype;
+
+        if (state.alert.dingtalkMsgtype === 'single_action_card') {
+          if (state.alert.dingtalkSingleTitle) {
+            config.dingtalk_single_title = state.alert.dingtalkSingleTitle;
+          }
+          if (state.alert.dingtalkSingleUrl) {
+            config.dingtalk_single_url = state.alert.dingtalkSingleUrl;
+          }
+        } else if (state.alert.dingtalkMsgtype === 'action_card') {
+          if (state.alert.dingtalkBtnOrientation) {
+            config.dingtalk_btn_orientation = state.alert.dingtalkBtnOrientation;
+          }
+        }
+      }
+
+      if (state.alert.dingtalkProxy) {
+        config.dingtalk_proxy = state.alert.dingtalkProxy;
+      }
+
+      if (state.alert.dingtalkProxyLogin && state.alert.dingtalkProxyPass) {
+        config.dingtalk_proxy_login = state.alert.dingtalkProxyLogin;
+        config.dingtalk_proxy_pass = state.alert.dingtalkProxy;
+      }
+
+      return config;
+    },
+
     datadog(state) {
       let config = {};
 
@@ -2674,6 +2729,10 @@ export default {
         config = { ...config, ...getters.datadog };
       }
 
+      if (state.alert.alert.includes('dingtalk')) {
+        config = { ...config, ...getters.dingtalk };
+      }
+
       if (state.alert.alert.includes('discord')) {
         config = { ...config, ...getters.discord };
       }
@@ -2778,6 +2837,7 @@ export default {
         || state.alert.alert.includes('alertmanager')
         || state.alert.alert.includes('chatwork')
         || state.alert.alert.includes('datadog')
+        || state.alert.alert.includes('dingtalk')
         || state.alert.alert.includes('discord')
         || state.alert.alert.includes('email')
         || state.alert.alert.includes('gitter')

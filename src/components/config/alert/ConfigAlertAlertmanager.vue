@@ -63,7 +63,7 @@
     <!-- alertmanager_basic_auth_login -->
 
     <praeco-form-item label="Proxy Login" prop="alertmanagerBasicAuthLogin">
-      <el-input id="alertmanagerBasicAuthLogin" v-model="telegramProalertmanagerBasicAuthLogin" :disabled="viewOnly" />
+      <el-input id="alertmanagerBasicAuthLogin" v-model="alertmanagerBasicAuthLogin" :disabled="viewOnly" />
       <label>The Alertmanager proxy auth username.</label>
     </praeco-form-item>
 
