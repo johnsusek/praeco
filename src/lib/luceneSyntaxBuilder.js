@@ -36,8 +36,8 @@ function luceneSyntaxFromQueryBuilderRule(qbRule) {
   //   type: "query-builder-rule",
   //   query: {
   //     rule: "message",
-  //     operator: "contains",
-  //     operand: "message",
+  //     selectedOperator: "contains",
+  //     selectedOperand: "message",
   //     value: "ahci"
   //   }
   // }
@@ -49,25 +49,25 @@ function luceneSyntaxFromQueryBuilderRule(qbRule) {
 
   let rule = escapeLuceneSyntax(qbRule.query.rule); // like 'message'
   let value = qbRule.query.value || '*'; // like 'ahci'
-  let operator = qbRule.query.operator; // like 'contains'
+  let selectedOperator = qbRule.query.selectedOperator; // like 'contains'
 
-  if (operator === 'contains') {
+  if (selectedOperator === 'contains') {
     syntax += `${rule}:${value}`; // 'message:"ahci"`
-  } else if (operator === 'does not contain') {
+  } else if (selectedOperator === 'does not contain') {
     syntax += `NOT ${rule}:${value}`; // 'NOT message:"ahci"`
-  } else if (operator === 'is empty') {
+  } else if (selectedOperator === 'is empty') {
     syntax += `NOT ${rule}:*`; // 'NOT message:*`
-  } else if (operator === 'is not empty') {
+  } else if (selectedOperator === 'is not empty') {
     syntax += `${rule}:*`; // 'message:*`
-  } else if (operator === 'less than') {
+  } else if (selectedOperator === 'less than') {
     syntax += `${rule}:<${value}`; // 'message:<10`
-  } else if (operator === 'greater than') {
+  } else if (selectedOperator === 'greater than') {
     syntax += `${rule}:>${value}`; // 'message:>10`
-  } else if (operator === 'regex') {
+  } else if (selectedOperator === 'regex') {
     syntax += `${rule}:/${value}/`; // 'message:/ahci/`
   } else {
     /* istanbul ignore next */
-    console.warn(`Unknown operator selected for field ${rule}:`, operator);
+    console.warn(`Unknown selectedOperator selected for field ${rule}:`, selectedOperator);
   }
 
   return syntax;
@@ -85,8 +85,8 @@ function luceneSyntaxFromQueryBuilderGroup(group) {
   //         type: "query-builder-rule",
   //         query: {
   //           rule: "message",
-  //           operator: "contains",
-  //           operand: "message",
+  //           selectedOperator: "contains",
+  //           selectedOperand: "message",
   //           value: "error"
   //         }
   //       }

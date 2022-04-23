@@ -15,7 +15,8 @@
                     v-if="rules.length"
                     v-model="queryTree"
                     :rules="rules"
-                    :labels="labels" />
+                    :labels="labels"
+                    :styled="false" />
                 </el-form-item>
                 <el-form-item v-if="!queryTree.children.length">
                   <label>
@@ -55,10 +56,8 @@ export default {
       sampling: false,
       labels: {
         matchType: ' of the following conditions are met:',
-        matchTypes: [
-          { id: 'all', label: 'All' },
-          { id: 'any', label: 'Any' }
-        ],
+        matchTypeAll: 'all',
+        matchTypeAny: 'any',
         addRule: 'Add filter',
         removeRule: '&times;',
         addGroup: 'Add group',
