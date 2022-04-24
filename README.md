@@ -130,9 +130,10 @@ Main challenges of yelp/elastalert
 
 Not Support
 
-#### Does it support elasticsearch 6.x?
+#### Doesi support elasticserch 6.x?`
 
-Not Support
+Elasticserch 6 is no longer supported from elastalert2 2.4.0.<br>
+Please use `praecoapp/elastalert-server:20220109` with elastalert2 installed before 2.4.0.
 
 #### Does it support elasticsearch 7.x?
 
@@ -140,7 +141,7 @@ Support
 
 #### Does it support elasticsearch 8.x?
 
-We plan to address it, but we are currently experiencing a variety of issues and elasticsearch 8 will not be supported until the issues are resolved.
+Supported by `praecoapp/elastalert-server:20220424` or later
 
 #### Can you support a version that is not the latest version?
 
