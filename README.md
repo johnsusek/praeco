@@ -141,7 +141,7 @@ Support
 
 #### Does it support elasticsearch 8.x?
 
-Supported by `praecoapp/elastalert-server:20220424` or later
+There is a problem that the graph is not displayed. There seems to be a problem with the support of elastalert-server.
 
 #### Can you support a version that is not the latest version?
 
