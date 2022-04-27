@@ -328,11 +328,15 @@ export default {
           .unix();
       }
 
+      // Elasticsearch 8 support
+      // The date_histogram aggregation’s interval parameter is no longer valid.
+      // interval to fixed_interval.
+      // https://www.elastic.co/guide/en/elasticsearch/reference/8.1/migrating-8.0.html
       return {
         by_minute: {
           date_histogram: {
             field: this.timeField,
-            interval: intervalFromTimeframe(this.interval),
+            fixed_interval: intervalFromTimeframe(this.interval),
             min_doc_count: 0,
             extended_bounds: {
               min: gte,
