@@ -141,7 +141,7 @@ Support
 
 #### Does it support elasticsearch 8.x?
 
-- There is a problem that the graph is not displayed. It seems that you need to modify the query you are passing to the elastalert-server search api in praeco's ESChart.vue.<br>
+- Supports elasticsearch 8 with praeco 1.8.11 or later.<br>
 - elastalert-server is compatible with elasticsearch 8.
 
 #### Can you support a version that is not the latest version?
