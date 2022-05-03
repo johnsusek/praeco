@@ -38,6 +38,7 @@ type: "frequency"
 use_count_query: true
 use_strftime_index: false
 zbx_host: "test001"
+zbx_host_from_field: "abc"
 zbx_key: "sender_load1"
 zbx_sender_host: "localhost"
 zbx_sender_port: 10051

@@ -19,6 +19,14 @@
       <el-input id="zbxKey" v-model="zbxKey" :disabled="viewOnly" />
       <label>This field setup the key in the host that receives the value sent by ElastAlert 2.</label>
     </praeco-form-item>
+
+    <el-form-item label="Host From Field" prop="zbxHostFromField">
+      <el-switch
+        id="zbxHostFromField"
+        v-model="zbxHostFromField"
+        :disabled="viewOnly"
+        @change="changeZbxHostFromField" />
+    </el-form-item>
   </div>
 </template>
 
@@ -73,10 +81,29 @@ export default {
           value
         );
       }
+    },
+
+    zbxHostFromField: {
+      get() {
+        return this.$store.state.config.alert.zbxHostFromField;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ZBX_HOST_FROM_FIELD',
+          value
+        );
+      }
     }
   },
 
   methods: {
+    changeSlackCaCerts(val) {
+      if (val) {
+        this.zbxHostFromField = true;
+      } else {
+        this.zbxHostFromField = false;
+      }
+    }
   }
 };
 </script>

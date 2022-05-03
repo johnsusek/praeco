@@ -150,6 +150,7 @@ function initialState() {
     zbxSenderPort: 10051,
     zbxHost: '',
     zbxKey: '',
+    zbxHostFromField: false,
 
     /* Line Notify */
     linenotifyAccessToken: '',
@@ -957,6 +958,10 @@ export default {
 
     UPDATE_ZBX_KEY(state, zbxKey) {
       state.zbxKey = zbxKey;
+    },
+
+    UPDATE_ZBX_HOST_FROM_FIELD(state, zbxHostFromField) {
+      state.zbxHostFromField = zbxHostFromField;
     },
 
     /* LineNotify */

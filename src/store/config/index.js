@@ -521,6 +521,10 @@ export default {
         commit('alert/UPDATE_ZBX_HOST', config.zbx_host);
         commit('alert/UPDATE_ZBX_KEY', config.zbx_key);
 
+        if (config.zbx_host_from_field) {
+          commit('alert/UPDATE_ZBX_HOST_FROM_FIELD', config.zbx_host_from_field);
+        }
+
         /* Line Notify */
         commit('alert/UPDATE_LINENOTIFY_ACCESS_TOKEN', config.linenotify_access_token);
 
@@ -1940,6 +1944,10 @@ export default {
 
       if (state.alert.zbxKey) {
         config.zbx_key = state.alert.zbxKey;
+      }
+
+      if (state.alert.zbxHostFromField) {
+        config.zbx_host_from_field = state.alert.zbxHostFromField;
       }
 
       return config;
