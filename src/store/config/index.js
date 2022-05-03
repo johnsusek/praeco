@@ -898,6 +898,18 @@ export default {
           commit('alert/UPDATE_SLACK_KIBANA_DISCOVER_TITLE', config.slack_kibana_discover_title);
         }
 
+        if (config.slack_attach_jira_ticket_url) {
+          commit('alert/UPDATE_SLACK_ATTACH_JIRA_TICKET_URL', config.slack_attach_jira_ticket_url);
+        }
+
+        if (config.slack_jira_ticket_color) {
+          commit('alert/UPDATE_SLACK_JIRA_TICKET_COLOR', config.slack_jira_ticket_color);
+        }
+
+        if (config.slack_jira_ticket_title) {
+          commit('alert/UPDATE_SLACK_JIRA_TICKET_TITLE', config.slack_jira_ticket_title);
+        }
+
         commit('alert/UPDATE_SLACK_PROXY', config.slack_proxy);
         commit('alert/UPDATE_SLACK_FOOTER', config.slack_footer);
         commit('alert/UPDATE_SLACK_FOOTER_ICON', config.slack_footer_icon);
@@ -1600,6 +1612,17 @@ export default {
 
       if (state.alert.slackMsgPretext) {
         config.slack_msg_pretext = state.alert.slackMsgPretext;
+      }
+
+      config.slack_attach_jira_ticket_url = state.alert.slackAttachJiraTicketUrl;
+      if (config.slack_attach_jira_ticket_url) {
+        if (state.alert.slackJiraTicketColor) {
+          config.slack_jira_ticket_color = state.alert.slackJiraTicketColor;
+        }
+
+        if (state.alert.slackJiraTicketTitle) {
+          config.slack_jira_ticket_title = state.alert.slackJiraTicketTitle;
+        }
       }
 
       return config;

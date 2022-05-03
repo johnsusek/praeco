@@ -32,6 +32,7 @@ name: "test123"
 num_events: 10000
 realert:
   minutes: 5
+slack_attach_jira_ticket_url: true
 slack_attach_kibana_discover_url: true
 slack_author_icon: "http://localhost/icon.png"
 slack_author_link: "http://localhost/author"
@@ -44,6 +45,8 @@ slack_footer_icon: "footer_icon"
 slack_icon_url_override: "http://test.com/xxxx.png"
 slack_ignore_ssl_errors: true
 slack_image_url: "http://localhost/image.png"
+slack_jira_ticket_color: "#ec4b96"
+slack_jira_ticket_title: "jira title"
 slack_kibana_discover_color: "#ec4b98"
 slack_kibana_discover_title: "Discover in Kibana"
 slack_msg_color: "good"

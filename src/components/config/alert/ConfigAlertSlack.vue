@@ -155,6 +155,25 @@
       <el-input v-model="slackMsgPretext" :disabled="viewOnly" />
       <label>You can set the message attachment pretext using this option.</label>
     </el-form-item>
+
+    <el-form-item label="Attach Jira Ticket URL" prop="slackAttachJiraTicketUrl">
+      <el-switch
+        id="slackAttachJiraTicketUrl"
+        v-model="slackAttachJiraTicketUrl"
+        :disabled="viewOnly"
+        @change="changeSlackAttachKibanaDiscoverUrl" />
+    </el-form-item>
+
+    <el-form-item label="Jira Ticket Color" prop="slackJiraTicketColor">
+      <el-color-picker
+        v-model="slackJiraTicketColor" :disabled="viewOnly" />
+      <label>The color of the Jira Ticket url attachment.</label>
+    </el-form-item>
+
+    <el-form-item label="Jira Ticket Title" prop="slackJiraTicketTitle">
+      <el-input v-model="slackJiraTicketTitle" :disabled="viewOnly" />
+      <label>The title of the Jira Ticket url attachment.</label>
+    </el-form-item>
   </div>
 </template>
 
@@ -411,6 +430,33 @@ export default {
         );
       }
     },
+
+    slackAttachJiraTicketUrl: {
+      get() {
+        return this.$store.state.config.alert.slackAttachJiraTicketUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_ATTACH_JIRA_TICKET_URL', value);
+      }
+    },
+
+    slackJiraTicketColor: {
+      get() {
+        return this.$store.state.config.alert.slackJiraTicketColor;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_JIRA_TICKET_COLOR', value);
+      }
+    },
+
+    slackJiraTicketTitle: {
+      get() {
+        return this.$store.state.config.alert.slackJiraTicketTitle;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_JIRA_TICKET_TITLE', value);
+      }
+    }
   },
 
   methods: {
@@ -439,6 +485,14 @@ export default {
         this.slackCaCerts = true;
       } else {
         this.slackCaCerts = false;
+      }
+    },
+
+    changeSlackAttachJiraTicketUrl(val) {
+      if (val) {
+        this.slackAttachJiraTicketUrl = true;
+      } else {
+        this.slackAttachJiraTicketUrl = false;
       }
     }
   }

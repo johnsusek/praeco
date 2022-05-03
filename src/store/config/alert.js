@@ -50,6 +50,9 @@ function initialState() {
     slackAuthorLink: '',
     slackAuthorIcon: '',
     slackMsgPretext: '',
+    slackAttachJiraTicketUrl: false,
+    slackJiraTicketColor: '#ec4b98',
+    slackJiraTicketTitle: 'Jira Ticket',
 
     /* MS Teams */
     msTeamsWebhookUrl: '',
@@ -1406,6 +1409,18 @@ export default {
 
     UPDATE_SLACK_MSG_PRETEXT(state, slackMsgPretext) {
       state.slackMsgPretext = slackMsgPretext;
+    },
+
+    UPDATE_SLACK_ATTACH_JIRA_TICKET_URL(state, slackAttachJiraTicketUrl) {
+      state.slackAttachJiraTicketUrl = slackAttachJiraTicketUrl;
+    },
+
+    UPDATE_SLACK_JIRA_TICKET_COLOR(state, slackJiraTicketColor) {
+      state.slackJiraTicketColor = slackJiraTicketColor;
+    },
+
+    UPDATE_SLACK_JIRA_TICKET_TITLE(state, slackJiraTicketTitle) {
+      state.slackJiraTicketTitle = slackJiraTicketTitle;
     },
 
     /* MS Teams */
