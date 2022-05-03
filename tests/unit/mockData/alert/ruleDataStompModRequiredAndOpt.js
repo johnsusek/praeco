@@ -23,7 +23,6 @@ stomp_hostname: localhost2
 stomp_hostport: 61612
 stomp_login: admin2
 stomp_password: admin2
-stomp_ssl: true
 timeframe:
   minutes: 5
 timestamp_field: '@timestamp'

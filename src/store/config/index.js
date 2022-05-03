@@ -622,10 +622,6 @@ export default {
           commit('alert/UPDATE_STOMP_DESTINATION', '/queue/ALERT');
         }
 
-        if (config.stomp_ssl) {
-          commit('alert/UPDATE_STOMP_SSL', config.stomp_ssl);
-        }
-
         /* GoogleChat */
         commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
 
@@ -2245,10 +2241,6 @@ export default {
 
       if (state.alert.stompDestination) {
         config.stomp_destination = state.alert.stompDestination;
-      }
-
-      if (state.alert.stompSsl) {
-        config.stomp_ssl = state.alert.stompSsl;
       }
 
       return config;

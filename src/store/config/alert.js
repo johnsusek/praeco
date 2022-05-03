@@ -237,7 +237,6 @@ function initialState() {
     stompLogin: '',
     stompPassword: '',
     stompDestination: '',
-    stompSsl: false,
 
     /* GoogleChat */
     googleChatWebhookUrl: '',
@@ -1167,10 +1166,6 @@ export default {
 
     UPDATE_STOMP_DESTINATION(state, stompDestination) {
       state.stompDestination = stompDestination;
-    },
-
-    UPDATE_STOMP_SSL(state, stompSsl) {
-      state.stompSsl = stompSsl;
     },
 
     /* GoogleChat */

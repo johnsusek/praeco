@@ -24,15 +24,6 @@
       <el-input id="stompDestination" v-model="stompDestination" :disabled="viewOnly" />
       <label>The STOMP destination to use, defaults to /queue/ALERT</label>
     </praeco-form-item>
-
-    <praeco-form-item label="SSL" prop="stompSsl">
-      <el-switch
-        id="stompSsl"
-        v-model="stompSsl"
-        :disabled="viewOnly"
-        @change="changestompSsl" />
-      <label>Connect the STOMP host using TLS.</label>
-    </praeco-form-item>
   </div>
 </template>
 
@@ -99,29 +90,10 @@ export default {
           value
         );
       }
-    },
-
-    stompSsl: {
-      get() {
-        return this.$store.state.config.alert.stompSsl;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_STOMP_SSL',
-          value
-        );
-      }
     }
   },
 
   methods: {
-    changestompSsl(val) {
-      if (val) {
-        this.stompSsl = true;
-      } else {
-        this.stompSsl = false;
-      }
-    }
   }
 };
 </script>
