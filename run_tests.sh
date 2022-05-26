@@ -61,6 +61,7 @@
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlVictorOpsOpt.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlZabbix.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlZabbixSenderHostPort.spec.js &&
+./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigYamlScanEntireTimefame.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ErrorsLog.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/luceneSyntaxBuilder.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/QueriesLog.spec.js &&
