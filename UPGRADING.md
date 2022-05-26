@@ -7,6 +7,79 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.11
+
+Elasticsearch 8 support
+
+**New options**
+
+- Dingtalk
+
+`dingtalk_btns` is set in BaseRule.config.<br>
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#dingtalk
+
+- Alertmanager
+
+`dingtalk_btns` is set in BaseRule.config.<br>
+`alertmanager_api_version` is set in BaseRule.config.<br>
+`alertmanager_hosts` is set in BaseRule.config.<br>
+`alertmanager_labels` is set in BaseRule.config.<br>
+`alertmanager_annotations` is set in BaseRule.config.<br>
+`alertmanager_fields` is set in BaseRule.config.<br>
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#alertmanager
+
+**Chatwork**
+
+add settings.
+
+- chatwork_proxy
+
+**Discord**
+
+add settings.
+
+- discord_proxy
+
+**Stomp**
+
+remove settings.
+
+- stomp_ssl
+
+**Slack**
+
+add settings.
+
+- slack_attach_jira_ticket_url
+- slack_jira_ticket_color
+- slack_jira_ticket_title
+
+**MS Teams**
+
+add settings.
+
+- Add ms_teams_ca_certs
+- Add ms_teams_ignore_ssl_errors
+- Add ms_teams_attach_kibana_discover_url
+- Add ms_teams_kibana_discover_title
+
+**Command**
+
+add settings.
+
+- fail_on_non_zero_exit
+
+**Zabbix**
+
+add settings.
+
+- zbx_host_from_field
+
+**kibana discover**
+
+- kibana 7.16/7.17/8.0/8.1 support
+- remove kibana 5.6～6.8 support
+
 ## -> 1.8.10
 
 **PagerDuty**
