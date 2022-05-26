@@ -33,12 +33,16 @@ https://elastalert2.readthedocs.io/en/latest/ruletypes.html#alertmanager
 add settings.
 
 - chatwork_proxy
+- chatwork_proxy_login
+- chatwork_proxy_pass
 
 **Discord**
 
 add settings.
 
 - discord_proxy
+- discord_proxy_login
+- discord_proxy_password
 
 **Stomp**
 
