@@ -1721,7 +1721,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .el-popover .el-form-item {
   margin-bottom: 10px !important;
 }

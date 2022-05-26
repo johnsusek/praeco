@@ -408,15 +408,11 @@ export default {
           commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_GROUP_ARGS', config.pagerduty_v2_payload_group_args);
         }
 
-        commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY', config.pagerduty_v2_payload_severity);
-
         if (config.pagerduty_v2_payload_severity) {
           commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY', config.pagerduty_v2_payload_severity);
         } else {
           commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SEVERITY', 'critical');
         }
-
-        commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE', config.pagerduty_v2_payload_source);
 
         if (config.pagerduty_v2_payload_source) {
           commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_SOURCE', config.pagerduty_v2_payload_source);
@@ -2864,6 +2860,7 @@ export default {
         || state.alert.alert.includes('linenotify')
         || state.alert.alert.includes('mattermost')
         || state.alert.alert.includes('ms_teams')
+        || state.alert.alert.includes('pagerduty')
         || state.alert.alert.includes('pagertree')
         || state.alert.alert.includes('rocketchat')
         || state.alert.alert.includes('servicenow')
