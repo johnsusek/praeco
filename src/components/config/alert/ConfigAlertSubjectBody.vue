@@ -205,11 +205,14 @@
 <script>
 import debounce from 'debounce';
 import At from 'vue-at';
+
 export default {
   components: {
     At
   },
+
   props: ['viewOnly'],
+
   data() {
     return {
       popAlertSubjectArgsVisible: false,
@@ -218,13 +221,16 @@ export default {
       popAlertTextArgsValid: true,
     };
   },
+
   computed: {
     queryString() {
       return this.$store.getters['config/query/queryString'];
     },
+
     summaryTableFields() {
       return this.$store.state.config.alert.summaryTableFields || [];
     },
+
     subject: {
       get() {
         return this.$store.state.config.alert.subject;
@@ -233,6 +239,7 @@ export default {
         this.$store.commit('config/alert/UPDATE_SUBJECT', value);
       }
     },
+
     alertSubjectArgs: {
       get() {
         return this.$store.state.config.alert.alertSubjectArgs;
@@ -241,6 +248,7 @@ export default {
         this.$store.commit('config/alert/UPDATE_ALERT_SUBJECT_ARGS', value);
       }
     },
+
     alertTextArgs: {
       get() {
         return this.$store.state.config.alert.alertTextArgs;
@@ -249,6 +257,7 @@ export default {
         this.$store.commit('config/alert/UPDATE_ALERT_TEXT_ARGS', value);
       }
     },
+
     body: {
       get() {
         return this.$store.state.config.alert.body;
@@ -257,6 +266,7 @@ export default {
         this.$store.commit('config/alert/UPDATE_BODY', value);
       }
     },
+
     bodyType: {
       get() {
         return this.$store.state.config.alert.bodyType;
@@ -265,29 +275,35 @@ export default {
         this.$store.commit('config/alert/UPDATE_BODY_TYPE', value);
       }
     },
+
     fields() {
       return this.$store.getters[
         'metadata/templateFieldsForCurrentConfig'
       ];
     }
   },
+
   watch: {
     queryString() {
       this.sampleDebounced();
     }
   },
+
   mounted() {
     this.$store.dispatch('config/sample');
   },
+
   methods: {
     sampleDebounced: debounce(function() {
       this.$store.dispatch('config/sample');
     }, 750),
+
     pastePlainText(e) {
       e.preventDefault();
       let text = (e.originalEvent || e).clipboardData.getData('text/plain');
       document.execCommand('insertHTML', false, text);
     },
+
     async validate() {
       try {
         if (this.$refs.alertSubjectArgs) {
@@ -303,6 +319,7 @@ export default {
         return false;
       }
     },
+
     async validateAlertSubjectArgs() {
       if (!this.alertSubjectArgs.length) {
         this.popAlertSubjectArgsValid = false;
@@ -315,6 +332,7 @@ export default {
         throw error;
       }
     },
+
     async validateAlertTextArgs() {
       if (!this.alertTextArgs.length) {
         this.popAlertTextArgsValid = false;
@@ -327,6 +345,7 @@ export default {
         throw error;
       }
     },
+
     updateAlertSubjectArgs(entry, index) {
       if (Number.isNaN(entry)) return;
       this.$store.commit('config/alert/UPDATE_ALERT_SUBJECT_ARGS_ENTRY', {
@@ -337,6 +356,7 @@ export default {
         this.validate();
       });
     },
+
     updateAlertTextArgs(entry, index) {
       if (Number.isNaN(entry)) return;
       this.$store.commit('config/alert/UPDATE_ALERT_TEXT_ARGS_ENTRY', {
@@ -347,24 +367,28 @@ export default {
         this.validate();
       });
     },
+
     removeAlertSubjectArgsEntry(entry) {
       this.$store.commit('config/alert/REMOVE_ALERT_SUBJECT_ARGS_ENTRY', entry);
       this.$nextTick(() => {
         this.validate();
       });
     },
+
     removeAlertTextArgsEntry(entry) {
       this.$store.commit('config/alert/REMOVE_ALERT_TEXT_ARGS_ENTRY', entry);
       this.$nextTick(() => {
         this.validate();
       });
     },
+
     addAlertSubjectArgsEntry() {
       this.$store.commit('config/alert/ADD_ALERT_SUBJECT_ARGS_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });
     },
+
     addAlertTextArgsEntry() {
       this.$store.commit('config/alert/ADD_ALERT_TEXT_ARGS_ENTRY');
       this.$nextTick(() => {
@@ -383,24 +407,30 @@ export default {
   padding: 25px 0;
   background: #eee;
 }
+
 .preview {
   white-space: pre-wrap;
   line-height: 1.3;
   font-family: monospace;
 }
+
 .el-select {
   width: 340px;
 }
+
 .el-tag {
   margin-right: 5px;
 }
+
 .el-checkbox.is-bordered.el-checkbox--mini {
   height: auto;
 }
+
 [contenteditable="false"] {
   border: 0 !important;
   padding: 0 !important;
 }
+
 [contenteditable] {
   border: 1px solid #dcdfe6;
   border-radius: 4px;
@@ -408,13 +438,16 @@ export default {
   overflow-y: auto;
   line-height: 1.4;
 }
+
 [contenteditable]:focus {
   border: 1px solid #ccc;
   outline: none;
 }
+
 [contenteditable] .el-tag {
   margin-right: 0;
 }
+
 [contenteditable] + label {
   display: block;
   color: #86898f;
@@ -422,9 +455,11 @@ export default {
   font-size: 12px;
   padding-top: 8px;
 }
+
 .el-card {
   margin-bottom: 20px;
 }
+
 h6 {
   font-size: 13px;
 }
