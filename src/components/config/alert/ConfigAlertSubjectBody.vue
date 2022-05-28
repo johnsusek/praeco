@@ -400,6 +400,9 @@ export default {
 </script>
 
 <style scoped>
+.atwho-wrap >>> .atwho-panel {
+  position: initial;
+}
 .preview-container {
   padding: 25px 0;
   background: #eee;
