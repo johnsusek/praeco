@@ -480,6 +480,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 **Elasticsearch Support version**
 
 - 7.x
+- 8.x
 
 Configure the ElastAlert 2 `config.yaml` with:
 - Your `es_host`
@@ -517,7 +518,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 16.13.0
+nvm install 16.15.0
 ```
 
 ```sh
