@@ -392,7 +392,7 @@ export default {
     /*eslint-disable */
     RESET(state) {
       /* eslint-enable */
-      state = Object.assign(state, initialState());
+      state = Object.assign(state, initialState()); // eslint-disable-line no-unused-vars
     },
 
     UPDATE_AGGREGATION_SCHEDULE(state, schedule) {

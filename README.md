@@ -552,13 +552,13 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 16.13.0
+nvm install 16.15.0
 ```
 
 ```sh
 cd ~/praeco
 nvm use "$(cat .nvmrc)"
-npm install
+npm install --legacy-peer-deps
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 npm run serve
 ```

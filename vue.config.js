@@ -33,7 +33,7 @@ module.exports = {
   devServer: {
     host: '0.0.0.0',
     hot: true,
-    disableHostCheck: true,
+    allowedHosts: 'all',
     proxy: {
       '/api-app/releases': {
         target: 'https://api.github.com/repos/johnsusek/praeco/releases',
