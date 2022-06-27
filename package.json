@@ -50,7 +50,7 @@
     "semver": "7.3.7",
     "string-format": "2.0.0",
     "validator": "^13.7.0",
-    "vue": "^2.7.0-beta.6",
+    "vue": "^2.7.0-beta.7",
     "vue-at": "2.5.0-beta.2",
     "vue-cron-editor-buefy": "^0.2.17",
     "vue-echarts": "5.0.0-beta.0",
@@ -92,10 +92,10 @@
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",
     "nyc": "15.1.0",
-    "vue-template-compiler": "^2.7.0-beta.6"
+    "vue-template-compiler": "^2.7.0-beta.7"
   },
   "overrides": {
-    "@vue/vue-loader-v15": "npm:vue-loader@^15.10.0-beta.6"
+    "@vue/vue-loader-v15": "npm:vue-loader@^15.10.0-beta.7"
   },
   "nyc": {
     "instrument": true,
