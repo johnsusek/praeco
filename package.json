@@ -92,7 +92,7 @@
     "vue-template-compiler": "^2.7.0-beta.8"
   },
   "overrides": {
-    "@vue/vue-loader-v15": "npm:vue-loader@^15.10.0-beta.7"
+    "@vue/vue-loader-v15": "npm:vue-loader@^15.10.0-beta.6"
   },
   "nyc": {
     "instrument": true,
