@@ -14,7 +14,7 @@
 ## Praeco
 
 - `nvm use "$(cat .nvmrc)"`
-- `npm install`
+- `npm install --legacy-peer-deps`
 - `npm run lint:fix`
 - `./run_tests.sh`
 - Bump version number in package.json, if not already done
