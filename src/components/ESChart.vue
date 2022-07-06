@@ -6,11 +6,6 @@
       title="Search error"
       type="error" />
 
-    <!--
-      TODO:
-      vue-echarts 5.0.0-beta.0 to 6.0.0
-      :options="chart" to :option="chart"
-    -->
     <div class="praeco-chart m-s-med">
       <div v-if="groupBy">
         <el-tabs
@@ -28,23 +23,18 @@
             <VChart
               ref="chart"
               v-loading="loading"
-              :options="chart"
+              :option="chart"
               autoresize
               @click="ev => $emit('click', ev)" />
           </el-tab-pane>
         </el-tabs>
       </div>
 
-      <!--
-        TODO:
-        vue-echarts 5.0.0-beta.0 to 6.0.0
-        :options="chart" to :option="chart"
-      -->
       <div v-else>
         <VChart
           ref="chart"
           v-loading="loading"
-          :options="chart"
+          :option="chart"
           autoresize
           @click="ev => $emit('click', ev)" />
 
@@ -91,50 +81,37 @@ import Vue from 'vue';
 import axios from 'axios';
 import moment from 'moment-timezone';
 import debounce from 'debounce';
-// TODO: vue-echarts 5.0.0-beta.0 to 6.0.0 remove start
-import 'echarts/lib/chart/bar';
-import 'echarts/lib/chart/line';
-import 'echarts/lib/component/title';
-import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/grid';
-import 'echarts/lib/component/dataZoom';
-import 'echarts/lib/component/markPoint';
-import 'echarts/lib/component/markLine';
-// TODO: vue-echarts 5.0.0-beta.0 to 6.0.0 remove end
-// TODO: vue-echarts 5.0.0-beta.0 to 6.0.0 add start
-// import { use } from 'echarts/core';
-// import {
-//   BarChart,
-//   LineChart
-// } from 'echarts/charts';
-// import { CanvasRenderer } from 'echarts/renderers';
-// import {
-//   TitleComponent,
-//   TooltipComponent,
-//   LegendComponent,
-//   GridComponent,
-//   DataZoomComponent,
-//   MarkPointComponent,
-//   MarkLineComponent
-// } from 'echarts/components';
-// TODO: vue-echarts 5.0.0-beta.0 to 6.0.0 add end
+import { use } from 'echarts/core';
+import {
+  BarChart,
+  LineChart
+} from 'echarts/charts';
+import { CanvasRenderer } from 'echarts/renderers';
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  DataZoomComponent,
+  MarkPointComponent,
+  MarkLineComponent
+} from 'echarts/components';
 import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
-// TODO: vue-echarts 5.0.0-beta.0 to 6.0.0 add start
-// use([
-//   CanvasRenderer,
-//   BarChart,
-//   LineChart,
-//   TitleComponent,
-//   TooltipComponent,
-//   LegendComponent,
-//   GridComponent,
-//   DataZoomComponent,
-//   MarkPointComponent,
-//   MarkLineComponent
-// ]);
-// TODO: vue-echarts 5.0.0-beta.0 to 6.0.0 add end
+
+use([
+  CanvasRenderer,
+  BarChart,
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  DataZoomComponent,
+  MarkPointComponent,
+  MarkLineComponent
+]);
 const CancelToken = axios.CancelToken;
 
 function getColorForIndex(index, data, spikeHeight) {
@@ -217,13 +194,6 @@ export default {
             xAxisIndex: [0]
           }
         ],
-        // TODO: vue-echarts 5.0.0-beta.0 to 6.0.0
-        //    itemStyle: {
-        //      color: '#555'
-        //    },
-        //    emphasis: {
-        //      color: '#999'
-        //    },
         series: [
           {
             name: 'Events',
@@ -231,10 +201,10 @@ export default {
             barCategoryGap: '0',
             symbol: 'none',
             itemStyle: {
-              color: '#555',
-              emphasis: {
-                color: '#999'
-              }
+              color: '#555'
+            },
+            emphasis: {
+              color: '#999'
             },
             markPoint: {
               silent: true,
