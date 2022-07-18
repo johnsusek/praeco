@@ -6,6 +6,11 @@ module.exports = {
   },
   extends: ['plugin:vue/recommended', '@vue/airbnb'],
   rules: {
+    'vuejs-accessibility/rule-name': 'off',
+    'vuejs-accessibility/label-has-for': 'off',
+    'vuejs-accessibility/click-events-have-key-events': 'off',
+    'vuejs-accessibility/no-autofocus': 'off',
+    'vuejs-accessibility/anchor-has-content': 'off',
     quotes: ['error', 'single'],
     'no-underscore-dangle': 'off',
     'no-empty': 'off',
