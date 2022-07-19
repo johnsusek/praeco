@@ -5,17 +5,25 @@
       <label>The webhook URL.</label>
     </praeco-form-item>
 
-    <praeco-form-item
-      v-if="!(viewOnly && !discordEmojiTitle)"
-      :class="{ 'disabled': viewOnly }"
-      label="Icon"
-      prop="discordEmojiTitle">
+    <div v-show="viewOnly">
+      <emoji
+        :data="emojiIndex"
+        :emoji="discordEmojiTitle"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
+    <div v-if="!viewOnly">
       <picker
-        :emoji="discordEmojiTitle || 'arrow_up'"
-        :title="discordEmojiTitle || 'Pick your icon...'"
+        :disabled="viewOnly"
+        :data="emojiIndex"
         color="#189acc"
         @select="addDiscordEmoji" />
-    </praeco-form-item>
+      <emoji
+        :data="emojiIndex"
+        :emoji="discordEmojiTitle"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
 
     <praeco-form-item label="Discord Embed Footer" prop="discordEmbedFooter">
       <el-input id="discordEmbedFooter" v-model="discordEmbedFooter" :disabled="viewOnly" />
@@ -51,9 +59,25 @@
 </template>
 
 <script>
+import 'emoji-mart-vue-fast/css/emoji-mart.css';
+import emojiData from 'emoji-mart-vue-fast/data/all.json';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+
+let emojiIndex = new EmojiIndex(emojiData);
+
 export default {
+  components: {
+    Emoji,
+    Picker
+  },
+
   props: ['viewOnly'],
 
+  data() {
+    return {
+      emojiIndex,
+    };
+  },
   computed: {
     discordWebhookUrl: {
       get() {

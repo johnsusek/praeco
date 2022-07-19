@@ -13,17 +13,25 @@
       <label>This is the username that will appear in Rocket.Chat for the alert</label>
     </praeco-form-item>
 
-    <praeco-form-item
-      v-if="!(viewOnly && !rocketChatEmojiOverride)"
-      :class="{ 'disabled': viewOnly }"
-      label="Icon"
-      prop="rocketChatEmojiOverride">
-      <picker
+    <div v-show="viewOnly">
+      <emoji
+        :data="emojiIndex"
         :emoji="rocketChatEmojiOverride"
-        :title="rocketChatEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
+    <div v-if="!viewOnly">
+      <picker
+        :disabled="viewOnly"
+        :data="emojiIndex"
         color="#189acc"
         @select="addRocketChatEmoji" />
-    </praeco-form-item>
+      <emoji
+        :data="emojiIndex"
+        :emoji="rocketChatEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
 
     <el-form-item label="Message color" prop="rocketChatMsgColor" required>
       <el-radio-group v-model="rocketChatMsgColor" :disabled="viewOnly">
@@ -98,15 +106,25 @@
 </template>
 
 <script>
-import { Picker } from 'emoji-mart-vue';
+import 'emoji-mart-vue-fast/css/emoji-mart.css';
+import emojiData from 'emoji-mart-vue-fast/data/all.json';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+
+let emojiIndex = new EmojiIndex(emojiData);
 
 export default {
   components: {
+    Emoji,
     Picker
   },
 
   props: ['viewOnly'],
 
+  data() {
+    return {
+      emojiIndex,
+    };
+  },
   computed: {
     rocketChatChannelOverride: {
       get() {

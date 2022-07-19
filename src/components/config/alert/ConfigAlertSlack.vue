@@ -13,17 +13,25 @@
       <label>This is the username that will appear in Slack for the alert</label>
     </praeco-form-item>
 
-    <praeco-form-item
-      v-if="!(viewOnly && !slackEmojiOverride)"
-      :class="{ 'disabled': viewOnly }"
-      label="Icon"
-      prop="slackEmojiOverride">
+    <div v-show="viewOnly">
+      <emoji
+        :data="emojiIndex"
+        :emoji="slackEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
+    <div v-if="!viewOnly">
       <picker
-        :emoji="slackEmojiOverride || 'arrow_up'"
-        :title="slackEmojiOverride || 'Pick your icon...'"
+        :disabled="viewOnly"
+        :data="emojiIndex"
         color="#189acc"
         @select="addEmoji" />
-    </praeco-form-item>
+      <emoji
+        :data="emojiIndex"
+        :emoji="slackEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
 
     <el-form-item label="Message color" prop="slackMsgColor" required>
       <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
@@ -178,15 +186,25 @@
 </template>
 
 <script>
-import { Picker } from 'emoji-mart-vue';
+import 'emoji-mart-vue-fast/css/emoji-mart.css';
+import emojiData from 'emoji-mart-vue-fast/data/all.json';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+
+let emojiIndex = new EmojiIndex(emojiData);
 
 export default {
   components: {
+    Emoji,
     Picker
   },
 
   props: ['viewOnly'],
 
+  data() {
+    return {
+      emojiIndex,
+    };
+  },
   computed: {
     slackChannelOverride: {
       get() {
