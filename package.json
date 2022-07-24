@@ -15,7 +15,7 @@
     "test:watch": "vue-cli-service test:unit --watch"
   },
   "dependencies": {
-    "@babel/core": "^7.18.6",
+    "@babel/core": "^7.18.9",
     "@browser-bunyan/server-stream": "1.8.0",
     "@fortawesome/fontawesome-svg-core": "6.1.1",
     "@fortawesome/free-brands-svg-icons": "6.1.1",
@@ -28,7 +28,7 @@
     "canvas": "^2.9.3",
     "change-case": "4.1.2",
     "comma-number": "2.1.0",
-    "core-js": "^3.23.3",
+    "core-js": "^3.23.5",
     "cron-ui": "1.0.3",
     "debounce": "1.2.1",
     "echarts": "^5.3.3",
@@ -38,17 +38,17 @@
     "lodash.clonedeep": "4.5.0",
     "lodash.get": "4.4.2",
     "lodash.throttle": "4.1.1",
-    "moment": "2.29.3",
+    "moment": "2.29.4",
     "moment-timezone": "0.5.34",
     "normalize.css": "8.0.1",
     "prettycron": "0.10.0",
     "prismjs": "1.28.0",
-    "sass": "^1.53.0",
+    "sass": "^1.54.0",
     "sass-loader": "^10.1.0",
     "semver": "7.3.7",
     "string-format": "2.0.0",
     "validator": "^13.7.0",
-    "vue": "^2.7.7",
+    "vue": "^2.7.8",
     "vue-at": "2.5.0-beta.2",
     "vue-cron-editor-buefy": "^0.2.17",
     "vue-echarts": "6.2.3",
@@ -65,7 +65,7 @@
     "zrender": "5.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.6",
+    "@babel/core": "^7.18.9",
     "@babel/eslint-parser": "^7.18.2",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
     "@vue/cli-plugin-babel": "^4.5.19",
@@ -80,7 +80,7 @@
     "chai": "4.3.6",
     "coverage-istanbul-loader": "^3.0.5",
     "cross-env": "7.0.3",
-    "cypress": "^10.3.0",
+    "cypress": "^10.3.1",
     "eslint": "^6.8.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.26.0",
@@ -89,7 +89,7 @@
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",
     "nyc": "15.1.0",
-    "vue-template-compiler": "^2.7.7"
+    "vue-template-compiler": "^2.7.8"
   },
   "overrides": {
     "@vue/vue-loader-v15": "npm:vue-loader@^15.10.0"
