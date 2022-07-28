@@ -3,10 +3,12 @@
     <el-tabs v-model="queryType" type="card" @tab-click="changeQueryType">
       <el-tab-pane label="Builder" name="tree">
         <el-popover v-model="popFilterVisible">
-          <span slot="reference" class="pop-trigger">
-            <span v-if="!queryTree.children.length">NEW FILTER</span>
-            <span else>{{ queryString }}</span>
-          </span>
+          <template v-slot:reference>
+            <span class="pop-trigger">
+              <span v-if="!queryTree.children.length">NEW FILTER</span>
+              <span else>{{ queryString }}</span>
+            </span>
+          </template>
           <div>
             <el-row :gutter="30" :class="{ 'empty': !queryTree.children.length }">
               <el-col :span="24">

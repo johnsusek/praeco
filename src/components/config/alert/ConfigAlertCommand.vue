@@ -1,12 +1,14 @@
 <template>
   <div>
     <el-popover v-model="popCommandVisible" :class="{ 'is-invalid': !popCommandValid }">
-      <span slot="reference" class="pop-trigger">
-        <el-tooltip v-if="command.length" :content="command.join(', ')" placement="top">
-          <span>Command ({{ command.length }})</span>
-        </el-tooltip>
-        <span v-else>Command ({{ command.length }})</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="command.length" :content="command.join(', ')" placement="top">
+            <span>Command ({{ command.length }})</span>
+          </el-tooltip>
+          <span v-else>Command ({{ command.length }})</span>
+        </span>
+      </template>
       <template>
         <el-form
           ref="command"

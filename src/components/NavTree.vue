@@ -12,15 +12,15 @@
     placeholder="Filter..."
     @select="handleSelect"
     @click.native="handleClick">
-    <label
-      slot="option-label"
-      slot-scope="{ node, labelClassName }"
-      :class="labelClassName">
-      <span v-if="node.children !== undefined">
-        <Icon :icon="node.isExpanded ? 'folder-open' : 'folder'" />
-      </span>
-      {{ node.label }}
-    </label>
+    <template v-slot:option-label="{ node, labelClassName }">
+      <label
+        :class="labelClassName">
+        <span v-if="node.children !== undefined">
+          <Icon :icon="node.isExpanded ? 'folder-open' : 'folder'" />
+        </span>
+        {{ node.label }}
+      </label>
+    </template>
   </treeselect>
 </template>
 

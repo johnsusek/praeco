@@ -1,10 +1,12 @@
 <template>
   <div>
     <el-popover v-model="popWhenVisible">
-      <span slot="reference" class="pop-trigger pop-when">
-        <span>WHEN </span>
-        <span>{{ metricAggType === 'avg' ? 'average' : metricAggType }}</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger pop-when">
+          <span>WHEN </span>
+          <span>{{ metricAggType === 'avg' ? 'average' : metricAggType }}</span>
+        </span>
+      </template>
       <div>
         <el-menu mode="vertical" @select="selectWhen">
           <el-menu-item index="count">
@@ -49,10 +51,12 @@
       v-if="showPopCardinalityField"
       v-model="popCardinalityVisible"
       :class="{ 'is-invalid': !popCardinalityValid }">
-      <span slot="reference" class="pop-trigger">
-        <span>OF </span>
-        <span>{{ cardinalityField || 'select a field' }}</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <span>OF </span>
+          <span>{{ cardinalityField || 'select a field' }}</span>
+        </span>
+      </template>
       <el-form ref="cardinalityField" :model="$store.state.config.match">
         <el-form-item prop="cardinalityField" required>
           <el-select
@@ -72,10 +76,12 @@
     </el-popover>
 
     <el-popover v-if="showPopOf" v-model="popOfVisible" :class="{ 'is-invalid': !popOfValid }">
-      <span slot="reference" class="pop-trigger">
-        <span>OF </span>
-        <span>{{ metricAggKey || 'select a field' }}</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <span>OF </span>
+          <span>{{ metricAggKey || 'select a field' }}</span>
+        </span>
+      </template>
       <el-form ref="of" :model="$store.state.config.match">
         <el-form-item prop="metricAggKey" required>
           <el-select
@@ -95,14 +101,16 @@
     </el-popover>
 
     <el-popover v-if="showPopOver" v-model="popOverVisible" :class="{ 'is-invalid': !popOverValid }">
-      <span slot="reference" class="pop-trigger">
-        <span>
-          <span v-if="groupedOver === 'field'">GROUPED </span>
-          <span>OVER </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <span>
+            <span v-if="groupedOver === 'field'">GROUPED </span>
+            <span>OVER </span>
+          </span>
+          <span v-if="groupedOver === 'all'">all documents</span>
+          <span v-if="groupedOver === 'field'">{{ queryKey }}</span>
         </span>
-        <span v-if="groupedOver === 'all'">all documents</span>
-        <span v-if="groupedOver === 'field'">{{ queryKey }}</span>
-      </span>
+      </template>
       <div>
         <el-radio
           id="groupedOverAll"
@@ -181,20 +189,22 @@
     </el-popover>
 
     <el-popover v-if="showPopCompare" v-model="popCompareVisible" :class="{ 'is-invalid': !popCompareValid }">
-      <span slot="reference" class="pop-trigger">
-        <template v-if="compareKey && compareKey.length > 1">
-          <span>FIELDS</span>
-          <span> {{ compareKey }}</span>
-        </template>
-        <template v-else-if="compareKey && compareKey.length === 1">
-          <span>FIELD</span>
-          <span> {{ compareKey[0] }}</span>
-        </template>
-        <template v-else>
-          <span>FIELD</span>
-          <span> {{ compareKey }}</span>
-        </template>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <template v-if="compareKey && compareKey.length > 1">
+            <span>FIELDS</span>
+            <span> {{ compareKey }}</span>
+          </template>
+          <template v-else-if="compareKey && compareKey.length === 1">
+            <span>FIELD</span>
+            <span> {{ compareKey[0] }}</span>
+          </template>
+          <template v-else>
+            <span>FIELD</span>
+            <span> {{ compareKey }}</span>
+          </template>
+        </span>
+      </template>
       <el-form ref="compare" :model="$store.state.config.match">
         <el-form-item prop="compareKey" required>
           <el-select
@@ -226,13 +236,15 @@
     </el-popover>
 
     <el-popover v-if="showPopGroup" v-model="popGroupVisible" :class="{ 'is-invalid': !popGroupValid }">
-      <span slot="reference" class="pop-trigger">
-        <span>
-          <span v-if="metricAggType === 'new term'">IN FIELD </span>
-          <span v-else>GROUPED OVER </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <span>
+            <span v-if="metricAggType === 'new term'">IN FIELD </span>
+            <span v-else>GROUPED OVER </span>
+          </span>
+          <span>{{ queryKey }}</span>
         </span>
-        <span>{{ queryKey }}</span>
-      </span>
+      </template>
       <el-form ref="group" :model="$store.state.config.match">
         <el-form-item
           v-for="(entry, index) in queryKey"
@@ -270,12 +282,14 @@
     </el-popover>
 
     <el-popover v-if="showPopBlacklist" v-model="popBlacklistVisible" :class="{ 'is-invalid': !popBlacklistValid }">
-      <span slot="reference" class="pop-trigger">
-        <el-tooltip v-if="blacklist.length" :content="blacklist.join(', ')" placement="top">
-          <span>IN LIST ({{ blacklist.length }})</span>
-        </el-tooltip>
-        <span v-else>IN LIST ({{ blacklist.length }})</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="blacklist.length" :content="blacklist.join(', ')" placement="top">
+            <span>IN LIST ({{ blacklist.length }})</span>
+          </el-tooltip>
+          <span v-else>IN LIST ({{ blacklist.length }})</span>
+        </span>
+      </template>
       <template>
         <el-form
           ref="blacklist"
@@ -316,12 +330,14 @@
     </el-popover>
 
     <el-popover v-if="showPopWhitelist" v-model="popWhitelistVisible" :class="{ 'is-invalid': !popWhitelistValid }">
-      <span slot="reference" class="pop-trigger">
-        <el-tooltip v-if="whitelist.length" :content="whitelist.join(', ')" placement="top">
-          <span>NOT IN LIST ({{ whitelist.length }})</span>
-        </el-tooltip>
-        <span v-else>NOT IN LIST ({{ whitelist.length }})</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="whitelist.length" :content="whitelist.join(', ')" placement="top">
+            <span>NOT IN LIST ({{ whitelist.length }})</span>
+          </el-tooltip>
+          <span v-else>NOT IN LIST ({{ whitelist.length }})</span>
+        </span>
+      </template>
       <template>
         <el-form
           ref="whitelist"
@@ -378,15 +394,17 @@
       v-if="showPopCardinalityThresholds"
       v-model="popCardinalityThresholdsVisible"
       :class="{ 'is-invalid': !popCardinalityThresholdsValid }">
-      <span slot="reference" class="pop-trigger">
-        <span>IS</span>
-        <span v-if="maxCardinality">
-          ABOVE {{ maxCardinality }}
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <span>IS</span>
+          <span v-if="maxCardinality">
+            ABOVE {{ maxCardinality }}
+          </span>
+          <span v-if="minCardinality">
+            BELOW {{ minCardinality }}
+          </span>
         </span>
-        <span v-if="minCardinality">
-          BELOW {{ minCardinality }}
-        </span>
-      </span>
+      </template>
 
       <el-row :gutter="10" style="width: 260px">
         <el-col :span="10">
@@ -426,36 +444,51 @@
     </el-popover>
 
     <el-popover v-if="showPopAbove" v-model="popAboveVisible" :class="{ 'is-invalid': !popAboveValid }">
-      <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" slot="reference" class="pop-trigger">
-        <span>IS</span>
-        <span v-if="numEvents || maxThreshold">
-          ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
+      <template v-slot:reference>
+        <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
+          <span>IS</span>
+          <span v-if="numEvents || maxThreshold">
+            ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
+          </span>
+          <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
+            &amp;
+          </span>
+          <span v-if="threshold || minThreshold">
+            BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}
+          </span>
         </span>
-        <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
-          &amp;
-        </span>
-        <span v-if="threshold || minThreshold">
-          BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}
-        </span>
-      </span>
 
-      <span v-else-if="spikeOrThreshold === 'spike'" slot="reference" class="pop-trigger">
-        <span>SPIKES</span>
-        <span v-if="spikeType === 'up'">
-          UP
+        <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
+          <span>IS</span>
+          <span v-if="numEvents || maxThreshold">
+            ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
+          </span>
+          <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
+            &amp;
+          </span>
+          <span v-if="threshold || minThreshold">
+            BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}
+          </span>
         </span>
-        <span v-if="spikeType === 'down'">
-          DOWN
-        </span>
-        <span v-if="spikeType === 'both'">
-          EITHER DIRECTION
-        </span>
-        {{ spikeHeight }}x
-      </span>
 
-      <span v-else-if="spikeOrThreshold === 'any'" slot="reference" class="pop-trigger">
-        <span>IS NOT EMPTY</span>
-      </span>
+        <span v-else-if="spikeOrThreshold === 'spike'" class="pop-trigger">
+          <span>SPIKES</span>
+          <span v-if="spikeType === 'up'">
+            UP
+          </span>
+          <span v-if="spikeType === 'down'">
+            DOWN
+          </span>
+          <span v-if="spikeType === 'both'">
+            EITHER DIRECTION
+          </span>
+          {{ spikeHeight }}x
+        </span>
+
+        <span v-else-if="spikeOrThreshold === 'any'" class="pop-trigger">
+          <span>IS NOT EMPTY</span>
+        </span>
+      </template>
 
       <div v-if="metricAggType === 'count'">
         <el-row :gutter="10" style="width: 360px">
@@ -543,21 +576,21 @@
       <el-popover
         v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality'"
         popper-class="popover-time">
-        <span
-          slot="reference"
-          class="pop-trigger">
-          <span>
-            <span v-if="metricAggType === 'field changes'">
-              WITHIN
-              <span v-if="!useTimeframe">ANY TIMEFRAME</span>
+        <template v-slot:reference>
+          <span class="pop-trigger">
+            <span>
+              <span v-if="metricAggType === 'field changes'">
+                WITHIN
+                <span v-if="!useTimeframe">ANY TIMEFRAME</span>
+              </span>
+              <span v-if="metricAggType === 'count' || metricAggType === 'cardinality'">FOR </span>
+              <span v-if="useTimeframe">THE LAST</span>
             </span>
-            <span v-if="metricAggType === 'count' || metricAggType === 'cardinality'">FOR </span>
-            <span v-if="useTimeframe">THE LAST</span>
+            <ElastalertTimeView
+              v-if="useTimeframe"
+              :time="timeframe" />
           </span>
-          <ElastalertTimeView
-            v-if="useTimeframe"
-            :time="timeframe" />
-        </span>
+        </template>
 
         <el-form v-if="metricAggType === 'field changes'" :class="{ 'm-s-lg': useTimeframe }">
           <el-form-item label="Limit timeframe">
@@ -584,10 +617,12 @@
       </el-popover>
 
       <el-popover v-show="showForTheLast">
-        <span slot="reference" class="pop-trigger-pseudo">
-          <span>FOR THE LAST </span>
-          <ElastalertTimeView :time="bufferTime" />
-        </span>
+        <template v-slot:reference>
+          <span class="pop-trigger-pseudo">
+            <span>FOR THE LAST </span>
+            <ElastalertTimeView :time="bufferTime" />
+          </span>
+        </template>
       </el-popover>
     </span>
 
@@ -597,9 +632,11 @@
       v-model="popOptionsVisible"
       :class="{ 'is-invalid': !popOptionsValid }"
       popper-class="popover-options">
-      <span slot="reference" class="pop-trigger">
-        <span>WITH OPTIONS</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <span>WITH OPTIONS</span>
+        </span>
+      </template>
 
       <div v-if="metricAggType === 'field not in list' || metricAggType === 'field changes'">
         <el-form

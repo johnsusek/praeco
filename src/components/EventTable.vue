@@ -10,7 +10,7 @@
       stripe
       @header-dragend="saveColumnWidths">
       <el-table-column type="expand">
-        <template slot-scope="props">
+        <template v-slot="props">
           <p v-for="col in columns" :key="col">
             <strong>{{ col }}</strong>
             <br>
@@ -26,7 +26,7 @@
         :prop="col"
         :width="widthForCol(col, i)"
         resizable>
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <VueJsonPretty
             v-if="typeof scope.row[col] === 'object'"
             :data="scope.row[col]"
@@ -40,15 +40,17 @@
         </template>
       </el-table-column>
 
-      <template slot="append">
+      <template v-slot:append>
         <div v-infinite-scroll="loadMore" infinite-scroll-distance="800" />
       </template>
     </el-table>
 
     <el-popover title="Hide columns">
-      <el-button slot="reference" circle class="show-columns-button">
-        <Icon icon="ellipsis-h" />
-      </el-button>
+      <template v-slot:reference>
+        <el-button circle class="show-columns-button">
+          <Icon icon="ellipsis-h" />
+        </el-button>
+      </template>
       <el-checkbox-group v-model="hidden">
         <div v-for="col in columns" :key="col">
           <el-checkbox :label="col" @change="saveColumns">

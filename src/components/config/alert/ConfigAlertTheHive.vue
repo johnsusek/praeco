@@ -26,12 +26,14 @@
     </praeco-form-item>
 
     <el-popover v-model="pophiveAlertConfigTagsVisible" :class="{ 'is-invalid': !pophiveAlertConfigTagsValid }">
-      <span slot="reference" class="pop-trigger">
-        <el-tooltip v-if="hiveAlertConfigTags.length" :content="hiveAlertConfigTags.join(', ')" placement="top">
-          <span>Tags ({{ hiveAlertConfigTags.length }})</span>
-        </el-tooltip>
-        <span v-else>Tags ({{ hiveAlertConfigTags.length }})</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="hiveAlertConfigTags.length" :content="hiveAlertConfigTags.join(', ')" placement="top">
+            <span>Tags ({{ hiveAlertConfigTags.length }})</span>
+          </el-tooltip>
+          <span v-else>Tags ({{ hiveAlertConfigTags.length }})</span>
+        </span>
+      </template>
       <template>
         <el-form
           ref="hiveAlertConfigTags"

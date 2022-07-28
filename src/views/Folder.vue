@@ -34,7 +34,7 @@
 
     <el-table :data="type === 'templates' ? templatesForFolder : rulesForFolder" class="m-n-sm" style="width: 100%">
       <el-table-column :label="type.capitalize()">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <Icon icon="file-alt" style="padding-right: 4px" />
           <router-link :to="`/${type}/${encodeURIComponent(scope.row.val)}`">
             {{ scope.row.label }}

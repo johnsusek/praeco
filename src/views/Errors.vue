@@ -5,11 +5,13 @@
     <el-table v-loading="loading" :data="errorLog" empty-text=" ">
       <el-table-column label="Rule" prop="data.rule" width="150" />
       <el-table-column label="Error">
-        <span slot-scope="scope">
-          <strong>{{ shortDate(scope.row['@timestamp']) }}</strong>
-          <br>
-          {{ scope.row.message }}
-        </span>
+        <template v-slot="scope">
+          <span>
+            <strong>{{ shortDate(scope.row['@timestamp']) }}</strong>
+            <br>
+            {{ scope.row.message }}
+          </span>
+        </template>
       </el-table-column>
     </el-table>
   </div>
