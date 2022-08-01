@@ -8,14 +8,14 @@
     <el-table :data="silenceLog" empty-text="">
       <el-table-column label="Rule" prop="rule_name" />
       <el-table-column label="Until" width="170">
-        <template v-slot="scope">
+        <template #default="scope">
           <span>
             {{ shortDate(scope.row.until) }}
           </span>
         </template>
       </el-table-column>
       <el-table-column label="Timestamp" width="170">
-        <template v-slot="scope">
+        <template #default="scope">
           <span>
             {{ shortDate(scope.row['@timestamp']) }}
           </span>

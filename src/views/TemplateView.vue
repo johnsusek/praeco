@@ -10,7 +10,7 @@
               size="large"
               autofocus
               autoselect
-              @keyup.enter.native="rename" />
+              @keyup.enter="rename" />
           </el-col>
           <el-col :span="18">
             <el-button size="large" type="primary" @click="rename">
@@ -65,14 +65,14 @@
       </el-row>
 
       <el-dialog
-        :visible.sync="moveVisible"
+        v-model:visible="moveVisible"
         title="Move"
         width="40%"
         @close="moveVisible = false">
         <div>
           <FolderTree v-model="moveDest" type="templates" />
         </div>
-        <template v-slot:footer>
+        <template #footer>
           <span>
             <el-button @click="moveVisible = false">Cancel</el-button>
             <el-button type="primary" @click="move">Move template</el-button>

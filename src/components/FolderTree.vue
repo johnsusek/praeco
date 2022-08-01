@@ -20,6 +20,7 @@ import { loadChildrenOptions } from '@/lib/tree';
 
 export default {
   props: ['type'],
+  emits: ['input'],
   data() {
     return {
       options: [

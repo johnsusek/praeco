@@ -4,7 +4,7 @@
     :rules="rules"
     :model="$store.state.config.settings"
     label-position="top"
-    @submit.native.prevent>
+    @submit.prevent>
     <el-alert
       v-if="mappingError"
       :description="mappingError"

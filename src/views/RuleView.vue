@@ -10,7 +10,7 @@
               size="large"
               autofocus
               autoselect
-              @keyup.enter.native="rename" />
+              @keyup.enter="rename" />
           </el-col>
           <el-col :span="18">
             <el-button size="large" type="primary" @click="rename">
@@ -71,7 +71,7 @@
           v-if="isEnabled"
           v-model="silencePopoverVisible"
           :disabled="!!silenceNotice">
-          <template v-slot:reference>
+          <template #reference>
             <span>
               <el-button
                 :disabled="!!silenceNotice"
@@ -128,14 +128,14 @@
         </el-button>
 
         <el-dialog
-          :visible.sync="moveVisible"
+          v-model:visible="moveVisible"
           title="Move"
           width="40%"
           @close="moveVisible = false">
           <div>
             <FolderTree v-model="moveDest" type="rules" />
           </div>
-          <template v-slot:footer>
+          <template #footer>
             <span>
               <el-button @click="moveVisible = false">Cancel</el-button>
               <el-button type="primary" @click="move">Move rule</el-button>
@@ -158,7 +158,7 @@
         <el-tab-pane label="Alert log">
           <el-table :data="alertLog" empty-text="">
             <el-table-column label="Alert sent" width="100">
-              <template v-slot="scope">
+              <template #default="scope">
                 <span>
                   <el-tag v-if="scope.row.alert_sent" type="success">Sent</el-tag>
                   <el-tag v-else type="danger">Not sent</el-tag>
@@ -166,14 +166,14 @@
               </template>
             </el-table-column>
             <el-table-column label="Alert time" width="170">
-              <template v-slot="scope">
+              <template #default="scope">
                 <span>
                   {{ shortDate(scope.row.alert_time) }}
                 </span>
               </template>
             </el-table-column>
             <el-table-column label="Alert type" width="100">
-              <template v-slot="scope">
+              <template #default="scope">
                 <span>
                   {{ titleCase(scope.row.alert_info && scope.row.alert_info.type) }}
                 </span>
@@ -186,14 +186,14 @@
         <el-tab-pane label="Query log">
           <el-table :data="queryLog" empty-text="">
             <el-table-column label="Start time" width="170">
-              <template v-slot="scope">
+              <template #default="scope">
                 <span>
                   {{ shortDate(scope.row.starttime) }}
                 </span>
               </template>
             </el-table-column>
             <el-table-column label="End time" width="170">
-              <template v-slot="scope">
+              <template #default="scope">
                 <span>
                   {{ shortDate(scope.row.endtime) }}
                 </span>
@@ -212,14 +212,14 @@
           been alerted within the rule's re-alert timeframe." />
           <el-table :data="silenceLog" empty-text="">
             <el-table-column label="Until" width="170">
-              <template v-slot="scope">
+              <template #default="scope">
                 <span>
                   {{ shortDate(scope.row.until) }}
                 </span>
               </template>
             </el-table-column>
             <el-table-column label="Timestamp" width="170">
-              <template v-slot="scope">
+              <template #default="scope">
                 <span>
                   {{ shortDate(scope.row['@timestamp']) }}
                 </span>

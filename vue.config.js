@@ -16,7 +16,22 @@ module.exports = {
     ]
   },
   chainWebpack: config => {
+    config.resolve.alias.set('vue', '@vue/compat');
+
     if (process.env.NODE_ENV !== 'production') {
+      config.resolve.alias.set('vue', '@vue/compat');
+
+      config.module
+        .rule('vue')
+        .use('vue-loader')
+        .tap(options => ({
+          ...options,
+          compilerOptions: {
+            compatConfig: {
+              MODE: 2
+            }
+          }
+        }));
       config.module
         .rule('istanbul')
         .test(/\.(js|vue)$/)

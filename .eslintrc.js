@@ -4,7 +4,7 @@ module.exports = {
     node: true,
     mocha: true
   },
-  extends: ['plugin:vue/recommended', '@vue/airbnb'],
+  extends: ['plugin:vue/vue3-recommended', '@vue/airbnb'],
   rules: {
     quotes: ['error', 'single'],
     'no-underscore-dangle': 'off',

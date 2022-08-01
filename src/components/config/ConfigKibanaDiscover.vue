@@ -49,7 +49,7 @@
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
       <el-popover v-model="popKibanaDiscoverColumnsVisible" :class="{ 'is-invalid': !popKibanaDiscoverColumnsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="kibanaDiscoverColumns.length" :content="kibanaDiscoverColumns.join(', ')" placement="top">
               <span>Kibana Discover Columns ({{ kibanaDiscoverColumns.length }})</span>
@@ -63,7 +63,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in kibanaDiscoverColumns"
               :key="index"
@@ -141,6 +141,7 @@
 <script>
 export default {
   props: ['viewOnly'],
+  emits: ['validate'],
 
   data() {
     return {

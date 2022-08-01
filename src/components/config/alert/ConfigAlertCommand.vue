@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-popover v-model="popCommandVisible" :class="{ 'is-invalid': !popCommandValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="command.length" :content="command.join(', ')" placement="top">
             <span>Command ({{ command.length }})</span>
@@ -15,7 +15,7 @@
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in command"
             :key="index"
@@ -93,6 +93,7 @@
 <script>
 export default {
   props: ['viewOnly'],
+  emits: ['validate'],
 
   data() {
     return {

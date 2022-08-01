@@ -1,6 +1,6 @@
 <template>
   <span class="elastalert-timepicker">
-    <el-input-number v-model="currentAmount" :min="allowZero ? 0 : 1" @input.native="emitNumKeyup" @input="emitValue" />
+    <el-input-number v-model="currentAmount" :min="allowZero ? 0 : 1" @keyup="emitNumKeyup" @input="emitValue" />
 
     <el-select v-model="currentUnit" @input="emitValue">
       <el-option :label="`Second`+plural()" value="seconds" />
@@ -15,6 +15,7 @@
 <script>
 export default {
   props: ['unit', 'amount', 'allowZero'],
+  emits: ['input'],
 
   data() {
     return {

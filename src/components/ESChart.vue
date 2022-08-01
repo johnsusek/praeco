@@ -39,7 +39,7 @@
           @click="ev => $emit('click', ev)" />
 
         <el-popover v-if="showControls" trigger="click" class="praeco-chart-popover">
-          <template v-slot:reference>
+          <template #reference>
             <el-button
               size="medium"
               class="praeco-chart-options"
@@ -152,6 +152,11 @@ export default {
     'aggMin',
     'aggMax',
     'aggCardinality'
+  ],
+  emits: [
+    'click',
+    'group',
+    'update'
   ],
 
   data() {

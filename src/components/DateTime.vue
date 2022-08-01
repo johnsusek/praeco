@@ -52,7 +52,7 @@ export default {
       this.beginTimer();
     }
   },
-  destroyed() {
+  unmounted() {
     clearInterval(this.timerId);
   },
   methods: {

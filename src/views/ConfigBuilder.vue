@@ -117,7 +117,7 @@ export default {
     }
   },
 
-  destroyed() {
+  unmounted() {
     this.$store.dispatch('config/reset');
   },
 

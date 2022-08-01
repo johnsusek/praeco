@@ -4,14 +4,14 @@
     <el-table :data="queryLog" empty-text="">
       <el-table-column label="Rule" prop="rule_name" />
       <el-table-column label="Start time" width="170">
-        <template v-slot="scope">
+        <template #default="scope">
           <span>
             {{ shortDate(scope.row.starttime) }}
           </span>
         </template>
       </el-table-column>
       <el-table-column label="End time" width="170">
-        <template v-slot="scope">
+        <template #default="scope">
           <span>
             {{ shortDate(scope.row.endtime) }}
           </span>

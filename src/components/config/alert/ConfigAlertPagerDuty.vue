@@ -45,7 +45,7 @@
     </el-form-item>
 
     <el-popover v-model="popPagerdutyIncidentKeyArgsVisible" :class="{ 'is-invalid': !popPagerdutyIncidentKeyArgsValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="pagerdutyIncidentKeyArgs.length" :content="pagerdutyIncidentKeyArgs.join(', ')" placement="top">
             <span>Incident Key Args ({{ pagerdutyIncidentKeyArgs.length }})</span>
@@ -59,7 +59,7 @@
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in pagerdutyIncidentKeyArgs"
             :key="index"
@@ -112,7 +112,7 @@
       </el-form-item>
 
       <el-popover v-model="popPagerdutyV2PayloadClassArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadClassArgsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="pagerdutyV2PayloadClassArgs.length" :content="pagerdutyV2PayloadClassArgs.join(', ')" placement="top">
               <span>Payload Class Args ({{ pagerdutyV2PayloadClassArgs.length }})</span>
@@ -126,7 +126,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadClassArgs"
               :key="index"
@@ -170,7 +170,7 @@
       </el-form-item>
 
       <el-popover v-model="popPagerdutyV2PayloadComponentArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadComponentArgsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="pagerdutyV2PayloadComponentArgs.length" :content="pagerdutyV2PayloadComponentArgs.join(', ')" placement="top">
               <span>Payload Component Args ({{ pagerdutyV2PayloadComponentArgs.length }})</span>
@@ -184,7 +184,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadComponentArgs"
               :key="index"
@@ -228,7 +228,7 @@
       </el-form-item>
 
       <el-popover v-model="popPagerdutyV2PayloadGroupArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadGroupArgsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="pagerdutyV2PayloadGroupArgs.length" :content="pagerdutyV2PayloadGroupArgs.join(', ')" placement="top">
               <span>Payload Group Args ({{ pagerdutyV2PayloadGroupArgs.length }})</span>
@@ -242,7 +242,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadGroupArgs"
               :key="index"
@@ -306,7 +306,7 @@
       </el-form-item>
 
       <el-popover v-model="poppagerdutyV2PayloadSourceArgsVisible" :class="{ 'is-invalid': !poppagerdutyV2PayloadSourceArgsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="pagerdutyV2PayloadSourceArgs.length" :content="pagerdutyV2PayloadSourceArgs.join(', ')" placement="top">
               <span>Payload Source Args ({{ pagerdutyV2PayloadSourceArgs.length }})</span>
@@ -320,7 +320,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadSourceArgs"
               :key="index"
@@ -371,6 +371,7 @@
 
 export default {
   props: ['viewOnly'],
+  emits: ['validate'],
 
   data() {
     let groupPagerdutyValue;

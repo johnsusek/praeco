@@ -1,9 +1,9 @@
 <template>
-  <el-form ref="form" label-position="top" @submit.native.prevent>
+  <el-form ref="form" label-position="top" @submit.prevent>
     <el-tabs v-model="queryType" type="card" @tab-click="changeQueryType">
       <el-tab-pane label="Builder" name="tree">
         <el-popover v-model="popFilterVisible">
-          <template v-slot:reference>
+          <template #reference>
             <span class="pop-trigger">
               <span v-if="!queryTree.children.length">NEW FILTER</span>
               <span else>{{ queryString }}</span>

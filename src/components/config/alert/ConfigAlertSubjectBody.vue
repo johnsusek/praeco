@@ -3,7 +3,7 @@
     ref="form"
     :model="$store.state.config.alert"
     label-position="top"
-    @submit.native.prevent>
+    @submit.prevent>
     <el-row :gutter="50">
       <el-col :span="12">
         <el-form-item
@@ -16,8 +16,8 @@
             :members="fields"
             :allow-spaces="false"
             at="%"
-            @paste.native="pastePlainText">
-            <template v-slot:embeddedItem="s">
+            @paste="pastePlainText">
+            <template #embeddedItem="s">
               <span>
                 <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
               </span>
@@ -28,7 +28,7 @@
         </el-form-item>
 
         <el-popover v-model="popAlertSubjectArgsVisible" :class="{ 'is-invalid': !popAlertSubjectArgsValid }">
-          <template v-slot:reference>
+          <template #reference>
             <span class="pop-trigger">
               <el-tooltip v-if="alertSubjectArgs.length" :content="alertSubjectArgs.join(', ')" placement="top">
                 <span>AlertSubjectArgs ({{ alertSubjectArgs.length }})</span>
@@ -42,7 +42,7 @@
               :model="$store.state.config.alert"
               label-position="top"
               style="width: 360px"
-              @submit.native.prevent>
+              @submit.prevent>
               <el-form-item
                 v-for="(entry, index) in alertSubjectArgs"
                 :key="index"
@@ -88,8 +88,8 @@
             :members="fields"
             :allow-spaces="false"
             at="%"
-            @paste.native="pastePlainText">
-            <template v-slot:embeddedItem="s">
+            @paste="pastePlainText">
+            <template #embeddedItem="s">
               <span>
                 <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
               </span>
@@ -103,7 +103,7 @@
           v-if="bodyType !== 'aggregation_summary_only'"
           v-model="popAlertTextArgsVisible"
           :class="{ 'is-invalid': !popAlertTextArgsValid }">
-          <template v-slot:reference>
+          <template #reference>
             <span class="pop-trigger">
               <el-tooltip v-if="alertTextArgs.length" :content="alertTextArgs.join(', ')" placement="top">
                 <span>alertTextArgs ({{ alertTextArgs.length }})</span>
@@ -117,7 +117,7 @@
               :model="$store.state.config.alert"
               label-position="top"
               style="width: 360px"
-              @submit.native.prevent>
+              @submit.prevent>
               <el-form-item
                 v-for="(entry, index) in alertTextArgs"
                 :key="index"
@@ -218,8 +218,9 @@ export default {
   components: {
     At
   },
-
   props: ['viewOnly'],
+
+  emits: ['validate'],
 
   data() {
     return {

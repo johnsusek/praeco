@@ -51,7 +51,7 @@
     </el-form-item>
 
     <el-popover v-model="popAlertaTagsVisible" :class="{ 'is-invalid': !popAlertaTagsValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaTags.length" :content="alertaTags.join(', ')" placement="top">
             <span>Tags ({{ alertaTags.length }})</span>
@@ -65,7 +65,7 @@
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in alertaTags"
             :key="index"
@@ -111,6 +111,7 @@
 <script>
 export default {
   props: ['viewOnly'],
+  emits: ['validate'],
 
   data() {
     return {
