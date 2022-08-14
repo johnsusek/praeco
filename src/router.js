@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
 import Home from './views/Home.vue';
 import Errors from './views/Errors.vue';
 import Silences from './views/Silences.vue';
@@ -11,11 +11,11 @@ import RuleView from './views/RuleView.vue';
 import TemplateView from './views/TemplateView.vue';
 import ConfigBuilder from './views/ConfigBuilder.vue';
 
-Vue.use(Router);
+const app = createApp({});
 
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+
   routes: [
     {
       path: '/',
@@ -115,3 +115,5 @@ export default new Router({
     }
   ]
 });
+export default router;
+app.use(router);

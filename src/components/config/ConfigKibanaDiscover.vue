@@ -72,7 +72,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5"  justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="kibanaDiscoverColumns[index]"
@@ -290,12 +290,12 @@ export default {
   methods: {
     updateKibanaDiscoverFromTimedelta(value) {
       this.kibanaDiscoverFromTimedelta = {};
-      this.$set(this.kibanaDiscoverFromTimedelta, Object.keys(value)[0], Object.values(value)[0]);
+      this.kibanaDiscoverFromTimedelta[Object.keys(value)[0]] = Object.values(value)[0];
     },
 
     updateKibanaDiscoverToTimedelta(value) {
       this.kibanaDiscoverToTimedelta = {};
-      this.$set(this.kibanaDiscoverToTimedelta, Object.keys(value)[0], Object.values(value)[0]);
+      this.kibanaDiscoverToTimedelta[Object.keys(value)[0]] = Object.values(value)[0];
     },
 
     async validate() {

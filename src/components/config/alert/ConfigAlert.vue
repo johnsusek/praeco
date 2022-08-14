@@ -789,7 +789,7 @@ export default {
 
     updateRealert(value) {
       this.realert = {};
-      this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
+      this.realert[Object.keys(value)[0]] = Object.values(value)[0];
     }
   }
 };

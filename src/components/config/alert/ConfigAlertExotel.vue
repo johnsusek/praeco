@@ -1,4 +1,4 @@
-.<template>
+<template>
   <div>
     <praeco-form-item label="Account Sid" prop="exotelAccountSid" required>
       <el-input id="exotelAccountSid" v-model="exotelAccountSid" :disabled="viewOnly" />

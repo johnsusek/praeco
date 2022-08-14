@@ -1,8 +1,8 @@
 import axios from 'axios';
-import ElementUI from 'element-ui';
+import ElementUI from 'element-plus';
 import Vuex from 'vuex';
 import MockAdapter from 'axios-mock-adapter';
-import VueRouter from 'vue-router';
+import { createRouter as VueRouter } from 'vue-router';
 import 'localstorage-polyfill';
 import {
   config, mount, shallowMount, createLocalVue

@@ -1,4 +1,4 @@
-import { Notification } from 'element-ui';
+import { ElNotification as Notification } from 'element-plus';
 import { logger } from '@/lib/logger.js';
 
 export default function notifyError(error) {

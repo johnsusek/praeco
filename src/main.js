@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import { Notification } from 'element-ui';
+import * as Vue from 'vue';
+import { ElNotification as Notification } from 'element-plus';
 import axios from 'axios';
-import VueNativeSock from 'vue-native-websocket';
-import VueSplit from 'vue-split-panel';
+import VueNativeSock from 'vue-native-websocket-vue3';
+import VueSplit from 'vue3-split-panel';
 import '@/contrib.js';
 import '@/registration.js';
 import '@/lib/string.js';
@@ -20,8 +20,6 @@ import './style/element.scss';
 import './style/pop-trigger.scss';
 
 Vue.use(VueSplit);
-
-Vue.config.productionTip = false;
 
 Vue.config.errorHandler = function(err, vm, info) {
   logger().error(err);
@@ -51,11 +49,8 @@ function startApp(config) {
     }
   );
 
-  new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount('#app');
+  const app = Vue.createApp(App).use(router).use(store);
+  app.mount('#app');
 }
 
 // First get the config from the server

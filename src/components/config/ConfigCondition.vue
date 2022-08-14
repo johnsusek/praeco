@@ -304,7 +304,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5"  justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="blacklist[index]"
@@ -352,7 +352,7 @@
             required
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5"  justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="whitelist[index]"

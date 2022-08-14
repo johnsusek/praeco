@@ -20,7 +20,7 @@
       </div>
     </el-header>
 
-    <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
+    <Split style="height: calc(100% - 48px)" @on-drag-end="onDragEnd">
       <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
         <NavTree style="padding: 10px" />
       </SplitArea>

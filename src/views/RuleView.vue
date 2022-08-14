@@ -84,7 +84,7 @@
             </span>
           </template>
           <template>
-            <el-row type="flex" justify="space-around">
+            <el-row  justify="space-around">
               <el-col :span="24" align="center">
                 <el-button @click="handleSilence('minutes', 5)">
                   5 minutes
@@ -249,12 +249,12 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import axios from 'axios';
 import moment from 'moment';
 import * as changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import { selectNode } from '@/lib/tree';
+import { nextTick } from 'vue';
 import networkError from '../lib/networkError.js';
 
 export default {
@@ -383,7 +383,7 @@ export default {
 
     showRenameInput() {
       this.showRename = true;
-      Vue.nextTick(() => {
+      nextTick(() => {
         this.$refs.rename.$el.querySelector('input').focus();
         this.$refs.rename.$el.querySelector('input').select();
       });

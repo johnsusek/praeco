@@ -1,11 +1,11 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import infiniteScroll from 'vue-infinite-scroll';
-import Treeselect from '@riophae/vue-treeselect';
-import ElementUI from 'element-ui';
+import infiniteScroll from 'vue3-infinite-scroll-good';
+import Treeselect from 'vue3-treeselect';
+import ElementPlus from 'element-plus';
 import 'prismjs';
-import locale from 'element-ui/lib/locale/lang/en';
+import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBell,
@@ -25,13 +25,15 @@ import {
   faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import 'element-ui/lib/theme-chalk/index.css';
+import 'element-plus/dist/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+import 'vue3-treeselect/dist/vue3-treeselect.css';
 
 import ECharts from 'vue-echarts';
+
+const app = createApp({});
 
 library.add(
   faBell,
@@ -56,11 +58,11 @@ library.add(
   faExclamationCircle
 );
 
-Vue.use(ElementUI, { locale, size: 'mini' });
-Vue.use(infiniteScroll);
+app.use(ElementPlus, { locale, size: 'mini' });
+app.use(infiniteScroll);
 
-Vue.component('VChart', ECharts);
-Vue.component('Icon', FontAwesomeIcon);
-Vue.component('VueJsonPretty', VueJsonPretty);
-Vue.component('Prism', Prism);
-Vue.component('Treeselect', Treeselect);
+app.component('VChart', ECharts);
+app.component('Icon', FontAwesomeIcon);
+app.component('VueJsonPretty', VueJsonPretty);
+app.component('Prism', Prism);
+app.component('Treeselect', Treeselect);
