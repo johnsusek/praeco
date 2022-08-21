@@ -10,7 +10,7 @@
         v-if="!showDetails"
         :type="type === 'error' ? 'danger' : type"
         plain
-        icon="el-icon-arrow-right"
+        :icon="ElIconArrowRight"
         @click="showDetails = true">
         Details
       </el-button>
@@ -18,7 +18,7 @@
         v-if="showDetails"
         :type="type === 'error' ? 'danger' : type"
         plain
-        icon="el-icon-arrow-down"
+        :icon="ElIconArrowDown"
         @click="showDetails = false">
         Details
       </el-button>
@@ -28,11 +28,18 @@
 </template>
 
 <script>
+import {
+  ArrowRight as ElIconArrowRight,
+  ArrowDown as ElIconArrowDown,
+} from '@element-plus/icons';
+
 export default {
   props: ['title', 'type', 'contents'],
   data() {
     return {
-      showDetails: false
+      showDetails: false,
+      ElIconArrowRight,
+      ElIconArrowDown,
     };
   }
 };

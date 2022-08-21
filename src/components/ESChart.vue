@@ -45,7 +45,7 @@
               class="praeco-chart-options"
               circle
               plain
-              icon="el-icon-time" />
+             :icon="ElIconTime" />
           </template>
 
           <div class="praeco-chart-controls">
@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import { Time as ElIconTime } from '@element-plus/icons';
 import axios from 'axios';
 import moment from 'moment-timezone';
 import debounce from 'debounce';
@@ -233,7 +234,8 @@ export default {
             markLine: {}
           }
         ]
-      }
+      },
+      ElIconTime,
     };
   },
 

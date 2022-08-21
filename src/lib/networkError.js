@@ -1,4 +1,4 @@
-import { ElNotification as Notification } from 'element-plus';
+import { ElNotification } from 'element-plus';
 import { logger } from '@/lib/logger.js';
 
 export default function notifyError(error) {
@@ -15,7 +15,7 @@ export default function notifyError(error) {
     console.error(err);
   }
 
-  Notification.error({
+  ElNotification.error({
     message: error.toString(),
     title: 'API error',
     duration: 0

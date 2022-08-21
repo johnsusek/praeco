@@ -63,7 +63,7 @@
                     <el-button
                       :disabled="viewOnly"
                       type="danger"
-                      icon="el-icon-delete"
+                      :icon="ElIconDelete"
                       circle
                       plain
                       @click="removeAlertSubjectArgsEntry(entry)" />
@@ -138,7 +138,7 @@
                     <el-button
                       :disabled="viewOnly"
                       type="danger"
-                      icon="el-icon-delete"
+                      :icon="ElIconDelete"
                       circle
                       plain
                       @click="removeAlertTextArgsEntry(entry)" />
@@ -211,6 +211,7 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons';
 import debounce from 'debounce';
 import At from 'vue-at';
 
@@ -228,6 +229,7 @@ export default {
       popAlertSubjectArgsValid: true,
       popAlertTextArgsVisible: false,
       popAlertTextArgsValid: true,
+      ElIconDelete,
     };
   },
 

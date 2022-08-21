@@ -13,7 +13,19 @@ module.exports = {
       //   /element-ui[/\\]lib[/\\]locale[/\\]lang[/\\]zh-CN/,
       //   'element-ui/lib/locale/lang/en'
       // )
-    ]
+    ],
+    resolve: {
+      extensions: ['.ts', '.js', '.mjs', '.json'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.mjs$/i,
+          include: /node_modules/,
+          type: 'javascript/auto',
+        },
+      ],
+    },
   },
   chainWebpack: config => {
     config.resolve.alias.set('vue', '@vue/compat');

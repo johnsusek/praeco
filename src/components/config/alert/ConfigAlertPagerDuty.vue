@@ -80,7 +80,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removePagerdutyIncidentKeyArgsEntry(entry)" />
@@ -147,7 +147,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadClassArgsEntry(entry)" />
@@ -205,7 +205,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadComponentArgsEntry(entry)" />
@@ -263,7 +263,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadGroupArgsEntry(entry)" />
@@ -341,7 +341,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadSourceArgsEntry(entry)" />
@@ -368,6 +368,7 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons';
 
 export default {
   props: ['viewOnly'],
@@ -393,7 +394,8 @@ export default {
       poppagerdutyV2PayloadSourceArgsValid: true,
       groupPagerduty: groupPagerdutyValue,
       rules: {
-      }
+      },
+      ElIconDelete,
     };
   },
 

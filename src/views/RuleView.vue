@@ -42,7 +42,7 @@
           :to="{
             name: 'ruleconfigeditor',
             params: { action: 'edit', path: id } }">
-          <el-button icon="el-icon-edit" plain type="primary">
+          <el-button :icon="ElIconEdit" plain type="primary">
             Edit
           </el-button>
         </router-link>
@@ -78,8 +78,12 @@
                 plain
                 type="warning">
                 Silence
-                <i v-if="!silencePopoverVisible" class="el-icon-caret-bottom el-icon-right" />
-                <i v-if="silencePopoverVisible" class="el-icon-caret-top el-icon-right" />
+                <el-icon v-if="!silencePopoverVisible" class="el-icon-right">
+                  <el-icon-caret-bottom />
+                </el-icon>
+                <el-icon v-if="silencePopoverVisible" class="el-icon-right">
+                  <el-icon-caret-top />
+                </el-icon>
               </el-button>
             </span>
           </template>
@@ -120,7 +124,7 @@
         </el-button>
 
         <el-button
-          icon="el-icon-delete"
+          :icon="ElIconDelete"
           plain
           type="danger"
           @click="showDeleteConfirm">
@@ -249,6 +253,12 @@
 </template>
 
 <script>
+import {
+  CaretBottom as ElIconCaretBottom,
+  CaretTop as ElIconCaretTop,
+  Edit as ElIconEdit,
+  Delete as ElIconDelete,
+} from '@element-plus/icons';
 import axios from 'axios';
 import moment from 'moment';
 import * as changeCase from 'change-case';
@@ -271,10 +281,15 @@ export default {
       newName: '',
       queryLog: [],
       alertLog: [],
-      silenceLog: []
+      silenceLog: [],
+      ElIconEdit,
+      ElIconDelete,
     };
   },
-
+  components: {
+    ElIconCaretBottom,
+    ElIconCaretTop,
+  },
   computed: {
     rule() {
       return this.$store.state.configs.rules[this.id] || {};

@@ -61,7 +61,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeHiveAlertConfigTagsEntry(entry)" />
@@ -110,6 +110,8 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons';
+
 export default {
   props: ['viewOnly'],
   emits: ['validate'],
@@ -118,6 +120,7 @@ export default {
     return {
       popHiveAlertConfigTagsVisible: false,
       popHiveAlertConfigTagsValid: true,
+      ElIconDelete,
     };
   },
 

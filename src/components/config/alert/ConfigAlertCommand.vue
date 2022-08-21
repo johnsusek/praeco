@@ -36,7 +36,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeCommandEntry(entry)" />
@@ -91,6 +91,8 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons';
+
 export default {
   props: ['viewOnly'],
   emits: ['validate'],
@@ -99,6 +101,7 @@ export default {
     return {
       popCommandVisible: false,
       popCommandValid: true,
+      ElIconDelete,
     };
   },
 

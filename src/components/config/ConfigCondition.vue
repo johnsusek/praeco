@@ -169,7 +169,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeQueryKeyEntry(entry)" />
@@ -267,7 +267,7 @@
           <el-col :span="4">
             <el-button
               type="danger"
-              icon="el-icon-delete"
+              :icon="ElIconDelete"
               circle
               plain
               @click="removeQueryKeyEntry(entry)" />
@@ -314,7 +314,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeBlacklistEntry(entry)" />
@@ -362,7 +362,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click.prevent="removeWhitelistEntry(entry)" />
@@ -860,6 +860,8 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons';
+
 export default {
   emits: ['validate'],
   data() {
@@ -901,7 +903,8 @@ export default {
         minThreshold: [
           { validator: this.validateMinThreshold, trigger: 'change' }
         ]
-      }
+      },
+      ElIconDelete,
     };
   },
 

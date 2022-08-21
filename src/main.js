@@ -1,5 +1,5 @@
-import * as Vue from 'vue';
-import { ElNotification as Notification } from 'element-plus';
+import { createApp } from 'vue';
+import { ElNotification } from 'element-plus';
 import axios from 'axios';
 import VueNativeSock from 'vue-native-websocket-vue3';
 import VueSplit from 'vue3-split-panel';
@@ -19,14 +19,16 @@ import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
 
-Vue.use(VueSplit);
+const app = createApp({});
 
-Vue.config.errorHandler = function(err, vm, info) {
+app.use(VueSplit);
+
+app.config.errorHandler = function(err, vm, info) {
   logger().error(err);
 
   console.error(err, vm, info);
 
-  Notification.error({
+  ElNotification.error({
     message: err.toString(),
     title: 'Internal error',
     duration: 0
@@ -38,7 +40,7 @@ function startApp(config) {
 
   initLogging();
 
-  Vue.use(
+  app.use(
     VueNativeSock,
     `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
       window.location.port
@@ -49,8 +51,10 @@ function startApp(config) {
     }
   );
 
-  const app = Vue.createApp(App).use(router).use(store);
-  app.mount('#app');
+  const app2 = app.createApp(App);
+  app2.use(router);
+  app2.use(store);
+  app2.mount('#app');
 }
 
 // First get the config from the server

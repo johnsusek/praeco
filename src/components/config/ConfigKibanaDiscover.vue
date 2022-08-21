@@ -84,7 +84,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removeKibanaDiscoverColumnsEntry(entry)" />
@@ -139,6 +139,8 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons';
+
 export default {
   props: ['viewOnly'],
   emits: ['validate'],
@@ -214,6 +216,7 @@ export default {
         code: '8.3',
         name: '8.3'
       }],
+      ElIconDelete,
     };
   },
 
