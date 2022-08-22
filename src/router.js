@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+// import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from './views/Home.vue';
 import Errors from './views/Errors.vue';
@@ -11,8 +11,7 @@ import RuleView from './views/RuleView.vue';
 import TemplateView from './views/TemplateView.vue';
 import ConfigBuilder from './views/ConfigBuilder.vue';
 
-const app = createApp({});
-
+// const app = createApp({});
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
 
@@ -116,4 +115,4 @@ const router = createRouter({
   ]
 });
 export default router;
-app.use(router);
+// app.use(router);

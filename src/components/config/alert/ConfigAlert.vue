@@ -42,12 +42,13 @@
       </el-col>
     </el-row>
 
+    <!-- TODO: -->
     <!-- Limit Excecution -->
-    <el-row class="m-s-sm">
+    <!-- <el-row class="m-s-sm">
       <el-col :span="24">
         <ConfigLimitExcecution ref="limitExcecution" :view-only="viewOnly" />
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <!-- KibanaDiscover -->
     <el-row class="m-s-sm">
@@ -216,10 +217,11 @@
         <template #label>
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
-        <ConfigAlertSubjectBody
+        <!-- TODO: vue3 : error -->
+        <!-- <ConfigAlertSubjectBody
           ref="subjectBody"
           :view-only="viewOnly"
-          class="m-s-lg" />
+          class="m-s-lg" /> -->
       </el-tab-pane>
 
       <!-- Slack -->
@@ -476,7 +478,8 @@
 <script>
 import isURL from 'validator/lib/isURL';
 import isEmail from 'validator/lib/isEmail';
-import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
+// TODO: vue3 : error
+// import ConfigAlertSubjectBody from './ConfigAlertSubjectBody';
 import ConfigAlertAlerta from './ConfigAlertAlerta';
 import ConfigAlertAlertmanager from './ConfigAlertAlertmanager';
 import ConfigAlertAmazonSes from './ConfigAlertAmazonSes';
@@ -591,7 +594,8 @@ let validateSlackDestination = (rule, value, callback) => {
 
 export default {
   components: {
-    ConfigAlertSubjectBody,
+    // TODO: vue3 : error
+    // ConfigAlertSubjectBody,
     ConfigAlertAlerta,
     ConfigAlertAlertmanager,
     ConfigAlertAmazonSes,
