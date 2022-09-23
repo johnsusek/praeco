@@ -215,6 +215,9 @@ export default {
       }, {
         code: '8.3',
         name: '8.3'
+      }, {
+        code: '8.4',
+        name: '8.4'
       }],
       ElIconDelete,
     };
