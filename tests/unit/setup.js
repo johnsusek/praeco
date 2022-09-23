@@ -7,8 +7,8 @@ import 'localstorage-polyfill';
 import {
   config, mount, shallowMount, createLocalVue
 } from '@vue/test-utils';
-import '@/contrib.js';
-import '@/registration.js';
+// import '@/contrib.js';
+// import '@/registration.js';
 import store from '@/store';
 import router from '@/router';
 

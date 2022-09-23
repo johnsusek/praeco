@@ -211,7 +211,7 @@
 </template>
 
 <script>
-import { Delete as ElIconDelete } from '@element-plus/icons';
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
 import debounce from 'debounce';
 import At from 'vue-at';
 

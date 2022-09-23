@@ -90,7 +90,7 @@ import {
   CaretBottom as ElIconCaretBottom,
   CaretTop as ElIconCaretTop,
   Loading as ElIconLoading,
-} from '@element-plus/icons';
+} from '@element-plus/icons-vue';
 import moment from 'moment-timezone';
 
 export default {

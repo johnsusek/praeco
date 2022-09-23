@@ -101,7 +101,7 @@ import {
   Plus as ElIconPlus,
   Edit as ElIconEdit,
   Delete as ElIconDelete,
-} from '@element-plus/icons';
+} from '@element-plus/icons-vue';
 import { selectNode } from '@/lib/tree';
 import { nextTick } from 'vue';
 

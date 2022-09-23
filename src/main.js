@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import infiniteScroll from 'vue3-infinite-scroll-good';
+import InfiniteScroll from 'vue3-infinite-scroll-good';
 import Treeselect from '@tanbo800/vue3-treeselect';
 import ElementPlus, { ElNotification } from 'element-plus';
 import 'prismjs';
@@ -110,111 +110,215 @@ import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
 
-const app = createApp(App);
+// const app = createApp(App);
 
-library.add(
-  faBell,
-  faFile,
-  faFileAlt,
-  faSlack,
-  faRocketchat,
-  faMicrosoft,
-  faGitter,
-  faAws,
-  faLine,
-  faTelegram,
-  faJira,
-  faGlobe,
-  faEnvelope,
-  faChevronUp,
-  faChevronDown,
-  faEllipsisH,
-  faFolder,
-  faFolderOpen,
-  faQuestionCircle,
-  faExclamationCircle
-);
+// library.add(
+//   faBell,
+//   faFile,
+//   faFileAlt,
+//   faSlack,
+//   faRocketchat,
+//   faMicrosoft,
+//   faGitter,
+//   faAws,
+//   faLine,
+//   faTelegram,
+//   faJira,
+//   faGlobe,
+//   faEnvelope,
+//   faChevronUp,
+//   faChevronDown,
+//   faEllipsisH,
+//   faFolder,
+//   faFolderOpen,
+//   faQuestionCircle,
+//   faExclamationCircle
+// );
 
-app.use(ElementPlus, { locale, size: 'mini' });
-app.use(infiniteScroll);
+// app.use(ElementPlus, { locale, size: 'mini' });
+// app.use(InfiniteScroll);
 
-app.component('VChart', ECharts);
-app.component('Icon', FontAwesomeIcon);
-app.component('VueJsonPretty', VueJsonPretty);
-app.component('Prism', Prism);
-app.component('Treeselect', Treeselect);
+// app.component('VChart', ECharts);
+// app.component('Icon', FontAwesomeIcon);
+// app.component('VueJsonPretty', VueJsonPretty);
+// app.component('Prism', Prism);
+// app.component('Treeselect', Treeselect);
 
-app.component('Bulb', Bulb);
-app.component('DateTime', DateTime);
-app.component('ConfigQuery', ConfigQuery);
-app.component('ConfigAlert', ConfigAlert);
-app.component('ConfigAlertAlerta', ConfigAlertAlerta);
-app.component('ConfigAlertAlertmanager', ConfigAlertAlertmanager);
-app.component('ConfigAlertAmazonSes', ConfigAlertAmazonSes);
-app.component('ConfigAlertAmazonSns', ConfigAlertAmazonSns);
-app.component('ConfigAlertChatwork', ConfigAlertChatwork);
-app.component('ConfigAlertCommand', ConfigAlertCommand);
-app.component('ConfigAlertDatadog', ConfigAlertDatadog);
-app.component('ConfigAlertDingtalk', ConfigAlertDingtalk);
-app.component('ConfigAlertDiscord', ConfigAlertDiscord);
-app.component('ConfigAlertEmail', ConfigAlertEmail);
-app.component('ConfigAlertExotel', ConfigAlertExotel);
-app.component('ConfigAlertGitter', ConfigAlertGitter);
-app.component('ConfigAlertGoogleChat', ConfigAlertGoogleChat);
-app.component('ConfigAlertHttpPost', ConfigAlertHttpPost);
-app.component('ConfigAlertHttpPost2', ConfigAlertHttpPost2);
-app.component('ConfigAlertJira', ConfigAlertJira);
-app.component('ConfigAlertLineNotify', ConfigAlertLineNotify);
-app.component('ConfigAlertMattermost', ConfigAlertMattermost);
-app.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
-app.component('ConfigAlertPagerDuty', ConfigAlertPagerDuty);
-app.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
-app.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
-app.component('ConfigAlertServiceNow', ConfigAlertServiceNow);
-app.component('ConfigAlertSlack', ConfigAlertSlack);
-app.component('ConfigAlertStomp', ConfigAlertStomp);
-app.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
-app.component('ConfigAlertTelegram', ConfigAlertTelegram);
-app.component('ConfigAlertTheHive', ConfigAlertTheHive);
-app.component('ConfigAlertTwilio', ConfigAlertTwilio);
-app.component('ConfigAlertVictorOps', ConfigAlertVictorOps);
-app.component('ConfigAlertZabbix', ConfigAlertZabbix);
-app.component('ConfigAggregation', ConfigAggregation);
-app.component('ConfigSettings', ConfigSettings);
-app.component('ConfigKibanaDiscover', ConfigKibanaDiscover);
-app.component('ConfigTimeWindowFeature', ConfigTimeWindowFeature);
-app.component('ConfigOwner', ConfigOwner);
-app.component('ConfigPriority', ConfigPriority);
-app.component('ConfigDescription', ConfigDescription);
-app.component('ConfigCondition', ConfigCondition);
-app.component('ConfigScanEntireTimeframe', ConfigScanEntireTimeframe);
-// app.component('ConfigLimitExcecution', ConfigLimitExcecution); // TODO:
-app.component('DefinitionTable', DefinitionTable);
-app.component('ElastalertTimePicker', ElastalertTimePicker);
-app.component('ESChart', ESChart);
-app.component('EventTable', EventTable);
-app.component('ExpandableAlert', ExpandableAlert);
-app.component('FolderTree', FolderTree);
-app.component('NavTree', NavTree);
-app.component('PraecoFormItem', PraecoFormItem);
-app.component('TableRow', TableRow);
-app.component('ElastalertTimeView', ElastalertTimeView);
+// app.component('Bulb', Bulb);
+// app.component('DateTime', DateTime);
+// app.component('ConfigQuery', ConfigQuery);
+// app.component('ConfigAlert', ConfigAlert);
+// app.component('ConfigAlertAlerta', ConfigAlertAlerta);
+// app.component('ConfigAlertAlertmanager', ConfigAlertAlertmanager);
+// app.component('ConfigAlertAmazonSes', ConfigAlertAmazonSes);
+// app.component('ConfigAlertAmazonSns', ConfigAlertAmazonSns);
+// app.component('ConfigAlertChatwork', ConfigAlertChatwork);
+// app.component('ConfigAlertCommand', ConfigAlertCommand);
+// app.component('ConfigAlertDatadog', ConfigAlertDatadog);
+// app.component('ConfigAlertDingtalk', ConfigAlertDingtalk);
+// app.component('ConfigAlertDiscord', ConfigAlertDiscord);
+// app.component('ConfigAlertEmail', ConfigAlertEmail);
+// app.component('ConfigAlertExotel', ConfigAlertExotel);
+// app.component('ConfigAlertGitter', ConfigAlertGitter);
+// app.component('ConfigAlertGoogleChat', ConfigAlertGoogleChat);
+// app.component('ConfigAlertHttpPost', ConfigAlertHttpPost);
+// app.component('ConfigAlertHttpPost2', ConfigAlertHttpPost2);
+// app.component('ConfigAlertJira', ConfigAlertJira);
+// app.component('ConfigAlertLineNotify', ConfigAlertLineNotify);
+// app.component('ConfigAlertMattermost', ConfigAlertMattermost);
+// app.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
+// app.component('ConfigAlertPagerDuty', ConfigAlertPagerDuty);
+// app.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
+// app.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
+// app.component('ConfigAlertServiceNow', ConfigAlertServiceNow);
+// app.component('ConfigAlertSlack', ConfigAlertSlack);
+// app.component('ConfigAlertStomp', ConfigAlertStomp);
+// app.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
+// app.component('ConfigAlertTelegram', ConfigAlertTelegram);
+// app.component('ConfigAlertTheHive', ConfigAlertTheHive);
+// app.component('ConfigAlertTwilio', ConfigAlertTwilio);
+// app.component('ConfigAlertVictorOps', ConfigAlertVictorOps);
+// app.component('ConfigAlertZabbix', ConfigAlertZabbix);
+// app.component('ConfigAggregation', ConfigAggregation);
+// app.component('ConfigSettings', ConfigSettings);
+// app.component('ConfigKibanaDiscover', ConfigKibanaDiscover);
+// app.component('ConfigTimeWindowFeature', ConfigTimeWindowFeature);
+// app.component('ConfigOwner', ConfigOwner);
+// app.component('ConfigPriority', ConfigPriority);
+// app.component('ConfigDescription', ConfigDescription);
+// app.component('ConfigCondition', ConfigCondition);
+// app.component('ConfigScanEntireTimeframe', ConfigScanEntireTimeframe);
+// // app.component('ConfigLimitExcecution', ConfigLimitExcecution); // TODO:
+// app.component('DefinitionTable', DefinitionTable);
+// app.component('ElastalertTimePicker', ElastalertTimePicker);
+// app.component('ESChart', ESChart);
+// app.component('EventTable', EventTable);
+// app.component('ExpandableAlert', ExpandableAlert);
+// app.component('FolderTree', FolderTree);
+// app.component('NavTree', NavTree);
+// app.component('PraecoFormItem', PraecoFormItem);
+// app.component('TableRow', TableRow);
+// app.component('ElastalertTimeView', ElastalertTimeView);
 
-app.use(VueSplit);
+// app.use(VueSplit);
 
-app.config.errorHandler = function(err, vm, info) {
-  logger().error(err);
+// app.config.errorHandler = function(err, vm, info) {
+//   logger().error(err);
 
-  console.error(err, vm, info);
+//   console.error(err, vm, info);
 
-  ElNotification.error({
-    message: err.toString(),
-    title: 'Internal error',
-    duration: 0
-  });
-};
+//   ElNotification.error({
+//     message: err.toString(),
+//     title: 'Internal error',
+//     duration: 0
+//   });
+// };
 
 function startApp(config) {
+  const app = createApp(App);
+
+  library.add(
+    faBell,
+    faFile,
+    faFileAlt,
+    faSlack,
+    faRocketchat,
+    faMicrosoft,
+    faGitter,
+    faAws,
+    faLine,
+    faTelegram,
+    faJira,
+    faGlobe,
+    faEnvelope,
+    faChevronUp,
+    faChevronDown,
+    faEllipsisH,
+    faFolder,
+    faFolderOpen,
+    faQuestionCircle,
+    faExclamationCircle
+  );
+
+  app.use(ElementPlus, { locale, size: 'mini' });
+  app.use(InfiniteScroll);
+
+  app.component('VChart', ECharts);
+  app.component('Icon', FontAwesomeIcon);
+  app.component('VueJsonPretty', VueJsonPretty);
+  app.component('Prism', Prism);
+  app.component('Treeselect', Treeselect);
+
+  app.component('Bulb', Bulb);
+  app.component('DateTime', DateTime);
+  app.component('ConfigQuery', ConfigQuery);
+  app.component('ConfigAlert', ConfigAlert);
+  app.component('ConfigAlertAlerta', ConfigAlertAlerta);
+  app.component('ConfigAlertAlertmanager', ConfigAlertAlertmanager);
+  app.component('ConfigAlertAmazonSes', ConfigAlertAmazonSes);
+  app.component('ConfigAlertAmazonSns', ConfigAlertAmazonSns);
+  app.component('ConfigAlertChatwork', ConfigAlertChatwork);
+  app.component('ConfigAlertCommand', ConfigAlertCommand);
+  app.component('ConfigAlertDatadog', ConfigAlertDatadog);
+  app.component('ConfigAlertDingtalk', ConfigAlertDingtalk);
+  app.component('ConfigAlertDiscord', ConfigAlertDiscord);
+  app.component('ConfigAlertEmail', ConfigAlertEmail);
+  app.component('ConfigAlertExotel', ConfigAlertExotel);
+  app.component('ConfigAlertGitter', ConfigAlertGitter);
+  app.component('ConfigAlertGoogleChat', ConfigAlertGoogleChat);
+  app.component('ConfigAlertHttpPost', ConfigAlertHttpPost);
+  app.component('ConfigAlertHttpPost2', ConfigAlertHttpPost2);
+  app.component('ConfigAlertJira', ConfigAlertJira);
+  app.component('ConfigAlertLineNotify', ConfigAlertLineNotify);
+  app.component('ConfigAlertMattermost', ConfigAlertMattermost);
+  app.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
+  app.component('ConfigAlertPagerDuty', ConfigAlertPagerDuty);
+  app.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
+  app.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
+  app.component('ConfigAlertServiceNow', ConfigAlertServiceNow);
+  app.component('ConfigAlertSlack', ConfigAlertSlack);
+  app.component('ConfigAlertStomp', ConfigAlertStomp);
+  app.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
+  app.component('ConfigAlertTelegram', ConfigAlertTelegram);
+  app.component('ConfigAlertTheHive', ConfigAlertTheHive);
+  app.component('ConfigAlertTwilio', ConfigAlertTwilio);
+  app.component('ConfigAlertVictorOps', ConfigAlertVictorOps);
+  app.component('ConfigAlertZabbix', ConfigAlertZabbix);
+  app.component('ConfigAggregation', ConfigAggregation);
+  app.component('ConfigSettings', ConfigSettings);
+  app.component('ConfigKibanaDiscover', ConfigKibanaDiscover);
+  app.component('ConfigTimeWindowFeature', ConfigTimeWindowFeature);
+  app.component('ConfigOwner', ConfigOwner);
+  app.component('ConfigPriority', ConfigPriority);
+  app.component('ConfigDescription', ConfigDescription);
+  app.component('ConfigCondition', ConfigCondition);
+  app.component('ConfigScanEntireTimeframe', ConfigScanEntireTimeframe);
+  // app.component('ConfigLimitExcecution', ConfigLimitExcecution); // TODO:
+  app.component('DefinitionTable', DefinitionTable);
+  app.component('ElastalertTimePicker', ElastalertTimePicker);
+  app.component('ESChart', ESChart);
+  app.component('EventTable', EventTable);
+  app.component('ExpandableAlert', ExpandableAlert);
+  app.component('FolderTree', FolderTree);
+  app.component('NavTree', NavTree);
+  app.component('PraecoFormItem', PraecoFormItem);
+  app.component('TableRow', TableRow);
+  app.component('ElastalertTimeView', ElastalertTimeView);
+
+  app.use(VueSplit);
+
+  app.config.errorHandler = function(err, vm, info) {
+    logger().error(err);
+
+    console.error(err, vm, info);
+
+    ElNotification.error({
+      message: err.toString(),
+      title: 'Internal error',
+      duration: 0
+    });
+  };
+
   store.commit('appconfig/SET_APP_CONFIG', config);
 
   initLogging();

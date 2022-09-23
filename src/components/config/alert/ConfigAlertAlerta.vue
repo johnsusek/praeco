@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { Delete as ElIconDelete } from '@element-plus/icons';
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
 
 export default {
   props: ['viewOnly'],

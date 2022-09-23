@@ -258,7 +258,7 @@ import {
   CaretTop as ElIconCaretTop,
   Edit as ElIconEdit,
   Delete as ElIconDelete,
-} from '@element-plus/icons';
+} from '@element-plus/icons-vue';
 import axios from 'axios';
 import moment from 'moment';
 import * as changeCase from 'change-case';

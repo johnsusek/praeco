@@ -31,7 +31,7 @@
 import {
   ArrowRight as ElIconArrowRight,
   ArrowDown as ElIconArrowDown,
-} from '@element-plus/icons';
+} from '@element-plus/icons-vue';
 
 export default {
   props: ['title', 'type', 'contents'],

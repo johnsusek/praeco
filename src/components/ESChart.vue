@@ -45,7 +45,7 @@
               class="praeco-chart-options"
               circle
               plain
-             :icon="ElIconTime" />
+             :icon="ElIconClock" />
           </template>
 
           <div class="praeco-chart-controls">
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { Time as ElIconTime } from '@element-plus/icons';
+import { Clock as ElIconClock } from '@element-plus/icons-vue';
 import axios from 'axios';
 import moment from 'moment-timezone';
 import debounce from 'debounce';
@@ -235,7 +235,7 @@ export default {
           }
         ]
       },
-      ElIconTime,
+      ElIconClock,
     };
   },
 

@@ -11,7 +11,7 @@
     :options="options"
     class="folders-only"
     placeholder="Filter..."
-    @input="(val) => $emit('input', val)" />
+    @input="(val) => $emit('update:modelValue', val)" />
 </template>
 
 <script>
@@ -19,8 +19,8 @@ import * as changeCase from 'change-case';
 import { loadChildrenOptions } from '@/lib/tree';
 
 export default {
-  props: ['type'],
-  emits: ['input'],
+  props: ['type', 'modelValue'],
+  emits: ['update:modelValue'],
   data() {
     return {
       options: [
