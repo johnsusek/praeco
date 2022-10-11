@@ -43,6 +43,7 @@ import ConfigAlertTencentSms from '@/components/config/alert/ConfigAlertTencentS
 import ConfigAlertTelegram from '@/components/config/alert/ConfigAlertTelegram.vue';
 import ConfigAlertTheHive from '@/components/config/alert/ConfigAlertTheHive.vue';
 import ConfigAlertTwilio from '@/components/config/alert/ConfigAlertTwilio.vue';
+import ConfigAlertOpsgenie from '@/components/config/alert/ConfigAlertOpsgenie.vue';
 import ConfigAlertVictorOps from '@/components/config/alert/ConfigAlertVictorOps.vue';
 import ConfigAlertZabbix from '@/components/config/alert/ConfigAlertZabbix.vue';
 import ConfigKibanaDiscover from '@/components/config/ConfigKibanaDiscover.vue';
@@ -88,6 +89,7 @@ Vue.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
 Vue.component('ConfigAlertTelegram', ConfigAlertTelegram);
 Vue.component('ConfigAlertTheHive', ConfigAlertTheHive);
 Vue.component('ConfigAlertTwilio', ConfigAlertTwilio);
+Vue.component('ConfigAlertOpsgenie', ConfigAlertOpsgenie);
 Vue.component('ConfigAlertVictorOps', ConfigAlertVictorOps);
 Vue.component('ConfigAlertZabbix', ConfigAlertZabbix);
 Vue.component('ConfigAggregation', ConfigAggregation);

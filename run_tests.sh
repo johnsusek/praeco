@@ -34,6 +34,7 @@
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlMsTeams.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlMsTeamsOpt.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlPagerTree.spec.js &&
+./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlOpsgenie.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlPagerDuty.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlPagerDuty002.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlPagerDuty003.spec.js &&

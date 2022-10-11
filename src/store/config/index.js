@@ -371,6 +371,28 @@ export default {
         commit('alert/UPDATE_TWILIO_FROM_NUMBER', config.twilio_from_number);
         commit('alert/UPDATE_TWILIO_MESSAGE_SERVICE_SID', config.twilio_message_service_sid);
 
+        /* OpsGenie */
+        commit('alert/OPSGENIE_KEY', config.opsgenie_key);
+        commit('alert/OPSGENIE_ACCOUNT', config.opsgenie_account);
+        commit('alert/OPSGENIE_MESSAGE', config.opsgenie_message);
+        commit('alert/OPSGENIE_SUBJECT', config.opsgenie_subject);
+        commit('alert/OPSGENIE_ALIAS', config.opsgenie_alias);
+        commit('alert/OPSGENIE_PROXY', config.opsgenie_proxy);
+        commit('alert/OPSGENIE_PRIORITY', config.opsgenie_priority);
+        commit('alert/OPSGENIE_DESCRIPTION', config.opsgenie_description);
+
+        // TODO: opsgenie_priority
+        // TODO: opsgenie_default_receipients
+        // TODO: opsgenie_recipients
+        // TODO: opsgenie_recipients_args
+        // TODO: opsgenie_default_teams
+        // TODO: opsgenie_teams
+        // TODO: opsgenie_teams_args
+        // TODO: opsgenie_tags
+        // TODO: opsgenie_addr
+        // TODO: opsgenie_subject_args
+        // TODO: opsgenie_details
+
         /* PagerDuty */
         commit('alert/UPDATE_PAGERDUTY_SERVICE_KEY', config.pagerduty_service_key);
         commit('alert/UPDATE_PAGERDUTY_CLIENT_NAME', config.pagerduty_client_name);
@@ -938,6 +960,16 @@ export default {
         if (config.ms_teams_kibana_discover_title) {
           commit('alert/UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE', config.ms_teams_kibana_discover_title);
         }
+
+        /* OpsGenie */
+        commit('alert/OPSGENIE_KEY', config.opsgenie_key);
+        commit('alert/OPSGENIE_ACCOUNT', config.opsgenie_account);
+        commit('alert/OPSGENIE_MESSAGE', config.opsgenie_message);
+        commit('alert/OPSGENIE_SUBJECT', config.opsgenie_subject);
+        commit('alert/OPSGENIE_ALIAS', config.opsgenie_alias);
+        commit('alert/OPSGENIE_PROXY', config.opsgenie_proxy);
+        commit('alert/OPSGENIE_PRIORITY', config.opsgenie_priority);
+        commit('alert/OPSGENIE_DESCRIPTION', config.opsgenie_description);
 
         /* realert, alert, alert_text_type, alert_text, alert_subject, alert_subject_args, alert_text_args */
         commit('alert/UPDATE_REALERT', config.realert);
@@ -1832,6 +1864,52 @@ export default {
         config.twilio_use_copilot = true;
         config.twilio_message_service_sid = state.alert.twilioMessageServiceSid;
       }
+
+      return config;
+    },
+
+    opsgenie(state) {
+      let config = {};
+
+      if (state.alert.opsgenieKey) {
+        config.opsgenie_key = state.alert.opsgenieKey;
+      }
+
+      if (state.alert.opsgenieAccount) {
+        config.opsgenie_account = state.alert.opsgenieAccount;
+      }
+
+      if (state.alert.opsgenieMessage) {
+        config.opsgenie_message = state.alert.opsgenieMessage;
+      }
+
+      if (state.alert.opsgenieSubject) {
+        config.opsgenie_subject = state.alert.opsgenieSubject;
+      }
+
+      if (state.alert.opsgenieAlias) {
+        config.opsgenie_alias = state.alert.opsgenieAlias;
+      }
+
+      if (state.alert.opsgenieProxy) {
+        config.opsgenie_proxy = state.alert.opsgenieProxy;
+      }
+
+      if (state.alert.opsgenieDescription) {
+        config.opsgenie_description = state.alert.opsgenieDescription;
+      }
+
+      // TODO: opsgenie_priority
+      // TODO: opsgenie_default_receipients
+      // TODO: opsgenie_recipients
+      // TODO: opsgenie_recipients_args
+      // TODO: opsgenie_default_teams
+      // TODO: opsgenie_teams
+      // TODO: opsgenie_teams_args
+      // TODO: opsgenie_tags
+      // TODO: opsgenie_addr
+      // TODO: opsgenie_subject_args
+      // TODO: opsgenie_details
 
       return config;
     },
@@ -2786,6 +2864,10 @@ export default {
         config = { ...config, ...getters.ms_teams };
       }
 
+      if (state.alert.alert.includes('opsgenie')) {
+        config = { ...config, ...getters.opsgenie };
+      }
+
       if (state.alert.alert.includes('pagerduty')) {
         config = { ...config, ...getters.pagerduty };
       }
@@ -2860,6 +2942,7 @@ export default {
         || state.alert.alert.includes('linenotify')
         || state.alert.alert.includes('mattermost')
         || state.alert.alert.includes('ms_teams')
+        || state.alert.alert.includes('opsgenie')
         || state.alert.alert.includes('pagerduty')
         || state.alert.alert.includes('pagertree')
         || state.alert.alert.includes('rocketchat')

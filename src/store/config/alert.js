@@ -347,6 +347,26 @@ function initialState() {
     httpPost2CaCerts: false,
     httpPost2Timeout: '',
     httpPost2Proxy: '',
+
+    /* OpsGenie */
+    opsgenieKey: '',
+    opsgenieAccount: '',
+    opsgenieMessage: '',
+    opsgenieSubject: '',
+    opsgenieAlias: '',
+    opsgenieProxy: '',
+    opsgenieDescription: '',
+    // TODO: opsgenie_priority
+    // TODO: opsgenie_default_receipients
+    // TODO: opsgenie_recipients
+    // TODO: opsgenie_recipients_args
+    // TODO: opsgenie_default_teams
+    // TODO: opsgenie_teams
+    // TODO: opsgenie_teams_args
+    // TODO: opsgenie_tags
+    // TODO: opsgenie_addr
+    // TODO: opsgenie_subject_args
+    // TODO: opsgenie_details
   };
 }
 
@@ -1597,6 +1617,51 @@ export default {
     UPDATE_DATADOG_APP_KEY(state, datadogAppKey) {
       state.datadogAppKey = datadogAppKey;
     },
+
+    /* OpsGenie */
+    OPSGENIE_KEY(state, opsgenieKey) {
+      state.opsgenieKey = opsgenieKey;
+    },
+
+    OPSGENIE_ACCOUNT(state, opsgenieAccount) {
+      state.opsgenieAccount = opsgenieAccount;
+    },
+
+    OPSGENIE_MESSAGE(state, opsgenieMessage) {
+      state.opsgenieMessage = opsgenieMessage;
+    },
+
+    OPSGENIE_SUBJECT(state, opsgenieSubject) {
+      state.opsgenieSubject = opsgenieSubject;
+    },
+
+    OPSGENIE_ALIAS(state, opsgenieAlias) {
+      state.opsgenieAlias = opsgenieAlias;
+    },
+
+    OPSGENIE_PROXY(state, opsgenieProxy) {
+      state.opsgenieProxy = opsgenieProxy;
+    },
+
+    OPSGENIE_PRIORITY(state, opsgeniePriority) {
+      state.opsgeniePriority = opsgeniePriority;
+    },
+
+    OPSGENIE_DESCRIPTION(state, opsgenieDescription) {
+      state.opsgenieDescription = opsgenieDescription;
+    },
+
+    // TODO: opsgenie_priority
+    // TODO: opsgenie_default_receipients
+    // TODO: opsgenie_recipients
+    // TODO: opsgenie_recipients_args
+    // TODO: opsgenie_default_teams
+    // TODO: opsgenie_teams
+    // TODO: opsgenie_teams_args
+    // TODO: opsgenie_tags
+    // TODO: opsgenie_addr
+    // TODO: opsgenie_subject_args
+    // TODO: opsgenie_details
 
     /* limitExcecution */
     UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {

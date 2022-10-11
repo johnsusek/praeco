@@ -183,6 +183,9 @@
         <el-checkbox id="destinationDingtalk" label="dingtalk" border>
           Dingtalk
         </el-checkbox>
+        <el-checkbox id="destinationOpsgenie" label="opsgenie" border>
+          Opsgenie
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -202,6 +205,7 @@
           alert.includes('linenotify') ||
           alert.includes('mattermost') ||
           alert.includes('ms_teams') ||
+          alert.includes('opsgenie') ||
           alert.includes('pagerduty') ||
           alert.includes('pagertree') ||
           alert.includes('rocketchat') ||
@@ -469,6 +473,14 @@
         </template>
         <ConfigAlertDingtalk ref="dingtalk" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Opsgenie -->
+      <el-tab-pane v-if="alert.includes('opsgenie')">
+        <template #label>
+          Opsgenie
+        </template>
+        <ConfigAlertOpsgenie ref="opsgenie" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -496,6 +508,7 @@ import ConfigAlertJira from './ConfigAlertJira';
 import ConfigAlertLineNotify from './ConfigAlertLineNotify';
 import ConfigAlertMattermost from './ConfigAlertMattermost';
 import ConfigAlertMsTeams from './ConfigAlertMsTeams';
+import ConfigAlertOpsgenie from './ConfigAlertOpsgenie';
 import ConfigAlertPagerDuty from './ConfigAlertPagerDuty';
 import ConfigAlertPagerTree from './ConfigAlertPagerTree';
 import ConfigAlertRocketChat from './ConfigAlertRocketChat';
@@ -611,6 +624,7 @@ export default {
     ConfigAlertLineNotify,
     ConfigAlertMattermost,
     ConfigAlertMsTeams,
+    ConfigAlertOpsgenie,
     ConfigAlertPagerDuty,
     ConfigAlertPagerTree,
     ConfigAlertRocketChat,
