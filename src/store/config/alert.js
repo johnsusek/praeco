@@ -248,6 +248,7 @@ function initialState() {
     googleChatHeaderSubtitle: '',
     googleChatHeaderImage: '',
     googleFooterKibanalink: '',
+    googleChatProxy: '',
 
     /* Mattermost */
     mattermostChannelOverride: '',
@@ -1214,6 +1215,10 @@ export default {
 
     UPDATE_GOOGLECHAT_FOOTER_KIBANALINK(state, googleFooterKibanalink) {
       state.googleFooterKibanalink = googleFooterKibanalink;
+    },
+
+    UPDATE_GOOGLECHAT_PROXY(state, googleChatProxy) {
+      state.googleChatProxy = googleChatProxy;
     },
 
     /* Mattermost */

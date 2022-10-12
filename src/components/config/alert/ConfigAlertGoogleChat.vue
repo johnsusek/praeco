@@ -36,6 +36,14 @@
         <label>URL to Kibana to include in the card footer.</label>
       </praeco-form-item>
     </div>
+
+    <praeco-form-item label="Proxy" prop="googleChatProxy">
+      <el-input id="googleChatProxy" v-model="googleChatProxy" :disabled="viewOnly" />
+      <label>
+        By default ElastAlert 2 will not use a network proxy to send notifications to GoogleChat.
+        Set this option using hostname:port if you need to use a proxy.
+      </label>
+    </praeco-form-item>
   </div>
 </template>
 
@@ -112,6 +120,18 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_GOOGLECHAT_FOOTER_KIBANALINK',
+          value
+        );
+      }
+    },
+
+    googleChatProxy: {
+      get() {
+        return this.$store.state.config.alert.googleChatProxy;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_GOOGLECHAT_PROXY',
           value
         );
       }

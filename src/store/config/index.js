@@ -378,7 +378,6 @@ export default {
         commit('alert/OPSGENIE_SUBJECT', config.opsgenie_subject);
         commit('alert/OPSGENIE_ALIAS', config.opsgenie_alias);
         commit('alert/OPSGENIE_PROXY', config.opsgenie_proxy);
-        commit('alert/OPSGENIE_PRIORITY', config.opsgenie_priority);
         commit('alert/OPSGENIE_DESCRIPTION', config.opsgenie_description);
 
         // TODO: opsgenie_priority
@@ -653,6 +652,7 @@ export default {
         commit('alert/UPDATE_GOOGLECHAT_HEADER_SUBTITLE', config.googlechat_header_subtitle);
         commit('alert/UPDATE_GOOGLECHAT_HEADER_IMAGE', config.googlechat_header_image);
         commit('alert/UPDATE_GOOGLECHAT_FOOTER_KIBANALINK', config.googlechat_footer_kibanalink);
+        commit('alert/UPDATE_GOOGLECHAT_PROXY', config.googlechat_proxy);
 
         /* Mattermost */
         commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
@@ -2367,6 +2367,10 @@ export default {
 
       if (state.alert.googleFooterKibanalink) {
         config.googlechat_footer_kibanalink = state.alert.googleFooterKibanalink;
+      }
+
+      if (state.alert.googleChatProxy) {
+        config.googlechat_proxy = state.alert.googleChatProxy;
       }
 
       return config;
