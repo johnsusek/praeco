@@ -306,6 +306,13 @@ function initialState() {
     alertaGroup: '',
     alertaTags: [],
     alertaEnvironment: 'Production',
+    alertaTimeout: 84600,
+    alertaUseMatchTimestamp: false,
+    alertaUseQkAsResource: false,
+    alertaApiSkipSsl: false,
+    alertaOrigin: 'elastalert',
+    alertaValue: '',
+    alertaType: 'elastalert',
 
     /* Dingtalk */
     dingtalkAccessToken: '',
@@ -1591,6 +1598,34 @@ export default {
 
     UPDATE_ALERTA_ENVIRONMENT(state, alertaEnvironment) {
       state.alertaEnvironment = alertaEnvironment;
+    },
+
+    UPDATE_ALERTA_TIMEOUT(state, alertaTimeout) {
+      state.alertaTimeout = alertaTimeout;
+    },
+
+    UPDATE_ALERTA_USE_MATCH_TIMESTAMP(state, alertaUseMatchTimestamp) {
+      state.alertaUseMatchTimestamp = alertaUseMatchTimestamp;
+    },
+
+    UPDATE_ALERTA_USE_QK_AS_RESOURCE(state, alertaUseQkAsResource) {
+      state.alertaUseQkAsResource = alertaUseQkAsResource;
+    },
+
+    UPDATE_ALERTA_API_SKIP_SSL(state, alertaApiSkipSsl) {
+      state.alertaApiSkipSsl = alertaApiSkipSsl;
+    },
+
+    UPDATE_ALERTA_ORIGIN(state, alertaOrigin) {
+      state.alertaOrigin = alertaOrigin;
+    },
+
+    UPDATE_ALERTA_VALUE(state, alertaValue) {
+      state.alertaValue = alertaValue;
+    },
+
+    UPDATE_ALERTA_TYPE(state, alertaType) {
+      state.alertaType = alertaType;
     },
 
     /* Dingtalk */

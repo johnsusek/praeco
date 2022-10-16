@@ -11,12 +11,15 @@ alerta_api_url: http://testserver/
 alerta_environment: b
 alerta_event: c
 alerta_group: g
+alerta_origin: elastalert2
 alerta_resource: c
 alerta_severity: e
 alerta_tags:
   - h
   - i
 alerta_text: f
+alerta_type: k
+alerta_value: m
 doc_type: syslog
 filter:
   - query:

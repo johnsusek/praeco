@@ -7,7 +7,11 @@ alert_text: this is a test body
 alert_text_args: []
 alert_text_type: alert_text_only
 alerta_api_key: a
+alerta_api_skip_ssl: true
 alerta_api_url: http://testserver/
+alerta_timeout: 88000
+alerta_use_match_timestamp: true
+alerta_use_qk_as_resource: true
 doc_type: syslog
 filter:
   - query:

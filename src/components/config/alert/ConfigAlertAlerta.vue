@@ -105,6 +105,52 @@
       <el-input id="alertaEnvironment" v-model="alertaEnvironment" :disabled="viewOnly" />
       <label>Defaults to “Production”.</label>
     </el-form-item>
+
+    <el-form-item label="Timeout" prop="alertaTimeout">
+      <el-input-number id="alertaTimeout" v-model="alertaTimeout" :disabled="viewOnly" />
+      <label>
+        Defaults 84600 (1 Day).
+      </label>
+    </el-form-item>
+
+    <el-form-item label="Use Match Timestamp" prop="alertaUseMatchTimestamp">
+      <el-switch
+        id="alertaUseMatchTimestamp"
+        v-model="alertaUseMatchTimestamp"
+        :disabled="viewOnly"
+        @change="changeAlertaUseMatchTimestamp" />
+    </el-form-item>
+
+    <el-form-item label="Use Qk As Resource" prop="alertaUseQkAsResource">
+      <el-switch
+        id="alertaUseQkAsResource"
+        v-model="alertaUseQkAsResource"
+        :disabled="viewOnly"
+        @change="changeAlertaUseQkAsResource" />
+    </el-form-item>
+
+    <el-form-item label="Api Skip Ssl" prop="alertaApiSkipSsl">
+      <el-switch
+        id="alertaApiSkipSsl"
+        v-model="alertaApiSkipSsl"
+        :disabled="viewOnly"
+        @change="changeAlertaApiSkipSsl" />
+    </el-form-item>
+
+    <el-form-item label="Origin" prop="alertaOrigin">
+      <el-input id="alertaOrigin" v-model="alertaOrigin" :disabled="viewOnly" />
+      <label>Defaults to “elastalert”.</label>
+    </el-form-item>
+
+    <el-form-item label="Value" prop="alertaValue">
+      <el-input id="alertaValue" v-model="alertaValue" :disabled="viewOnly" />
+      <label>Defaults to “”.</label>
+    </el-form-item>
+
+    <el-form-item label="Type" prop="alertaType">
+      <el-input id="alertaType" v-model="alertaType" :disabled="viewOnly" />
+      <label>Defaults to “elastalert”.</label>
+    </el-form-item>
   </div>
 </template>
 
@@ -236,6 +282,90 @@ export default {
       set(value) {
         this.$store.commit('config/alert/UPDATE_ALERTA_ENVIRONMENT', value);
       }
+    },
+
+    alertaTimeout: {
+      get() {
+        return this.$store.state.config.alert.alertaTimeout;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ALERTA_TIMEOUT',
+          value
+        );
+      }
+    },
+
+    alertaUseMatchTimestamp: {
+      get() {
+        return this.$store.state.config.alert.alertaUseMatchTimestamp;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ALERTA_USE_MATCH_TIMESTAMP',
+          value
+        );
+      }
+    },
+
+    alertaUseQkAsResource: {
+      get() {
+        return this.$store.state.config.alert.alertaUseQkAsResource;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ALERTA_USE_QK_AS_RESOURCE',
+          value
+        );
+      }
+    },
+
+    alertaApiSkipSsl: {
+      get() {
+        return this.$store.state.config.alert.alertaApiSkipSsl;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ALERTA_API_SKIP_SSL',
+          value
+        );
+      }
+    },
+
+    alertaOrigin: {
+      get() {
+        return this.$store.state.config.alert.alertaOrigin;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ALERTA_ORIGIN',
+          value
+        );
+      }
+    },
+
+    alertaValue: {
+      get() {
+        return this.$store.state.config.alert.alertaValue;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ALERTA_VALUE',
+          value
+        );
+      }
+    },
+
+    alertaType: {
+      get() {
+        return this.$store.state.config.alert.alertaType;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_ALERTA_TYPE',
+          value
+        );
+      }
     }
   },
 
@@ -289,7 +419,31 @@ export default {
       this.$nextTick(() => {
         this.validate();
       });
-    }
+    },
+
+    changeAlertaUseMatchTimestamp(val) {
+      if (val) {
+        this.alertaUseMatchTimestamp = true;
+      } else {
+        this.alertaUseMatchTimestamp = false;
+      }
+    },
+
+    changeAlertaUseQkAsResource(val) {
+      if (val) {
+        this.alertaUseQkAsResource = true;
+      } else {
+        this.alertaUseQkAsResource = false;
+      }
+    },
+
+    changeAlertaApiSkipSsl(val) {
+      if (val) {
+        this.alertaApiSkipSsl = true;
+      } else {
+        this.alertaApiSkipSsl = false;
+      }
+    },
   }
 };
 </script>

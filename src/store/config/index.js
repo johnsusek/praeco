@@ -834,6 +834,34 @@ export default {
           commit('alert/UPDATE_ALERTA_ENVIRONMENT', 'Production');
         }
 
+        commit('alert/UPDATE_ALERTA_TIMEOUT', config.alerta_timeout);
+
+        if (config.alerta_use_match_timestamp) {
+          commit('alert/UPDATE_ALERTA_USE_MATCH_TIMESTAMP', config.alerta_use_match_timestamp);
+        }
+
+        if (config.alerta_use_qk_as_resource) {
+          commit('alert/UPDATE_ALERTA_USE_QK_AS_RESOURCE', config.alerta_use_qk_as_resource);
+        }
+
+        if (config.alerta_api_skip_ssl) {
+          commit('alert/UPDATE_ALERTA_API_SKIP_SSL', config.alerta_api_skip_ssl);
+        }
+
+        if (config.alerta_origin) {
+          commit('alert/UPDATE_ALERTA_ORIGIN', config.alerta_origin);
+        } else {
+          commit('alert/UPDATE_ALERTA_ORIGIN', 'elastalert');
+        }
+
+        commit('alert/UPDATE_ALERTA_VALUE', config.alerta_value);
+
+        if (config.alerta_type) {
+          commit('alert/UPDATE_ALERTA_TYPE', config.alerta_type);
+        } else {
+          commit('alert/UPDATE_ALERTA_TYPE', 'elastalert');
+        }
+
         /* Datadog */
         commit('alert/UPDATE_DATADOG_API_KEY', config.datadog_api_key);
         commit('alert/UPDATE_DATADOG_APP_KEY', config.datadog_app_key);
@@ -2590,6 +2618,34 @@ export default {
 
       if (state.alert.alertaEnvironment) {
         config.alerta_environment = state.alert.alertaEnvironment;
+      }
+
+      if (state.alert.alertaTimeout) {
+        config.alerta_timeout = state.alert.alertaTimeout;
+      }
+
+      if (state.alert.alertaUseMatchTimestamp) {
+        config.alerta_use_match_timestamp = state.alert.alertaUseMatchTimestamp;
+      }
+
+      if (state.alert.alertaUseQkAsResource) {
+        config.alerta_use_qk_as_resource = state.alert.alertaUseQkAsResource;
+      }
+
+      if (state.alert.alertaApiSkipSsl) {
+        config.alerta_api_skip_ssl = state.alert.alertaApiSkipSsl;
+      }
+
+      if (state.alert.alertaOrigin) {
+        config.alerta_origin = state.alert.alertaOrigin;
+      }
+
+      if (state.alert.alertaValue) {
+        config.alerta_value = state.alert.alertaValue;
+      }
+
+      if (state.alert.alertaType) {
+        config.alerta_type = state.alert.alertaType;
       }
 
       return config;
