@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import store from '@/store';
 import { mockAxios } from '../../setup';
-import { ruleYaml } from '../../mockData/alert/ruleDataTelegram.js';
+import { ruleYaml } from '../../mockData/alert/ruleDataTelegram002.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
@@ -32,6 +32,7 @@ name: "test123"
 num_events: 10000
 realert:
   minutes: 5
+telegram_parse_mode: "markdownV2"
 telegram_proxy: "hostname:8080"
 telegram_proxy_login: "user"
 telegram_proxy_pass: "password"

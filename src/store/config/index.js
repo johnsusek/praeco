@@ -313,6 +313,12 @@ export default {
         commit('alert/UPDATE_TELEGRAM_PROXY_LOGIN', config.telegram_proxy_login);
         commit('alert/UPDATE_TELEGRAM_PROXY_PASS', config.telegram_proxy_pass);
 
+        if (config.telegram_parse_mode) {
+          commit('alert/UPDATE_TELEGRAM_PARSE_MODE', config.telegram_parse_mode);
+        } else {
+          commit('alert/UPDATE_TELEGRAM_PARSE_MODE', 'markdown');
+        }
+
         /* Tencent SMS */
         commit('alert/UPDATE_TENCENT_SMS_SECRET_ID', config.tencent_sms_secret_id);
         commit('alert/UPDATE_TENCENT_SMS_SECRET_KEY', config.tencent_sms_secret_key);
@@ -1741,6 +1747,10 @@ export default {
 
       if (state.alert.telegramProxyPass) {
         config.telegram_proxy_pass = state.alert.telegramProxyPass;
+      }
+
+      if (state.alert.telegramParseMode) {
+        config.telegram_parse_mode = state.alert.telegramParseMode;
       }
 
       return config;

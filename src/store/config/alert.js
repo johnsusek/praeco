@@ -70,6 +70,7 @@ function initialState() {
     telegramProxy: '',
     telegramProxyLogin: '',
     telegramProxyPass: '',
+    telegramParseMode: 'markdown',
 
     /* Tencent SMS */
     tencentSmsSecretId: '',
@@ -550,6 +551,10 @@ export default {
 
     UPDATE_TELEGRAM_PROXY_PASS(state, telegramProxyPass) {
       state.telegramProxyPass = telegramProxyPass;
+    },
+
+    UPDATE_TELEGRAM_PARSE_MODE(state, telegramParseMode) {
+      state.telegramParseMode = telegramParseMode;
     },
 
     /* Tencent SMS */
