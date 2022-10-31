@@ -585,6 +585,9 @@ export default {
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
+        commit('alert/UPDATE_JIRA_DESCRIPTIONT', config.jira_description);
+        commit('alert/UPDATE_JIRA_ASSIGNEE', config.jira_assignee);
+        commit('alert/UPDATE_JIRA_TRANSITION_TO', config.jira_transition_to);
 
         /* ServiceNow */
         commit('alert/UPDATE_SERVICENOW_USERNAME', config.username);
@@ -2265,6 +2268,18 @@ export default {
 
       if (state.alert.jiraComponents) {
         config.jira_components = state.alert.jiraComponents;
+      }
+
+      if (state.alert.jiraDescription) {
+        config.jira_description = state.alert.jiraDescription;
+      }
+
+      if (state.alert.jiraAssignee) {
+        config.jira_assignee = state.alert.jiraAssignee;
+      }
+
+      if (state.alert.jiraTransitionTo) {
+        config.jira_transition_to = state.alert.jiraTransitionTo;
       }
 
       return config;

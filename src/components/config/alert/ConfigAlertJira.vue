@@ -12,6 +12,21 @@
       <el-input id="jiraComponents" v-model="jiraComponents" :disabled="viewOnly" />
       <label>Jira issue components</label>
     </praeco-form-item>
+
+    <praeco-form-item label="Description" prop="jiraDescription">
+      <el-input id="jiraDescription" v-model="jiraDescription" :disabled="viewOnly" />
+      <label>Similar to alert_text, this text is prepended to the Jira description.</label>
+    </praeco-form-item>
+
+    <praeco-form-item label="Assignee" prop="jiraAssignee">
+      <el-input id="jiraAssignee" v-model="jiraAssignee" :disabled="viewOnly" />
+      <label>Assigns an issue to a user.</label>
+    </praeco-form-item>
+
+    <praeco-form-item label="TransitionT" prop="jiraTransitionTo">
+      <el-input id="jiraTransitionTo" v-model="jiraTransitionTo" :disabled="viewOnly" />
+      <label>If jira_bump_tickets is true, Transition this ticket to the given Status when bumping. Must match the text of your Jira implementation’s Status field.</label>
+    </praeco-form-item>
   </div>
 </template>
 
@@ -52,6 +67,42 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_JIRA_COMPONENTS',
+          value
+        );
+      }
+    },
+
+    jiraDescription: {
+      get() {
+        return this.$store.state.config.alert.jiraDescription;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_DESCRIPTIONT',
+          value
+        );
+      }
+    },
+
+    jiraAssignee: {
+      get() {
+        return this.$store.state.config.alert.jiraAssignee;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_ASSIGNEE',
+          value
+        );
+      }
+    },
+
+    jiraTransitionTo: {
+      get() {
+        return this.$store.state.config.alert.jiraTransitionTo;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_TRANSITION_TO',
           value
         );
       }

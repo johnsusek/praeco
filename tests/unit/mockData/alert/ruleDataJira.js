@@ -14,9 +14,12 @@ filter:
 import: BaseRule.config
 index: hannibal-*
 is_enabled: false
+jira_assignee: assign
 jira_components: xxxxxx1
+jira_description: desc
 jira_issuetype: xxxxxx2
 jira_project: xxxxxx3
+jira_transition_to: trans
 name: test123
 num_events: 10000
 realert:

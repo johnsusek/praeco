@@ -195,6 +195,9 @@ function initialState() {
     jiraProject: '',
     jiraIssueType: '',
     jiraComponents: '',
+    jiraDescription: '',
+    jiraAssignee: '',
+    jiraTransitionTo: '',
 
     /* Chatwork */
     chatworkApikey: '',
@@ -1103,6 +1106,18 @@ export default {
 
     UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
       state.jiraComponents = jiraComponents;
+    },
+
+    UPDATE_JIRA_DESCRIPTIONT(state, jiraDescription) {
+      state.jiraDescription = jiraDescription;
+    },
+
+    UPDATE_JIRA_ASSIGNEE(state, jiraAssignee) {
+      state.jiraAssignee = jiraAssignee;
+    },
+
+    UPDATE_JIRA_TRANSITION_TO(state, jiraTransitionTo) {
+      state.jiraTransitionTo = jiraTransitionTo;
     },
 
     /* ServiceNow */
