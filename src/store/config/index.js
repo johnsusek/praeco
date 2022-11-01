@@ -588,6 +588,9 @@ export default {
         commit('alert/UPDATE_JIRA_DESCRIPTIONT', config.jira_description);
         commit('alert/UPDATE_JIRA_ASSIGNEE', config.jira_assignee);
         commit('alert/UPDATE_JIRA_TRANSITION_TO', config.jira_transition_to);
+        commit('alert/UPDATE_JIRA_PRIORITY', config.jira_priority);
+        commit('alert/UPDATE_JIRA_MAX_AGE', config.jira_max_age);
+        commit('alert/UPDATE_JIRA_BUMP_AFTER_INACTIVITY', config.jira_bump_after_inactivity);
 
         /* ServiceNow */
         commit('alert/UPDATE_SERVICENOW_USERNAME', config.username);
@@ -2280,6 +2283,18 @@ export default {
 
       if (state.alert.jiraTransitionTo) {
         config.jira_transition_to = state.alert.jiraTransitionTo;
+      }
+
+      if (state.alert.jiraPriority) {
+        config.jira_priority = state.alert.jiraPriority;
+      }
+
+      if (state.alert.jiraMaxAge) {
+        config.jira_max_age = state.alert.jiraMaxAge;
+      }
+
+      if (state.alert.jiraBumpAfterInactivity) {
+        config.jira_bump_after_inactivity = state.alert.jiraBumpAfterInactivity;
       }
 
       return config;

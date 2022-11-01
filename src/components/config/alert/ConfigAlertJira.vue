@@ -27,6 +27,21 @@
       <el-input id="jiraTransitionTo" v-model="jiraTransitionTo" :disabled="viewOnly" />
       <label>If jira_bump_tickets is true, Transition this ticket to the given Status when bumping. Must match the text of your Jira implementation’s Status field.</label>
     </praeco-form-item>
+
+    <praeco-form-item label="Priority" prop="jiraPriority">
+      <el-input-number id="jiraPriority" v-model="jiraPriority" :disabled="viewOnly" />
+      <label>The index of the priority to set the issue to. In the Jira dropdown for priorities, 0 would represent the first priority, 1 the 2nd, etc.</label>
+    </praeco-form-item>
+
+    <praeco-form-item label="Max Age" prop="jiraMaxAge">
+      <el-input-number id="jiraMaxAge" v-model="jiraMaxAge" :disabled="viewOnly" />
+      <label>If jira_bump_tickets is true, the maximum age of a ticket, in days, such that ElastAlert 2 will comment on the ticket instead of opening a new one. Default is 30 days.</label>
+    </praeco-form-item>
+
+    <praeco-form-item label="Bump After Inactivity" prop="jiraBumpAfterInactivity">
+      <el-input-number id="jiraBumpAfterInactivity" v-model="jiraBumpAfterInactivity" :disabled="viewOnly" />
+      <label> If this is set, ElastAlert 2 will only comment on tickets that have been inactive for at least this many days. It only applies if jira_bump_tickets is true. Default is 0 days.</label>
+    </praeco-form-item>
   </div>
 </template>
 
@@ -103,6 +118,42 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_JIRA_TRANSITION_TO',
+          value
+        );
+      }
+    },
+
+    jiraPriority: {
+      get() {
+        return this.$store.state.config.alert.jiraPriority;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_PRIORITY',
+          value
+        );
+      }
+    },
+
+    jiraMaxAge: {
+      get() {
+        return this.$store.state.config.alert.jiraMaxAge;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_MAX_AGE',
+          value
+        );
+      }
+    },
+
+    jiraBumpAfterInactivity: {
+      get() {
+        return this.$store.state.config.alert.jiraBumpAfterInactivity;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_BUMP_AFTER_INACTIVITY',
           value
         );
       }

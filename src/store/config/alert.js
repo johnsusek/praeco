@@ -198,6 +198,9 @@ function initialState() {
     jiraDescription: '',
     jiraAssignee: '',
     jiraTransitionTo: '',
+    jiraPriority: 0,
+    jiraMaxAge: 30,
+    jiraBumpAfterInactivity: 0,
 
     /* Chatwork */
     chatworkApikey: '',
@@ -1118,6 +1121,18 @@ export default {
 
     UPDATE_JIRA_TRANSITION_TO(state, jiraTransitionTo) {
       state.jiraTransitionTo = jiraTransitionTo;
+    },
+
+    UPDATE_JIRA_PRIORITY(state, jiraPriority) {
+      state.jiraPriority = jiraPriority;
+    },
+
+    UPDATE_JIRA_MAX_AGE(state, jiraMaxAge) {
+      state.jiraMaxAge = jiraMaxAge;
+    },
+
+    UPDATE_JIRA_BUMP_AFTER_INACTIVITY(state, jiraBumpAfterInactivity) {
+      state.jiraBumpAfterInactivity = jiraBumpAfterInactivity;
     },
 
     /* ServiceNow */
