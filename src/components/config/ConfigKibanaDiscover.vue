@@ -215,6 +215,9 @@ export default {
       }, {
         code: '8.4',
         name: '8.4'
+      }, {
+        code: '8.5',
+        name: '8.5'
       }],
     };
   },
