@@ -42,6 +42,22 @@
       <el-input-number id="jiraBumpAfterInactivity" v-model="jiraBumpAfterInactivity" :disabled="viewOnly" />
       <label> If this is set, ElastAlert 2 will only comment on tickets that have been inactive for at least this many days. It only applies if jira_bump_tickets is true. Default is 0 days.</label>
     </praeco-form-item>
+
+    <el-form-item label="Bump Tickets" prop="jiraBumpTickets">
+      <el-switch
+        id="jiraBumpTickets"
+        v-model="jiraBumpTickets"
+        :disabled="viewOnly"
+        @change="changeJiraBumpTickets" />
+    </el-form-item>
+
+    <el-form-item label="Bump Only" prop="jiraBumpOnly">
+      <el-switch
+        id="jiraBumpOnly"
+        v-model="jiraBumpOnly"
+        :disabled="viewOnly"
+        @change="changeJiraBumpOnly" />
+    </el-form-item>
   </div>
 </template>
 
@@ -157,10 +173,49 @@ export default {
           value
         );
       }
+    },
+
+    jiraBumpTickets: {
+      get() {
+        return this.$store.state.config.alert.jiraBumpTickets;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_BUMP_TICKETS',
+          value
+        );
+      }
+    },
+
+    jiraBumpOnly: {
+      get() {
+        return this.$store.state.config.alert.jiraBumpOnly;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_JIRA_BUMP_ONLY',
+          value
+        );
+      }
     }
   },
 
   methods: {
+    changeJiraBumpTickets(val) {
+      if (val) {
+        this.jiraBumpTickets = true;
+      } else {
+        this.jiraBumpTickets = false;
+      }
+    },
+
+    changeJiraBumpOnly(val) {
+      if (val) {
+        this.jiraBumpOnly = true;
+      } else {
+        this.jiraBumpOnly = false;
+      }
+    }
   }
 };
 </script>

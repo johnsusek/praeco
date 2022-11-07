@@ -201,6 +201,8 @@ function initialState() {
     jiraPriority: 0,
     jiraMaxAge: 30,
     jiraBumpAfterInactivity: 0,
+    jiraBumpTickets: false,
+    jiraBumpOnly: false,
 
     /* Chatwork */
     chatworkApikey: '',
@@ -1133,6 +1135,14 @@ export default {
 
     UPDATE_JIRA_BUMP_AFTER_INACTIVITY(state, jiraBumpAfterInactivity) {
       state.jiraBumpAfterInactivity = jiraBumpAfterInactivity;
+    },
+
+    UPDATE_JIRA_BUMP_TICKETS(state, jiraBumpTickets) {
+      state.jiraBumpTickets = jiraBumpTickets;
+    },
+
+    UPDATE_JIRA_BUMP_ONLY(state, jiraBumpOnly) {
+      state.jiraBumpOnly = jiraBumpOnly;
     },
 
     /* ServiceNow */

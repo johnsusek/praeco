@@ -592,6 +592,14 @@ export default {
         commit('alert/UPDATE_JIRA_MAX_AGE', config.jira_max_age);
         commit('alert/UPDATE_JIRA_BUMP_AFTER_INACTIVITY', config.jira_bump_after_inactivity);
 
+        if (config.jira_bump_tickets) {
+          commit('alert/UPDATE_JIRA_BUMP_TICKETS', config.jira_bump_tickets);
+        }
+
+        if (config.jira_bump_only) {
+          commit('alert/UPDATE_JIRA_BUMP_ONLY', config.jira_bump_only);
+        }
+
         /* ServiceNow */
         commit('alert/UPDATE_SERVICENOW_USERNAME', config.username);
         commit('alert/UPDATE_SERVICENOW_PASSWORD', config.password);
@@ -2295,6 +2303,14 @@ export default {
 
       if (state.alert.jiraBumpAfterInactivity) {
         config.jira_bump_after_inactivity = state.alert.jiraBumpAfterInactivity;
+      }
+
+      if (state.alert.jiraBumpTickets) {
+        config.jira_bump_tickets = state.alert.jiraBumpTickets;
+      }
+
+      if (state.alert.jiraBumpOnly) {
+        config.jira_bump_only = state.alert.jiraBumpOnly;
       }
 
       return config;
