@@ -4,7 +4,7 @@
       <el-input id="rocketChatChannelOverride" v-model="rocketChatChannelOverride" :disabled="viewOnly" />
       <label>
         The @username or #channel to send the alert. Tip: Create new channels
-        for your alerts, to have fine-grained control of Slack notifications.
+        for your alerts, to have fine-grained control of Rocket.Chat notifications.
       </label>
     </el-form-item>
 
