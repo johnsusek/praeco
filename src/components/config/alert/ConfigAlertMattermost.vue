@@ -13,6 +13,26 @@
       <label>This is the username that will appear in Mattermost for the alert</label>
     </praeco-form-item>
 
+    <div v-show="viewOnly">
+      <emoji
+        :data="emojiIndex"
+        :emoji="mattermostEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
+    <div v-if="!viewOnly">
+      <picker
+        :disabled="viewOnly"
+        :data="emojiIndex"
+        color="#189acc"
+        @select="addMattermostEmoji" />
+      <emoji
+        :data="emojiIndex"
+        :emoji="mattermostEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
+
     <el-form-item label="Message color" prop="mattermostMsgColor" required>
       <el-radio-group v-model="mattermostMsgColor" :disabled="viewOnly">
         <el-radio id="mattermostMsgColorDanger" label="danger" border class="mattermost-danger">
@@ -124,9 +144,22 @@
 </template>
 
 <script>
-export default {
-  props: ['viewOnly'],
+import emojiData from 'emoji-mart-vue-fast/data/all.json';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
 
+let emojiIndex = new EmojiIndex(emojiData);
+
+export default {
+  components: {
+    Emoji,
+    Picker
+  },
+  props: ['viewOnly'],
+  data() {
+    return {
+      emojiIndex,
+    };
+  },
   computed: {
     mattermostChannelOverride: {
       get() {
@@ -146,6 +179,15 @@ export default {
           'config/alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE',
           value
         );
+      }
+    },
+
+    mattermostEmojiOverride: {
+      get() {
+        return this.$store.state.config.alert.mattermostEmojiOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_EMOJI_OVERRIDE', value);
       }
     },
 
@@ -357,12 +399,41 @@ export default {
       } else {
         this.mattermostAttachKibanaDiscoverUrl = false;
       }
+    },
+
+    addMattermostEmoji(value) {
+      this.mattermostEmojiOverride = value.colons;
     }
   }
 };
 </script>
 
 <style lang="scss">
+.disabled {
+  .emoji-mart {
+    height: auto !important;
+    border: 0 !important;
+  }
+  .emoji-mart-title-label,
+  .emoji-mart-bar:first-child,
+  .emoji-mart-search,
+  .emoji-mart-scroll,
+  .emoji-mart-preview-skins {
+    display: none;
+  }
+  .emoji-mart-bar {
+    border: 0 !important;
+  }
+  .emoji-mart-preview {
+    height: 45px !important;
+  }
+  .emoji-mart-preview-emoji {
+    left: 0 !important;
+  }
+  .emoji-mart-preview-data {
+    left: 56px !important;
+  }
+}
 :not(.is-disabled) {
   &.mattermost-danger .el-radio__inner:hover {
     border-color: red;

@@ -262,6 +262,7 @@ function initialState() {
     /* Mattermost */
     mattermostChannelOverride: '',
     mattermostUsernameOverride: 'Praeco',
+    mattermostEmojiOverride: ':ghost:',
     mattermostMsgColor: 'danger',
     mattermostIconUrlOverride: '',
     mattermostMsgPretext: '',
@@ -1280,6 +1281,10 @@ export default {
 
     UPDATE_MATTERMOST_USERNAME_OVERRIDE(state, mattermostUsernameOverride) {
       state.mattermostUsernameOverride = mattermostUsernameOverride;
+    },
+
+    UPDATE_MATTERMOST_EMOJI_OVERRIDE(state, mattermostEmojiOverride) {
+      state.mattermostEmojiOverride = mattermostEmojiOverride;
     },
 
     UPDATE_MATTERMOST_MSG_COLOR(state, mattermostMsgColor) {

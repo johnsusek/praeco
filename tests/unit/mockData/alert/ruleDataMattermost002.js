@@ -16,9 +16,9 @@ import: BaseRule.config
 index: hannibal-*
 is_enabled: false
 mattermost_channel_override: '#elastalert-debugging'
+mattermost_emoji_override: ':postal_horn:'
 mattermost_username_override: 'elastalert2'
 mattermost_msg_color: 'good'
-mattermost_icon_url_override: 'https://localhost/abc.png'
 mattermost_msg_pretext: 'abc'
 mattermost_ignore_ssl_errors: true
 mattermost_proxy: 'https://hostname:8080'

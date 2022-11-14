@@ -683,6 +683,12 @@ export default {
           commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', 'elastalert');
         }
 
+        if (config.mattermost_emoji_override) {
+          commit('alert/UPDATE_MATTERMOST_EMOJI_OVERRIDE', config.mattermost_emoji_override);
+        } else {
+          commit('alert/UPDATE_MATTERMOST_EMOJI_OVERRIDE', ':ghost:');
+        }
+
         if (config.mattermost_msg_color) {
           commit('alert/UPDATE_MATTERMOST_MSG_COLOR', config.mattermost_msg_color);
         } else {
@@ -2469,6 +2475,10 @@ export default {
 
       if (state.alert.mattermostUsernameOverride) {
         config.mattermost_username_override = state.alert.mattermostUsernameOverride;
+      }
+
+      if (state.alert.mattermostEmojiOverride) {
+        config.mattermost_emoji_override = state.alert.mattermostEmojiOverride;
       }
 
       if (state.alert.mattermostMsgColor) {
