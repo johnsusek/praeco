@@ -318,7 +318,7 @@ export default {
           await this.validateAlertSubjectArgs();
         }
         if (this.$refs.alertTextArgs) {
-          await this.validateAlertaTags();
+          await this.validateAlertTextArgs();
         }
         this.$emit('validate', true);
         return true;
