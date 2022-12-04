@@ -323,6 +323,10 @@ function initialState() {
     alertaOrigin: 'elastalert',
     alertaValue: '',
     alertaType: 'elastalert',
+    alertaService: [],
+    alertaCorrelate: [],
+    alertaAttributesKeys: [],
+    alertaAttributesValues: [],
 
     /* Dingtalk */
     dingtalkAccessToken: '',
@@ -1676,6 +1680,90 @@ export default {
 
     UPDATE_ALERTA_TYPE(state, alertaType) {
       state.alertaType = alertaType;
+    },
+
+    UPDATE_ALERTA_SERVICES(state, alertaService) {
+      state.alertaService = alertaService;
+    },
+
+    ADD_ALERTA_SERVICES_ENTRY(state) {
+      state.alertaService.push('');
+    },
+
+    ADD_ALERTA_SERVICES_ENTRY_VALUE(state, value) {
+      state.alertaService.push(value);
+    },
+
+    REMOVE_ALERTA_SERVICES_ENTRY(state, entry) {
+      state.alertaService = state.alertaService.filter(b => b !== entry);
+    },
+
+    UPDATE_alerta_serviceS_ENTRY(state, { entry, index }) {
+      if (!state.alertaService) return;
+      state.alertaService[index] = entry;
+    },
+
+    UPDATE_ALERTA_CORRELATE(state, alertaCorrelate) {
+      state.alertaCorrelate = alertaCorrelate;
+    },
+
+    ADD_ALERTA_CORRELATE_ENTRY(state) {
+      state.alertaCorrelate.push('');
+    },
+
+    ADD_ALERTA_CORRELATE_ENTRY_VALUE(state, value) {
+      state.alertaCorrelate.push(value);
+    },
+
+    REMOVE_ALERTA_CORRELATE_ENTRY(state, entry) {
+      state.alertaCorrelate = state.alertaCorrelate.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_CORRELATE_ENTRY(state, { entry, index }) {
+      if (!state.alertaCorrelate) return;
+      state.alertaCorrelate[index] = entry;
+    },
+
+    UPDATE_ALERTA_ATTRIBUTES_KEYS(state, alertaAttributesKeys) {
+      state.alertaAttributesKeys = alertaAttributesKeys;
+    },
+
+    ADD_ALERTA_ATTRIBUTES_KEYS_ENTRY(state) {
+      state.alertaAttributesKeys.push('');
+    },
+
+    ADD_ALERTA_ATTRIBUTES_KEYS_ENTRY_VALUE(state, value) {
+      state.alertaAttributesKeys.push(value);
+    },
+
+    REMOVE_ALERTA_ATTRIBUTES_KEYS_ENTRY(state, entry) {
+      state.alertaAttributesKeys = state.alertaAttributesKeys.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_ATTRIBUTES_KEYS_ENTRY(state, { entry, index }) {
+      if (!state.alertaAttributesKeys) return;
+      state.alertaAttributesKeys[index] = entry;
+    },
+
+    UPDATE_ALERTA_ATTRIBUTES_VALUES(state, alertaAttributesValues) {
+      state.alertaAttributesValues = alertaAttributesValues;
+    },
+
+    ADD_ALERTA_ATTRIBUTES_VALUES_ENTRY(state) {
+      state.alertaAttributesValues.push('');
+    },
+
+    ADD_ALERTA_ATTRIBUTES_VALUES_ENTRY_VALUE(state, value) {
+      state.alertaAttributesValues.push(value);
+    },
+
+    REMOVE_ALERTA_ATTRIBUTES_VALUES_ENTRY(state, entry) {
+      state.alertaAttributesValues = state.alertaAttributesValues.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_ATTRIBUTES_VALUES_ENTRY(state, { entry, index }) {
+      if (!state.alertaAttributesValues) return;
+      state.alertaAttributesValues[index] = entry;
     },
 
     /* Dingtalk */

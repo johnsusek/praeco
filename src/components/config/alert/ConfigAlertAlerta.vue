@@ -151,6 +151,210 @@
       <el-input id="alertaType" v-model="alertaType" :disabled="viewOnly" />
       <label>Defaults to “elastalert”.</label>
     </el-form-item>
+
+    <el-popover v-model="popalertaServiceVisible" :class="{ 'is-invalid': !popalertaServiceValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="alertaService.length" :content="alertaService.join(', ')" placement="top">
+            <span>Services ({{ alertaService.length }})</span>
+          </el-tooltip>
+          <span v-else>Services ({{ alertaService.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="alertaService"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in alertaService"
+            :key="index"
+            :prop="'alertaService.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="alertaService[index]"
+                  :disabled="viewOnly"
+                  placeholder="Tags"
+                  @input="(val) => updatealertaService(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removealertaServiceEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaServiceEntry">
+          Add Services
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popalertaCorrelateVisible" :class="{ 'is-invalid': !popalertaCorrelateValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="alertaCorrelate.length" :content="alertaCorrelate.join(', ')" placement="top">
+            <span>Correlates ({{ alertaCorrelate.length }})</span>
+          </el-tooltip>
+          <span v-else>Correlatea ({{ alertaCorrelate.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="alertaCorrelate"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in alertaCorrelate"
+            :key="index"
+            :prop="'alertaCorrelate.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="alertaCorrelate[index]"
+                  :disabled="viewOnly"
+                  placeholder="Correlates"
+                  @input="(val) => updatealertaCorrelate(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removealertaCorrelateEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaCorrelateEntry">
+          Add Correlates
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popalertaAttributesKeysVisible" :class="{ 'is-invalid': !popalertaAttributesKeysValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="alertaAttributesKeys.length" :content="alertaAttributesKeys.join(', ')" placement="top">
+            <span>AttributesKeys ({{ alertaAttributesKeys.length }})</span>
+          </el-tooltip>
+          <span v-else>AttributesKeys ({{ alertaAttributesKeys.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="alertaAttributesKeys"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in alertaAttributesKeys"
+            :key="index"
+            :prop="'alertaAttributesKeys.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="alertaAttributesKeys[index]"
+                  :disabled="viewOnly"
+                  placeholder="AttributesKeys"
+                  @input="(val) => updatealertaAttributesKeys(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removealertaAttributesKeysEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaAttributesKeysEntry">
+          Add AttributesKeys
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popalertaAttributesValuesVisible" :class="{ 'is-invalid': !popalertaAttributesValuesValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="alertaAttributesValues.length" :content="alertaAttributesValues.join(', ')" placement="top">
+            <span>AttributesValues ({{ alertaAttributesValues.length }})</span>
+          </el-tooltip>
+          <span v-else>AttributesValues ({{ alertaAttributesValues.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="alertaAttributesValues"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in alertaAttributesValues"
+            :key="index"
+            :prop="'alertaAttributesValues.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="alertaAttributesValues[index]"
+                  :disabled="viewOnly"
+                  placeholder="AttributesValues"
+                  @input="(val) => updatealertaAttributesValues(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removealertaAttributesValuesEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaAttributesValuesEntry">
+          Add AttributesValues
+        </el-button>
+      </template>
+    </el-popover>
   </div>
 </template>
 
@@ -160,6 +364,14 @@ export default {
 
   data() {
     return {
+      popalertaAttributesValuesVisible: false,
+      popalertaAttributesValuesValid: true,
+      popalertaAttributesKeysVisible: false,
+      popalertaAttributesKeysValid: true,
+      popalertaCorrelateVisible: false,
+      popalertaCorrelateValid: true,
+      popalertaServiceVisible: false,
+      popalertaServiceValid: true,
       popAlertaTagsVisible: false,
       popAlertaTagsValid: true,
       alertaSeverityOptions: [{
@@ -375,6 +587,18 @@ export default {
         if (this.$refs.alertaTags) {
           await this.validateAlertaTags();
         }
+        if (this.$refs.alertaService) {
+          await this.validatealertaService();
+        }
+        if (this.$refs.alertaCorrelate) {
+          await this.validatealertaCorrelate();
+        }
+        if (this.$refs.alertaAttributesKeys) {
+          await this.validatealertaAttributesKeys();
+        }
+        if (this.$refs.alertaAttributesValues) {
+          await this.validatealertaAttributesValues();
+        }
         this.$emit('validate', true);
         return true;
       } catch (error) {
@@ -416,6 +640,158 @@ export default {
 
     addAlertaTagsEntry() {
       this.$store.commit('config/alert/ADD_ALERTA_TAGS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatealertaService() {
+      if (!this.alertaService.length) {
+        this.popalertaServiceValid = false;
+        return;
+      }
+      try {
+        this.popalertaServiceValid = await this.$refs.alertaService.validate();
+      } catch (error) {
+        this.popalertaServiceValid = false;
+        throw error;
+      }
+    },
+
+    updatealertaService(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ALERTA_SERVICES_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removealertaServiceEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ALERTA_SERVICES_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addalertaServiceEntry() {
+      this.$store.commit('config/alert/ADD_ALERTA_SERVICES_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatealertaCorrelate() {
+      if (!this.alertaCorrelate.length) {
+        this.popalertaCorrelateValid = false;
+        return;
+      }
+      try {
+        this.popalertaCorrelateValid = await this.$refs.alertaCorrelate.validate();
+      } catch (error) {
+        this.popalertaCorrelateValid = false;
+        throw error;
+      }
+    },
+
+    updatealertaCorrelate(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ALERTA_CORRELATE_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removealertaCorrelateEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ALERTA_CORRELATE_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addalertaCorrelateEntry() {
+      this.$store.commit('config/alert/ADD_ALERTA_CORRELATE_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatealertaAttributesKeys() {
+      if (!this.alertaAttributesKeys.length) {
+        this.popalertaAttributesKeysValid = false;
+        return;
+      }
+      try {
+        this.popalertaAttributesKeysValid = await this.$refs.alertaAttributesKeys.validate();
+      } catch (error) {
+        this.popalertaAttributesKeysValid = false;
+        throw error;
+      }
+    },
+
+    updatealertaAttributesKeys(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ALERTA_ATTRIBUTES_KEYS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removealertaAttributesKeysEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ALERTA_ATTRIBUTES_KEYS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addalertaAttributesKeysEntry() {
+      this.$store.commit('config/alert/ADD_ALERTA_ATTRIBUTES_KEYS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatealertaAttributesValues() {
+      if (!this.alertaAttributesValues.length) {
+        this.popalertaAttributesValuesValid = false;
+        return;
+      }
+      try {
+        this.popalertaAttributesValuesValid = await this.$refs.alertaAttributesValues.validate();
+      } catch (error) {
+        this.popalertaAttributesValuesValid = false;
+        throw error;
+      }
+    },
+
+    updatealertaAttributesValues(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ALERTA_ATTRIBUTES_VALUES_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removealertaAttributesValuesEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ALERTA_ATTRIBUTES_VALUES_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addalertaAttributesValuesEntry() {
+      this.$store.commit('config/alert/ADD_ALERTA_ATTRIBUTES_VALUES_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });

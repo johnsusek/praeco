@@ -888,6 +888,22 @@ export default {
           commit('alert/UPDATE_ALERTA_TYPE', 'elastalert');
         }
 
+        if (config.alerta_services) {
+          commit('alert/UPDATE_ALERTA_SERVICES', config.alerta_services);
+        }
+
+        if (config.alerta_correlate) {
+          commit('alert/UPDATE_ALERTA_CORRELATE', config.alerta_correlate);
+        }
+
+        if (config.alerta_attributes_keys) {
+          commit('alert/UPDATE_ALERTA_ATTRIBUTES_KEYS', config.alerta_attributes_keys);
+        }
+
+        if (config.alerta_attributes_values) {
+          commit('alert/UPDATE_ALERTA_ATTRIBUTES_VALUES', config.alerta_attributes_values);
+        }
+
         /* Datadog */
         commit('alert/UPDATE_DATADOG_API_KEY', config.datadog_api_key);
         commit('alert/UPDATE_DATADOG_APP_KEY', config.datadog_app_key);
@@ -2712,6 +2728,22 @@ export default {
 
       if (state.alert.alertaType) {
         config.alerta_type = state.alert.alertaType;
+      }
+
+      if (state.alert.alertaService && state.alert.alertaService.length) {
+        config.alerta_services = state.alert.alertaService;
+      }
+
+      if (state.alert.alertaCorrelate && state.alert.alertaCorrelate.length) {
+        config.alerta_correlate = state.alert.alertaCorrelate;
+      }
+
+      if (state.alert.alertaAttributesKeys && state.alert.alertaAttributesKeys.length) {
+        config.alerta_attributes_keys = state.alert.alertaAttributesKeys;
+      }
+
+      if (state.alert.alertaAttributesValues && state.alert.alertaAttributesValues.length) {
+        config.alerta_attributes_values = state.alert.alertaAttributesValues;
       }
 
       return config;
