@@ -58,6 +58,261 @@
         :disabled="viewOnly"
         @change="changeJiraBumpOnly" />
     </el-form-item>
+
+    <el-popover v-model="popjiraWatchersVisible" :class="{ 'is-invalid': !popjiraWatchersValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="jiraWatchers.length" :content="jiraWatchers.join(', ')" placement="top">
+            <span>Watchers ({{ jiraWatchers.length }})</span>
+          </el-tooltip>
+          <span v-else>Watchers ({{ jiraWatchers.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="jiraWatchers"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in jiraWatchers"
+            :key="index"
+            :prop="'jiraWatchers.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="jiraWatchers[index]"
+                  :disabled="viewOnly"
+                  placeholder="AttributesValues"
+                  @input="(val) => updatejiraWatchers(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removejiraWatchersEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addjiraWatchersEntry">
+          Add Watchers
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popjiraBumpInStatusesVisible" :class="{ 'is-invalid': !popjiraBumpInStatusesValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="jiraBumpInStatuses.length" :content="jiraBumpInStatuses.join(', ')" placement="top">
+            <span>BumpInStatuses ({{ jiraBumpInStatuses.length }})</span>
+          </el-tooltip>
+          <span v-else>BumpInStatuses ({{ jiraBumpInStatuses.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="jiraBumpInStatuses"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in jiraBumpInStatuses"
+            :key="index"
+            :prop="'jiraBumpInStatuses.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="jiraBumpInStatuses[index]"
+                  :disabled="viewOnly"
+                  placeholder="AttributesValues"
+                  @input="(val) => updatejiraBumpInStatuses(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removejiraBumpInStatusesEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addjiraBumpInStatusesEntry">
+          Add BumpInStatuses
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popjiraBumpNotInStatusesVisible" :class="{ 'is-invalid': !popjiraBumpNotInStatusesValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="jiraBumpNotInStatuses.length" :content="jiraBumpNotInStatuses.join(', ')" placement="top">
+            <span>BumpNotInStatuses ({{ jiraBumpNotInStatuses.length }})</span>
+          </el-tooltip>
+          <span v-else>BumpNotInStatuses ({{ jiraBumpNotInStatuses.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="jiraBumpNotInStatuses"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in jiraBumpNotInStatuses"
+            :key="index"
+            :prop="'jiraBumpNotInStatuses.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="jiraBumpNotInStatuses[index]"
+                  :disabled="viewOnly"
+                  placeholder="AttributesValues"
+                  @input="(val) => updatejiraBumpNotInStatuses(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removejiraBumpNotInStatusesEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addjiraBumpNotInStatusesEntry">
+          Add BumpNotInStatuses
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popjiraLabelVisible" :class="{ 'is-invalid': !popjiraLabelValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="jiraLabel.length" :content="jiraLabel.join(', ')" placement="top">
+            <span>Label ({{ jiraLabel.length }})</span>
+          </el-tooltip>
+          <span v-else>Label ({{ jiraLabel.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="jiraLabel"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in jiraLabel"
+            :key="index"
+            :prop="'jiraLabel.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="jiraLabel[index]"
+                  :disabled="viewOnly"
+                  placeholder="AttributesValues"
+                  @input="(val) => updatejiraLabel(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removejiraLabelEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addjiraLabelEntry">
+          Add Label
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popjiraLabelsVisible" :class="{ 'is-invalid': !popjiraLabelsValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="jiraLabels.length" :content="jiraLabels.join(', ')" placement="top">
+            <span>Labels ({{ jiraLabels.length }})</span>
+          </el-tooltip>
+          <span v-else>Labels ({{ jiraLabels.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="jiraLabels"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in jiraLabels"
+            :key="index"
+            :prop="'jiraLabels.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="jiraLabels[index]"
+                  :disabled="viewOnly"
+                  placeholder="AttributesValues"
+                  @input="(val) => updatejiraLabels(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removejiraLabelsEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addjiraLabelsEntry">
+          Add Labels
+        </el-button>
+      </template>
+    </el-popover>
   </div>
 </template>
 
@@ -65,6 +320,21 @@
 
 export default {
   props: ['viewOnly'],
+
+  data() {
+    return {
+      popjiraLabelsVisible: false,
+      popjiraLabelsValid: true,
+      popjiraLabelVisible: false,
+      popjiraLabelValid: true,
+      popjiraBumpNotInStatusesVisible: false,
+      popjiraBumpNotInStatusesValid: true,
+      popjiraBumpInStatusesVisible: false,
+      popjiraBumpInStatusesValid: true,
+      popjiraWatchersVisible: false,
+      popjiraWatchersValid: true,
+    };
+  },
 
   computed: {
     jiraIssueType: {
@@ -201,6 +471,221 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.jiraWatchers) {
+          await this.validatejiraWatchers();
+        }
+        if (this.$refs.jiraBumpInStatuses) {
+          await this.validatejiraBumpInStatuses();
+        }
+        if (this.$refs.jiraBumpNotInStatuses) {
+          await this.validatejiraBumpNotInStatuses();
+        }
+        if (this.$refs.jiraLabel) {
+          await this.validatejiraLabel();
+        }
+        if (this.$refs.jiraLabels) {
+          await this.validatejiraLabels();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validatejiraWatchers() {
+      if (!this.jiraWatchers.length) {
+        this.popjiraWatchersValid = false;
+        return;
+      }
+      try {
+        this.popjiraWatchersValid = await this.$refs.jiraWatchers.validate();
+      } catch (error) {
+        this.popjiraWatchersValid = false;
+        throw error;
+      }
+    },
+
+    updatejiraWatchers(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_JIRA_WATCHERS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removejiraWatchersEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_JIRA_WATCHERS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addjiraWatchersEntry() {
+      this.$store.commit('config/alert/ADD_JIRA_WATCHERS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatejiraBumpInStatuses() {
+      if (!this.jiraBumpInStatuses.length) {
+        this.popjiraBumpInStatusesValid = false;
+        return;
+      }
+      try {
+        this.popjiraBumpInStatusesValid = await this.$refs.jiraBumpInStatuses.validate();
+      } catch (error) {
+        this.popjiraBumpInStatusesValid = false;
+        throw error;
+      }
+    },
+
+    updatejiraBumpInStatuses(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_JIRA_BUMP_IN_STATUSES_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removejiraBumpInStatusesEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_JIRA_BUMP_IN_STATUSES_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addjiraBumpInStatusesEntry() {
+      this.$store.commit('config/alert/ADD_JIRA_BUMP_IN_STATUSES_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatejiraBumpNotInStatuses() {
+      if (!this.jiraBumpNotInStatuses.length) {
+        this.popjiraBumpNotInStatusesValid = false;
+        return;
+      }
+      try {
+        this.popjiraBumpNotInStatusesValid = await this.$refs.jiraBumpNotInStatuses.validate();
+      } catch (error) {
+        this.popjiraBumpNotInStatusesValid = false;
+        throw error;
+      }
+    },
+
+    updatejiraBumpNotInStatuses(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_JIRA_BUMP_NOT_IN_STATUSES_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removejiraBumpNotInStatusesEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_JIRA_BUMP_NOT_IN_STATUSES_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addjiraBumpNotInStatusesEntry() {
+      this.$store.commit('config/alert/ADD_JIRA_BUMP_NOT_IN_STATUSES_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatejiraLabel() {
+      if (!this.jiraLabel.length) {
+        this.popjiraLabelValid = false;
+        return;
+      }
+      try {
+        this.popjiraLabelValid = await this.$refs.jiraLabel.validate();
+      } catch (error) {
+        this.popjiraLabelValid = false;
+        throw error;
+      }
+    },
+
+    updatejiraLabel(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_JIRA_LABEL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removejiraLabelEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_JIRA_LABEL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addjiraLabelEntry() {
+      this.$store.commit('config/alert/ADD_JIRA_LABEL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatejiraLabels() {
+      if (!this.jiraLabels.length) {
+        this.popjiraLabelsValid = false;
+        return;
+      }
+      try {
+        this.popjiraLabelsValid = await this.$refs.jiraLabels.validate();
+      } catch (error) {
+        this.popjiraLabelsValid = false;
+        throw error;
+      }
+    },
+
+    updatejiraLabels(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_JIRA_LABELS_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removejiraLabelsEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_JIRA_LABELS_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addjiraLabelsEntry() {
+      this.$store.commit('config/alert/ADD_JIRA_LABELS_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     changeJiraBumpTickets(val) {
       if (val) {
         this.jiraBumpTickets = true;

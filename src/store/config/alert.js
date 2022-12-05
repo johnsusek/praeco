@@ -203,6 +203,11 @@ function initialState() {
     jiraBumpAfterInactivity: 0,
     jiraBumpTickets: false,
     jiraBumpOnly: false,
+    jiraWatchers: [],
+    jiraBumpInStatuses: [],
+    jiraBumpNotInStatuses: [],
+    jiraLabel: [],
+    jiraLabels: [],
 
     /* Chatwork */
     chatworkApikey: '',
@@ -1148,6 +1153,111 @@ export default {
 
     UPDATE_JIRA_BUMP_ONLY(state, jiraBumpOnly) {
       state.jiraBumpOnly = jiraBumpOnly;
+    },
+
+    UPDATE_JIRA_WATCHERS(state, jiraWatchers) {
+      state.jiraWatchers = jiraWatchers;
+    },
+
+    ADD_JIRA_WATCHERS_ENTRY(state) {
+      state.jiraWatchers.push('');
+    },
+
+    ADD_JIRA_WATCHERS_ENTRY_VALUE(state, value) {
+      state.jiraWatchers.push(value);
+    },
+
+    REMOVE_JIRA_WATCHERS_ENTRY(state, entry) {
+      state.jiraWatchers = state.jiraWatchers.filter(b => b !== entry);
+    },
+
+    UPDATE_JIRA_WATCHERS_ENTRY(state, { entry, index }) {
+      if (!state.jiraWatchers) return;
+      state.jiraWatchers[index] = entry;
+    },
+
+    UPDATE_JIRA_BUMP_IN_STATUSES(state, jiraBumpInStatuses) {
+      state.jiraBumpInStatuses = jiraBumpInStatuses;
+    },
+
+    ADD_JIRA_BUMP_IN_STATUSES_ENTRY(state) {
+      state.jiraBumpInStatuses.push('');
+    },
+
+    ADD_JIRA_BUMP_IN_STATUSES_ENTRY_VALUE(state, value) {
+      state.jiraBumpInStatuses.push(value);
+    },
+
+    REMOVE_JIRA_BUMP_IN_STATUSES_ENTRY(state, entry) {
+      state.jiraBumpInStatuses = state.jiraBumpInStatuses.filter(b => b !== entry);
+    },
+
+    UPDATE_JIRA_BUMP_IN_STATUSES_ENTRY(state, { entry, index }) {
+      if (!state.jiraBumpInStatuses) return;
+      state.jiraBumpInStatuses[index] = entry;
+    },
+
+    UPDATE_JIRA_BUMP_NOT_IN_STATUSES(state, jiraBumpNotInStatuses) {
+      state.jiraBumpNotInStatuses = jiraBumpNotInStatuses;
+    },
+
+    ADD_JIRA_BUMP_NOT_IN_STATUSES_ENTRY(state) {
+      state.jiraBumpNotInStatuses.push('');
+    },
+
+    ADD_JIRA_BUMP_NOT_IN_STATUSES_ENTRY_VALUE(state, value) {
+      state.jiraBumpNotInStatuses.push(value);
+    },
+
+    REMOVE_JIRA_BUMP_NOT_IN_STATUSES_ENTRY(state, entry) {
+      state.jiraBumpNotInStatuses = state.jiraBumpNotInStatuses.filter(b => b !== entry);
+    },
+
+    UPDATE_JIRA_BUMP_NOT_IN_STATUSES_ENTRY(state, { entry, index }) {
+      if (!state.jiraBumpNotInStatuses) return;
+      state.jiraBumpNotInStatuses[index] = entry;
+    },
+
+    UPDATE_JIRA_LABEL(state, jiraLabel) {
+      state.jiraLabel = jiraLabel;
+    },
+
+    ADD_JIRA_LABEL_ENTRY(state) {
+      state.jiraLabel.push('');
+    },
+
+    ADD_JIRA_LABEL_ENTRY_VALUE(state, value) {
+      state.jiraLabel.push(value);
+    },
+
+    REMOVE_JIRA_LABEL_ENTRY(state, entry) {
+      state.jiraLabel = state.jiraLabel.filter(b => b !== entry);
+    },
+
+    UPDATE_JIRA_LABEL_ENTRY(state, { entry, index }) {
+      if (!state.jiraLabel) return;
+      state.jiraLabel[index] = entry;
+    },
+
+    UPDATE_JIRA_LABELS(state, jiraLabels) {
+      state.jiraLabels = jiraLabels;
+    },
+
+    ADD_JIRA_LABELS_ENTRY(state) {
+      state.jiraLabels.push('');
+    },
+
+    ADD_JIRA_LABELS_ENTRY_VALUE(state, value) {
+      state.jiraLabels.push(value);
+    },
+
+    REMOVE_JIRA_LABELS_ENTRY(state, entry) {
+      state.jiraLabels = state.jiraLabels.filter(b => b !== entry);
+    },
+
+    UPDATE_JIRA_LABELS_ENTRY(state, { entry, index }) {
+      if (!state.jiraLabels) return;
+      state.jiraLabels[index] = entry;
     },
 
     /* ServiceNow */

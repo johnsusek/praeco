@@ -600,6 +600,26 @@ export default {
           commit('alert/UPDATE_JIRA_BUMP_ONLY', config.jira_bump_only);
         }
 
+        if (config.jira_watchers) {
+          commit('alert/UPDATE_JIRA_WATCHERS', config.jira_watchers);
+        }
+
+        if (config.jira_bump_in_statuses) {
+          commit('alert/UPDATE_JIRA_BUMP_IN_STATUSES', config.jira_bump_in_statuses);
+        }
+
+        if (config.jira_bump_not_in_statuses) {
+          commit('alert/UPDATE_JIRA_BUMP_NOT_IN_STATUSES', config.jira_bump_not_in_statuses);
+        }
+
+        if (config.jira_label) {
+          commit('alert/UPDATE_JIRA_LABEL', config.jira_label);
+        }
+
+        if (config.jira_labels) {
+          commit('alert/UPDATE_JIRA_LABELS', config.jira_labels);
+        }
+
         /* ServiceNow */
         commit('alert/UPDATE_SERVICENOW_USERNAME', config.username);
         commit('alert/UPDATE_SERVICENOW_PASSWORD', config.password);
@@ -2333,6 +2353,26 @@ export default {
 
       if (state.alert.jiraBumpOnly) {
         config.jira_bump_only = state.alert.jiraBumpOnly;
+      }
+
+      if (state.alert.jiraWatchers && state.alert.jiraWatchers.length) {
+        config.jira_watchers = state.alert.jiraWatchers;
+      }
+
+      if (state.alert.jiraBumpInStatuses && state.alert.jiraBumpInStatuses.length) {
+        config.jira_bump_in_statuses = state.alert.jiraBumpInStatuses;
+      }
+
+      if (state.alert.jiraBumpNotInStatuses && state.alert.jiraBumpNotInStatuses.length) {
+        config.jira_bump_not_in_statuses = state.alert.jiraBumpNotInStatuses;
+      }
+
+      if (state.alert.jiraLabel && state.alert.jiraLabel.length) {
+        config.jira_label = state.alert.jiraLabel;
+      }
+
+      if (state.alert.jiraLabels && state.alert.jiraLabels.length) {
+        config.jira_labels = state.alert.jiraLabels;
       }
 
       return config;
