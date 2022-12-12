@@ -1792,23 +1792,23 @@ export default {
       state.alertaType = alertaType;
     },
 
-    UPDATE_ALERTA_SERVICES(state, alertaService) {
+    UPDATE_ALERTA_SERVICE(state, alertaService) {
       state.alertaService = alertaService;
     },
 
-    ADD_ALERTA_SERVICES_ENTRY(state) {
+    ADD_ALERTA_SERVICE_ENTRY(state) {
       state.alertaService.push('');
     },
 
-    ADD_ALERTA_SERVICES_ENTRY_VALUE(state, value) {
+    ADD_ALERTA_SERVICE_ENTRY_VALUE(state, value) {
       state.alertaService.push(value);
     },
 
-    REMOVE_ALERTA_SERVICES_ENTRY(state, entry) {
+    REMOVE_ALERTA_SERVICE_ENTRY(state, entry) {
       state.alertaService = state.alertaService.filter(b => b !== entry);
     },
 
-    UPDATE_alerta_serviceS_ENTRY(state, { entry, index }) {
+    UPDATE_ALERTA_SERVICE_ENTRY(state, { entry, index }) {
       if (!state.alertaService) return;
       state.alertaService[index] = entry;
     },

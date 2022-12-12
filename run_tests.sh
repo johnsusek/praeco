@@ -4,6 +4,7 @@
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigAlert.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/ConfigYaml.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlAlerta.spec.js &&
+./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlAlerta002.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlAlertaOpt.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlAlertmanager.spec.js &&
 ./node_modules/.bin/vue-cli-service test:unit tests/unit/specs/alert/ConfigYamlAlertmanager002.spec.js &&

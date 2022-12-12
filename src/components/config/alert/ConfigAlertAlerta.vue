@@ -660,7 +660,7 @@ export default {
 
     updatealertaService(entry, index) {
       if (Number.isNaN(entry)) return;
-      this.$store.commit('config/alert/UPDATE_ALERTA_SERVICES_ENTRY', {
+      this.$store.commit('config/alert/UPDATE_ALERTA_SERVICE_ENTRY', {
         entry,
         index
       });
@@ -670,14 +670,14 @@ export default {
     },
 
     removealertaServiceEntry(entry) {
-      this.$store.commit('config/alert/REMOVE_ALERTA_SERVICES_ENTRY', entry);
+      this.$store.commit('config/alert/REMOVE_ALERTA_SERVICE_ENTRY', entry);
       this.$nextTick(() => {
         this.validate();
       });
     },
 
     addalertaServiceEntry() {
-      this.$store.commit('config/alert/ADD_ALERTA_SERVICES_ENTRY');
+      this.$store.commit('config/alert/ADD_ALERTA_SERVICE_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });

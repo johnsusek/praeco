@@ -908,8 +908,8 @@ export default {
           commit('alert/UPDATE_ALERTA_TYPE', 'elastalert');
         }
 
-        if (config.alerta_services) {
-          commit('alert/UPDATE_ALERTA_SERVICES', config.alerta_services);
+        if (config.alerta_service) {
+          commit('alert/UPDATE_ALERTA_SERVICE', config.alerta_service);
         }
 
         if (config.alerta_correlate) {
@@ -2771,7 +2771,7 @@ export default {
       }
 
       if (state.alert.alertaService && state.alert.alertaService.length) {
-        config.alerta_services = state.alert.alertaService;
+        config.alerta_service = state.alert.alertaService;
       }
 
       if (state.alert.alertaCorrelate && state.alert.alertaCorrelate.length) {
