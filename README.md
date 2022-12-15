@@ -474,8 +474,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 **Python Support version**
 
-- 3.9
-- 3.10
+- Compatible with 3.9 to 3.11
 
 **Elasticsearch Support version**
 
@@ -518,7 +517,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 16.15.0
+nvm install 16.19.0
 ```
 
 ```sh
@@ -552,7 +551,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 16.15.0
+nvm install 16.19.0
 ```
 
 ```sh
