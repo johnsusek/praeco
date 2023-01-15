@@ -38,7 +38,7 @@ add settings.
 
 add settings.
 
-- jira_labe
+- jira_label
 - jira_labels
 - jira_description
 - jira_assignee
@@ -61,7 +61,7 @@ add settings.
 **OpsGenie**
 
 https://elastalert2.readthedocs.io/en/latest/ruletypes.html#opsgenie
-- opsgenie_ke
+- opsgenie_key
 - opsgenie_account
 - opsgenie_message
 - opsgenie_subject
