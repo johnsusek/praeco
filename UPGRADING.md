@@ -7,6 +7,77 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.12
+
+**New options**
+
+**Alerta**
+
+add settings.
+
+- alerta_timeout
+- alerta_use_match_timestamp
+- alerta_use_qk_as_resource
+- alerta_api_skip_ssl
+- alert_missing_value
+- alerta_origin
+- alerta_service
+- alerta_type
+- alerta_correlate
+- alerta_attributes_keys
+- alerta_attributes_values
+- alerta_value
+
+**GoogleChat**
+
+add settings.
+
+- googlechat_proxy
+
+**Jira**
+
+add settings.
+
+- jira_labe
+- jira_labels
+- jira_description
+- jira_assignee
+- jira_max_age
+- jira_priority
+- jira_bump_tickets
+- jira_bump_not_in_statuses
+- jira_bump_in_statuses
+- jira_bump_after_inactivity
+- jira_bump_only
+- jira_transition_to
+- jira_watchers
+
+**Mattermost**
+
+add settings.
+
+- mattermost_emoji_override
+
+**OpsGenie**
+
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#opsgenie
+- opsgenie_ke
+- opsgenie_account
+- opsgenie_message
+- opsgenie_subject
+- opsgenie_alias
+- opsgenie_proxy
+
+**Telegram**
+
+add settings.
+
+- telegram_parse_mode
+
+**kibana discover**
+
+- kibana 8.2～8.5 support
+
 ## -> 1.8.11
 
 Elasticsearch 8 support
