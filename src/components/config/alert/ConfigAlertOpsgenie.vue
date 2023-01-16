@@ -139,18 +139,6 @@ export default {
         );
       }
     },
-
-    // TODO: opsgenie_priority
-    // TODO: opsgenie_default_receipients
-    // TODO: opsgenie_recipients
-    // TODO: opsgenie_recipients_args
-    // TODO: opsgenie_default_teams
-    // TODO: opsgenie_teams
-    // TODO: opsgenie_teams_args
-    // TODO: opsgenie_tags
-    // TODO: opsgenie_addr
-    // TODO: opsgenie_subject_args
-    // TODO: opsgenie_details
   },
 
   methods: {

@@ -300,13 +300,6 @@ export default {
         commit('alert/UPDATE_EMAIL_FROM_FIELD', config.email_from_field);
         commit('alert/UPDATE_EMAIL_ADD_DOMAIN', config.email_add_domain);
 
-        // TODO:
-        // if (config.email_format === 'html') {
-        //   commit('alert/UPDATE_EMAIL_FORMAT', true);
-        // } else {
-        //   commit('alert/UPDATE_EMAIL_FORMAT', false);
-        // }
-
         /* Telegram */
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
         commit('alert/UPDATE_TELEGRAM_PROXY', config.telegram_proxy);
@@ -385,18 +378,6 @@ export default {
         commit('alert/OPSGENIE_ALIAS', config.opsgenie_alias);
         commit('alert/OPSGENIE_PROXY', config.opsgenie_proxy);
         commit('alert/OPSGENIE_DESCRIPTION', config.opsgenie_description);
-
-        // TODO: opsgenie_priority
-        // TODO: opsgenie_default_receipients
-        // TODO: opsgenie_recipients
-        // TODO: opsgenie_recipients_args
-        // TODO: opsgenie_default_teams
-        // TODO: opsgenie_teams
-        // TODO: opsgenie_teams_args
-        // TODO: opsgenie_tags
-        // TODO: opsgenie_addr
-        // TODO: opsgenie_subject_args
-        // TODO: opsgenie_details
 
         /* PagerDuty */
         commit('alert/UPDATE_PAGERDUTY_SERVICE_KEY', config.pagerduty_service_key);
@@ -559,6 +540,20 @@ export default {
         commit('alert/UPDATE_PIPE_MATCH_JSON', config.pipe_match_json);
         commit('alert/UPDATE_PIPE_ALERT_TEXT', config.pipe_alert_text);
         commit('alert/UPDATE_FAIL_ON_NON_ZERO_EXIT', config.fail_on_non_zero_exit);
+
+        /* Gelf */
+        commit('alert/UPDATE_GELF_TYPE', config.gelf_type);
+        commit('alert/UPDATE_GELF_ENDPOINT', config.gelf_endpoint);
+
+        if (config.gelf_http_ignore_ssl_errors) {
+          commit('alert/UPDATE_GELF_HTTP_IGNORE_SSL_ERRORS', config.gelf_http_ignore_ssl_errors);
+        }
+
+        commit('alert/UPDATE_GELF_CA_CERT', config.gelf_ca_cert);
+        commit('alert/UPDATE_GELF_HOST', config.gelf_host);
+        commit('alert/UPDATE_GELF_PORT', config.gelf_port);
+        commit('alert/UPDATE_GELF_LOG_LEVEL', config.gelf_log_level);
+        commit('alert/UPDATE_GELF_TIMEOUT', config.gelf_timeout);
 
         /* Gitter */
         commit('alert/UPDATE_GITTER_WEBHOOK_URL', config.gitter_webhook_url);
@@ -1629,11 +1624,6 @@ export default {
         config.email_add_domain = state.alert.emailAddDomain;
       }
 
-      // TODO:
-      // if (state.alert.emailFormat) {
-      //   config.email_format = 'html';
-      // }
-
       return config;
     },
 
@@ -1993,18 +1983,6 @@ export default {
         config.opsgenie_description = state.alert.opsgenieDescription;
       }
 
-      // TODO: opsgenie_priority
-      // TODO: opsgenie_default_receipients
-      // TODO: opsgenie_recipients
-      // TODO: opsgenie_recipients_args
-      // TODO: opsgenie_default_teams
-      // TODO: opsgenie_teams
-      // TODO: opsgenie_teams_args
-      // TODO: opsgenie_tags
-      // TODO: opsgenie_addr
-      // TODO: opsgenie_subject_args
-      // TODO: opsgenie_details
-
       return config;
     },
 
@@ -2229,6 +2207,44 @@ export default {
 
       if (state.alert.failOnNonZeroExit) {
         config.fail_on_non_zero_exit = state.alert.failOnNonZeroExit;
+      }
+
+      return config;
+    },
+
+    gelf(state) {
+      let config = {};
+
+      if (state.alert.gelfType) {
+        config.gelf_type = state.alert.gelfType;
+      }
+
+      if (state.alert.gelfType === 'http') {
+        if (state.alert.gelfEndpoint) {
+          config.gelf_endpoint = state.alert.gelfEndpoint;
+        }
+
+        if (state.alert.gelfHttpIgnoreSslErrors) {
+          config.gelf_http_ignore_ssl_errors = state.alert.gelfHttpIgnoreSslErrors;
+        }
+      } else {
+        if (state.alert.gelfHost) {
+          config.gelf_host = state.alert.gelfHost;
+        }
+
+        if (state.alert.gelfPort) {
+          config.gelf_port = state.alert.gelfPort;
+        }
+      }
+
+      config.gelf_log_level = state.alert.gelfLogLevel;
+
+      if (state.alert.gelfCaCert) {
+        config.gelf_ca_cert = state.alert.gelfCaCert;
+      }
+
+      if (state.alert.gelfTimeout) {
+        config.gelf_timeout = state.alert.gelfTimeout;
       }
 
       return config;
@@ -3034,6 +3050,10 @@ export default {
         config = { ...config, ...getters.exotel };
       }
 
+      if (state.alert.alert.includes('gelf')) {
+        config = { ...config, ...getters.gelf };
+      }
+
       if (state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.gitter };
       }
@@ -3133,6 +3153,7 @@ export default {
         || state.alert.alert.includes('dingtalk')
         || state.alert.alert.includes('discord')
         || state.alert.alert.includes('email')
+        || state.alert.alert.includes('gelf')
         || state.alert.alert.includes('gitter')
         || state.alert.alert.includes('googlechat')
         || state.alert.alert.includes('hivealerter')

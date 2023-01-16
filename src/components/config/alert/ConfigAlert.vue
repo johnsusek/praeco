@@ -186,6 +186,9 @@
         <el-checkbox id="destinationOpsgenie" label="opsgenie" border>
           Opsgenie
         </el-checkbox>
+        <el-checkbox id="destinationGelf" label="gelf" border>
+          Gelf
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -216,6 +219,7 @@
           alert.includes('stomp') ||
           alert.includes('tencent_sms') ||
           alert.includes('victorops') ||
+          alert.includes('gelf') ||
           alert.includes('telegram')">
         <template v-slot:label>
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
@@ -481,6 +485,14 @@
         </template>
         <ConfigAlertOpsgenie ref="opsgenie" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Gelf -->
+      <el-tab-pane v-if="alert.includes('gelf')" label="Gelf">
+        <template v-slot:label>
+          <span><Icon icon="globe" /> Gelf</span>
+        </template>
+        <ConfigAlertGelf ref="gelf" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -500,6 +512,7 @@ import ConfigAlertDatadog from './ConfigAlertDatadog';
 import ConfigAlertDiscord from './ConfigAlertDiscord';
 import ConfigAlertEmail from './ConfigAlertEmail';
 import ConfigAlertExotel from './ConfigAlertExotel';
+import ConfigAlertGelf from './ConfigAlertGelf';
 import ConfigAlertGitter from './ConfigAlertGitter';
 import ConfigAlertGoogleChat from './ConfigAlertGoogleChat';
 import ConfigAlertHttpPost from './ConfigAlertHttpPost';
@@ -616,6 +629,7 @@ export default {
     ConfigAlertDiscord,
     ConfigAlertEmail,
     ConfigAlertExotel,
+    ConfigAlertGelf,
     ConfigAlertGitter,
     ConfigAlertGoogleChat,
     ConfigAlertHttpPost,
