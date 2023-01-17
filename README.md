@@ -491,7 +491,7 @@ cd ~/elastalert2
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
 echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
-pip install "setuptools>=60.9.3"
+pip install "setuptools>=11.3"
 python setup.py install
 cp ./examples/config.yaml.example ./config.yaml
 vi config.yaml
