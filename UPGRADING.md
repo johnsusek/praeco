@@ -7,6 +7,34 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.13
+
+**New options**
+
+**Graylog GELF**
+
+**kibana discover**
+
+- kibana 8.6 support
+
+**Remove option**
+
+**Jira**
+
+- jira_label
+- jira_labels
+- jira_description
+- jira_assignee
+- jira_max_age
+- jira_priority
+- jira_bump_tickets
+- jira_bump_not_in_statuses
+- jira_bump_in_statuses
+- jira_bump_after_inactivity
+- jira_bump_only
+- jira_transition_to
+- jira_watchers
+
 ## -> 1.8.12
 
 **New options**

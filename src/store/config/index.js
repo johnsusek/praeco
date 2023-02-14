@@ -580,40 +580,6 @@ export default {
         commit('alert/UPDATE_JIRA_PROJECT', config.jira_project);
         commit('alert/UPDATE_JIRA_ISSUE_TYPE', config.jira_issuetype);
         commit('alert/UPDATE_JIRA_COMPONENTS', config.jira_components);
-        commit('alert/UPDATE_JIRA_DESCRIPTIONT', config.jira_description);
-        commit('alert/UPDATE_JIRA_ASSIGNEE', config.jira_assignee);
-        commit('alert/UPDATE_JIRA_TRANSITION_TO', config.jira_transition_to);
-        commit('alert/UPDATE_JIRA_PRIORITY', config.jira_priority);
-        commit('alert/UPDATE_JIRA_MAX_AGE', config.jira_max_age);
-        commit('alert/UPDATE_JIRA_BUMP_AFTER_INACTIVITY', config.jira_bump_after_inactivity);
-
-        if (config.jira_bump_tickets) {
-          commit('alert/UPDATE_JIRA_BUMP_TICKETS', config.jira_bump_tickets);
-        }
-
-        if (config.jira_bump_only) {
-          commit('alert/UPDATE_JIRA_BUMP_ONLY', config.jira_bump_only);
-        }
-
-        if (config.jira_watchers) {
-          commit('alert/UPDATE_JIRA_WATCHERS', config.jira_watchers);
-        }
-
-        if (config.jira_bump_in_statuses) {
-          commit('alert/UPDATE_JIRA_BUMP_IN_STATUSES', config.jira_bump_in_statuses);
-        }
-
-        if (config.jira_bump_not_in_statuses) {
-          commit('alert/UPDATE_JIRA_BUMP_NOT_IN_STATUSES', config.jira_bump_not_in_statuses);
-        }
-
-        if (config.jira_label) {
-          commit('alert/UPDATE_JIRA_LABEL', config.jira_label);
-        }
-
-        if (config.jira_labels) {
-          commit('alert/UPDATE_JIRA_LABELS', config.jira_labels);
-        }
 
         /* ServiceNow */
         commit('alert/UPDATE_SERVICENOW_USERNAME', config.username);
@@ -2337,58 +2303,6 @@ export default {
 
       if (state.alert.jiraComponents) {
         config.jira_components = state.alert.jiraComponents;
-      }
-
-      if (state.alert.jiraDescription) {
-        config.jira_description = state.alert.jiraDescription;
-      }
-
-      if (state.alert.jiraAssignee) {
-        config.jira_assignee = state.alert.jiraAssignee;
-      }
-
-      if (state.alert.jiraTransitionTo) {
-        config.jira_transition_to = state.alert.jiraTransitionTo;
-      }
-
-      if (state.alert.jiraPriority) {
-        config.jira_priority = state.alert.jiraPriority;
-      }
-
-      if (state.alert.jiraMaxAge) {
-        config.jira_max_age = state.alert.jiraMaxAge;
-      }
-
-      if (state.alert.jiraBumpAfterInactivity) {
-        config.jira_bump_after_inactivity = state.alert.jiraBumpAfterInactivity;
-      }
-
-      if (state.alert.jiraBumpTickets) {
-        config.jira_bump_tickets = state.alert.jiraBumpTickets;
-      }
-
-      if (state.alert.jiraBumpOnly) {
-        config.jira_bump_only = state.alert.jiraBumpOnly;
-      }
-
-      if (state.alert.jiraWatchers && state.alert.jiraWatchers.length) {
-        config.jira_watchers = state.alert.jiraWatchers;
-      }
-
-      if (state.alert.jiraBumpInStatuses && state.alert.jiraBumpInStatuses.length) {
-        config.jira_bump_in_statuses = state.alert.jiraBumpInStatuses;
-      }
-
-      if (state.alert.jiraBumpNotInStatuses && state.alert.jiraBumpNotInStatuses.length) {
-        config.jira_bump_not_in_statuses = state.alert.jiraBumpNotInStatuses;
-      }
-
-      if (state.alert.jiraLabel && state.alert.jiraLabel.length) {
-        config.jira_label = state.alert.jiraLabel;
-      }
-
-      if (state.alert.jiraLabels && state.alert.jiraLabels.length) {
-        config.jira_labels = state.alert.jiraLabels;
       }
 
       return config;
