@@ -48,6 +48,26 @@
         Set the OpsGenie description to something other than the rule body. The message can be formatted with fields from the first match e.g. “Error occurred for {app_name} at {timestamp}.”.
       </label>
     </el-form-item>
+
+    <el-form-item label="opsgenie_priority" prop="opsgeniePriority">
+      <el-radio-group v-model="opsgeniePriority" :disabled="viewOnly">
+        <el-radio id="opsgeniePriorityP1" label="P1" border>
+          P1
+        </el-radio>
+        <el-radio id="opsgeniePriorityP2" label="P2" border>
+          P2
+        </el-radio>
+        <el-radio id="opsgeniePriorityP3" label="P3" border>
+          P3
+        </el-radio>
+        <el-radio id="opsgeniePriorityP4" label="P4" border>
+          P4
+        </el-radio>
+        <el-radio id="opsgeniePriorityP5" label="P5" border>
+          P5
+        </el-radio>
+      </el-radio-group>
+    </el-form-item>
   </div>
 </template>
 
@@ -137,6 +157,15 @@ export default {
           'config/alert/OPSGENIE_DESCRIPTION',
           value
         );
+      }
+    },
+
+    opsgeniePriority: {
+      get() {
+        return this.$store.state.config.alert.opsgeniePriority;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_OPSGENIE_PRIORITY', value);
       }
     },
   },

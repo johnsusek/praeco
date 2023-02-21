@@ -1021,6 +1021,7 @@ export default {
         commit('alert/OPSGENIE_PROXY', config.opsgenie_proxy);
         commit('alert/OPSGENIE_PRIORITY', config.opsgenie_priority);
         commit('alert/OPSGENIE_DESCRIPTION', config.opsgenie_description);
+        commit('alert/UPDATE_OPSGENIE_PRIORITY', config.opsgenie_priority);
 
         /* realert, alert, alert_text_type, alert_text, alert_subject, alert_subject_args, alert_text_args */
         commit('alert/UPDATE_REALERT', config.realert);
@@ -1947,6 +1948,10 @@ export default {
 
       if (state.alert.opsgenieDescription) {
         config.opsgenie_description = state.alert.opsgenieDescription;
+      }
+
+      if (state.alert.opsgeniePriority) {
+        config.opsgenie_priority = state.alert.opsgeniePriority;
       }
 
       return config;

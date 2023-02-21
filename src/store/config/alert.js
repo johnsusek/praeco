@@ -235,6 +235,7 @@ function initialState() {
     opsgenieAlias: '',
     opsgenieProxy: '',
     opsgenieDescription: '',
+    opsgeniePriority: '',
 
     /* PagerDuty */
     pagerdutyServiceKey: '',
@@ -1331,6 +1332,10 @@ export default {
 
     OPSGENIE_DESCRIPTION(state, opsgenieDescription) {
       state.opsgenieDescription = opsgenieDescription;
+    },
+
+    UPDATE_OPSGENIE_PRIORITY(state, opsgeniePriority) {
+      state.opsgeniePriority = opsgeniePriority;
     },
 
     /* PagerDuty */
