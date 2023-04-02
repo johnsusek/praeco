@@ -909,6 +909,10 @@ export default {
         commit('alert/UPDATE_DINGTALK_BTN_ORIENTATION', config.dingtalk_btn_orientation);
 
         /* Slack */
+        if (config.slack_webhook_url) {
+          commit('alert/UPDATE_SLACK_WEBHOOK_URL', config.slack_webhook_url);
+        }
+
         commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
 
         if (config.slack_username_override) {
@@ -1596,6 +1600,10 @@ export default {
 
     slack(state, getters) {
       let config = {};
+
+      if (state.alert.slackWebhookUrl && state.alert.slackWebhookUrl.length) {
+        config.slack_webhook_url = state.alert.slackWebhookUrl;
+      }
 
       if (state.alert.slackChannelOverride) {
         config.slack_channel_override = state.alert.slackChannelOverride;

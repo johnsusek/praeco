@@ -20,6 +20,9 @@ realert:
   minutes: 5
 slack_channel_override: '#elastalert-debugging'
 slack_title_link: 'http://localhost:8080/rules/test123'
+slack_webhook_url:
+  - 'a'
+  - 'b'
 timeframe:
   minutes: 5
 timestamp_field: '@timestamp'

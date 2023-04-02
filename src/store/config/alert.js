@@ -275,6 +275,7 @@ function initialState() {
     rocketChatTimeout: 10,
 
     /* Slack */
+    slackWebhookUrl: [],
     slackChannelOverride: '',
     slackUsernameOverride: 'Praeco',
     slackEmojiOverride: ':ghost:',
@@ -1604,6 +1605,27 @@ export default {
     },
 
     /* Slack */
+    UPDATE_SLACK_WEBHOOK_URL(state, slackWebhookUrl) {
+      state.slackWebhookUrl = slackWebhookUrl;
+    },
+
+    ADD_SLACK_WEBHOOK_URL_ENTRY(state) {
+      state.slackWebhookUrl.push('');
+    },
+
+    ADD_SLACK_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.slackWebhookUrl.push(value);
+    },
+
+    REMOVE_SLACK_WEBHOOK_URL_ENTRY(state, entry) {
+      state.slackWebhookUrl = state.slackWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_SLACK_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.slackWebhookUrl) return;
+      state.slackWebhookUrl[index] = entry;
+    },
+
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {
       state.slackChannelOverride = slackChannelOverride;
     },

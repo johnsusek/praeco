@@ -1,5 +1,56 @@
 <template>
   <div>
+    <el-popover v-model="popslackWebhookUrlVisible" :class="{ 'is-invalid': !popslackWebhookUrlValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="slackWebhookUrl.length" :content="slackWebhookUrl.join(', ')" placement="top">
+            <span>Tags ({{ slackWebhookUrl.length }})</span>
+          </el-tooltip>
+          <span v-else>Tags ({{ slackWebhookUrl.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="slackWebhookUrl"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in slackWebhookUrl"
+            :key="index"
+            :prop="'slackWebhookUrl.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="slackWebhookUrl[index]"
+                  :disabled="viewOnly"
+                  placeholder="Tags"
+                  @input="(val) => updateslackWebhookUrl(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeslackWebhookUrlEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackWebhookUrlEntry">
+          Add slackWebhookUrls
+        </el-button>
+      </template>
+    </el-popover>
+
     <el-form-item label="Channel or username" prop="slackChannelOverride" required>
       <el-input id="slackChannelOverride" v-model="slackChannelOverride" :disabled="viewOnly" />
       <label>
@@ -203,9 +254,20 @@ export default {
   data() {
     return {
       emojiIndex,
+      popslackWebhookUrlVisible: false,
+      popslackWebhookUrlValid: true,
     };
   },
   computed: {
+    slackWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.slackWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_WEBHOOK_URL', value);
+      }
+    },
+
     slackChannelOverride: {
       get() {
         return this.$store.state.config.alert.slackChannelOverride;
@@ -478,6 +540,57 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.slackWebhookUrl) {
+          await this.validateslackWebhookUrl();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validateslackWebhookUrl() {
+      if (!this.slackWebhookUrl.length) {
+        this.popslackWebhookUrlValid = false;
+        return;
+      }
+      try {
+        this.popslackWebhookUrlValid = await this.$refs.slackWebhookUrl.validate();
+      } catch (error) {
+        this.popslackWebhookUrlValid = false;
+        throw error;
+      }
+    },
+
+    updateslackWebhookUrl(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_SLACK_WEBHOOK_URL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeslackWebhookUrlEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_SLACK_WEBHOOK_URL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addslackWebhookUrlEntry() {
+      this.$store.commit('config/alert/ADD_SLACK_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     addEmoji(value) {
       this.slackEmojiOverride = value.colons;
     },

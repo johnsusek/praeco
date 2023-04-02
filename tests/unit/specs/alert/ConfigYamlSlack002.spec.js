@@ -58,6 +58,9 @@ slack_thumb_url: "http://localhost/thumb.png"
 slack_timeout: 20
 slack_title_link: "undefined/rules/test123"
 slack_username_override: "Praeco"
+slack_webhook_url:
+  - "a"
+  - "b"
 terms_size: 50
 timeframe:
   minutes: 5
