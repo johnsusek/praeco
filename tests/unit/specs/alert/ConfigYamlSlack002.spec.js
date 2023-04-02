@@ -38,7 +38,9 @@ slack_author_icon: "http://localhost/icon.png"
 slack_author_link: "http://localhost/author"
 slack_author_name: "author_name"
 slack_ca_certs: true
-slack_channel_override: "#elastalert-debugging"
+slack_channel_override:
+  - "#elastalert-debugging"
+  - "#elastalert-debugging2"
 slack_emoji_override: ":postal_horn:"
 slack_footer: "footer"
 slack_footer_icon: "footer_icon"

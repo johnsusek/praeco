@@ -51,13 +51,56 @@
       </template>
     </el-popover>
 
-    <el-form-item label="Channel or username" prop="slackChannelOverride" required>
-      <el-input id="slackChannelOverride" v-model="slackChannelOverride" :disabled="viewOnly" />
-      <label>
-        The @username or #channel to send the alert. Tip: Create new channels
-        for your alerts, to have fine-grained control of Slack notifications.
-      </label>
-    </el-form-item>
+    <el-popover v-model="popslackChannelOverrideVisible" :class="{ 'is-invalid': !popslackChannelOverrideValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="slackChannelOverride.length" :content="slackChannelOverride.join(', ')" placement="top">
+            <span>Tags ({{ slackChannelOverride.length }})</span>
+          </el-tooltip>
+          <span v-else>Tags ({{ slackChannelOverride.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="slackChannelOverride"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in slackChannelOverride"
+            :key="index"
+            :prop="'slackChannelOverride.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="slackChannelOverride[index]"
+                  :disabled="viewOnly"
+                  placeholder="Tags"
+                  @input="(val) => updateslackChannelOverride(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeslackChannelOverrideEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackChannelOverrideEntry">
+          Add slackChannelOverrides
+        </el-button>
+      </template>
+    </el-popover>
 
     <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
       <el-input id="slackUsernameOverride" v-model="slackUsernameOverride" :disabled="viewOnly" />
@@ -256,6 +299,8 @@ export default {
       emojiIndex,
       popslackWebhookUrlVisible: false,
       popslackWebhookUrlValid: true,
+      popslackChannelOverrideVisible: false,
+      popslackChannelOverrideValid: true,
     };
   },
   computed: {
@@ -545,6 +590,9 @@ export default {
         if (this.$refs.slackWebhookUrl) {
           await this.validateslackWebhookUrl();
         }
+        if (this.$refs.slackChannelOverride) {
+          await this.validateslackChannelOverride();
+        }
         this.$emit('validate', true);
         return true;
       } catch (error) {
@@ -586,6 +634,44 @@ export default {
 
     addslackWebhookUrlEntry() {
       this.$store.commit('config/alert/ADD_SLACK_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validateslackChannelOverride() {
+      if (!this.slackChannelOverride.length) {
+        this.popslackChannelOverrideValid = false;
+        return;
+      }
+      try {
+        this.popslackChannelOverrideValid = await this.$refs.slackChannelOverride.validate();
+      } catch (error) {
+        this.popslackChannelOverrideValid = false;
+        throw error;
+      }
+    },
+
+    updateslackChannelOverride(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_SLACK_CHANNEL_OVERRIDE_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeslackChannelOverrideEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_SLACK_CHANNEL_OVERRIDE_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addslackChannelOverrideEntry() {
+      this.$store.commit('config/alert/ADD_SLACK_CHANNEL_OVERRIDE_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });

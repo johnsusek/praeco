@@ -223,7 +223,7 @@ export default {
         name: '8.6'
       }, {
         code: '8.7',
-        name: '8.7' 
+        name: '8.7'
       }],
     };
   },

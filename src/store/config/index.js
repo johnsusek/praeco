@@ -913,7 +913,14 @@ export default {
           commit('alert/UPDATE_SLACK_WEBHOOK_URL', config.slack_webhook_url);
         }
 
-        commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
+        if (typeof (config.slack_channel_override) === 'string') {
+          let tmpSlackWebhookUrl = [];
+          tmpSlackWebhookUrl.push(config.slack_channel_override);
+          config.slack_channel_override = tmpSlackWebhookUrl;
+        }
+        if (config.slack_channel_override) {
+          commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
+        }
 
         if (config.slack_username_override) {
           commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
@@ -1605,7 +1612,7 @@ export default {
         config.slack_webhook_url = state.alert.slackWebhookUrl;
       }
 
-      if (state.alert.slackChannelOverride) {
+      if (state.alert.slackChannelOverride && state.alert.slackChannelOverride.length) {
         config.slack_channel_override = state.alert.slackChannelOverride;
       }
 

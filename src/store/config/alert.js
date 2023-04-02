@@ -276,7 +276,7 @@ function initialState() {
 
     /* Slack */
     slackWebhookUrl: [],
-    slackChannelOverride: '',
+    slackChannelOverride: [],
     slackUsernameOverride: 'Praeco',
     slackEmojiOverride: ':ghost:',
     slackMsgColor: 'danger',
@@ -1628,6 +1628,23 @@ export default {
 
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {
       state.slackChannelOverride = slackChannelOverride;
+    },
+
+    ADD_SLACK_CHANNEL_OVERRIDE_ENTRY(state) {
+      state.slackChannelOverride.push('');
+    },
+
+    ADD_SLACK_CHANNEL_OVERRIDE_ENTRY_VALUE(state, value) {
+      state.slackChannelOverride.push(value);
+    },
+
+    REMOVE_SLACK_CHANNEL_OVERRIDE_ENTRY(state, entry) {
+      state.slackChannelOverride = state.slackChannelOverride.filter(b => b !== entry);
+    },
+
+    UPDATE_SLACK_CHANNEL_OVERRIDE_ENTRY(state, { entry, index }) {
+      if (!state.slackChannelOverride) return;
+      state.slackChannelOverride[index] = entry;
     },
 
     UPDATE_SLACK_USERNAME_OVERRIDE(state, slackUsernameOverride) {

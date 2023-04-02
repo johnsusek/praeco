@@ -34,7 +34,8 @@ realert:
   minutes: 5
 slack_attach_jira_ticket_url: false
 slack_attach_kibana_discover_url: false
-slack_channel_override: "#elastalert-debugging"
+slack_channel_override:
+  - "#elastalert-debugging"
 slack_emoji_override: ":ghost:"
 slack_kibana_discover_color: "#ec4b98"
 slack_kibana_discover_title: "Discover in Kibana"
