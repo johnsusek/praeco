@@ -22,6 +22,7 @@ index: hannibal-*
 is_enabled: false
 name: test123
 num_events: 10000
+query_key: beat.hostname
 realert:
   minutes: 5
 timeframe:

@@ -43,6 +43,8 @@ is_enabled: false
 match_enhancements: []
 name: "test123"
 num_events: 10000
+query_key:
+  - "beat.hostname"
 realert:
   minutes: 5
 terms_size: 50

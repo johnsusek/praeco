@@ -117,6 +117,11 @@ export default {
         commit('match/UPDATE_IGNORE_NULL', config.ignore_null);
         commit('match/UPDATE_DOC_TYPE', config.doc_type);
         if (config.query_key) {
+          if (typeof (config.query_key) === 'string') {
+            let tmpQueryKey = [];
+            tmpQueryKey.push(config.query_key);
+            config.query_key = tmpQueryKey;
+          }
           config.query_key.forEach(entry => commit('match/ADD_QUERY_KEY_ENTRY_VALUE', entry));
         }
         commit('match/UPDATE_COMPARE_KEY', config.compare_key);
