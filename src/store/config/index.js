@@ -712,6 +712,10 @@ export default {
         }
 
         /* Rocket.Chat */
+        if (config.rocket_chat_webhook_url) {
+          commit('alert/UPDATE_ROCKET_CHAT_WEBHOOK_URL', config.rocket_chat_webhook_url);
+        }
+
         if (config.rocket_chat_username_override) {
           commit('alert/UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE', config.rocket_chat_username_override);
         } else {
@@ -2563,6 +2567,10 @@ export default {
 
     rocketchat(state) {
       let config = {};
+
+      if (state.alert.rocketChatWebhookUrl && state.alert.rocketChatWebhookUrl.length) {
+        config.rocket_chat_webhook_url = state.alert.rocketChatWebhookUrl;
+      }
 
       if (state.alert.rocketChatUsernameOverride) {
         config.rocket_chat_username_override = state.alert.rocketChatUsernameOverride;

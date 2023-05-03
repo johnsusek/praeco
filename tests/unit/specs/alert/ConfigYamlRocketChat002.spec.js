@@ -5,7 +5,7 @@ import { ruleYaml } from '../../mockData/alert/ruleDataRocketChat002.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
-describe('Mattermost YAML parsing', () => {
+describe('Rocket.Chat 002 YAML parsing', () => {
   it('renders the correct yaml', async () => {
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
 
@@ -23,7 +23,7 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
+generate_kibana_discover_url: true
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
@@ -35,16 +35,18 @@ realert:
 rocket_chat_attach_kibana_discover_url: true
 rocket_chat_ca_certs: true
 rocket_chat_channel_override: "#elastalert-debugging"
-rocket_chat_icon_url_override: "https://localhost/abc.png"
+rocket_chat_emoji_override: ":ghost:"
 rocket_chat_ignore_ssl_errors: true
 rocket_chat_kibana_discover_color: "#FFFFFFFF"
 rocket_chat_kibana_discover_title: "ijk"
 rocket_chat_msg_color: "good"
-rocket_chat_msg_pretext: "abc"
 rocket_chat_proxy: "https://hostname:8080"
+rocket_chat_text_string: "aaa"
 rocket_chat_timeout: 11
 rocket_chat_username_override: "elastalert2"
-rocket_chat_text_string: "aaa"
+rocket_chat_webhook_url:
+  - "a"
+  - "b"
 terms_size: 50
 timeframe:
   minutes: 5

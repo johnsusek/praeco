@@ -261,6 +261,7 @@ function initialState() {
     pagertreeProxy: '',
 
     /* Rocket.Chat */
+    rocketChatWebhookUrl: [],
     rocketChatChannelOverride: '',
     rocketChatUsernameOverride: 'Praeco',
     rocketChatEmojiOverride: ':ghost:',
@@ -1503,6 +1504,27 @@ export default {
     },
 
     /* Rocket.Chat */
+    UPDATE_ROCKET_CHAT_WEBHOOK_URL(state, rocketChatWebhookUrl) {
+      state.rocketChatWebhookUrl = rocketChatWebhookUrl;
+    },
+
+    ADD_ROCKET_CHAT_WEBHOOK_URL_ENTRY(state) {
+      state.rocketChatWebhookUrl.push('');
+    },
+
+    ADD_ROCKET_CHAT_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.rocketChatWebhookUrl.push(value);
+    },
+
+    REMOVE_ROCKET_CHAT_WEBHOOK_URL_ENTRY(state, entry) {
+      state.rocketChatWebhookUrl = state.rocketChatWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_ROCKET_CHAT_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.rocketChatWebhookUrl) return;
+      state.rocketChatWebhookUrl[index] = entry;
+    },
+
     UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE(state, rocketChatChannelOverride) {
       state.rocketChatChannelOverride = rocketChatChannelOverride;
     },

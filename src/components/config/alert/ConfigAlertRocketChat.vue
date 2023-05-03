@@ -1,5 +1,56 @@
 <template>
   <div>
+    <el-popover v-model="poprocketChatWebhookUrlVisible" :class="{ 'is-invalid': !poprocketChatWebhookUrlValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="rocketChatWebhookUrl.length" :content="rocketChatWebhookUrl.join(', ')" placement="top">
+            <span>Tags ({{ rocketChatWebhookUrl.length }})</span>
+          </el-tooltip>
+          <span v-else>Tags ({{ rocketChatWebhookUrl.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="rocketChatWebhookUrl"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in rocketChatWebhookUrl"
+            :key="index"
+            :prop="'rocketChatWebhookUrl.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="rocketChatWebhookUrl[index]"
+                  :disabled="viewOnly"
+                  placeholder="Tags"
+                  @input="(val) => updateRocketChatWebhookUrl(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeRocketChatWebhookUrlEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addRocketChatWebhookUrlEntry">
+          Add rocketChatWebhookUrls
+        </el-button>
+      </template>
+    </el-popover>
+
     <el-form-item label="Channel or username" prop="rocketChatChannelOverride" required>
       <el-input id="rocketChatChannelOverride" v-model="rocketChatChannelOverride" :disabled="viewOnly" />
       <label>
@@ -123,9 +174,20 @@ export default {
   data() {
     return {
       emojiIndex,
+      poprocketChatWebhookUrlVisible: false,
+      poprocketChatWebhookUrlValid: true,
     };
   },
   computed: {
+    rocketChatWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.rocketChatWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_rocket_chat_webhook_url', value);
+      }
+    },
+
     rocketChatChannelOverride: {
       get() {
         return this.$store.state.config.alert.rocketChatChannelOverride;
@@ -253,6 +315,57 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.rocketChatWebhookUrl) {
+          await this.validateRocketChatWebhookUrl();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validateRocketChatWebhookUrl() {
+      if (!this.rocketChatWebhookUrl.length) {
+        this.poprocketChatWebhookUrlValid = false;
+        return;
+      }
+      try {
+        this.poprocketChatWebhookUrlValid = await this.$refs.rocketChatWebhookUrl.validate();
+      } catch (error) {
+        this.poprocketChatWebhookUrlValid = false;
+        throw error;
+      }
+    },
+
+    updateRocketChatWebhookUrl(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_WEBHOOK_URL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeRocketChatWebhookUrlEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ROCKET_CHAT_WEBHOOK_URL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addRocketChatWebhookUrlEntry() {
+      this.$store.commit('config/alert/ADD_ROCKET_CHAT_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     addRocketChatEmoji(value) {
       this.rocketChatEmojiOverride = value.colons;
     },
