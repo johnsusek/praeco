@@ -1017,7 +1017,15 @@ export default {
         commit('alert/UPDATE_SLACK_MSG_PRETEXT', config.slack_msg_pretext);
 
         /* MS Teams */
-        commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
+        if (typeof (config.ms_teams_webhook_url) === 'string') {
+          let tmpMsTeamsWebhookUrl = [];
+          tmpMsTeamsWebhookUrl.push(config.ms_teams_webhook_url);
+          config.ms_teams_webhook_url = tmpMsTeamsWebhookUrl;
+        }
+        if (config.ms_teams_webhook_url) {
+          commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
+        }
+
         commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
         commit('alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', config.ms_teams_alert_summary);
         commit('alert/UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH', config.ms_teams_alert_fixed_width);
@@ -1737,7 +1745,7 @@ export default {
     ms_teams(state) {
       let config = {};
 
-      if (state.alert.msTeamsWebhookUrl) {
+      if (state.alert.msTeamsWebhookUrl && state.alert.msTeamsWebhookUrl.length) {
         config.ms_teams_webhook_url = state.alert.msTeamsWebhookUrl;
       }
 

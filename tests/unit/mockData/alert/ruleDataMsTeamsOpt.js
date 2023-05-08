@@ -22,7 +22,9 @@ ms_teams_ca_certs: true
 ms_teams_kibana_discover_title: Discover in Kibana2
 ms_teams_proxy: hostname:8080
 ms_teams_theme_color: #f0f8ff
-ms_teams_webhook_url: https://xxxxxxxxxxxxxxxxxxxxxx/xxxx
+ms_teams_webhook_url:
+  - a
+  - b
 name: test123
 num_events: 10000
 realert:

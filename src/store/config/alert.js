@@ -217,7 +217,7 @@ function initialState() {
     mattermostKibanaDiscoverTitle: 'Discover in Kibana',
 
     /* MS Teams */
-    msTeamsWebhookUrl: '',
+    msTeamsWebhookUrl: [],
     msTeamsThemeColor: '#ff0000',
     msTeamsAlertFixedWidth: false,
     msTeamsAlertSummary: 'ElastAlert Message',
@@ -1269,6 +1269,23 @@ export default {
     /* MS Teams */
     UPDATE_MS_TEAMS_WEBHOOK_URL(state, msTeamsWebhookUrl) {
       state.msTeamsWebhookUrl = msTeamsWebhookUrl;
+    },
+
+    ADD_MS_TEAMS_WEBHOOK_URL_ENTRY(state) {
+      state.msTeamsWebhookUrl.push('');
+    },
+
+    ADD_MS_TEAMS_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.msTeamsWebhookUrl.push(value);
+    },
+
+    REMOVE_MS_TEAMS_WEBHOOK_URL_ENTRY(state, entry) {
+      state.msTeamsWebhookUrl = state.msTeamsWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_MS_TEAMS_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.msTeamsWebhookUrl) return;
+      state.msTeamsWebhookUrl[index] = entry;
     },
 
     UPDATE_MS_TEAMS_THEME_COLOR(state, msTeamsThemeColor) {
