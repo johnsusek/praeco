@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="poprocketChatWebhookUrlVisible" :class="{ 'is-invalid': !poprocketChatWebhookUrlValid }">
+    <el-popover v-model="popRocketChatWebhookUrlVisible" :class="{ 'is-invalid': !popRocketChatWebhookUrlValid }">
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="rocketChatWebhookUrl.length" :content="rocketChatWebhookUrl.join(', ')" placement="top">
@@ -51,13 +51,56 @@
       </template>
     </el-popover>
 
-    <el-form-item label="Channel or username" prop="rocketChatChannelOverride" required>
-      <el-input id="rocketChatChannelOverride" v-model="rocketChatChannelOverride" :disabled="viewOnly" />
-      <label>
-        The @username or #channel to send the alert. Tip: Create new channels
-        for your alerts, to have fine-grained control of Rocket.Chat notifications.
-      </label>
-    </el-form-item>
+    <el-popover v-model="popRocketChatChannelOverrideVisible" :class="{ 'is-invalid': !popRocketChatChannelOverrideValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="rocketChatChannelOverride.length" :content="rocketChatChannelOverride.join(', ')" placement="top">
+            <span>Tags ({{ rocketChatChannelOverride.length }})</span>
+          </el-tooltip>
+          <span v-else>Tags ({{ rocketChatChannelOverride.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="rocketChatChannelOverride"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in rocketChatChannelOverride"
+            :key="index"
+            :prop="'rocketChatChannelOverride.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="rocketChatChannelOverride[index]"
+                  :disabled="viewOnly"
+                  placeholder="Tags"
+                  @input="(val) => updateRocketChatChannelOverride(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeRocketChatChannelOverrideEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addRocketChatChannelOverrideEntry">
+          Add rocketChatChannelOverrides
+        </el-button>
+      </template>
+    </el-popover>
 
     <praeco-form-item label="Post as" prop="rocketChatUsernameOverride" required>
       <el-input id="rocketChatUsernameOverride" v-model="rocketChatUsernameOverride" :disabled="viewOnly" />
@@ -174,8 +217,10 @@ export default {
   data() {
     return {
       emojiIndex,
-      poprocketChatWebhookUrlVisible: false,
-      poprocketChatWebhookUrlValid: true,
+      popRocketChatWebhookUrlVisible: false,
+      popRocketChatWebhookUrlValid: true,
+      popRocketChatChannelOverrideVisible: false,
+      popRocketChatChannelOverrideValid: true,
     };
   },
   computed: {
@@ -320,6 +365,9 @@ export default {
         if (this.$refs.rocketChatWebhookUrl) {
           await this.validateRocketChatWebhookUrl();
         }
+        if (this.$refs.rocketChatChannelOverride) {
+          await this.validateRocketChatChannelOverride();
+        }
         this.$emit('validate', true);
         return true;
       } catch (error) {
@@ -330,13 +378,13 @@ export default {
 
     async validateRocketChatWebhookUrl() {
       if (!this.rocketChatWebhookUrl.length) {
-        this.poprocketChatWebhookUrlValid = false;
+        this.popRocketChatWebhookUrlValid = false;
         return;
       }
       try {
-        this.poprocketChatWebhookUrlValid = await this.$refs.rocketChatWebhookUrl.validate();
+        this.popRocketChatWebhookUrlValid = await this.$refs.rocketChatWebhookUrl.validate();
       } catch (error) {
-        this.poprocketChatWebhookUrlValid = false;
+        this.popRocketChatWebhookUrlValid = false;
         throw error;
       }
     },
@@ -361,6 +409,44 @@ export default {
 
     addRocketChatWebhookUrlEntry() {
       this.$store.commit('config/alert/ADD_ROCKET_CHAT_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validateRocketChatChannelOverride() {
+      if (!this.rocketChatChannelOverride.length) {
+        this.popRocketChatChannelOverrideValid = false;
+        return;
+      }
+      try {
+        this.popRocketChatChannelOverrideValid = await this.$refs.rocketChatChannelOverride.validate();
+      } catch (error) {
+        this.popRocketChatChannelOverrideValid = false;
+        throw error;
+      }
+    },
+
+    updateRocketChatChannelOverride(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeRocketChatChannelOverrideEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addRocketChatChannelOverrideEntry() {
+      this.$store.commit('config/alert/ADD_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });

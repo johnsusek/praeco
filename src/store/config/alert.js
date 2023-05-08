@@ -262,7 +262,7 @@ function initialState() {
 
     /* Rocket.Chat */
     rocketChatWebhookUrl: [],
-    rocketChatChannelOverride: '',
+    rocketChatChannelOverride: [],
     rocketChatUsernameOverride: 'Praeco',
     rocketChatEmojiOverride: ':ghost:',
     rocketChatMsgColor: 'danger',
@@ -1527,6 +1527,23 @@ export default {
 
     UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE(state, rocketChatChannelOverride) {
       state.rocketChatChannelOverride = rocketChatChannelOverride;
+    },
+
+    ADD_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY(state) {
+      state.rocketChatChannelOverride.push('');
+    },
+
+    ADD_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY_VALUE(state, value) {
+      state.rocketChatChannelOverride.push(value);
+    },
+
+    REMOVE_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY(state, entry) {
+      state.rocketChatChannelOverride = state.rocketChatChannelOverride.filter(b => b !== entry);
+    },
+
+    UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY(state, { entry, index }) {
+      if (!state.rocketChatChannelOverride) return;
+      state.rocketChatChannelOverride[index] = entry;
     },
 
     UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE(state, rocketChatUsernameOverride) {

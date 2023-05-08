@@ -722,7 +722,14 @@ export default {
           commit('alert/UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE', 'elastalert2');
         }
 
-        commit('alert/UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE', config.rocket_chat_channel_override);
+        if (typeof (config.rocket_chat_channel_override) === 'string') {
+          let tmpRocketChatChannelOverride = [];
+          tmpRocketChatChannelOverride.push(config.rocket_chat_channel_override);
+          config.rocket_chat_channel_override = tmpRocketChatChannelOverride;
+        }
+        if (config.rocket_chat_channel_override) {
+          commit('alert/UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE', config.rocket_chat_channel_override);
+        }
 
         if (config.rocket_chat_emoji_override) {
           commit('alert/UPDATE_ROCKET_CHAT_EMOJI_OVERRIDE', config.rocket_chat_emoji_override);
@@ -923,9 +930,9 @@ export default {
         }
 
         if (typeof (config.slack_channel_override) === 'string') {
-          let tmpSlackWebhookUrl = [];
-          tmpSlackWebhookUrl.push(config.slack_channel_override);
-          config.slack_channel_override = tmpSlackWebhookUrl;
+          let tmpSlackChannelOverride = [];
+          tmpSlackChannelOverride.push(config.slack_channel_override);
+          config.slack_channel_override = tmpSlackChannelOverride;
         }
         if (config.slack_channel_override) {
           commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
@@ -2576,7 +2583,7 @@ export default {
         config.rocket_chat_username_override = state.alert.rocketChatUsernameOverride;
       }
 
-      if (state.alert.rocketChatChannelOverride) {
+      if (state.alert.rocketChatChannelOverride && state.alert.rocketChatChannelOverride.length) {
         config.rocket_chat_channel_override = state.alert.rocketChatChannelOverride;
       }
 

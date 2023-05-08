@@ -22,7 +22,9 @@ generate_kibana_discover_url: true
 rocket_chat_webhook_url:
   - a
   - b
-rocket_chat_channel_override: '#elastalert-debugging'
+rocket_chat_channel_override:
+  - '#elastalert-debugging'
+  - '#elastalert-debugging2'
 rocket_chat_username_override: 'elastalert2'
 rocket_chat_msg_color: 'good'
 rocket_chat_ignore_ssl_errors: true

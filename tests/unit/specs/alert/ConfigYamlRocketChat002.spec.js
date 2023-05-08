@@ -34,7 +34,9 @@ realert:
   minutes: 5
 rocket_chat_attach_kibana_discover_url: true
 rocket_chat_ca_certs: true
-rocket_chat_channel_override: "#elastalert-debugging"
+rocket_chat_channel_override:
+  - "#elastalert-debugging"
+  - "#elastalert-debugging2"
 rocket_chat_emoji_override: ":ghost:"
 rocket_chat_ignore_ssl_errors: true
 rocket_chat_kibana_discover_color: "#FFFFFFFF"
