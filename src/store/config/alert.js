@@ -195,6 +195,7 @@ function initialState() {
     linenotifyAccessToken: '',
 
     /* Mattermost */
+    mattermostWebhookUrl: [],
     mattermostChannelOverride: '',
     mattermostUsernameOverride: 'Praeco',
     mattermostEmojiOverride: ':ghost:',
@@ -1186,6 +1187,27 @@ export default {
     },
 
     /* Mattermost */
+    UPDATE_MATTERMOST_WEBHOOK_URL(state, mattermostWebhookUrl) {
+      state.mattermostWebhookUrl = mattermostWebhookUrl;
+    },
+
+    ADD_MATTERMOST_WEBHOOK_URL_ENTRY(state) {
+      state.mattermostWebhookUrl.push('');
+    },
+
+    ADD_MATTERMOST_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.mattermostWebhookUrl.push(value);
+    },
+
+    REMOVE_MATTERMOST_WEBHOOK_URL_ENTRY(state, entry) {
+      state.mattermostWebhookUrl = state.mattermostWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_MATTERMOST_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.mattermostWebhookUrl) return;
+      state.mattermostWebhookUrl[index] = entry;
+    },
+
     UPDATE_MATTERMOST_CHANNEL_OVERRIDE(state, mattermostChannelOverride) {
       state.mattermostChannelOverride = mattermostChannelOverride;
     },

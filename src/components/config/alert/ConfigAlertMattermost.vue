@@ -1,5 +1,56 @@
 <template>
   <div>
+    <el-popover v-model="popMattermostWebhookUrlVisible" :class="{ 'is-invalid': !popMattermostWebhookUrlValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="mattermostWebhookUrl.length" :content="mattermostWebhookUrl.join(', ')" placement="top">
+            <span>Tags ({{ mattermostWebhookUrl.length }})</span>
+          </el-tooltip>
+          <span v-else>Tags ({{ mattermostWebhookUrl.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="mattermostWebhookUrl"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in mattermostWebhookUrl"
+            :key="index"
+            :prop="'mattermostWebhookUrl.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="mattermostWebhookUrl[index]"
+                  :disabled="viewOnly"
+                  placeholder="Tags"
+                  @input="(val) => updateMattermostWebhookUrl(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeMattermostWebhookUrlEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostWebhookUrlEntry">
+          Add mattermostWebhookUrls
+        </el-button>
+      </template>
+    </el-popover>
+
     <el-form-item label="Channel or username" prop="mattermostChannelOverride" required>
       <el-input id="mattermostChannelOverride" v-model="mattermostChannelOverride" :disabled="viewOnly" />
       <label>
@@ -158,9 +209,20 @@ export default {
   data() {
     return {
       emojiIndex,
+      popMattermostWebhookUrlVisible: false,
+      popMattermostWebhookUrlValid: true,
     };
   },
   computed: {
+    mattermostWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.mattermostWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_WEBHOOK_URL', value);
+      }
+    },
+
     mattermostChannelOverride: {
       get() {
         return this.$store.state.config.alert.mattermostChannelOverride;
@@ -385,6 +447,57 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.mattermostWebhookUrl) {
+          await this.validateMattermostWebhookUrl();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validateMattermostWebhookUrl() {
+      if (!this.mattermostWebhookUrl.length) {
+        this.popMattermostWebhookUrlValid = false;
+        return;
+      }
+      try {
+        this.popMattermostWebhookUrlValid = await this.$refs.mattermostWebhookUrl.validate();
+      } catch (error) {
+        this.popMattermostWebhookUrlValid = false;
+        throw error;
+      }
+    },
+
+    updateMattermostWebhookUrl(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_MATTERMOST_WEBHOOK_URL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeMattermostWebhookUrlEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_MATTERMOST_WEBHOOK_URL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addmattermostWebhookUrlEntry() {
+      this.$store.commit('config/alert/ADD_MATTERMOST_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     changeMattermostIgnoreSslErrors(val) {
       if (val) {
         this.mattermostIgnoreSslErrors = true;

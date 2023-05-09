@@ -47,6 +47,9 @@ mattermost_thumb_url: "https://localhost/thumb.png"
 mattermost_title: "cde"
 mattermost_title_link: "fgh"
 mattermost_username_override: "elastalert2"
+mattermost_webhook_url:
+  - "a"
+  - "b"
 name: "test123"
 num_events: 10000
 realert:

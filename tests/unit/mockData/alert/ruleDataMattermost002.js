@@ -15,6 +15,9 @@ generate_kibana_discover_url: true
 import: BaseRule.config
 index: hannibal-*
 is_enabled: false
+mattermost_webhook_url:
+    - 'a'
+    - 'b'
 mattermost_channel_override: '#elastalert-debugging'
 mattermost_emoji_override: ':postal_horn:'
 mattermost_username_override: 'elastalert2'

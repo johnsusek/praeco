@@ -661,6 +661,10 @@ export default {
         commit('alert/UPDATE_GOOGLECHAT_PROXY', config.googlechat_proxy);
 
         /* Mattermost */
+        if (config.mattermost_webhook_url) {
+          commit('alert/UPDATE_MATTERMOST_WEBHOOK_URL', config.mattermost_webhook_url);
+        }
+
         commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
 
         if (config.mattermost_username_override) {
@@ -2498,6 +2502,10 @@ export default {
 
     mattermost(state) {
       let config = {};
+
+      if (state.alert.mattermostWebhookUrl && state.alert.mattermostWebhookUrl.length) {
+        config.mattermost_webhook_url = state.alert.mattermostWebhookUrl;
+      }
 
       if (state.alert.mattermostChannelOverride) {
         config.mattermost_channel_override = state.alert.mattermostChannelOverride;

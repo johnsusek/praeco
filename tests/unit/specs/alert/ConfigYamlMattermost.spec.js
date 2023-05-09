@@ -35,6 +35,8 @@ mattermost_kibana_discover_color: "#ec4b98"
 mattermost_kibana_discover_title: "Discover in Kibana"
 mattermost_msg_color: "danger"
 mattermost_username_override: "elastalert"
+mattermost_webhook_url:
+  - "a"
 name: "test123"
 num_events: 10000
 realert:
