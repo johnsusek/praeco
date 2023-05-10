@@ -665,7 +665,14 @@ export default {
           commit('alert/UPDATE_MATTERMOST_WEBHOOK_URL', config.mattermost_webhook_url);
         }
 
-        commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
+        if (typeof (config.mattermost_channel_override) === 'string') {
+          let tmpMattermostChannelOverride = [];
+          tmpMattermostChannelOverride.push(config.mattermost_channel_override);
+          config.mattermost_channel_override = tmpMattermostChannelOverride;
+        }
+        if (config.mattermost_channel_override) {
+          commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
+        }
 
         if (config.mattermost_username_override) {
           commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', config.mattermost_username_override);

@@ -29,7 +29,8 @@ index: "hannibal-*"
 is_enabled: false
 match_enhancements: []
 mattermost_attach_kibana_discover_url: false
-mattermost_channel_override: "#elastalert-debugging"
+mattermost_channel_override:
+  - "#elastalert-debugging"
 mattermost_emoji_override: ":ghost:"
 mattermost_kibana_discover_color: "#ec4b98"
 mattermost_kibana_discover_title: "Discover in Kibana"

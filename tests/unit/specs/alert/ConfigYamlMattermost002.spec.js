@@ -32,7 +32,9 @@ mattermost_attach_kibana_discover_url: true
 mattermost_author_icon: "author_icon"
 mattermost_author_link: "author_link"
 mattermost_author_name: "author_name"
-mattermost_channel_override: "#elastalert-debugging"
+mattermost_channel_override:
+  - "#elastalert-debugging"
+  - "#elastalert-debugging2"
 mattermost_emoji_override: ":postal_horn:"
 mattermost_footer: "footer"
 mattermost_footer_icon: "footer_icon"

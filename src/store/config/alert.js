@@ -196,7 +196,7 @@ function initialState() {
 
     /* Mattermost */
     mattermostWebhookUrl: [],
-    mattermostChannelOverride: '',
+    mattermostChannelOverride: [],
     mattermostUsernameOverride: 'Praeco',
     mattermostEmojiOverride: ':ghost:',
     mattermostMsgColor: 'danger',
@@ -1210,6 +1210,23 @@ export default {
 
     UPDATE_MATTERMOST_CHANNEL_OVERRIDE(state, mattermostChannelOverride) {
       state.mattermostChannelOverride = mattermostChannelOverride;
+    },
+
+    ADD_MATTERMOST_CHANNEL_OVERRIDE_ENTRY(state) {
+      state.mattermostChannelOverride.push('');
+    },
+
+    ADD_MATTERMOST_CHANNEL_OVERRIDE_ENTRY_VALUE(state, value) {
+      state.mattermostChannelOverride.push(value);
+    },
+
+    REMOVE_MATTERMOST_CHANNEL_OVERRIDE_ENTRY(state, entry) {
+      state.mattermostChannelOverride = state.mattermostChannelOverride.filter(b => b !== entry);
+    },
+
+    UPDATE_MATTERMOST_CHANNEL_OVERRIDE_ENTRY(state, { entry, index }) {
+      if (!state.mattermostChannelOverride) return;
+      state.mattermostChannelOverride[index] = entry;
     },
 
     UPDATE_MATTERMOST_USERNAME_OVERRIDE(state, mattermostUsernameOverride) {
