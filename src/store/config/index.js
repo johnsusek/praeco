@@ -646,7 +646,15 @@ export default {
         }
 
         /* GoogleChat */
-        commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
+        if (typeof (config.googlechat_webhook_url) === 'string') {
+          let tmpGooglechatWebhookUrl = [];
+          tmpGooglechatWebhookUrl.push(config.googlechat_webhook_url);
+          config.googlechat_webhook_url = tmpGooglechatWebhookUrl;
+        }
+
+        if (config.googlechat_webhook_url) {
+          commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
+        }
 
         if (config.googlechat_format) {
           commit('alert/UPDATE_GOOGLE_CHAT_FORMAT', config.googlechat_format);
@@ -2476,7 +2484,7 @@ export default {
 
     googlechat(state) {
       let config = {};
-      if (state.alert.googleChatWebhookUrl) {
+      if (state.alert.googleChatWebhookUrl && state.alert.googleChatWebhookUrl.length) {
         config.googlechat_webhook_url = state.alert.googleChatWebhookUrl;
       }
 

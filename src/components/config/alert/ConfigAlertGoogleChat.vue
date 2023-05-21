@@ -1,9 +1,56 @@
 <template>
   <div>
-    <praeco-form-item label="GoogleChat Webhook" prop="googleChatWebhookUrl" required>
-      <el-input id="googleChatWebhookUrl" v-model="googleChatWebhookUrl" :disabled="viewOnly" />
-      <label>Google Webhook Url</label>
-    </praeco-form-item>
+    <el-popover v-model="popgoogleChatWebhookUrlVisible" :class="{ 'is-invalid': !popgoogleChatWebhookUrlValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="googleChatWebhookUrl.length" :content="googleChatWebhookUrl.join(', ')" placement="top">
+            <span>Tags ({{ googleChatWebhookUrl.length }})</span>
+          </el-tooltip>
+          <span v-else>Tags ({{ googleChatWebhookUrl.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="googleChatWebhookUrl"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in googleChatWebhookUrl"
+            :key="index"
+            :prop="'googleChatWebhookUrl.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="googleChatWebhookUrl[index]"
+                  :disabled="viewOnly"
+                  placeholder="Tags"
+                  @input="(val) => updategoogleChatWebhookUrl(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removegoogleChatWebhookUrlEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addgoogleChatWebhookUrlEntry">
+          Add googleChatWebhookUrls
+        </el-button>
+      </template>
+    </el-popover>
+
     <praeco-form-item label="GoogleChat Format" prop="googleChatFormat" required>
       <el-radio-group v-model="googleChatFormat" :disabled="viewOnly">
         <el-radio id="googleChatFormatBasic" label="basic" border>
@@ -51,6 +98,13 @@
 
 export default {
   props: ['viewOnly'],
+
+  data() {
+    return {
+      popgoogleChatWebhookUrlVisible: false,
+      popgoogleChatWebhookUrlValid: true,
+    };
+  },
 
   computed: {
     googleChatWebhookUrl: {
@@ -139,6 +193,52 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.googleChatWebhookUrl) {
+          await this.validategoogleChatWebhookUrl();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+    async validategoogleChatWebhookUrl() {
+      if (!this.googleChatWebhookUrl.length) {
+        this.popgoogleChatWebhookUrlValid = false;
+        return;
+      }
+      try {
+        this.popgoogleChatWebhookUrlValid = await this.$refs.googleChatWebhookUrl.validate();
+      } catch (error) {
+        this.popgoogleChatWebhookUrlValid = false;
+        throw error;
+      }
+    },
+    updategoogleChatWebhookUrl(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_GOOGLECHAT_WEBHOOK_URL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    removegoogleChatWebhookUrlEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_GOOGLECHAT_WEBHOOK_URL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    addgoogleChatWebhookUrlEntry() {
+      this.$store.commit('config/alert/ADD_GOOGLECHAT_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
   }
 };
 </script>

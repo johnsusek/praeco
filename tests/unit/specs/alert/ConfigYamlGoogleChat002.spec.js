@@ -30,7 +30,9 @@ googlechat_header_image: "http://example/abc.png"
 googlechat_header_subtitle: "b"
 googlechat_header_title: "a"
 googlechat_proxy: "hostname:8080"
-googlechat_webhook_url: "http://example/abca"
+googlechat_webhook_url:
+  - "http://example/abca"
+  - "http://example/abc2"
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false

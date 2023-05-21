@@ -172,6 +172,15 @@ function initialState() {
     gitterMsgLevel: 'error',
     gitterProxy: '',
 
+    /* GoogleChat */
+    googleChatWebhookUrl: [],
+    googleChatFormat: 'basic',
+    googleChatHeaderTitle: '',
+    googleChatHeaderSubtitle: '',
+    googleChatHeaderImage: '',
+    googleFooterKibanalink: '',
+    googleChatProxy: '',
+
     /* HTTP POST */
     httpPostUrl: '',
     httpPostIgnoreSslErrors: false,
@@ -1050,6 +1059,23 @@ export default {
     /* GoogleChat */
     UPDATE_GOOGLE_CHAT_WEBHOOK_URL(state, googleChatWebhookUrl) {
       state.googleChatWebhookUrl = googleChatWebhookUrl;
+    },
+
+    ADD_GOOGLECHAT_WEBHOOK_URL_ENTRY(state) {
+      state.googleChatWebhookUrl.push('');
+    },
+
+    ADD_GOOGLECHAT_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.googleChatWebhookUrl.push(value);
+    },
+
+    REMOVE_GOOGLECHAT_WEBHOOK_URL_ENTRY(state, entry) {
+      state.googleChatWebhookUrl = state.googleChatWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_GOOGLECHAT_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.googleChatWebhookUrl) return;
+      state.googleChatWebhookUrl[index] = entry;
     },
 
     UPDATE_GOOGLE_CHAT_FORMAT(state, googleChatFormat) {
