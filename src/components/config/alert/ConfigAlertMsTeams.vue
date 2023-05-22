@@ -4,9 +4,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="msTeamsWebhookUrl.length" :content="msTeamsWebhookUrl.join(', ')" placement="top">
-            <span>Tags ({{ msTeamsWebhookUrl.length }})</span>
+            <span>msTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ msTeamsWebhookUrl.length }})</span>
+          <span v-else>msTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
         </span>
       </template>
       <template>

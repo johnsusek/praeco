@@ -4,9 +4,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="slackWebhookUrl.length" :content="slackWebhookUrl.join(', ')" placement="top">
-            <span>Tags ({{ slackWebhookUrl.length }})</span>
+            <span>slackWebhookUrls ({{ slackWebhookUrl.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ slackWebhookUrl.length }})</span>
+          <span v-else>slackWebhookUrls ({{ slackWebhookUrl.length }})</span>
         </span>
       </template>
       <template>

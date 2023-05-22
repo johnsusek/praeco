@@ -4,9 +4,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="rocketChatWebhookUrl.length" :content="rocketChatWebhookUrl.join(', ')" placement="top">
-            <span>Tags ({{ rocketChatWebhookUrl.length }})</span>
+            <span>rocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ rocketChatWebhookUrl.length }})</span>
+          <span v-else>rocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
         </span>
       </template>
       <template>

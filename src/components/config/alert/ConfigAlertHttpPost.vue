@@ -4,9 +4,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="httpPostUrl.length" :content="httpPostUrl.join(', ')" placement="top">
-            <span>Tags ({{ httpPostUrl.length }})</span>
+            <span>httpPostUrls ({{ httpPostUrl.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ httpPostUrl.length }})</span>
+          <span v-else>httpPostUrls ({{ httpPostUrl.length }})</span>
         </span>
       </template>
       <template>

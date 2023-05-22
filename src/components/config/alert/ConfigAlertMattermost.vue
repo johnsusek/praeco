@@ -4,9 +4,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="mattermostWebhookUrl.length" :content="mattermostWebhookUrl.join(', ')" placement="top">
-            <span>Tags ({{ mattermostWebhookUrl.length }})</span>
+            <span>mattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ mattermostWebhookUrl.length }})</span>
+          <span v-else>mattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
         </span>
       </template>
       <template>
