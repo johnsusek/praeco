@@ -182,7 +182,7 @@ function initialState() {
     googleChatProxy: '',
 
     /* HTTP POST */
-    httpPostUrl: '',
+    httpPostUrl: [],
     httpPostIgnoreSslErrors: false,
     httpPostCaCerts: false,
     httpPostTimeout: '',
@@ -1151,6 +1151,23 @@ export default {
     /* HTTP POST */
     UPDATE_HTTP_POST_URL(state, httpPostUrl) {
       state.httpPostUrl = httpPostUrl;
+    },
+
+    ADD_HTTP_POST_URL_ENTRY(state) {
+      state.httpPostUrl.push('');
+    },
+
+    ADD_HTTP_POST_URL_ENTRY_VALUE(state, value) {
+      state.httpPostUrl.push(value);
+    },
+
+    REMOVE_HTTP_POST_URL_ENTRY(state, entry) {
+      state.httpPostUrl = state.httpPostUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_HTTP_POST_URL_ENTRY(state, { entry, index }) {
+      if (!state.httpPostUrl) return;
+      state.httpPostUrl[index] = entry;
     },
 
     UPDATE_HTTP_POST_IGNORE_SSL_ERRORS(state, httpPostIgnoreSslErrors) {

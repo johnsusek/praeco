@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import store from '@/store';
 import { mockAxios } from '../../setup';
-import { ruleYaml } from '../../mockData/alert/ruleDataHttpPost.js';
+import { ruleYaml } from '../../mockData/alert/ruleDataHttpPost002.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
@@ -24,6 +24,7 @@ generate_kibana_discover_url: false
 http_post_timeout: 10
 http_post_url:
   - "http://localhost/webhook"
+  - "http://localhost/webhook2"
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false

@@ -222,7 +222,15 @@ export default {
         commit('alert/UPDATE_OWNER', config.owner);
 
         /* HTTP POST */
-        commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
+        if (typeof (config.http_post_url) === 'string') {
+          let tmphttpPostUrl = [];
+          tmphttpPostUrl.push(config.http_post_url);
+          config.http_post_url = tmphttpPostUrl;
+        }
+
+        if (config.http_post_url) {
+          commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
+        }
 
         if (config.http_post_ignore_ssl_errors) {
           commit('alert/UPDATE_HTTP_POST_IGNORE_SSL_ERRORS', config.http_post_ignore_ssl_errors);
@@ -1447,7 +1455,7 @@ export default {
     http(state) {
       let config = {};
 
-      if (state.alert.httpPostUrl) {
+      if (state.alert.httpPostUrl && state.alert.httpPostUrl.length) {
         config.http_post_url = state.alert.httpPostUrl;
       }
 
