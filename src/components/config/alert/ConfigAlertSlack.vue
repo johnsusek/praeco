@@ -4,9 +4,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="slackWebhookUrl.length" :content="slackWebhookUrl.join(', ')" placement="top">
-            <span>slackWebhookUrls ({{ slackWebhookUrl.length }})</span>
+            <span>SlackWebhookUrls ({{ slackWebhookUrl.length }})</span>
           </el-tooltip>
-          <span v-else>slackWebhookUrls ({{ slackWebhookUrl.length }})</span>
+          <span v-else>SlackWebhookUrls ({{ slackWebhookUrl.length }})</span>
         </span>
       </template>
       <template>
@@ -29,7 +29,7 @@
                 <el-input
                   v-model="slackWebhookUrl[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="WebhookUrl"
                   @input="(val) => updateslackWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -46,7 +46,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackWebhookUrlEntry">
-          Add slackWebhookUrls
+          Add WebhookUrl
         </el-button>
       </template>
     </el-popover>
@@ -55,9 +55,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="slackChannelOverride.length" :content="slackChannelOverride.join(', ')" placement="top">
-            <span>Tags ({{ slackChannelOverride.length }})</span>
+            <span>SlackChannelOverrides ({{ slackChannelOverride.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ slackChannelOverride.length }})</span>
+          <span v-else>SlackChannelOverrides ({{ slackChannelOverride.length }})</span>
         </span>
       </template>
       <template>
@@ -80,7 +80,7 @@
                 <el-input
                   v-model="slackChannelOverride[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="SlackChannelOverrides"
                   @input="(val) => updateslackChannelOverride(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -97,7 +97,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackChannelOverrideEntry">
-          Add slackChannelOverrides
+          Add ChannelOverride
         </el-button>
       </template>
     </el-popover>

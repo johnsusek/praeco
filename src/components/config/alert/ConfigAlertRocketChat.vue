@@ -4,9 +4,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="rocketChatWebhookUrl.length" :content="rocketChatWebhookUrl.join(', ')" placement="top">
-            <span>rocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
+            <span>RocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
           </el-tooltip>
-          <span v-else>rocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
+          <span v-else>RocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
         </span>
       </template>
       <template>
@@ -29,7 +29,7 @@
                 <el-input
                   v-model="rocketChatWebhookUrl[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="WebhookUrl"
                   @input="(val) => updateRocketChatWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -46,7 +46,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addRocketChatWebhookUrlEntry">
-          Add rocketChatWebhookUrls
+          Add WebhookUrl
         </el-button>
       </template>
     </el-popover>
@@ -55,9 +55,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="rocketChatChannelOverride.length" :content="rocketChatChannelOverride.join(', ')" placement="top">
-            <span>Tags ({{ rocketChatChannelOverride.length }})</span>
+            <span>RocketChatChannelOverrides ({{ rocketChatChannelOverride.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ rocketChatChannelOverride.length }})</span>
+          <span v-else>RocketChatChannelOverrides ({{ rocketChatChannelOverride.length }})</span>
         </span>
       </template>
       <template>
@@ -80,7 +80,7 @@
                 <el-input
                   v-model="rocketChatChannelOverride[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="RocketChatChannelOverrides"
                   @input="(val) => updateRocketChatChannelOverride(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -97,7 +97,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addRocketChatChannelOverrideEntry">
-          Add rocketChatChannelOverrides
+          Add ChatChannelOverride
         </el-button>
       </template>
     </el-popover>

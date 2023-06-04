@@ -4,7 +4,7 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="mattermostWebhookUrl.length" :content="mattermostWebhookUrl.join(', ')" placement="top">
-            <span>mattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
+            <span>MattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
           </el-tooltip>
           <span v-else>mattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
         </span>
@@ -29,7 +29,7 @@
                 <el-input
                   v-model="mattermostWebhookUrl[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="WebhookUrl"
                   @input="(val) => updateMattermostWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -46,7 +46,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostWebhookUrlEntry">
-          Add mattermostWebhookUrls
+          Add WebhookUrl
         </el-button>
       </template>
     </el-popover>
@@ -55,9 +55,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="mattermostChannelOverride.length" :content="mattermostChannelOverride.join(', ')" placement="top">
-            <span>Tags ({{ mattermostChannelOverride.length }})</span>
+            <span>MattermostChannelOverrides ({{ mattermostChannelOverride.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ mattermostChannelOverride.length }})</span>
+          <span v-else>MattermostChannelOverrides ({{ mattermostChannelOverride.length }})</span>
         </span>
       </template>
       <template>
@@ -80,7 +80,7 @@
                 <el-input
                   v-model="mattermostChannelOverride[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="MattermostChannelOverrides"
                   @input="(val) => updatemattermostChannelOverride(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -97,7 +97,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostChannelOverrideEntry">
-          Add mattermostChannelOverrides
+          Add ChannelOverrides
         </el-button>
       </template>
     </el-popover>

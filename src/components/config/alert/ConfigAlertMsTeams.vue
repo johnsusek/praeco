@@ -4,9 +4,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="msTeamsWebhookUrl.length" :content="msTeamsWebhookUrl.join(', ')" placement="top">
-            <span>msTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
+            <span>MsTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
           </el-tooltip>
-          <span v-else>msTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
+          <span v-else>MsTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
         </span>
       </template>
       <template>
@@ -29,7 +29,7 @@
                 <el-input
                   v-model="msTeamsWebhookUrl[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="WebhookUrl"
                   @input="(val) => updateMsTeamsWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -46,7 +46,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addMsTeamsWebhookUrlEntry">
-          Add msTeamsWebhookUrls
+          Add WebhookUrl
         </el-button>
       </template>
     </el-popover>

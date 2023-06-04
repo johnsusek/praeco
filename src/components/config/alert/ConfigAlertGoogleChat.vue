@@ -4,7 +4,7 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="googleChatWebhookUrl.length" :content="googleChatWebhookUrl.join(', ')" placement="top">
-            <span>googleChatWebhookUrls ({{ googleChatWebhookUrl.length }})</span>
+            <span>GoogleChatWebhookUrls ({{ googleChatWebhookUrl.length }})</span>
           </el-tooltip>
           <span v-else>googleChatWebhookUrls ({{ googleChatWebhookUrl.length }})</span>
         </span>
@@ -29,7 +29,7 @@
                 <el-input
                   v-model="googleChatWebhookUrl[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="WebhookUrl"
                   @input="(val) => updategoogleChatWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -46,7 +46,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addgoogleChatWebhookUrlEntry">
-          Add googleChatWebhookUrls
+          Add WebhookUrl
         </el-button>
       </template>
     </el-popover>

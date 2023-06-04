@@ -4,7 +4,7 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="httpPostUrl.length" :content="httpPostUrl.join(', ')" placement="top">
-            <span>httpPostUrls ({{ httpPostUrl.length }})</span>
+            <span>HttpPostUrls ({{ httpPostUrl.length }})</span>
           </el-tooltip>
           <span v-else>httpPostUrls ({{ httpPostUrl.length }})</span>
         </span>
@@ -29,7 +29,7 @@
                 <el-input
                   v-model="httpPostUrl[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="HttpPostUrls"
                   @input="(val) => updatehttpPostUrl(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -46,7 +46,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addhttpPostUrlEntry">
-          Add httpPostUrls
+          Add HttpPostUrl
         </el-button>
       </template>
     </el-popover>

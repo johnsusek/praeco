@@ -189,7 +189,7 @@ function initialState() {
     httpPostProxy: '',
 
     /* HTTP POST 2 */
-    httpPost2Url: '',
+    httpPost2Url: [],
     httpPost2IgnoreSslErrors: false,
     httpPost2CaCerts: false,
     httpPost2Timeout: '',
@@ -1189,6 +1189,23 @@ export default {
     /* HTTP POST 2 */
     UPDATE_HTTP_POST2_URL(state, httpPost2Url) {
       state.httpPost2Url = httpPost2Url;
+    },
+
+    ADD_HTTP_POST2_URL_ENTRY(state) {
+      state.httpPost2Url.push('');
+    },
+
+    ADD_HTTP_POST2_URL_ENTRY_VALUE(state, value) {
+      state.httpPost2Url.push(value);
+    },
+
+    REMOVE_HTTP_POST2_URL_ENTRY(state, entry) {
+      state.httpPost2Url = state.httpPost2Url.filter(b => b !== entry);
+    },
+
+    UPDATE_HTTP_POST2_URL_ENTRY(state, { entry, index }) {
+      if (!state.httpPost2Url) return;
+      state.httpPost2Url[index] = entry;
     },
 
     UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS(state, httpPost2IgnoreSslErrors) {

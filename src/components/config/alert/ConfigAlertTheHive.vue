@@ -29,9 +29,9 @@
       <template v-slot:reference>
         <span class="pop-trigger">
           <el-tooltip v-if="hiveAlertConfigTags.length" :content="hiveAlertConfigTags.join(', ')" placement="top">
-            <span>Tags ({{ hiveAlertConfigTags.length }})</span>
+            <span>HiveAlertConfigTags ({{ hiveAlertConfigTags.length }})</span>
           </el-tooltip>
-          <span v-else>Tags ({{ hiveAlertConfigTags.length }})</span>
+          <span v-else>HiveAlertConfigTags ({{ hiveAlertConfigTags.length }})</span>
         </span>
       </template>
       <template>
@@ -54,7 +54,7 @@
                 <el-input
                   v-model="hiveAlertConfigTags[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="HiveAlertConfigTags"
                   @input="(val) => updateHiveAlertConfigTags(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -71,7 +71,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addHiveAlertConfigTagsEntry">
-          Add tags
+          Add HiveAlertConfigTags
         </el-button>
       </template>
     </el-popover>

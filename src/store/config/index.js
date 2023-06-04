@@ -249,7 +249,15 @@ export default {
         commit('alert/UPDATE_HTTP_POST_PROXY', config.http_post_proxy);
 
         /* HTTP POST 2 */
-        commit('alert/UPDATE_HTTP_POST2_URL', config.http_post2_url);
+        if (typeof (config.http_post2_url) === 'string') {
+          let tmphttpPost2Url = [];
+          tmphttpPost2Url.push(config.http_post2_url);
+          config.http_post2_url = tmphttpPost2Url;
+        }
+
+        if (config.http_post2_url) {
+          commit('alert/UPDATE_HTTP_POST2_URL', config.http_post2_url);
+        }
 
         if (config.http_post2_ignore_ssl_errors) {
           commit('alert/UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS', config.http_post2_ignore_ssl_errors);
@@ -1481,7 +1489,7 @@ export default {
     http2(state) {
       let config = {};
 
-      if (state.alert.httpPost2Url) {
+      if (state.alert.httpPost2Url && state.alert.httpPost2Url.length) {
         config.http_post2_url = state.alert.httpPost2Url;
       }
 

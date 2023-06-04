@@ -96,7 +96,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertaTagsEntry">
-          Add tags
+          Add Tags
         </el-button>
       </template>
     </el-popover>

@@ -29,7 +29,7 @@
                 <el-input
                   v-model="command[index]"
                   :disabled="viewOnly"
-                  placeholder="Tags"
+                  placeholder="Commands"
                   @input="(val) => updateCommand(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -46,7 +46,7 @@
         </el-form>
 
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addCommandEntry">
-          Add command
+          Add Command
         </el-button>
       </template>
     </el-popover>
