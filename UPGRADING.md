@@ -7,6 +7,28 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.14
+
+**kibana discover**
+
+- kibana 8.7, 8.8 support
+
+**multiple settigs**
+
+- slack_webhook_url
+- mattermost_webhook_url
+- mattermost_channel_override
+- rocket_chat_webhook_url
+- rocket_chat_channel_override
+- ms_teams_webhook_url
+- googlechat_webhook_url
+- http_post_url
+- http_post2_url
+
+**bug fix**
+
+- Alerta
+
 ## -> 1.8.13
 
 **New options**
