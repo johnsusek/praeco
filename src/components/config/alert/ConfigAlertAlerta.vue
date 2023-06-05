@@ -487,6 +487,42 @@ export default {
       }
     },
 
+    alertaService: {
+      get() {
+        return this.$store.state.config.alert.alertaService;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_SERVICE', value);
+      }
+    },
+
+    alertaCorrelate: {
+      get() {
+        return this.$store.state.config.alert.alertaCorrelate;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_CORRELATE', value);
+      }
+    },
+
+    alertaAttributesKeys: {
+      get() {
+        return this.$store.state.config.alert.alertaAttributesKeys;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_ATTRIBUTES_KEYS', value);
+      }
+    },
+
+    alertaAttributesValues: {
+      get() {
+        return this.$store.state.config.alert.alertaAttributesValues;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_ALERTA_ATTRIBUTES_VALUES', value);
+      }
+    },
+
     alertaEnvironment: {
       get() {
         return this.$store.state.config.alert.alertaEnvironment;
