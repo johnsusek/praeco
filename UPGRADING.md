@@ -7,11 +7,24 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.15
+
+**bug fix**
+
+- Alerta
+- TheHive
+
 ## -> 1.8.14
 
 **kibana discover**
 
 - kibana 8.7, 8.8 support
+
+**Opsgenie**
+
+add settings.
+
+- opsgenie_priority
 
 **multiple settigs**
 
