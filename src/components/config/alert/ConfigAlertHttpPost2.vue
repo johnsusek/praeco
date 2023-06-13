@@ -22,8 +22,7 @@
             :prop="'httpPost2Url.' + index"
             :disabled="viewOnly"
             class="el-form-item-list"
-            label=""
-            required>
+            label="">
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
                 <el-input

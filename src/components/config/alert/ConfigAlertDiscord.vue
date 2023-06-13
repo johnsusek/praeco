@@ -1,6 +1,6 @@
 <template>
   <div>
-    <praeco-form-item label="WebhookURL" prop="discordWebhookUrl" required>
+    <praeco-form-item label="WebhookURL" prop="discordWebhookUrl">
       <el-input id="discordWebhookUrl" v-model="discordWebhookUrl" :disabled="viewOnly" />
       <label>The webhook URL.</label>
     </praeco-form-item>

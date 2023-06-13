@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form-item label="API URL" prop="alertaApiUrl" required>
+    <el-form-item label="API URL" prop="alertaApiUrl">
       <el-input id="alertaApiUrl" v-model="alertaApiUrl" :disabled="viewOnly" />
       <label>API server URL.</label>
     </el-form-item>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <praeco-form-item label="Webhook URL" prop="gitterWebhookUrl" required>
+    <praeco-form-item label="Webhook URL" prop="gitterWebhookUrl">
       <el-input id="gitterWebhookUrl" v-model="gitterWebhookUrl" :disabled="viewOnly" />
       <label>
         The webhook URL that includes your auth data and the ID of the channel (room) you want to post to.
