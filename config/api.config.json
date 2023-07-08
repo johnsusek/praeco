@@ -18,7 +18,7 @@
     "relative": true,
     "path": "/server_data"
   },
-  "es_host": "localhost",
+  "es_host": "elasticsearch",
   "es_port": 9200,
   "es_username": "",
   "es_password": "",

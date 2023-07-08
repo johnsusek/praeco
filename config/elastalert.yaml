@@ -1,6 +1,6 @@
 # The elasticsearch hostname for metadata writeback
 # Note that every rule can have its own elasticsearch host
-es_host: localhost
+es_host: elasticsearch
 
 # The elasticsearch port
 es_port: 9200
