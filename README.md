@@ -517,7 +517,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 16.19.0
+nvm install 16.20.1
 ```
 
 ```sh
@@ -551,7 +551,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 16.19.0
+nvm install 16.20.1
 ```
 
 ```sh
