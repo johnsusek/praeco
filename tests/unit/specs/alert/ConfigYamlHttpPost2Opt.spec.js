@@ -25,7 +25,9 @@ http_post2_ca_certs: "/etc/certs/cert.pem"
 http_post2_ignore_ssl_errors: true
 http_post2_proxy: "host:8080"
 http_post2_timeout: 10
-http_post2_url: "http://localhost/webhook"
+http_post2_url:
+  - "http://localhost/webhook"
+  - "http://localhost/webhook2"
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false

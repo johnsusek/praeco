@@ -11,8 +11,17 @@ function initialState() {
     aggregationKey: '',
     summaryTableFields: [],
 
-    limitExcecution: '',
+    subject: '',
+    body: '',
+    bodyType: 'alert_text_only',
+    alertSubjectArgs: [],
+    alertTextArgs: [],
 
+    /* Description */
+    useDescription: false,
+    configDescription: '',
+
+    /* Kibana Discover */
     generateKibanaDiscoverUrl: false,
     kibanaDiscoverAppUrl: '',
     kibanaDiscoverVersion: '',
@@ -21,102 +30,47 @@ function initialState() {
     kibanaDiscoverFromTimedelta: { minutes: 10 },
     kibanaDiscoverToTimedelta: { minutes: 10 },
 
-    subject: '',
-    body: '',
-    bodyType: 'alert_text_only',
-    alertSubjectArgs: [],
-    alertTextArgs: [],
+    /* limitExcecution */
+    limitExcecution: '',
 
-    /* Slack */
-    slackChannelOverride: '',
-    slackUsernameOverride: 'Praeco',
-    slackEmojiOverride: ':ghost:',
-    slackMsgColor: 'danger',
-    slackParseOverride: 'none',
-    slackTextString: '',
-    slackIgnoreSslErrors: false,
-    slackCaCerts: false,
-    slackIconUrlOverride: '',
-    slackTimeout: 10,
-    slackAttachKibanaDiscoverUrl: false,
-    slackKibanaDiscoverColor: '#ec4b98',
-    slackKibanaDiscoverTitle: 'Discover in Kibana',
-    slackProxy: '',
-    slackFooter: '',
-    slackFooterIcon: '',
-    slackImageUrl: '',
-    slackThumbUrl: '',
-    slackAuthorName: '',
-    slackAuthorLink: '',
-    slackAuthorIcon: '',
-    slackMsgPretext: '',
-    slackAttachJiraTicketUrl: false,
-    slackJiraTicketColor: '#ec4b98',
-    slackJiraTicketTitle: 'Jira Ticket',
+    /* Owner */
+    useOwner: false,
+    configOwner: '',
 
-    /* MS Teams */
-    msTeamsWebhookUrl: '',
-    msTeamsThemeColor: '#ff0000',
-    msTeamsAlertFixedWidth: false,
-    msTeamsAlertSummary: 'ElastAlert Message',
-    msTeamsProxy: '',
-    msTeamsIgnoreSslErrors: false,
-    msTeamsCaCerts: false,
-    msTeamsAttachKibanaDiscoverUrl: false,
-    msTeamsKibanaDiscoverTitle: 'Discover in Kibana',
+    /* Priority */
+    usePriority: false,
+    configPriority: '',
 
-    /* Telegram */
-    telegramRoomId: '',
-    telegramProxy: '',
-    telegramProxyLogin: '',
-    telegramProxyPass: '',
+    /* scanEntireTimeframe */
+    scanEntireTimeframe: false,
 
-    /* Tencent SMS */
-    tencentSmsSecretId: '',
-    tencentSmsSecretKey: '',
-    tencentSmsSdkAppid: '',
-    tencentSmsToNumber: [],
-    tencentSmsRegion: '',
-    tencentSmsSignName: '',
-    tencentSmsTemplateId: '',
-    tencentSmsTemplateParm: [],
+    /* time_window_change */
+    useTimeWindow: false,
+    timeWindowStartTime: '',
+    timeWindowEndTime: '',
+    timeWindowDropIf: '',
 
-    /* Exotel */
-    exotelAccountSid: '',
-    exotelAuthToken: '',
-    exotelToNumber: '',
-    exotelFromNumber: '',
-    exotelMessageBody: '',
-
-    /* Twilio */
-    twilioAccountSid: '',
-    twilioAuth: '',
-    twilioToNumber: '',
-    twilioFromNumber: '',
-    twilioMessageServiceSid: '',
-
-    /* PagerDuty */
-    pagerdutyServiceKey: '',
-    pagerdutyClientName: '',
-    pagerdutyEventType: 'trigger',
-    pagerdutyIncidentKey: '',
-    pagerdutyIncidentKeyArgs: [],
-    pagerdutyProxy: '',
-    pagerdutyApiVersion: 'v1',
-    pagerdutyV2PayloadClass: '',
-    pagerdutyV2PayloadClassArgs: [],
-    pagerdutyV2PayloadComponent: '',
-    pagerdutyV2PayloadComponentArgs: [],
-    pagerdutyV2PayloadGroup: '',
-    pagerdutyV2PayloadGroupArgs: [],
-    pagerdutyV2PayloadSeverity: 'critical',
-    pagerdutyV2PayloadSource: 'ElastAlert',
-    pagerdutyV2PayloadSourceArgs: [],
-    pagerdutyV2PayloadIncludeAllInfo: false,
-
-    /* PagerTree */
-    pagertreeIntegrationUrl: '',
-    pagertreeProxy: '',
+    /* Alerta */
+    alertaApiUrl: '',
+    alertaApiKey: '',
+    alertaSeverity: 'warning',
+    alertaResource: 'elastalert',
+    alertaText: 'elastalert',
+    alertaEvent: 'elastalert',
+    alertaGroup: '',
+    alertaTags: [],
+    alertaEnvironment: 'Production',
+    alertaTimeout: 84600,
+    alertaUseMatchTimestamp: false,
+    alertaUseQkAsResource: false,
+    alertaApiSkipSsl: false,
+    alertaOrigin: 'elastalert',
+    alertaValue: '',
+    alertaType: 'elastalert',
+    alertaService: [],
+    alertaCorrelate: [],
+    alertaAttributesKeys: [],
+    alertaAttributesValues: [],
 
     /* Alertmanager */
     alertmanagerAlertSubjectLabelname: 'summary',
@@ -148,59 +102,18 @@ function initialState() {
     sesAwsRegion: '',
     sesAwsProfile: '',
 
-    /* Zabbix */
-    zbxSenderHost: 'localhost',
-    zbxSenderPort: 10051,
-    zbxHost: '',
-    zbxKey: '',
-    zbxHostFromField: false,
-
-    /* Line Notify */
-    linenotifyAccessToken: '',
-
-    /* Command */
-    command: [],
-    pipeMatchJson: false,
-    pipeAlertText: false,
-    failOnNonZeroExit: false,
-
-    /* Gitter */
-    gitterWebhookUrl: '',
-    gitterMsgLevel: 'error',
-    gitterProxy: '',
-
-    /* time_window_change */
-    useTimeWindow: false,
-    timeWindowStartTime: '',
-    timeWindowEndTime: '',
-    timeWindowDropIf: '',
-
-    /* Description */
-    useDescription: false,
-    configDescription: '',
-
-    /* Priority */
-    usePriority: false,
-    configPriority: '',
-
-    /* Owner */
-    useOwner: false,
-    configOwner: '',
-
-    /* scanEntireTimeframe */
-    scanEntireTimeframe: false,
-
-    /* Jira */
-    jiraProject: '',
-    jiraIssueType: '',
-    jiraComponents: '',
-
     /* Chatwork */
     chatworkApikey: '',
     chatworkRoomId: '',
     chatworkProxy: '',
     chatworkProxyLogin: '',
     chatworkProxyPass: '',
+
+    /* Command */
+    command: [],
+    pipeMatchJson: false,
+    pipeAlertText: false,
+    failOnNonZeroExit: false,
 
     /* Discord */
     discordWebhookUrl: '',
@@ -210,101 +123,6 @@ function initialState() {
     discordProxy: '',
     discordProxyLogin: '',
     discordProxyPassword: '',
-
-    /* ServiceNow */
-    serviceNowUsername: '',
-    serviceNowPassword: '',
-    servicenowRestUrl: '',
-    servicenowShortDescription: '',
-    servicenowComments: '',
-    servicenowAssignmentGroup: '',
-    servicenowCategory: '',
-    servicenowSubcategory: '',
-    servicenowCmdbCi: '',
-    servicenowCallerId: '',
-    servicenowProxy: '',
-    servicenowImpact: 1,
-    servicenowUrgency: 1,
-
-    /* VictorOps */
-    victoropsApiKey: '',
-    victoropsRoutingKey: '',
-    victoropsMessageType: '',
-    victoropsEntityId: '',
-    victoropsEntityDisplayName: '',
-    victoropsProxy: '',
-
-    /* Stomp */
-    stompHostname: '',
-    stompHostport: '',
-    stompLogin: '',
-    stompPassword: '',
-    stompDestination: '',
-
-    /* GoogleChat */
-    googleChatWebhookUrl: '',
-    googleChatFormat: 'basic',
-    googleChatHeaderTitle: '',
-    googleChatHeaderSubtitle: '',
-    googleChatHeaderImage: '',
-    googleFooterKibanalink: '',
-
-    /* Mattermost */
-    mattermostChannelOverride: '',
-    mattermostUsernameOverride: 'Praeco',
-    mattermostMsgColor: 'danger',
-    mattermostIconUrlOverride: '',
-    mattermostMsgPretext: '',
-    mattermostIgnoreSslErrors: false,
-    mattermostProxy: '',
-    mattermostTitle: '',
-    mattermostTitleLink: '',
-    mattermostFooter: '',
-    mattermostFooterIcon: '',
-    mattermostImageUrl: '',
-    mattermostThumbUrl: '',
-    mattermostAuthorName: '',
-    mattermostAuthorLink: '',
-    mattermostAuthorIcon: '',
-    mattermostAttachKibanaDiscoverUrl: false,
-    mattermostKibanaDiscoverColor: '#ec4b98',
-    mattermostKibanaDiscoverTitle: 'Discover in Kibana',
-
-    /* Rocket.Chat */
-    rocketChatChannelOverride: '',
-    rocketChatUsernameOverride: 'Praeco',
-    rocketChatEmojiOverride: ':ghost:',
-    rocketChatMsgColor: 'danger',
-    rocketChatTextString: '',
-    rocketChatProxy: '',
-    rocketChatAttachKibanaDiscoverUrl: false,
-    rocketChatKibanaDiscoverColor: '#ec4b98',
-    rocketChatKibanaDiscoverTitle: 'Discover in Kibana',
-    rocketChatIgnoreSslErrors: false,
-    rocketChatCaCerts: false,
-    rocketChatTimeout: 10,
-
-    /* TheHive */
-    hiveAlertConfigTitle: '',
-    hiveAlertConfigType: '',
-    hiveAlertConfigSource: '',
-    hiveAlertConfigDescription: '',
-    hiveAlertConfigSeverity: 2,
-    hiveAlertConfigTags: [],
-    hiveAlertConfigTlp: 2,
-    hiveAlertConfigStatus: 'Waiting',
-    hiveAlertConfigFollow: false,
-
-    /* Alerta */
-    alertaApiUrl: '',
-    alertaApiKey: '',
-    alertaSeverity: 'warning',
-    alertaResource: 'elastalert',
-    alertaText: 'elastalert',
-    alertaEvent: 'elastalert',
-    alertaGroup: '',
-    alertaTags: [],
-    alertaEnvironment: 'Production',
 
     /* Dingtalk */
     dingtalkAccessToken: '',
@@ -331,22 +149,241 @@ function initialState() {
     smtpCertFile: '',
     emailFromField: '',
     emailAddDomain: '',
-    // TODO:
-    // emailFormat: false,
+
+    /* Exotel */
+    exotelAccountSid: '',
+    exotelAuthToken: '',
+    exotelToNumber: '',
+    exotelFromNumber: '',
+    exotelMessageBody: '',
+
+    /* Gelf */
+    gelfType: '',
+    gelfEndpoint: '',
+    gelfHttpIgnoreSslErrors: false,
+    gelfHost: '',
+    gelfPort: '',
+    gelfLogLevel: '5',
+    gelfCaCert: '',
+    gelfTimeout: 30,
+
+    /* Gitter */
+    gitterWebhookUrl: '',
+    gitterMsgLevel: 'error',
+    gitterProxy: '',
+
+    /* GoogleChat */
+    googleChatWebhookUrl: [],
+    googleChatFormat: 'basic',
+    googleChatHeaderTitle: '',
+    googleChatHeaderSubtitle: '',
+    googleChatHeaderImage: '',
+    googleFooterKibanalink: '',
+    googleChatProxy: '',
 
     /* HTTP POST */
-    httpPostUrl: '',
+    httpPostUrl: [],
     httpPostIgnoreSslErrors: false,
     httpPostCaCerts: false,
     httpPostTimeout: '',
     httpPostProxy: '',
 
     /* HTTP POST 2 */
-    httpPost2Url: '',
+    httpPost2Url: [],
     httpPost2IgnoreSslErrors: false,
     httpPost2CaCerts: false,
     httpPost2Timeout: '',
     httpPost2Proxy: '',
+
+    /* Jira */
+    jiraProject: '',
+    jiraIssueType: '',
+    jiraComponents: '',
+
+    /* Line Notify */
+    linenotifyAccessToken: '',
+
+    /* Mattermost */
+    mattermostWebhookUrl: [],
+    mattermostChannelOverride: [],
+    mattermostUsernameOverride: 'Praeco',
+    mattermostEmojiOverride: ':ghost:',
+    mattermostMsgColor: 'danger',
+    mattermostIconUrlOverride: '',
+    mattermostMsgPretext: '',
+    mattermostIgnoreSslErrors: false,
+    mattermostProxy: '',
+    mattermostTitle: '',
+    mattermostTitleLink: '',
+    mattermostFooter: '',
+    mattermostFooterIcon: '',
+    mattermostImageUrl: '',
+    mattermostThumbUrl: '',
+    mattermostAuthorName: '',
+    mattermostAuthorLink: '',
+    mattermostAuthorIcon: '',
+    mattermostAttachKibanaDiscoverUrl: false,
+    mattermostKibanaDiscoverColor: '#ec4b98',
+    mattermostKibanaDiscoverTitle: 'Discover in Kibana',
+
+    /* MS Teams */
+    msTeamsWebhookUrl: [],
+    msTeamsThemeColor: '#ff0000',
+    msTeamsAlertFixedWidth: false,
+    msTeamsAlertSummary: 'ElastAlert Message',
+    msTeamsProxy: '',
+    msTeamsIgnoreSslErrors: false,
+    msTeamsCaCerts: false,
+    msTeamsAttachKibanaDiscoverUrl: false,
+    msTeamsKibanaDiscoverTitle: 'Discover in Kibana',
+
+    /* OpsGenie */
+    opsgenieKey: '',
+    opsgenieAccount: '',
+    opsgenieMessage: '',
+    opsgenieSubject: '',
+    opsgenieAlias: '',
+    opsgenieProxy: '',
+    opsgenieDescription: '',
+    opsgeniePriority: '',
+
+    /* PagerDuty */
+    pagerdutyServiceKey: '',
+    pagerdutyClientName: '',
+    pagerdutyEventType: 'trigger',
+    pagerdutyIncidentKey: '',
+    pagerdutyIncidentKeyArgs: [],
+    pagerdutyProxy: '',
+    pagerdutyApiVersion: 'v1',
+    pagerdutyV2PayloadClass: '',
+    pagerdutyV2PayloadClassArgs: [],
+    pagerdutyV2PayloadComponent: '',
+    pagerdutyV2PayloadComponentArgs: [],
+    pagerdutyV2PayloadGroup: '',
+    pagerdutyV2PayloadGroupArgs: [],
+    pagerdutyV2PayloadSeverity: 'critical',
+    pagerdutyV2PayloadSource: 'ElastAlert',
+    pagerdutyV2PayloadSourceArgs: [],
+    pagerdutyV2PayloadIncludeAllInfo: false,
+
+    /* PagerTree */
+    pagertreeIntegrationUrl: '',
+    pagertreeProxy: '',
+
+    /* Rocket.Chat */
+    rocketChatWebhookUrl: [],
+    rocketChatChannelOverride: [],
+    rocketChatUsernameOverride: 'Praeco',
+    rocketChatEmojiOverride: ':ghost:',
+    rocketChatMsgColor: 'danger',
+    rocketChatTextString: '',
+    rocketChatProxy: '',
+    rocketChatAttachKibanaDiscoverUrl: false,
+    rocketChatKibanaDiscoverColor: '#ec4b98',
+    rocketChatKibanaDiscoverTitle: 'Discover in Kibana',
+    rocketChatIgnoreSslErrors: false,
+    rocketChatCaCerts: false,
+    rocketChatTimeout: 10,
+
+    /* Slack */
+    slackWebhookUrl: [],
+    slackChannelOverride: [],
+    slackUsernameOverride: 'Praeco',
+    slackEmojiOverride: ':ghost:',
+    slackMsgColor: 'danger',
+    slackParseOverride: 'none',
+    slackTextString: '',
+    slackIgnoreSslErrors: false,
+    slackCaCerts: false,
+    slackIconUrlOverride: '',
+    slackTimeout: 10,
+    slackAttachKibanaDiscoverUrl: false,
+    slackKibanaDiscoverColor: '#ec4b98',
+    slackKibanaDiscoverTitle: 'Discover in Kibana',
+    slackProxy: '',
+    slackFooter: '',
+    slackFooterIcon: '',
+    slackImageUrl: '',
+    slackThumbUrl: '',
+    slackAuthorName: '',
+    slackAuthorLink: '',
+    slackAuthorIcon: '',
+    slackMsgPretext: '',
+    slackAttachJiraTicketUrl: false,
+    slackJiraTicketColor: '#ec4b98',
+    slackJiraTicketTitle: 'Jira Ticket',
+
+    /* ServiceNow */
+    serviceNowUsername: '',
+    serviceNowPassword: '',
+    servicenowRestUrl: '',
+    servicenowShortDescription: '',
+    servicenowComments: '',
+    servicenowAssignmentGroup: '',
+    servicenowCategory: '',
+    servicenowSubcategory: '',
+    servicenowCmdbCi: '',
+    servicenowCallerId: '',
+    servicenowProxy: '',
+    servicenowImpact: 1,
+    servicenowUrgency: 1,
+
+    /* Stomp */
+    stompHostname: '',
+    stompHostport: '',
+    stompLogin: '',
+    stompPassword: '',
+    stompDestination: '',
+
+    /* Telegram */
+    telegramRoomId: '',
+    telegramProxy: '',
+    telegramProxyLogin: '',
+    telegramProxyPass: '',
+    telegramParseMode: 'markdown',
+
+    /* Tencent SMS */
+    tencentSmsSecretId: '',
+    tencentSmsSecretKey: '',
+    tencentSmsSdkAppid: '',
+    tencentSmsToNumber: [],
+    tencentSmsRegion: '',
+    tencentSmsSignName: '',
+    tencentSmsTemplateId: '',
+    tencentSmsTemplateParm: [],
+
+    /* TheHive */
+    hiveAlertConfigTitle: '',
+    hiveAlertConfigType: '',
+    hiveAlertConfigSource: '',
+    hiveAlertConfigDescription: '',
+    hiveAlertConfigSeverity: 2,
+    hiveAlertConfigTags: [],
+    hiveAlertConfigTlp: 2,
+    hiveAlertConfigStatus: 'Waiting',
+    hiveAlertConfigFollow: false,
+
+    /* Twilio */
+    twilioAccountSid: '',
+    twilioAuth: '',
+    twilioToNumber: '',
+    twilioFromNumber: '',
+    twilioMessageServiceSid: '',
+
+    /* VictorOps */
+    victoropsApiKey: '',
+    victoropsRoutingKey: '',
+    victoropsMessageType: '',
+    victoropsEntityId: '',
+    victoropsEntityDisplayName: '',
+    victoropsProxy: '',
+
+    /* Zabbix */
+    zbxSenderHost: 'localhost',
+    zbxSenderPort: 10051,
+    zbxHost: '',
+    zbxKey: '',
+    zbxHostFromField: false
   };
 }
 
@@ -407,46 +444,563 @@ export default {
       state.summaryTableFields = fields;
     },
 
-    /* HTTP POST */
-    UPDATE_HTTP_POST_URL(state, httpPostUrl) {
-      state.httpPostUrl = httpPostUrl;
+    UPDATE_REALERT(state, realert) {
+      state.realert = realert;
     },
 
-    UPDATE_HTTP_POST_IGNORE_SSL_ERRORS(state, httpPostIgnoreSslErrors) {
-      state.httpPostIgnoreSslErrors = httpPostIgnoreSslErrors;
+    UPDATE_BODY(state, body) {
+      state.body = body;
     },
 
-    UPDATE_HTTP_POST_CA_CERTS(state, httpPostCaCerts) {
-      state.httpPostCaCerts = httpPostCaCerts;
+    UPDATE_BODY_TYPE(state, bodyType) {
+      state.bodyType = bodyType;
     },
 
-    UPDATE_HTTP_POST_TIMEOUT(state, httpPostTimeout) {
-      state.httpPostTimeout = httpPostTimeout;
+    UPDATE_SUBJECT(state, subject) {
+      state.subject = subject;
     },
 
-    UPDATE_HTTP_POST_PROXY(state, httpPostProxy) {
-      state.httpPostProxy = httpPostProxy;
+    UPDATE_ALERT_SUBJECT_ARGS(state, alertSubjectArgs) {
+      state.alertSubjectArgs = alertSubjectArgs;
     },
 
-    /* HTTP POST 2 */
-    UPDATE_HTTP_POST2_URL(state, httpPost2Url) {
-      state.httpPost2Url = httpPost2Url;
+    ADD_ALERT_SUBJECT_ARGS_ENTRY(state) {
+      state.alertSubjectArgs.push('');
     },
 
-    UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS(state, httpPost2IgnoreSslErrors) {
-      state.httpPost2IgnoreSslErrors = httpPost2IgnoreSslErrors;
+    ADD_ALERT_SUBJECT_ARGS_ENTRY_VALUE(state, value) {
+      state.alertSubjectArgs.push(value);
     },
 
-    UPDATE_HTTP_POST2_CA_CERTS(state, httpPost2CaCerts) {
-      state.httpPost2CaCerts = httpPost2CaCerts;
+    REMOVE_ALERT_SUBJECT_ARGS_ENTRY(state, entry) {
+      state.alertSubjectArgs = state.alertSubjectArgs.filter(b => b !== entry);
     },
 
-    UPDATE_HTTP_POST2_TIMEOUT(state, httpPost2Timeout) {
-      state.httpPost2Timeout = httpPost2Timeout;
+    UPDATE_ALERT_SUBJECT_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.alertSubjectArgs) return;
+      state.alertSubjectArgs[index] = entry;
     },
 
-    UPDATE_HTTP_POST2_PROXY(state, httpPost2Proxy) {
-      state.httpPost2Proxy = httpPost2Proxy;
+    UPDATE_ALERT_TEXT_ARGS(state, alertTextArgs) {
+      state.alertTextArgs = alertTextArgs;
+    },
+
+    ADD_ALERT_TEXT_ARGS_ENTRY(state) {
+      state.alertTextArgs.push('');
+    },
+
+    ADD_ALERT_TEXT_ARGS_ENTRY_VALUE(state, value) {
+      state.alertTextArgs.push(value);
+    },
+
+    REMOVE_ALERT_TEXT_ARGS_ENTRY(state, entry) {
+      state.alertTextArgs = state.alertTextArgs.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERT_TEXT_ARGS_ENTRY(state, { entry, index }) {
+      if (!state.alertTextArgs) return;
+      state.alertTextArgs[index] = entry;
+    },
+
+    UPDATE_ALERT(state, alert) {
+      state.alert = alert;
+    },
+
+    /* Description */
+    UPDATE_USE_DESCRIPTION(state, useDescription) {
+      state.useDescription = useDescription;
+    },
+
+    UPDATE_DESCRIPTION(state, configDescription) {
+      state.configDescription = configDescription;
+    },
+
+    /* Kibana Discover */
+    UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
+      state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
+    },
+
+    UPDATE_KIBANA_DISCOVER_APP_URL(state, kibanaDiscoverAppUrl) {
+      state.kibanaDiscoverAppUrl = kibanaDiscoverAppUrl;
+    },
+
+    UPDATE_KIBANA_DISCOVER_VERSION(state, kibanaDiscoverVersion) {
+      state.kibanaDiscoverVersion = kibanaDiscoverVersion;
+    },
+
+    UPDATE_KIBANA_DISCOVER_INDEX_PATTERN_ID(state, kibanaDiscoverIndexPatternId) {
+      state.kibanaDiscoverIndexPatternId = kibanaDiscoverIndexPatternId;
+    },
+
+    UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA(state, kibanaDiscoverFromTimedelta) {
+      state.kibanaDiscoverFromTimedelta = kibanaDiscoverFromTimedelta;
+    },
+
+    UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA(state, kibanaDiscoverToTimedelta) {
+      state.kibanaDiscoverToTimedelta = kibanaDiscoverToTimedelta;
+    },
+
+    UPDATE_KIBANA_DISCOVER_COLUMNS(state, kibanaDiscoverColumns) {
+      state.kibanaDiscoverColumns = kibanaDiscoverColumns;
+    },
+
+    ADD_KIBANA_DISCOVER_COLUMNS_ENTRY(state) {
+      state.kibanaDiscoverColumns.push('');
+    },
+
+    ADD_KIBANA_DISCOVER_COLUMNS_ENTRY_VALUE(state, value) {
+      state.kibanaDiscoverColumns.push(value);
+    },
+
+    REMOVE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, entry) {
+      state.kibanaDiscoverColumns = state.kibanaDiscoverColumns.filter(b => b !== entry);
+    },
+
+    UPDATE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, { entry, index }) {
+      if (!state.kibanaDiscoverColumns) return;
+      state.kibanaDiscoverColumns[index] = entry;
+    },
+
+    /* limitExcecution */
+    UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {
+      state.limitExcecution = limitExcecution;
+    },
+
+    /* Owner */
+    UPDATE_USE_OWNER(state, useOwner) {
+      state.useOwner = useOwner;
+    },
+
+    UPDATE_OWNER(state, configOwner) {
+      state.configOwner = configOwner;
+    },
+
+    /* Priority */
+    UPDATE_USE_PRIORITY(state, usePriority) {
+      state.usePriority = usePriority;
+    },
+
+    UPDATE_PRIORITY(state, configPriority) {
+      state.configPriority = configPriority;
+    },
+
+    /* scan_entire_timeframe */
+    UPDATE_SCAN_ENTIRE_TIMEFRAME(state, scanEntireTimeframe) {
+      state.scanEntireTimeframe = scanEntireTimeframe;
+    },
+
+    /* time_window_change */
+    UPDATE_USE_TIME_WINDOW(state, useTimeWindow) {
+      state.useTimeWindow = useTimeWindow;
+    },
+    UPDATE_TIME_WINDOW_START_TIME(state, timeWindowStartTime) {
+      state.timeWindowStartTime = timeWindowStartTime;
+    },
+    UPDATE_TIME_WINDOW_END_TIME(state, timeWindowEndTime) {
+      state.timeWindowEndTime = timeWindowEndTime;
+    },
+    UPDATE_TIME_WINDOW_DROP_IF(state, timeWindowDropIf) {
+      state.timeWindowDropIf = timeWindowDropIf;
+    },
+
+    /* Alerta */
+    UPDATE_ALERTA_API_URL(state, alertaApiUrl) {
+      state.alertaApiUrl = alertaApiUrl;
+    },
+
+    UPDATE_ALERTA_API_KEY(state, alertaApiKey) {
+      state.alertaApiKey = alertaApiKey;
+    },
+
+    UPDATE_ALERTA_SEVERITY(state, alertaSeverity) {
+      state.alertaSeverity = alertaSeverity;
+    },
+
+    UPDATE_ALERTA_RESOURCE(state, alertaResource) {
+      state.alertaResource = alertaResource;
+    },
+
+    UPDATE_ALERTA_TEXT(state, alertaText) {
+      state.alertaText = alertaText;
+    },
+
+    UPDATE_ALERTA_EVENT(state, alertaEvent) {
+      state.alertaEvent = alertaEvent;
+    },
+
+    UPDATE_ALERTA_GROUP(state, alertaGroup) {
+      state.alertaGroup = alertaGroup;
+    },
+
+    UPDATE_ALERTA_TAGS(state, alertaTags) {
+      state.alertaTags = alertaTags;
+    },
+
+    ADD_ALERTA_TAGS_ENTRY(state) {
+      state.alertaTags.push('');
+    },
+
+    ADD_ALERTA_TAGS_ENTRY_VALUE(state, value) {
+      state.alertaTags.push(value);
+    },
+
+    REMOVE_ALERTA_TAGS_ENTRY(state, entry) {
+      state.alertaTags = state.alertaTags.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_TAGS_ENTRY(state, { entry, index }) {
+      if (!state.alertaTags) return;
+      state.alertaTags[index] = entry;
+    },
+
+    UPDATE_ALERTA_ENVIRONMENT(state, alertaEnvironment) {
+      state.alertaEnvironment = alertaEnvironment;
+    },
+
+    UPDATE_ALERTA_TIMEOUT(state, alertaTimeout) {
+      state.alertaTimeout = alertaTimeout;
+    },
+
+    UPDATE_ALERTA_USE_MATCH_TIMESTAMP(state, alertaUseMatchTimestamp) {
+      state.alertaUseMatchTimestamp = alertaUseMatchTimestamp;
+    },
+
+    UPDATE_ALERTA_USE_QK_AS_RESOURCE(state, alertaUseQkAsResource) {
+      state.alertaUseQkAsResource = alertaUseQkAsResource;
+    },
+
+    UPDATE_ALERTA_API_SKIP_SSL(state, alertaApiSkipSsl) {
+      state.alertaApiSkipSsl = alertaApiSkipSsl;
+    },
+
+    UPDATE_ALERTA_ORIGIN(state, alertaOrigin) {
+      state.alertaOrigin = alertaOrigin;
+    },
+
+    UPDATE_ALERTA_VALUE(state, alertaValue) {
+      state.alertaValue = alertaValue;
+    },
+
+    UPDATE_ALERTA_TYPE(state, alertaType) {
+      state.alertaType = alertaType;
+    },
+
+    UPDATE_ALERTA_SERVICE(state, alertaService) {
+      state.alertaService = alertaService;
+    },
+
+    ADD_ALERTA_SERVICE_ENTRY(state) {
+      state.alertaService.push('');
+    },
+
+    ADD_ALERTA_SERVICE_ENTRY_VALUE(state, value) {
+      state.alertaService.push(value);
+    },
+
+    REMOVE_ALERTA_SERVICE_ENTRY(state, entry) {
+      state.alertaService = state.alertaService.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_SERVICE_ENTRY(state, { entry, index }) {
+      if (!state.alertaService) return;
+      state.alertaService[index] = entry;
+    },
+
+    UPDATE_ALERTA_CORRELATE(state, alertaCorrelate) {
+      state.alertaCorrelate = alertaCorrelate;
+    },
+
+    ADD_ALERTA_CORRELATE_ENTRY(state) {
+      state.alertaCorrelate.push('');
+    },
+
+    ADD_ALERTA_CORRELATE_ENTRY_VALUE(state, value) {
+      state.alertaCorrelate.push(value);
+    },
+
+    REMOVE_ALERTA_CORRELATE_ENTRY(state, entry) {
+      state.alertaCorrelate = state.alertaCorrelate.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_CORRELATE_ENTRY(state, { entry, index }) {
+      if (!state.alertaCorrelate) return;
+      state.alertaCorrelate[index] = entry;
+    },
+
+    UPDATE_ALERTA_ATTRIBUTES_KEYS(state, alertaAttributesKeys) {
+      state.alertaAttributesKeys = alertaAttributesKeys;
+    },
+
+    ADD_ALERTA_ATTRIBUTES_KEYS_ENTRY(state) {
+      state.alertaAttributesKeys.push('');
+    },
+
+    ADD_ALERTA_ATTRIBUTES_KEYS_ENTRY_VALUE(state, value) {
+      state.alertaAttributesKeys.push(value);
+    },
+
+    REMOVE_ALERTA_ATTRIBUTES_KEYS_ENTRY(state, entry) {
+      state.alertaAttributesKeys = state.alertaAttributesKeys.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_ATTRIBUTES_KEYS_ENTRY(state, { entry, index }) {
+      if (!state.alertaAttributesKeys) return;
+      state.alertaAttributesKeys[index] = entry;
+    },
+
+    UPDATE_ALERTA_ATTRIBUTES_VALUES(state, alertaAttributesValues) {
+      state.alertaAttributesValues = alertaAttributesValues;
+    },
+
+    ADD_ALERTA_ATTRIBUTES_VALUES_ENTRY(state) {
+      state.alertaAttributesValues.push('');
+    },
+
+    ADD_ALERTA_ATTRIBUTES_VALUES_ENTRY_VALUE(state, value) {
+      state.alertaAttributesValues.push(value);
+    },
+
+    REMOVE_ALERTA_ATTRIBUTES_VALUES_ENTRY(state, entry) {
+      state.alertaAttributesValues = state.alertaAttributesValues.filter(b => b !== entry);
+    },
+
+    UPDATE_ALERTA_ATTRIBUTES_VALUES_ENTRY(state, { entry, index }) {
+      if (!state.alertaAttributesValues) return;
+      state.alertaAttributesValues[index] = entry;
+    },
+
+    /* Alertmanager */
+    UPDATE_ALERTMANAGER_ALERT_SUBJECT_LABELNAME(state, alertmanagerAlertSubjectLabelname) {
+      state.alertmanagerAlertSubjectLabelname = alertmanagerAlertSubjectLabelname;
+    },
+
+    UPDATE_ALERTMANAGER_ALERT_TEXT_LABELNAME(state, alertmanagerAlertTextLabelname) {
+      state.alertmanagerAlertTextLabelname = alertmanagerAlertTextLabelname;
+    },
+
+    UPDATE_ALERTMANAGER_PROXY(state, alertmanagerProxy) {
+      state.alertmanagerProxy = alertmanagerProxy;
+    },
+
+    UPDATE_ALERTMANAGER_BASIC_AUTH_LOGIN(state, alertmanagerBasicAuthLogin) {
+      state.alertmanagerBasicAuthLogin = alertmanagerBasicAuthLogin;
+    },
+
+    UPDATE_ALERTMANAGER_BASIC_AUTH_PASSWORD(state, alertmanagerBasicAuthPassword) {
+      state.alertmanagerBasicAuthPassword = alertmanagerBasicAuthPassword;
+    },
+
+    UPDATE_ALERTMANAGER_CA_CERTS(state, alertmanagerCaCerts) {
+      state.alertmanagerCaCerts = alertmanagerCaCerts;
+    },
+
+    UPDATE_ALERTMANAGER_IGNORE_SSL_ERRORS(state, alertmanagerIgnoreSslErrors) {
+      state.alertmanagerIgnoreSslErrors = alertmanagerIgnoreSslErrors;
+    },
+
+    UPDATE_ALERTMANAGER_TIMEOUT(state, alertmanagerTimeout) {
+      state.alertmanagerTimeout = alertmanagerTimeout;
+    },
+
+    /* Amazon SNS */
+    UPDATE_SNS_TOPIC_ARN(state, snsTopicArn) {
+      state.snsTopicArn = snsTopicArn;
+    },
+
+    UPDATE_SNS_AWS_ACCESS_KEY_ID(state, snsAwsAccessKeyId) {
+      state.snsAwsAccessKeyId = snsAwsAccessKeyId;
+    },
+
+    UPDATE_SNS_AWS_SECRET_ACCESS_KEY(state, snsAwsSecretAccessKey) {
+      state.snsAwsSecretAccessKey = snsAwsSecretAccessKey;
+    },
+
+    UPDATE_SNS_AWS_REGION(state, snsAwsRegion) {
+      state.snsAwsRegion = snsAwsRegion;
+    },
+
+    UPDATE_SNS_AWS_PROFILE(state, snsAwsProfile) {
+      state.snsAwsProfile = snsAwsProfile;
+    },
+
+    /* Amazon SES */
+    UPDATE_SES_FROM_ADDR(state, sesFromAddr) {
+      state.sesFromAddr = sesFromAddr;
+    },
+
+    UPDATE_SES_EMAIL_REPLY_TO(state, sesEmailReplyTo) {
+      state.sesEmailReplyTo = sesEmailReplyTo;
+    },
+
+    UPDATE_SES_EMAIL(state, sesEmail) {
+      state.sesEmail = sesEmail;
+    },
+
+    UPDATE_SES_CC(state, sesCc) {
+      state.sesCc = sesCc;
+    },
+
+    UPDATE_SES_BCC(state, sesBcc) {
+      state.sesBcc = sesBcc;
+    },
+
+    UPDATE_SES_EMAIL_FROM_FIELD(state, sesEmailFromField) {
+      state.sesEmailFromField = sesEmailFromField;
+    },
+
+    UPDATE_SES_EMAIL_ADD_DOMAIN(state, sesEmailAddDomain) {
+      state.sesEmailAddDomain = sesEmailAddDomain;
+    },
+
+    UPDATE_SES_AWS_ACCESS_KEY_ID(state, sesAwsAccessKeyId) {
+      state.sesAwsAccessKeyId = sesAwsAccessKeyId;
+    },
+
+    UPDATE_SES_AWS_SECRET_ACCESS_KEY(state, sesAwsSecretAccessKey) {
+      state.sesAwsSecretAccessKey = sesAwsSecretAccessKey;
+    },
+
+    UPDATE_SES_AWS_REGION(state, sesAwsRegion) {
+      state.sesAwsRegion = sesAwsRegion;
+    },
+
+    UPDATE_SES_AWS_PROFILE(state, sesAwsProfile) {
+      state.sesAwsProfile = sesAwsProfile;
+    },
+
+    /* Chatwork */
+    UPDATE_CHATWORK_API_KEY(state, chatworkApikey) {
+      state.chatworkApikey = chatworkApikey;
+    },
+
+    UPDATE_CHATWORK_ROOM_ID(state, chatworkRoomId) {
+      state.chatworkRoomId = chatworkRoomId;
+    },
+
+    UPDATE_CHATWORK_PROXY(state, chatworkProxy) {
+      state.chatworkProxy = chatworkProxy;
+    },
+
+    UPDATE_CHATWORK_PROXY_LOGIN(state, chatworkProxyLogin) {
+      state.chatworkProxyLogin = chatworkProxyLogin;
+    },
+
+    UPDATE_CHATWORK_PROXY_PASS(state, chatworkProxyPass) {
+      state.chatworkProxyPass = chatworkProxyPass;
+    },
+
+    /* Command */
+    UPDATE_COMMAND(state, command) {
+      state.command = command;
+    },
+
+    ADD_COMMAND_ENTRY(state) {
+      state.command.push('');
+    },
+
+    ADD_COMMAND_ENTRY_VALUE(state, value) {
+      state.command.push(value);
+    },
+
+    REMOVE_COMMAND_ENTRY(state, entry) {
+      state.command = state.command.filter(b => b !== entry);
+    },
+
+    UPDATE_COMMAND_ENTRY(state, { entry, index }) {
+      if (!state.command) return;
+      state.command[index] = entry;
+    },
+
+    UPDATE_PIPE_MATCH_JSON(state, pipeMatchJson) {
+      state.pipeMatchJson = pipeMatchJson;
+    },
+
+    UPDATE_PIPE_ALERT_TEXT(state, pipeAlertText) {
+      state.pipeAlertText = pipeAlertText;
+    },
+
+    UPDATE_FAIL_ON_NON_ZERO_EXIT(state, failOnNonZeroExit) {
+      state.failOnNonZeroExit = failOnNonZeroExit;
+    },
+
+    /* Datadog */
+    UPDATE_DATADOG_API_KEY(state, datadogApiKey) {
+      state.datadogApiKey = datadogApiKey;
+    },
+
+    UPDATE_DATADOG_APP_KEY(state, datadogAppKey) {
+      state.datadogAppKey = datadogAppKey;
+    },
+
+    /* Dingtalk */
+    UPDATE_DINGTALK_ACCESS_TOKEN(state, dingtalkAccessToken) {
+      state.dingtalkAccessToken = dingtalkAccessToken;
+    },
+
+    UPDATE_DINGTALK_MSGTYPE(state, dingtalkMsgtype) {
+      state.dingtalkMsgtype = dingtalkMsgtype;
+    },
+
+    UPDATE_DINGTALK_SINGLE_TITLE(state, dingtalkSingleTitle) {
+      state.dingtalkSingleTitle = dingtalkSingleTitle;
+    },
+
+    UPDATE_DINGTALK_SINGLE_URL(state, dingtalkSingleUrl) {
+      state.dingtalkSingleUrl = dingtalkSingleUrl;
+    },
+
+    UPDATE_DINGTALK_BTN_ORIENTATION(state, dingtalkBtnOrientation) {
+      state.dingtalkBtnOrientation = dingtalkBtnOrientation;
+    },
+
+    /* Discord */
+    UPDATE_DISCORD_WEBHOOK_URL(state, discordWebhookUrl) {
+      state.discordWebhookUrl = discordWebhookUrl;
+    },
+
+    UPDATE_DISCORD_EMOJI_TITLE(state, discordEmojiTitle) {
+      state.discordEmojiTitle = discordEmojiTitle;
+    },
+
+    UPDATE_DISCORD_EMBED_FOOTER(state, discordEmbedFooter) {
+      state.discordEmbedFooter = discordEmbedFooter;
+    },
+
+    UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
+      state.discordEmbedIconUrl = discordEmbedIconUrl;
+    },
+
+    UPDATE_DISCORD_PROXY(state, discordProxy) {
+      state.discordProxy = discordProxy;
+    },
+
+    UPDATE_DISCORD_PROXY_LOGIN(state, discordProxyLogin) {
+      state.discordProxyLogin = discordProxyLogin;
+    },
+
+    UPDATE_DISCORD_PROXY_PASSWORD(state, discordProxyPassword) {
+      state.discordProxyPassword = discordProxyPassword;
+    },
+
+    /* Exotel */
+    UPDATE_EXOTEL_ACCOUNT_SID(state, exotelAccountSid) {
+      state.exotelAccountSid = exotelAccountSid;
+    },
+
+    UPDATE_EXOTEL_AUTH_TOKEN(state, exotelAuthToken) {
+      state.exotelAuthToken = exotelAuthToken;
+    },
+
+    UPDATE_EXOTEL_TO_NUMBER(state, exotelToNumber) {
+      state.exotelToNumber = exotelToNumber;
+    },
+
+    UPDATE_EXOTEL_FROM_NUMBER(state, exotelFromNumber) {
+      state.exotelFromNumber = exotelFromNumber;
+    },
+
+    UPDATE_EXOTEL_MESSAGE_BODY(state, exotelMessageBody) {
+      state.exotelMessageBody = exotelMessageBody;
     },
 
     /* EMail */
@@ -502,185 +1056,404 @@ export default {
       state.emailAddDomain = emailAddDomain;
     },
 
-    // TODO:
-    // UPDATE_EMAIL_FORMAT(state, emailFormat) {
-    //   state.emailFormat = emailFormat;
-    // },
-
-    /* Telegram */
-    UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
-      state.telegramRoomId = telegramRoomId;
+    /* GoogleChat */
+    UPDATE_GOOGLE_CHAT_WEBHOOK_URL(state, googleChatWebhookUrl) {
+      state.googleChatWebhookUrl = googleChatWebhookUrl;
     },
 
-    UPDATE_TELEGRAM_PROXY(state, telegramProxy) {
-      state.telegramProxy = telegramProxy;
+    ADD_GOOGLECHAT_WEBHOOK_URL_ENTRY(state) {
+      state.googleChatWebhookUrl.push('');
     },
 
-    UPDATE_TELEGRAM_PROXY_LOGIN(state, telegramProxyLogin) {
-      state.telegramProxyLogin = telegramProxyLogin;
+    ADD_GOOGLECHAT_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.googleChatWebhookUrl.push(value);
     },
 
-    UPDATE_TELEGRAM_PROXY_PASS(state, telegramProxyPass) {
-      state.telegramProxyPass = telegramProxyPass;
+    REMOVE_GOOGLECHAT_WEBHOOK_URL_ENTRY(state, entry) {
+      state.googleChatWebhookUrl = state.googleChatWebhookUrl.filter(b => b !== entry);
     },
 
-    /* Tencent SMS */
-    UPDATE_TENCENT_SMS_SECRET_ID(state, tencentSmsSecretId) {
-      state.tencentSmsSecretId = tencentSmsSecretId;
+    UPDATE_GOOGLECHAT_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.googleChatWebhookUrl) return;
+      state.googleChatWebhookUrl[index] = entry;
     },
 
-    UPDATE_TENCENT_SMS_SECRET_KEY(state, tencentSmsSecretKey) {
-      state.tencentSmsSecretKey = tencentSmsSecretKey;
+    UPDATE_GOOGLE_CHAT_FORMAT(state, googleChatFormat) {
+      state.googleChatFormat = googleChatFormat;
     },
 
-    UPDATE_TENCENT_SMS_SDK_APPID(state, tencentSmsSdkAppid) {
-      state.tencentSmsSdkAppid = tencentSmsSdkAppid;
+    UPDATE_GOOGLE_CHAT_HEADER_TITLE(state, googleChatHeaderTitle) {
+      state.googleChatHeaderTitle = googleChatHeaderTitle;
     },
 
-    UPDATE_TENCENT_SMS_TO_NUMBER(state, tencentSmsToNumber) {
-      state.tencentSmsToNumber = tencentSmsToNumber;
+    UPDATE_GOOGLECHAT_HEADER_SUBTITLE(state, googleChatHeaderSubtitle) {
+      state.googleChatHeaderSubtitle = googleChatHeaderSubtitle;
     },
 
-    ADD_TENCENT_SMS_TO_NUMBER_ENTRY(state) {
-      state.tencentSmsToNumber.push('');
+    UPDATE_GOOGLECHAT_HEADER_IMAGE(state, googleChatHeaderImage) {
+      state.googleChatHeaderImage = googleChatHeaderImage;
     },
 
-    ADD_TENCENT_SMS_TO_NUMBER_ENTRY_VALUE(state, value) {
-      state.tencentSmsToNumber.push(value);
+    UPDATE_GOOGLECHAT_FOOTER_KIBANALINK(state, googleFooterKibanalink) {
+      state.googleFooterKibanalink = googleFooterKibanalink;
     },
 
-    UPDATE_TENCENT_SMS_TO_NUMBER_ENTRY(state, { entry, index }) {
-      if (!state.tencentSmsToNumber) return;
-      state.tencentSmsToNumber[index] = entry;
+    UPDATE_GOOGLECHAT_PROXY(state, googleChatProxy) {
+      state.googleChatProxy = googleChatProxy;
     },
 
-    REMOVE_TENCENT_SMS_TO_NUMBER_ENTRY(state, entry) {
-      state.tencentSmsToNumber = state.tencentSmsToNumber.filter(b => b !== entry);
+    /* Gelf */
+    UPDATE_GELF_TYPE(state, gelfType) {
+      state.gelfType = gelfType;
     },
 
-    UPDATE_TENCENT_SMS_REGION(state, tencentSmsRegion) {
-      state.tencentSmsRegion = tencentSmsRegion;
+    UPDATE_GELF_ENDPOINT(state, gelfEndpoint) {
+      state.gelfEndpoint = gelfEndpoint;
     },
 
-    UPDATE_TENCENT_SMS_SIGN_NAME(state, tencentSmsSignName) {
-      state.tencentSmsSignName = tencentSmsSignName;
+    UPDATE_GELF_HTTP_IGNORE_SSL_ERRORS(state, gelfHttpIgnoreSslErrors) {
+      state.gelfHttpIgnoreSslErrors = gelfHttpIgnoreSslErrors;
     },
 
-    UPDATE_TENCENT_SMS_TEMPLATE_ID(state, tencentSmsTemplateId) {
-      state.tencentSmsTemplateId = tencentSmsTemplateId;
+    UPDATE_GELF_HOST(state, gelfHost) {
+      state.gelfHost = gelfHost;
     },
 
-    UPDATE_TENCENT_SMS_TEMPLATE_PARM(state, tencentSmsTemplateParm) {
-      state.tencentSmsTemplateParm = tencentSmsTemplateParm;
+    UPDATE_GELF_PORT(state, gelfPort) {
+      state.gelfPort = gelfPort;
     },
 
-    ADD_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state) {
-      state.tencentSmsTemplateParm.push('');
+    UPDATE_GELF_LOG_LEVEL(state, gelfLogLevel) {
+      state.gelfLogLevel = gelfLogLevel;
     },
 
-    ADD_TENCENT_SMS_TEMPLATE_PARM_ENTRY_VALUE(state, value) {
-      state.tencentSmsTemplateParm.push(value);
+    UPDATE_GELF_CA_CERT(state, gelfCaCert) {
+      state.gelfCaCert = gelfCaCert;
     },
 
-    UPDATE_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state, { entry, index }) {
-      if (!state.tencentSmsTemplateParm) return;
-      state.tencentSmsTemplateParm[index] = entry;
+    UPDATE_GELF_TIMEOUT(state, gelfTimeout) {
+      state.gelfTimeout = gelfTimeout;
     },
 
-    REMOVE_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state, entry) {
-      state.tencentSmsTemplateParm = state.tencentSmsTemplateParm.filter(b => b !== entry);
+    /* Gitter */
+    UPDATE_GITTER_WEBHOOK_URL(state, gitterWebhookUrl) {
+      state.gitterWebhookUrl = gitterWebhookUrl;
     },
 
-    /* Chatwork */
-    UPDATE_CHATWORK_API_KEY(state, chatworkApikey) {
-      state.chatworkApikey = chatworkApikey;
+    UPDATE_GITTER_MSG_LEVEL(state, gitterMsgLevel) {
+      state.gitterMsgLevel = gitterMsgLevel;
     },
 
-    UPDATE_CHATWORK_ROOM_ID(state, chatworkRoomId) {
-      state.chatworkRoomId = chatworkRoomId;
+    UPDATE_GITTER_PROXY(state, gitterProxy) {
+      state.gitterProxy = gitterProxy;
     },
 
-    UPDATE_CHATWORK_PROXY(state, chatworkProxy) {
-      state.chatworkProxy = chatworkProxy;
+    /* HTTP POST */
+    UPDATE_HTTP_POST_URL(state, httpPostUrl) {
+      state.httpPostUrl = httpPostUrl;
     },
 
-    UPDATE_CHATWORK_PROXY_LOGIN(state, chatworkProxyLogin) {
-      state.chatworkProxyLogin = chatworkProxyLogin;
+    ADD_HTTP_POST_URL_ENTRY(state) {
+      state.httpPostUrl.push('');
     },
 
-    UPDATE_CHATWORK_PROXY_PASS(state, chatworkProxyPass) {
-      state.chatworkProxyPass = chatworkProxyPass;
+    ADD_HTTP_POST_URL_ENTRY_VALUE(state, value) {
+      state.httpPostUrl.push(value);
     },
 
-    /* Discord */
-    UPDATE_DISCORD_WEBHOOK_URL(state, discordWebhookUrl) {
-      state.discordWebhookUrl = discordWebhookUrl;
+    REMOVE_HTTP_POST_URL_ENTRY(state, entry) {
+      state.httpPostUrl = state.httpPostUrl.filter(b => b !== entry);
     },
 
-    UPDATE_DISCORD_EMOJI_TITLE(state, discordEmojiTitle) {
-      state.discordEmojiTitle = discordEmojiTitle;
+    UPDATE_HTTP_POST_URL_ENTRY(state, { entry, index }) {
+      if (!state.httpPostUrl) return;
+      state.httpPostUrl[index] = entry;
     },
 
-    UPDATE_DISCORD_EMBED_FOOTER(state, discordEmbedFooter) {
-      state.discordEmbedFooter = discordEmbedFooter;
+    UPDATE_HTTP_POST_IGNORE_SSL_ERRORS(state, httpPostIgnoreSslErrors) {
+      state.httpPostIgnoreSslErrors = httpPostIgnoreSslErrors;
     },
 
-    UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
-      state.discordEmbedIconUrl = discordEmbedIconUrl;
+    UPDATE_HTTP_POST_CA_CERTS(state, httpPostCaCerts) {
+      state.httpPostCaCerts = httpPostCaCerts;
     },
 
-    UPDATE_DISCORD_PROXY(state, discordProxy) {
-      state.discordProxy = discordProxy;
+    UPDATE_HTTP_POST_TIMEOUT(state, httpPostTimeout) {
+      state.httpPostTimeout = httpPostTimeout;
     },
 
-    UPDATE_DISCORD_PROXY_LOGIN(state, discordProxyLogin) {
-      state.discordProxyLogin = discordProxyLogin;
+    UPDATE_HTTP_POST_PROXY(state, httpPostProxy) {
+      state.httpPostProxy = httpPostProxy;
     },
 
-    UPDATE_DISCORD_PROXY_PASSWORD(state, discordProxyPassword) {
-      state.discordProxyPassword = discordProxyPassword;
+    /* HTTP POST 2 */
+    UPDATE_HTTP_POST2_URL(state, httpPost2Url) {
+      state.httpPost2Url = httpPost2Url;
     },
 
-    /* Exotel */
-    UPDATE_EXOTEL_ACCOUNT_SID(state, exotelAccountSid) {
-      state.exotelAccountSid = exotelAccountSid;
+    ADD_HTTP_POST2_URL_ENTRY(state) {
+      state.httpPost2Url.push('');
     },
 
-    UPDATE_EXOTEL_AUTH_TOKEN(state, exotelAuthToken) {
-      state.exotelAuthToken = exotelAuthToken;
+    ADD_HTTP_POST2_URL_ENTRY_VALUE(state, value) {
+      state.httpPost2Url.push(value);
     },
 
-    UPDATE_EXOTEL_TO_NUMBER(state, exotelToNumber) {
-      state.exotelToNumber = exotelToNumber;
+    REMOVE_HTTP_POST2_URL_ENTRY(state, entry) {
+      state.httpPost2Url = state.httpPost2Url.filter(b => b !== entry);
     },
 
-    UPDATE_EXOTEL_FROM_NUMBER(state, exotelFromNumber) {
-      state.exotelFromNumber = exotelFromNumber;
+    UPDATE_HTTP_POST2_URL_ENTRY(state, { entry, index }) {
+      if (!state.httpPost2Url) return;
+      state.httpPost2Url[index] = entry;
     },
 
-    UPDATE_EXOTEL_MESSAGE_BODY(state, exotelMessageBody) {
-      state.exotelMessageBody = exotelMessageBody;
+    UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS(state, httpPost2IgnoreSslErrors) {
+      state.httpPost2IgnoreSslErrors = httpPost2IgnoreSslErrors;
     },
 
-    /* Twilio */
-    UPDATE_TWILIO_ACCOUNT_SID(state, twilioAccountSid) {
-      state.twilioAccountSid = twilioAccountSid;
+    UPDATE_HTTP_POST2_CA_CERTS(state, httpPost2CaCerts) {
+      state.httpPost2CaCerts = httpPost2CaCerts;
     },
 
-    UPDATE_TWILIO_AUTH_TOKEN(state, twilioAuth) {
-      state.twilioAuth = twilioAuth;
+    UPDATE_HTTP_POST2_TIMEOUT(state, httpPost2Timeout) {
+      state.httpPost2Timeout = httpPost2Timeout;
     },
 
-    UPDATE_TWILIO_TO_NUMBER(state, twilioToNumber) {
-      state.twilioToNumber = twilioToNumber;
+    UPDATE_HTTP_POST2_PROXY(state, httpPost2Proxy) {
+      state.httpPost2Proxy = httpPost2Proxy;
     },
 
-    UPDATE_TWILIO_FROM_NUMBER(state, twilioFromNumber) {
-      state.twilioFromNumber = twilioFromNumber;
+    /* Jira */
+    UPDATE_JIRA_PROJECT(state, jiraProject) {
+      state.jiraProject = jiraProject;
     },
 
-    UPDATE_TWILIO_MESSAGE_SERVICE_SID(state, twilioMessageServiceSid) {
-      state.twilioMessageServiceSid = twilioMessageServiceSid;
+    UPDATE_JIRA_ISSUE_TYPE(state, jiraIssueType) {
+      state.jiraIssueType = jiraIssueType;
+    },
+
+    UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
+      state.jiraComponents = jiraComponents;
+    },
+
+    UPDATE_JIRA_DESCRIPTIONT(state, jiraDescription) {
+      state.jiraDescription = jiraDescription;
+    },
+
+    /* LineNotify */
+    UPDATE_LINENOTIFY_ACCESS_TOKEN(state, linenotifyAccessToken) {
+      state.linenotifyAccessToken = linenotifyAccessToken;
+    },
+
+    /* Mattermost */
+    UPDATE_MATTERMOST_WEBHOOK_URL(state, mattermostWebhookUrl) {
+      state.mattermostWebhookUrl = mattermostWebhookUrl;
+    },
+
+    ADD_MATTERMOST_WEBHOOK_URL_ENTRY(state) {
+      state.mattermostWebhookUrl.push('');
+    },
+
+    ADD_MATTERMOST_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.mattermostWebhookUrl.push(value);
+    },
+
+    REMOVE_MATTERMOST_WEBHOOK_URL_ENTRY(state, entry) {
+      state.mattermostWebhookUrl = state.mattermostWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_MATTERMOST_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.mattermostWebhookUrl) return;
+      state.mattermostWebhookUrl[index] = entry;
+    },
+
+    UPDATE_MATTERMOST_CHANNEL_OVERRIDE(state, mattermostChannelOverride) {
+      state.mattermostChannelOverride = mattermostChannelOverride;
+    },
+
+    ADD_MATTERMOST_CHANNEL_OVERRIDE_ENTRY(state) {
+      state.mattermostChannelOverride.push('');
+    },
+
+    ADD_MATTERMOST_CHANNEL_OVERRIDE_ENTRY_VALUE(state, value) {
+      state.mattermostChannelOverride.push(value);
+    },
+
+    REMOVE_MATTERMOST_CHANNEL_OVERRIDE_ENTRY(state, entry) {
+      state.mattermostChannelOverride = state.mattermostChannelOverride.filter(b => b !== entry);
+    },
+
+    UPDATE_MATTERMOST_CHANNEL_OVERRIDE_ENTRY(state, { entry, index }) {
+      if (!state.mattermostChannelOverride) return;
+      state.mattermostChannelOverride[index] = entry;
+    },
+
+    UPDATE_MATTERMOST_USERNAME_OVERRIDE(state, mattermostUsernameOverride) {
+      state.mattermostUsernameOverride = mattermostUsernameOverride;
+    },
+
+    UPDATE_MATTERMOST_EMOJI_OVERRIDE(state, mattermostEmojiOverride) {
+      state.mattermostEmojiOverride = mattermostEmojiOverride;
+    },
+
+    UPDATE_MATTERMOST_MSG_COLOR(state, mattermostMsgColor) {
+      state.mattermostMsgColor = mattermostMsgColor;
+    },
+
+    UPDATE_MATTERMOST_ICON_URL_OVERRIDE(state, mattermostIconUrlOverride) {
+      state.mattermostIconUrlOverride = mattermostIconUrlOverride;
+    },
+
+    UPDATE_MATTERMOST_MSG_PRETEXT(state, mattermostMsgPretext) {
+      state.mattermostMsgPretext = mattermostMsgPretext;
+    },
+
+    UPDATE_MATTERMOST_IGNORE_SSL_ERRORS(state, mattermostIgnoreSslErrors) {
+      state.mattermostIgnoreSslErrors = mattermostIgnoreSslErrors;
+    },
+
+    UPDATE_MATTERMOST_PROXY(state, mattermostProxy) {
+      state.mattermostProxy = mattermostProxy;
+    },
+
+    UPDATE_MATTERMOST_TITLE(state, mattermostTitle) {
+      state.mattermostTitle = mattermostTitle;
+    },
+
+    UPDATE_MATTERMOST_TITLE_LINK(state, mattermostTitleLink) {
+      state.mattermostTitleLink = mattermostTitleLink;
+    },
+
+    UPDATE_MATTERMOST_FOOTER(state, mattermostFooter) {
+      state.mattermostFooter = mattermostFooter;
+    },
+
+    UPDATE_MATTERMOST_FOOTER_ICON(state, mattermostFooterIcon) {
+      state.mattermostFooterIcon = mattermostFooterIcon;
+    },
+
+    UPDATE_MATTERMOST_IMAGE_URL(state, mattermostImageUrl) {
+      state.mattermostImageUrl = mattermostImageUrl;
+    },
+
+    UPDATE_MATTERMOST_THUMB_URL(state, mattermostThumbUrl) {
+      state.mattermostThumbUrl = mattermostThumbUrl;
+    },
+
+    UPDATE_MATTERMOST_AUTHOR_NAME(state, mattermostAuthorName) {
+      state.mattermostAuthorName = mattermostAuthorName;
+    },
+
+    UPDATE_MATTERMOST_AUTHOR_LINK(state, mattermostAuthorLink) {
+      state.mattermostAuthorLink = mattermostAuthorLink;
+    },
+
+    UPDATE_MATTERMOST_AUTHOR_ICON(state, mattermostAuthorIcon) {
+      state.mattermostAuthorIcon = mattermostAuthorIcon;
+    },
+
+    UPDATE_MATTERMOST_ATTACH_KIBANA_DISCOVER_URL(state, mattermostAttachKibanaDiscoverUrl) {
+      state.mattermostAttachKibanaDiscoverUrl = mattermostAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_MATTERMOST_KIBANA_DISCOVER_COLOR(state, mattermostKibanaDiscoverColor) {
+      state.mattermostKibanaDiscoverColor = mattermostKibanaDiscoverColor;
+    },
+
+    UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE(state, mattermostKibanaDiscoverTitle) {
+      state.mattermostKibanaDiscoverTitle = mattermostKibanaDiscoverTitle;
+    },
+
+    /* MS Teams */
+    UPDATE_MS_TEAMS_WEBHOOK_URL(state, msTeamsWebhookUrl) {
+      state.msTeamsWebhookUrl = msTeamsWebhookUrl;
+    },
+
+    ADD_MS_TEAMS_WEBHOOK_URL_ENTRY(state) {
+      state.msTeamsWebhookUrl.push('');
+    },
+
+    ADD_MS_TEAMS_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.msTeamsWebhookUrl.push(value);
+    },
+
+    REMOVE_MS_TEAMS_WEBHOOK_URL_ENTRY(state, entry) {
+      state.msTeamsWebhookUrl = state.msTeamsWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_MS_TEAMS_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.msTeamsWebhookUrl) return;
+      state.msTeamsWebhookUrl[index] = entry;
+    },
+
+    UPDATE_MS_TEAMS_THEME_COLOR(state, msTeamsThemeColor) {
+      state.msTeamsThemeColor = msTeamsThemeColor;
+    },
+
+    UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH(state, msTeamsAlertFixedWidth) {
+      state.msTeamsAlertFixedWidth = msTeamsAlertFixedWidth;
+    },
+
+    UPDATE_MS_TEAMS_ALERT_SUMMARY(state, msTeamsAlertSummary) {
+      state.msTeamsAlertSummary = msTeamsAlertSummary;
+    },
+
+    UPDATE_MS_TEAMS_PROXY(state, msTeamsProxy) {
+      state.msTeamsProxy = msTeamsProxy;
+    },
+
+    UPDATE_MS_TEAMS_IGNORE_SSL_ERRORS(state, msTeamsIgnoreSslErrors) {
+      state.msTeamsIgnoreSslErrors = msTeamsIgnoreSslErrors;
+    },
+
+    UPDATE_MS_TEAMS_CA_CERTS(state, msTeamsCaCerts) {
+      state.msTeamsCaCerts = msTeamsCaCerts;
+    },
+
+    UPDATE_MS_TEAMS_ATTACH_KIBANA_DISCOVER_URL(state, msTeamsAttachKibanaDiscoverUrl) {
+      state.msTeamsAttachKibanaDiscoverUrl = msTeamsAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE(state, msTeamsKibanaDiscoverTitle) {
+      state.msTeamsKibanaDiscoverTitle = msTeamsKibanaDiscoverTitle;
+    },
+
+    /* OpsGenie */
+    OPSGENIE_KEY(state, opsgenieKey) {
+      state.opsgenieKey = opsgenieKey;
+    },
+
+    OPSGENIE_ACCOUNT(state, opsgenieAccount) {
+      state.opsgenieAccount = opsgenieAccount;
+    },
+
+    OPSGENIE_MESSAGE(state, opsgenieMessage) {
+      state.opsgenieMessage = opsgenieMessage;
+    },
+
+    OPSGENIE_SUBJECT(state, opsgenieSubject) {
+      state.opsgenieSubject = opsgenieSubject;
+    },
+
+    OPSGENIE_ALIAS(state, opsgenieAlias) {
+      state.opsgenieAlias = opsgenieAlias;
+    },
+
+    OPSGENIE_PROXY(state, opsgenieProxy) {
+      state.opsgenieProxy = opsgenieProxy;
+    },
+
+    OPSGENIE_PRIORITY(state, opsgeniePriority) {
+      state.opsgeniePriority = opsgeniePriority;
+    },
+
+    OPSGENIE_DESCRIPTION(state, opsgenieDescription) {
+      state.opsgenieDescription = opsgenieDescription;
+    },
+
+    UPDATE_OPSGENIE_PRIORITY(state, opsgeniePriority) {
+      state.opsgeniePriority = opsgeniePriority;
     },
 
     /* PagerDuty */
@@ -846,230 +1619,91 @@ export default {
       state.pagertreeProxy = pagertreeProxy;
     },
 
-    /* Alertmanager */
-    UPDATE_ALERTMANAGER_ALERT_SUBJECT_LABELNAME(state, alertmanagerAlertSubjectLabelname) {
-      state.alertmanagerAlertSubjectLabelname = alertmanagerAlertSubjectLabelname;
+    /* Rocket.Chat */
+    UPDATE_ROCKET_CHAT_WEBHOOK_URL(state, rocketChatWebhookUrl) {
+      state.rocketChatWebhookUrl = rocketChatWebhookUrl;
     },
 
-    UPDATE_ALERTMANAGER_ALERT_TEXT_LABELNAME(state, alertmanagerAlertTextLabelname) {
-      state.alertmanagerAlertTextLabelname = alertmanagerAlertTextLabelname;
+    ADD_ROCKET_CHAT_WEBHOOK_URL_ENTRY(state) {
+      state.rocketChatWebhookUrl.push('');
     },
 
-    UPDATE_ALERTMANAGER_PROXY(state, alertmanagerProxy) {
-      state.alertmanagerProxy = alertmanagerProxy;
+    ADD_ROCKET_CHAT_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.rocketChatWebhookUrl.push(value);
     },
 
-    UPDATE_ALERTMANAGER_BASIC_AUTH_LOGIN(state, alertmanagerBasicAuthLogin) {
-      state.alertmanagerBasicAuthLogin = alertmanagerBasicAuthLogin;
+    REMOVE_ROCKET_CHAT_WEBHOOK_URL_ENTRY(state, entry) {
+      state.rocketChatWebhookUrl = state.rocketChatWebhookUrl.filter(b => b !== entry);
     },
 
-    UPDATE_ALERTMANAGER_BASIC_AUTH_PASSWORD(state, alertmanagerBasicAuthPassword) {
-      state.alertmanagerBasicAuthPassword = alertmanagerBasicAuthPassword;
+    UPDATE_ROCKET_CHAT_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.rocketChatWebhookUrl) return;
+      state.rocketChatWebhookUrl[index] = entry;
     },
 
-    UPDATE_ALERTMANAGER_CA_CERTS(state, alertmanagerCaCerts) {
-      state.alertmanagerCaCerts = alertmanagerCaCerts;
+    UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE(state, rocketChatChannelOverride) {
+      state.rocketChatChannelOverride = rocketChatChannelOverride;
     },
 
-    UPDATE_ALERTMANAGER_IGNORE_SSL_ERRORS(state, alertmanagerIgnoreSslErrors) {
-      state.alertmanagerIgnoreSslErrors = alertmanagerIgnoreSslErrors;
+    ADD_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY(state) {
+      state.rocketChatChannelOverride.push('');
     },
 
-    UPDATE_ALERTMANAGER_TIMEOUT(state, alertmanagerTimeout) {
-      state.alertmanagerTimeout = alertmanagerTimeout;
+    ADD_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY_VALUE(state, value) {
+      state.rocketChatChannelOverride.push(value);
     },
 
-    /* Amazon SNS */
-    UPDATE_SNS_TOPIC_ARN(state, snsTopicArn) {
-      state.snsTopicArn = snsTopicArn;
+    REMOVE_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY(state, entry) {
+      state.rocketChatChannelOverride = state.rocketChatChannelOverride.filter(b => b !== entry);
     },
 
-    UPDATE_SNS_AWS_ACCESS_KEY_ID(state, snsAwsAccessKeyId) {
-      state.snsAwsAccessKeyId = snsAwsAccessKeyId;
+    UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE_ENTRY(state, { entry, index }) {
+      if (!state.rocketChatChannelOverride) return;
+      state.rocketChatChannelOverride[index] = entry;
     },
 
-    UPDATE_SNS_AWS_SECRET_ACCESS_KEY(state, snsAwsSecretAccessKey) {
-      state.snsAwsSecretAccessKey = snsAwsSecretAccessKey;
+    UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE(state, rocketChatUsernameOverride) {
+      state.rocketChatUsernameOverride = rocketChatUsernameOverride;
     },
 
-    UPDATE_SNS_AWS_REGION(state, snsAwsRegion) {
-      state.snsAwsRegion = snsAwsRegion;
+    UPDATE_ROCKET_CHAT_EMOJI_OVERRIDE(state, rocketChatEmojiOverride) {
+      state.rocketChatEmojiOverride = rocketChatEmojiOverride;
     },
 
-    UPDATE_SNS_AWS_PROFILE(state, snsAwsProfile) {
-      state.snsAwsProfile = snsAwsProfile;
+    UPDATE_ROCKET_CHAT_MSG_COLOR(state, rocketChatMsgColor) {
+      state.rocketChatMsgColor = rocketChatMsgColor;
     },
 
-    /* Amazon SES */
-    UPDATE_SES_FROM_ADDR(state, sesFromAddr) {
-      state.sesFromAddr = sesFromAddr;
+    UPDATE_ROCKET_CHAT_TEXT_STRING(state, rocketChatTextString) {
+      state.rocketChatTextString = rocketChatTextString;
     },
 
-    UPDATE_SES_EMAIL_REPLY_TO(state, sesEmailReplyTo) {
-      state.sesEmailReplyTo = sesEmailReplyTo;
+    UPDATE_ROCKET_CHAT_PROXY(state, rocketChatProxy) {
+      state.rocketChatProxy = rocketChatProxy;
     },
 
-    UPDATE_SES_EMAIL(state, sesEmail) {
-      state.sesEmail = sesEmail;
+    UPDATE_ROCKET_CHAT_ATTACH_KIBANA_DISCOVER_URL(state, rocketChatAttachKibanaDiscoverUrl) {
+      state.rocketChatAttachKibanaDiscoverUrl = rocketChatAttachKibanaDiscoverUrl;
     },
 
-    UPDATE_SES_CC(state, sesCc) {
-      state.sesCc = sesCc;
+    UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR(state, rocketChatKibanaDiscoverColor) {
+      state.rocketChatKibanaDiscoverColor = rocketChatKibanaDiscoverColor;
     },
 
-    UPDATE_SES_BCC(state, sesBcc) {
-      state.sesBcc = sesBcc;
+    UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE(state, rocketChatKibanaDiscoverTitle) {
+      state.rocketChatKibanaDiscoverTitle = rocketChatKibanaDiscoverTitle;
     },
 
-    UPDATE_SES_EMAIL_FROM_FIELD(state, sesEmailFromField) {
-      state.sesEmailFromField = sesEmailFromField;
+    UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS(state, rocketChatIgnoreSslErrors) {
+      state.rocketChatIgnoreSslErrors = rocketChatIgnoreSslErrors;
     },
 
-    UPDATE_SES_EMAIL_ADD_DOMAIN(state, sesEmailAddDomain) {
-      state.sesEmailAddDomain = sesEmailAddDomain;
+    UPDATE_ROCKET_CHAT_CA_CERTS(state, rocketChatCaCerts) {
+      state.rocketChatCaCerts = rocketChatCaCerts;
     },
 
-    UPDATE_SES_AWS_ACCESS_KEY_ID(state, sesAwsAccessKeyId) {
-      state.sesAwsAccessKeyId = sesAwsAccessKeyId;
-    },
-
-    UPDATE_SES_AWS_SECRET_ACCESS_KEY(state, sesAwsSecretAccessKey) {
-      state.sesAwsSecretAccessKey = sesAwsSecretAccessKey;
-    },
-
-    UPDATE_SES_AWS_REGION(state, sesAwsRegion) {
-      state.sesAwsRegion = sesAwsRegion;
-    },
-
-    UPDATE_SES_AWS_PROFILE(state, sesAwsProfile) {
-      state.sesAwsProfile = sesAwsProfile;
-    },
-
-    /* Zabbix */
-    UPDATE_ZBX_SENDER_HOST(state, zbxSenderHost) {
-      state.zbxSenderHost = zbxSenderHost;
-    },
-
-    UPDATE_ZBX_SENDER_PORT(state, zbxSenderPort) {
-      state.zbxSenderPort = zbxSenderPort;
-    },
-
-    UPDATE_ZBX_HOST(state, zbxHost) {
-      state.zbxHost = zbxHost;
-    },
-
-    UPDATE_ZBX_KEY(state, zbxKey) {
-      state.zbxKey = zbxKey;
-    },
-
-    UPDATE_ZBX_HOST_FROM_FIELD(state, zbxHostFromField) {
-      state.zbxHostFromField = zbxHostFromField;
-    },
-
-    /* LineNotify */
-    UPDATE_LINENOTIFY_ACCESS_TOKEN(state, linenotifyAccessToken) {
-      state.linenotifyAccessToken = linenotifyAccessToken;
-    },
-
-    /* Command */
-    UPDATE_COMMAND(state, command) {
-      state.command = command;
-    },
-
-    ADD_COMMAND_ENTRY(state) {
-      state.command.push('');
-    },
-
-    ADD_COMMAND_ENTRY_VALUE(state, value) {
-      state.command.push(value);
-    },
-
-    REMOVE_COMMAND_ENTRY(state, entry) {
-      state.command = state.command.filter(b => b !== entry);
-    },
-
-    UPDATE_COMMAND_ENTRY(state, { entry, index }) {
-      if (!state.command) return;
-      state.command[index] = entry;
-    },
-
-    UPDATE_PIPE_MATCH_JSON(state, pipeMatchJson) {
-      state.pipeMatchJson = pipeMatchJson;
-    },
-
-    UPDATE_PIPE_ALERT_TEXT(state, pipeAlertText) {
-      state.pipeAlertText = pipeAlertText;
-    },
-
-    UPDATE_FAIL_ON_NON_ZERO_EXIT(state, failOnNonZeroExit) {
-      state.failOnNonZeroExit = failOnNonZeroExit;
-    },
-
-    /* Gitter */
-    UPDATE_GITTER_WEBHOOK_URL(state, gitterWebhookUrl) {
-      state.gitterWebhookUrl = gitterWebhookUrl;
-    },
-
-    UPDATE_GITTER_MSG_LEVEL(state, gitterMsgLevel) {
-      state.gitterMsgLevel = gitterMsgLevel;
-    },
-
-    UPDATE_GITTER_PROXY(state, gitterProxy) {
-      state.gitterProxy = gitterProxy;
-    },
-
-    /* Description */
-    UPDATE_USE_DESCRIPTION(state, useDescription) {
-      state.useDescription = useDescription;
-    },
-
-    UPDATE_DESCRIPTION(state, configDescription) {
-      state.configDescription = configDescription;
-    },
-
-    /* Priority */
-    UPDATE_USE_PRIORITY(state, usePriority) {
-      state.usePriority = usePriority;
-    },
-
-    UPDATE_PRIORITY(state, configPriority) {
-      state.configPriority = configPriority;
-    },
-
-    /* Owner */
-    UPDATE_USE_OWNER(state, useOwner) {
-      state.useOwner = useOwner;
-    },
-
-    UPDATE_OWNER(state, configOwner) {
-      state.configOwner = configOwner;
-    },
-
-    /* time_window_change */
-    UPDATE_USE_TIME_WINDOW(state, useTimeWindow) {
-      state.useTimeWindow = useTimeWindow;
-    },
-    UPDATE_TIME_WINDOW_START_TIME(state, timeWindowStartTime) {
-      state.timeWindowStartTime = timeWindowStartTime;
-    },
-    UPDATE_TIME_WINDOW_END_TIME(state, timeWindowEndTime) {
-      state.timeWindowEndTime = timeWindowEndTime;
-    },
-    UPDATE_TIME_WINDOW_DROP_IF(state, timeWindowDropIf) {
-      state.timeWindowDropIf = timeWindowDropIf;
-    },
-
-    /* Jira */
-    UPDATE_JIRA_PROJECT(state, jiraProject) {
-      state.jiraProject = jiraProject;
-    },
-
-    UPDATE_JIRA_ISSUE_TYPE(state, jiraIssueType) {
-      state.jiraIssueType = jiraIssueType;
-    },
-
-    UPDATE_JIRA_COMPONENTS(state, jiraComponents) {
-      state.jiraComponents = jiraComponents;
+    UPDATE_ROCKET_CHAT_TIMEOUT(state, rocketChatTimeout) {
+      state.rocketChatTimeout = rocketChatTimeout;
     },
 
     /* ServiceNow */
@@ -1125,206 +1759,47 @@ export default {
       state.servicenowUrgency = servicenowUrgency;
     },
 
-    /* VictorOps */
-    UPDATE_VICTOROPS_API_KEY(state, victoropsApiKey) {
-      state.victoropsApiKey = victoropsApiKey;
-    },
-
-    UPDATE_VICTOROPS_ROUTING_KEY(state, victoropsRoutingKey) {
-      state.victoropsRoutingKey = victoropsRoutingKey;
-    },
-
-    UPDATE_VICTOROPS_MESSAGE_TYPE(state, victoropsMessageType) {
-      state.victoropsMessageType = victoropsMessageType;
-    },
-
-    UPDATE_VICTOROPS_ENTITY_ID(state, victoropsEntityId) {
-      state.victoropsEntityId = victoropsEntityId;
-    },
-
-    UPDATE_VICTOROPS_ENTITY_DISPLAY_NAME(state, victoropsEntityDisplayName) {
-      state.victoropsEntityDisplayName = victoropsEntityDisplayName;
-    },
-
-    UPDATE_VICTOROPS_PROXY(state, victoropsProxy) {
-      state.victoropsProxy = victoropsProxy;
-    },
-
-    /* Stomp */
-    UPDATE_STOMP_HOSTNAME(state, stompHostname) {
-      state.stompHostname = stompHostname;
-    },
-
-    UPDATE_STOMP_HOSTPORT(state, stompHostport) {
-      state.stompHostport = stompHostport;
-    },
-
-    UPDATE_STOMP_LOGIN(state, stompLogin) {
-      state.stompLogin = stompLogin;
-    },
-
-    UPDATE_STOMP_PASSWORD(state, stompPassword) {
-      state.stompPassword = stompPassword;
-    },
-
-    UPDATE_STOMP_DESTINATION(state, stompDestination) {
-      state.stompDestination = stompDestination;
-    },
-
-    /* GoogleChat */
-    UPDATE_GOOGLE_CHAT_WEBHOOK_URL(state, googleChatWebhookUrl) {
-      state.googleChatWebhookUrl = googleChatWebhookUrl;
-    },
-
-    UPDATE_GOOGLE_CHAT_FORMAT(state, googleChatFormat) {
-      state.googleChatFormat = googleChatFormat;
-    },
-
-    UPDATE_GOOGLE_CHAT_HEADER_TITLE(state, googleChatHeaderTitle) {
-      state.googleChatHeaderTitle = googleChatHeaderTitle;
-    },
-
-    UPDATE_GOOGLECHAT_HEADER_SUBTITLE(state, googleChatHeaderSubtitle) {
-      state.googleChatHeaderSubtitle = googleChatHeaderSubtitle;
-    },
-
-    UPDATE_GOOGLECHAT_HEADER_IMAGE(state, googleChatHeaderImage) {
-      state.googleChatHeaderImage = googleChatHeaderImage;
-    },
-
-    UPDATE_GOOGLECHAT_FOOTER_KIBANALINK(state, googleFooterKibanalink) {
-      state.googleFooterKibanalink = googleFooterKibanalink;
-    },
-
-    /* Mattermost */
-    UPDATE_MATTERMOST_CHANNEL_OVERRIDE(state, mattermostChannelOverride) {
-      state.mattermostChannelOverride = mattermostChannelOverride;
-    },
-
-    UPDATE_MATTERMOST_USERNAME_OVERRIDE(state, mattermostUsernameOverride) {
-      state.mattermostUsernameOverride = mattermostUsernameOverride;
-    },
-
-    UPDATE_MATTERMOST_MSG_COLOR(state, mattermostMsgColor) {
-      state.mattermostMsgColor = mattermostMsgColor;
-    },
-
-    UPDATE_MATTERMOST_ICON_URL_OVERRIDE(state, mattermostIconUrlOverride) {
-      state.mattermostIconUrlOverride = mattermostIconUrlOverride;
-    },
-
-    UPDATE_MATTERMOST_MSG_PRETEXT(state, mattermostMsgPretext) {
-      state.mattermostMsgPretext = mattermostMsgPretext;
-    },
-
-    UPDATE_MATTERMOST_IGNORE_SSL_ERRORS(state, mattermostIgnoreSslErrors) {
-      state.mattermostIgnoreSslErrors = mattermostIgnoreSslErrors;
-    },
-
-    UPDATE_MATTERMOST_PROXY(state, mattermostProxy) {
-      state.mattermostProxy = mattermostProxy;
-    },
-
-    UPDATE_MATTERMOST_TITLE(state, mattermostTitle) {
-      state.mattermostTitle = mattermostTitle;
-    },
-
-    UPDATE_MATTERMOST_TITLE_LINK(state, mattermostTitleLink) {
-      state.mattermostTitleLink = mattermostTitleLink;
-    },
-
-    UPDATE_MATTERMOST_FOOTER(state, mattermostFooter) {
-      state.mattermostFooter = mattermostFooter;
-    },
-
-    UPDATE_MATTERMOST_FOOTER_ICON(state, mattermostFooterIcon) {
-      state.mattermostFooterIcon = mattermostFooterIcon;
-    },
-
-    UPDATE_MATTERMOST_IMAGE_URL(state, mattermostImageUrl) {
-      state.mattermostImageUrl = mattermostImageUrl;
-    },
-
-    UPDATE_MATTERMOST_THUMB_URL(state, mattermostThumbUrl) {
-      state.mattermostThumbUrl = mattermostThumbUrl;
-    },
-
-    UPDATE_MATTERMOST_AUTHOR_NAME(state, mattermostAuthorName) {
-      state.mattermostAuthorName = mattermostAuthorName;
-    },
-
-    UPDATE_MATTERMOST_AUTHOR_LINK(state, mattermostAuthorLink) {
-      state.mattermostAuthorLink = mattermostAuthorLink;
-    },
-
-    UPDATE_MATTERMOST_AUTHOR_ICON(state, mattermostAuthorIcon) {
-      state.mattermostAuthorIcon = mattermostAuthorIcon;
-    },
-
-    UPDATE_MATTERMOST_ATTACH_KIBANA_DISCOVER_URL(state, mattermostAttachKibanaDiscoverUrl) {
-      state.mattermostAttachKibanaDiscoverUrl = mattermostAttachKibanaDiscoverUrl;
-    },
-
-    UPDATE_MATTERMOST_KIBANA_DISCOVER_COLOR(state, mattermostKibanaDiscoverColor) {
-      state.mattermostKibanaDiscoverColor = mattermostKibanaDiscoverColor;
-    },
-
-    UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE(state, mattermostKibanaDiscoverTitle) {
-      state.mattermostKibanaDiscoverTitle = mattermostKibanaDiscoverTitle;
-    },
-
-    /* Rocket.Chat */
-    UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE(state, rocketChatChannelOverride) {
-      state.rocketChatChannelOverride = rocketChatChannelOverride;
-    },
-
-    UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE(state, rocketChatUsernameOverride) {
-      state.rocketChatUsernameOverride = rocketChatUsernameOverride;
-    },
-
-    UPDATE_ROCKET_CHAT_EMOJI_OVERRIDE(state, rocketChatEmojiOverride) {
-      state.rocketChatEmojiOverride = rocketChatEmojiOverride;
-    },
-
-    UPDATE_ROCKET_CHAT_MSG_COLOR(state, rocketChatMsgColor) {
-      state.rocketChatMsgColor = rocketChatMsgColor;
-    },
-
-    UPDATE_ROCKET_CHAT_TEXT_STRING(state, rocketChatTextString) {
-      state.rocketChatTextString = rocketChatTextString;
-    },
-
-    UPDATE_ROCKET_CHAT_PROXY(state, rocketChatProxy) {
-      state.rocketChatProxy = rocketChatProxy;
-    },
-
-    UPDATE_ROCKET_CHAT_ATTACH_KIBANA_DISCOVER_URL(state, rocketChatAttachKibanaDiscoverUrl) {
-      state.rocketChatAttachKibanaDiscoverUrl = rocketChatAttachKibanaDiscoverUrl;
-    },
-
-    UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_COLOR(state, rocketChatKibanaDiscoverColor) {
-      state.rocketChatKibanaDiscoverColor = rocketChatKibanaDiscoverColor;
-    },
-
-    UPDATE_ROCKET_CHAT_KIBANA_DISCOVER_TITLE(state, rocketChatKibanaDiscoverTitle) {
-      state.rocketChatKibanaDiscoverTitle = rocketChatKibanaDiscoverTitle;
-    },
-
-    UPDATE_ROCKET_CHAT_IGNORE_SSL_ERRORS(state, rocketChatIgnoreSslErrors) {
-      state.rocketChatIgnoreSslErrors = rocketChatIgnoreSslErrors;
-    },
-
-    UPDATE_ROCKET_CHAT_CA_CERTS(state, rocketChatCaCerts) {
-      state.rocketChatCaCerts = rocketChatCaCerts;
-    },
-
-    UPDATE_ROCKET_CHAT_TIMEOUT(state, rocketChatTimeout) {
-      state.rocketChatTimeout = rocketChatTimeout;
-    },
-
     /* Slack */
+    UPDATE_SLACK_WEBHOOK_URL(state, slackWebhookUrl) {
+      state.slackWebhookUrl = slackWebhookUrl;
+    },
+
+    ADD_SLACK_WEBHOOK_URL_ENTRY(state) {
+      state.slackWebhookUrl.push('');
+    },
+
+    ADD_SLACK_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.slackWebhookUrl.push(value);
+    },
+
+    REMOVE_SLACK_WEBHOOK_URL_ENTRY(state, entry) {
+      state.slackWebhookUrl = state.slackWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_SLACK_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.slackWebhookUrl) return;
+      state.slackWebhookUrl[index] = entry;
+    },
+
     UPDATE_SLACK_CHANNEL_OVERRIDE(state, slackChannelOverride) {
       state.slackChannelOverride = slackChannelOverride;
+    },
+
+    ADD_SLACK_CHANNEL_OVERRIDE_ENTRY(state) {
+      state.slackChannelOverride.push('');
+    },
+
+    ADD_SLACK_CHANNEL_OVERRIDE_ENTRY_VALUE(state, value) {
+      state.slackChannelOverride.push(value);
+    },
+
+    REMOVE_SLACK_CHANNEL_OVERRIDE_ENTRY(state, entry) {
+      state.slackChannelOverride = state.slackChannelOverride.filter(b => b !== entry);
+    },
+
+    UPDATE_SLACK_CHANNEL_OVERRIDE_ENTRY(state, { entry, index }) {
+      if (!state.slackChannelOverride) return;
+      state.slackChannelOverride[index] = entry;
     },
 
     UPDATE_SLACK_USERNAME_OVERRIDE(state, slackUsernameOverride) {
@@ -1423,41 +1898,113 @@ export default {
       state.slackJiraTicketTitle = slackJiraTicketTitle;
     },
 
-    /* MS Teams */
-    UPDATE_MS_TEAMS_WEBHOOK_URL(state, msTeamsWebhookUrl) {
-      state.msTeamsWebhookUrl = msTeamsWebhookUrl;
+    /* Stomp */
+    UPDATE_STOMP_HOSTNAME(state, stompHostname) {
+      state.stompHostname = stompHostname;
     },
 
-    UPDATE_MS_TEAMS_THEME_COLOR(state, msTeamsThemeColor) {
-      state.msTeamsThemeColor = msTeamsThemeColor;
+    UPDATE_STOMP_HOSTPORT(state, stompHostport) {
+      state.stompHostport = stompHostport;
     },
 
-    UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH(state, msTeamsAlertFixedWidth) {
-      state.msTeamsAlertFixedWidth = msTeamsAlertFixedWidth;
+    UPDATE_STOMP_LOGIN(state, stompLogin) {
+      state.stompLogin = stompLogin;
     },
 
-    UPDATE_MS_TEAMS_ALERT_SUMMARY(state, msTeamsAlertSummary) {
-      state.msTeamsAlertSummary = msTeamsAlertSummary;
+    UPDATE_STOMP_PASSWORD(state, stompPassword) {
+      state.stompPassword = stompPassword;
     },
 
-    UPDATE_MS_TEAMS_PROXY(state, msTeamsProxy) {
-      state.msTeamsProxy = msTeamsProxy;
+    UPDATE_STOMP_DESTINATION(state, stompDestination) {
+      state.stompDestination = stompDestination;
     },
 
-    UPDATE_MS_TEAMS_IGNORE_SSL_ERRORS(state, msTeamsIgnoreSslErrors) {
-      state.msTeamsIgnoreSslErrors = msTeamsIgnoreSslErrors;
+    /* Telegram */
+    UPDATE_TELEGRAM_ROOM_ID(state, telegramRoomId) {
+      state.telegramRoomId = telegramRoomId;
     },
 
-    UPDATE_MS_TEAMS_CA_CERTS(state, msTeamsCaCerts) {
-      state.msTeamsCaCerts = msTeamsCaCerts;
+    UPDATE_TELEGRAM_PROXY(state, telegramProxy) {
+      state.telegramProxy = telegramProxy;
     },
 
-    UPDATE_MS_TEAMS_ATTACH_KIBANA_DISCOVER_URL(state, msTeamsAttachKibanaDiscoverUrl) {
-      state.msTeamsAttachKibanaDiscoverUrl = msTeamsAttachKibanaDiscoverUrl;
+    UPDATE_TELEGRAM_PROXY_LOGIN(state, telegramProxyLogin) {
+      state.telegramProxyLogin = telegramProxyLogin;
     },
 
-    UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE(state, msTeamsKibanaDiscoverTitle) {
-      state.msTeamsKibanaDiscoverTitle = msTeamsKibanaDiscoverTitle;
+    UPDATE_TELEGRAM_PROXY_PASS(state, telegramProxyPass) {
+      state.telegramProxyPass = telegramProxyPass;
+    },
+
+    UPDATE_TELEGRAM_PARSE_MODE(state, telegramParseMode) {
+      state.telegramParseMode = telegramParseMode;
+    },
+
+    /* Tencent SMS */
+    UPDATE_TENCENT_SMS_SECRET_ID(state, tencentSmsSecretId) {
+      state.tencentSmsSecretId = tencentSmsSecretId;
+    },
+
+    UPDATE_TENCENT_SMS_SECRET_KEY(state, tencentSmsSecretKey) {
+      state.tencentSmsSecretKey = tencentSmsSecretKey;
+    },
+
+    UPDATE_TENCENT_SMS_SDK_APPID(state, tencentSmsSdkAppid) {
+      state.tencentSmsSdkAppid = tencentSmsSdkAppid;
+    },
+
+    UPDATE_TENCENT_SMS_TO_NUMBER(state, tencentSmsToNumber) {
+      state.tencentSmsToNumber = tencentSmsToNumber;
+    },
+
+    ADD_TENCENT_SMS_TO_NUMBER_ENTRY(state) {
+      state.tencentSmsToNumber.push('');
+    },
+
+    ADD_TENCENT_SMS_TO_NUMBER_ENTRY_VALUE(state, value) {
+      state.tencentSmsToNumber.push(value);
+    },
+
+    UPDATE_TENCENT_SMS_TO_NUMBER_ENTRY(state, { entry, index }) {
+      if (!state.tencentSmsToNumber) return;
+      state.tencentSmsToNumber[index] = entry;
+    },
+
+    REMOVE_TENCENT_SMS_TO_NUMBER_ENTRY(state, entry) {
+      state.tencentSmsToNumber = state.tencentSmsToNumber.filter(b => b !== entry);
+    },
+
+    UPDATE_TENCENT_SMS_REGION(state, tencentSmsRegion) {
+      state.tencentSmsRegion = tencentSmsRegion;
+    },
+
+    UPDATE_TENCENT_SMS_SIGN_NAME(state, tencentSmsSignName) {
+      state.tencentSmsSignName = tencentSmsSignName;
+    },
+
+    UPDATE_TENCENT_SMS_TEMPLATE_ID(state, tencentSmsTemplateId) {
+      state.tencentSmsTemplateId = tencentSmsTemplateId;
+    },
+
+    UPDATE_TENCENT_SMS_TEMPLATE_PARM(state, tencentSmsTemplateParm) {
+      state.tencentSmsTemplateParm = tencentSmsTemplateParm;
+    },
+
+    ADD_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state) {
+      state.tencentSmsTemplateParm.push('');
+    },
+
+    ADD_TENCENT_SMS_TEMPLATE_PARM_ENTRY_VALUE(state, value) {
+      state.tencentSmsTemplateParm.push(value);
+    },
+
+    UPDATE_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state, { entry, index }) {
+      if (!state.tencentSmsTemplateParm) return;
+      state.tencentSmsTemplateParm[index] = entry;
+    },
+
+    REMOVE_TENCENT_SMS_TEMPLATE_PARM_ENTRY(state, entry) {
+      state.tencentSmsTemplateParm = state.tencentSmsTemplateParm.filter(b => b !== entry);
     },
 
     /* TheHive */
@@ -1514,206 +2061,71 @@ export default {
       state.hiveAlertConfigFollow = hiveAlertConfigFollow;
     },
 
-    /* Alerta */
-    UPDATE_ALERTA_API_URL(state, alertaApiUrl) {
-      state.alertaApiUrl = alertaApiUrl;
+    /* Twilio */
+    UPDATE_TWILIO_ACCOUNT_SID(state, twilioAccountSid) {
+      state.twilioAccountSid = twilioAccountSid;
     },
 
-    UPDATE_ALERTA_API_KEY(state, alertaApiKey) {
-      state.alertaApiKey = alertaApiKey;
+    UPDATE_TWILIO_AUTH_TOKEN(state, twilioAuth) {
+      state.twilioAuth = twilioAuth;
     },
 
-    UPDATE_ALERTA_SEVERITY(state, alertaSeverity) {
-      state.alertaSeverity = alertaSeverity;
+    UPDATE_TWILIO_TO_NUMBER(state, twilioToNumber) {
+      state.twilioToNumber = twilioToNumber;
     },
 
-    UPDATE_ALERTA_RESOURCE(state, alertaResource) {
-      state.alertaResource = alertaResource;
+    UPDATE_TWILIO_FROM_NUMBER(state, twilioFromNumber) {
+      state.twilioFromNumber = twilioFromNumber;
     },
 
-    UPDATE_ALERTA_TEXT(state, alertaText) {
-      state.alertaText = alertaText;
+    UPDATE_TWILIO_MESSAGE_SERVICE_SID(state, twilioMessageServiceSid) {
+      state.twilioMessageServiceSid = twilioMessageServiceSid;
     },
 
-    UPDATE_ALERTA_EVENT(state, alertaEvent) {
-      state.alertaEvent = alertaEvent;
+    /* VictorOps */
+    UPDATE_VICTOROPS_API_KEY(state, victoropsApiKey) {
+      state.victoropsApiKey = victoropsApiKey;
     },
 
-    UPDATE_ALERTA_GROUP(state, alertaGroup) {
-      state.alertaGroup = alertaGroup;
+    UPDATE_VICTOROPS_ROUTING_KEY(state, victoropsRoutingKey) {
+      state.victoropsRoutingKey = victoropsRoutingKey;
     },
 
-    UPDATE_ALERTA_TAGS(state, alertaTags) {
-      state.alertaTags = alertaTags;
+    UPDATE_VICTOROPS_MESSAGE_TYPE(state, victoropsMessageType) {
+      state.victoropsMessageType = victoropsMessageType;
     },
 
-    ADD_ALERTA_TAGS_ENTRY(state) {
-      state.alertaTags.push('');
+    UPDATE_VICTOROPS_ENTITY_ID(state, victoropsEntityId) {
+      state.victoropsEntityId = victoropsEntityId;
     },
 
-    ADD_ALERTA_TAGS_ENTRY_VALUE(state, value) {
-      state.alertaTags.push(value);
+    UPDATE_VICTOROPS_ENTITY_DISPLAY_NAME(state, victoropsEntityDisplayName) {
+      state.victoropsEntityDisplayName = victoropsEntityDisplayName;
     },
 
-    REMOVE_ALERTA_TAGS_ENTRY(state, entry) {
-      state.alertaTags = state.alertaTags.filter(b => b !== entry);
+    UPDATE_VICTOROPS_PROXY(state, victoropsProxy) {
+      state.victoropsProxy = victoropsProxy;
     },
 
-    UPDATE_ALERTA_TAGS_ENTRY(state, { entry, index }) {
-      if (!state.alertaTags) return;
-      state.alertaTags[index] = entry;
+    /* Zabbix */
+    UPDATE_ZBX_SENDER_HOST(state, zbxSenderHost) {
+      state.zbxSenderHost = zbxSenderHost;
     },
 
-    UPDATE_ALERTA_ENVIRONMENT(state, alertaEnvironment) {
-      state.alertaEnvironment = alertaEnvironment;
+    UPDATE_ZBX_SENDER_PORT(state, zbxSenderPort) {
+      state.zbxSenderPort = zbxSenderPort;
     },
 
-    /* Dingtalk */
-    UPDATE_DINGTALK_ACCESS_TOKEN(state, dingtalkAccessToken) {
-      state.dingtalkAccessToken = dingtalkAccessToken;
+    UPDATE_ZBX_HOST(state, zbxHost) {
+      state.zbxHost = zbxHost;
     },
 
-    UPDATE_DINGTALK_MSGTYPE(state, dingtalkMsgtype) {
-      state.dingtalkMsgtype = dingtalkMsgtype;
+    UPDATE_ZBX_KEY(state, zbxKey) {
+      state.zbxKey = zbxKey;
     },
 
-    UPDATE_DINGTALK_SINGLE_TITLE(state, dingtalkSingleTitle) {
-      state.dingtalkSingleTitle = dingtalkSingleTitle;
-    },
-
-    UPDATE_DINGTALK_SINGLE_URL(state, dingtalkSingleUrl) {
-      state.dingtalkSingleUrl = dingtalkSingleUrl;
-    },
-
-    UPDATE_DINGTALK_BTN_ORIENTATION(state, dingtalkBtnOrientation) {
-      state.dingtalkBtnOrientation = dingtalkBtnOrientation;
-    },
-
-    /* Datadog */
-    UPDATE_DATADOG_API_KEY(state, datadogApiKey) {
-      state.datadogApiKey = datadogApiKey;
-    },
-
-    UPDATE_DATADOG_APP_KEY(state, datadogAppKey) {
-      state.datadogAppKey = datadogAppKey;
-    },
-
-    /* limitExcecution */
-    UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {
-      state.limitExcecution = limitExcecution;
-    },
-
-    /* Kibana Discover */
-    UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
-      state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
-    },
-
-    UPDATE_KIBANA_DISCOVER_APP_URL(state, kibanaDiscoverAppUrl) {
-      state.kibanaDiscoverAppUrl = kibanaDiscoverAppUrl;
-    },
-
-    UPDATE_KIBANA_DISCOVER_VERSION(state, kibanaDiscoverVersion) {
-      state.kibanaDiscoverVersion = kibanaDiscoverVersion;
-    },
-
-    UPDATE_KIBANA_DISCOVER_INDEX_PATTERN_ID(state, kibanaDiscoverIndexPatternId) {
-      state.kibanaDiscoverIndexPatternId = kibanaDiscoverIndexPatternId;
-    },
-
-    UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA(state, kibanaDiscoverFromTimedelta) {
-      state.kibanaDiscoverFromTimedelta = kibanaDiscoverFromTimedelta;
-    },
-
-    UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA(state, kibanaDiscoverToTimedelta) {
-      state.kibanaDiscoverToTimedelta = kibanaDiscoverToTimedelta;
-    },
-
-    UPDATE_KIBANA_DISCOVER_COLUMNS(state, kibanaDiscoverColumns) {
-      state.kibanaDiscoverColumns = kibanaDiscoverColumns;
-    },
-
-    ADD_KIBANA_DISCOVER_COLUMNS_ENTRY(state) {
-      state.kibanaDiscoverColumns.push('');
-    },
-
-    ADD_KIBANA_DISCOVER_COLUMNS_ENTRY_VALUE(state, value) {
-      state.kibanaDiscoverColumns.push(value);
-    },
-
-    REMOVE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, entry) {
-      state.kibanaDiscoverColumns = state.kibanaDiscoverColumns.filter(b => b !== entry);
-    },
-
-    UPDATE_KIBANA_DISCOVER_COLUMNS_ENTRY(state, { entry, index }) {
-      if (!state.kibanaDiscoverColumns) return;
-      state.kibanaDiscoverColumns[index] = entry;
-    },
-
-    /* scan_entire_timeframe */
-    UPDATE_SCAN_ENTIRE_TIMEFRAME(state, scanEntireTimeframe) {
-      state.scanEntireTimeframe = scanEntireTimeframe;
-    },
-
-    UPDATE_REALERT(state, realert) {
-      state.realert = realert;
-    },
-
-    UPDATE_BODY(state, body) {
-      state.body = body;
-    },
-
-    UPDATE_BODY_TYPE(state, bodyType) {
-      state.bodyType = bodyType;
-    },
-
-    UPDATE_SUBJECT(state, subject) {
-      state.subject = subject;
-    },
-
-    UPDATE_ALERT_SUBJECT_ARGS(state, alertSubjectArgs) {
-      state.alertSubjectArgs = alertSubjectArgs;
-    },
-
-    ADD_ALERT_SUBJECT_ARGS_ENTRY(state) {
-      state.alertSubjectArgs.push('');
-    },
-
-    ADD_ALERT_SUBJECT_ARGS_ENTRY_VALUE(state, value) {
-      state.alertSubjectArgs.push(value);
-    },
-
-    REMOVE_ALERT_SUBJECT_ARGS_ENTRY(state, entry) {
-      state.alertSubjectArgs = state.alertSubjectArgs.filter(b => b !== entry);
-    },
-
-    UPDATE_ALERT_SUBJECT_ARGS_ENTRY(state, { entry, index }) {
-      if (!state.alertSubjectArgs) return;
-      state.alertSubjectArgs[index] = entry;
-    },
-
-    UPDATE_ALERT_TEXT_ARGS(state, alertTextArgs) {
-      state.alertTextArgs = alertTextArgs;
-    },
-
-    ADD_ALERT_TEXT_ARGS_ENTRY(state) {
-      state.alertTextArgs.push('');
-    },
-
-    ADD_ALERT_TEXT_ARGS_ENTRY_VALUE(state, value) {
-      state.alertTextArgs.push(value);
-    },
-
-    REMOVE_ALERT_TEXT_ARGS_ENTRY(state, entry) {
-      state.alertTextArgs = state.alertTextArgs.filter(b => b !== entry);
-    },
-
-    UPDATE_ALERT_TEXT_ARGS_ENTRY(state, { entry, index }) {
-      if (!state.alertTextArgs) return;
-      state.alertTextArgs[index] = entry;
-    },
-
-    UPDATE_ALERT(state, alert) {
-      state.alert = alert;
+    UPDATE_ZBX_HOST_FROM_FIELD(state, zbxHostFromField) {
+      state.zbxHostFromField = zbxHostFromField;
     }
   }
 };

@@ -117,6 +117,11 @@ export default {
         commit('match/UPDATE_IGNORE_NULL', config.ignore_null);
         commit('match/UPDATE_DOC_TYPE', config.doc_type);
         if (config.query_key) {
+          if (typeof (config.query_key) === 'string') {
+            let tmpQueryKey = [];
+            tmpQueryKey.push(config.query_key);
+            config.query_key = tmpQueryKey;
+          }
           config.query_key.forEach(entry => commit('match/ADD_QUERY_KEY_ENTRY_VALUE', entry));
         }
         commit('match/UPDATE_COMPARE_KEY', config.compare_key);
@@ -217,7 +222,15 @@ export default {
         commit('alert/UPDATE_OWNER', config.owner);
 
         /* HTTP POST */
-        commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
+        if (typeof (config.http_post_url) === 'string') {
+          let tmphttpPostUrl = [];
+          tmphttpPostUrl.push(config.http_post_url);
+          config.http_post_url = tmphttpPostUrl;
+        }
+
+        if (config.http_post_url) {
+          commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
+        }
 
         if (config.http_post_ignore_ssl_errors) {
           commit('alert/UPDATE_HTTP_POST_IGNORE_SSL_ERRORS', config.http_post_ignore_ssl_errors);
@@ -236,7 +249,15 @@ export default {
         commit('alert/UPDATE_HTTP_POST_PROXY', config.http_post_proxy);
 
         /* HTTP POST 2 */
-        commit('alert/UPDATE_HTTP_POST2_URL', config.http_post2_url);
+        if (typeof (config.http_post2_url) === 'string') {
+          let tmphttpPost2Url = [];
+          tmphttpPost2Url.push(config.http_post2_url);
+          config.http_post2_url = tmphttpPost2Url;
+        }
+
+        if (config.http_post2_url) {
+          commit('alert/UPDATE_HTTP_POST2_URL', config.http_post2_url);
+        }
 
         if (config.http_post2_ignore_ssl_errors) {
           commit('alert/UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS', config.http_post2_ignore_ssl_errors);
@@ -300,18 +321,17 @@ export default {
         commit('alert/UPDATE_EMAIL_FROM_FIELD', config.email_from_field);
         commit('alert/UPDATE_EMAIL_ADD_DOMAIN', config.email_add_domain);
 
-        // TODO:
-        // if (config.email_format === 'html') {
-        //   commit('alert/UPDATE_EMAIL_FORMAT', true);
-        // } else {
-        //   commit('alert/UPDATE_EMAIL_FORMAT', false);
-        // }
-
         /* Telegram */
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
         commit('alert/UPDATE_TELEGRAM_PROXY', config.telegram_proxy);
         commit('alert/UPDATE_TELEGRAM_PROXY_LOGIN', config.telegram_proxy_login);
         commit('alert/UPDATE_TELEGRAM_PROXY_PASS', config.telegram_proxy_pass);
+
+        if (config.telegram_parse_mode) {
+          commit('alert/UPDATE_TELEGRAM_PARSE_MODE', config.telegram_parse_mode);
+        } else {
+          commit('alert/UPDATE_TELEGRAM_PARSE_MODE', 'markdown');
+        }
 
         /* Tencent SMS */
         commit('alert/UPDATE_TENCENT_SMS_SECRET_ID', config.tencent_sms_secret_id);
@@ -370,6 +390,15 @@ export default {
         commit('alert/UPDATE_TWILIO_TO_NUMBER', config.twilio_to_number);
         commit('alert/UPDATE_TWILIO_FROM_NUMBER', config.twilio_from_number);
         commit('alert/UPDATE_TWILIO_MESSAGE_SERVICE_SID', config.twilio_message_service_sid);
+
+        /* OpsGenie */
+        commit('alert/OPSGENIE_KEY', config.opsgenie_key);
+        commit('alert/OPSGENIE_ACCOUNT', config.opsgenie_account);
+        commit('alert/OPSGENIE_MESSAGE', config.opsgenie_message);
+        commit('alert/OPSGENIE_SUBJECT', config.opsgenie_subject);
+        commit('alert/OPSGENIE_ALIAS', config.opsgenie_alias);
+        commit('alert/OPSGENIE_PROXY', config.opsgenie_proxy);
+        commit('alert/OPSGENIE_DESCRIPTION', config.opsgenie_description);
 
         /* PagerDuty */
         commit('alert/UPDATE_PAGERDUTY_SERVICE_KEY', config.pagerduty_service_key);
@@ -533,6 +562,20 @@ export default {
         commit('alert/UPDATE_PIPE_ALERT_TEXT', config.pipe_alert_text);
         commit('alert/UPDATE_FAIL_ON_NON_ZERO_EXIT', config.fail_on_non_zero_exit);
 
+        /* Gelf */
+        commit('alert/UPDATE_GELF_TYPE', config.gelf_type);
+        commit('alert/UPDATE_GELF_ENDPOINT', config.gelf_endpoint);
+
+        if (config.gelf_http_ignore_ssl_errors) {
+          commit('alert/UPDATE_GELF_HTTP_IGNORE_SSL_ERRORS', config.gelf_http_ignore_ssl_errors);
+        }
+
+        commit('alert/UPDATE_GELF_CA_CERT', config.gelf_ca_cert);
+        commit('alert/UPDATE_GELF_HOST', config.gelf_host);
+        commit('alert/UPDATE_GELF_PORT', config.gelf_port);
+        commit('alert/UPDATE_GELF_LOG_LEVEL', config.gelf_log_level);
+        commit('alert/UPDATE_GELF_TIMEOUT', config.gelf_timeout);
+
         /* Gitter */
         commit('alert/UPDATE_GITTER_WEBHOOK_URL', config.gitter_webhook_url);
 
@@ -619,7 +662,15 @@ export default {
         }
 
         /* GoogleChat */
-        commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
+        if (typeof (config.googlechat_webhook_url) === 'string') {
+          let tmpGooglechatWebhookUrl = [];
+          tmpGooglechatWebhookUrl.push(config.googlechat_webhook_url);
+          config.googlechat_webhook_url = tmpGooglechatWebhookUrl;
+        }
+
+        if (config.googlechat_webhook_url) {
+          commit('alert/UPDATE_GOOGLE_CHAT_WEBHOOK_URL', config.googlechat_webhook_url);
+        }
 
         if (config.googlechat_format) {
           commit('alert/UPDATE_GOOGLE_CHAT_FORMAT', config.googlechat_format);
@@ -631,14 +682,32 @@ export default {
         commit('alert/UPDATE_GOOGLECHAT_HEADER_SUBTITLE', config.googlechat_header_subtitle);
         commit('alert/UPDATE_GOOGLECHAT_HEADER_IMAGE', config.googlechat_header_image);
         commit('alert/UPDATE_GOOGLECHAT_FOOTER_KIBANALINK', config.googlechat_footer_kibanalink);
+        commit('alert/UPDATE_GOOGLECHAT_PROXY', config.googlechat_proxy);
 
         /* Mattermost */
-        commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
+        if (config.mattermost_webhook_url) {
+          commit('alert/UPDATE_MATTERMOST_WEBHOOK_URL', config.mattermost_webhook_url);
+        }
+
+        if (typeof (config.mattermost_channel_override) === 'string') {
+          let tmpMattermostChannelOverride = [];
+          tmpMattermostChannelOverride.push(config.mattermost_channel_override);
+          config.mattermost_channel_override = tmpMattermostChannelOverride;
+        }
+        if (config.mattermost_channel_override) {
+          commit('alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE', config.mattermost_channel_override);
+        }
 
         if (config.mattermost_username_override) {
           commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', config.mattermost_username_override);
         } else {
           commit('alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE', 'elastalert');
+        }
+
+        if (config.mattermost_emoji_override) {
+          commit('alert/UPDATE_MATTERMOST_EMOJI_OVERRIDE', config.mattermost_emoji_override);
+        } else {
+          commit('alert/UPDATE_MATTERMOST_EMOJI_OVERRIDE', ':ghost:');
         }
 
         if (config.mattermost_msg_color) {
@@ -678,13 +747,24 @@ export default {
         }
 
         /* Rocket.Chat */
+        if (config.rocket_chat_webhook_url) {
+          commit('alert/UPDATE_ROCKET_CHAT_WEBHOOK_URL', config.rocket_chat_webhook_url);
+        }
+
         if (config.rocket_chat_username_override) {
           commit('alert/UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE', config.rocket_chat_username_override);
         } else {
           commit('alert/UPDATE_ROCKET_CHAT_USERNAME_OVERRIDE', 'elastalert2');
         }
 
-        commit('alert/UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE', config.rocket_chat_channel_override);
+        if (typeof (config.rocket_chat_channel_override) === 'string') {
+          let tmpRocketChatChannelOverride = [];
+          tmpRocketChatChannelOverride.push(config.rocket_chat_channel_override);
+          config.rocket_chat_channel_override = tmpRocketChatChannelOverride;
+        }
+        if (config.rocket_chat_channel_override) {
+          commit('alert/UPDATE_ROCKET_CHAT_CHANNEL_OVERRIDE', config.rocket_chat_channel_override);
+        }
 
         if (config.rocket_chat_emoji_override) {
           commit('alert/UPDATE_ROCKET_CHAT_EMOJI_OVERRIDE', config.rocket_chat_emoji_override);
@@ -812,6 +892,50 @@ export default {
           commit('alert/UPDATE_ALERTA_ENVIRONMENT', 'Production');
         }
 
+        commit('alert/UPDATE_ALERTA_TIMEOUT', config.alerta_timeout);
+
+        if (config.alerta_use_match_timestamp) {
+          commit('alert/UPDATE_ALERTA_USE_MATCH_TIMESTAMP', config.alerta_use_match_timestamp);
+        }
+
+        if (config.alerta_use_qk_as_resource) {
+          commit('alert/UPDATE_ALERTA_USE_QK_AS_RESOURCE', config.alerta_use_qk_as_resource);
+        }
+
+        if (config.alerta_api_skip_ssl) {
+          commit('alert/UPDATE_ALERTA_API_SKIP_SSL', config.alerta_api_skip_ssl);
+        }
+
+        if (config.alerta_origin) {
+          commit('alert/UPDATE_ALERTA_ORIGIN', config.alerta_origin);
+        } else {
+          commit('alert/UPDATE_ALERTA_ORIGIN', 'elastalert');
+        }
+
+        commit('alert/UPDATE_ALERTA_VALUE', config.alerta_value);
+
+        if (config.alerta_type) {
+          commit('alert/UPDATE_ALERTA_TYPE', config.alerta_type);
+        } else {
+          commit('alert/UPDATE_ALERTA_TYPE', 'elastalert');
+        }
+
+        if (config.alerta_service) {
+          commit('alert/UPDATE_ALERTA_SERVICE', config.alerta_service);
+        }
+
+        if (config.alerta_correlate) {
+          commit('alert/UPDATE_ALERTA_CORRELATE', config.alerta_correlate);
+        }
+
+        if (config.alerta_attributes_keys) {
+          commit('alert/UPDATE_ALERTA_ATTRIBUTES_KEYS', config.alerta_attributes_keys);
+        }
+
+        if (config.alerta_attributes_values) {
+          commit('alert/UPDATE_ALERTA_ATTRIBUTES_VALUES', config.alerta_attributes_values);
+        }
+
         /* Datadog */
         commit('alert/UPDATE_DATADOG_API_KEY', config.datadog_api_key);
         commit('alert/UPDATE_DATADOG_APP_KEY', config.datadog_app_key);
@@ -836,7 +960,18 @@ export default {
         commit('alert/UPDATE_DINGTALK_BTN_ORIENTATION', config.dingtalk_btn_orientation);
 
         /* Slack */
-        commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
+        if (config.slack_webhook_url) {
+          commit('alert/UPDATE_SLACK_WEBHOOK_URL', config.slack_webhook_url);
+        }
+
+        if (typeof (config.slack_channel_override) === 'string') {
+          let tmpSlackChannelOverride = [];
+          tmpSlackChannelOverride.push(config.slack_channel_override);
+          config.slack_channel_override = tmpSlackChannelOverride;
+        }
+        if (config.slack_channel_override) {
+          commit('alert/UPDATE_SLACK_CHANNEL_OVERRIDE', config.slack_channel_override);
+        }
 
         if (config.slack_username_override) {
           commit('alert/UPDATE_SLACK_USERNAME_OVERRIDE', config.slack_username_override);
@@ -917,8 +1052,18 @@ export default {
         commit('alert/UPDATE_SLACK_MSG_PRETEXT', config.slack_msg_pretext);
 
         /* MS Teams */
-        commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
-        commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
+        if (typeof (config.ms_teams_webhook_url) === 'string') {
+          let tmpMsTeamsWebhookUrl = [];
+          tmpMsTeamsWebhookUrl.push(config.ms_teams_webhook_url);
+          config.ms_teams_webhook_url = tmpMsTeamsWebhookUrl;
+        }
+        if (config.ms_teams_webhook_url) {
+          commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
+        }
+
+        if (config.ms_teams_theme_color) {
+          commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
+        }
         commit('alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', config.ms_teams_alert_summary);
         commit('alert/UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH', config.ms_teams_alert_fixed_width);
         commit('alert/UPDATE_MS_TEAMS_PROXY', config.ms_teams_proxy);
@@ -938,6 +1083,17 @@ export default {
         if (config.ms_teams_kibana_discover_title) {
           commit('alert/UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE', config.ms_teams_kibana_discover_title);
         }
+
+        /* OpsGenie */
+        commit('alert/OPSGENIE_KEY', config.opsgenie_key);
+        commit('alert/OPSGENIE_ACCOUNT', config.opsgenie_account);
+        commit('alert/OPSGENIE_MESSAGE', config.opsgenie_message);
+        commit('alert/OPSGENIE_SUBJECT', config.opsgenie_subject);
+        commit('alert/OPSGENIE_ALIAS', config.opsgenie_alias);
+        commit('alert/OPSGENIE_PROXY', config.opsgenie_proxy);
+        commit('alert/OPSGENIE_PRIORITY', config.opsgenie_priority);
+        commit('alert/OPSGENIE_DESCRIPTION', config.opsgenie_description);
+        commit('alert/UPDATE_OPSGENIE_PRIORITY', config.opsgenie_priority);
 
         /* realert, alert, alert_text_type, alert_text, alert_subject, alert_subject_args, alert_text_args */
         commit('alert/UPDATE_REALERT', config.realert);
@@ -1309,7 +1465,7 @@ export default {
     http(state) {
       let config = {};
 
-      if (state.alert.httpPostUrl) {
+      if (state.alert.httpPostUrl && state.alert.httpPostUrl.length) {
         config.http_post_url = state.alert.httpPostUrl;
       }
 
@@ -1335,7 +1491,7 @@ export default {
     http2(state) {
       let config = {};
 
-      if (state.alert.httpPost2Url) {
+      if (state.alert.httpPost2Url && state.alert.httpPost2Url.length) {
         config.http_post2_url = state.alert.httpPost2Url;
       }
 
@@ -1507,18 +1663,17 @@ export default {
         config.email_add_domain = state.alert.emailAddDomain;
       }
 
-      // TODO:
-      // if (state.alert.emailFormat) {
-      //   config.email_format = 'html';
-      // }
-
       return config;
     },
 
     slack(state, getters) {
       let config = {};
 
-      if (state.alert.slackChannelOverride) {
+      if (state.alert.slackWebhookUrl && state.alert.slackWebhookUrl.length) {
+        config.slack_webhook_url = state.alert.slackWebhookUrl;
+      }
+
+      if (state.alert.slackChannelOverride && state.alert.slackChannelOverride.length) {
         config.slack_channel_override = state.alert.slackChannelOverride;
       }
 
@@ -1627,7 +1782,7 @@ export default {
     ms_teams(state) {
       let config = {};
 
-      if (state.alert.msTeamsWebhookUrl) {
+      if (state.alert.msTeamsWebhookUrl && state.alert.msTeamsWebhookUrl.length) {
         config.ms_teams_webhook_url = state.alert.msTeamsWebhookUrl;
       }
 
@@ -1681,6 +1836,10 @@ export default {
 
       if (state.alert.telegramProxyPass) {
         config.telegram_proxy_pass = state.alert.telegramProxyPass;
+      }
+
+      if (state.alert.telegramParseMode) {
+        config.telegram_parse_mode = state.alert.telegramParseMode;
       }
 
       return config;
@@ -1831,6 +1990,44 @@ export default {
       if (state.alert.twilioMessageServiceSid) {
         config.twilio_use_copilot = true;
         config.twilio_message_service_sid = state.alert.twilioMessageServiceSid;
+      }
+
+      return config;
+    },
+
+    opsgenie(state) {
+      let config = {};
+
+      if (state.alert.opsgenieKey) {
+        config.opsgenie_key = state.alert.opsgenieKey;
+      }
+
+      if (state.alert.opsgenieAccount) {
+        config.opsgenie_account = state.alert.opsgenieAccount;
+      }
+
+      if (state.alert.opsgenieMessage) {
+        config.opsgenie_message = state.alert.opsgenieMessage;
+      }
+
+      if (state.alert.opsgenieSubject) {
+        config.opsgenie_subject = state.alert.opsgenieSubject;
+      }
+
+      if (state.alert.opsgenieAlias) {
+        config.opsgenie_alias = state.alert.opsgenieAlias;
+      }
+
+      if (state.alert.opsgenieProxy) {
+        config.opsgenie_proxy = state.alert.opsgenieProxy;
+      }
+
+      if (state.alert.opsgenieDescription) {
+        config.opsgenie_description = state.alert.opsgenieDescription;
+      }
+
+      if (state.alert.opsgeniePriority) {
+        config.opsgenie_priority = state.alert.opsgeniePriority;
       }
 
       return config;
@@ -2062,6 +2259,44 @@ export default {
       return config;
     },
 
+    gelf(state) {
+      let config = {};
+
+      if (state.alert.gelfType) {
+        config.gelf_type = state.alert.gelfType;
+      }
+
+      if (state.alert.gelfType === 'http') {
+        if (state.alert.gelfEndpoint) {
+          config.gelf_endpoint = state.alert.gelfEndpoint;
+        }
+
+        if (state.alert.gelfHttpIgnoreSslErrors) {
+          config.gelf_http_ignore_ssl_errors = state.alert.gelfHttpIgnoreSslErrors;
+        }
+      } else {
+        if (state.alert.gelfHost) {
+          config.gelf_host = state.alert.gelfHost;
+        }
+
+        if (state.alert.gelfPort) {
+          config.gelf_port = state.alert.gelfPort;
+        }
+      }
+
+      config.gelf_log_level = state.alert.gelfLogLevel;
+
+      if (state.alert.gelfCaCert) {
+        config.gelf_ca_cert = state.alert.gelfCaCert;
+      }
+
+      if (state.alert.gelfTimeout) {
+        config.gelf_timeout = state.alert.gelfTimeout;
+      }
+
+      return config;
+    },
+
     gitter(state) {
       let config = {};
 
@@ -2267,7 +2502,7 @@ export default {
 
     googlechat(state) {
       let config = {};
-      if (state.alert.googleChatWebhookUrl) {
+      if (state.alert.googleChatWebhookUrl && state.alert.googleChatWebhookUrl.length) {
         config.googlechat_webhook_url = state.alert.googleChatWebhookUrl;
       }
 
@@ -2291,11 +2526,19 @@ export default {
         config.googlechat_footer_kibanalink = state.alert.googleFooterKibanalink;
       }
 
+      if (state.alert.googleChatProxy) {
+        config.googlechat_proxy = state.alert.googleChatProxy;
+      }
+
       return config;
     },
 
     mattermost(state) {
       let config = {};
+
+      if (state.alert.mattermostWebhookUrl && state.alert.mattermostWebhookUrl.length) {
+        config.mattermost_webhook_url = state.alert.mattermostWebhookUrl;
+      }
 
       if (state.alert.mattermostChannelOverride) {
         config.mattermost_channel_override = state.alert.mattermostChannelOverride;
@@ -2303,6 +2546,10 @@ export default {
 
       if (state.alert.mattermostUsernameOverride) {
         config.mattermost_username_override = state.alert.mattermostUsernameOverride;
+      }
+
+      if (state.alert.mattermostEmojiOverride) {
+        config.mattermost_emoji_override = state.alert.mattermostEmojiOverride;
       }
 
       if (state.alert.mattermostMsgColor) {
@@ -2377,11 +2624,15 @@ export default {
     rocketchat(state) {
       let config = {};
 
+      if (state.alert.rocketChatWebhookUrl && state.alert.rocketChatWebhookUrl.length) {
+        config.rocket_chat_webhook_url = state.alert.rocketChatWebhookUrl;
+      }
+
       if (state.alert.rocketChatUsernameOverride) {
         config.rocket_chat_username_override = state.alert.rocketChatUsernameOverride;
       }
 
-      if (state.alert.rocketChatChannelOverride) {
+      if (state.alert.rocketChatChannelOverride && state.alert.rocketChatChannelOverride.length) {
         config.rocket_chat_channel_override = state.alert.rocketChatChannelOverride;
       }
 
@@ -2508,6 +2759,50 @@ export default {
 
       if (state.alert.alertaEnvironment) {
         config.alerta_environment = state.alert.alertaEnvironment;
+      }
+
+      if (state.alert.alertaTimeout) {
+        config.alerta_timeout = state.alert.alertaTimeout;
+      }
+
+      if (state.alert.alertaUseMatchTimestamp) {
+        config.alerta_use_match_timestamp = state.alert.alertaUseMatchTimestamp;
+      }
+
+      if (state.alert.alertaUseQkAsResource) {
+        config.alerta_use_qk_as_resource = state.alert.alertaUseQkAsResource;
+      }
+
+      if (state.alert.alertaApiSkipSsl) {
+        config.alerta_api_skip_ssl = state.alert.alertaApiSkipSsl;
+      }
+
+      if (state.alert.alertaOrigin) {
+        config.alerta_origin = state.alert.alertaOrigin;
+      }
+
+      if (state.alert.alertaValue) {
+        config.alerta_value = state.alert.alertaValue;
+      }
+
+      if (state.alert.alertaType) {
+        config.alerta_type = state.alert.alertaType;
+      }
+
+      if (state.alert.alertaService && state.alert.alertaService.length) {
+        config.alerta_service = state.alert.alertaService;
+      }
+
+      if (state.alert.alertaCorrelate && state.alert.alertaCorrelate.length) {
+        config.alerta_correlate = state.alert.alertaCorrelate;
+      }
+
+      if (state.alert.alertaAttributesKeys && state.alert.alertaAttributesKeys.length) {
+        config.alerta_attributes_keys = state.alert.alertaAttributesKeys;
+      }
+
+      if (state.alert.alertaAttributesValues && state.alert.alertaAttributesValues.length) {
+        config.alerta_attributes_values = state.alert.alertaAttributesValues;
       }
 
       return config;
@@ -2758,6 +3053,10 @@ export default {
         config = { ...config, ...getters.exotel };
       }
 
+      if (state.alert.alert.includes('gelf')) {
+        config = { ...config, ...getters.gelf };
+      }
+
       if (state.alert.alert.includes('gitter')) {
         config = { ...config, ...getters.gitter };
       }
@@ -2784,6 +3083,10 @@ export default {
 
       if (state.alert.alert.includes('ms_teams')) {
         config = { ...config, ...getters.ms_teams };
+      }
+
+      if (state.alert.alert.includes('opsgenie')) {
+        config = { ...config, ...getters.opsgenie };
       }
 
       if (state.alert.alert.includes('pagerduty')) {
@@ -2853,6 +3156,7 @@ export default {
         || state.alert.alert.includes('dingtalk')
         || state.alert.alert.includes('discord')
         || state.alert.alert.includes('email')
+        || state.alert.alert.includes('gelf')
         || state.alert.alert.includes('gitter')
         || state.alert.alert.includes('googlechat')
         || state.alert.alert.includes('hivealerter')
@@ -2860,6 +3164,7 @@ export default {
         || state.alert.alert.includes('linenotify')
         || state.alert.alert.includes('mattermost')
         || state.alert.alert.includes('ms_teams')
+        || state.alert.alert.includes('opsgenie')
         || state.alert.alert.includes('pagerduty')
         || state.alert.alert.includes('pagertree')
         || state.alert.alert.includes('rocketchat')

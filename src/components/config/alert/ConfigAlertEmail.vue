@@ -281,16 +281,6 @@ export default {
         this.$store.commit('config/alert/UPDATE_SMTP_CERT_FILE', value);
       }
     },
-
-    // TODO:
-    // emailFormat: {
-    //   get() {
-    //     return this.$store.state.config.alert.emailFormat;
-    //   },
-    //   set(value) {
-    //     this.$store.commit('config/alert/UPDATE_EMAIL_FORMAT', value);
-    //   }
-    // },
   },
 
   methods: {

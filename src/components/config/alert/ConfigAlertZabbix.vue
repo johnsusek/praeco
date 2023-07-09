@@ -97,7 +97,7 @@ export default {
   },
 
   methods: {
-    changeSlackCaCerts(val) {
+    changeZbxHostFromField(val) {
       if (val) {
         this.zbxHostFromField = true;
       } else {

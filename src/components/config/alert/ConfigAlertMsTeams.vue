@@ -1,12 +1,54 @@
 <template>
   <div>
-    <el-form-item label="Team webhook" prop="msTeamsWebhookUrl" required>
-      <el-input v-model="msTeamsWebhookUrl" :disabled="viewOnly" />
-      <label>
-        See<a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook">
-          https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook</a>
-      </label>
-    </el-form-item>
+    <el-popover v-model="popMsTeaMsWebhookUrlVisible" :class="{ 'is-invalid': !popMsTeamsWebhookUrlValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="msTeamsWebhookUrl.length" :content="msTeamsWebhookUrl.join(', ')" placement="top">
+            <span>MsTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
+          </el-tooltip>
+          <span v-else>MsTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="msTeamsWebhookUrl"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in msTeamsWebhookUrl"
+            :key="index"
+            :prop="'msTeamsWebhookUrl.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label="">
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="msTeamsWebhookUrl[index]"
+                  :disabled="viewOnly"
+                  placeholder="WebhookUrl"
+                  @input="(val) => updateMsTeamsWebhookUrl(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeMsTeamsWebhookUrlEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addMsTeamsWebhookUrlEntry">
+          Add WebhookUrl
+        </el-button>
+      </template>
+    </el-popover>
 
     <el-form-item label="Color" prop="msTeamsThemeColor" required>
       <el-color-picker v-model="msTeamsThemeColor" :disabled="viewOnly" />
@@ -75,6 +117,13 @@
 <script>
 export default {
   props: ['viewOnly'],
+
+  data() {
+    return {
+      popMsTeaMsWebhookUrlVisible: false,
+      popMsTeamsWebhookUrlValid: true,
+    };
+  },
 
   computed: {
     msTeamsWebhookUrl: {
@@ -166,6 +215,57 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.msTeamsWebhookUrl) {
+          await this.validateMsTeamsWebhookUrl();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validateMsTeamsWebhookUrl() {
+      if (!this.msTeamsWebhookUrl.length) {
+        this.popMsTeamsWebhookUrlValid = false;
+        return;
+      }
+      try {
+        this.popMsTeamsWebhookUrlValid = await this.$refs.msTeamsWebhookUrl.validate();
+      } catch (error) {
+        this.popMsTeamsWebhookUrlValid = false;
+        throw error;
+      }
+    },
+
+    updateMsTeamsWebhookUrl(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_MS_TEAMS_WEBHOOK_URL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeMsTeamsWebhookUrlEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_MS_TEAMS_WEBHOOK_URL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addMsTeamsWebhookUrlEntry() {
+      this.$store.commit('config/alert/ADD_MS_TEAMS_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     changemsTeamsAlertFixedWidth(val) {
       if (val) {
         this.msTeamsAlertFixedWidth = true;

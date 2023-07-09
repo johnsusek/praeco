@@ -14,6 +14,10 @@
     "relative": true,
     "path": "/rule_templates"
   },
+  "dataPath": {
+    "relative": true,
+    "path": "/server_data"
+  },
   "es_host": "elasticsearch",
   "es_port": 9200,
   "es_username": "",

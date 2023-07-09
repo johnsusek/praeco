@@ -183,6 +183,12 @@
         <el-checkbox id="destinationDingtalk" label="dingtalk" border>
           Dingtalk
         </el-checkbox>
+        <el-checkbox id="destinationOpsgenie" label="opsgenie" border>
+          Opsgenie
+        </el-checkbox>
+        <el-checkbox id="destinationGelf" label="gelf" border>
+          Gelf
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -202,6 +208,7 @@
           alert.includes('linenotify') ||
           alert.includes('mattermost') ||
           alert.includes('ms_teams') ||
+          alert.includes('opsgenie') ||
           alert.includes('pagerduty') ||
           alert.includes('pagertree') ||
           alert.includes('rocketchat') ||
@@ -212,8 +219,9 @@
           alert.includes('stomp') ||
           alert.includes('tencent_sms') ||
           alert.includes('victorops') ||
+          alert.includes('gelf') ||
           alert.includes('telegram')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>
         <ConfigAlertSubjectBody
@@ -224,7 +232,7 @@
 
       <!-- Slack -->
       <el-tab-pane v-if="alert.includes('slack')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'slack']" size="1x" /> Slack
         </template>
         <ConfigAlertSlack ref="slack" :view-only="viewOnly" />
@@ -232,25 +240,31 @@
 
       <!-- Email -->
       <el-tab-pane v-if="alert.includes('email')">
-        <span slot="label"><Icon icon="envelope" size="1x" /> Email</span>
+        <template v-slot:label>
+          <span><Icon icon="envelope" size="1x" /> Email</span>
+        </template>
         <ConfigAlertEmail ref="email" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- HTTP POST -->
       <el-tab-pane v-if="alert.includes('post')" label="HTTP">
-        <span slot="label"><Icon icon="globe" /> HTTP POST</span>
+        <template v-slot:label>
+          <span><Icon icon="globe" /> HTTP POST</span>
+        </template>
         <ConfigAlertHttpPost ref="post" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- HTTP POST 2 -->
       <el-tab-pane v-if="alert.includes('post2')" label="HTTP2">
-        <span slot="label"><Icon icon="globe" /> HTTP POST 2</span>
+        <template v-slot:label>
+          <span><Icon icon="globe" /> HTTP POST 2</span>
+        </template>
         <ConfigAlertHttpPost2 ref="post2" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- MS Teams -->
       <el-tab-pane v-if="alert.includes('ms_teams')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'microsoft']" size="1x" /> MS Teams
         </template>
         <ConfigAlertMsTeams ref="ms_teams" :view-only="viewOnly" />
@@ -258,7 +272,7 @@
 
       <!-- Telegram -->
       <el-tab-pane v-if="alert.includes('telegram')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'telegram']" size="1x" /> Telegram
         </template>
         <ConfigAlertTelegram ref="telegram" :view-only="viewOnly" />
@@ -266,7 +280,7 @@
 
       <!-- Jira -->
       <el-tab-pane v-if="alert.includes('jira')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'jira']" size="1x" /> Jira
         </template>
         <ConfigAlertJira ref="jira" :view-only="viewOnly" />
@@ -274,7 +288,7 @@
 
       <!-- Google Chat -->
       <el-tab-pane v-if="alert.includes('googlechat')">
-        <template slot="label">
+        <template v-slot:label>
           Google Chat
         </template>
         <ConfigAlertGoogleChat ref="googlechat" :view-only="viewOnly" />
@@ -282,7 +296,7 @@
 
       <!-- Line Notify -->
       <el-tab-pane v-if="alert.includes('linenotify')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'line']" size="1x" /> Line Notify
         </template>
         <ConfigAlertLineNotify ref="linenotify" :view-only="viewOnly" />
@@ -290,7 +304,7 @@
 
       <!-- Mattermost -->
       <el-tab-pane v-if="alert.includes('mattermost')">
-        <template slot="label">
+        <template v-slot:label>
           Mattermost
         </template>
         <ConfigAlertMattermost ref="mattermost" :view-only="viewOnly" />
@@ -298,7 +312,7 @@
 
       <!-- Command -->
       <el-tab-pane v-if="alert.includes('command')">
-        <template slot="label">
+        <template v-slot:label>
           Command
         </template>
         <ConfigAlertCommand ref="command" :view-only="viewOnly" />
@@ -306,7 +320,7 @@
 
       <!-- Gitter -->
       <el-tab-pane v-if="alert.includes('gitter')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'gitter']" size="1x" /> Gitter
         </template>
         <ConfigAlertGitter ref="gitter" :view-only="viewOnly" />
@@ -314,7 +328,7 @@
 
       <!-- Amazon SNS -->
       <el-tab-pane v-if="alert.includes('sns')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SNS
         </template>
         <ConfigAlertAmazonSns ref="sns" :view-only="viewOnly" />
@@ -322,7 +336,7 @@
 
       <!-- Amazon SES -->
       <el-tab-pane v-if="alert.includes('ses')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SES
         </template>
         <ConfigAlertAmazonSes ref="ses" :view-only="viewOnly" />
@@ -330,7 +344,7 @@
 
       <!-- Zabbix -->
       <el-tab-pane v-if="alert.includes('zabbix')">
-        <template slot="label">
+        <template v-slot:label>
           Zabbix
         </template>
         <ConfigAlertZabbix ref="zabbix" :view-only="viewOnly" />
@@ -338,7 +352,7 @@
 
       <!-- Twilio -->
       <el-tab-pane v-if="alert.includes('twilio')">
-        <template slot="label">
+        <template v-slot:label>
           Twilio
         </template>
         <ConfigAlertTwilio ref="twilio" :view-only="viewOnly" />
@@ -346,7 +360,7 @@
 
       <!-- PagerTree -->
       <el-tab-pane v-if="alert.includes('pagertree')">
-        <template slot="label">
+        <template v-slot:label>
           PagerTree
         </template>
         <ConfigAlertPagerTree ref="pagertree" :view-only="viewOnly" />
@@ -354,7 +368,7 @@
 
       <!-- Exotel -->
       <el-tab-pane v-if="alert.includes('exotel')">
-        <template slot="label">
+        <template v-slot:label>
           Exotel
         </template>
         <ConfigAlertExotel ref="exotel" :view-only="viewOnly" />
@@ -362,7 +376,7 @@
 
       <!-- Stomp -->
       <el-tab-pane v-if="alert.includes('stomp')">
-        <template slot="label">
+        <template v-slot:label>
           Stomp
         </template>
         <ConfigAlertStomp ref="stomp" :view-only="viewOnly" />
@@ -370,7 +384,7 @@
 
       <!-- VictorOps -->
       <el-tab-pane v-if="alert.includes('victorops')">
-        <template slot="label">
+        <template v-slot:label>
           VictorOps
         </template>
         <ConfigAlertVictorOps ref="victorops" :view-only="viewOnly" />
@@ -378,7 +392,7 @@
 
       <!-- ServiceNow -->
       <el-tab-pane v-if="alert.includes('servicenow')">
-        <template slot="label">
+        <template v-slot:label>
           ServiceNow
         </template>
         <ConfigAlertServiceNow ref="servicenow" :view-only="viewOnly" />
@@ -386,7 +400,7 @@
 
       <!-- Chatwork -->
       <el-tab-pane v-if="alert.includes('chatwork')">
-        <template slot="label">
+        <template v-slot:label>
           Chatwork
         </template>
         <ConfigAlertChatwork ref="chatwork" :view-only="viewOnly" />
@@ -394,7 +408,7 @@
 
       <!-- Discord -->
       <el-tab-pane v-if="alert.includes('discord')">
-        <template slot="label">
+        <template v-slot:label>
           Discord
         </template>
         <ConfigAlertDiscord ref="discord" :view-only="viewOnly" />
@@ -402,7 +416,7 @@
 
       <!-- TheHive -->
       <el-tab-pane v-if="alert.includes('hivealerter')">
-        <template slot="label">
+        <template v-slot:label>
           TheHive
         </template>
         <ConfigAlertTheHive ref="hivealerter" :view-only="viewOnly" />
@@ -410,7 +424,7 @@
 
       <!-- Alerta -->
       <el-tab-pane v-if="alert.includes('alerta')">
-        <template slot="label">
+        <template v-slot:label>
           Alerta
         </template>
         <ConfigAlertAlerta ref="alerta" :view-only="viewOnly" />
@@ -418,7 +432,7 @@
 
       <!-- Datadog -->
       <el-tab-pane v-if="alert.includes('datadog')">
-        <template slot="label">
+        <template v-slot:label>
           Datadog
         </template>
         <ConfigAlertDatadog ref="datadog" :view-only="viewOnly" />
@@ -426,7 +440,7 @@
 
       <!-- Rocket.Chat -->
       <el-tab-pane v-if="alert.includes('rocketchat')">
-        <template slot="label">
+        <template v-slot:label>
           <Icon :icon="['fab', 'rocketchat']" size="1x" /> Rocket.Chat
         </template>
         <ConfigAlertRocketChat ref="rocketchat" :view-only="viewOnly" />
@@ -434,7 +448,7 @@
 
       <!-- PagerDuty -->
       <el-tab-pane v-if="alert.includes('pagerduty')">
-        <template slot="label">
+        <template v-slot:label>
           PagerDuty
         </template>
         <ConfigAlertPagerDuty ref="pagerduty" :view-only="viewOnly" />
@@ -442,7 +456,7 @@
 
       <!-- Tencent SMS -->
       <el-tab-pane v-if="alert.includes('tencent_sms')">
-        <template slot="label">
+        <template v-slot:label>
           TencentSMS
         </template>
         <ConfigAlertTencentSms ref="tencent_sms" :view-only="viewOnly" />
@@ -450,7 +464,7 @@
 
       <!-- Alertmanager -->
       <el-tab-pane v-if="alert.includes('alertmanager')">
-        <template slot="label">
+        <template v-slot:label>
           Alertmanager
         </template>
         <ConfigAlertAlertmanager ref="alertmanager" :view-only="viewOnly" />
@@ -458,10 +472,26 @@
 
       <!-- Dingtalk -->
       <el-tab-pane v-if="alert.includes('dingtalk')">
-        <template slot="label">
+        <template v-slot:label>
           Dingtalk
         </template>
         <ConfigAlertDingtalk ref="dingtalk" :view-only="viewOnly" />
+      </el-tab-pane>
+
+      <!-- Opsgenie -->
+      <el-tab-pane v-if="alert.includes('opsgenie')">
+        <template #label>
+          Opsgenie
+        </template>
+        <ConfigAlertOpsgenie ref="opsgenie" :view-only="viewOnly" />
+      </el-tab-pane>
+
+      <!-- Gelf -->
+      <el-tab-pane v-if="alert.includes('gelf')" label="Gelf">
+        <template v-slot:label>
+          <span><Icon icon="globe" /> Gelf</span>
+        </template>
+        <ConfigAlertGelf ref="gelf" :view-only="viewOnly" />
       </el-tab-pane>
     </el-tabs>
   </el-form>
@@ -482,6 +512,7 @@ import ConfigAlertDatadog from './ConfigAlertDatadog';
 import ConfigAlertDiscord from './ConfigAlertDiscord';
 import ConfigAlertEmail from './ConfigAlertEmail';
 import ConfigAlertExotel from './ConfigAlertExotel';
+import ConfigAlertGelf from './ConfigAlertGelf';
 import ConfigAlertGitter from './ConfigAlertGitter';
 import ConfigAlertGoogleChat from './ConfigAlertGoogleChat';
 import ConfigAlertHttpPost from './ConfigAlertHttpPost';
@@ -490,6 +521,7 @@ import ConfigAlertJira from './ConfigAlertJira';
 import ConfigAlertLineNotify from './ConfigAlertLineNotify';
 import ConfigAlertMattermost from './ConfigAlertMattermost';
 import ConfigAlertMsTeams from './ConfigAlertMsTeams';
+import ConfigAlertOpsgenie from './ConfigAlertOpsgenie';
 import ConfigAlertPagerDuty from './ConfigAlertPagerDuty';
 import ConfigAlertPagerTree from './ConfigAlertPagerTree';
 import ConfigAlertRocketChat from './ConfigAlertRocketChat';
@@ -597,6 +629,7 @@ export default {
     ConfigAlertDiscord,
     ConfigAlertEmail,
     ConfigAlertExotel,
+    ConfigAlertGelf,
     ConfigAlertGitter,
     ConfigAlertGoogleChat,
     ConfigAlertHttpPost,
@@ -605,6 +638,7 @@ export default {
     ConfigAlertLineNotify,
     ConfigAlertMattermost,
     ConfigAlertMsTeams,
+    ConfigAlertOpsgenie,
     ConfigAlertPagerDuty,
     ConfigAlertPagerTree,
     ConfigAlertRocketChat,

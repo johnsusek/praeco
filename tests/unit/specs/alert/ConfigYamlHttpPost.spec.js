@@ -22,7 +22,8 @@ filter:
         query: "@timestamp:*"
 generate_kibana_discover_url: false
 http_post_timeout: 10
-http_post_url: "http://localhost/webhook"
+http_post_url:
+  - "http://localhost/webhook"
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false

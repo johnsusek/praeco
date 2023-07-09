@@ -11,7 +11,7 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat, PagerDuty, Tencent SMS, Dingtalk, Alertmanager or an HTTP POST/HTTP POST 2 endpoint
+- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat, PagerDuty, Tencent SMS, Dingtalk, Alertmanager, OpsGenie, Graylog GELF or an HTTP POST/HTTP POST 2 endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -122,7 +122,7 @@ Do not use `karql/elastalert2-server` as it does not implement the features requ
 yelp/elastalert is no longer supported as maintenance has been discontinued.
 
 Main challenges of yelp/elastalert
-- It does not work with Python 3.9 and 3.10.
+- python 3.9-3.11 is not supported.
 - Line Notify, PagerTree, Stomp and Zabbix alert notifications do not work due to a bug.
 - kibana Discover only guarantees operation up to kibana 7.3.
 
@@ -474,8 +474,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 **Python Support version**
 
-- 3.9
-- 3.10
+- Compatible with 3.9 to 3.11
 
 **Elasticsearch Support version**
 
@@ -492,7 +491,7 @@ cd ~/elastalert2
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
 echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
-pip install "setuptools>=60.9.3"
+pip install "setuptools>=11.3"
 python setup.py install
 cp ./examples/config.yaml.example ./config.yaml
 vi config.yaml
@@ -508,7 +507,7 @@ Configure the api server `config.json` with:
 ```sh
 # nvm install
 # https://github.com/nvm-sh/nvm#install--update-script
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 $ vi ~/.bash_profile
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -518,7 +517,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 16.15.0
+nvm install 16.20.1
 ```
 
 ```sh
@@ -542,7 +541,7 @@ Finally, run praeco:
 # No need to implement if the environment is the same as elastalert-server
 # nvm install
 # https://github.com/nvm-sh/nvm#install--update-script
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 $ vi ~/.bash_profile
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -552,7 +551,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 16.15.0
+nvm install 16.20.1
 ```
 
 ```sh

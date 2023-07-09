@@ -7,6 +7,140 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.15
+
+**bug fix**
+
+- Alerta
+- TheHive
+
+## -> 1.8.14
+
+**kibana discover**
+
+- kibana 8.7, 8.8 support
+
+**Opsgenie**
+
+add settings.
+
+- opsgenie_priority
+
+**multiple settigs**
+
+- slack_webhook_url
+- mattermost_webhook_url
+- mattermost_channel_override
+- rocket_chat_webhook_url
+- rocket_chat_channel_override
+- ms_teams_webhook_url
+- googlechat_webhook_url
+- http_post_url
+- http_post2_url
+
+**bug fix**
+
+- Alerta
+
+## -> 1.8.13
+
+**New options**
+
+**Graylog GELF**
+
+**kibana discover**
+
+- kibana 8.6 support
+
+**Remove option**
+
+**Jira**
+
+- jira_label
+- jira_labels
+- jira_description
+- jira_assignee
+- jira_max_age
+- jira_priority
+- jira_bump_tickets
+- jira_bump_not_in_statuses
+- jira_bump_in_statuses
+- jira_bump_after_inactivity
+- jira_bump_only
+- jira_transition_to
+- jira_watchers
+
+## -> 1.8.12
+
+**New options**
+
+**Alerta**
+
+add settings.
+
+- alerta_timeout
+- alerta_use_match_timestamp
+- alerta_use_qk_as_resource
+- alerta_api_skip_ssl
+- alert_missing_value
+- alerta_origin
+- alerta_service
+- alerta_type
+- alerta_correlate
+- alerta_attributes_keys
+- alerta_attributes_values
+- alerta_value
+
+**GoogleChat**
+
+add settings.
+
+- googlechat_proxy
+
+**Jira**
+
+add settings.
+
+- jira_label
+- jira_labels
+- jira_description
+- jira_assignee
+- jira_max_age
+- jira_priority
+- jira_bump_tickets
+- jira_bump_not_in_statuses
+- jira_bump_in_statuses
+- jira_bump_after_inactivity
+- jira_bump_only
+- jira_transition_to
+- jira_watchers
+
+**Mattermost**
+
+add settings.
+
+- mattermost_emoji_override
+
+**OpsGenie**
+
+https://elastalert2.readthedocs.io/en/latest/ruletypes.html#opsgenie
+- opsgenie_key
+- opsgenie_account
+- opsgenie_message
+- opsgenie_subject
+- opsgenie_alias
+- opsgenie_proxy
+
+**Telegram**
+
+add settings.
+
+- telegram_parse_mode
+
+**kibana discover**
+
+- kibana 8.2～8.5 support
+
 ## -> 1.8.11
 
 Elasticsearch 8 support

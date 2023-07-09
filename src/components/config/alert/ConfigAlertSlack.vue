@@ -1,29 +1,130 @@
 <template>
   <div>
-    <el-form-item label="Channel or username" prop="slackChannelOverride" required>
-      <el-input id="slackChannelOverride" v-model="slackChannelOverride" :disabled="viewOnly" />
-      <label>
-        The @username or #channel to send the alert. Tip: Create new channels
-        for your alerts, to have fine-grained control of Slack notifications.
-      </label>
-    </el-form-item>
+    <el-popover v-model="popslackWebhookUrlVisible" :class="{ 'is-invalid': !popslackWebhookUrlValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="slackWebhookUrl.length" :content="slackWebhookUrl.join(', ')" placement="top">
+            <span>SlackWebhookUrls ({{ slackWebhookUrl.length }})</span>
+          </el-tooltip>
+          <span v-else>SlackWebhookUrls ({{ slackWebhookUrl.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="slackWebhookUrl"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in slackWebhookUrl"
+            :key="index"
+            :prop="'slackWebhookUrl.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label="">
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="slackWebhookUrl[index]"
+                  :disabled="viewOnly"
+                  placeholder="WebhookUrl"
+                  @input="(val) => updateslackWebhookUrl(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeslackWebhookUrlEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackWebhookUrlEntry">
+          Add WebhookUrl
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popslackChannelOverrideVisible" :class="{ 'is-invalid': !popslackChannelOverrideValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="slackChannelOverride.length" :content="slackChannelOverride.join(', ')" placement="top">
+            <span>SlackChannelOverrides ({{ slackChannelOverride.length }})</span>
+          </el-tooltip>
+          <span v-else>SlackChannelOverrides ({{ slackChannelOverride.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="slackChannelOverride"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in slackChannelOverride"
+            :key="index"
+            :prop="'slackChannelOverride.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="slackChannelOverride[index]"
+                  :disabled="viewOnly"
+                  placeholder="SlackChannelOverrides"
+                  @input="(val) => updateslackChannelOverride(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeslackChannelOverrideEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackChannelOverrideEntry">
+          Add ChannelOverride
+        </el-button>
+      </template>
+    </el-popover>
 
     <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
       <el-input id="slackUsernameOverride" v-model="slackUsernameOverride" :disabled="viewOnly" />
       <label>This is the username that will appear in Slack for the alert</label>
     </praeco-form-item>
 
-    <praeco-form-item
-      v-if="!(viewOnly && !slackEmojiOverride)"
-      :class="{ 'disabled': viewOnly }"
-      label="Icon"
-      prop="slackEmojiOverride">
+    <div v-show="viewOnly">
+      <emoji
+        :data="emojiIndex"
+        :emoji="slackEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
+    <div v-if="!viewOnly">
       <picker
-        :emoji="slackEmojiOverride || 'arrow_up'"
-        :title="slackEmojiOverride || 'Pick your icon...'"
+        :disabled="viewOnly"
+        :data="emojiIndex"
         color="#189acc"
         @select="addEmoji" />
-    </praeco-form-item>
+      <emoji
+        :data="emojiIndex"
+        :emoji="slackEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
 
     <el-form-item label="Message color" prop="slackMsgColor" required>
       <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
@@ -178,16 +279,39 @@
 </template>
 
 <script>
-import { Picker } from 'emoji-mart-vue';
+import 'emoji-mart-vue-fast/css/emoji-mart.css';
+import emojiData from 'emoji-mart-vue-fast/data/all.json';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+
+let emojiIndex = new EmojiIndex(emojiData);
 
 export default {
   components: {
+    Emoji,
     Picker
   },
 
   props: ['viewOnly'],
 
+  data() {
+    return {
+      emojiIndex,
+      popslackWebhookUrlVisible: false,
+      popslackWebhookUrlValid: true,
+      popslackChannelOverrideVisible: false,
+      popslackChannelOverrideValid: true,
+    };
+  },
   computed: {
+    slackWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.slackWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SLACK_WEBHOOK_URL', value);
+      }
+    },
+
     slackChannelOverride: {
       get() {
         return this.$store.state.config.alert.slackChannelOverride;
@@ -460,6 +584,98 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.slackWebhookUrl) {
+          await this.validateslackWebhookUrl();
+        }
+        if (this.$refs.slackChannelOverride) {
+          await this.validateslackChannelOverride();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validateslackWebhookUrl() {
+      if (!this.slackWebhookUrl.length) {
+        this.popslackWebhookUrlValid = false;
+        return;
+      }
+      try {
+        this.popslackWebhookUrlValid = await this.$refs.slackWebhookUrl.validate();
+      } catch (error) {
+        this.popslackWebhookUrlValid = false;
+        throw error;
+      }
+    },
+
+    updateslackWebhookUrl(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_SLACK_WEBHOOK_URL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeslackWebhookUrlEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_SLACK_WEBHOOK_URL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addslackWebhookUrlEntry() {
+      this.$store.commit('config/alert/ADD_SLACK_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validateslackChannelOverride() {
+      if (!this.slackChannelOverride.length) {
+        this.popslackChannelOverrideValid = false;
+        return;
+      }
+      try {
+        this.popslackChannelOverrideValid = await this.$refs.slackChannelOverride.validate();
+      } catch (error) {
+        this.popslackChannelOverrideValid = false;
+        throw error;
+      }
+    },
+
+    updateslackChannelOverride(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_SLACK_CHANNEL_OVERRIDE_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeslackChannelOverrideEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_SLACK_CHANNEL_OVERRIDE_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addslackChannelOverrideEntry() {
+      this.$store.commit('config/alert/ADD_SLACK_CHANNEL_OVERRIDE_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     addEmoji(value) {
       this.slackEmojiOverride = value.colons;
     },

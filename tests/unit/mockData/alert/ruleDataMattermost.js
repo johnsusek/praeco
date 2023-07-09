@@ -14,6 +14,8 @@ filter:
 import: BaseRule.config
 index: hannibal-*
 is_enabled: false
+mattermost_webhook_url:
+  - 'a'
 mattermost_channel_override: '#elastalert-debugging'
 name: test123
 num_events: 10000

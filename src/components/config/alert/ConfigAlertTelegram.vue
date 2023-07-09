@@ -25,6 +25,20 @@
       <el-input id="telegramProxyPass" v-model="telegramProxyPass" :disabled="viewOnly" />
       <label>The Telegram proxy auth password.</label>
     </praeco-form-item>
+
+    <praeco-form-item label="Parse Mode" prop="telegramParseMode" required>
+      <el-radio-group v-model="telegramParseMode" :disabled="viewOnly">
+        <el-radio id="telegramParseModeMarkdown" label="markdown" border>
+          markdown
+        </el-radio>
+        <el-radio id="telegramParseModeMarkdownV2" label="markdownV2" border>
+          markdownV2
+        </el-radio>
+        <el-radio id="telegramParseModeHtml" label="html" border>
+          html
+        </el-radio>
+      </el-radio-group>
+    </praeco-form-item>
   </div>
 </template>
 
@@ -79,7 +93,16 @@ export default {
           value
         );
       }
-    }
+    },
+
+    telegramParseMode: {
+      get() {
+        return this.$store.state.config.alert.telegramParseMode;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_TELEGRAM_PARSE_MODE', value);
+      }
+    },
   },
 
   methods: {

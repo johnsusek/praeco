@@ -32,8 +32,10 @@ name: "test123"
 num_events: 10000
 realert:
   minutes: 5
+slack_attach_jira_ticket_url: false
 slack_attach_kibana_discover_url: false
-slack_channel_override: "#elastalert-debugging"
+slack_channel_override:
+  - "#elastalert-debugging"
 slack_emoji_override: ":ghost:"
 slack_kibana_discover_color: "#ec4b98"
 slack_kibana_discover_title: "Discover in Kibana"
@@ -42,6 +44,9 @@ slack_parse_override: "none"
 slack_timeout: 10
 slack_title_link: "undefined/rules/test123"
 slack_username_override: "elastalert"
+slack_webhook_url:
+  - "a"
+  - "b"
 terms_size: 50
 timeframe:
   minutes: 5

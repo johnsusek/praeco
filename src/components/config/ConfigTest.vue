@@ -1,14 +1,16 @@
 <template>
   <span>
     <el-popover v-model="testPopoverVisible" placement="top" width="310">
-      <span slot="reference">
-        <el-button v-if="!testRunLoading" type="primary" plain size="medium">
-          Test
-          <i v-if="!testPopoverVisible" class="el-icon-caret-bottom el-icon-right" />
-          <i v-if="testPopoverVisible" class="el-icon-caret-top el-icon-right" />
-        </el-button>
-        <el-button v-else type="primary" plain disabled size="medium">Testing...</el-button>
-      </span>
+      <template v-slot:reference>
+        <span>
+          <el-button v-if="!testRunLoading" type="primary" plain size="medium">
+            Test
+            <i v-if="!testPopoverVisible" class="el-icon-caret-bottom el-icon-right" />
+            <i v-if="testPopoverVisible" class="el-icon-caret-top el-icon-right" />
+          </el-button>
+          <el-button v-else type="primary" plain disabled size="medium">Testing...</el-button>
+        </span>
+      </template>
       <el-form label-position="top">
         <div>
           <el-form-item label="Test over previous">

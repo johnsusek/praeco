@@ -3,21 +3,27 @@
     <h2>Activity</h2>
     <el-table :data="alertLog" empty-text="">
       <el-table-column label="Alert sent" width="100">
-        <span slot-scope="scope">
-          <el-tag v-if="scope.row.alert_sent" type="success">Sent</el-tag>
-          <el-tag v-else type="danger">Not sent</el-tag>
-        </span>
+        <template v-slot="scope">
+          <span>
+            <el-tag v-if="scope.row.alert_sent" type="success">Sent</el-tag>
+            <el-tag v-else type="danger">Not sent</el-tag>
+          </span>
+        </template>
       </el-table-column>
       <el-table-column label="Alert time">
-        <span slot-scope="scope">
-          {{ shortDate(scope.row.alert_time) }}
-        </span>
+        <template v-slot="scope">
+          <span>
+            {{ shortDate(scope.row.alert_time) }}
+          </span>
+        </template>
       </el-table-column>
       <el-table-column label="Rule" prop="rule_name" />
       <el-table-column label="Alert type">
-        <span slot-scope="scope">
-          {{ titleCase(scope.row.alert_info && scope.row.alert_info.type) }}
-        </span>
+        <template v-slot="scope">
+          <span>
+            {{ titleCase(scope.row.alert_info && scope.row.alert_info.type) }}
+          </span>
+        </template>
       </el-table-column>
     </el-table>
   </div>

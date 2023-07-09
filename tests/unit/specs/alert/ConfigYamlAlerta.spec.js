@@ -19,12 +19,18 @@ alert_subject: "this is a test subject"
 alert_text: "this is a test body"
 alert_text_type: "alert_text_only"
 alerta_api_key: "a"
+alerta_api_skip_ssl: true
 alerta_api_url: "http://testserver/"
 alerta_environment: "Production"
 alerta_event: "elastalert"
+alerta_origin: "elastalert"
 alerta_resource: "elastalert"
 alerta_severity: "warning"
 alerta_text: "elastalert"
+alerta_timeout: 88000
+alerta_type: "elastalert"
+alerta_use_match_timestamp: true
+alerta_use_qk_as_resource: true
 doc_type: "syslog"
 filter:
   - query:
@@ -37,6 +43,8 @@ is_enabled: false
 match_enhancements: []
 name: "test123"
 num_events: 10000
+query_key:
+  - "beat.hostname"
 realert:
   minutes: 5
 terms_size: 50

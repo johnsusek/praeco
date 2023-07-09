@@ -19,12 +19,14 @@
     </praeco-form-item>
 
     <el-popover v-model="popTencentSmsToNumberVisible" :class="{ 'is-invalid': !popTencentSmsToNumberValid }">
-      <span slot="reference" class="pop-trigger">
-        <el-tooltip v-if="tencentSmsToNumber.length" :content="tencentSmsToNumber.join(', ')" placement="top">
-          <span>TencentSmsToNumber ({{ tencentSmsToNumber.length }})</span>
-        </el-tooltip>
-        <span v-else>TencentSmsToNumber ({{ tencentSmsToNumber.length }})</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="tencentSmsToNumber.length" :content="tencentSmsToNumber.join(', ')" placement="top">
+            <span>TencentSmsToNumber ({{ tencentSmsToNumber.length }})</span>
+          </el-tooltip>
+          <span v-else>TencentSmsToNumber ({{ tencentSmsToNumber.length }})</span>
+        </span>
+      </template>
       <template>
         <el-form
           ref="tencentSmsToNumber"
@@ -92,12 +94,14 @@
 
     <!-- tencentSmsTemplateParm -->
     <el-popover v-model="popTencentSmsTemplateParmVisible" :class="{ 'is-invalid': !popTencentSmsTemplateParmValid }">
-      <span slot="reference" class="pop-trigger">
-        <el-tooltip v-if="tencentSmsTemplateParm.length" :content="tencentSmsTemplateParm.join(', ')" placement="top">
-          <span>TencentSmsTemplateParm ({{ tencentSmsTemplateParm.length }})</span>
-        </el-tooltip>
-        <span v-else>TencentSmsTemplateParm ({{ tencentSmsTemplateParm.length }})</span>
-      </span>
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="tencentSmsTemplateParm.length" :content="tencentSmsTemplateParm.join(', ')" placement="top">
+            <span>TencentSmsTemplateParm ({{ tencentSmsTemplateParm.length }})</span>
+          </el-tooltip>
+          <span v-else>TencentSmsTemplateParm ({{ tencentSmsTemplateParm.length }})</span>
+        </span>
+      </template>
       <template>
         <el-form
           ref="tencentSmsTemplateParm"

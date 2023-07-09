@@ -42,6 +42,11 @@ module.exports = {
     'vue/no-template-shadow': 'off',
     'import/no-cycle': 'off',
     'vue/return-in-computed-property': 'off',
+    'vue/this-in-template': 'warn',
+    'vue/no-deprecated-slot-attribute': 'warn',
+    'vue/no-deprecated-slot-scope-attribute': 'warn',
+    // 'vue/no-deprecated-filter': 'warn',
+    // 'vue/no-deprecated-functional-template': 'warn',
     'import/extensions': [
       'off',
       'always',

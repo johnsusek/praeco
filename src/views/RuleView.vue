@@ -71,16 +71,18 @@
           v-if="isEnabled"
           v-model="silencePopoverVisible"
           :disabled="!!silenceNotice">
-          <span slot="reference">
-            <el-button
-              :disabled="!!silenceNotice"
-              plain
-              type="warning">
-              Silence
-              <i v-if="!silencePopoverVisible" class="el-icon-caret-bottom el-icon-right" />
-              <i v-if="silencePopoverVisible" class="el-icon-caret-top el-icon-right" />
-            </el-button>
-          </span>
+          <template v-slot:reference>
+            <span>
+              <el-button
+                :disabled="!!silenceNotice"
+                plain
+                type="warning">
+                Silence
+                <i v-if="!silencePopoverVisible" class="el-icon-caret-bottom el-icon-right" />
+                <i v-if="silencePopoverVisible" class="el-icon-caret-top el-icon-right" />
+              </el-button>
+            </span>
+          </template>
           <template>
             <el-row type="flex" justify="space-around">
               <el-col :span="24" align="center">
@@ -133,10 +135,12 @@
           <div>
             <FolderTree v-model="moveDest" type="rules" />
           </div>
-          <span slot="footer">
-            <el-button @click="moveVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="move">Move rule</el-button>
-          </span>
+          <template v-slot:footer>
+            <span>
+              <el-button @click="moveVisible = false">Cancel</el-button>
+              <el-button type="primary" @click="move">Move rule</el-button>
+            </span>
+          </template>
         </el-dialog>
       </el-row>
 
@@ -154,20 +158,26 @@
         <el-tab-pane label="Alert log">
           <el-table :data="alertLog" empty-text="">
             <el-table-column label="Alert sent" width="100">
-              <span slot-scope="scope">
-                <el-tag v-if="scope.row.alert_sent" type="success">Sent</el-tag>
-                <el-tag v-else type="danger">Not sent</el-tag>
-              </span>
+              <template v-slot="scope">
+                <span>
+                  <el-tag v-if="scope.row.alert_sent" type="success">Sent</el-tag>
+                  <el-tag v-else type="danger">Not sent</el-tag>
+                </span>
+              </template>
             </el-table-column>
             <el-table-column label="Alert time" width="170">
-              <span slot-scope="scope">
-                {{ shortDate(scope.row.alert_time) }}
-              </span>
+              <template v-slot="scope">
+                <span>
+                  {{ shortDate(scope.row.alert_time) }}
+                </span>
+              </template>
             </el-table-column>
             <el-table-column label="Alert type" width="100">
-              <span slot-scope="scope">
-                {{ titleCase(scope.row.alert_info && scope.row.alert_info.type) }}
-              </span>
+              <template v-slot="scope">
+                <span>
+                  {{ titleCase(scope.row.alert_info && scope.row.alert_info.type) }}
+                </span>
+              </template>
             </el-table-column>
             <el-table-column label="Exception" prop="alert_exception" />
           </el-table>
@@ -176,14 +186,18 @@
         <el-tab-pane label="Query log">
           <el-table :data="queryLog" empty-text="">
             <el-table-column label="Start time" width="170">
-              <span slot-scope="scope">
-                {{ shortDate(scope.row.starttime) }}
-              </span>
+              <template v-slot="scope">
+                <span>
+                  {{ shortDate(scope.row.starttime) }}
+                </span>
+              </template>
             </el-table-column>
             <el-table-column label="End time" width="170">
-              <span slot-scope="scope">
-                {{ shortDate(scope.row.endtime) }}
-              </span>
+              <template v-slot="scope">
+                <span>
+                  {{ shortDate(scope.row.endtime) }}
+                </span>
+              </template>
             </el-table-column>
             <el-table-column label="Hits" prop="hits" width="100" />
             <el-table-column label="Matches" prop="matches" width="100" />
@@ -198,14 +212,18 @@
           been alerted within the rule's re-alert timeframe." />
           <el-table :data="silenceLog" empty-text="">
             <el-table-column label="Until" width="170">
-              <span slot-scope="scope">
-                {{ shortDate(scope.row.until) }}
-              </span>
+              <template v-slot="scope">
+                <span>
+                  {{ shortDate(scope.row.until) }}
+                </span>
+              </template>
             </el-table-column>
             <el-table-column label="Timestamp" width="170">
-              <span slot-scope="scope">
-                {{ shortDate(scope.row['@timestamp']) }}
-              </span>
+              <template v-slot="scope">
+                <span>
+                  {{ shortDate(scope.row['@timestamp']) }}
+                </span>
+              </template>
             </el-table-column>
             <el-table-column label="Exponent" prop="exponent" />
           </el-table>

@@ -49,12 +49,14 @@
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
       <el-popover v-model="popKibanaDiscoverColumnsVisible" :class="{ 'is-invalid': !popKibanaDiscoverColumnsValid }">
-        <span slot="reference" class="pop-trigger">
-          <el-tooltip v-if="kibanaDiscoverColumns.length" :content="kibanaDiscoverColumns.join(', ')" placement="top">
-            <span>Kibana Discover Columns ({{ kibanaDiscoverColumns.length }})</span>
-          </el-tooltip>
-          <span v-else>Kibana Discover Columns ({{ kibanaDiscoverColumns.length }})</span>
-        </span>
+        <template v-slot:reference>
+          <span class="pop-trigger">
+            <el-tooltip v-if="kibanaDiscoverColumns.length" :content="kibanaDiscoverColumns.join(', ')" placement="top">
+              <span>Kibana Discover Columns ({{ kibanaDiscoverColumns.length }})</span>
+            </el-tooltip>
+            <span v-else>Kibana Discover Columns ({{ kibanaDiscoverColumns.length }})</span>
+          </span>
+        </template>
         <template>
           <el-form
             ref="kibanaDiscoverColumns"
@@ -210,6 +212,21 @@ export default {
       }, {
         code: '8.3',
         name: '8.3'
+      }, {
+        code: '8.4',
+        name: '8.4'
+      }, {
+        code: '8.5',
+        name: '8.5'
+      }, {
+        code: '8.6',
+        name: '8.6'
+      }, {
+        code: '8.7',
+        name: '8.7'
+      }, {
+        code: '8.8',
+        name: '8.8'
       }],
     };
   },

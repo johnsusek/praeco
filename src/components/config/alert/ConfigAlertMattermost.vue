@@ -1,17 +1,130 @@
 <template>
   <div>
-    <el-form-item label="Channel or username" prop="mattermostChannelOverride" required>
-      <el-input id="mattermostChannelOverride" v-model="mattermostChannelOverride" :disabled="viewOnly" />
-      <label>
-        The @username or #channel to send the alert. Tip: Create new channels
-        for your alerts, to have fine-grained control of Mattermost notifications.
-      </label>
-    </el-form-item>
+    <el-popover v-model="popMattermostWebhookUrlVisible" :class="{ 'is-invalid': !popMattermostWebhookUrlValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="mattermostWebhookUrl.length" :content="mattermostWebhookUrl.join(', ')" placement="top">
+            <span>MattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
+          </el-tooltip>
+          <span v-else>mattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="mattermostWebhookUrl"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in mattermostWebhookUrl"
+            :key="index"
+            :prop="'mattermostWebhookUrl.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label="">
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="mattermostWebhookUrl[index]"
+                  :disabled="viewOnly"
+                  placeholder="WebhookUrl"
+                  @input="(val) => updateMattermostWebhookUrl(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removeMattermostWebhookUrlEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostWebhookUrlEntry">
+          Add WebhookUrl
+        </el-button>
+      </template>
+    </el-popover>
+
+    <el-popover v-model="popMattermostChannelOverrideVisible" :class="{ 'is-invalid': !popMattermostChannelOverrideValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="mattermostChannelOverride.length" :content="mattermostChannelOverride.join(', ')" placement="top">
+            <span>MattermostChannelOverrides ({{ mattermostChannelOverride.length }})</span>
+          </el-tooltip>
+          <span v-else>MattermostChannelOverrides ({{ mattermostChannelOverride.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="mattermostChannelOverride"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in mattermostChannelOverride"
+            :key="index"
+            :prop="'mattermostChannelOverride.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label=""
+            required>
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="mattermostChannelOverride[index]"
+                  :disabled="viewOnly"
+                  placeholder="MattermostChannelOverrides"
+                  @input="(val) => updatemattermostChannelOverride(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removemattermostChannelOverrideEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostChannelOverrideEntry">
+          Add ChannelOverrides
+        </el-button>
+      </template>
+    </el-popover>
 
     <praeco-form-item label="Post as" prop="mattermostUsernameOverride" required>
       <el-input id="mattermostUsernameOverride" v-model="mattermostUsernameOverride" :disabled="viewOnly" />
       <label>This is the username that will appear in Mattermost for the alert</label>
     </praeco-form-item>
+
+    <div v-show="viewOnly">
+      <emoji
+        :data="emojiIndex"
+        :emoji="mattermostEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
+    <div v-if="!viewOnly">
+      <picker
+        :disabled="viewOnly"
+        :data="emojiIndex"
+        color="#189acc"
+        @select="addMattermostEmoji" />
+      <emoji
+        :data="emojiIndex"
+        :emoji="mattermostEmojiOverride"
+        :size="32"
+        :disabled="viewOnly" />
+    </div>
 
     <el-form-item label="Message color" prop="mattermostMsgColor" required>
       <el-radio-group v-model="mattermostMsgColor" :disabled="viewOnly">
@@ -124,10 +237,36 @@
 </template>
 
 <script>
-export default {
-  props: ['viewOnly'],
+import emojiData from 'emoji-mart-vue-fast/data/all.json';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
 
+let emojiIndex = new EmojiIndex(emojiData);
+
+export default {
+  components: {
+    Emoji,
+    Picker
+  },
+  props: ['viewOnly'],
+  data() {
+    return {
+      emojiIndex,
+      popMattermostWebhookUrlVisible: false,
+      popMattermostWebhookUrlValid: true,
+      popMattermostChannelOverrideVisible: false,
+      popMattermostChannelOverrideValid: true,
+    };
+  },
   computed: {
+    mattermostWebhookUrl: {
+      get() {
+        return this.$store.state.config.alert.mattermostWebhookUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_WEBHOOK_URL', value);
+      }
+    },
+
     mattermostChannelOverride: {
       get() {
         return this.$store.state.config.alert.mattermostChannelOverride;
@@ -146,6 +285,15 @@ export default {
           'config/alert/UPDATE_MATTERMOST_USERNAME_OVERRIDE',
           value
         );
+      }
+    },
+
+    mattermostEmojiOverride: {
+      get() {
+        return this.$store.state.config.alert.mattermostEmojiOverride;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MATTERMOST_EMOJI_OVERRIDE', value);
       }
     },
 
@@ -343,6 +491,95 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.mattermostWebhookUrl) {
+          await this.validateMattermostWebhookUrl();
+        }
+        if (this.$refs.mattermostChannelOverride) {
+          await this.validatemattermostChannelOverride();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+
+    async validateMattermostWebhookUrl() {
+      if (!this.mattermostWebhookUrl.length) {
+        this.popMattermostWebhookUrlValid = false;
+        return;
+      }
+      try {
+        this.popMattermostWebhookUrlValid = await this.$refs.mattermostWebhookUrl.validate();
+      } catch (error) {
+        this.popMattermostWebhookUrlValid = false;
+        throw error;
+      }
+    },
+
+    updateMattermostWebhookUrl(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_MATTERMOST_WEBHOOK_URL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    removeMattermostWebhookUrlEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_MATTERMOST_WEBHOOK_URL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    addmattermostWebhookUrlEntry() {
+      this.$store.commit('config/alert/ADD_MATTERMOST_WEBHOOK_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
+    async validatemattermostChannelOverride() {
+      if (!this.mattermostChannelOverride.length) {
+        this.popMattermostChannelOverrideValid = false;
+        return;
+      }
+      try {
+        this.popMattermostChannelOverrideValid = await this.$refs.mattermostChannelOverride.validate();
+      } catch (error) {
+        this.popMattermostChannelOverrideValid = false;
+        throw error;
+      }
+    },
+    updatemattermostChannelOverride(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_MATTERMOST_CHANNEL_OVERRIDE_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    removemattermostChannelOverrideEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_MATTERMOST_CHANNEL_OVERRIDE_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    addmattermostChannelOverrideEntry() {
+      this.$store.commit('config/alert/ADD_MATTERMOST_CHANNEL_OVERRIDE_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     changeMattermostIgnoreSslErrors(val) {
       if (val) {
         this.mattermostIgnoreSslErrors = true;
@@ -357,12 +594,41 @@ export default {
       } else {
         this.mattermostAttachKibanaDiscoverUrl = false;
       }
+    },
+
+    addMattermostEmoji(value) {
+      this.mattermostEmojiOverride = value.colons;
     }
   }
 };
 </script>
 
 <style lang="scss">
+.disabled {
+  .emoji-mart {
+    height: auto !important;
+    border: 0 !important;
+  }
+  .emoji-mart-title-label,
+  .emoji-mart-bar:first-child,
+  .emoji-mart-search,
+  .emoji-mart-scroll,
+  .emoji-mart-preview-skins {
+    display: none;
+  }
+  .emoji-mart-bar {
+    border: 0 !important;
+  }
+  .emoji-mart-preview {
+    height: 45px !important;
+  }
+  .emoji-mart-preview-emoji {
+    left: 0 !important;
+  }
+  .emoji-mart-preview-data {
+    left: 56px !important;
+  }
+}
 :not(.is-disabled) {
   &.mattermost-danger .el-radio__inner:hover {
     border-color: red;

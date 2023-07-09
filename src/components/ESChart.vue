@@ -39,13 +39,14 @@
           @click="ev => $emit('click', ev)" />
 
         <el-popover v-if="showControls" trigger="click" class="praeco-chart-popover">
-          <el-button
-            slot="reference"
-            size="medium"
-            class="praeco-chart-options"
-            circle
-            plain
-            icon="el-icon-time" />
+          <template v-slot:reference>
+            <el-button
+              size="medium"
+              class="praeco-chart-options"
+              circle
+              plain
+              icon="el-icon-time" />
+          </template>
 
           <div class="praeco-chart-controls">
             <el-row type="flex" class="row-bg" justify="space-around">

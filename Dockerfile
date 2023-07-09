@@ -1,7 +1,8 @@
 FROM node:lts-gallium AS base
 
-RUN apt-get update
-RUN apt-get install -y nginx
+RUN apt update && \
+    export DEBIAN_FRONTEND=noninteractive && \
+    apt install -y nginx
 
 RUN mkdir -p /tmp/nginx/praeco
 RUN mkdir -p /var/log/nginx

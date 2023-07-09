@@ -72,10 +72,12 @@
         <div>
           <FolderTree v-model="moveDest" type="templates" />
         </div>
-        <span slot="footer">
-          <el-button @click="moveVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="move">Move template</el-button>
-        </span>
+        <template v-slot:footer>
+          <span>
+            <el-button @click="moveVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="move">Move template</el-button>
+          </span>
+        </template>
       </el-dialog>
 
       <template v-if="configLoaded && elastalertConfigLoaded">

@@ -1,9 +1,54 @@
 <template>
   <div>
-    <el-form-item label="HTTP POST URL" prop="httpPost2Url" required>
-      <el-input v-model="httpPost2Url" :disabled="viewOnly" />
-      <label>JSON results will be POSTed to this URL</label>
-    </el-form-item>
+    <el-popover v-model="popHttpPost2UrlVisible" :class="{ 'is-invalid': !popHttpPost2UrlValid }">
+      <template v-slot:reference>
+        <span class="pop-trigger">
+          <el-tooltip v-if="httpPost2Url.length" :content="httpPost2Url.join(', ')" placement="top">
+            <span>HttpPost2Urls ({{ httpPost2Url.length }})</span>
+          </el-tooltip>
+          <span v-else>HttpPost2Urls ({{ httpPost2Url.length }})</span>
+        </span>
+      </template>
+      <template>
+        <el-form
+          ref="httpPost2Url"
+          :model="$store.state.config.alert"
+          label-position="top"
+          style="width: 360px"
+          @submit.native.prevent>
+          <el-form-item
+            v-for="(entry, index) in httpPost2Url"
+            :key="index"
+            :prop="'httpPost2Url.' + index"
+            :disabled="viewOnly"
+            class="el-form-item-list"
+            label="">
+            <el-row :gutter="5" type="flex" justify="space-between">
+              <el-col :span="20">
+                <el-input
+                  v-model="httpPost2Url[index]"
+                  :disabled="viewOnly"
+                  placeholder="HttpPost2Url"
+                  @input="(val) => updatehttpPost2Url(val, index)" />
+              </el-col>
+              <el-col :span="4">
+                <el-button
+                  :disabled="viewOnly"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  plain
+                  @click="removehttpPost2UrlEntry(entry)" />
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+
+        <el-button :disabled="viewOnly" class="m-n-sm" @click="addhttpPost2UrlEntry">
+          Add HttpPost2Url
+        </el-button>
+      </template>
+    </el-popover>
 
     <el-form-item label="CA Certs" prop="httpPost2CaCerts">
       <el-switch
@@ -40,6 +85,13 @@
 <script>
 export default {
   props: ['viewOnly'],
+
+  data() {
+    return {
+      popHttpPost2UrlVisible: false,
+      popHttpPost2UrlValid: true,
+    };
+  },
 
   computed: {
     httpPost2Url: {
@@ -101,6 +153,53 @@ export default {
   },
 
   methods: {
+    async validate() {
+      try {
+        if (this.$refs.httpPost2Url) {
+          await this.validatehttpPost2Url();
+        }
+        this.$emit('validate', true);
+        return true;
+      } catch (error) {
+        this.$emit('validate', false);
+        return false;
+      }
+    },
+    async validatehttpPost2Url() {
+      if (!this.httpPost2Url.length) {
+        this.popHttpPost2UrlValid = false;
+        return;
+      }
+      try {
+        this.popHttpPost2UrlValid = await this.$refs.httpPost2Url.validate();
+      } catch (error) {
+        this.popHttpPost2UrlValid = false;
+        throw error;
+      }
+    },
+    updatehttpPost2Url(entry, index) {
+      if (Number.isNaN(entry)) return;
+      this.$store.commit('config/alert/UPDATE_HTTP_POST2_URL_ENTRY', {
+        entry,
+        index
+      });
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    removehttpPost2UrlEntry(entry) {
+      this.$store.commit('config/alert/REMOVE_HTTP_POST2_URL_ENTRY', entry);
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+    addhttpPost2UrlEntry() {
+      this.$store.commit('config/alert/ADD_HTTP_POST2_URL_ENTRY');
+      this.$nextTick(() => {
+        this.validate();
+      });
+    },
+
     changeHttpPost2IgnoreSslErrors(val) {
       if (val) {
         this.httpPost2IgnoreSslErrors = true;

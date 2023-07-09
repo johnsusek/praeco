@@ -18,11 +18,15 @@ name: test123
 num_events: 10000
 realert:
   minutes: 5
-rocket_chat_channel_override: '#elastalert-debugging'
+generate_kibana_discover_url: true
+rocket_chat_webhook_url:
+  - a
+  - b
+rocket_chat_channel_override:
+  - '#elastalert-debugging'
+  - '#elastalert-debugging2'
 rocket_chat_username_override: 'elastalert2'
 rocket_chat_msg_color: 'good'
-rocket_chat_icon_url_override: 'https://localhost/abc.png'
-rocket_chat_msg_pretext: 'abc'
 rocket_chat_ignore_ssl_errors: true
 rocket_chat_proxy: 'https://hostname:8080'
 rocket_chat_attach_kibana_discover_url: true
@@ -31,6 +35,7 @@ rocket_chat_kibana_discover_title: 'ijk'
 rocket_chat_ca_certs: true
 rocket_chat_timeout: 11
 rocket_chat_text_string: 'aaa'
+rocket_chat_emoji_override: ':ghost:'
 timeframe:
   minutes: 5
 timestamp_field: '@timestamp'

@@ -38,7 +38,9 @@ slack_author_icon: "http://localhost/icon.png"
 slack_author_link: "http://localhost/author"
 slack_author_name: "author_name"
 slack_ca_certs: true
-slack_channel_override: "#elastalert-debugging"
+slack_channel_override:
+  - "#elastalert-debugging"
+  - "#elastalert-debugging2"
 slack_emoji_override: ":postal_horn:"
 slack_footer: "footer"
 slack_footer_icon: "footer_icon"
@@ -58,6 +60,9 @@ slack_thumb_url: "http://localhost/thumb.png"
 slack_timeout: 20
 slack_title_link: "undefined/rules/test123"
 slack_username_override: "Praeco"
+slack_webhook_url:
+  - "a"
+  - "b"
 terms_size: 50
 timeframe:
   minutes: 5
