@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-popover v-model="popslackWebhookUrlVisible" :class="{ 'is-invalid': !popslackWebhookUrlValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="slackWebhookUrl.length" :content="slackWebhookUrl.join(', ')" placement="top">
             <span>SlackWebhookUrls ({{ slackWebhookUrl.length }})</span>
@@ -51,7 +51,7 @@
     </el-popover>
 
     <el-popover v-model="popslackChannelOverrideVisible" :class="{ 'is-invalid': !popslackChannelOverrideValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="slackChannelOverride.length" :content="slackChannelOverride.join(', ')" placement="top">
             <span>SlackChannelOverrides ({{ slackChannelOverride.length }})</span>

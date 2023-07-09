@@ -26,7 +26,7 @@
     </praeco-form-item>
 
     <el-popover v-model="popHiveAlertConfigTagsVisible" :class="{ 'is-invalid': !popHiveAlertConfigTagsValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="hiveAlertConfigTags.length" :content="hiveAlertConfigTags.join(', ')" placement="top">
             <span>HiveAlertConfigTags ({{ hiveAlertConfigTags.length }})</span>

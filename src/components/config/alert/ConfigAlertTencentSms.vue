@@ -19,7 +19,7 @@
     </praeco-form-item>
 
     <el-popover v-model="popTencentSmsToNumberVisible" :class="{ 'is-invalid': !popTencentSmsToNumberValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="tencentSmsToNumber.length" :content="tencentSmsToNumber.join(', ')" placement="top">
             <span>TencentSmsToNumber ({{ tencentSmsToNumber.length }})</span>
@@ -94,7 +94,7 @@
 
     <!-- tencentSmsTemplateParm -->
     <el-popover v-model="popTencentSmsTemplateParmVisible" :class="{ 'is-invalid': !popTencentSmsTemplateParmValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="tencentSmsTemplateParm.length" :content="tencentSmsTemplateParm.join(', ')" placement="top">
             <span>TencentSmsTemplateParm ({{ tencentSmsTemplateParm.length }})</span>

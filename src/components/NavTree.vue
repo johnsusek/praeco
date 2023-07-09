@@ -12,7 +12,7 @@
     placeholder="Filter..."
     @select="handleSelect"
     @click.native="handleClick">
-    <template v-slot:option-label="{ node, labelClassName }">
+    <template #option-label="{ node, labelClassName }">
       <label
         :class="labelClassName">
         <span v-if="node.children !== undefined">

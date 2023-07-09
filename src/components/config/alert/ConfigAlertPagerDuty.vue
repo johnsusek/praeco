@@ -45,7 +45,7 @@
     </el-form-item>
 
     <el-popover v-model="popPagerdutyIncidentKeyArgsVisible" :class="{ 'is-invalid': !popPagerdutyIncidentKeyArgsValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="pagerdutyIncidentKeyArgs.length" :content="pagerdutyIncidentKeyArgs.join(', ')" placement="top">
             <span>Incident Key Args ({{ pagerdutyIncidentKeyArgs.length }})</span>
@@ -112,7 +112,7 @@
       </el-form-item>
 
       <el-popover v-model="popPagerdutyV2PayloadClassArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadClassArgsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="pagerdutyV2PayloadClassArgs.length" :content="pagerdutyV2PayloadClassArgs.join(', ')" placement="top">
               <span>Payload Class Args ({{ pagerdutyV2PayloadClassArgs.length }})</span>
@@ -170,7 +170,7 @@
       </el-form-item>
 
       <el-popover v-model="popPagerdutyV2PayloadComponentArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadComponentArgsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="pagerdutyV2PayloadComponentArgs.length" :content="pagerdutyV2PayloadComponentArgs.join(', ')" placement="top">
               <span>Payload Component Args ({{ pagerdutyV2PayloadComponentArgs.length }})</span>
@@ -228,7 +228,7 @@
       </el-form-item>
 
       <el-popover v-model="popPagerdutyV2PayloadGroupArgsVisible" :class="{ 'is-invalid': !popPagerdutyV2PayloadGroupArgsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="pagerdutyV2PayloadGroupArgs.length" :content="pagerdutyV2PayloadGroupArgs.join(', ')" placement="top">
               <span>Payload Group Args ({{ pagerdutyV2PayloadGroupArgs.length }})</span>
@@ -306,7 +306,7 @@
       </el-form-item>
 
       <el-popover v-model="poppagerdutyV2PayloadSourceArgsVisible" :class="{ 'is-invalid': !poppagerdutyV2PayloadSourceArgsValid }">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="pagerdutyV2PayloadSourceArgs.length" :content="pagerdutyV2PayloadSourceArgs.join(', ')" placement="top">
               <span>Payload Source Args ({{ pagerdutyV2PayloadSourceArgs.length }})</span>

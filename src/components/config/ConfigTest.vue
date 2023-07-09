@@ -1,7 +1,7 @@
 <template>
   <span>
     <el-popover v-model="testPopoverVisible" placement="top" width="310">
-      <template v-slot:reference>
+      <template #reference>
         <span>
           <el-button v-if="!testRunLoading" type="primary" plain size="medium">
             Test

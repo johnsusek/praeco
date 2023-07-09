@@ -72,7 +72,7 @@
         <div>
           <FolderTree v-model="moveDest" type="templates" />
         </div>
-        <template v-slot:footer>
+        <template #footer>
           <span>
             <el-button @click="moveVisible = false">Cancel</el-button>
             <el-button type="primary" @click="move">Move template</el-button>

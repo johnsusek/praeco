@@ -14,7 +14,7 @@
 
     <el-table :data="rules" class="m-n-sm" style="width: 100%">
       <el-table-column label="Rules">
-        <template v-slot="scope">
+        <template #default="scope">
           <Icon icon="file-alt" style="padding-right: 4px" />
           <router-link :to="`/rules/${encodeURIComponent(scope.row.val)}`">
             {{ scope.row.val }}

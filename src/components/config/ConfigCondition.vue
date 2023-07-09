@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-popover v-model="popWhenVisible">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger pop-when">
           <span>WHEN </span>
           <span>{{ metricAggType === 'avg' ? 'average' : metricAggType }}</span>
@@ -51,7 +51,7 @@
       v-if="showPopCardinalityField"
       v-model="popCardinalityVisible"
       :class="{ 'is-invalid': !popCardinalityValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <span>OF </span>
           <span>{{ cardinalityField || 'select a field' }}</span>
@@ -76,7 +76,7 @@
     </el-popover>
 
     <el-popover v-if="showPopOf" v-model="popOfVisible" :class="{ 'is-invalid': !popOfValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <span>OF </span>
           <span>{{ metricAggKey || 'select a field' }}</span>
@@ -101,7 +101,7 @@
     </el-popover>
 
     <el-popover v-if="showPopOver" v-model="popOverVisible" :class="{ 'is-invalid': !popOverValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <span>
             <span v-if="groupedOver === 'field'">GROUPED </span>
@@ -189,7 +189,7 @@
     </el-popover>
 
     <el-popover v-if="showPopCompare" v-model="popCompareVisible" :class="{ 'is-invalid': !popCompareValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <template v-if="compareKey && compareKey.length > 1">
             <span>FIELDS</span>
@@ -236,7 +236,7 @@
     </el-popover>
 
     <el-popover v-if="showPopGroup" v-model="popGroupVisible" :class="{ 'is-invalid': !popGroupValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <span>
             <span v-if="metricAggType === 'new term'">IN FIELD </span>
@@ -282,7 +282,7 @@
     </el-popover>
 
     <el-popover v-if="showPopBlacklist" v-model="popBlacklistVisible" :class="{ 'is-invalid': !popBlacklistValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="blacklist.length" :content="blacklist.join(', ')" placement="top">
             <span>IN LIST ({{ blacklist.length }})</span>
@@ -330,7 +330,7 @@
     </el-popover>
 
     <el-popover v-if="showPopWhitelist" v-model="popWhitelistVisible" :class="{ 'is-invalid': !popWhitelistValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="whitelist.length" :content="whitelist.join(', ')" placement="top">
             <span>NOT IN LIST ({{ whitelist.length }})</span>
@@ -394,7 +394,7 @@
       v-if="showPopCardinalityThresholds"
       v-model="popCardinalityThresholdsVisible"
       :class="{ 'is-invalid': !popCardinalityThresholdsValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <span>IS</span>
           <span v-if="maxCardinality">
@@ -444,7 +444,7 @@
     </el-popover>
 
     <el-popover v-if="showPopAbove" v-model="popAboveVisible" :class="{ 'is-invalid': !popAboveValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
           <span>IS</span>
           <span v-if="numEvents || maxThreshold">
@@ -576,7 +576,7 @@
       <el-popover
         v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality'"
         popper-class="popover-time">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger">
             <span>
               <span v-if="metricAggType === 'field changes'">
@@ -617,7 +617,7 @@
       </el-popover>
 
       <el-popover v-show="showForTheLast">
-        <template v-slot:reference>
+        <template #reference>
           <span class="pop-trigger-pseudo">
             <span>FOR THE LAST </span>
             <ElastalertTimeView :time="bufferTime" />
@@ -632,7 +632,7 @@
       v-model="popOptionsVisible"
       :class="{ 'is-invalid': !popOptionsValid }"
       popper-class="popover-options">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <span>WITH OPTIONS</span>
         </span>

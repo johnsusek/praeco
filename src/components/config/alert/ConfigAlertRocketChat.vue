@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-popover v-model="popRocketChatWebhookUrlVisible" :class="{ 'is-invalid': !popRocketChatWebhookUrlValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="rocketChatWebhookUrl.length" :content="rocketChatWebhookUrl.join(', ')" placement="top">
             <span>RocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
@@ -51,7 +51,7 @@
     </el-popover>
 
     <el-popover v-model="popRocketChatChannelOverrideVisible" :class="{ 'is-invalid': !popRocketChatChannelOverrideValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="rocketChatChannelOverride.length" :content="rocketChatChannelOverride.join(', ')" placement="top">
             <span>RocketChatChannelOverrides ({{ rocketChatChannelOverride.length }})</span>

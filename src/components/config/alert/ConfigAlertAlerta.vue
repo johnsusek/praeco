@@ -51,7 +51,7 @@
     </el-form-item>
 
     <el-popover v-model="popAlertaTagsVisible" :class="{ 'is-invalid': !popAlertaTagsValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaTags.length" :content="alertaTags.join(', ')" placement="top">
             <span>Tags ({{ alertaTags.length }})</span>
@@ -153,7 +153,7 @@
     </el-form-item>
 
     <el-popover v-model="popalertaServiceVisible" :class="{ 'is-invalid': !popalertaServiceValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaService.length" :content="alertaService.join(', ')" placement="top">
             <span>Services ({{ alertaService.length }})</span>
@@ -204,7 +204,7 @@
     </el-popover>
 
     <el-popover v-model="popalertaCorrelateVisible" :class="{ 'is-invalid': !popalertaCorrelateValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaCorrelate.length" :content="alertaCorrelate.join(', ')" placement="top">
             <span>Correlates ({{ alertaCorrelate.length }})</span>
@@ -255,7 +255,7 @@
     </el-popover>
 
     <el-popover v-model="popalertaAttributesKeysVisible" :class="{ 'is-invalid': !popalertaAttributesKeysValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaAttributesKeys.length" :content="alertaAttributesKeys.join(', ')" placement="top">
             <span>AttributesKeys ({{ alertaAttributesKeys.length }})</span>
@@ -306,7 +306,7 @@
     </el-popover>
 
     <el-popover v-model="popalertaAttributesValuesVisible" :class="{ 'is-invalid': !popalertaAttributesValuesValid }">
-      <template v-slot:reference>
+      <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaAttributesValues.length" :content="alertaAttributesValues.join(', ')" placement="top">
             <span>AttributesValues ({{ alertaAttributesValues.length }})</span>
