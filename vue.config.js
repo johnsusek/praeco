@@ -31,8 +31,9 @@ module.exports = {
     }
   },
   devServer: {
-    webSocketServer: "sockjs",
+    webSocketServer: 'sockjs',
   },
+  // eslint-disable-line no-dupe-keys
   devServer: {
     host: '0.0.0.0',
     hot: true,
