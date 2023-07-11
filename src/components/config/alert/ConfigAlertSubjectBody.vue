@@ -309,7 +309,18 @@ export default {
     pastePlainText(e) {
       e.preventDefault();
       let text = (e.originalEvent || e).clipboardData.getData('text/plain');
-      document.execCommand('insertHTML', false, text);
+
+      const selection = window.getSelection();
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+
+      const node = document.createElement('div');
+      node.style.whiteSpace = 'pre';
+      node.innerHTML = text;
+      range.insertNode(node);
+
+      // Move the cursor to the end of the inserted string
+      selection.collapseToEnd();
     },
 
     async validate() {
