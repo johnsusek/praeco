@@ -5,6 +5,7 @@ import Prism from 'vue-prism-component';
 import InfiniteScroll from 'vue3-infinite-scroll-good';
 import Treeselect from '@tanbo800/vue3-treeselect';
 import ElementPlus, { ElNotification } from 'element-plus';
+ElementPlus.compatConfig = { MODE: 3 }
 import 'prismjs';
 import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
