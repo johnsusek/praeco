@@ -45,11 +45,11 @@
               class="praeco-chart-options"
               circle
               plain
-             :icon="ElIconClock" />
+              :icon="ElIconClock" />
           </template>
 
           <div class="praeco-chart-controls">
-            <el-row  class="row-bg" justify="space-around">
+            <el-row class="row-bg" justify="space-around">
               <el-col :span="24" align="right">
                 <label>Group</label>
                 <ElastalertTimePicker
@@ -60,7 +60,7 @@
               </el-col>
             </el-row>
 
-            <el-row  class="row-bg" justify="space-around">
+            <el-row class="row-bg" justify="space-around">
               <el-col :span="24" align="right">
                 <label>View previous</label>
                 <ElastalertTimePicker

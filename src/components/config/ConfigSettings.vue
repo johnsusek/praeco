@@ -31,7 +31,7 @@
             v-model="index"
             :disabled="viewOnly || indicesLoading"
             :fetch-suggestions="(qs, cb) => { cb(links); }"
-            :placeholder="indicesLoading ? `Loading indices...`: ''"
+            :placeholder="indicesLoading ? `Loading indices...` : ''"
             class="el-input-wide"
             @input="getMappingDebounced" />
           <label v-if="!viewOnly">
@@ -60,7 +60,7 @@
           <el-select
             v-model="timeField"
             :disabled="viewOnly || mappingLoading"
-            :placeholder="mappingLoading ? `Loading mappings...`: ''"
+            :placeholder="mappingLoading ? `Loading mappings...` : ''"
             filterable
             clearable
             class="el-select-wide">

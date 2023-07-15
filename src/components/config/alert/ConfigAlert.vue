@@ -10,7 +10,7 @@
         <ConfigAggregation ref="aggregation" :view-only="viewOnly" />
       </el-col>
       <el-col v-if="!aggregationSchedule" :span="12">
-        <el-form-item :class="{'view-only': viewOnly }" label="Re-alert">
+        <el-form-item :class="{ 'view-only': viewOnly }" label="Re-alert">
           <ElastalertTimeView v-if="viewOnly" :time="realert" />
           <ElastalertTimePicker
             v-else-if="realert"
@@ -189,31 +189,31 @@
 
     <el-tabs v-if="alert.length" v-model="visibleTabPane" class="border-card-plain m-n-sm" type="card">
       <el-tab-pane
-        v-if="alert.includes('alerta') ||
-          alert.includes('alertmanager') ||
-          alert.includes('chatwork') ||
-          alert.includes('datadog') ||
-          alert.includes('dingtalk') ||
-          alert.includes('discord') ||
-          alert.includes('email') ||
-          alert.includes('gitter') ||
-          alert.includes('googlechat') ||
-          alert.includes('hivealerter') ||
-          alert.includes('jira') ||
-          alert.includes('linenotify') ||
-          alert.includes('mattermost') ||
-          alert.includes('ms_teams') ||
-          alert.includes('pagerduty') ||
-          alert.includes('pagertree') ||
-          alert.includes('rocketchat') ||
-          alert.includes('servicenow') ||
-          alert.includes('ses') ||
-          alert.includes('slack') ||
-          alert.includes('sns') ||
-          alert.includes('stomp') ||
-          alert.includes('tencent_sms') ||
-          alert.includes('victorops') ||
-          alert.includes('telegram')">
+        v-if="alert.includes('alerta')
+          || alert.includes('alertmanager')
+          || alert.includes('chatwork')
+          || alert.includes('datadog')
+          || alert.includes('dingtalk')
+          || alert.includes('discord')
+          || alert.includes('email')
+          || alert.includes('gitter')
+          || alert.includes('googlechat')
+          || alert.includes('hivealerter')
+          || alert.includes('jira')
+          || alert.includes('linenotify')
+          || alert.includes('mattermost')
+          || alert.includes('ms_teams')
+          || alert.includes('pagerduty')
+          || alert.includes('pagertree')
+          || alert.includes('rocketchat')
+          || alert.includes('servicenow')
+          || alert.includes('ses')
+          || alert.includes('slack')
+          || alert.includes('sns')
+          || alert.includes('stomp')
+          || alert.includes('tencent_sms')
+          || alert.includes('victorops')
+          || alert.includes('telegram')">
         <template #label>
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
         </template>

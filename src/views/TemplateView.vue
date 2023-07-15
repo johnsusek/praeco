@@ -31,7 +31,8 @@
         <router-link
           :to="{
             name: 'ruleconfigbuilder',
-            params: { action: 'add' }, query: { prefill: id }
+            params: { action: 'add' },
+            query: { prefill: id },
           }">
           <el-button :icon="ElIconPlus" plain type="primary">
             Create rule from template
@@ -41,7 +42,8 @@
         <router-link
           :to="{
             name: 'templateconfigeditor',
-            params: { action: 'edit', path: id } }">
+            params: { action: 'edit', path: id },
+          }">
           <el-button type="primary" :icon="ElIconEdit" plain>
             Edit
           </el-button>
@@ -102,8 +104,8 @@ import {
   Edit as ElIconEdit,
   Delete as ElIconDelete,
 } from '@element-plus/icons-vue';
-import { selectNode } from '@/lib/tree';
 import { nextTick } from 'vue';
+import { selectNode } from '@/lib/tree';
 
 export default {
   props: ['id'],

@@ -5,7 +5,6 @@ import Prism from 'vue-prism-component';
 import InfiniteScroll from 'vue3-infinite-scroll-good';
 import Treeselect from '@tanbo800/vue3-treeselect';
 import ElementPlus, { ElNotification } from 'element-plus';
-ElementPlus.compatConfig = { MODE: 3 }
 import 'prismjs';
 import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -36,6 +35,9 @@ import '@tanbo800/vue3-treeselect/dist/vue3-treeselect.css';
 
 import ECharts from 'vue-echarts';
 
+import axios from 'axios';
+import VueNativeSock from 'vue-native-websocket-vue3';
+import VueSplit from 'vue3-split-panel';
 import Bulb from '@/components/Bulb';
 import DateTime from '@/components/DateTime';
 import DefinitionTable from '@/components/DefinitionTable';
@@ -92,9 +94,6 @@ import ConfigCondition from '@/components/config/ConfigCondition.vue';
 import ConfigScanEntireTimeframe from '@/components/config/ConfigScanEntireTimeframe.vue';
 // import ConfigLimitExcecution from '@/components/config/ConfigLimitExcecution.vue'; // TODO:
 
-import axios from 'axios';
-import VueNativeSock from 'vue-native-websocket-vue3';
-import VueSplit from 'vue3-split-panel';
 // import '@/contrib.js'; // TODO:
 // import '@/registration.js'; // TODO:
 import '@/lib/string.js';
@@ -110,6 +109,8 @@ import './style/icons.scss';
 import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
+
+ElementPlus.compatConfig = { MODE: 3 };
 
 // const app = createApp(App);
 

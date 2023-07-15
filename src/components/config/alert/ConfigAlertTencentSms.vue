@@ -43,7 +43,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5"  justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="tencentSmsToNumber[index]"
@@ -117,7 +117,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5"  justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="tencentSmsTemplateParm[index]"

@@ -41,7 +41,8 @@
         <router-link
           :to="{
             name: 'ruleconfigeditor',
-            params: { action: 'edit', path: id } }">
+            params: { action: 'edit', path: id },
+          }">
           <el-button :icon="ElIconEdit" plain type="primary">
             Edit
           </el-button>
@@ -88,7 +89,7 @@
             </span>
           </template>
           <template>
-            <el-row  justify="space-around">
+            <el-row justify="space-around">
               <el-col :span="24" align="center">
                 <el-button @click="handleSilence('minutes', 5)">
                   5 minutes
@@ -262,9 +263,9 @@ import {
 import axios from 'axios';
 import moment from 'moment';
 import * as changeCase from 'change-case';
+import { nextTick } from 'vue';
 import { logger } from '@/lib/logger.js';
 import { selectNode } from '@/lib/tree';
-import { nextTick } from 'vue';
 import networkError from '../lib/networkError.js';
 
 export default {

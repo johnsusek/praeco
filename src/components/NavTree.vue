@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import { selectNode, expandNode, loadChildrenOptions } from '@/lib/tree';
 import { nextTick } from 'vue';
+import { selectNode, expandNode, loadChildrenOptions } from '@/lib/tree';
 
 export default {
   data() {
