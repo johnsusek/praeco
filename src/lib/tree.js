@@ -2,9 +2,8 @@ import axios from 'axios';
 import store from '@/store';
 
 export function triggerMouseEvent(node, eventType) {
-  let clickEvent = document.createEvent('MouseEvents');
+  let clickEvent = new Event(eventType, { bubbles: true, cancelable: true });
   clickEvent.synthetic = true;
-  clickEvent.initEvent(eventType, true, true);
   node.dispatchEvent(clickEvent);
 }
 
