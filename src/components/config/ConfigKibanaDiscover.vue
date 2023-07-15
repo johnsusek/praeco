@@ -218,6 +218,18 @@ export default {
       }, {
         code: '8.4',
         name: '8.4'
+      }, {
+        code: '8.5',
+        name: '8.5'
+      }, {
+        code: '8.6',
+        name: '8.6'
+      }, {
+        code: '8.7',
+        name: '8.7'
+      }, {
+        code: '8.8',
+        name: '8.8'
       }],
       ElIconDelete,
     };
