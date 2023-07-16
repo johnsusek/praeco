@@ -30,10 +30,10 @@ module.exports = {
         .end();
     }
   },
+  // eslint-disable-line no-dupe-keys
   devServer: {
     webSocketServer: 'sockjs',
   },
-  // eslint-disable-line no-dupe-keys
   devServer: {
     host: '0.0.0.0',
     hot: true,
@@ -63,4 +63,5 @@ module.exports = {
       }
     }
   }
+  /* eslint-enable */
 };

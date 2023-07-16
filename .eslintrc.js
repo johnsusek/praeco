@@ -24,7 +24,6 @@ module.exports = {
     'func-names': 'off',
     'arrow-parens': 'off',
     camelcase: 'off',
-    'no-dupe-keys': 'off',
     'no-console': 'off',
     'no-alert': 'off',
     'prefer-const': 'off',
