@@ -1,10 +1,12 @@
+require('@rushstack/eslint-patch/modern-module-resolution');
+
 module.exports = {
   root: true,
   env: {
     node: true,
     mocha: true
   },
-  extends: ['plugin:vue/vue3-essential', '@vue/airbnb'],
+  extends: ['plugin:vue/vue3-essential', '@vue/eslint-config-airbnb'],
   rules: {
     'vuejs-accessibility/rule-name': 'off',
     'vuejs-accessibility/label-has-for': 'off',

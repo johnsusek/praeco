@@ -25,6 +25,7 @@
     "@fortawesome/free-solid-svg-icons": "6.4.0",
     "@fortawesome/vue-fontawesome": "3.0.3",
     "@originjs/vue-codemod": "^1.1.1",
+    "@rushstack/eslint-patch": "^1.3.2",
     "@tanbo800/vue3-treeselect": "^0.3.3",
     "@vue/compat": "^3.3.4",
     "axios": "1.4.0",
