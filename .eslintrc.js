@@ -45,6 +45,9 @@ module.exports = {
     'vue/this-in-template': 'warn',
     'vue/no-deprecated-slot-attribute': 'warn',
     'vue/no-deprecated-slot-scope-attribute': 'warn',
+    'vue/max-len': 'off',
+    'import/no-unresolved': 'off',
+    'vue/no-template-target-blank': 'off',
     // 'vue/no-deprecated-filter': 'warn',
     // 'vue/no-deprecated-functional-template': 'warn',
     'import/extensions': [

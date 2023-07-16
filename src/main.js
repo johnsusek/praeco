@@ -6,7 +6,7 @@ import InfiniteScroll from 'vue3-infinite-scroll-good';
 import Treeselect from '@tanbo800/vue3-treeselect';
 import ElementPlus, { ElNotification } from 'element-plus';
 import 'prismjs';
-import locale from 'element-plus/lib/locale/lang/en';
+// import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBell,
@@ -37,7 +37,7 @@ import ECharts from 'vue-echarts';
 
 import axios from 'axios';
 import VueNativeSock from 'vue-native-websocket-vue3';
-import VueSplit from 'vue3-split-panel';
+import VueSplit from 'coder-vue3-split-panel';
 import Bulb from '@/components/Bulb';
 import DateTime from '@/components/DateTime';
 import DefinitionTable from '@/components/DefinitionTable';
@@ -242,7 +242,7 @@ function startApp(config) {
     faExclamationCircle
   );
 
-  app.use(ElementPlus, { locale, size: 'mini' });
+  app.use(ElementPlus, { size: 'mini' });
   app.use(InfiniteScroll);
 
   app.component('VChart', ECharts);
