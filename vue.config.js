@@ -59,5 +59,4 @@ module.exports = {
       }
     }
   }
-  /* eslint-enable */
 };
