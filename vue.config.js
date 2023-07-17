@@ -30,14 +30,10 @@ module.exports = {
         .end();
     }
   },
-  // eslint-disable-line no-dupe-keys
-  devServer: {
-    webSocketServer: 'sockjs',
-  },
   devServer: {
     host: '0.0.0.0',
     hot: true,
-    allowedHosts: ['all'],
+    disableHostCheck: true,
     proxy: {
       '/api-app/releases': {
         target: 'https://api.github.com/repos/johnsusek/praeco/releases',
