@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { Notification } from 'element-ui';
 import axios from 'axios';
 import VueNativeSock from 'vue-native-websocket';
-import VueSplit from 'vue-split-panel';
+// import VueSplit from 'vue-split-panel';
 import '@/contrib.js';
 import '@/registration.js';
 import '@/lib/string.js';
@@ -19,7 +19,7 @@ import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
 
-Vue.use(VueSplit);
+// Vue.use(VueSplit);
 
 Vue.config.productionTip = false;
 
