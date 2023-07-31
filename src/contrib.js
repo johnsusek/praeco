@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
+import infiniteScroll from 'vue-infinite-scroll';
 import Treeselect from '@riophae/vue-treeselect';
 import ElementUI from 'element-ui';
 import 'prismjs';
@@ -56,6 +57,7 @@ library.add(
 );
 
 Vue.use(ElementUI, { locale, size: 'mini' });
+Vue.use(infiniteScroll);
 
 Vue.component('VChart', ECharts);
 Vue.component('Icon', FontAwesomeIcon);

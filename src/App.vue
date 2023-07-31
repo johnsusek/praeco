@@ -20,27 +20,23 @@
       </div>
     </el-header>
 
-    <splitpanes style="height: calc(100% - 48px)">
-      <pane :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
+    <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
+      <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
         <NavTree style="padding: 10px" />
-      </pane>
-      <pane :size="sidebarWidth[1]">
+      </SplitArea>
+      <SplitArea :size="sidebarWidth[1]">
         <router-view :key="$route.fullPath" style="padding: 10px" />
-      </pane>
-    </splitpanes>
+      </SplitArea>
+    </Split>
   </div>
 </template>
 
 <script>
 import UpdateIndicator from '@/components/UpdateIndicator';
-import { Splitpanes, Pane } from 'splitpanes';
-import 'splitpanes/dist/splitpanes.css';
 
 export default {
   components: {
-    UpdateIndicator,
-    Splitpanes,
-    Pane
+    UpdateIndicator
   },
 
   computed: {

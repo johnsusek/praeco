@@ -31,8 +31,6 @@ module.exports = {
     }
   },
   devServer: {
-    // clientLogLevel ('none', 'silent', 'info', 'debug', 'trace', 'error', 'warning', 'warn')
-    clientLogLevel: 'silent',
     host: '0.0.0.0',
     hot: true,
     disableHostCheck: true,
