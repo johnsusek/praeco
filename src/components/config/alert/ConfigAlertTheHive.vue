@@ -112,6 +112,7 @@
 <script>
 export default {
   props: ['viewOnly'],
+  emits: ['update:validate'],
 
   data() {
     return {

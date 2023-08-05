@@ -15,6 +15,7 @@
 <script>
 export default {
   props: ['unit', 'amount', 'allowZero'],
+  emits: ['update:input'],
 
   data() {
     return {

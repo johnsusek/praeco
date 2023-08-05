@@ -861,6 +861,7 @@
 
 <script>
 export default {
+  emits: ['update:validate'],
   data() {
     return {
       bigBuckets: false,
