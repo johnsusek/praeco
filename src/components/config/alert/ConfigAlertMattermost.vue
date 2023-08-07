@@ -248,7 +248,7 @@ export default {
     Picker
   },
   props: ['viewOnly'],
-  emits: ['update:validate'],
+  emits: ['validate'],
 
   data() {
     return {

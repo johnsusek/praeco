@@ -220,7 +220,7 @@ export default {
   },
 
   props: ['viewOnly'],
-  emits: ['update:validate'],
+  emits: ['validate'],
 
   data() {
     return {
