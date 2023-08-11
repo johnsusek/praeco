@@ -3,6 +3,10 @@
 ## ElastAlert Server (if neccessary)
 
 - Stash all changes in elastalert-server project
+- update `package.json` version
+- update `Makefile`
+- update `Dockerfile`
+- update `DockerImageLog.md`
 - `nvm use "$(cat .nvmrc)"`
 - `npm install`
 - `npm run lint:fix`
@@ -13,6 +17,9 @@
 
 ## Praeco
 
+- update `UPGRADING.md`
+- update `package.json` version
+- update `Dockerfile`
 - `nvm use "$(cat .nvmrc)"`
 - `npm install --legacy-peer-deps`
 - `npm run lint:fix`
