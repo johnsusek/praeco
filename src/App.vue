@@ -33,14 +33,10 @@
 
 <script>
 import UpdateIndicator from '@/components/UpdateIndicator';
-// import { Splitpanes, Pane } from 'splitpanes';
-import 'splitpanes/dist/splitpanes.css';
 
 export default {
   components: {
-    UpdateIndicator,
-    // Splitpanes,
-    // Pane
+    UpdateIndicator
   },
 
   computed: {
