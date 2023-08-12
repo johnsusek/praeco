@@ -44,7 +44,7 @@ function startApp(config) {
     VueNativeSock,
     `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
       window.location.port
-    }/api-ws/test`,
+    }/ws/test`,
     {
       connectManually: true,
       format: 'json'
