@@ -90,6 +90,7 @@ import moment from 'moment-timezone';
 
 export default {
   props: ['valid'],
+  emits: ['validateForTest'],
 
   data() {
     return {

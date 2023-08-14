@@ -248,6 +248,8 @@ export default {
     Picker
   },
   props: ['viewOnly'],
+  emits: ['validate'],
+
   data() {
     return {
       emojiIndex,

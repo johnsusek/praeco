@@ -153,6 +153,7 @@ export default {
     'aggMax',
     'aggCardinality'
   ],
+  emits: ['group', 'update', 'click'],
 
   data() {
     return {

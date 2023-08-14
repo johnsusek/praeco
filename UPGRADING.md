@@ -7,6 +7,47 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.16
+
+**nginx_config/default.conf**
+
+webpack-dev-server 3 to 4
+
+before
+```
+  location /api-ws {
+      rewrite ^/api-ws/?(.*)$ /$1 break;
+```
+after
+```
+  location /ws {
+      rewrite ^/ws/?(.*)$ /$1 break;
+```
+
+**New options**
+
+  - Remove required webhook_url
+    - alerta_api_url
+    - discord_webhook_url
+    - gitter_webhook_url
+    - googlechat_webhook_url
+    - http_post_url
+    - http_post2_url
+    - mattermost_webhook_url
+    - ms_teams_webhook_url
+    - pagertree_integration_url
+    - rocket_chat_webhook_url
+    - slack_webhook_url
+
+**bug fix**
+
+ - MS Teams
+   - ms_teams_theme_color
+
+**kibana discover**
+
+- kibana 8.9 support
+
 ## -> 1.8.15
 
 **bug fix**

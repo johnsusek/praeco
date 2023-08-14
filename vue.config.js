@@ -33,7 +33,7 @@ module.exports = {
   devServer: {
     host: '0.0.0.0',
     hot: true,
-    disableHostCheck: true,
+    allowedHosts: ['all'],
     proxy: {
       '/api-app/releases': {
         target: 'https://api.github.com/repos/johnsusek/praeco/releases',
@@ -42,12 +42,12 @@ module.exports = {
           '^/api-app/releases': ''
         }
       },
-      '/api-ws/test': {
+      '/ws/test': {
         target: 'http://localhost:3333/',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/api-ws/test': '/test'
+          '^/ws/test': '/test'
         }
       },
       '/api': {
@@ -59,5 +59,4 @@ module.exports = {
       }
     }
   }
-  /* eslint-enable */
 };

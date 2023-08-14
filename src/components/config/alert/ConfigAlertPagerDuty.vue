@@ -371,6 +371,7 @@
 
 export default {
   props: ['viewOnly'],
+  emits: ['validate'],
 
   data() {
     let groupPagerdutyValue;
