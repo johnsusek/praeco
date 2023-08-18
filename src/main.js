@@ -93,6 +93,7 @@ import ConfigScanEntireTimeframe from '@/components/config/ConfigScanEntireTimef
 import ConfigLimitExcecution from '@/components/config/ConfigLimitExcecution.vue';
 
 import '@/lib/string.js';
+import cronLight from '@vue-js-cron/light';
 import { initLogging, logger } from './lib/logger.js';
 import App from './App.vue';
 import router from './router';
@@ -105,6 +106,7 @@ import './style/icons.scss';
 import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
+import '@vue-js-cron/light/dist/light.css';
 
 library.add(
   faBell,
@@ -129,6 +131,7 @@ library.add(
   faExclamationCircle
 );
 
+Vue.use(cronLight);
 Vue.use(VueSplit);
 Vue.use(ElementUI, { locale, size: 'mini' });
 

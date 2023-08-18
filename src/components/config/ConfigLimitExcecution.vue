@@ -14,11 +14,15 @@
     <el-col v-if="enableLimitExcecution" :span="20">
       <el-form-item label="" prop="limitExcecution">
         <div v-if="!viewOnly" class="limit-excecution">
-          <VueCronEditorBuefy v-model="limitExcecution" /><br>
-          {{ limitExcecution }}
+          <div class="getting-started-light">
+            <CronLight v-model="limitExcecution" @error="error=$event" />
+            <div class="mt-2 grey--text text--darken-1">
+              cron expression: {{ limitExcecution }}
+            </div>
+          </div>
         </div>
         <div v-else>
-          {{ limitExcecution }}
+          cron expression: {{ limitExcecution }}
         </div>
       </el-form-item>
     </el-col>
@@ -26,18 +30,14 @@
 </template>
 
 <script>
-import VueCronEditorBuefy from 'vue-cron-editor-buefy';
-
 export default {
-  components: {
-    VueCronEditorBuefy
-  },
 
   props: ['viewOnly'],
 
   data() {
     return {
       enableLimitExcecution: false,
+      error: ''
     };
   },
 
