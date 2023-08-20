@@ -86,7 +86,10 @@
 </template>
 
 <script>
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+
+dayjs.extend(advancedFormat);
 
 export default {
   props: ['valid'],
@@ -193,7 +196,7 @@ export default {
         this.messages = [];
         this.messages.push('Starting test run...');
 
-        let start = moment()
+        let start = dayjs()
           .subtract(
             parseInt(Object.values(this.testTime)[0], 10), // example. 1
             Object.keys(this.testTime)[0] // example. hours
