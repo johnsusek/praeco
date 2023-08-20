@@ -195,8 +195,8 @@ export default {
 
         let start = moment()
           .subtract(
-            Object.values(this.testTime)[0],
-            Object.keys(this.testTime)[0]
+            parseInt(Object.values(this.testTime)[0], 10), // example. 1
+            Object.keys(this.testTime)[0] // example. hours
           )
           .toISOString();
 
