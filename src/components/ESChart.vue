@@ -315,16 +315,16 @@ export default {
         lte = Math.trunc(+new Date());
         gte = moment()
           .subtract(
-            Object.values(this.timespan)[0],
-            Object.keys(this.timespan)[0]
+            parseInt(Object.values(this.timespan)[0]), // example. 500
+            Object.keys(this.timespan)[0] // example. minutes
           )
           .valueOf();
       } else {
         lte = Math.trunc(+new Date() / 1000);
         gte = moment()
           .subtract(
-            Object.values(this.timespan)[0],
-            Object.keys(this.timespan)[0]
+            parseInt(Object.values(this.timespan)[0]), // example. 500
+            Object.keys(this.timespan)[0] // example. minutes
           )
           .unix();
       }
@@ -618,16 +618,16 @@ export default {
         lte = Math.trunc(+new Date());
         gte = moment()
           .subtract(
-            Object.values(this.timespan)[0],
-            Object.keys(this.timespan)[0]
+            parseInt(Object.values(this.timespan)[0]), // example. 500
+            Object.keys(this.timespan)[0] // example. minutes
           )
           .valueOf();
       } else {
         lte = Math.trunc(+new Date() / 1000);
         gte = moment()
           .subtract(
-            Object.values(this.timespan)[0],
-            Object.keys(this.timespan)[0]
+            parseInt(Object.values(this.timespan)[0]), // example. 500
+            Object.keys(this.timespan)[0] // example. minutes
           )
           .unix();
       }
