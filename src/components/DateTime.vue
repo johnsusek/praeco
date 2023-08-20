@@ -10,8 +10,18 @@
 </template>
 
 <script>
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import dayjs_advancedFormat from 'dayjs/plugin/advancedFormat';
+import dayjs_relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs_timezone from 'dayjs/plugin/timezone';
+import dayjs_utc from 'dayjs/plugin/utc';
+
 import parseDate from '@/lib/parseDate';
+
+dayjs.extend(dayjs_advancedFormat);
+dayjs.extend(dayjs_relativeTime);
+dayjs.extend(dayjs_timezone);
+dayjs.extend(dayjs_utc);
 
 export default {
   props: {
@@ -57,12 +67,12 @@ export default {
   },
   methods: {
     beginTimer() {
-      this.formattedUpdated = moment(String(this.date))
+      this.formattedUpdated = dayjs(String(this.date))
         .tz(this.timeZone)
         .fromNow();
 
       this.timerId = setInterval(() => {
-        this.formattedUpdated = moment(String(this.date))
+        this.formattedUpdated = dayjs(String(this.date))
           .tz(this.timeZone)
           .fromNow();
       }, 1000);

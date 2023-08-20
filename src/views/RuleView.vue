@@ -251,11 +251,14 @@
 <script>
 import Vue from 'vue';
 import axios from 'axios';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import * as changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import { selectNode } from '@/lib/tree';
 import networkError from '../lib/networkError.js';
+
+dayjs.extend(advancedFormat);
 
 export default {
   props: ['id'],
@@ -293,7 +296,7 @@ export default {
       let silencedDate = new Date(this.silenceLog[0].until);
 
       if (this.now < silencedDate) {
-        let formattedSilencedDate = moment(silencedDate).format('MMMM Do YYYY, h:mm:ss A');
+        let formattedSilencedDate = dayjs(silencedDate).format('MMMM Do YYYY, h:mm:ss A');
         return `Rule silenced until ${formattedSilencedDate}`;
       }
     },

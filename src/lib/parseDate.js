@@ -1,4 +1,13 @@
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import dayjs_advancedFormat from 'dayjs/plugin/advancedFormat';
+import dayjs_relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs_timezone from 'dayjs/plugin/timezone';
+import dayjs_utc from 'dayjs/plugin/utc';
+
+dayjs.extend(dayjs_advancedFormat);
+dayjs.extend(dayjs_relativeTime);
+dayjs.extend(dayjs_timezone);
+dayjs.extend(dayjs_utc);
 
 let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -6,11 +15,11 @@ export default function parseDate(val) {
   let momentDate;
 
   if (typeof val === 'string') {
-    momentDate = moment(String(val)).tz(timeZone);
+    momentDate = dayjs(String(val)).tz(timeZone);
   } else if (val.toString().length === 10) {
-    momentDate = moment.unix(String(val)).tz(timeZone);
+    momentDate = dayjs.unix(String(val)).tz(timeZone);
   } else {
-    momentDate = moment(val).tz(timeZone);
+    momentDate = dayjs(val).tz(timeZone);
   }
 
   return momentDate;

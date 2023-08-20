@@ -80,7 +80,13 @@
 <script>
 import Vue from 'vue';
 import axios from 'axios';
-import moment from 'moment-timezone';
+
+import dayjs from 'dayjs';
+import dayjs_advancedFormat from 'dayjs/plugin/advancedFormat';
+import dayjs_relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs_timezone from 'dayjs/plugin/timezone';
+import dayjs_utc from 'dayjs/plugin/utc';
+
 import debounce from 'debounce';
 import { use } from 'echarts/core';
 import {
@@ -100,6 +106,11 @@ import {
 import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
+
+dayjs.extend(dayjs_advancedFormat);
+dayjs.extend(dayjs_relativeTime);
+dayjs.extend(dayjs_timezone);
+dayjs.extend(dayjs_utc);
 
 use([
   CanvasRenderer,
@@ -185,7 +196,7 @@ export default {
             type: 'slider',
             xAxisIndex: [0],
             labelFormatter(value, valueStr) {
-              let momentDate = moment(String(valueStr)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+              let momentDate = dayjs(String(valueStr)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
               return momentDate.format('M/D/YYYY h:mm:ssa');
             }
           },
@@ -313,7 +324,7 @@ export default {
         lte = 'now';
       } else if (this.timeType === 'unix_ms') {
         lte = Math.trunc(+new Date());
-        gte = moment()
+        gte = dayjs()
           .subtract(
             parseInt(Object.values(this.timespan)[0]), // example. 500
             Object.keys(this.timespan)[0] // example. minutes
@@ -321,7 +332,7 @@ export default {
           .valueOf();
       } else {
         lte = Math.trunc(+new Date() / 1000);
-        gte = moment()
+        gte = dayjs()
           .subtract(
             parseInt(Object.values(this.timespan)[0]), // example. 500
             Object.keys(this.timespan)[0] // example. minutes
@@ -507,11 +518,11 @@ export default {
         let momentDate;
 
         if (this.timeType === 'iso') {
-          momentDate = moment(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+          momentDate = dayjs(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         } else if (this.timeType === 'unix_ms') {
-          momentDate = moment(event.value).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+          momentDate = dayjs(event.value).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         } else {
-          momentDate = moment
+          momentDate = dayjs
             .unix(String(event.value))
             .tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         }
@@ -547,11 +558,11 @@ export default {
         let momentDate;
 
         if (this.timeType === 'iso') {
-          momentDate = moment(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+          momentDate = dayjs(String(event.value)).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         } else if (this.timeType === 'unix_ms') {
-          momentDate = moment(event.value).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+          momentDate = dayjs(event.value).tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         } else {
-          momentDate = moment
+          momentDate = dayjs
             .unix(String(event.value))
             .tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
         }
@@ -616,7 +627,7 @@ export default {
         gte = `now-${intervalFromTimeframe(this.timespan)}`;
       } else if (this.timeType === 'unix_ms') {
         lte = Math.trunc(+new Date());
-        gte = moment()
+        gte = dayjs()
           .subtract(
             parseInt(Object.values(this.timespan)[0]), // example. 500
             Object.keys(this.timespan)[0] // example. minutes
@@ -624,7 +635,7 @@ export default {
           .valueOf();
       } else {
         lte = Math.trunc(+new Date() / 1000);
-        gte = moment()
+        gte = dayjs()
           .subtract(
             parseInt(Object.values(this.timespan)[0]), // example. 500
             Object.keys(this.timespan)[0] // example. minutes
