@@ -42,7 +42,7 @@
     "lodash.throttle": "4.1.1",
     "node-sass": "^9.0.0",
     "normalize.css": "8.0.1",
-    "prettycron": "0.10.0",
+    "prettycron": "github:nsano-rururu/prettycron",
     "prismjs": "1.29.0",
     "sass-loader": "^13.3.2",
     "semver": "7.5.4",
