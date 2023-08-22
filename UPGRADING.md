@@ -9,19 +9,11 @@ Some version upgrades require further configuration. Version specific upgrade in
 
 ## -> 1.8.16
 
-**nginx_config/default.conf**
+**Chage UI**
 
-webpack-dev-server 3 to 4
-
-before
+Setting screen of limitExcecutionn
 ```
-  location /api-ws {
-      rewrite ^/api-ws/?(.*)$ /$1 break;
-```
-after
-```
-  location /ws {
-      rewrite ^/ws/?(.*)$ /$1 break;
+vue-cron-editor-buefy to vue-js-cron
 ```
 
 **New options**
