@@ -42,12 +42,12 @@ module.exports = {
           '^/api-app/releases': ''
         }
       },
-      '/ws/test': {
+      '/api-ws/test': {
         target: 'http://localhost:3333/',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/ws/test': '/test'
+          '^/api-ws/test': '/test'
         }
       },
       '/api': {
