@@ -507,7 +507,7 @@ Configure the api server `config.json` with:
 ```sh
 # nvm install
 # https://github.com/nvm-sh/nvm#install--update-script
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 $ vi ~/.bash_profile
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -541,7 +541,7 @@ Finally, run praeco:
 # No need to implement if the environment is the same as elastalert-server
 # nvm install
 # https://github.com/nvm-sh/nvm#install--update-script
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 $ vi ~/.bash_profile
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
