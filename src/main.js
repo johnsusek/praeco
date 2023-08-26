@@ -110,8 +110,6 @@ import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
 
-ElementPlus.compatConfig = { MODE: 3 };
-
 // const app = createApp(App);
 
 // library.add(
