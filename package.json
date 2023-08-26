@@ -62,7 +62,7 @@
     "vue-json-pretty": "2.2.4",
     "vue-native-websocket-vue3": "^3.1.7",
     "vue-prism-component": "2.0.0",
-    "vue-query-builder": "github:nsano-rururu/vue-query-builder#vue3",
+    "vue-query-builder": "github:nsano-rururu/vue-query-builder#v0.6.1vue2",
     "vue-router": "^4.2.4",
     "vue3-infinite-scroll-good": "^1.0.2",
     "vuex": "^4.1.0",
