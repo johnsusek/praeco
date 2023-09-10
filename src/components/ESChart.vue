@@ -15,11 +15,11 @@
           @input="updateGroupIndex"
           @tab-click="clickTab">
           <el-tab-pane
-            v-for="(group, index) in groups"
-            :key="index"
+            v-for="(group, index2) in groups"
+            :key="index2"
             v-model="activeGroupIndex"
             :label="group.key.toString()"
-            :name="index.toString()">
+            :name="index2.toString()">
             <VChart
               ref="chart"
               v-loading="loading"

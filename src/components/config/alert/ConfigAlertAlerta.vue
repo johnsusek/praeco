@@ -59,7 +59,7 @@
           <span v-else>Tags ({{ alertaTags.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="alertaTags"
           :model="$store.state.config.alert"
@@ -98,7 +98,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertaTagsEntry">
           Add Tags
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-form-item label="Environment" prop="alertaEnvironment">
@@ -161,7 +161,7 @@
           <span v-else>Services ({{ alertaService.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="alertaService"
           :model="$store.state.config.alert"
@@ -200,7 +200,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaServiceEntry">
           Add Services
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popalertaCorrelateVisible" :class="{ 'is-invalid': !popalertaCorrelateValid }">
@@ -212,7 +212,7 @@
           <span v-else>Correlatea ({{ alertaCorrelate.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="alertaCorrelate"
           :model="$store.state.config.alert"
@@ -251,7 +251,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaCorrelateEntry">
           Add Correlates
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popalertaAttributesKeysVisible" :class="{ 'is-invalid': !popalertaAttributesKeysValid }">
@@ -263,7 +263,7 @@
           <span v-else>AttributesKeys ({{ alertaAttributesKeys.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="alertaAttributesKeys"
           :model="$store.state.config.alert"
@@ -302,7 +302,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaAttributesKeysEntry">
           Add AttributesKeys
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popalertaAttributesValuesVisible" :class="{ 'is-invalid': !popalertaAttributesValuesValid }">
@@ -314,7 +314,7 @@
           <span v-else>AttributesValues ({{ alertaAttributesValues.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="alertaAttributesValues"
           :model="$store.state.config.alert"
@@ -353,7 +353,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaAttributesValuesEntry">
           Add AttributesValues
         </el-button>
-      </template>
+      </div>
     </el-popover>
   </div>
 </template>

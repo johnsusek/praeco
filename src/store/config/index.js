@@ -1,6 +1,7 @@
 import axios from 'axios';
 import yaml from 'js-yaml';
 import { htmlToConfigFormat } from '@/lib/alertText';
+// TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import { logger } from '@/lib/logger.js';
 import settings from './settings';
 import query from './query';

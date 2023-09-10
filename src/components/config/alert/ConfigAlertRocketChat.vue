@@ -9,7 +9,7 @@
           <span v-else>RocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="rocketChatWebhookUrl"
           :model="$store.state.config.alert"
@@ -47,7 +47,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addRocketChatWebhookUrlEntry">
           Add WebhookUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popRocketChatChannelOverrideVisible" :class="{ 'is-invalid': !popRocketChatChannelOverrideValid }">
@@ -59,7 +59,7 @@
           <span v-else>RocketChatChannelOverrides ({{ rocketChatChannelOverride.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="rocketChatChannelOverride"
           :model="$store.state.config.alert"
@@ -98,7 +98,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addRocketChatChannelOverrideEntry">
           Add ChatChannelOverride
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="Post as" prop="rocketChatUsernameOverride" required>

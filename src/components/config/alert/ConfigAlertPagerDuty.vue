@@ -53,7 +53,7 @@
           <span v-else>Incident Key Args ({{ pagerdutyIncidentKeyArgs.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="pagerdutyIncidentKeyArgs"
           :model="$store.state.config.alert"
@@ -92,7 +92,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyIncidentKeyArgsEntry">
           Add Incident Key Args
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-form-item label="Proxy" prop="pagerdutyProxy">
@@ -120,7 +120,7 @@
             <span v-else>Payload Class Args ({{ pagerdutyV2PayloadClassArgs.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
           <el-form
             ref="pagerdutyV2PayloadClassArgs"
             :model="$store.state.config.alert"
@@ -159,7 +159,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadClassArgsEntry">
             Add Payload Class Args
           </el-button>
-        </template>
+        </div>
       </el-popover>
 
       <el-form-item label="Payload Component" prop="pagerdutyV2PayloadComponent">
@@ -178,7 +178,7 @@
             <span v-else>Payload Component Args ({{ pagerdutyV2PayloadComponentArgs.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
           <el-form
             ref="pagerdutyV2PayloadComponentArgs"
             :model="$store.state.config.alert"
@@ -217,7 +217,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadComponentArgsEntry">
             Add Payload Component Args
           </el-button>
-        </template>
+        </div>
       </el-popover>
 
       <el-form-item label="Payload Group" prop="pagerdutyV2PayloadGroup">
@@ -236,7 +236,7 @@
             <span v-else>Payload Group Args ({{ pagerdutyV2PayloadGroupArgs.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
           <el-form
             ref="pagerdutyV2PayloadGroupArgs"
             :model="$store.state.config.alert"
@@ -275,7 +275,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadGroupArgsEntry">
             Add Payload Group Args
           </el-button>
-        </template>
+        </div>
       </el-popover>
 
       <el-form-item label="Severity" prop="pagerdutyV2PayloadSeverity">
@@ -314,7 +314,7 @@
             <span v-else>Payload Source Args ({{ pagerdutyV2PayloadSourceArgs.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
           <el-form
             ref="pagerdutyV2PayloadSourceArgs"
             :model="$store.state.config.alert"
@@ -353,7 +353,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadSourceArgsEntry">
             Add Payload Source Args
           </el-button>
-        </template>
+        </div>
       </el-popover>
 
       <el-form-item label="Payload include All Info" prop="pagerdutyV2PayloadIncludeAllInfo">

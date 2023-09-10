@@ -83,7 +83,7 @@
               </el-button>
             </span>
           </template>
-          <template>
+          <div>
             <el-row type="flex" justify="space-around">
               <el-col :span="24" align="center">
                 <el-button @click="handleSilence('minutes', 5)">
@@ -108,7 +108,7 @@
               @click="handleSilence(Object.keys(silenceTime)[0], Object.values(silenceTime)[0])">
               Silence
             </el-button>
-          </template>
+          </div>
         </el-popover>
 
         <el-button
@@ -288,6 +288,7 @@ export default {
       return this.$store.getters['config/yaml']();
     },
 
+    /* eslint-disable vue/return-in-computed-property */
     silenceNotice() {
       if (!this.silenceLog || !this.silenceLog[0]) {
         return;
@@ -300,6 +301,7 @@ export default {
         return `Rule silenced until ${formattedSilencedDate}`;
       }
     },
+    /* eslint-enable vue/return-in-computed-property */
 
     name() {
       return this.$store.state.config.settings.name;

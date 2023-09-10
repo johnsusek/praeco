@@ -141,7 +141,7 @@
                 class="el-select-wide m-n-sm"
                 placeholder="Select doc type"
                 @change="validate">
-                <el-option v-for="type in types" :key="type" :label="type" :value="type" />
+                <el-option v-for="type2 in types" :key="type2" :label="type2" :value="type2" />
               </el-select>
             </el-form-item>
           </el-form>
@@ -149,11 +149,11 @@
         <div v-if="groupedOver === 'field'">
           <el-form ref="over" :model="$store.state.config.match">
             <el-form-item
-              v-for="(entry, index) in queryKey"
-              :key="index"
-              :prop="'queryKey.' + index" required>
+              v-for="(entry, index2) in queryKey"
+              :key="index2"
+              :prop="'queryKey.' + index2" required>
               <el-select
-                v-model="queryKey[index]"
+                v-model="queryKey[index2]"
                 filterable
                 clearable
                 placeholder="Select field"
@@ -247,11 +247,11 @@
       </template>
       <el-form ref="group" :model="$store.state.config.match">
         <el-form-item
-          v-for="(entry, index) in queryKey"
-          :key="index"
-          :prop="'queryKey.' + index" required>
+          v-for="(entry, index2) in queryKey"
+          :key="index2"
+          :prop="'queryKey.' + index2" required>
           <el-select
-            v-model="queryKey[index]"
+            v-model="queryKey[index2]"
             filterable
             clearable
             placeholder="Select field"
@@ -290,7 +290,7 @@
           <span v-else>IN LIST ({{ blacklist.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="blacklist"
           :model="$store.state.config.match"
@@ -298,18 +298,18 @@
           style="width: 360px"
           @submit.native.prevent>
           <el-form-item
-            v-for="(entry, index) in blacklist"
-            :key="index"
-            :prop="'blacklist.' + index"
+            v-for="(entry, index2) in blacklist"
+            :key="index2"
+            :prop="'blacklist.' + index2"
             class="el-form-item-list"
             label=""
             required>
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
                 <el-input
-                  v-model="blacklist[index]"
+                  v-model="blacklist[index2]"
                   placeholder="Keyword"
-                  @input="(val) => updateBlacklist(val, index)" />
+                  @input="(val) => updateBlacklist(val, index2)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -326,7 +326,7 @@
         <el-button class="m-n-sm" @click="addBlacklistEntry">
           Add keyword
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-if="showPopWhitelist" v-model="popWhitelistVisible" :class="{ 'is-invalid': !popWhitelistValid }">
@@ -338,7 +338,7 @@
           <span v-else>NOT IN LIST ({{ whitelist.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="whitelist"
           :model="$store.state.config.match"
@@ -346,8 +346,8 @@
           style="width: 360px"
           @submit.native.prevent>
           <el-form-item
-            v-for="(entry, index) in whitelist"
-            :key="index"
+            v-for="(entry, index2) in whitelist"
+            :key="index2"
             :prop="'whitelist.' + index"
             required
             class="el-form-item-list"
@@ -355,9 +355,9 @@
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
                 <el-input
-                  v-model="whitelist[index]"
+                  v-model="whitelist[index2]"
                   placeholder="Keyword"
-                  @input="(val) => updateWhitelist(val, index)" />
+                  @input="(val) => updateWhitelist(val, index2)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -374,7 +374,7 @@
         <el-button class="m-n-sm" @click="addWhitelistEntry">
           Add keyword
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <span class="pop-trigger" @click="popFilterVisible = true">
@@ -749,7 +749,7 @@
               allow-create
               placeholder=""
               @change="validateFreqFlatlineOptions">
-              <el-option v-for="type in types" :key="type" :label="type" :value="type" />
+              <el-option v-for="type2 in types" :key="type2" :label="type2" :value="type2" />
             </el-select>
             <label>
               Specify the _type of document to search for.
@@ -923,6 +923,7 @@ export default {
       return helpLinks[this.type];
     },
 
+    /* eslint-disable vue/return-in-computed-property */
     chartTimeframe() {
       if (!this.bucket) return {};
 
@@ -932,6 +933,7 @@ export default {
         };
       }
     },
+    /* eslint-enable vue/return-in-computed-property */
 
     eventTableHeight() {
       return document.body.clientHeight - 85;
@@ -1056,6 +1058,7 @@ export default {
       return this.$store.state.config.match.whitelist;
     },
 
+    /* eslint-disable vue/return-in-computed-property */
     compareKey: {
       get() {
         if (this.$store.state.config.match.compareKey) {
@@ -1068,6 +1071,7 @@ export default {
         this.$store.commit('config/match/UPDATE_COMPARE_KEY', value);
       }
     },
+    /* eslint-enable vue/return-in-computed-property */
 
     useKeywordPostfix: {
       get() {

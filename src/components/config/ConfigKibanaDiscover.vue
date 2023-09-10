@@ -57,7 +57,7 @@
             <span v-else>Kibana Discover Columns ({{ kibanaDiscoverColumns.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
           <el-form
             ref="kibanaDiscoverColumns"
             :model="$store.state.config.alert"
@@ -96,7 +96,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addKibanaDiscoverColumnsEntry">
             Add keyword
           </el-button>
-        </template>
+        </div>
       </el-popover>
     </el-col>
 

@@ -1,4 +1,5 @@
 import { Notification } from 'element-ui';
+// TODO: error  Dependency cycle via @/store:5=>./configs:4  import/no-cycle
 import { logger } from '@/lib/logger.js';
 
 export default function notifyError(error) {

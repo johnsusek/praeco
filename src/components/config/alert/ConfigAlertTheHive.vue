@@ -34,7 +34,7 @@
           <span v-else>HiveAlertConfigTags ({{ hiveAlertConfigTags.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="hiveAlertConfigTags"
           :model="$store.state.config.alert"
@@ -73,7 +73,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addHiveAlertConfigTagsEntry">
           Add HiveAlertConfigTags
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="Hive Alert Config Tlp" prop="hiveAlertConfigTlp">
