@@ -9,13 +9,14 @@
           <span v-else>RocketChatWebhookUrls ({{ rocketChatWebhookUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="rocketChatWebhookUrl"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in rocketChatWebhookUrl"
             :key="index"
@@ -23,7 +24,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="rocketChatWebhookUrl[index]"
@@ -35,7 +36,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeRocketChatWebhookUrlEntry(entry)" />
@@ -47,7 +48,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addRocketChatWebhookUrlEntry">
           Add WebhookUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popRocketChatChannelOverrideVisible" :class="{ 'is-invalid': !popRocketChatChannelOverrideValid }">
@@ -59,13 +60,14 @@
           <span v-else>RocketChatChannelOverrides ({{ rocketChatChannelOverride.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="rocketChatChannelOverride"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in rocketChatChannelOverride"
             :key="index"
@@ -74,7 +76,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="rocketChatChannelOverride[index]"
@@ -86,7 +88,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeRocketChatChannelOverrideEntry(entry)" />
@@ -98,7 +100,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addRocketChatChannelOverrideEntry">
           Add ChatChannelOverride
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="Post as" prop="rocketChatUsernameOverride" required>
@@ -199,9 +201,10 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
 import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
-import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast/src';
 
 let emojiIndex = new EmojiIndex(emojiData);
 
@@ -216,6 +219,7 @@ export default {
 
   data() {
     return {
+      ElIconDelete,
       emojiIndex,
       popRocketChatWebhookUrlVisible: false,
       popRocketChatWebhookUrlValid: true,

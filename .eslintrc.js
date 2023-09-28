@@ -1,11 +1,15 @@
+require('@rushstack/eslint-patch/modern-module-resolution');
+
 module.exports = {
   root: true,
   env: {
     node: true,
     mocha: true
   },
-  extends: ['plugin:vue/recommended', '@vue/airbnb'],
+  extends: ['plugin:vue/vue3-recommended', '@vue/eslint-config-airbnb'],
   rules: {
+    'vue/max-len': 'off',
+    'import/no-unresolved': 'off',
     'vuejs-accessibility/rule-name': 'off',
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/click-events-have-key-events': 'off',
@@ -35,18 +39,26 @@ module.exports = {
     'vue/require-v-for-key': 'off',
     'vue/require-prop-types': 'off',
     'vue/max-attributes-per-line': 'off',
-    // TODO: 'vue/component-api-style': ['error', ['composition-vue2']],
-    'vue/no-lone-template': 'off', // TODO:
-    'vue/multi-word-component-names': 'off', // TODO:
+    'vue/multi-word-component-names': 'off',
     'import/prefer-default-export': 'off',
-    'vue/no-template-shadow': 'off',
+    // 'vue/no-lone-template': 'off', // TODO:
+    'vue/no-template-shadow': 'off', // TODO:
     'import/no-cycle': 'off',
     'vue/return-in-computed-property': 'off',
     'vue/this-in-template': 'warn',
-    'vue/no-deprecated-slot-attribute': 'warn',
-    'vue/no-deprecated-slot-scope-attribute': 'warn',
-    // 'vue/no-deprecated-filter': 'warn',
-    // 'vue/no-deprecated-functional-template': 'warn',
+    'vue/no-deprecated-slot-attribute': 'error',
+    'vue/no-deprecated-scope-attribute': 'error',
+    'vue/no-deprecated-slot-scope-attribute': 'error',
+    'vue/no-deprecated-filter': 'error',
+    'vue/no-deprecated-v-bind-sync': 'error',
+    'vue/no-deprecated-v-on-number-modifiers': 'error',
+    'vue/no-deprecated-events-api': 'error',
+    'vue/no-deprecated-functional-template': 'error',
+    'vue/no-deprecated-html-element-is': 'error',
+    'vue/no-deprecated-vue-config-keycodes': 'error',
+    'vue/no-deprecated-dollar-listeners-api': 'error',
+    'vue/no-deprecated-v-on-native-modifier': 'error',
+    'vue/no-deprecated-dollar-scopedslots-api': 'error',
     'import/extensions': [
       'off',
       'always',

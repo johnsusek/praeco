@@ -1,18 +1,18 @@
 import axios from 'axios';
-import ElementUI from 'element-ui';
+import ElementPlus from 'element-plus';
 import Vuex from 'vuex';
 import MockAdapter from 'axios-mock-adapter';
-import VueRouter from 'vue-router';
+import { createRouter as VueRouter } from 'vue-router';
 import 'localstorage-polyfill';
 import {
   config, mount, shallowMount, createLocalVue
 } from '@vue/test-utils';
-import Vue from 'vue';
+import * as Vue from 'vue';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import Treeselect from '@riophae/vue-treeselect';
+import Treeselect from '@tanbo800/vue3-treeselect';
 import 'prismjs';
-import locale from 'element-ui/lib/locale/lang/en';
+// import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBell,
@@ -32,11 +32,11 @@ import {
   faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import 'element-ui/lib/theme-chalk/index.css';
+import 'element-plus/lib/theme-chalk/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+import '@tanbo800/vue3-treeselect/dist/vue3-treeselect.css';
 
 import ECharts from 'vue-echarts';
 
@@ -124,7 +124,7 @@ library.add(
   faExclamationCircle
 );
 
-Vue.use(ElementUI, { locale, size: 'mini' });
+Vue.use(ElementPlus, { size: 'mini' });
 
 Vue.component('VChart', ECharts);
 Vue.component('Icon', FontAwesomeIcon);
@@ -197,7 +197,7 @@ export const mockAxios = new MockAdapter(axios);
 export function mountComponent(comp, opts = {}) {
   let localVue = createLocalVue();
   localVue.use(VueRouter);
-  localVue.use(ElementUI);
+  localVue.use(ElementPlus);
   localVue.use(Vuex);
 
   return mount(comp, {
@@ -213,7 +213,7 @@ export function mountComponent(comp, opts = {}) {
 export function shallowMountComponent(comp, opts = {}) {
   let localVue = createLocalVue();
   localVue.use(VueRouter);
-  localVue.use(ElementUI);
+  localVue.use(ElementPlus);
   localVue.use(Vuex);
 
   return shallowMount(comp, {

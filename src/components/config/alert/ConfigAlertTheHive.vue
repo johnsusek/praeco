@@ -34,13 +34,14 @@
           <span v-else>HiveAlertConfigTags ({{ hiveAlertConfigTags.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="hiveAlertConfigTags"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in hiveAlertConfigTags"
             :key="index"
@@ -49,7 +50,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="hiveAlertConfigTags[index]"
@@ -61,7 +62,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeHiveAlertConfigTagsEntry(entry)" />
@@ -73,7 +74,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addHiveAlertConfigTagsEntry">
           Add HiveAlertConfigTags
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="Hive Alert Config Tlp" prop="hiveAlertConfigTlp">
@@ -110,12 +111,14 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
+
 export default {
   props: ['viewOnly'],
   emits: ['validate'],
-
   data() {
     return {
+      ElIconDelete,
       popHiveAlertConfigTagsVisible: false,
       popHiveAlertConfigTagsValid: true,
     };

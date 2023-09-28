@@ -9,13 +9,14 @@
           <span v-else>mattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="mattermostWebhookUrl"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in mattermostWebhookUrl"
             :key="index"
@@ -23,7 +24,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="mattermostWebhookUrl[index]"
@@ -35,7 +36,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeMattermostWebhookUrlEntry(entry)" />
@@ -47,7 +48,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostWebhookUrlEntry">
           Add WebhookUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popMattermostChannelOverrideVisible" :class="{ 'is-invalid': !popMattermostChannelOverrideValid }">
@@ -59,13 +60,14 @@
           <span v-else>MattermostChannelOverrides ({{ mattermostChannelOverride.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="mattermostChannelOverride"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in mattermostChannelOverride"
             :key="index"
@@ -74,7 +76,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="mattermostChannelOverride[index]"
@@ -86,7 +88,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removemattermostChannelOverrideEntry(entry)" />
@@ -98,7 +100,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostChannelOverrideEntry">
           Add ChannelOverrides
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="Post as" prop="mattermostUsernameOverride" required>
@@ -237,8 +239,9 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
-import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast/src';
 
 let emojiIndex = new EmojiIndex(emojiData);
 
@@ -252,6 +255,7 @@ export default {
 
   data() {
     return {
+      ElIconDelete,
       emojiIndex,
       popMattermostWebhookUrlVisible: false,
       popMattermostWebhookUrlValid: true,

@@ -26,7 +26,7 @@ describe('App test', () => {
 
     cy.contains('Add folder').click();
     cy.get('.el-message-box__wrapper .el-input')
-      .find('input')
+      .find('modelValue')
       .click()
       .type('Automated test folder');
 

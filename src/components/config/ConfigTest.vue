@@ -5,8 +5,12 @@
         <span>
           <el-button v-if="!testRunLoading" type="primary" plain size="medium">
             Test
-            <i v-if="!testPopoverVisible" class="el-icon-caret-bottom el-icon-right" />
-            <i v-if="testPopoverVisible" class="el-icon-caret-top el-icon-right" />
+            <el-icon v-if="!silencePopoverVisible" class="el-icon-right">
+              <el-icon-caret-bottom />
+            </el-icon>
+            <el-icon v-if="silencePopoverVisible" class="el-icon-right">
+              <el-icon-caret-top />
+            </el-icon>
           </el-button>
           <el-button v-else type="primary" plain disabled size="medium">Testing...</el-button>
         </span>
@@ -43,9 +47,9 @@
       class="m-n-med" />
 
     <el-alert
-      v-if="testRunResult &&
-        testRunResult.writeback &&
-        testRunResult.writeback.elastalert_status"
+      v-if="testRunResult
+        && testRunResult.writeback
+        && testRunResult.writeback.elastalert_status"
       :closable="false"
       type="success"
       show-icon
@@ -72,7 +76,7 @@
       type="info">
       <el-container>
         <div>
-          <i class="el-icon-loading" />
+          <el-icon><el-icon-loading /></el-icon>
         </div>
         <div style="flex: 1;">
           {{ messages.slice(-1)[0].replace('INFO:elastalert:', '') }}
@@ -128,7 +132,7 @@ export default {
     }
   },
 
-  destroyed() {
+  unmounted() {
     this.$disconnect();
   },
 

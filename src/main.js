@@ -1,14 +1,14 @@
-import Vue from 'vue';
-import ElementUI, { Notification } from 'element-ui';
+import { createApp } from 'vue';
+import ElementPlus, { ElNotification } from 'element-plus';
 import axios from 'axios';
-import VueNativeSock from 'vue-native-websocket';
-import VueSplit from 'vue-split-panel';
+import VueNativeSock from 'vue-native-websocket-vue3';
+import VueSplit from 'coder-vue3-split-panel';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import Treeselect from '@riophae/vue-treeselect';
+import Treeselect from '@tanbo800/vue3-treeselect';
 import ECharts from 'vue-echarts';
 import 'prismjs';
-import locale from 'element-ui/lib/locale/lang/en';
+// import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBell,
@@ -28,12 +28,14 @@ import {
   faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import 'element-ui/lib/theme-chalk/index.css';
+// import 'element-plus/lib/theme-chalk/index.css';
+import 'element-plus/dist/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+import '@tanbo800/vue3-treeselect/dist/vue3-treeselect.css';
 
+import cronLight from '@vue-js-cron/light';
 import Bulb from '@/components/Bulb';
 import DateTime from '@/components/DateTime';
 import DefinitionTable from '@/components/DefinitionTable';
@@ -93,7 +95,6 @@ import ConfigScanEntireTimeframe from '@/components/config/ConfigScanEntireTimef
 import ConfigLimitExcecution from '@/components/config/ConfigLimitExcecution.vue';
 
 import '@/lib/string.js';
-import cronLight from '@vue-js-cron/light';
 import { initLogging, logger } from './lib/logger.js';
 import App from './App.vue';
 import router from './router';
@@ -131,108 +132,108 @@ library.add(
   faExclamationCircle
 );
 
-Vue.use(cronLight);
-Vue.use(VueSplit);
-Vue.use(ElementUI, { locale, size: 'mini' });
-
-Vue.component('VChart', ECharts);
-Vue.component('Icon', FontAwesomeIcon);
-Vue.component('VueJsonPretty', VueJsonPretty);
-Vue.component('Prism', Prism);
-Vue.component('Treeselect', Treeselect);
-Vue.component('Bulb', Bulb);
-Vue.component('DateTime', DateTime);
-Vue.component('ConfigQuery', ConfigQuery);
-Vue.component('ConfigAlert', ConfigAlert);
-Vue.component('ConfigAlertAlerta', ConfigAlertAlerta);
-Vue.component('ConfigAlertAlertmanager', ConfigAlertAlertmanager);
-Vue.component('ConfigAlertAmazonSes', ConfigAlertAmazonSes);
-Vue.component('ConfigAlertAmazonSns', ConfigAlertAmazonSns);
-Vue.component('ConfigAlertChatwork', ConfigAlertChatwork);
-Vue.component('ConfigAlertCommand', ConfigAlertCommand);
-Vue.component('ConfigAlertDatadog', ConfigAlertDatadog);
-Vue.component('ConfigAlertDingtalk', ConfigAlertDingtalk);
-Vue.component('ConfigAlertDiscord', ConfigAlertDiscord);
-Vue.component('ConfigAlertEmail', ConfigAlertEmail);
-Vue.component('ConfigAlertExotel', ConfigAlertExotel);
-Vue.component('ConfigAlertGelf', ConfigAlertGelf);
-Vue.component('ConfigAlertGitter', ConfigAlertGitter);
-Vue.component('ConfigAlertGoogleChat', ConfigAlertGoogleChat);
-Vue.component('ConfigAlertHttpPost', ConfigAlertHttpPost);
-Vue.component('ConfigAlertHttpPost2', ConfigAlertHttpPost2);
-Vue.component('ConfigAlertJira', ConfigAlertJira);
-Vue.component('ConfigAlertLineNotify', ConfigAlertLineNotify);
-Vue.component('ConfigAlertMattermost', ConfigAlertMattermost);
-Vue.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
-Vue.component('ConfigAlertPagerDuty', ConfigAlertPagerDuty);
-Vue.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
-Vue.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
-Vue.component('ConfigAlertServiceNow', ConfigAlertServiceNow);
-Vue.component('ConfigAlertSlack', ConfigAlertSlack);
-Vue.component('ConfigAlertStomp', ConfigAlertStomp);
-Vue.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
-Vue.component('ConfigAlertTelegram', ConfigAlertTelegram);
-Vue.component('ConfigAlertTheHive', ConfigAlertTheHive);
-Vue.component('ConfigAlertTwilio', ConfigAlertTwilio);
-Vue.component('ConfigAlertOpsgenie', ConfigAlertOpsgenie);
-Vue.component('ConfigAlertVictorOps', ConfigAlertVictorOps);
-Vue.component('ConfigAlertZabbix', ConfigAlertZabbix);
-Vue.component('ConfigAggregation', ConfigAggregation);
-Vue.component('ConfigSettings', ConfigSettings);
-Vue.component('ConfigKibanaDiscover', ConfigKibanaDiscover);
-Vue.component('ConfigTimeWindowFeature', ConfigTimeWindowFeature);
-Vue.component('ConfigOwner', ConfigOwner);
-Vue.component('ConfigPriority', ConfigPriority);
-Vue.component('ConfigDescription', ConfigDescription);
-Vue.component('ConfigCondition', ConfigCondition);
-Vue.component('ConfigScanEntireTimeframe', ConfigScanEntireTimeframe);
-Vue.component('ConfigLimitExcecution', ConfigLimitExcecution);
-Vue.component('DefinitionTable', DefinitionTable);
-Vue.component('ElastalertTimePicker', ElastalertTimePicker);
-Vue.component('ESChart', ESChart);
-Vue.component('EventTable', EventTable);
-Vue.component('ExpandableAlert', ExpandableAlert);
-Vue.component('FolderTree', FolderTree);
-Vue.component('NavTree', NavTree);
-Vue.component('PraecoFormItem', PraecoFormItem);
-Vue.component('TableRow', TableRow);
-Vue.component('ElastalertTimeView', ElastalertTimeView);
-
-Vue.config.productionTip = false;
-
-Vue.config.errorHandler = function(err, vm, info) {
-  logger().error(err);
-
-  console.error(err, vm, info);
-
-  Notification.error({
-    message: err.toString(),
-    title: 'Internal error',
-    duration: 0
-  });
-};
-
 function startApp(config) {
+  const app = createApp(App);
+
+  app.use(cronLight);
+  app.use(VueSplit);
+  app.use(ElementPlus, { size: 'mini' });
+
+  app.config.errorHandler = function(err, vm, info) {
+    logger().error(err);
+
+    console.error(err, vm, info);
+
+    ElNotification({
+      message: err.toString(),
+      title: 'Internal error',
+      duration: 0,
+      type: 'error',
+    });
+  };
+
   store.commit('appconfig/SET_APP_CONFIG', config);
 
   initLogging();
 
-  Vue.use(
+  app.use(
     VueNativeSock,
     `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
       window.location.port
-    }/api-ws/test`,
+    }/ws/test`,
     {
       connectManually: true,
       format: 'json'
     }
   );
 
-  new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount('#app');
+  app.use(router);
+  app.use(store);
+
+  app.component('VChart', ECharts);
+  app.component('Icon', FontAwesomeIcon);
+  app.component('VueJsonPretty', VueJsonPretty);
+  app.component('Prism', Prism);
+  app.component('Treeselect', Treeselect);
+  app.component('Bulb', Bulb);
+  app.component('DateTime', DateTime);
+  app.component('ConfigQuery', ConfigQuery);
+  app.component('ConfigAlert', ConfigAlert);
+  app.component('ConfigAlertAlerta', ConfigAlertAlerta);
+  app.component('ConfigAlertAlertmanager', ConfigAlertAlertmanager);
+  app.component('ConfigAlertAmazonSes', ConfigAlertAmazonSes);
+  app.component('ConfigAlertAmazonSns', ConfigAlertAmazonSns);
+  app.component('ConfigAlertChatwork', ConfigAlertChatwork);
+  app.component('ConfigAlertCommand', ConfigAlertCommand);
+  app.component('ConfigAlertDatadog', ConfigAlertDatadog);
+  app.component('ConfigAlertDingtalk', ConfigAlertDingtalk);
+  app.component('ConfigAlertDiscord', ConfigAlertDiscord);
+  app.component('ConfigAlertEmail', ConfigAlertEmail);
+  app.component('ConfigAlertExotel', ConfigAlertExotel);
+  app.component('ConfigAlertGelf', ConfigAlertGelf);
+  app.component('ConfigAlertGitter', ConfigAlertGitter);
+  app.component('ConfigAlertGoogleChat', ConfigAlertGoogleChat);
+  app.component('ConfigAlertHttpPost', ConfigAlertHttpPost);
+  app.component('ConfigAlertHttpPost2', ConfigAlertHttpPost2);
+  app.component('ConfigAlertJira', ConfigAlertJira);
+  app.component('ConfigAlertLineNotify', ConfigAlertLineNotify);
+  app.component('ConfigAlertMattermost', ConfigAlertMattermost);
+  app.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
+  app.component('ConfigAlertPagerDuty', ConfigAlertPagerDuty);
+  app.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
+  app.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
+  app.component('ConfigAlertServiceNow', ConfigAlertServiceNow);
+  app.component('ConfigAlertSlack', ConfigAlertSlack);
+  app.component('ConfigAlertStomp', ConfigAlertStomp);
+  app.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
+  app.component('ConfigAlertTelegram', ConfigAlertTelegram);
+  app.component('ConfigAlertTheHive', ConfigAlertTheHive);
+  app.component('ConfigAlertTwilio', ConfigAlertTwilio);
+  app.component('ConfigAlertOpsgenie', ConfigAlertOpsgenie);
+  app.component('ConfigAlertVictorOps', ConfigAlertVictorOps);
+  app.component('ConfigAlertZabbix', ConfigAlertZabbix);
+  app.component('ConfigAggregation', ConfigAggregation);
+  app.component('ConfigSettings', ConfigSettings);
+  app.component('ConfigKibanaDiscover', ConfigKibanaDiscover);
+  app.component('ConfigTimeWindowFeature', ConfigTimeWindowFeature);
+  app.component('ConfigOwner', ConfigOwner);
+  app.component('ConfigPriority', ConfigPriority);
+  app.component('ConfigDescription', ConfigDescription);
+  app.component('ConfigCondition', ConfigCondition);
+  app.component('ConfigScanEntireTimeframe', ConfigScanEntireTimeframe);
+  app.component('ConfigLimitExcecution', ConfigLimitExcecution);
+  app.component('DefinitionTable', DefinitionTable);
+  app.component('ElastalertTimePicker', ElastalertTimePicker);
+  app.component('ESChart', ESChart);
+  app.component('EventTable', EventTable);
+  app.component('ExpandableAlert', ExpandableAlert);
+  app.component('FolderTree', FolderTree);
+  app.component('NavTree', NavTree);
+  app.component('PraecoFormItem', PraecoFormItem);
+  app.component('TableRow', TableRow);
+  app.component('ElastalertTimeView', ElastalertTimeView);
+
+  app.mount('#app');
 }
 
 // First get the config from the server

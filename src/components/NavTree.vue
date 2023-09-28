@@ -1,4 +1,5 @@
 <template>
+  <!-- native modifier has been removed, please confirm whether the function has been affected  -->
   <treeselect
     ref="tree"
     v-model="value"
@@ -11,7 +12,7 @@
     :options="options"
     placeholder="Filter..."
     @select="handleSelect"
-    @click.native="handleClick">
+    @click="handleClick">
     <template #option-label="{ node, labelClassName }">
       <label
         :class="labelClassName">
@@ -25,7 +26,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import { nextTick } from 'vue';
 import { selectNode, expandNode, loadChildrenOptions } from '@/lib/tree';
 
 export default {
@@ -83,7 +84,7 @@ export default {
       ];
     },
     loadExpanded() {
-      Vue.nextTick(() => {
+      nextTick(() => {
         this.$refs.tree.traverseAllNodesByIndex(node => {
           if (node.isBranch && !node.isExpanded && this.expanded.includes(node.id)) {
             expandNode(node.id);

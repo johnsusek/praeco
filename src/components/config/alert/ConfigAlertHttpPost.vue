@@ -9,13 +9,14 @@
           <span v-else>httpPostUrls ({{ httpPostUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="httpPostUrl"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in httpPostUrl"
             :key="index"
@@ -23,7 +24,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="httpPostUrl[index]"
@@ -35,7 +36,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removehttpPostUrlEntry(entry)" />
@@ -47,7 +48,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addhttpPostUrlEntry">
           Add HttpPostUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-form-item label="CA Certs" prop="httpPostCaCerts">
@@ -83,12 +84,14 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
+
 export default {
   props: ['viewOnly'],
   emits: ['validate'],
-
   data() {
     return {
+      ElIconDelete,
       popHttpPostUrlVisible: false,
       popHttpPostUrlValid: true,
     };

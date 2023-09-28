@@ -59,13 +59,14 @@
           <span v-else>Tags ({{ alertaTags.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="alertaTags"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in alertaTags"
             :key="index"
@@ -74,7 +75,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="alertaTags[index]"
@@ -86,7 +87,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeAlertaTagsEntry(entry)" />
@@ -98,7 +99,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertaTagsEntry">
           Add Tags
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-form-item label="Environment" prop="alertaEnvironment">
@@ -161,13 +162,14 @@
           <span v-else>Services ({{ alertaService.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="alertaService"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in alertaService"
             :key="index"
@@ -176,7 +178,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="alertaService[index]"
@@ -188,7 +190,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removealertaServiceEntry(entry)" />
@@ -200,7 +202,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaServiceEntry">
           Add Services
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popalertaCorrelateVisible" :class="{ 'is-invalid': !popalertaCorrelateValid }">
@@ -212,13 +214,14 @@
           <span v-else>Correlatea ({{ alertaCorrelate.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="alertaCorrelate"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in alertaCorrelate"
             :key="index"
@@ -227,7 +230,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="alertaCorrelate[index]"
@@ -239,7 +242,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removealertaCorrelateEntry(entry)" />
@@ -251,7 +254,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaCorrelateEntry">
           Add Correlates
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popalertaAttributesKeysVisible" :class="{ 'is-invalid': !popalertaAttributesKeysValid }">
@@ -263,13 +266,14 @@
           <span v-else>AttributesKeys ({{ alertaAttributesKeys.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="alertaAttributesKeys"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in alertaAttributesKeys"
             :key="index"
@@ -278,7 +282,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="alertaAttributesKeys[index]"
@@ -290,7 +294,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removealertaAttributesKeysEntry(entry)" />
@@ -302,7 +306,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaAttributesKeysEntry">
           Add AttributesKeys
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popalertaAttributesValuesVisible" :class="{ 'is-invalid': !popalertaAttributesValuesValid }">
@@ -314,13 +318,14 @@
           <span v-else>AttributesValues ({{ alertaAttributesValues.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="alertaAttributesValues"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in alertaAttributesValues"
             :key="index"
@@ -329,7 +334,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="alertaAttributesValues[index]"
@@ -341,7 +346,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removealertaAttributesValuesEntry(entry)" />
@@ -353,18 +358,20 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addalertaAttributesValuesEntry">
           Add AttributesValues
         </el-button>
-      </template>
+      </div>
     </el-popover>
   </div>
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
+
 export default {
   props: ['viewOnly'],
   emits: ['validate'],
-
   data() {
     return {
+      ElIconDelete,
       popalertaAttributesValuesVisible: false,
       popalertaAttributesValuesValid: true,
       popalertaAttributesKeysVisible: false,

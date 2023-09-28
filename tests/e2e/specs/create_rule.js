@@ -13,7 +13,7 @@ describe('App test', () => {
     cy.get('.el-form-item__label')
       .contains('Name')
       .next()
-      .find('input')
+      .find('modelValue')
       .clear()
       .click()
       .type('Automated test rule');

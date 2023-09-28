@@ -1,9 +1,10 @@
 <template>
+  <!-- native modifier has been removed, please confirm whether the function has been affected  -->
   <el-form
     ref="form"
     :model="$store.state.config.alert"
     label-position="top"
-    @submit.native.prevent>
+    @submit.prevent>
     <el-row :gutter="50">
       <el-col :span="12">
         <el-form-item
@@ -11,12 +12,13 @@
           label="Subject"
           prop="subject"
           required>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <at
             v-model="subject"
             :members="fields"
             :allow-spaces="false"
             at="%"
-            @paste.native="pastePlainText">
+            @paste="pastePlainText">
             <template #embeddedItem="s">
               <span>
                 <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
@@ -36,13 +38,14 @@
               <span v-else>AlertSubjectArgs ({{ alertSubjectArgs.length }})</span>
             </span>
           </template>
-          <template>
+          <div>
+            <!-- native modifier has been removed, please confirm whether the function has been affected  -->
             <el-form
               ref="alertSubjectArgs"
               :model="$store.state.config.alert"
               label-position="top"
               style="width: 360px"
-              @submit.native.prevent>
+              @submit.prevent>
               <el-form-item
                 v-for="(entry, index) in alertSubjectArgs"
                 :key="index"
@@ -51,7 +54,7 @@
                 class="el-form-item-list"
                 label=""
                 required>
-                <el-row :gutter="5" type="flex" justify="space-between">
+                <el-row :gutter="5" justify="space-between">
                   <el-col :span="20">
                     <el-input
                       v-model="alertSubjectArgs[index]"
@@ -63,7 +66,7 @@
                     <el-button
                       :disabled="viewOnly"
                       type="danger"
-                      icon="el-icon-delete"
+                      :icon="ElIconDelete"
                       circle
                       plain
                       @click="removeAlertSubjectArgsEntry(entry)" />
@@ -75,7 +78,7 @@
             <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertSubjectArgsEntry">
               Add alert_subject_args
             </el-button>
-          </template>
+          </div>
         </el-popover>
 
         <el-form-item
@@ -83,12 +86,13 @@
           id="body"
           label="Body text"
           prop="body">
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <at
             v-model="body"
             :members="fields"
             :allow-spaces="false"
             at="%"
-            @paste.native="pastePlainText">
+            @paste="pastePlainText">
             <template #embeddedItem="s">
               <span>
                 <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
@@ -111,13 +115,14 @@
               <span v-else>alertTextArgs ({{ alertTextArgs.length }})</span>
             </span>
           </template>
-          <template>
+          <div>
+            <!-- native modifier has been removed, please confirm whether the function has been affected  -->
             <el-form
               ref="alertTextArgs"
               :model="$store.state.config.alert"
               label-position="top"
               style="width: 360px"
-              @submit.native.prevent>
+              @submit.prevent>
               <el-form-item
                 v-for="(entry, index) in alertTextArgs"
                 :key="index"
@@ -126,7 +131,7 @@
                 class="el-form-item-list"
                 label=""
                 required>
-                <el-row :gutter="5" type="flex" justify="space-between">
+                <el-row :gutter="5" justify="space-between">
                   <el-col :span="20">
                     <el-input
                       v-model="alertTextArgs[index]"
@@ -138,7 +143,7 @@
                     <el-button
                       :disabled="viewOnly"
                       type="danger"
-                      icon="el-icon-delete"
+                      :icon="ElIconDelete"
                       circle
                       plain
                       @click="removeAlertTextArgsEntry(entry)" />
@@ -150,7 +155,7 @@
             <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertTextArgsEntry">
               Add alert_text_args
             </el-button>
-          </template>
+          </div>
         </el-popover>
 
         <el-form-item required label="Include">
@@ -211,6 +216,7 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
 import debounce from 'debounce';
 import At from 'vue-at';
 
@@ -224,6 +230,7 @@ export default {
 
   data() {
     return {
+      ElIconDelete,
       popAlertSubjectArgsVisible: false,
       popAlertSubjectArgsValid: true,
       popAlertTextArgsVisible: false,

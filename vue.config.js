@@ -1,4 +1,8 @@
 const webpack = require('webpack');
+const AutoImport = require('unplugin-auto-import/webpack');
+const Components = require('unplugin-vue-components/webpack');
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
+const ICons = require('unplugin-icons/webpack');
 
 module.exports = {
   publicPath: process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : '/',
@@ -7,16 +11,44 @@ module.exports = {
     performance: {
       hints: false
     },
+    resolve: {
+      extensions: ['.ts', '.js', '.mjs', '.json'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.mjs$/i,
+          resolve: { byDependency: { esm: { fullySpecified: false } } },
+        },
+      ],
+    },
     plugins: [
       new webpack.EnvironmentPlugin({ LATER_COV: false }),
-      new webpack.NormalModuleReplacementPlugin(
-        /element-ui[/\\]lib[/\\]locale[/\\]lang[/\\]zh-CN/,
-        'element-ui/lib/locale/lang/en'
-      )
+      ICons({ /* options */ }),
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
     ]
   },
   chainWebpack: config => {
     if (process.env.NODE_ENV !== 'production') {
+      config.resolve.alias.set('vue', '@vue/compat');
+
+      config.module
+        .rule('vue')
+        .use('vue-loader')
+        .tap(options => ({
+          ...options,
+          compilerOptions: {
+            compatConfig: {
+              MODE: 2
+            }
+          }
+        }));
+
       config.module
         .rule('istanbul')
         .test(/\.(js|vue)$/)
@@ -42,12 +74,12 @@ module.exports = {
           '^/api-app/releases': ''
         }
       },
-      '/api-ws/test': {
+      '/ws/test': {
         target: 'http://localhost:3333/',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/api-ws/test': '/test'
+          '^/ws/test': '/test'
         }
       },
       '/api': {

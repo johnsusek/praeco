@@ -9,13 +9,14 @@
           <span v-else>SlackWebhookUrls ({{ slackWebhookUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="slackWebhookUrl"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in slackWebhookUrl"
             :key="index"
@@ -23,7 +24,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="slackWebhookUrl[index]"
@@ -35,7 +36,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeslackWebhookUrlEntry(entry)" />
@@ -47,7 +48,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackWebhookUrlEntry">
           Add WebhookUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popslackChannelOverrideVisible" :class="{ 'is-invalid': !popslackChannelOverrideValid }">
@@ -59,13 +60,14 @@
           <span v-else>SlackChannelOverrides ({{ slackChannelOverride.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="slackChannelOverride"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in slackChannelOverride"
             :key="index"
@@ -74,7 +76,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="slackChannelOverride[index]"
@@ -86,7 +88,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeslackChannelOverrideEntry(entry)" />
@@ -98,7 +100,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackChannelOverrideEntry">
           Add ChannelOverride
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
@@ -279,9 +281,10 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
 import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
-import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast/src';
 
 let emojiIndex = new EmojiIndex(emojiData);
 
@@ -296,6 +299,7 @@ export default {
 
   data() {
     return {
+      ElIconDelete,
       emojiIndex,
       popslackWebhookUrlVisible: false,
       popslackWebhookUrlValid: true,

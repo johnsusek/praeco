@@ -1,4 +1,4 @@
-.<template>
+<template>
   <div>
     <praeco-form-item label="Host Name" prop="stompHostname" required>
       <el-input id="stompHostname" v-model="stompHostname" :disabled="viewOnly" />

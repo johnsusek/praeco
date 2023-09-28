@@ -53,13 +53,14 @@
           <span v-else>Incident Key Args ({{ pagerdutyIncidentKeyArgs.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="pagerdutyIncidentKeyArgs"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in pagerdutyIncidentKeyArgs"
             :key="index"
@@ -68,7 +69,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="pagerdutyIncidentKeyArgs[index]"
@@ -80,7 +81,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removePagerdutyIncidentKeyArgsEntry(entry)" />
@@ -92,7 +93,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyIncidentKeyArgsEntry">
           Add Incident Key Args
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-form-item label="Proxy" prop="pagerdutyProxy">
@@ -120,13 +121,14 @@
             <span v-else>Payload Class Args ({{ pagerdutyV2PayloadClassArgs.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <el-form
             ref="pagerdutyV2PayloadClassArgs"
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadClassArgs"
               :key="index"
@@ -135,7 +137,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5" justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="pagerdutyV2PayloadClassArgs[index]"
@@ -147,7 +149,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadClassArgsEntry(entry)" />
@@ -159,7 +161,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadClassArgsEntry">
             Add Payload Class Args
           </el-button>
-        </template>
+        </div>
       </el-popover>
 
       <el-form-item label="Payload Component" prop="pagerdutyV2PayloadComponent">
@@ -178,13 +180,14 @@
             <span v-else>Payload Component Args ({{ pagerdutyV2PayloadComponentArgs.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <el-form
             ref="pagerdutyV2PayloadComponentArgs"
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadComponentArgs"
               :key="index"
@@ -193,7 +196,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5" justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="pagerdutyV2PayloadComponentArgs[index]"
@@ -205,7 +208,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadComponentArgsEntry(entry)" />
@@ -217,7 +220,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadComponentArgsEntry">
             Add Payload Component Args
           </el-button>
-        </template>
+        </div>
       </el-popover>
 
       <el-form-item label="Payload Group" prop="pagerdutyV2PayloadGroup">
@@ -236,13 +239,14 @@
             <span v-else>Payload Group Args ({{ pagerdutyV2PayloadGroupArgs.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <el-form
             ref="pagerdutyV2PayloadGroupArgs"
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadGroupArgs"
               :key="index"
@@ -251,7 +255,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5" justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="pagerdutyV2PayloadGroupArgs[index]"
@@ -263,7 +267,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadGroupArgsEntry(entry)" />
@@ -275,7 +279,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadGroupArgsEntry">
             Add Payload Group Args
           </el-button>
-        </template>
+        </div>
       </el-popover>
 
       <el-form-item label="Severity" prop="pagerdutyV2PayloadSeverity">
@@ -314,13 +318,14 @@
             <span v-else>Payload Source Args ({{ pagerdutyV2PayloadSourceArgs.length }})</span>
           </span>
         </template>
-        <template>
+        <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <el-form
             ref="pagerdutyV2PayloadSourceArgs"
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadSourceArgs"
               :key="index"
@@ -329,7 +334,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5" justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="pagerdutyV2PayloadSourceArgs[index]"
@@ -341,7 +346,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="ElIconDelete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadSourceArgsEntry(entry)" />
@@ -353,7 +358,7 @@
           <el-button :disabled="viewOnly" class="m-n-sm" @click="addPagerdutyV2PayloadSourceArgsEntry">
             Add Payload Source Args
           </el-button>
-        </template>
+        </div>
       </el-popover>
 
       <el-form-item label="Payload include All Info" prop="pagerdutyV2PayloadIncludeAllInfo">
@@ -368,11 +373,11 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons-vue';
 
 export default {
   props: ['viewOnly'],
   emits: ['validate'],
-
   data() {
     let groupPagerdutyValue;
     if (typeof this.$store.state.config.alert.pagerdutyApiVersion === 'undefined' || this.$store.state.config.alert.pagerdutyApiVersion === '') {
@@ -381,6 +386,7 @@ export default {
       groupPagerdutyValue = this.$store.state.config.alert.pagerdutyApiVersion;
     }
     return {
+      ElIconDelete,
       popPagerdutyIncidentKeyArgsVisible: false,
       popPagerdutyIncidentKeyArgsValid: true,
       popPagerdutyV2PayloadClassArgsVisible: false,

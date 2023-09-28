@@ -1,13 +1,14 @@
 <template>
   <span class="elastalert-timepicker">
-    <el-input-number v-model="currentAmount" :min="allowZero ? 0 : 1" @input.native="emitNumKeyup" @input="emitValue" />
+    <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+    <el-input-number v-model="currentAmount" :min="allowZero ? 0 : 1" @keyup="emitNumKeyup" @input="emitValue" />
 
     <el-select v-model="currentUnit" @input="emitValue">
-      <el-option :label="`Second`+plural()" value="seconds" />
-      <el-option :label="`Minute`+plural()" value="minutes" />
-      <el-option :label="`Hour`+plural()" value="hours" />
-      <el-option :label="`Day`+plural()" value="days" />
-      <el-option :label="`Week`+plural()" value="weeks" />
+      <el-option :label="`Second` + plural()" value="seconds" />
+      <el-option :label="`Minute` + plural()" value="minutes" />
+      <el-option :label="`Hour` + plural()" value="hours" />
+      <el-option :label="`Day` + plural()" value="days" />
+      <el-option :label="`Week` + plural()" value="weeks" />
     </el-select>
   </span>
 </template>
@@ -15,7 +16,7 @@
 <script>
 export default {
   props: ['unit', 'amount', 'allowZero'],
-  emits: ['input'],
+  emits: ['update:modelValue'],
 
   data() {
     return {
@@ -43,7 +44,7 @@ export default {
 
     emitValue() {
       if (this.currentUnit && this.currentAmount !== undefined) {
-        this.$emit('input', { [this.currentUnit]: this.currentAmount });
+        this.$emit('update:modelValue', { [this.currentUnit]: this.currentAmount });
       }
     }
   }

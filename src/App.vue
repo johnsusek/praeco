@@ -20,6 +20,7 @@
       </div>
     </el-header>
 
+    <!-- eslint-disable vue/v-on-event-hyphenation -->
     <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
       <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
         <NavTree style="padding: 10px" />
@@ -28,6 +29,7 @@
         <router-view :key="$route.fullPath" style="padding: 10px" />
       </SplitArea>
     </Split>
+    <!-- eslint-enable vue/v-on-event-hyphenation -->
   </div>
 </template>
 

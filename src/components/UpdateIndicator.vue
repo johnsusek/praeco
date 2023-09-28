@@ -1,7 +1,7 @@
 <template>
   <span>
     <el-tag v-if="updateAvailable" type="info">
-      <a href="https://github.com/johnsusek/praeco/releases" target="_blank">
+      <a href="https://github.com/johnsusek/praeco/releases" target="_blank" rel="noopener noreferrer">
         Update available
       </a>
     </el-tag>
