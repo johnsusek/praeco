@@ -37,13 +37,13 @@ export default {
 
     emitNumKeyup(ev) {
       if (ev.target) {
-        this.currentAmount = ev.target.value;
+        this.currentAmount = parseInt(ev.target.value);
       }
     },
 
     emitValue() {
       if (this.currentUnit && this.currentAmount !== undefined) {
-        this.$emit('input', { [this.currentUnit]: this.currentAmount });
+        this.$emit('input', { [this.currentUnit]: parseInt(this.currentAmount) });
       }
     }
   }
