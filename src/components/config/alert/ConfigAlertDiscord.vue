@@ -71,7 +71,9 @@ export default {
     Picker
   },
 
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
 
   data() {
     return {

@@ -73,7 +73,9 @@
 
 <script>
 export default {
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
 
   computed: {
     opsgenieKey: {

@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       expanded: [],
-      value: null,
+      modelValue: null,
       options: []
     };
   },

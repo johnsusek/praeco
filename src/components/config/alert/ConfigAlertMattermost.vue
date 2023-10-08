@@ -250,7 +250,9 @@ export default {
     Emoji,
     Picker
   },
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
   emits: ['validate'],
 
   data() {

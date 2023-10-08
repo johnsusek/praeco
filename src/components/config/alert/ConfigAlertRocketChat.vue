@@ -214,7 +214,9 @@ export default {
     Picker
   },
 
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
   emits: ['validate'],
 
   data() {

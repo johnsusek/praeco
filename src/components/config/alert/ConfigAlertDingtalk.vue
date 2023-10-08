@@ -63,7 +63,9 @@
 <script>
 
 export default {
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
 
   data() {
     let groupDingtalkValue = this.$store.state.config.alert.dingtalkMsgtype;

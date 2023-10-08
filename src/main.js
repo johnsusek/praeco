@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import ElementPlus, { ElNotification } from 'element-plus';
+
 import axios from 'axios';
 import VueNativeSock from 'vue-native-websocket-vue3';
 import VueSplit from 'coder-vue3-split-panel';
@@ -108,6 +109,10 @@ import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
 import '@vue-js-cron/light/dist/light.css';
+
+ElementPlus.compatConfig = { MODE: 3 };
+ElNotification.compatConfig = { MODE: 3 };
+// Treeselect.compatConfig = { MODE: 3 };
 
 library.add(
   faBell,

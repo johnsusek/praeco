@@ -78,10 +78,9 @@
 
 <script>
 export default {
-  components: {
+  props: {
+    viewOnly: Boolean
   },
-
-  props: ['viewOnly'],
 
   computed: {
 

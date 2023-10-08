@@ -114,7 +114,9 @@
 import { Delete as ElIconDelete } from '@element-plus/icons-vue';
 
 export default {
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
   emits: ['validate'],
   data() {
     return {

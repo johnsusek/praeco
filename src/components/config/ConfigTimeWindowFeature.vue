@@ -22,7 +22,7 @@
           end="23:59"
           placeholder="Select time" />
         <label v-if="!viewOnly">Start time of the range.</label>
-      </el-form-item>"
+      </el-form-item>
     </el-col>
 
     <el-col v-if="useTimeWindow" :span="6">
@@ -52,7 +52,9 @@
 
 <script>
 export default {
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
 
   data() {
     return {};

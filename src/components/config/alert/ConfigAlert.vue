@@ -654,7 +654,9 @@ export default {
     ConfigAlertZabbix
   },
 
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
   emits: ['validate'],
 
   data() {

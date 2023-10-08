@@ -68,7 +68,9 @@ import prettycron from 'prettycron';
 import CronUI from 'cron-ui';
 
 export default {
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
 
   data() {
     return {

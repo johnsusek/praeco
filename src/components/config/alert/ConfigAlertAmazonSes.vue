@@ -81,7 +81,9 @@
 
 <script>
 export default {
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
 
   data() {
     let groupSesValue = 'profile';

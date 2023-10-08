@@ -125,7 +125,9 @@ export default {
   components: {
   },
 
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
 
   data() {
     return {

@@ -225,7 +225,9 @@ export default {
     At
   },
 
-  props: ['viewOnly'],
+  props: {
+    viewOnly: Boolean
+  },
   emits: ['validate'],
 
   data() {
