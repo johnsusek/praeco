@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       currentUnit: 'minutes',
-      currentAmount: '888'
+      currentAmount: 888
     };
   },
 
