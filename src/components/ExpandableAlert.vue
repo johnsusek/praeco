@@ -34,7 +34,21 @@ import {
 } from '@element-plus/icons-vue';
 
 export default {
-  props: ['title', 'type', 'contents'],
+  // props: ['title', 'type', 'contents'],
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: ''
+    },
+    contents: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       showDetails: false,

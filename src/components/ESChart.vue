@@ -148,22 +148,80 @@ function getColorForIndex(index, data, spikeHeight) {
 }
 
 export default {
-  props: [
-    'index',
-    'query',
-    'bucket',
-    'timeframe',
-    'markLine',
-    'spikeHeight',
-    'showTitle',
-    'showControls',
-    'groupBy',
-    'aggAvg',
-    'aggSum',
-    'aggMin',
-    'aggMax',
-    'aggCardinality'
-  ],
+  // props: [
+  //   'index',
+  //   'query',
+  //   'bucket',
+  //   'timeframe',
+  //   'markLine',
+  //   'spikeHeight',
+  //   'showTitle',
+  //   'showControls',
+  //   'groupBy',
+  //   'aggAvg',
+  //   'aggSum',
+  //   'aggMin',
+  //   'aggMax',
+  //   'aggCardinality'
+  // ],
+  props: {
+    index: {
+      type: String,
+      default: ''
+    },
+    query: {
+      type: String,
+      default: ''
+    },
+    bucket: {
+      type: Object,
+      default: () => ({})
+    },
+    timeframe: {
+      type: Object,
+      default: () => ({})
+    },
+    markLine: {
+      type: Object,
+      default: () => ({})
+    },
+    spikeHeight: {
+      type: Number,
+      default: 0
+    },
+    showTitle: {
+      type: Boolean,
+      default: true
+    },
+    showControls: {
+      type: Boolean,
+      default: true
+    },
+    groupBy: {
+      type: Array,
+      default: () => []
+    },
+    aggAvg: {
+      type: String,
+      default: ''
+    },
+    aggSum: {
+      type: String,
+      default: ''
+    },
+    aggMin: {
+      type: String,
+      default: ''
+    },
+    aggMax: {
+      type: String,
+      default: ''
+    },
+    aggCardinality: {
+      type: String,
+      default: ''
+    }
+  },
   emits: ['group', 'update', 'click'],
   data() {
     return {

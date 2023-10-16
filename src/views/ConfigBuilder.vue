@@ -47,8 +47,25 @@ export default {
     ConfigTest
   },
 
-  props: ['path', 'type', 'action', 'prefill'],
-
+  // props: ['path', 'type', 'action', 'prefill'],
+  props: {
+    path: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    action: {
+      type: String,
+      required: true
+    },
+    prefill: {
+      type: String,
+      default: null
+    }
+  },
   data() {
     return {
       valid: false,

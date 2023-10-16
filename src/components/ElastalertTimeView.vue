@@ -7,7 +7,13 @@
 
 <script>
 export default {
-  props: ['time'],
+  // props: ['time'],
+  props: {
+    time: {
+      type: Object,
+      default: () => ({})
+    }
+  },
 
   data() {
     return {

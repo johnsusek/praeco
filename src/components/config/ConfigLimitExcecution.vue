@@ -15,7 +15,7 @@
       <el-form-item label="" prop="limitExcecution">
         <div v-if="!viewOnly" class="limit-excecution">
           <div class="getting-started-light">
-            <CronLight v-model="limitExcecution" @error="error = $event" />
+            <cron-light v-model="limitExcecution" @error="error = $event" />
             <div class="mt-2 grey--text text--darken-1">
               cron expression: {{ limitExcecution }}
             </div>
@@ -33,7 +33,10 @@
 export default {
 
   props: {
-    viewOnly: Boolean
+    viewOnly: {
+      type: Boolean,
+      default: false
+    },
   },
 
   data() {

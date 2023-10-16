@@ -110,7 +110,13 @@ import {
 import { selectNode } from '@/lib/tree';
 
 export default {
-  props: ['id'],
+  // props: ['id'],
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       ElIconPlus,

@@ -19,7 +19,13 @@ import * as changeCase from 'change-case';
 import { loadChildrenOptions } from '@/lib/tree';
 
 export default {
-  props: ['type'],
+  // props: ['type'],
+  props: {
+    type: {
+      type: String,
+      default: ''
+    }
+  },
   emits: ['update:modelValue'],
   data() {
     return {

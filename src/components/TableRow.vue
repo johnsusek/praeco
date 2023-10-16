@@ -10,7 +10,17 @@
 
 <script>
 export default {
-  props: ['name', 'value']
+  // props: ['name', 'value']
+  props: {
+    name: {
+      type: String,
+      default: ''
+    },
+    value: {
+      type: String,
+      default: ''
+    }
+  }
 };
 </script>
 

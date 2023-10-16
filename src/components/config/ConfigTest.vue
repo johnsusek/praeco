@@ -96,7 +96,13 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 dayjs.extend(advancedFormat);
 
 export default {
-  props: ['valid'],
+  // props: ['valid'],
+  props: {
+    valid: {
+      type: Boolean,
+      default: false
+    }
+  },
   emits: ['validateForTest'],
 
   data() {

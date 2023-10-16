@@ -47,8 +47,17 @@
 
 <script>
 export default {
-  props: ['type', 'path'],
-
+  // props: ['type', 'path'],
+  props: {
+    type: {
+      type: String,
+      required: true
+    },
+    path: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
     rulesForFolder() {
       return Object.keys(this.$store.state.configs.rules)

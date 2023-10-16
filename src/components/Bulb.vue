@@ -9,7 +9,25 @@
 
 <script>
 export default {
-  props: ['success', 'warning', 'danger', 'info']
+  // props: ['success', 'warning', 'danger', 'info']
+  props: {
+    success: {
+      type: Boolean,
+      default: undefined
+    },
+    warning: {
+      type: Boolean,
+      default: undefined
+    },
+    danger: {
+      type: Boolean,
+      default: undefined
+    },
+    info: {
+      type: Boolean,
+      default: undefined
+    }
+  }
 };
 </script>
 

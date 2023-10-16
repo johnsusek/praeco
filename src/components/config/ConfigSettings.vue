@@ -98,15 +98,21 @@ import debounce from 'debounce';
 import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 
 export default {
-  // TODO: error  Prop 'action' requires default value to be set  vue/require-default-prop
-  // TODO: error  Prop 'type' requires default value to be set    vue/require-default-prop
-  // props: {
-  //   action: String,
-  //   type: String,
-  //   viewOnly: Boolean
-  // },
-  props: ['action', 'type', 'viewOnly'],
-
+  // props: ['action', 'type', 'viewOnly'],
+  props: {
+    action: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: ''
+    },
+    viewOnly: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       indicesLoading: false,

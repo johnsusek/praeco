@@ -88,8 +88,29 @@ function msFromTimeframe(timeframe) {
 }
 
 export default {
-  props: ['timeframe', 'from', 'height', 'groupByField', 'groupByValue'],
-
+  // props: ['timeframe', 'from', 'height', 'groupByField', 'groupByValue'],
+  props: {
+    timeframe: {
+      type: Object,
+      default: () => ({})
+    },
+    from: {
+      type: String,
+      default: ''
+    },
+    height: {
+      type: String,
+      default: 'auto'
+    },
+    groupByField: {
+      type: String,
+      default: ''
+    },
+    groupByValue: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       source: null,
