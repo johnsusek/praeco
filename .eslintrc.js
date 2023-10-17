@@ -33,6 +33,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'vue/multi-word-component-names': 'off',
     'import/no-cycle': 'off',
+    'import/no-unresolved': 'off',
     'import/extensions': [
       'off',
       'always',
