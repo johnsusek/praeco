@@ -2,7 +2,7 @@
   <!-- native modifier has been removed, please confirm whether the function has been affected  -->
   <treeselect
     ref="tree"
-    v-model="value"
+    v-model="modelValue"
     :multiple="false"
     :clearable="false"
     :searchable="true"

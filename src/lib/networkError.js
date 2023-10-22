@@ -1,7 +1,9 @@
 import { ElNotification } from 'element-plus';
 import { logger } from '@/lib/logger.js';
 
-ElNotification.compatConfig = { MODE: 3 };
+ElNotification.compatConfig = {
+  MODE: 3, duration: 0, offset: 50, zIndex: 3000, WATCH_ARRAY: false, LOCK_SCREEN: false, MAX_COUNT: 8, iconClass: '', customClass: ''
+};
 
 export default function notifyError(error) {
   console.error(error);

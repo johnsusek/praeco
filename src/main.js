@@ -110,9 +110,21 @@ import './style/element.scss';
 import './style/pop-trigger.scss';
 import '@vue-js-cron/light/dist/light.css';
 
-ElementPlus.compatConfig = { MODE: 3 };
-ElNotification.compatConfig = { MODE: 3 };
-// Treeselect.compatConfig = { MODE: 3 };
+ElementPlus.compatConfig = {
+  MODE: 3, COMPONENT_V_MODEL: false, RENDER_FUNCTION: false, TRANSITION: false, POPPER: false, LAZY: false, PROPS: { size: 'mini' }
+};
+ElNotification.compatConfig = {
+  MODE: 3, COMPONENT_V_MODEL: false, RENDER_FUNCTION: false, TRANSITION: false, POPPER: false, LAZY: false, PROPS: { size: 'mini' }, WATCH_ARRAY: false, LOCK_SCREEN: false, MAX_COUNT: 8, iconClass: '', customClass: '', duration: 0, offset: 50, zIndex: 3000, ATTR_FALSE_VALUE: false, ATTR_TRUE_VALUE: true, ATTR_DISABLED: false, TRANSITION_GROUP_ROOT: false
+};
+Treeselect.compatConfig = {
+  MODE: 3, WATCH_ARRAY: false, COMPONENT_V_MODEL: false, RENDER_FUNCTION: false, TRANSITION: false, POPPER: false, LAZY: false, PROPS: { size: 'mini' }
+};
+cronLight.compatConfig = {
+  MODE: 3, COMPONENT_V_MODEL: false, RENDER_FUNCTION: false, TRANSITION: false, POPPER: false, LAZY: false, PROPS: { size: 'mini' }, WATCH_ARRAY: false, LOCK_SCREEN: false, MAX_COUNT: 8, iconClass: '', customClass: '', duration: 0, offset: 50, zIndex: 3000, ATTR_FALSE_VALUE: false, ATTR_TRUE_VALUE: true, ATTR_DISABLED: false, TRANSITION_GROUP_ROOT: false
+};
+VueSplit.compatConfig = {
+  MODE: 3, WATCH_ARRAY: false, COMPONENT_V_MODEL: false, RENDER_FUNCTION: false, TRANSITION: false, POPPER: false, LAZY: false, PROPS: { size: 'mini' }, ATTR_FALSE_VALUE: false, ATTR_TRUE_VALUE: true, ATTR_DISABLED: false, TRANSITION_GROUP_ROOT: false, TRANSITION_GROUP: false, TRANSITION_CHILD: false, TRANSITION_CHILDREN: false
+};
 
 library.add(
   faBell,
