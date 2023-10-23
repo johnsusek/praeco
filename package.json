@@ -29,7 +29,7 @@
     "canvas": "^2.11.2",
     "change-case": "4.1.2",
     "comma-number": "2.1.0",
-    "core-js": "^3.33.0",
+    "core-js": "^3.33.1",
     "cron-ui": "1.0.3",
     "dayjs": "^1.11.10",
     "debounce": "1.2.1",
@@ -48,7 +48,7 @@
     "semver": "7.5.4",
     "string-format": "2.0.0",
     "validator": "^13.11.0",
-    "vue": "^2.7.14",
+    "vue": "^2.7.15",
     "vue-at": "2.5.1",
     "vue-echarts": "6.6.1",
     "vue-json-pretty": "1.8.3",
@@ -78,16 +78,16 @@
     "chai": "4.3.10",
     "coverage-istanbul-loader": "^3.0.5",
     "cross-env": "7.0.3",
-    "cypress": "^13.3.1",
-    "eslint": "^8.51.0",
+    "cypress": "^13.3.2",
+    "eslint": "^8.52.0",
     "eslint-plugin-cypress": "^2.15.1",
-    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-vue": "^9.17.0",
     "jsdom": "22.1.0",
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",
     "nyc": "15.1.0",
-    "vue-template-compiler": "^2.7.14"
+    "vue-template-compiler": "^2.7.15"
   },
   "overrides": {
     "@vue/vue-loader-v15": "npm:vue-loader@^15.10.0"
