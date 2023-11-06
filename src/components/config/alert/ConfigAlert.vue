@@ -189,6 +189,9 @@
         <el-checkbox id="destinationGelf" label="gelf" border>
           Gelf
         </el-checkbox>
+        <el-checkbox id="destinationLark" label="lark" border>
+          Lark
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -205,6 +208,7 @@
           alert.includes('googlechat') ||
           alert.includes('hivealerter') ||
           alert.includes('jira') ||
+          alert.includes('lark') ||
           alert.includes('linenotify') ||
           alert.includes('mattermost') ||
           alert.includes('ms_teams') ||
@@ -493,6 +497,14 @@
         </template>
         <ConfigAlertGelf ref="gelf" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Lark -->
+      <el-tab-pane v-if="alert.includes('lark')">
+        <template #label>
+          Lark
+        </template>
+        <ConfigAlertLark ref="lark" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -518,6 +530,7 @@ import ConfigAlertGoogleChat from './ConfigAlertGoogleChat';
 import ConfigAlertHttpPost from './ConfigAlertHttpPost';
 import ConfigAlertHttpPost2 from './ConfigAlertHttpPost2';
 import ConfigAlertJira from './ConfigAlertJira';
+import ConfigAlertLark from './ConfigAlertLark';
 import ConfigAlertLineNotify from './ConfigAlertLineNotify';
 import ConfigAlertMattermost from './ConfigAlertMattermost';
 import ConfigAlertMsTeams from './ConfigAlertMsTeams';
@@ -635,6 +648,7 @@ export default {
     ConfigAlertHttpPost,
     ConfigAlertHttpPost2,
     ConfigAlertJira,
+    ConfigAlertLark,
     ConfigAlertLineNotify,
     ConfigAlertMattermost,
     ConfigAlertMsTeams,

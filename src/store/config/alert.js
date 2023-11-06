@@ -203,6 +203,10 @@ function initialState() {
     /* Line Notify */
     linenotifyAccessToken: '',
 
+    /* Lark */
+    larkBotId: '',
+    larkMsgtype: 'text',
+
     /* Mattermost */
     mattermostWebhookUrl: [],
     mattermostChannelOverride: [],
@@ -1239,6 +1243,15 @@ export default {
 
     UPDATE_JIRA_DESCRIPTIONT(state, jiraDescription) {
       state.jiraDescription = jiraDescription;
+    },
+
+    /* Lark */
+    UPDATE_LARK_BOT_ID(state, larkBotId) {
+      state.larkBotId = larkBotId;
+    },
+
+    UPDATE_LARK_MSGTYPE(state, larkMsgtype) {
+      state.larkMsgtype = larkMsgtype;
     },
 
     /* LineNotify */
