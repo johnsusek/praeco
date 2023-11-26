@@ -458,19 +458,6 @@
           </span>
         </span>
 
-        <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
-          <span>IS</span>
-          <span v-if="numEvents || maxThreshold">
-            ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
-          </span>
-          <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
-            &amp;
-          </span>
-          <span v-if="threshold || minThreshold">
-            BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}
-          </span>
-        </span>
-
         <span v-else-if="spikeOrThreshold === 'spike'" class="pop-trigger">
           <span>SPIKES</span>
           <span v-if="spikeType === 'up'">
@@ -574,7 +561,7 @@
 
     <span v-show="showTime">
       <el-popover
-        v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality'"
+        v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max'"
         popper-class="popover-time">
         <template #reference>
           <span class="pop-trigger">
@@ -583,7 +570,7 @@
                 WITHIN
                 <span v-if="!useTimeframe">ANY TIMEFRAME</span>
               </span>
-              <span v-if="metricAggType === 'count' || metricAggType === 'cardinality'">FOR </span>
+              <span v-if="metricAggType === 'count' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max'">FOR </span>
               <span v-if="useTimeframe">THE LAST</span>
             </span>
             <ElastalertTimeView
@@ -940,7 +927,7 @@ export default {
     },
 
     showForTheLast() {
-      return this.metricAggType !== 'count' && this.metricAggType !== 'field changes' && this.metricAggType !== 'cardinality';
+      return this.metricAggType !== 'count' && this.metricAggType !== 'field changes' && this.metricAggType !== 'cardinality' && this.metricAggType !== 'avg' && this.metricAggType !== 'sum' && this.metricAggType !== 'min' && this.metricAggType !== 'max';
     },
 
     useTimeframe: {
