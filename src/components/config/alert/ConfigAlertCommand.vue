@@ -9,7 +9,7 @@
           <span v-else>Command ({{ command.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="command"
           :model="$store.state.config.alert"
@@ -48,7 +48,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addCommandEntry">
           Add Command
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-form-item label="Pipe Match Json" prop="pipeMatchJson">

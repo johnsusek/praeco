@@ -1,6 +1,7 @@
 import VuexPersistence from 'vuex-persist';
 import Vue from 'vue';
 import Vuex from 'vuex';
+// TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import configs from './configs';
 import server from './server';
 import metadata from './metadata';

@@ -9,7 +9,7 @@
           <span v-else>googleChatWebhookUrls ({{ googleChatWebhookUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="googleChatWebhookUrl"
           :model="$store.state.config.alert"
@@ -47,7 +47,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addgoogleChatWebhookUrlEntry">
           Add WebhookUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="GoogleChat Format" prop="googleChatFormat" required>

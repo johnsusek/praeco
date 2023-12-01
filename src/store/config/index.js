@@ -1,6 +1,7 @@
 import axios from 'axios';
 import yaml from 'js-yaml';
 import { htmlToConfigFormat } from '@/lib/alertText';
+// TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import { logger } from '@/lib/logger.js';
 import settings from './settings';
 import query from './query';
@@ -548,6 +549,14 @@ export default {
 
         if (config.zbx_host_from_field) {
           commit('alert/UPDATE_ZBX_HOST_FROM_FIELD', config.zbx_host_from_field);
+        }
+
+        /* Lark */
+        commit('alert/UPDATE_LARK_BOT_ID', config.lark_bot_id);
+        if (config.lark_msgtype) {
+          commit('alert/UPDATE_LARK_MSGTYPE', config.lark_msgtype);
+        } else {
+          commit('alert/UPDATE_LARK_MSGTYPE', 'text');
         }
 
         /* Line Notify */
@@ -2227,6 +2236,17 @@ export default {
       return config;
     },
 
+    lark(state) {
+      let config = {};
+
+      if (state.alert.larkBotId) {
+        config.lark_bot_id = state.alert.larkBotId;
+        config.lark_msgtype = state.alert.larkMsgtype;
+      }
+
+      return config;
+    },
+
     linenotify(state) {
       let config = {};
 
@@ -3073,6 +3093,10 @@ export default {
         config = { ...config, ...getters.jira };
       }
 
+      if (state.alert.alert.includes('lark')) {
+        config = { ...config, ...getters.lark };
+      }
+
       if (state.alert.alert.includes('linenotify')) {
         config = { ...config, ...getters.linenotify };
       }
@@ -3161,6 +3185,7 @@ export default {
         || state.alert.alert.includes('googlechat')
         || state.alert.alert.includes('hivealerter')
         || state.alert.alert.includes('jira')
+        || state.alert.alert.includes('lark')
         || state.alert.alert.includes('linenotify')
         || state.alert.alert.includes('mattermost')
         || state.alert.alert.includes('ms_teams')

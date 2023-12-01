@@ -9,7 +9,7 @@
           <span v-else>mattermostWebhookUrls ({{ mattermostWebhookUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="mattermostWebhookUrl"
           :model="$store.state.config.alert"
@@ -47,7 +47,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostWebhookUrlEntry">
           Add WebhookUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popMattermostChannelOverrideVisible" :class="{ 'is-invalid': !popMattermostChannelOverrideValid }">
@@ -59,7 +59,7 @@
           <span v-else>MattermostChannelOverrides ({{ mattermostChannelOverride.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="mattermostChannelOverride"
           :model="$store.state.config.alert"
@@ -98,7 +98,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addmattermostChannelOverrideEntry">
           Add ChannelOverrides
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="Post as" prop="mattermostUsernameOverride" required>

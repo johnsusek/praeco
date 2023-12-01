@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import { formatIndex, buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
+// TODO: error  Dependency cycle via @/lib/logger.js:2=>@/store:3  import/no-cycle
 import networkError from '../lib/networkError.js';
 
 function buildObjectFields(fields, prefix, addNonAnalyzedFields) {
