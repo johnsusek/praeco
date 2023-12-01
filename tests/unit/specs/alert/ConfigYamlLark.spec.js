@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import store from '@/store';
-import { mockAxios } from '../setup';
-import { ruleYaml } from '../mockData/ruleDataScanEntireTimefame.js';
+import { mockAxios } from '../../setup';
+import { ruleYaml } from '../../mockData/alert/ruleDataLark.js';
 
 mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 
-describe('ScanEntireTimefame YAML parsing', () => {
+describe('Lark YAML parsing', () => {
   it('renders the correct yaml', async () => {
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
 
@@ -14,17 +14,10 @@ describe('ScanEntireTimefame YAML parsing', () => {
     let expected = `__praeco_full_path: "test123"
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
-  - "alerta"
+  - "lark"
 alert_subject: "this is a test subject"
 alert_text: "this is a test body"
 alert_text_type: "alert_text_only"
-alerta_environment: "Production"
-alerta_event: "elastalert"
-alerta_origin: "elastalert"
-alerta_resource: "elastalert"
-alerta_severity: "warning"
-alerta_text: "elastalert"
-alerta_type: "elastalert"
 doc_type: "syslog"
 filter:
   - query:
@@ -34,12 +27,15 @@ generate_kibana_discover_url: false
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
+lark_bot_id: "abcdefg"
+lark_msgtype: "text"
 match_enhancements: []
 name: "test123"
 num_events: 10000
+query_key:
+  - "beat.hostname"
 realert:
   minutes: 5
-scan_entire_timeframe: true
 terms_size: 50
 timeframe:
   minutes: 5

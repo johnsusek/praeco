@@ -1,4 +1,5 @@
 import axios from 'axios';
+// TODO: error  Dependency cycle via @/lib/logger.js:4=>@/store:5  import/no-cycle
 import networkError from '../lib/networkError.js';
 
 export default {

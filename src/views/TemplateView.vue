@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import { nextTick } from 'vue';
 import { selectNode } from '@/lib/tree';
 
 export default {
@@ -199,7 +199,7 @@ export default {
 
     showRenameInput() {
       this.showRename = true;
-      Vue.nextTick(() => {
+      nextTick(() => {
         this.$refs.rename.$el.querySelector('input').focus();
         this.$refs.rename.$el.querySelector('input').select();
       });

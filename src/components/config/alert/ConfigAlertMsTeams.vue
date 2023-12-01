@@ -9,7 +9,7 @@
           <span v-else>MsTeamsWebhookUrls ({{ msTeamsWebhookUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="msTeamsWebhookUrl"
           :model="$store.state.config.alert"
@@ -47,7 +47,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addMsTeamsWebhookUrlEntry">
           Add WebhookUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-form-item label="Color" prop="msTeamsThemeColor" required>

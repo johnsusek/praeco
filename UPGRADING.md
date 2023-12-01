@@ -36,10 +36,6 @@ vue-cron-editor-buefy to vue-js-cron
  - MS Teams
    - ms_teams_theme_color
 
-**kibana discover**
-
-- kibana 8.9 support
-
 ## -> 1.8.15
 
 **bug fix**

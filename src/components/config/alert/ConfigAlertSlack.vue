@@ -9,7 +9,7 @@
           <span v-else>SlackWebhookUrls ({{ slackWebhookUrl.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="slackWebhookUrl"
           :model="$store.state.config.alert"
@@ -47,7 +47,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackWebhookUrlEntry">
           Add WebhookUrl
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-popover v-model="popslackChannelOverrideVisible" :class="{ 'is-invalid': !popslackChannelOverrideValid }">
@@ -59,7 +59,7 @@
           <span v-else>SlackChannelOverrides ({{ slackChannelOverride.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="slackChannelOverride"
           :model="$store.state.config.alert"
@@ -98,7 +98,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addslackChannelOverrideEntry">
           Add ChannelOverride
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="Post as" prop="slackUsernameOverride" required>

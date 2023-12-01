@@ -36,7 +36,7 @@
               <span v-else>AlertSubjectArgs ({{ alertSubjectArgs.length }})</span>
             </span>
           </template>
-          <template>
+          <div>
             <el-form
               ref="alertSubjectArgs"
               :model="$store.state.config.alert"
@@ -75,7 +75,7 @@
             <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertSubjectArgsEntry">
               Add alert_subject_args
             </el-button>
-          </template>
+          </div>
         </el-popover>
 
         <el-form-item
@@ -111,7 +111,7 @@
               <span v-else>alertTextArgs ({{ alertTextArgs.length }})</span>
             </span>
           </template>
-          <template>
+          <div>
             <el-form
               ref="alertTextArgs"
               :model="$store.state.config.alert"
@@ -150,7 +150,7 @@
             <el-button :disabled="viewOnly" class="m-n-sm" @click="addAlertTextArgsEntry">
               Add alert_text_args
             </el-button>
-          </template>
+          </div>
         </el-popover>
 
         <el-form-item required label="Include">

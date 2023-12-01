@@ -27,7 +27,7 @@
           <span v-else>TencentSmsToNumber ({{ tencentSmsToNumber.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="tencentSmsToNumber"
           :model="$store.state.config.alert"
@@ -67,7 +67,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addTencentSmsToNumberEntry">
           Add target mobile number
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <praeco-form-item label="TemplateId" prop="tencentSmsTemplateId" required>
@@ -102,7 +102,7 @@
           <span v-else>TencentSmsTemplateParm ({{ tencentSmsTemplateParm.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="tencentSmsTemplateParm"
           :model="$store.state.config.alert"
@@ -141,7 +141,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addTencentSmsTemplateParmEntry">
           Add template parm
         </el-button>
-      </template>
+      </div>
     </el-popover>
   </div>
 </template>

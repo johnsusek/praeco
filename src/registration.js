@@ -31,6 +31,7 @@ import ConfigAlertGoogleChat from '@/components/config/alert/ConfigAlertGoogleCh
 import ConfigAlertHttpPost from '@/components/config/alert/ConfigAlertHttpPost.vue';
 import ConfigAlertHttpPost2 from '@/components/config/alert/ConfigAlertHttpPost2.vue';
 import ConfigAlertJira from '@/components/config/alert/ConfigAlertJira.vue';
+import ConfigAlertLark from '@/components/config/alert/ConfigAlertLark.vue';
 import ConfigAlertLineNotify from '@/components/config/alert/ConfigAlertLineNotify.vue';
 import ConfigAlertMattermost from '@/components/config/alert/ConfigAlertMattermost.vue';
 import ConfigAlertMsTeams from '@/components/config/alert/ConfigAlertMsTeams.vue';
@@ -78,6 +79,7 @@ Vue.component('ConfigAlertGoogleChat', ConfigAlertGoogleChat);
 Vue.component('ConfigAlertHttpPost', ConfigAlertHttpPost);
 Vue.component('ConfigAlertHttpPost2', ConfigAlertHttpPost2);
 Vue.component('ConfigAlertJira', ConfigAlertJira);
+Vue.component('ConfigAlertLark', ConfigAlertLark);
 Vue.component('ConfigAlertLineNotify', ConfigAlertLineNotify);
 Vue.component('ConfigAlertMattermost', ConfigAlertMattermost);
 Vue.component('ConfigAlertMsTeams', ConfigAlertMsTeams);

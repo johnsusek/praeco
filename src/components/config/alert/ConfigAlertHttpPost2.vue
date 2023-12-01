@@ -9,7 +9,7 @@
           <span v-else>HttpPost2Urls ({{ httpPost2Url.length }})</span>
         </span>
       </template>
-      <template>
+      <div>
         <el-form
           ref="httpPost2Url"
           :model="$store.state.config.alert"
@@ -47,7 +47,7 @@
         <el-button :disabled="viewOnly" class="m-n-sm" @click="addhttpPost2UrlEntry">
           Add HttpPost2Url
         </el-button>
-      </template>
+      </div>
     </el-popover>
 
     <el-form-item label="CA Certs" prop="httpPost2CaCerts">

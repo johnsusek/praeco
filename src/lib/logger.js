@@ -1,5 +1,6 @@
 import { createLogger, ERROR, stdSerializers } from 'browser-bunyan';
 import { ServerStream } from '@browser-bunyan/server-stream';
+// TODO:  error  Dependency cycle via ./configs:4  import/no-cycle
 import store from '@/store';
 
 let bunyan = null;
