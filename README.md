@@ -1,5 +1,8 @@
 # Praeco
 
+⚠ Hi developer. Please contribute to the project if you find a bug or suggest an improvement / feature. 
+---
+
 ![GitHub release](https://img.shields.io/github/release/johnsusek/praeco.svg)
 ![Docker Pulls](https://img.shields.io/docker/pulls/praecoapp/praeco.svg)
 ![GitHub stars](https://img.shields.io/github/stars/johnsusek/praeco.svg?style=social&label=Stars)
