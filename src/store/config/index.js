@@ -327,6 +327,7 @@ export default {
         commit('alert/UPDATE_TELEGRAM_PROXY', config.telegram_proxy);
         commit('alert/UPDATE_TELEGRAM_PROXY_LOGIN', config.telegram_proxy_login);
         commit('alert/UPDATE_TELEGRAM_PROXY_PASS', config.telegram_proxy_pass);
+        commit('alert/UPDATE_TELEGRAM_THREAD_ID', config.telegram_thread_id);
 
         if (config.telegram_parse_mode) {
           commit('alert/UPDATE_TELEGRAM_PARSE_MODE', config.telegram_parse_mode);
@@ -1849,6 +1850,10 @@ export default {
 
       if (state.alert.telegramParseMode) {
         config.telegram_parse_mode = state.alert.telegramParseMode;
+      }
+
+      if (state.alert.telegramThreadId) {
+        config.telegram_thread_id = state.alert.telegramThreadId;
       }
 
       return config;

@@ -37,6 +37,7 @@ telegram_proxy: "hostname:8080"
 telegram_proxy_login: "user"
 telegram_proxy_pass: "password"
 telegram_room_id: "http://testserver"
+telegram_thread_id: 123456789
 terms_size: 50
 timeframe:
   minutes: 5

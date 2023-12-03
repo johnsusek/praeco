@@ -39,6 +39,11 @@
         </el-radio>
       </el-radio-group>
     </praeco-form-item>
+
+    <praeco-form-item label="Thread Id" prop="telegramThreadId">
+      <el-input-number id="telegramThreadId" v-model="telegramThreadId" :disabled="viewOnly" />
+      <label>Unique identifier for the target thread of supergroup/forum using telegram message_thread_id.</label>
+    </praeco-form-item>
   </div>
 </template>
 
@@ -101,6 +106,18 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_TELEGRAM_PARSE_MODE', value);
+      }
+    },
+
+    telegramThreadId: {
+      get() {
+        return this.$store.state.config.alert.telegramThreadId;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_TELEGRAM_THREAD_ID',
+          value
+        );
       }
     },
   },
