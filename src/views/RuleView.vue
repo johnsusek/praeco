@@ -365,7 +365,7 @@ export default {
     async move() {
       let newPath = await this.$store.dispatch('configs/moveConfig', {
         oldConfig: this.$store.getters['config/config'](),
-        newPath: this.moveDest.replace(/_rules/, ''),
+        newPath: this.moveDest.replace(/^_rules/, ''),
         type: 'rules'
       });
 
