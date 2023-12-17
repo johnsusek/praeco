@@ -1,4 +1,4 @@
-import { nextTick } from 'vue';
+import Vue from 'vue';
 import { expect } from 'chai';
 import store from '@/store';
 import ConfigAlert from '@/components/config/alert/ConfigAlert';
@@ -12,7 +12,7 @@ mockAxios.onPost('/api/search/hannibal-*').reply(200, mockChartData);
 async function prep() {
   await store.dispatch('config/load', { type: 'rules', path: 'test123' });
   let wrapper = mountComponent(ConfigAlert);
-  await nextTick();
+  await Vue.nextTick();
   return wrapper;
 }
 

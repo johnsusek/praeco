@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { nextTick } from 'vue';
+import Vue from 'vue';
 import { selectNode, expandNode, loadChildrenOptions } from '@/lib/tree';
 
 export default {
@@ -83,7 +83,7 @@ export default {
       ];
     },
     loadExpanded() {
-      nextTick(() => {
+      Vue.nextTick(() => {
         this.$refs.tree.traverseAllNodesByIndex(node => {
           if (node.isBranch && !node.isExpanded && this.expanded.includes(node.id)) {
             expandNode(node.id);

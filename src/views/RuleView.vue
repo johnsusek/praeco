@@ -249,7 +249,7 @@
 </template>
 
 <script>
-import { nextTick } from 'vue';
+import Vue from 'vue';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
@@ -388,7 +388,7 @@ export default {
 
     showRenameInput() {
       this.showRename = true;
-      nextTick(() => {
+      Vue.nextTick(() => {
         this.$refs.rename.$el.querySelector('input').focus();
         this.$refs.rename.$el.querySelector('input').select();
       });

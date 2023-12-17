@@ -1,4 +1,4 @@
-import { nextTick } from 'vue';
+import Vue from 'vue';
 import { expect } from 'chai';
 
 import store from '@/store';
@@ -20,7 +20,7 @@ async function prep() {
     popOptionsVisible: true
   });
 
-  await nextTick();
+  await Vue.nextTick();
 
   return wrapper;
 }
