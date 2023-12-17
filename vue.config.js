@@ -24,11 +24,11 @@ module.exports = {
     },
     plugins: [
       new webpack.EnvironmentPlugin({ LATER_COV: false }),
-      ICons({ /* options */ }),
-      AutoImport({
+      ICons.default({ /* options */ }),
+      AutoImport.default({
         resolvers: [ElementPlusResolver()],
       }),
-      Components({
+      Components.default({
         resolvers: [ElementPlusResolver()],
       }),
     ]
