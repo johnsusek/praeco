@@ -195,6 +195,22 @@ function initialState() {
     httpPost2Timeout: '',
     httpPost2Proxy: '',
 
+    /* IRIS */
+    irisHost: '',
+    irisApiToken: '',
+    irisCustomerId: 0,
+    irisIgnoreSslErrors: false,
+    irisCaCerts: false,
+    irisDescription: '',
+    irisOverwriteTimestamp: false,
+    irisType: 'alert',
+    irisCaseTemplateId: 0,
+    irisAlertNote: '',
+    irisAlertTags: '',
+    irisAlertStatusId: 0,
+    irisAlertSourceLink: '',
+    irisAlertSeverityId: 0,
+
     /* Jira */
     jiraProject: '',
     jiraIssueType: '',
@@ -1227,6 +1243,63 @@ export default {
 
     UPDATE_HTTP_POST2_PROXY(state, httpPost2Proxy) {
       state.httpPost2Proxy = httpPost2Proxy;
+    },
+
+    /* IRIS */
+    UPDATE_IRIS_HOST(state, irisHost) {
+      state.irisHost = irisHost;
+    },
+
+    UPDATE_IRIS_API_TOKEN(state, irisApiToken) {
+      state.irisApiToken = irisApiToken;
+    },
+
+    UPDATE_IRIS_CUSTOMER_ID(state, irisCustomerId) {
+      state.irisCustomerId = irisCustomerId;
+    },
+
+    UPDATE_IRIS_IGNORE_SSL_ERRORS(state, irisIgnoreSslErrors) {
+      state.irisIgnoreSslErrors = irisIgnoreSslErrors;
+    },
+
+    UPDATE_IRIS_CA_CERTS(state, irisCaCerts) {
+      state.irisCaCerts = irisCaCerts;
+    },
+
+    UPDATE_IRIS_DESCRIPTION(state, irisDescription) {
+      state.irisDescription = irisDescription;
+    },
+
+    UPDATE_IRIS_OVERWRITE_TIMESTAMP(state, irisOverwriteTimestamp) {
+      state.irisOverwriteTimestamp = irisOverwriteTimestamp;
+    },
+
+    UPDATE_IRIS_TYPE(state, irisType) {
+      state.irisType = irisType;
+    },
+
+    UPDATE_IRIS_CASE_TEMPLATE_ID(state, irisCaseTemplateId) {
+      state.irisCaseTemplateId = irisCaseTemplateId;
+    },
+
+    UPDATE_IRIS_ALERT_NOTE(state, irisAlertNote) {
+      state.irisAlertNote = irisAlertNote;
+    },
+
+    UPDATE_IRIS_ALERT_TAGS(state, irisAlertTags) {
+      state.irisAlertTags = irisAlertTags;
+    },
+
+    UPDATE_IRIS_ALERT_STATUS_ID(state, irisAlertStatusId) {
+      state.irisAlertStatusId = irisAlertStatusId;
+    },
+
+    UPDATE_IRIS_ALERT_SOURCE_LINK(state, irisAlertSourceLink) {
+      state.irisAlertSourceLink = irisAlertSourceLink;
+    },
+
+    UPDATE_IRIS_ALERT_SEVERITY_ID(state, irisAlertSeverityId) {
+      state.irisAlertSeverityId = irisAlertSeverityId;
     },
 
     /* Jira */

@@ -276,6 +276,53 @@ export default {
 
         commit('alert/UPDATE_HTTP_POST2_PROXY', config.http_post2_proxy);
 
+        /* IRIS */
+        commit('alert/UPDATE_IRIS_HOST', config.iris_host);
+
+        commit('alert/UPDATE_IRIS_API_TOKEN', config.iris_api_token);
+
+        commit('alert/UPDATE_IRIS_CUSTOMER_ID', config.iris_customer_id);
+
+        if (config.iris_ignore_ssl_errors) {
+          commit('alert/UPDATE_IRIS_IGNORE_SSL_ERRORS', config.iris_ignore_ssl_errors);
+        }
+
+        if (config.iris_ca_cert) {
+          commit('alert/UPDATE_IRIS_CA_CERTS', config.iris_ca_cert);
+        }
+
+        commit('alert/UPDATE_IRIS_DESCRIPTION', config.iris_description);
+
+        if (config.iris_overwrite_timestamp) {
+          commit('alert/UPDATE_IRIS_OVERWRITE_TIMESTAMP', config.iris_overwrite_timestamp);
+        }
+
+        if (config.iris_type) {
+          commit('alert/UPDATE_IRIS_TYPE', config.iris_type);
+        } else {
+          commit('alert/UPDATE_IRIS_TYPE', 'alert');
+        }
+
+        commit('alert/UPDATE_IRIS_CASE_TEMPLATE_ID', config.iris_case_template_id);
+
+        commit('alert/UPDATE_IRIS_ALERT_NOTE', config.iris_alert_note);
+
+        commit('alert/UPDATE_IRIS_ALERT_TAGS', config.iris_alert_tags);
+
+        if (config.iris_type) {
+          commit('alert/UPDATE_IRIS_ALERT_STATUS_ID', config.iris_alert_status_id);
+        } else {
+          commit('alert/UPDATE_IRIS_ALERT_STATUS_ID', 2);
+        }
+
+        commit('alert/UPDATE_IRIS_ALERT_SOURCE_LINK', config.iris_alert_source_link);
+
+        if (config.iris_alert_severity_id) {
+          commit('alert/UPDATE_IRIS_ALERT_SEVERITY_ID', config.iris_alert_severity_id);
+        } else {
+          commit('alert/UPDATE_IRIS_ALERT_SEVERITY_ID', 1);
+        }
+
         /* EMail */
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.email_reply_to);
@@ -1519,6 +1566,68 @@ export default {
 
       if (state.alert.httpPost2Proxy) {
         config.http_post2_proxy = state.alert.httpPost2Proxy;
+      }
+
+      return config;
+    },
+
+    iris(state) {
+      let config = {};
+
+      if (state.alert.irisHost) {
+        config.iris_host = state.alert.irisHost;
+      }
+
+      if (state.alert.irisApiToken) {
+        config.iris_api_token = state.alert.irisApiToken;
+      }
+
+      if (state.alert.irisCustomerId) {
+        config.iris_customer_id = state.alert.irisCustomerId;
+      }
+
+      if (state.alert.irisIgnoreSslErrors) {
+        config.iris_ignore_ssl_errors = state.alert.irisIgnoreSslErrors;
+      }
+
+      if (state.alert.irisCaCerts) {
+        config.iris_ca_cert = state.alert.irisCaCerts;
+      }
+
+      if (state.alert.irisDescription) {
+        config.iris_description = state.alert.irisDescription;
+      }
+
+      if (state.alert.irisOverwriteTimestamp) {
+        config.iris_overwrite_timestamp = state.alert.irisOverwriteTimestamp;
+      }
+
+      if (state.alert.irisType) {
+        config.iris_type = state.alert.irisType;
+      }
+
+      if (state.alert.irisCaseTemplateId) {
+        config.iris_case_template_id = state.alert.irisCaseTemplateId;
+      }
+
+      if (state.alert.irisAlertNote) {
+        config.iris_alert_note = state.alert.irisAlertNote;
+      }
+
+      if (state.alert.irisAlertTags) {
+        config.iris_alert_tags = state.alert.irisAlertTags;
+      }
+
+      if (state.alert.irisAlertStatusId) {
+        config.iris_alert_status_id = state.alert.irisAlertStatusId;
+      }
+
+      if (state.alert.irisAlertSourceLink) {
+        config.iris_alert_source_link = state.alert.irisAlertSourceLink;
+      }
+
+      if (state.alert.irisAlertSeverityId) {
+        config.iris_alert_severity_id = state.alert.irisAlertSeverityId;
       }
 
       return config;
@@ -3134,6 +3243,10 @@ export default {
         config = { ...config, ...getters.http2 };
       }
 
+      if (state.alert.alert.includes('iris')) {
+        config = { ...config, ...getters.iris };
+      }
+
       if (state.alert.alert.includes('rocketchat')) {
         config = { ...config, ...getters.rocketchat };
       }
@@ -3189,6 +3302,7 @@ export default {
         || state.alert.alert.includes('gitter')
         || state.alert.alert.includes('googlechat')
         || state.alert.alert.includes('hivealerter')
+        || state.alert.alert.includes('iris')
         || state.alert.alert.includes('jira')
         || state.alert.alert.includes('lark')
         || state.alert.alert.includes('linenotify')

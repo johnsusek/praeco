@@ -192,6 +192,9 @@
         <el-checkbox id="destinationLark" label="lark" border>
           Lark
         </el-checkbox>
+        <el-checkbox id="destinationIris" label="iris" border>
+          IRIS
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -207,6 +210,7 @@
           alert.includes('gitter') ||
           alert.includes('googlechat') ||
           alert.includes('hivealerter') ||
+          alert.includes('iris') ||
           alert.includes('jira') ||
           alert.includes('lark') ||
           alert.includes('linenotify') ||
@@ -505,6 +509,14 @@
         </template>
         <ConfigAlertLark ref="lark" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- IRIS -->
+      <el-tab-pane v-if="alert.includes('iris')">
+        <template #label>
+          IRIS
+        </template>
+        <ConfigAlertIris ref="iris" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -529,6 +541,7 @@ import ConfigAlertGitter from './ConfigAlertGitter';
 import ConfigAlertGoogleChat from './ConfigAlertGoogleChat';
 import ConfigAlertHttpPost from './ConfigAlertHttpPost';
 import ConfigAlertHttpPost2 from './ConfigAlertHttpPost2';
+import ConfigAlertIris from './ConfigAlertIris';
 import ConfigAlertJira from './ConfigAlertJira';
 import ConfigAlertLark from './ConfigAlertLark';
 import ConfigAlertLineNotify from './ConfigAlertLineNotify';
@@ -647,6 +660,7 @@ export default {
     ConfigAlertGoogleChat,
     ConfigAlertHttpPost,
     ConfigAlertHttpPost2,
+    ConfigAlertIris,
     ConfigAlertJira,
     ConfigAlertLark,
     ConfigAlertLineNotify,
