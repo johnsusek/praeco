@@ -7,6 +7,16 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.17
+
+**New options**
+
+**Lark**
+
+**kibana discover**
+
+- kibana 8.9 - 8.11 support
+
 ## -> 1.8.16
 
 **Chage UI**
