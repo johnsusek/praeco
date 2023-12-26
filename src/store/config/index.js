@@ -309,7 +309,7 @@ export default {
 
         commit('alert/UPDATE_IRIS_ALERT_TAGS', config.iris_alert_tags);
 
-        if (config.iris_type) {
+        if (config.iris_alert_status_id) {
           commit('alert/UPDATE_IRIS_ALERT_STATUS_ID', config.iris_alert_status_id);
         } else {
           commit('alert/UPDATE_IRIS_ALERT_STATUS_ID', 2);
