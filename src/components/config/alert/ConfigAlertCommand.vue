@@ -20,7 +20,7 @@
           <el-form-item
             v-for="(entry, index) in command"
             :key="index"
-            :prop="'command.' + index"
+            :prop="`command.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""

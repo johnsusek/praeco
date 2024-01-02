@@ -20,7 +20,7 @@
           <el-form-item
             v-for="(entry, index) in httpPostUrl"
             :key="index"
-            :prop="'httpPostUrl.' + index"
+            :prop="`httpPostUrl.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">

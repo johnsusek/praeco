@@ -20,7 +20,7 @@
           <el-form-item
             v-for="(entry, index) in slackWebhookUrl"
             :key="index"
-            :prop="'slackWebhookUrl.' + index"
+            :prop="`slackWebhookUrl.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
@@ -71,7 +71,7 @@
           <el-form-item
             v-for="(entry, index) in slackChannelOverride"
             :key="index"
-            :prop="'slackChannelOverride.' + index"
+            :prop="`slackChannelOverride.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""

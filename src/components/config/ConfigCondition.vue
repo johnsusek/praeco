@@ -151,7 +151,7 @@
             <el-form-item
               v-for="(entry, index) in queryKey"
               :key="index"
-              :prop="'queryKey.' + index" required>
+              :prop="`queryKey.${index}`" required>
               <el-select
                 v-model="queryKey[index]"
                 filterable
@@ -249,7 +249,7 @@
         <el-form-item
           v-for="(entry, index) in queryKey"
           :key="index"
-          :prop="'queryKey.' + index" required>
+          :prop="`queryKey.${index}`" required>
           <el-select
             v-model="queryKey[index]"
             filterable
@@ -301,7 +301,7 @@
           <el-form-item
             v-for="(entry, index) in blacklist"
             :key="index"
-            :prop="'blacklist.' + index"
+            :prop="`blacklist.${index}`"
             class="el-form-item-list"
             label=""
             required>
@@ -350,7 +350,7 @@
           <el-form-item
             v-for="(entry, index) in whitelist"
             :key="index"
-            :prop="'whitelist.' + index"
+            :prop="`whitelist.${index}`"
             required
             class="el-form-item-list"
             label="">

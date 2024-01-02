@@ -39,7 +39,7 @@
           <el-form-item
             v-for="(entry, index) in tencentSmsToNumber"
             :key="index"
-            :prop="'tencentSmsToNumber.' + index"
+            :prop="`tencentSmsToNumber.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""
@@ -114,7 +114,7 @@
           <el-form-item
             v-for="(entry, index) in tencentSmsTemplateParm"
             :key="index"
-            :prop="'tencentSmsTemplateParm.' + index"
+            :prop="`tencentSmsTemplateParm.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""

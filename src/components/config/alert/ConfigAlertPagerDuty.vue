@@ -64,7 +64,7 @@
           <el-form-item
             v-for="(entry, index) in pagerdutyIncidentKeyArgs"
             :key="index"
-            :prop="'pagerdutyIncidentKeyArgs.' + index"
+            :prop="`pagerdutyIncidentKeyArgs.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""
@@ -132,7 +132,7 @@
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadClassArgs"
               :key="index"
-              :prop="'pagerdutyV2PayloadClassArgs.' + index"
+              :prop="`pagerdutyV2PayloadClassArgs.${index}`"
               :disabled="viewOnly"
               class="el-form-item-list"
               label=""
@@ -191,7 +191,7 @@
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadComponentArgs"
               :key="index"
-              :prop="'pagerdutyV2PayloadComponentArgs.' + index"
+              :prop="`pagerdutyV2PayloadComponentArgs.${index}`"
               :disabled="viewOnly"
               class="el-form-item-list"
               label=""
@@ -250,7 +250,7 @@
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadGroupArgs"
               :key="index"
-              :prop="'pagerdutyV2PayloadGroupArgs.' + index"
+              :prop="`pagerdutyV2PayloadGroupArgs.${index}`"
               :disabled="viewOnly"
               class="el-form-item-list"
               label=""
@@ -329,7 +329,7 @@
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadSourceArgs"
               :key="index"
-              :prop="'pagerdutyV2PayloadSourceArgs.' + index"
+              :prop="`pagerdutyV2PayloadSourceArgs.${index}`"
               :disabled="viewOnly"
               class="el-form-item-list"
               label=""

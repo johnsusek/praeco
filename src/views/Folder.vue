@@ -9,7 +9,7 @@
       v-if="type === 'rules'"
       type="primary"
       plain
-      @click="$router.push('/rule/add/' + encodeURIComponent(path))">
+      @click="$router.push(`/rule/add/${encodeURIComponent(path)}`)">
       <Icon icon="file-alt" transform="left-4" />
       Add rule
     </el-button>
@@ -18,7 +18,7 @@
       v-if="type === 'templates'"
       type="primary"
       plain
-      @click="$router.push('/template/add/' + encodeURIComponent(path))">
+      @click="$router.push(`/template/add/${encodeURIComponent(path)}`)">
       <Icon icon="file" transform="left-4" />
       Add template
     </el-button>

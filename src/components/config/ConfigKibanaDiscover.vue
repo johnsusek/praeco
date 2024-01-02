@@ -68,7 +68,7 @@
             <el-form-item
               v-for="(entry, index) in kibanaDiscoverColumns"
               :key="index"
-              :prop="'kibanaDiscoverColumns.' + index"
+              :prop="`kibanaDiscoverColumns.${index}`"
               :disabled="viewOnly"
               class="el-form-item-list"
               label=""

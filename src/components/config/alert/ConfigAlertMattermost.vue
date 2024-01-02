@@ -20,7 +20,7 @@
           <el-form-item
             v-for="(entry, index) in mattermostWebhookUrl"
             :key="index"
-            :prop="'mattermostWebhookUrl.' + index"
+            :prop="`mattermostWebhookUrl.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
@@ -71,7 +71,7 @@
           <el-form-item
             v-for="(entry, index) in mattermostChannelOverride"
             :key="index"
-            :prop="'mattermostChannelOverride.' + index"
+            :prop="`mattermostChannelOverride.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""
