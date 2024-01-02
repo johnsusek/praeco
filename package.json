@@ -32,7 +32,7 @@
     "core-js": "^3.35.0",
     "cron-ui": "1.0.3",
     "dayjs": "^1.11.10",
-    "debounce": "2.0.0",
+    "debounce": "1.2.1",
     "echarts": "^5.4.3",
     "element-ui": "2.15.14",
     "emoji-mart-vue-fast": "^15.0.0",
