@@ -3,11 +3,11 @@
     <el-input-number v-model="currentAmount" :min="allowZero ? 0 : 1" @input.native="emitNumKeyup" @input="emitValue" />
 
     <el-select v-model="currentUnit" @input="emitValue">
-      <el-option :label="`Second`+plural()" value="seconds" />
-      <el-option :label="`Minute`+plural()" value="minutes" />
-      <el-option :label="`Hour`+plural()" value="hours" />
-      <el-option :label="`Day`+plural()" value="days" />
-      <el-option :label="`Week`+plural()" value="weeks" />
+      <el-option :label="`Second${plural()}`" value="seconds" />
+      <el-option :label="`Minute${plural()}`" value="minutes" />
+      <el-option :label="`Hour${plural()}`" value="hours" />
+      <el-option :label="`Day${plural()}`" value="days" />
+      <el-option :label="`Week${plural()}`" value="weeks" />
     </el-select>
   </span>
 </template>

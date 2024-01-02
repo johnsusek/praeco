@@ -4,8 +4,15 @@ module.exports = {
     node: true,
     mocha: true
   },
-  extends: ['plugin:vue/recommended', '@vue/airbnb'],
+  extends: ['plugin:vue/recommended', '@vue/eslint-config-airbnb'],
   rules: {
+    'vue/max-len': 'off',
+    'import/no-unresolved': 'off',
+    'vuejs-accessibility/rule-name': 'off',
+    'vuejs-accessibility/label-has-for': 'off',
+    'vuejs-accessibility/click-events-have-key-events': 'off',
+    'vuejs-accessibility/no-autofocus': 'off',
+    'vuejs-accessibility/anchor-has-content': 'off',
     quotes: ['error', 'single'],
     'no-underscore-dangle': 'off',
     'no-empty': 'off',
@@ -33,7 +40,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'vue/multi-word-component-names': 'off',
     'import/no-cycle': 'off',
-    'import/no-unresolved': 'off',
     'import/extensions': [
       'off',
       'always',

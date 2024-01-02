@@ -46,7 +46,7 @@
               <el-form-item
                 v-for="(entry, index) in alertSubjectArgs"
                 :key="index"
-                :prop="'alertSubjectArgs.' + index"
+                :prop="`alertSubjectArgs.${index}`"
                 :disabled="viewOnly"
                 class="el-form-item-list"
                 label=""
@@ -121,7 +121,7 @@
               <el-form-item
                 v-for="(entry, index) in alertTextArgs"
                 :key="index"
-                :prop="'alertTextArgs.' + index"
+                :prop="`alertTextArgs.${index}`"
                 :disabled="viewOnly"
                 class="el-form-item-list"
                 label=""

@@ -67,7 +67,7 @@
             <el-form-item
               v-for="(entry, index) in kibanaDiscoverColumns"
               :key="index"
-              :prop="'kibanaDiscoverColumns.' + index"
+              :prop="`kibanaDiscoverColumns.${index}`"
               :disabled="viewOnly"
               class="el-form-item-list"
               label=""
@@ -101,7 +101,7 @@
     </el-col>
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
-      <el-form-item :class="{'view-only': viewOnly }" label="From Timedelta">
+      <el-form-item :class="{ 'view-only': viewOnly }" label="From Timedelta">
         <ElastalertTimeView v-if="viewOnly" :time="kibanaDiscoverFromTimedelta" />
         <ElastalertTimePicker
           v-else-if="kibanaDiscoverFromTimedelta"
@@ -119,7 +119,7 @@
     </el-col>
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
-      <el-form-item :class="{'view-only': viewOnly }" label="To Timedelta">
+      <el-form-item :class="{ 'view-only': viewOnly }" label="To Timedelta">
         <ElastalertTimeView v-if="viewOnly" :time="kibanaDiscoverToTimedelta" />
         <ElastalertTimePicker
           v-else-if="kibanaDiscoverToTimedelta"

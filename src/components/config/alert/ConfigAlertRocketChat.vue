@@ -19,7 +19,7 @@
           <el-form-item
             v-for="(entry, index) in rocketChatWebhookUrl"
             :key="index"
-            :prop="'rocketChatWebhookUrl.' + index"
+            :prop="`rocketChatWebhookUrl.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
@@ -69,7 +69,7 @@
           <el-form-item
             v-for="(entry, index) in rocketChatChannelOverride"
             :key="index"
-            :prop="'rocketChatChannelOverride.' + index"
+            :prop="`rocketChatChannelOverride.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""

@@ -69,7 +69,7 @@
           <el-form-item
             v-for="(entry, index) in alertaTags"
             :key="index"
-            :prop="'alertaTags.' + index"
+            :prop="`alertaTags.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""
@@ -171,7 +171,7 @@
           <el-form-item
             v-for="(entry, index) in alertaService"
             :key="index"
-            :prop="'alertaService.' + index"
+            :prop="`alertaService.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""
@@ -222,7 +222,7 @@
           <el-form-item
             v-for="(entry, index) in alertaCorrelate"
             :key="index"
-            :prop="'alertaCorrelate.' + index"
+            :prop="`alertaCorrelate.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""
@@ -273,7 +273,7 @@
           <el-form-item
             v-for="(entry, index) in alertaAttributesKeys"
             :key="index"
-            :prop="'alertaAttributesKeys.' + index"
+            :prop="`alertaAttributesKeys.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""
@@ -324,7 +324,7 @@
           <el-form-item
             v-for="(entry, index) in alertaAttributesValues"
             :key="index"
-            :prop="'alertaAttributesValues.' + index"
+            :prop="`alertaAttributesValues.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""

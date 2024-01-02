@@ -43,7 +43,7 @@
       </div>
     </el-popover>
 
-    <a v-if="helpLinkForType" :href="helpLinkForType" target="_blank" class="pop-when-link">
+    <a v-if="helpLinkForType" :href="helpLinkForType" target="_blank" rel="noopener noreferrer" class="pop-when-link">
       <Icon icon="question-circle" class="pop-when-help" />
     </a>
 
@@ -151,7 +151,7 @@
             <el-form-item
               v-for="(entry, index2) in queryKey"
               :key="index2"
-              :prop="'queryKey.' + index2" required>
+              :prop="`queryKey.${index2}`" required>
               <el-select
                 v-model="queryKey[index2]"
                 filterable
@@ -249,7 +249,7 @@
         <el-form-item
           v-for="(entry, index2) in queryKey"
           :key="index2"
-          :prop="'queryKey.' + index2" required>
+          :prop="`queryKey.${index2}`" required>
           <el-select
             v-model="queryKey[index2]"
             filterable
@@ -300,7 +300,7 @@
           <el-form-item
             v-for="(entry, index2) in blacklist"
             :key="index2"
-            :prop="'blacklist.' + index2"
+            :prop="`blacklist.${index2}`"
             class="el-form-item-list"
             label=""
             required>
@@ -348,7 +348,7 @@
           <el-form-item
             v-for="(entry, index2) in whitelist"
             :key="index2"
-            :prop="'whitelist.' + index"
+            :prop="`whitelist.${index}`"
             required
             class="el-form-item-list"
             label="">

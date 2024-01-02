@@ -19,7 +19,7 @@
           <el-form-item
             v-for="(entry, index) in googleChatWebhookUrl"
             :key="index"
-            :prop="'googleChatWebhookUrl.' + index"
+            :prop="`googleChatWebhookUrl.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">

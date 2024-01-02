@@ -43,9 +43,9 @@
       class="m-n-med" />
 
     <el-alert
-      v-if="testRunResult &&
-        testRunResult.writeback &&
-        testRunResult.writeback.elastalert_status"
+      v-if="testRunResult
+        && testRunResult.writeback
+        && testRunResult.writeback.elastalert_status"
       :closable="false"
       type="success"
       show-icon

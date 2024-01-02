@@ -19,7 +19,7 @@
           <el-form-item
             v-for="(entry, index) in httpPost2Url"
             :key="index"
-            :prop="'httpPost2Url.' + index"
+            :prop="`httpPost2Url.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">

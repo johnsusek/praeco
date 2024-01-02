@@ -10,7 +10,7 @@
             </span>
           </template>
           <div>
-            <el-row :gutter="30" :class="{ 'empty': !queryTree.children.length }">
+            <el-row :gutter="30" :class="{ empty: !queryTree.children.length }">
               <el-col :span="24">
                 <el-form-item class="el-form-item-tight">
                   <vue-query-builder

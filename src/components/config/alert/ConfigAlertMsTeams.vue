@@ -19,7 +19,7 @@
           <el-form-item
             v-for="(entry, index) in msTeamsWebhookUrl"
             :key="index"
-            :prop="'msTeamsWebhookUrl.' + index"
+            :prop="`msTeamsWebhookUrl.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">

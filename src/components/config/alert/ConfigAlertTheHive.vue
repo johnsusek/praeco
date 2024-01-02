@@ -44,7 +44,7 @@
           <el-form-item
             v-for="(entry, index) in hiveAlertConfigTags"
             :key="index"
-            :prop="'hiveAlertConfigTags.' + index"
+            :prop="`hiveAlertConfigTags.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
             label=""

@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { htmlToConfigFormat, configFormatToHtml } from '@/lib/alertText.js';
 
+/* eslint-disable */
 describe('alertText', () => {
   it('returns config-formatted alert text', () => {
     let text = 'Test <span data-at-embedded="" contenteditable="false"> <span class="el-tag el-tag--info el-tag--mini" data-term="message">message<!----></span> </span>&nbsp;<div><br></div><div>123</div><div>&nbsp;b<span data-at-embedded="" contenteditable="false"> <span data-v-2d7a3f54="" class="el-tag el-tag--info el-tag--mini" data-term="@timestamp">@timestamp<!----></span> </span>&nbsp;aa</div><br><div>foo</div><div><br></div><div>bar</div><div><br></div><div>--baz</div>';
@@ -30,3 +31,4 @@ bar
     expect(formatted).to.equal(html);
   });
 });
+/* eslint-enable */
