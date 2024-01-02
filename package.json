@@ -27,7 +27,7 @@
     "axios": "1.6.3",
     "browser-bunyan": "1.8.0",
     "canvas": "^2.11.2",
-    "change-case": "4.1.2",
+    "change-case": "5.3.0",
     "comma-number": "2.1.0",
     "core-js": "^3.35.0",
     "cron-ui": "1.0.3",
