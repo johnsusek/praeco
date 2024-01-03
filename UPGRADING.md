@@ -133,7 +133,6 @@ add settings.
 - alerta_use_match_timestamp
 - alerta_use_qk_as_resource
 - alerta_api_skip_ssl
-- alert_missing_value
 - alerta_origin
 - alerta_service
 - alerta_type
