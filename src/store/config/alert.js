@@ -200,7 +200,7 @@ function initialState() {
     irisApiToken: '',
     irisCustomerId: 0,
     irisIgnoreSslErrors: false,
-    irisCaCerts: false,
+    irisCaCert: false,
     irisDescription: '',
     irisOverwriteTimestamp: false,
     irisType: 'alert',
@@ -1262,8 +1262,9 @@ export default {
       state.irisIgnoreSslErrors = irisIgnoreSslErrors;
     },
 
-    UPDATE_IRIS_CA_CERTS(state, irisCaCerts) {
-      state.irisCaCerts = irisCaCerts;
+    // TODO: Error saving config, are all fields filled out?
+    UPDATE_IRIS_CA_CERT(state, irisCaCert) {
+      state.irisCaCert = irisCaCert;
     },
 
     UPDATE_IRIS_DESCRIPTION(state, irisDescription) {

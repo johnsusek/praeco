@@ -29,6 +29,7 @@ index: "hannibal-*"
 iris_alert_severity_id: 1
 iris_alert_status_id: 2
 iris_api_token: "abcdefghijklmnopqrstuvwxyz"
+iris_customer_id: 1
 iris_host: "testserver"
 iris_type: "alert"
 is_enabled: false

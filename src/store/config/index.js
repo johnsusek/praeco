@@ -281,14 +281,19 @@ export default {
 
         commit('alert/UPDATE_IRIS_API_TOKEN', config.iris_api_token);
 
-        commit('alert/UPDATE_IRIS_CUSTOMER_ID', config.iris_customer_id);
+        if (config.iris_customer_id) {
+          commit('alert/UPDATE_IRIS_CUSTOMER_ID', config.iris_customer_id);
+        } else {
+          commit('alert/UPDATE_IRIS_CUSTOMER_ID', 1);
+        }
 
         if (config.iris_ignore_ssl_errors) {
           commit('alert/UPDATE_IRIS_IGNORE_SSL_ERRORS', config.iris_ignore_ssl_errors);
         }
 
+        // TODO: Error saving config, are all fields filled out?
         if (config.iris_ca_cert) {
-          commit('alert/UPDATE_IRIS_CA_CERTS', config.iris_ca_cert);
+          commit('alert/UPDATE_IRIS_CA_CERT', config.iris_ca_cert);
         }
 
         commit('alert/UPDATE_IRIS_DESCRIPTION', config.iris_description);
@@ -1590,8 +1595,9 @@ export default {
         config.iris_ignore_ssl_errors = state.alert.irisIgnoreSslErrors;
       }
 
-      if (state.alert.irisCaCerts) {
-        config.iris_ca_cert = state.alert.irisCaCerts;
+      // TODO: Error saving config, are all fields filled out?
+      if (state.alert.irisCaCert) {
+        config.iris_ca_cert = state.alert.irisCaCert;
       }
 
       if (state.alert.irisDescription) {

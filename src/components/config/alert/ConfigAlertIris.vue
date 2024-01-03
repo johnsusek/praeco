@@ -14,6 +14,17 @@
       </label>
     </praeco-form-item>
 
+    <!-- TODO: Error saving config, are all fields filled out? -->
+    <!--
+    <praeco-form-item label="CA Cert" prop="irisCaCert">
+      <el-switch
+        id="irisCaCert"
+        v-model="irisCaCert"
+        :disabled="viewOnly"
+        @change="changeIrisCaCert" />
+    </praeco-form-item>
+    -->
+
     <praeco-form-item label="Customer Id" prop="irisCustomerId">
       <el-input-number id="irisCustomerId" v-model="irisCustomerId" :disabled="viewOnly" />
       <label>
@@ -21,14 +32,6 @@
         Configure and view the existing options in the section Advanced -> Customers of your IRIS instance.
         The default value is: 1.
       </label>
-    </praeco-form-item>
-
-    <praeco-form-item label="CA Certs" prop="irisCaCerts">
-      <el-switch
-        id="irisCaCerts"
-        v-model="irisCaCerts"
-        :disabled="viewOnly"
-        @change="changeIrisCaCerts" />
     </praeco-form-item>
 
     <praeco-form-item label="Ignore SSL Errors" prop="irisIgnoreSslErrors">
@@ -40,7 +43,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Description" prop="irisDescription">
-      <el-input-number id="irisDescription" v-model="irisDescription" :disabled="viewOnly" />
+      <el-input id="irisDescription" v-model="irisDescription" :disabled="viewOnly" />
       <label>
         Description of the alert or case.
       </label>
@@ -57,10 +60,10 @@
     <praeco-form-item label="Type" prop="irisType">
       <el-radio-group v-model="irisType" :disabled="viewOnly">
         <el-radio id="irisTypeAlert" label="alert" border>
-          none
+          alert
         </el-radio>
         <el-radio id="irisTypeCase" label="case" border>
-          full
+          case
         </el-radio>
       </el-radio-group>
       <label>The type of object being created. It can be either alert or case. The default value is alert.</label>
@@ -74,14 +77,14 @@
     </praeco-form-item>
 
     <praeco-form-item label="Alert Note" prop="irisAlertNote">
-      <el-input-number id="irisAlertNote" v-model="irisAlertNote" :disabled="viewOnly" />
+      <el-input id="irisAlertNote" v-model="irisAlertNote" :disabled="viewOnly" />
       <label>
         Note for the alert.
       </label>
     </praeco-form-item>
 
     <praeco-form-item label="Alert Tags" prop="irisAlertTags">
-      <el-input-number id="irisAlertTags" v-model="irisAlertTags" :disabled="viewOnly" />
+      <el-input id="irisAlertTags" v-model="irisAlertTags" :disabled="viewOnly" />
       <label>
         List of tags.
       </label>
@@ -95,7 +98,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Alert Source Link" prop="irisAlertSourceLink">
-      <el-input-number id="irisAlertSourceLink" v-model="irisAlertSourceLink" :disabled="viewOnly" />
+      <el-input id="irisAlertSourceLink" v-model="irisAlertSourceLink" :disabled="viewOnly" />
       <label>
         Your custom link, if needed.
       </label>
@@ -152,17 +155,20 @@ export default {
         );
       }
     },
-    irisCaCerts: {
+    /*
+    TODO: Error saving config, are all fields filled out?
+    irisCaCert: {
       get() {
-        return this.$store.state.config.alert.irisCaCerts;
+        return this.$store.state.config.alert.irisCaCert;
       },
       set(value) {
         this.$store.commit(
-          'config/alert/UPDATE_IRIS_CA_CERTS',
+          'config/alert/UPDATE_IRIS_CA_CERT',
           value
         );
       }
     },
+    */
     irisDescription: {
       get() {
         return this.$store.state.config.alert.irisDescription;
@@ -272,13 +278,16 @@ export default {
         this.irisIgnoreSslErrors = false;
       }
     },
-    changeIrisCaCerts(val) {
+    /*
+    TODO: Error saving config, are all fields filled out?
+    changeIrisCaCert(val) {
       if (val) {
-        this.irisCaCerts = true;
+        this.irisCaCert = true;
       } else {
-        this.irisCaCerts = false;
+        this.irisCaCert = false;
       }
     },
+    */
     changeIrisOverwriteTimestamp(val) {
       if (val) {
         this.irisOverwriteTimestamp = true;
