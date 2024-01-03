@@ -7,6 +7,18 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.18
+
+**New options**
+
+**IRIS**
+
+**Telegram**
+
+add settings.
+
+- telegram_thread_id
+
 ## -> 1.8.17
 
 **New options**
