@@ -1,13 +1,18 @@
-FROM node:lts-gallium AS base
+FROM node:lts-hydrogen AS base
 
-RUN apt update && \
+RUN apt update -qqy && \
+    apt upgrade -qqy && \
     export DEBIAN_FRONTEND=noninteractive && \
-    apt install -y nginx
+    apt install -y nginx && \
+    apt-get clean  && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /tmp/nginx/praeco
-RUN mkdir -p /var/log/nginx
-RUN mkdir -p /var/www/html
-RUN chown www-data:www-data /var/www/html
+RUN export NODE_OPTIONS=--openssl-legacy-provider
+
+RUN mkdir -p /tmp/nginx/praeco && \
+    mkdir -p /var/log/nginx && \
+    mkdir -p /var/www/html && \
+    chown www-data:www-data /var/www/html
 WORKDIR /tmp/nginx/praeco
 COPY package.json .
 
