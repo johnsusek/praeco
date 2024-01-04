@@ -24,7 +24,7 @@
     "@fortawesome/vue-fontawesome": "2.0.10",
     "@riophae/vue-treeselect": "0.4.0",
     "@vue-js-cron/light": "^1.0.5",
-    "axios": "1.6.3",
+    "axios": "1.6.4",
     "browser-bunyan": "1.8.0",
     "canvas": "^2.11.2",
     "change-case": "4.1.2",
