@@ -102,7 +102,7 @@
     </el-popover>
 
     <praeco-form-item label="Post as" prop="slackUsernameOverride" required>
-      <el-input id="slackUsernameOverride" v-model="slackUsernameOverride" :disabled="viewOnly" />
+      <el-input id="slackUsernameOverride" :value="slackUsernameOverride" :disabled="viewOnly" @input="slackUsernameOverride = $event" />
       <label>This is the username that will appear in Slack for the alert</label>
     </praeco-form-item>
 
@@ -127,7 +127,7 @@
     </div>
 
     <el-form-item label="Message color" prop="slackMsgColor" required>
-      <el-radio-group v-model="slackMsgColor" :disabled="viewOnly">
+      <el-radio-group :value="slackMsgColor" :disabled="viewOnly" @input="slackMsgColor = $event">
         <el-radio id="slackMsgColorDanger" label="danger" border class="slack-danger">
           Danger
         </el-radio>
@@ -141,7 +141,7 @@
     </el-form-item>
 
     <el-form-item label="Parse Override" prop="slackParseOverride">
-      <el-radio-group v-model="slackParseOverride" :disabled="viewOnly">
+      <el-radio-group :value="slackParseOverride" :disabled="viewOnly" @input="slackParseOverride = $event">
         <el-radio id="slackParseOverrideNone" label="none" border>
           none
         </el-radio>
@@ -153,20 +153,20 @@
     </el-form-item>
 
     <el-form-item label="Text String" prop="slackTextString">
-      <el-input id="slackTextString" v-model="slackTextString" :disabled="viewOnly" />
+      <el-input id="slackTextString" :value="slackTextString" :disabled="viewOnly" @input="slackTextString = $event" />
       <label>Notification message you want to add.</label>
     </el-form-item>
 
     <el-form-item label="Ignore SSL Errors" prop="slackIgnoreSslErrors">
       <el-switch
         id="slackIgnoreSslErrors"
-        v-model="slackIgnoreSslErrors"
+        :value="slackIgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeSlackIgnoreSslErrors" />
     </el-form-item>
 
     <el-form-item label="Icon URL Override" prop="slackIconUrlOverride">
-      <el-input id="slackIconUrlOverride" v-model="slackIconUrlOverride" :disabled="viewOnly" />
+      <el-input id="slackIconUrlOverride" :value="slackIconUrlOverride" :disabled="viewOnly" @input="slackIconUrlOverride = $event" />
       <label>
         By default ElastAlert 2 will use the default webhook icon when posting to the channel.
         You can provide icon_url to use custom image.
@@ -177,13 +177,13 @@
     <el-form-item label="CA Certs" prop="slackCaCerts">
       <el-switch
         id="slackCaCerts"
-        v-model="slackCaCerts"
+        :value="slackCaCerts"
         :disabled="viewOnly"
         @change="changeSlackCaCerts" />
     </el-form-item>
 
     <el-form-item label="Timeout" prop="slackTimeout">
-      <el-input-number id="slackTimeout" v-model="slackTimeout" :disabled="viewOnly" />
+      <el-input-number id="slackTimeout" :value="slackTimeout" :disabled="viewOnly" @input="slackTimeout = $event" />
       <label>
         You can specify a timeout value, in seconds, for making communicating with Slack.
         The default is 10. If a timeout occurs, the alert will be retried next time ElastAlert 2 cycles.
@@ -193,7 +193,7 @@
     <el-form-item label="Attach Kibana Discover URL" prop="slackAttachKibanaDiscoverUrl">
       <el-switch
         id="slackAttachKibanaDiscoverUrl"
-        v-model="slackAttachKibanaDiscoverUrl"
+        :value="slackAttachKibanaDiscoverUrl"
         :disabled="viewOnly"
         @change="changeSlackAttachKibanaDiscoverUrl" />
     </el-form-item>
@@ -205,12 +205,12 @@
     </el-form-item>
 
     <el-form-item label="Kibana Discover Title" prop="slackKibanaDiscoverTitle">
-      <el-input v-model="slackKibanaDiscoverTitle" :disabled="viewOnly" />
+      <el-input :value="slackKibanaDiscoverTitle" :disabled="viewOnly" @input="slackKibanaDiscoverTitle = $event" />
       <label>The title of the Kibana Discover url attachment.</label>
     </el-form-item>
 
     <el-form-item label="Proxy" prop="slackProxy">
-      <el-input id="slackProxy" v-model="slackProxy" :disabled="viewOnly" />
+      <el-input id="slackProxy" :value="slackProxy" :disabled="viewOnly" @input="slackProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Slack.
         Set this option using hostname:port if you need to use a proxy.
@@ -218,49 +218,49 @@
     </el-form-item>
 
     <el-form-item label="Footer" prop="slackFooter">
-      <el-input v-model="slackFooter" :disabled="viewOnly" />
+      <el-input :value="slackFooter" :disabled="viewOnly" @input="slackFooter = $event" />
       <label>Add a static footer text for alert.</label>
     </el-form-item>
 
     <el-form-item label="Footer Icon" prop="slackFooterIcon">
-      <el-input v-model="slackFooterIcon" :disabled="viewOnly" />
+      <el-input :value="slackFooterIcon" :disabled="viewOnly" @input="slackFooterIcon = $event" />
       <label>A Public Url for a footer icon.</label>
     </el-form-item>
 
     <el-form-item label="Image URL" prop="slackImageUrl">
-      <el-input v-model="slackImageUrl" :disabled="viewOnly" />
+      <el-input :value="slackImageUrl" :disabled="viewOnly" @input="slackImageUrl = $event" />
       <label>An optional URL to an image file (GIF, JPEG, PNG, BMP, or SVG).</label>
     </el-form-item>
 
     <el-form-item label="Thumb URL" prop="slackThumbUrl">
-      <el-input v-model="slackThumbUrl" :disabled="viewOnly" />
+      <el-input :value="slackThumbUrl" :disabled="viewOnly" @input="slackThumbUrl = $event" />
       <label>An optional URL to an image file (GIF, JPEG, PNG, BMP, or SVG) that is displayed as thumbnail.</label>
     </el-form-item>
 
     <el-form-item label="Author Name" prop="slackAuthorName">
-      <el-input v-model="slackAuthorName" :disabled="viewOnly" />
+      <el-input :value="slackAuthorName" :disabled="viewOnly" @input="slackAuthorName = $event" />
       <label>An optional name used to identify the author.</label>
     </el-form-item>
 
     <el-form-item label="Author Link" prop="slackAuthorLink">
-      <el-input v-model="slackAuthorLink" :disabled="viewOnly" />
+      <el-input :value="slackAuthorLink" :disabled="viewOnly" @input="slackAuthorLink = $event" />
       <label>An optional URL used to hyperlink the author_name.</label>
     </el-form-item>
 
     <el-form-item label="Author Icon" prop="slackAuthorIcon">
-      <el-input v-model="slackAuthorIcon" :disabled="viewOnly" />
+      <el-input :value="slackAuthorIcon" :disabled="viewOnly" @input="slackAuthorIcon = $event" />
       <label>An optional URL used to display a 16x16 pixel icon beside the author_name.</label>
     </el-form-item>
 
     <el-form-item label="Msg Pretext" prop="slackMsgPretext">
-      <el-input v-model="slackMsgPretext" :disabled="viewOnly" />
+      <el-input :value="slackMsgPretext" :disabled="viewOnly" @input="slackMsgPretext = $event" />
       <label>You can set the message attachment pretext using this option.</label>
     </el-form-item>
 
     <el-form-item label="Attach Jira Ticket URL" prop="slackAttachJiraTicketUrl">
       <el-switch
         id="slackAttachJiraTicketUrl"
-        v-model="slackAttachJiraTicketUrl"
+        :value="slackAttachJiraTicketUrl"
         :disabled="viewOnly"
         @change="changeSlackAttachKibanaDiscoverUrl" />
     </el-form-item>
@@ -272,7 +272,7 @@
     </el-form-item>
 
     <el-form-item label="Jira Ticket Title" prop="slackJiraTicketTitle">
-      <el-input v-model="slackJiraTicketTitle" :disabled="viewOnly" />
+      <el-input :value="slackJiraTicketTitle" :disabled="viewOnly" @input="slackJiraTicketTitle = $event" />
       <label>The title of the Jira Ticket url attachment.</label>
     </el-form-item>
   </div>
@@ -682,41 +682,25 @@ export default {
     },
 
     changeSlackIgnoreSslErrors(val) {
-      if (val) {
-        this.slackIgnoreSslErrors = true;
-      } else {
-        this.slackIgnoreSslErrors = false;
-      }
+      this.slackIgnoreSslErrors = val;
     },
 
     changeSlackAttachKibanaDiscoverUrl(val) {
-      if (val) {
-        this.slackAttachKibanaDiscoverUrl = true;
-      } else {
-        this.slackAttachKibanaDiscoverUrl = false;
-      }
+      this.slackAttachKibanaDiscoverUrl = val;
     },
 
     changeSlackCaCerts(val) {
-      if (val) {
-        this.slackCaCerts = true;
-      } else {
-        this.slackCaCerts = false;
-      }
+      this.slackCaCerts = val;
     },
 
     changeSlackAttachJiraTicketUrl(val) {
-      if (val) {
-        this.slackAttachJiraTicketUrl = true;
-      } else {
-        this.slackAttachJiraTicketUrl = false;
-      }
+      this.slackAttachJiraTicketUrl = val;
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .disabled {
   .emoji-mart {
     height: auto !important;

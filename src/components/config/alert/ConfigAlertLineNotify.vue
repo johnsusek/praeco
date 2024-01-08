@@ -1,7 +1,7 @@
 <template>
   <div>
     <praeco-form-item label="Access Token" prop="linenotifyAccessToken" required>
-      <el-input id="linenotifyAccessToken" v-model="linenotifyAccessToken" :disabled="viewOnly" />
+      <el-input id="linenotifyAccessToken" :value="linenotifyAccessToken" :disabled="viewOnly" @input="linenotifyAccessToken = $event" />
       <label>The access token that you got from https://notify-bot.line.me/my/</label>
     </praeco-form-item>
   </div>
@@ -31,6 +31,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

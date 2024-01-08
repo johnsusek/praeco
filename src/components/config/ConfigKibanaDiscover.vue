@@ -4,7 +4,7 @@
       <el-form-item label="Kibana Discover">
         <el-switch
           id="generateKibanaDiscoverUrl"
-          v-model="generateKibanaDiscoverUrl"
+          :value="generateKibanaDiscoverUrl"
           :disabled="viewOnly"
           @change="changeGenerateKibanaDiscoverUrl" />
         <label>Kibana Discover application.</label>
@@ -14,9 +14,10 @@
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
       <el-form-item label="APP URL" prop="kibanaDiscoverAppUrl" required>
         <el-input
-          v-model="kibanaDiscoverAppUrl"
+          :value="kibanaDiscoverAppUrl"
           :disabled="viewOnly"
-          placeholder="http://localhost:5601/app/discover#/" />
+          placeholder="http://localhost:5601/app/discover#/"
+          @input="kibanaDiscoverAppUrl = $event" />
         <label>The url of the Kibana Discover application used to generate the kibana_discover_url variable.</label>
       </el-form-item>
     </el-col>
@@ -41,8 +42,9 @@
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
       <el-form-item label="Index Pattern Id" prop="kibanaDiscoverIndexPatternId" required>
         <el-input
-          v-model="kibanaDiscoverIndexPatternId"
-          :disabled="viewOnly" />
+          :value="kibanaDiscoverIndexPatternId"
+          :disabled="viewOnly"
+          @input="kibanaDiscoverIndexPatternId = $event" />
         <label>The id of the index pattern to link to in the Kibana Discover application.</label>
       </el-form-item>
     </el-col>

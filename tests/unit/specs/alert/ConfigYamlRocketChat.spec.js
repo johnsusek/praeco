@@ -23,7 +23,6 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
@@ -32,10 +31,7 @@ name: "test123"
 num_events: 10000
 realert:
   minutes: 5
-rocket_chat_attach_kibana_discover_url: false
 rocket_chat_emoji_override: ":ghost:"
-rocket_chat_kibana_discover_color: "#ec4b98"
-rocket_chat_kibana_discover_title: "Discover in Kibana"
 rocket_chat_msg_color: "danger"
 rocket_chat_timeout: 10
 rocket_chat_username_override: "elastalert2"

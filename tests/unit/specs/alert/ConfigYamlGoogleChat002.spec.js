@@ -23,7 +23,6 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
 googlechat_footer_kibanalink: "http://example/cde"
 googlechat_format: "card"
 googlechat_header_image: "http://example/abc.png"

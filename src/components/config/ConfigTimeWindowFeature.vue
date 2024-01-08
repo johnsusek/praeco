@@ -3,7 +3,7 @@
     <el-col :span="useTimeWindow ? 6 : 19">
       <el-form-item label="Use Time Window">
         <el-switch
-          v-model="useTimeWindow"
+          :value="useTimeWindow"
           :disabled="viewOnly"
           @change="changeTimeWindow" />
         <label>

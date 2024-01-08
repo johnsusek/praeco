@@ -3,7 +3,7 @@
     <el-col :span="usePriority ? 6 : 19">
       <el-form-item label="Priority">
         <el-switch
-          v-model="usePriority"
+          :value="usePriority"
           :disabled="viewOnly"
           @change="changePriority" />
         <label>
@@ -15,7 +15,7 @@
 
     <el-col v-if="usePriority" :span="6">
       <el-form-item label="Priority" prop="configPriority" required>
-        <el-input-number id="configPriority" v-model="configPriority" :disabled="viewOnly" />
+        <el-input-number id="configPriority" :value="configPriority" :disabled="viewOnly" @input="configPriority = $event" />
       </el-form-item>
     </el-col>
   </el-row>
@@ -57,11 +57,7 @@ export default {
 
   methods: {
     changePriority(val) {
-      if (val) {
-        this.usePriority = true;
-      } else {
-        this.usePriority = false;
-      }
+      this.usePriority = val;
     },
   }
 };

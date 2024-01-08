@@ -55,7 +55,7 @@
     </el-form-item>
 
     <el-form-item label="Alert Summary" prop="msTeamsAlertSummary" required>
-      <el-input v-model="msTeamsAlertSummary" :disabled="viewOnly" />
+      <el-input :value="msTeamsAlertSummary" :disabled="viewOnly" @input="msTeamsAlertSummary = $event" />
       <label>
         Summary should be configured according to MS documentation, although it seems not displayed by Teams currently.
       </label>
@@ -64,7 +64,7 @@
     <el-form-item label="Alert Fixed Width" prop="msTeamsAlertFixedWidth">
       <el-switch
         id="msTeamsAlertFixedWidth"
-        v-model="msTeamsAlertFixedWidth"
+        :value="msTeamsAlertFixedWidth"
         :disabled="viewOnly"
         @change="changemsTeamsAlertFixedWidth" />
       <label>
@@ -76,7 +76,7 @@
     </el-form-item>
 
     <el-form-item label="Proxy" prop="msTeamsProxy">
-      <el-input v-model="msTeamsProxy" :disabled="viewOnly" />
+      <el-input :value="msTeamsProxy" :disabled="viewOnly" @input="msTeamsProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to MS Teams.
         Set this option using hostname:port if you need to use a proxy.
@@ -86,20 +86,20 @@
     <el-form-item label="Attach Kibana Discover URL" prop="msTeamsAttachKibanaDiscoverUrl">
       <el-switch
         id="msTeamsAttachKibanaDiscoverUrl"
-        v-model="msTeamsAttachKibanaDiscoverUrl"
+        :value="msTeamsAttachKibanaDiscoverUrl"
         :disabled="viewOnly"
         @change="changeMsTeamsAttachKibanaDiscoverUrl" />
     </el-form-item>
 
     <el-form-item label="Kibana Discover Title" prop="msTeamsKibanaDiscoverTitle">
-      <el-input v-model="msTeamsKibanaDiscoverTitle" :disabled="viewOnly" />
+      <el-input :value="msTeamsKibanaDiscoverTitle" :disabled="viewOnly" @input="msTeamsKibanaDiscoverTitle = $event" />
       <label>The title of the Kibana Discover url attachment.</label>
     </el-form-item>
 
     <el-form-item label="Ignore SSL Errors" prop="msTeamsIgnoreSslErrors">
       <el-switch
         id="msTeamsIgnoreSslErrors"
-        v-model="msTeamsIgnoreSslErrors"
+        :value="msTeamsIgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeMsTeamsIgnoreSslErrors" />
     </el-form-item>
@@ -107,7 +107,7 @@
     <el-form-item label="CA Certs" prop="msTeamsCaCerts">
       <el-switch
         id="msTeamsCaCerts"
-        v-model="msTeamsCaCerts"
+        :value="msTeamsCaCerts"
         :disabled="viewOnly"
         @change="changeMsTeamsCaCerts" />
     </el-form-item>
@@ -268,39 +268,23 @@ export default {
     },
 
     changemsTeamsAlertFixedWidth(val) {
-      if (val) {
-        this.msTeamsAlertFixedWidth = true;
-      } else {
-        this.msTeamsAlertFixedWidth = false;
-      }
+      this.msTeamsAlertFixedWidth = val;
     },
 
     changeMsTeamsIgnoreSslErrors(val) {
-      if (val) {
-        this.msTeamsIgnoreSslErrors = true;
-      } else {
-        this.msTeamsIgnoreSslErrors = false;
-      }
+      this.msTeamsIgnoreSslErrors = val;
     },
 
     changeMsTeamsAttachKibanaDiscoverUrl(val) {
-      if (val) {
-        this.msTeamsAttachKibanaDiscoverUrl = true;
-      } else {
-        this.msTeamsAttachKibanaDiscoverUrl = false;
-      }
+      this.msTeamsAttachKibanaDiscoverUrl = val;
     },
 
     changeMsTeamsCaCerts(val) {
-      if (val) {
-        this.msTeamsCaCerts = true;
-      } else {
-        this.msTeamsCaCerts = false;
-      }
+      this.msTeamsCaCerts = val;
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 </style>

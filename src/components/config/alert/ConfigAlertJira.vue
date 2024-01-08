@@ -1,15 +1,15 @@
 <template>
   <div>
     <praeco-form-item label="Project" prop="jiraProject" required>
-      <el-input id="jiraProject" v-model="jiraProject" :disabled="viewOnly" />
+      <el-input id="jiraProject" :value="jiraProject" :disabled="viewOnly" @input="jiraProject = $event" />
       <label>Jira project</label>
     </praeco-form-item>
     <praeco-form-item label="Issue type" prop="jiraIssueType" required>
-      <el-input id="jiraIssueType" v-model="jiraIssueType" :disabled="viewOnly" />
+      <el-input id="jiraIssueType" :value="jiraIssueType" :disabled="viewOnly" @input="jiraIssueType = $event" />
       <label>Jira issue type (Bug, Integration Bug, etc...)</label>
     </praeco-form-item>
     <praeco-form-item label="Components" prop="jiraComponents">
-      <el-input id="jiraComponents" v-model="jiraComponents" :disabled="viewOnly" />
+      <el-input id="jiraComponents" :value="jiraComponents" :disabled="viewOnly" @input="jiraComponents = $event" />
       <label>Jira issue components</label>
     </praeco-form-item>
   </div>
@@ -63,6 +63,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

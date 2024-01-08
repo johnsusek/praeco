@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-form-item label="API KEY" prop="datadogApiKey" required>
-      <el-input id="datadogApiKey" v-model="datadogApiKey" :disabled="viewOnly" />
+      <el-input id="datadogApiKey" :value="datadogApiKey" :disabled="viewOnly" @input="datadogApiKey = $event" />
       <label>Datadog API key.</label>
     </el-form-item>
 
     <el-form-item label="APP KEY" prop="datadogAppKey" required>
-      <el-input id="datadogAppKey" v-model="datadogAppKey" :disabled="viewOnly" />
+      <el-input id="datadogAppKey" :value="datadogAppKey" :disabled="viewOnly" @input="datadogAppKey = $event" />
       <label>Datadog application key.</label>
     </el-form-item>
   </div>
@@ -42,6 +42,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

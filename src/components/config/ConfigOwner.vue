@@ -3,7 +3,7 @@
     <el-col :span="useOwner ? 6 : 19">
       <el-form-item label="Owner">
         <el-switch
-          v-model="useOwner"
+          :value="useOwner"
           :disabled="viewOnly"
           @change="changeOwner" />
         <label>
@@ -15,7 +15,7 @@
 
     <el-col v-if="useOwner" :span="6">
       <el-form-item label="Owner" prop="configOwner" required>
-        <el-input id="configOwner" v-model="configOwner" :disabled="viewOnly" />
+        <el-input id="configOwner" :value="configOwner" :disabled="viewOnly" @input="configOwner = $event" />
       </el-form-item>
     </el-col>
   </el-row>
@@ -57,11 +57,7 @@ export default {
 
   methods: {
     changeOwner(val) {
-      if (val) {
-        this.useOwner = true;
-      } else {
-        this.useOwner = false;
-      }
+      this.useOwner = val;
     },
   }
 };

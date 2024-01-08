@@ -19,7 +19,6 @@ iris_alert_source_link: b
 iris_alert_status_id: 3
 iris_alert_tags: c
 iris_api_token: abcdefghijklmnopqrstuvwxyz
-iris_ca_cert: true
 iris_case_template_id: 5
 iris_customer_id: 4
 iris_description: d

@@ -102,7 +102,7 @@
     </el-popover>
 
     <praeco-form-item label="Post as" prop="rocketChatUsernameOverride" required>
-      <el-input id="rocketChatUsernameOverride" v-model="rocketChatUsernameOverride" :disabled="viewOnly" />
+      <el-input id="rocketChatUsernameOverride" :value="rocketChatUsernameOverride" :disabled="viewOnly" @input="rocketChatUsernameOverride = $event" />
       <label>This is the username that will appear in Rocket.Chat for the alert</label>
     </praeco-form-item>
 
@@ -127,7 +127,7 @@
     </div>
 
     <el-form-item label="Message color" prop="rocketChatMsgColor" required>
-      <el-radio-group v-model="rocketChatMsgColor" :disabled="viewOnly">
+      <el-radio-group :value="rocketChatMsgColor" :disabled="viewOnly" @input="rocketChatMsgColor = $event">
         <el-radio id="rocketChatMsgColorDanger" label="danger" border class="rocketChat-danger">
           Danger
         </el-radio>
@@ -141,12 +141,12 @@
     </el-form-item>
 
     <el-form-item label="Text String" prop="rocketChatTextString">
-      <el-input id="rocketChatTextString" v-model="rocketChatTextString" :disabled="viewOnly" />
+      <el-input id="rocketChatTextString" :value="rocketChatTextString" :disabled="viewOnly" @input="rocketChatTextString = $event" />
       <label>Notification message you want to add.</label>
     </el-form-item>
 
     <el-form-item label="Proxy" prop="rocketChatProxy">
-      <el-input id="rocketChatProxy" v-model="rocketChatProxy" :disabled="viewOnly" />
+      <el-input id="rocketChatProxy" :value="rocketChatProxy" :disabled="viewOnly" @input="rocketChatProxy = $event" />
       <label>
         By default ElastAlert2 will not use a network proxy to send notifications to Rocket.Chat.
         Set this option using hostname:port if you need to use a proxy.
@@ -156,7 +156,7 @@
     <el-form-item label="Attach Kibana Discover URL" prop="rocketChatAttachKibanaDiscoverUrl">
       <el-switch
         id="rocketChatAttachKibanaDiscoverUrl"
-        v-model="rocketChatAttachKibanaDiscoverUrl"
+        :value="rocketChatAttachKibanaDiscoverUrl"
         :disabled="viewOnly"
         @change="changeRocketChatAttachKibanaDiscoverUrl" />
     </el-form-item>
@@ -168,14 +168,14 @@
     </el-form-item>
 
     <el-form-item label="Kibana Discover Title" prop="rocketChatKibanaDiscoverTitle">
-      <el-input v-model="rocketChatKibanaDiscoverTitle" :disabled="viewOnly" />
+      <el-input :value="rocketChatKibanaDiscoverTitle" :disabled="viewOnly" @input="rocketChatKibanaDiscoverTitle = $event" />
       <label>The title of the Kibana Discover url attachment.</label>
     </el-form-item>
 
     <el-form-item label="Ignore SSL Errors" prop="rocketChatIgnoreSslErrors">
       <el-switch
         id="rocketChatIgnoreSslErrors"
-        v-model="rocketChatIgnoreSslErrors"
+        :value="rocketChatIgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeRocketChatIgnoreSslErrors" />
     </el-form-item>
@@ -183,13 +183,13 @@
     <el-form-item label="CA Certs" prop="rocketChatCaCerts">
       <el-switch
         id="rocketChatCaCerts"
-        v-model="rocketChatCaCerts"
+        :value="rocketChatCaCerts"
         :disabled="viewOnly"
         @change="changeRocketChatCaCerts" />
     </el-form-item>
 
     <el-form-item label="Timeout" prop="rocketChatTimeout">
-      <el-input-number id="rocketChatTimeout" v-model="rocketChatTimeout" :disabled="viewOnly" />
+      <el-input-number id="rocketChatTimeout" :value="rocketChatTimeout" :disabled="viewOnly" @input="rocketChatTimeout = $event" />
       <label>
         You can specify a timeout value, in seconds, for making communicating with Rocket.Chat.
         The default is 10. If a timeout occurs, the alert will be retried next time ElastAlert 2 cycles.
@@ -457,33 +457,21 @@ export default {
     },
 
     changeRocketChatIgnoreSslErrors(val) {
-      if (val) {
-        this.rocketChatIgnoreSslErrors = true;
-      } else {
-        this.rocketChatIgnoreSslErrors = false;
-      }
+      this.rocketChatIgnoreSslErrors = val;
     },
 
     changeRocketChatCaCerts(val) {
-      if (val) {
-        this.rocketChatCaCerts = true;
-      } else {
-        this.rocketChatCaCerts = false;
-      }
+      this.rocketChatCaCerts = val;
     },
 
     changeRocketChatAttachKibanaDiscoverUrl(val) {
-      if (val) {
-        this.rocketChatAttachKibanaDiscoverUrl = true;
-      } else {
-        this.rocketChatAttachKibanaDiscoverUrl = false;
-      }
+      this.rocketChatAttachKibanaDiscoverUrl = val;
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .disabled {
   .emoji-mart {
     height: auto !important;

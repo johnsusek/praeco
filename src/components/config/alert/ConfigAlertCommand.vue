@@ -54,7 +54,7 @@
     <el-form-item label="Pipe Match Json" prop="pipeMatchJson">
       <el-switch
         id="pipeMatchJson"
-        v-model="pipeMatchJson"
+        :value="pipeMatchJson"
         :disabled="viewOnly"
         @change="changePipeMatchJson" />
       <label>
@@ -66,7 +66,7 @@
     <el-form-item label="Pipe Alert Text" prop="pipeAlertText">
       <el-switch
         id="pipeAlertText"
-        v-model="pipeAlertText"
+        :value="pipeAlertText"
         :disabled="viewOnly"
         @change="changePipeAlertText" />
       <label>
@@ -79,7 +79,7 @@
     <el-form-item label="fail_on_non_zero_exit" prop="failOnNonZeroExit">
       <el-switch
         id="failOnNonZeroExit"
-        v-model="failOnNonZeroExit"
+        :value="failOnNonZeroExit"
         :disabled="viewOnly"
         @change="changeFailOnNonZeroExit" />
       <label>
@@ -154,27 +154,15 @@ export default {
 
   methods: {
     changePipeMatchJson(val) {
-      if (val) {
-        this.pipeMatchJson = true;
-      } else {
-        this.pipeMatchJson = false;
-      }
+      this.pipeMatchJson = val;
     },
 
     changePipeAlertText(val) {
-      if (val) {
-        this.pipeAlertText = true;
-      } else {
-        this.pipeAlertText = false;
-      }
+      this.pipeAlertText = val;
     },
 
     changeFailOnNonZeroExit(val) {
-      if (val) {
-        this.failOnNonZeroExit = true;
-      } else {
-        this.failOnNonZeroExit = false;
-      }
+      this.failOnNonZeroExit = val;
     },
 
     async validate() {
@@ -231,6 +219,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

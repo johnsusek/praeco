@@ -20,7 +20,6 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
 http_post2_timeout: 10
 http_post2_url:
   - "http://localhost/webhook"

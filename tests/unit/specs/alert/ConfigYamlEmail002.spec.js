@@ -36,7 +36,6 @@ filter:
       query_string:
         query: "@timestamp:*"
 from_addr: "abc"
-generate_kibana_discover_url: false
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false

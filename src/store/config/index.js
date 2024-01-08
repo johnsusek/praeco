@@ -1674,48 +1674,30 @@ export default {
 
       if (state.alert.generateKibanaDiscoverUrl) {
         config.generate_kibana_discover_url = state.alert.generateKibanaDiscoverUrl;
-      } else {
-        config.generate_kibana_discover_url = false;
 
-        if (state.alert.alert.includes('slack')) {
-          config.slack_attach_kibana_discover_url = false;
+        if (state.alert.kibanaDiscoverAppUrl) {
+          config.kibana_discover_app_url = state.alert.kibanaDiscoverAppUrl;
         }
 
-        if (state.alert.alert.includes('rocketchat')) {
-          config.rocket_chat_attach_kibana_discover_url = false;
+        if (state.alert.kibanaDiscoverVersion) {
+          config.kibana_discover_version = state.alert.kibanaDiscoverVersion;
         }
 
-        if (state.alert.alert.includes('mattermost')) {
-          config.mattermost_attach_kibana_discover_url = false;
+        if (state.alert.kibanaDiscoverIndexPatternId) {
+          config.kibana_discover_index_pattern_id = state.alert.kibanaDiscoverIndexPatternId;
         }
 
-        if (state.alert.alert.includes('ms_teams')) {
-          config.ms_teams_attach_kibana_discover_url = false;
+        if (state.alert.kibanaDiscoverColumns && state.alert.kibanaDiscoverColumns.length) {
+          config.kibana_discover_columns = state.alert.kibanaDiscoverColumns;
         }
-      }
 
-      if (state.alert.kibanaDiscoverAppUrl) {
-        config.kibana_discover_app_url = state.alert.kibanaDiscoverAppUrl;
-      }
+        if (state.alert.kibanaDiscoverFromTimedelta) {
+          config.kibana_discover_from_timedelta = state.alert.kibanaDiscoverFromTimedelta;
+        }
 
-      if (state.alert.kibanaDiscoverVersion) {
-        config.kibana_discover_version = state.alert.kibanaDiscoverVersion;
-      }
-
-      if (state.alert.kibanaDiscoverIndexPatternId) {
-        config.kibana_discover_index_pattern_id = state.alert.kibanaDiscoverIndexPatternId;
-      }
-
-      if (state.alert.kibanaDiscoverColumns && state.alert.kibanaDiscoverColumns.length) {
-        config.kibana_discover_columns = state.alert.kibanaDiscoverColumns;
-      }
-
-      if (state.alert.kibanaDiscoverFromTimedelta) {
-        config.kibana_discover_from_timedelta = state.alert.kibanaDiscoverFromTimedelta;
-      }
-
-      if (state.alert.kibanaDiscoverToTimedelta) {
-        config.kibana_discover_to_timedelta = state.alert.kibanaDiscoverToTimedelta;
+        if (state.alert.kibanaDiscoverToTimedelta) {
+          config.kibana_discover_to_timedelta = state.alert.kibanaDiscoverToTimedelta;
+        }
       }
 
       return config;
@@ -1844,14 +1826,16 @@ export default {
         config.slack_timeout = state.alert.slackTimeout;
       }
 
-      config.slack_attach_kibana_discover_url = state.alert.slackAttachKibanaDiscoverUrl;
+      if (state.alert.generateKibanaDiscoverUrl && state.alert.slackAttachKibanaDiscoverUrl) {
+        config.slack_attach_kibana_discover_url = state.alert.slackAttachKibanaDiscoverUrl;
 
-      if (state.alert.slackKibanaDiscoverColor) {
-        config.slack_kibana_discover_color = state.alert.slackKibanaDiscoverColor;
-      }
+        if (state.alert.slackKibanaDiscoverColor) {
+          config.slack_kibana_discover_color = state.alert.slackKibanaDiscoverColor;
+        }
 
-      if (state.alert.slackKibanaDiscoverTitle) {
-        config.slack_kibana_discover_title = state.alert.slackKibanaDiscoverTitle;
+        if (state.alert.slackKibanaDiscoverTitle) {
+          config.slack_kibana_discover_title = state.alert.slackKibanaDiscoverTitle;
+        }
       }
 
       if (state.alert.slackProxy) {
@@ -1890,8 +1874,9 @@ export default {
         config.slack_msg_pretext = state.alert.slackMsgPretext;
       }
 
-      config.slack_attach_jira_ticket_url = state.alert.slackAttachJiraTicketUrl;
-      if (config.slack_attach_jira_ticket_url) {
+      if (state.alert.slackAttachJiraTicketUrl) {
+        config.slack_attach_jira_ticket_url = state.alert.slackAttachJiraTicketUrl;
+
         if (state.alert.slackJiraTicketColor) {
           config.slack_jira_ticket_color = state.alert.slackJiraTicketColor;
         }
@@ -1935,10 +1920,12 @@ export default {
         config.ms_teams_ca_certs = state.alert.msTeamsCaCerts;
       }
 
-      config.ms_teams_attach_kibana_discover_url = state.alert.msTeamsAttachKibanaDiscoverUrl;
+      if (state.alert.generateKibanaDiscoverUrl && state.alert.msTeamsAttachKibanaDiscoverUrl) {
+        config.ms_teams_attach_kibana_discover_url = state.alert.msTeamsAttachKibanaDiscoverUrl;
 
-      if (state.alert.msTeamsKibanaDiscoverTitle) {
-        config.ms_teams_kibana_discover_title = state.alert.msTeamsKibanaDiscoverTitle;
+        if (state.alert.msTeamsKibanaDiscoverTitle) {
+          config.ms_teams_kibana_discover_title = state.alert.msTeamsKibanaDiscoverTitle;
+        }
       }
 
       return config;
@@ -2748,14 +2735,16 @@ export default {
         config.mattermost_author_icon = state.alert.mattermostAuthorIcon;
       }
 
-      config.mattermost_attach_kibana_discover_url = state.alert.mattermostAttachKibanaDiscoverUrl;
+      if (state.alert.generateKibanaDiscoverUrl && state.alert.mattermostAttachKibanaDiscoverUrl) {
+        config.mattermost_attach_kibana_discover_url = state.alert.mattermostAttachKibanaDiscoverUrl;
 
-      if (state.alert.mattermostKibanaDiscoverColor) {
-        config.mattermost_kibana_discover_color = state.alert.mattermostKibanaDiscoverColor;
-      }
+        if (state.alert.mattermostKibanaDiscoverColor) {
+          config.mattermost_kibana_discover_color = state.alert.mattermostKibanaDiscoverColor;
+        }
 
-      if (state.alert.mattermostKibanaDiscoverTitle) {
-        config.mattermost_kibana_discover_title = state.alert.mattermostKibanaDiscoverTitle;
+        if (state.alert.mattermostKibanaDiscoverTitle) {
+          config.mattermost_kibana_discover_title = state.alert.mattermostKibanaDiscoverTitle;
+        }
       }
 
       return config;
@@ -2792,14 +2781,16 @@ export default {
         config.rocket_chat_proxy = state.alert.rocketChatProxy;
       }
 
-      config.rocket_chat_attach_kibana_discover_url = state.alert.rocketChatAttachKibanaDiscoverUrl;
+      if (state.alert.generateKibanaDiscoverUrl && state.alert.rocketChatAttachKibanaDiscoverUrl) {
+        config.rocket_chat_attach_kibana_discover_url = state.alert.rocketChatAttachKibanaDiscoverUrl;
 
-      if (state.alert.rocketChatKibanaDiscoverColor) {
-        config.rocket_chat_kibana_discover_color = state.alert.rocketChatKibanaDiscoverColor;
-      }
+        if (state.alert.rocketChatKibanaDiscoverColor) {
+          config.rocket_chat_kibana_discover_color = state.alert.rocketChatKibanaDiscoverColor;
+        }
 
-      if (state.alert.rocketChatKibanaDiscoverTitle) {
-        config.rocket_chat_kibana_discover_title = state.alert.rocketChatKibanaDiscoverTitle;
+        if (state.alert.rocketChatKibanaDiscoverTitle) {
+          config.rocket_chat_kibana_discover_title = state.alert.rocketChatKibanaDiscoverTitle;
+        }
       }
 
       if (state.alert.rocketChatIgnoreSslErrors) {

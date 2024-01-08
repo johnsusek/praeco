@@ -3,7 +3,7 @@
     <el-col :span="19">
       <el-form-item label="Description">
         <el-switch
-          v-model="useDescription"
+          :value="useDescription"
           :disabled="viewOnly"
           @change="changeUseDescription" />
         <label>
@@ -16,7 +16,7 @@
 
     <el-col v-if="useDescription" :span="19">
       <el-form-item label="Description" prop="configDescription" required>
-        <el-input id="configDescription" v-model="configDescription" :disabled="viewOnly" />
+        <el-input id="configDescription" :value="configDescription" :disabled="viewOnly" @input="configDescription = $event" />
       </el-form-item>
     </el-col>
   </el-row>
@@ -54,11 +54,7 @@ export default {
 
   methods: {
     changeUseDescription(val) {
-      if (val) {
-        this.useDescription = true;
-      } else {
-        this.useDescription = false;
-      }
+      this.useDescription = val;
     },
   }
 };

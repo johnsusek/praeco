@@ -248,7 +248,7 @@ function initialState() {
 
     /* MS Teams */
     msTeamsWebhookUrl: [],
-    msTeamsThemeColor: '#ff0000',
+    msTeamsThemeColor: '',
     msTeamsAlertFixedWidth: false,
     msTeamsAlertSummary: 'ElastAlert Message',
     msTeamsProxy: '',

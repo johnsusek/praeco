@@ -29,7 +29,6 @@ gelf_http_ignore_ssl_errors: true
 gelf_log_level: 0
 gelf_timeout: 10
 gelf_type: "http"
-generate_kibana_discover_url: false
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false

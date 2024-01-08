@@ -8,30 +8,30 @@
     </el-radio>
 
     <praeco-form-item label="Twilio Account Sid" prop="twilioAccountSid" required>
-      <el-input id="twilioAccountSid" v-model="twilioAccountSid" :disabled="viewOnly" />
+      <el-input id="twilioAccountSid" :value="twilioAccountSid" :disabled="viewOnly" @input="twilioAccountSid = $event" />
       <label>This is sid of your twilio account.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Twilio Auth Token" prop="twilioAuth" required>
-      <el-input id="twilioAuth" v-model="twilioAuth" :disabled="viewOnly" />
+      <el-input id="twilioAuth" :value="twilioAuth" :disabled="viewOnly" @input="twilioAuth = $event" />
       <label>Auth token assosiated with your twilio account.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Twilio To Number" prop="twilioToNumber" required>
-      <el-input id="twilioToNumber" v-model="twilioToNumber" :disabled="viewOnly" />
+      <el-input id="twilioToNumber" :value="twilioToNumber" :disabled="viewOnly" @input="twilioToNumber = $event" />
       <label>The phone number where you would like send the notification. </label>
     </praeco-form-item>
 
     <div v-if="groupTwilio === 'sms'">
       <praeco-form-item label="Twilio From Number" prop="twilioFromNumber" required>
-        <el-input id="twilioFromNumber" v-model="twilioFromNumber" :disabled="viewOnly" />
+        <el-input id="twilioFromNumber" :value="twilioFromNumber" :disabled="viewOnly" @input="twilioFromNumber = $event" />
         <label>Your twilio phone number from which message will be sent. </label>
       </praeco-form-item>
     </div>
 
     <div v-if="groupTwilio === 'copilot'">
       <praeco-form-item label="Twilio Message Service Sid" prop="twilioMessageServiceSid" required>
-        <el-input id="twilioMessageServiceSid" v-model="twilioMessageServiceSid" :disabled="viewOnly" />
+        <el-input id="twilioMessageServiceSid" :value="twilioMessageServiceSid" :disabled="viewOnly" @input="twilioMessageServiceSid = $event" />
         <label>The SID of your twilio message service.</label>
       </praeco-form-item>
     </div>
@@ -123,5 +123,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 </style>

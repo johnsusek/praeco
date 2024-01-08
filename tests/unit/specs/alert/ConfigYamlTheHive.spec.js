@@ -23,7 +23,6 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
 hive_alert_config:
   type: "external"
   source: "def"

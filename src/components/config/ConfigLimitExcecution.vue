@@ -4,7 +4,7 @@
       <el-form-item label="Limit Excecution">
         <el-switch
           id="enableLimitExcecution"
-          v-model="enableLimitExcecution"
+          :value="enableLimitExcecution"
           :disabled="viewOnly"
           @change="changeLimitExcecution" />
         <label>Limit Excecution Setting.</label>

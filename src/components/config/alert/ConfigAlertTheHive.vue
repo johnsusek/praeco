@@ -1,27 +1,27 @@
 <template>
   <div>
     <praeco-form-item label="Hive Alert Config Title" prop="hiveAlertConfigTitle">
-      <el-input id="hiveAlertConfigTitle" v-model="hiveAlertConfigTitle" :disabled="viewOnly" />
+      <el-input id="hiveAlertConfigTitle" :value="hiveAlertConfigTitle" :disabled="viewOnly" @input="hiveAlertConfigTitle = $event" />
       <label>Alert's description.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Type" prop="hiveAlertConfigType">
-      <el-input id="hiveAlertConfigType" v-model="hiveAlertConfigType" :disabled="viewOnly" />
+      <el-input id="hiveAlertConfigType" :value="hiveAlertConfigType" :disabled="viewOnly" @input="hiveAlertConfigType = $event" />
       <label>Alert's type.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Source" prop="hiveAlertConfigSource">
-      <el-input id="hiveAlertConfigSource" v-model="hiveAlertConfigSource" :disabled="viewOnly" />
+      <el-input id="hiveAlertConfigSource" :value="hiveAlertConfigSource" :disabled="viewOnly" @input="hiveAlertConfigSource = $event" />
       <label>Alert's source.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Description" prop="hiveAlertConfigDescription">
-      <el-input id="hiveAlertConfigDescription" v-model="hiveAlertConfigDescription" :disabled="viewOnly" />
+      <el-input id="hiveAlertConfigDescription" :value="hiveAlertConfigDescription" :disabled="viewOnly" @input="hiveAlertConfigDescription = $event" />
       <label>Alert's description.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Severity" prop="hiveAlertConfigSeverity">
-      <el-input-number id="hiveAlertConfigSeverity" v-model.number="hiveAlertConfigSeverity" :min="1" :max="4" :disabled="viewOnly" />
+      <el-input-number id="hiveAlertConfigSeverity" :value="hiveAlertConfigSeverity" :min="1" :max="4" :disabled="viewOnly" @input="hiveAlertConfigSeverity = $event" />
       <label>Alert's severity: 1, 2, 3, 4 for LOW, MEDIUM, HIGH, CRTICAL.</label>
     </praeco-form-item>
 
@@ -77,12 +77,12 @@
     </el-popover>
 
     <praeco-form-item label="Hive Alert Config Tlp" prop="hiveAlertConfigTlp">
-      <el-input-number id="hiveAlertConfigTlp" v-model.number="hiveAlertConfigTlp" :min="0" :max="3" :disabled="viewOnly" />
+      <el-input-number id="hiveAlertConfigTlp" :value="hiveAlertConfigTlp" :min="0" :max="3" :disabled="viewOnly" @input="hiveAlertConfigTlp = $event" />
       <label>Alert's TLP: 0, 1, 2, 3 for WHITE, GREEN, AMBER, RED.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Status" prop="hiveAlertConfigStatus">
-      <el-radio-group v-model="hiveAlertConfigStatus" :disabled="viewOnly">
+      <el-radio-group :value="hiveAlertConfigStatus" :disabled="viewOnly" @input="hiveAlertConfigStatus = $event">
         <el-radio id="hiveAlertConfigStatusWaiting" label="Waiting" border>
           Waiting
         </el-radio>
@@ -102,7 +102,7 @@
     <el-form-item label="Hive Alert Config Follow" prop="hiveAlertConfigFollow">
       <el-switch
         id="hiveAlertConfigFollow"
-        v-model="hiveAlertConfigFollow"
+        :value="hiveAlertConfigFollow"
         :disabled="viewOnly"
         @change="changeHiveAlertConfigFollow" />
     </el-form-item>
@@ -206,11 +206,7 @@ export default {
 
   methods: {
     changeHiveAlertConfigFollow(val) {
-      if (val) {
-        this.hiveAlertConfigFollow = true;
-      } else {
-        this.hiveAlertConfigFollow = false;
-      }
+      this.hiveAlertConfigFollow = val;
     },
 
     async validate() {
@@ -267,5 +263,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 </style>

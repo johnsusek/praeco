@@ -23,7 +23,6 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
 gitter_msg_level: "info"
 gitter_proxy: "hostname:8080"
 gitter_webhook_url: "https://xxxxxxxxxxxxxx/webhook/xxxxxxxx"

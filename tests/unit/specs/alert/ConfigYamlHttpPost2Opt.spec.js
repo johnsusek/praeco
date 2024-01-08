@@ -20,7 +20,6 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
 http_post2_ca_certs: "/etc/certs/cert.pem"
 http_post2_ignore_ssl_errors: true
 http_post2_proxy: "host:8080"

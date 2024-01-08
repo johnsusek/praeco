@@ -1,11 +1,19 @@
+const rulesDirPlugin = require('eslint-plugin-rulesdir');
+
+rulesDirPlugin.RULES_DIR = 'eslint/rules';
+
 module.exports = {
   root: true,
   env: {
     node: true,
     mocha: true
   },
-  extends: ['plugin:vue/recommended', '@vue/eslint-config-airbnb'],
+  extends: ['plugin:vue/vue3-recommended', '@vue/eslint-config-airbnb'],
+  plugins: [
+    'rulesdir'
+  ],
   rules: {
+    'rulesdir/custom1': 'off',
     'vue/max-len': 'off',
     'import/no-unresolved': 'off',
     'vuejs-accessibility/rule-name': 'off',
@@ -62,10 +70,120 @@ module.exports = {
         singleline: 'never',
         multiline: 'never'
       }
-    ]
+    ],
+    'no-restricted-imports': [
+      'error',
+      {
+        'paths': [
+          {
+            'name': 'vue',
+            'importNames': ['default']
+          },
+        ],
+      },
+    ],
   },
   parserOptions: {
     parser: '@babel/eslint-parser',
     requireConfigFile: false
-  }
+  },
+  overrides: [
+    // TODO: Vue3 Support
+    {
+      files: [
+        '.eslintrc.js',
+      ],
+      rules: {
+        'quote-props': 'off',
+      },
+    },
+    // TODO: Vue3 Support
+    {
+      files: [
+        'src/App.vue',
+      ],
+      rules: {
+        'vue/v-on-event-hyphenation': 'off',
+      },
+    },
+    // TODO: Vue3 Support
+    {
+      files: [
+        'src/components/DateTime.vue',
+        'src/components/config/ConfigTest.vue',
+        'src/views/ConfigBuilder.vue',
+      ],
+      rules: {
+        'vue/no-deprecated-destroyed-lifecycle': 'off',
+      },
+    },
+    // TODO: Vue3 Support
+    {
+      files: [
+        'src/components/ElastalertTimePicker.vue',
+        'src/components/NavTree.vue',
+        'src/components/config/ConfigCondition.vue',
+        'src/components/config/ConfigKibanaDiscover.vue',
+        'src/components/config/ConfigQuery.vue',
+        'src/components/config/ConfigSettings.vue',
+        'src/components/config/alert/ConfigAlert.vue',
+        'src/components/config/alert/ConfigAlertAlerta.vue',
+        'src/components/config/alert/ConfigAlertCommand.vue',
+        'src/components/config/alert/ConfigAlertGoogleChat.vue',
+        'src/components/config/alert/ConfigAlertHttpPost.vue',
+        'src/components/config/alert/ConfigAlertHttpPost2.vue',
+        'src/components/config/alert/ConfigAlertMattermost.vue',
+        'src/components/config/alert/ConfigAlertMsTeams.vue',
+        'src/components/config/alert/ConfigAlertPagerDuty.vue',
+        'src/components/config/alert/ConfigAlertRocketChat.vue',
+        'src/components/config/alert/ConfigAlertSlack.vue',
+        'src/components/config/alert/ConfigAlertSubjectBody.vue',
+        'src/components/config/alert/ConfigAlertTencentSms.vue',
+        'src/components/config/alert/ConfigAlertTheHive.vue',
+        'src/views/RuleView.vue',
+        'src/views/TemplateView.vue'
+      ],
+      rules: {
+        'vue/no-deprecated-v-on-native-modifier': 'off',
+      },
+    },
+    // TODO: Vue3 Support
+    {
+      files: [
+        'src/components/ESChart.vue',
+        'src/contrib.js',
+        'src/main.js',
+        'src/registration.js',
+        'src/router.js',
+        'src/store/config/match.js',
+        'src/store/config/settings.js',
+        'src/store/configs.js',
+        'src/store/index.js',
+        'src/store/metadata.js'
+      ],
+      rules: {
+        'no-restricted-imports': 'off',
+      },
+    },
+    // TODO: Vue3 Support
+    {
+      files: [
+        'src/components/config/ConfigCondition.vue',
+        'src/views/RuleView.vue',
+        'src/views/TemplateView.vue'
+      ],
+      rules: {
+        'vue/no-deprecated-v-bind-sync': 'off',
+      },
+    },
+    // TODO: Vue3 Support
+    {
+      files: [
+        'src/views/ConfigBuilder.vue'
+      ],
+      rules: {
+        'vue/v-on-event-hyphenation': 'off',
+      },
+    },
+  ]
 };

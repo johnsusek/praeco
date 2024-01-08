@@ -8,21 +8,21 @@
     </el-radio>
 
     <el-form-item label="Service Key" prop="pagerdutyServiceKey" required>
-      <el-input id="pagerdutyServiceKey" v-model="pagerdutyServiceKey" :disabled="viewOnly" />
+      <el-input id="pagerdutyServiceKey" :value="pagerdutyServiceKey" :disabled="viewOnly" @input="pagerdutyServiceKey = $event" />
       <label>
         Integration Key generated after creating a service with the ‘Use our API directly’ option at Integration Settingsl
       </label>
     </el-form-item>
 
     <el-form-item label="Client Name" prop="pagerdutyClientName" required>
-      <el-input id="pagerdutyClientName" v-model="pagerdutyClientName" :disabled="viewOnly" />
+      <el-input id="pagerdutyClientName" :value="pagerdutyClientName" :disabled="viewOnly" @input="pagerdutyClientName = $event" />
       <label>
         The name of the monitoring client that is triggering this event.
       </label>
     </el-form-item>
 
     <el-form-item label="Event Type" prop="pagerdutyEventType" required>
-      <el-radio-group v-model="pagerdutyEventType" :disabled="viewOnly">
+      <el-radio-group :value="pagerdutyEventType" :disabled="viewOnly" @input="pagerdutyEventType = $event">
         <el-radio id="pagerdutyEventTypeTrigger" label="trigger">
           Trigger
         </el-radio>
@@ -36,7 +36,7 @@
     </el-form-item>
 
     <el-form-item label="Incident Key" prop="pagerdutyIncidentKey">
-      <el-input id="pagerdutyIncidentKey" v-model="pagerdutyIncidentKey" :disabled="viewOnly" />
+      <el-input id="pagerdutyIncidentKey" :value="pagerdutyIncidentKey" :disabled="viewOnly" @input="pagerdutyIncidentKey = $event" />
       <label>
         If not set PagerDuty will trigger a new incident for each alert sent.
         If set to a unique string per rule PagerDuty will identify the incident that this event should be applied. If there’s no open (i.e. unresolved) incident with this key, a new one will be created.
@@ -96,7 +96,7 @@
     </el-popover>
 
     <el-form-item label="Proxy" prop="pagerdutyProxy">
-      <el-input id="pagerdutyProxy" v-model="pagerdutyProxy" :disabled="viewOnly" />
+      <el-input id="pagerdutyProxy" :value="pagerdutyProxy" :disabled="viewOnly" @input="pagerdutyProxy = $event" />
       <label>
         By default ElastAlert2 will not use a network proxy to send notifications to PagerDuty.
         Set this option using hostname:port if you need to use a proxy.
@@ -105,7 +105,7 @@
 
     <div v-if="groupPagerduty === 'v2'">
       <el-form-item label="Payload Class" prop="pagerdutyV2PayloadClass">
-        <el-input id="pagerdutyV2PayloadClass" v-model="pagerdutyV2PayloadClass" :disabled="viewOnly" />
+        <el-input id="pagerdutyV2PayloadClass" :value="pagerdutyV2PayloadClass" :disabled="viewOnly" @input="pagerdutyV2PayloadClass = $event" />
         <label>
           Sets the class of the payload. (the event type in PagerDuty)
         </label>
@@ -163,7 +163,7 @@
       </el-popover>
 
       <el-form-item label="Payload Component" prop="pagerdutyV2PayloadComponent">
-        <el-input id="pagerdutyV2PayloadComponent" v-model="pagerdutyV2PayloadComponent" :disabled="viewOnly" />
+        <el-input id="pagerdutyV2PayloadComponent" :value="pagerdutyV2PayloadComponent" :disabled="viewOnly" @input="pagerdutyV2PayloadComponent = $event" />
         <label>
           Sets the component of the payload. (what program/interface/etc the event came from)
         </label>
@@ -221,7 +221,7 @@
       </el-popover>
 
       <el-form-item label="Payload Group" prop="pagerdutyV2PayloadGroup">
-        <el-input id="pagerdutyV2PayloadGroup" v-model="pagerdutyV2PayloadGroup" :disabled="viewOnly" />
+        <el-input id="pagerdutyV2PayloadGroup" :value="pagerdutyV2PayloadGroup" :disabled="viewOnly" @input="pagerdutyV2PayloadGroup = $event" />
         <label>
           Sets the logical grouping (e.g. app-stack)
         </label>
@@ -279,7 +279,7 @@
       </el-popover>
 
       <el-form-item label="Severity" prop="pagerdutyV2PayloadSeverity">
-        <el-radio-group v-model="pagerdutyV2PayloadSeverity" :disabled="viewOnly">
+        <el-radio-group :value="pagerdutyV2PayloadSeverity" :disabled="viewOnly" @input="pagerdutyV2PayloadSeverity = $event">
           <el-radio id="pagerdutyV2PayloadSeverityCritical" label="critical">
             Critical
           </el-radio>
@@ -299,7 +299,7 @@
       </el-form-item>
 
       <el-form-item label="Payload Group" prop="pagerdutyV2PayloadSource">
-        <el-input id="pagerdutyV2PayloadSource" v-model="pagerdutyV2PayloadSource" :disabled="viewOnly" />
+        <el-input id="pagerdutyV2PayloadSource" :value="pagerdutyV2PayloadSource" :disabled="viewOnly" @input="pagerdutyV2PayloadSource = $event" />
         <label>
           Sets the source of the event, preferably the hostname or fqdn.
         </label>
@@ -359,7 +359,7 @@
       <el-form-item label="Payload include All Info" prop="pagerdutyV2PayloadIncludeAllInfo">
         <el-switch
           id="pagerdutyV2PayloadIncludeAllInfo"
-          v-model="pagerdutyV2PayloadIncludeAllInfo"
+          :value="pagerdutyV2PayloadIncludeAllInfo"
           :disabled="viewOnly"
           @change="changePagerdutyV2PayloadIncludeAllInfo" />
       </el-form-item>
@@ -810,15 +810,11 @@ export default {
     },
 
     changePagerdutyV2PayloadIncludeAllInfo(val) {
-      if (val) {
-        this.pagerdutyV2PayloadIncludeAllInfo = true;
-      } else {
-        this.pagerdutyV2PayloadIncludeAllInfo = false;
-      }
+      this.pagerdutyV2PayloadIncludeAllInfo = val;
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 </style>

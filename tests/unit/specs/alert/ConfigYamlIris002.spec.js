@@ -23,7 +23,6 @@ filter:
   - query:
       query_string:
         query: "@timestamp:*"
-generate_kibana_discover_url: false
 import: "BaseRule.config"
 index: "hannibal-*"
 iris_alert_note: "a"

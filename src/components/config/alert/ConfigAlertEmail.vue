@@ -5,7 +5,7 @@
       :value="fromAddr"
       label="From address"
       prop="fromAddr">
-      <el-input v-model="fromAddr" :disabled="viewOnly" />
+      <el-input :value="fromAddr" :disabled="viewOnly" @input="fromAddr = $event" />
       <label>
         This sets the From header in the email.
         By default, the from address is ElastAlert2@
@@ -18,7 +18,7 @@
       :value="replyTo"
       label="Reply to"
       prop="replyTo">
-      <el-input v-model="replyTo" :disabled="viewOnly" />
+      <el-input :value="replyTo" :disabled="viewOnly" @input="replyTo = $event" />
       <label>
         This sets the Reply-To header in the email.
         By default, the from address is ElastAlert2@ and the
@@ -27,24 +27,24 @@
     </praeco-form-item>
 
     <el-form-item label="To" prop="email" required>
-      <el-input v-model="email" :disabled="viewOnly" />
+      <el-input :value="email" :disabled="viewOnly" @input="email = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item v-if="!viewOnly || cc" label="CC" prop="cc">
-      <el-input v-model="cc" :disabled="viewOnly" />
+      <el-input :value="cc" :disabled="viewOnly" @input="cc = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item v-if="!viewOnly || bcc" label="BCC" prop="bcc">
-      <el-input v-model="bcc" :disabled="viewOnly" />
+      <el-input :value="bcc" :disabled="viewOnly" @input="bcc = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item label="SMTP SSL" prop="smtpSsl">
       <el-switch
         id="smtpSsl"
-        v-model="smtpSsl"
+        :value="smtpSsl"
         :disabled="viewOnly"
         @change="changeSmtpSsl" />
       <label>
@@ -54,17 +54,17 @@
     </el-form-item>
 
     <el-form-item label="SMTP Host" prop="smtpHost">
-      <el-input v-model="smtpHost" :disabled="viewOnly" />
+      <el-input :value="smtpHost" :disabled="viewOnly" @input="smtpHost = $event" />
       <label>The SMTP host to use, defaults to localhost.</label>
     </el-form-item>
 
     <el-form-item label="SMTP Port" prop="smtpPort">
-      <el-input-number id="smtpPort" v-model="smtpPort" :disabled="viewOnly" />
+      <el-input-number id="smtpPort" :value="smtpPort" :disabled="viewOnly" @input="smtpPort = $event" />
       <label>The port to use. Default is 25.</label>
     </el-form-item>
 
     <el-form-item label="SMTP Auth File" prop="smtpAuthFile">
-      <el-input v-model="smtpAuthFile" :disabled="viewOnly" />
+      <el-input :value="smtpAuthFile" :disabled="viewOnly" @input="smtpAuthFile = $event" />
       <label>
         The path to a file which contains SMTP authentication credentials.
         The path can be either absolute or relative to the given rule.
@@ -74,21 +74,21 @@
     </el-form-item>
 
     <el-form-item label="SMTP Key File" prop="smtpKeyFile">
-      <el-input v-model="smtpKeyFile" :disabled="viewOnly" />
+      <el-input :value="smtpKeyFile" :disabled="viewOnly" @input="smtpKeyFile = $event" />
       <label>Connect the SMTP host using the given path to a TLS key file, default to None.</label>
     </el-form-item>
 
     <el-form-item label="SMTP Cert File" prop="smtpCertFile">
-      <el-input v-model="smtpCertFile" :disabled="viewOnly" />
+      <el-input :value="smtpCertFile" :disabled="viewOnly" @input="smtpCertFile = $event" />
       <label> Connect the SMTP host using the given path to a TLS certificate file, default to None.</label>
     </el-form-item>
 
     <el-form-item label="Email From Field" prop="emailFromField">
-      <el-input v-model="emailFromField" :disabled="viewOnly" />
+      <el-input :value="emailFromField" :disabled="viewOnly" @input="emailFromField = $event" />
     </el-form-item>
 
     <el-form-item label="Email Add Domain" prop="emailAddDomain">
-      <el-input v-model="emailAddDomain" :disabled="viewOnly" />
+      <el-input :value="emailAddDomain" :disabled="viewOnly" @input="emailAddDomain = $event" />
     </el-form-item>
   </div>
 </template>
@@ -285,16 +285,12 @@ export default {
 
   methods: {
     changeSmtpSsl(val) {
-      if (val) {
-        this.smtpSsl = true;
-      } else {
-        this.smtpSsl = false;
-      }
+      this.smtpSsl = val;
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

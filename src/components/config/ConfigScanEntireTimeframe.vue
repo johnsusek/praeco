@@ -4,7 +4,7 @@
       <el-form-item label="scan entire timeframe">
         <el-switch
           id="scanEntireTimeframe"
-          v-model="scanEntireTimeframe"
+          :value="scanEntireTimeframe"
           :disabled="viewOnly"
           @change="changeScanEntireTimeframe" />
         <label>
@@ -37,11 +37,7 @@ export default {
 
   methods: {
     changeScanEntireTimeframe(val) {
-      if (val) {
-        this.scanEntireTimeframe = true;
-      } else {
-        this.scanEntireTimeframe = false;
-      }
+      this.scanEntireTimeframe = val;
     }
   }
 };

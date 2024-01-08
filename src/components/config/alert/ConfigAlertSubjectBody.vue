@@ -419,7 +419,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .atwho-wrap >>> .atwho-panel {
   position: initial;
 }

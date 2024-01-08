@@ -18,7 +18,7 @@
     <!-- dingtalk_access_token -->
 
     <praeco-form-item label="Access Token" prop="dingtalkAccessToken">
-      <el-input id="dingtalkAccessToken" v-model="dingtalkAccessToken" :disabled="viewOnly" />
+      <el-input id="dingtalkAccessToken" :value="dingtalkAccessToken" :disabled="viewOnly" @input="dingtalkAccessToken = $event" />
       <label>
         Dingtalk access token.
       </label>
@@ -28,7 +28,7 @@
       <!-- dingtalk_single_title -->
 
       <praeco-form-item label="Single Title" prop="dingtalkSingleTitle" required>
-        <el-input id="dingtalkSingleTitle" v-model="dingtalkSingleTitle" :disabled="viewOnly" />
+        <el-input id="dingtalkSingleTitle" :value="dingtalkSingleTitle" :disabled="viewOnly" @input="dingtalkSingleTitle = $event" />
         <label>
           The title of a single button.
         </label>
@@ -37,7 +37,7 @@
       <!-- dingtalk_single_url -->
 
       <praeco-form-item label="Single URL" prop="dingtalkSingleUrl">
-        <el-input id="dingtalkSingleUrl" v-model="dingtalkSingleUrl" :disabled="viewOnly" />
+        <el-input id="dingtalkSingleUrl" :value="dingtalkSingleUrl" :disabled="viewOnly" @input="dingtalkSingleUrl = $event" />
         <label>
           Jump link for a single button.
         </label>
@@ -47,7 +47,7 @@
     <div v-if="groupDingtalk === 'action_card'">
       <!-- dingtalk_btn_orientation -->
       <praeco-form-item label="Msg Type" prop="dingtalkBtnOrientation" required>
-        <el-radio-group v-model="dingtalkBtnOrientation" :disabled="viewOnly">
+        <el-radio-group :value="dingtalkBtnOrientation" :disabled="viewOnly" @input="dingtalkBtnOrientation = $event">
           <el-radio id="dingtalkBtnOrientation0" label="0">
             Buttons are arranged vertically
           </el-radio><br>
@@ -130,6 +130,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

@@ -53,7 +53,7 @@
     <el-form-item label="CA Certs" prop="httpPost2CaCerts">
       <el-switch
         id="httpPost2CaCerts"
-        v-model="httpPost2CaCerts"
+        :value="httpPost2CaCerts"
         :disabled="viewOnly"
         @change="changeHttpPost2CaCerts" />
     </el-form-item>
@@ -61,13 +61,13 @@
     <el-form-item label="Ignore SSL Errors" prop="httpPost2IgnoreSslErrors">
       <el-switch
         id="httpPost2IgnoreSslErrors"
-        v-model="httpPost2IgnoreSslErrors"
+        :value="httpPost2IgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeHttpPost2IgnoreSslErrors" />
     </el-form-item>
 
     <el-form-item label="Timeout" prop="httpPost2Timeout">
-      <el-input-number id="httpPost2Timeout" v-model="httpPost2Timeout" :disabled="viewOnly" />
+      <el-input-number id="httpPost2Timeout" :value="httpPost2Timeout" :disabled="viewOnly" @input="httpPost2Timeout = $event" />
       <label>
         The timeout value, in seconds, for making the post.
         The default is 10.
@@ -76,7 +76,7 @@
     </el-form-item>
 
     <el-form-item label="Proxy" prop="httpPost2Proxy">
-      <el-input id="httpPost2Proxy" v-model="httpPost2Proxy" :disabled="viewOnly" />
+      <el-input id="httpPost2Proxy" :value="httpPost2Proxy" :disabled="viewOnly" @input="httpPost2Proxy = $event" />
       <label>URL of proxy, if required.</label>
     </el-form-item>
   </div>
@@ -202,23 +202,15 @@ export default {
     },
 
     changeHttpPost2IgnoreSslErrors(val) {
-      if (val) {
-        this.httpPost2IgnoreSslErrors = true;
-      } else {
-        this.httpPost2IgnoreSslErrors = false;
-      }
+      this.httpPost2IgnoreSslErrors = val;
     },
 
     changeHttpPost2CaCerts(val) {
-      if (val) {
-        this.httpPost2CaCerts = true;
-      } else {
-        this.httpPost2CaCerts = false;
-      }
+      this.httpPost2CaCerts = val;
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 </style>

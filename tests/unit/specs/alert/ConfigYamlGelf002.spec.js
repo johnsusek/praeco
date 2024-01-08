@@ -29,7 +29,6 @@ gelf_log_level: 0
 gelf_port: 10500
 gelf_timeout: 10
 gelf_type: "tcp"
-generate_kibana_discover_url: false
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
