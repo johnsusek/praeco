@@ -3,12 +3,10 @@ import store from '@/store';
 import { mockAxios } from '../../setup';
 import { ruleYaml } from '../../mockData/alert/ruleDataMsTeamsOpt.js';
 
-mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
-
 describe('MsTeamsOpt YAML parsing', () => {
   it('renders the correct yaml', async () => {
+    mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
-
     let yaml = store.getters['config/yaml']();
 
     let expected = `__praeco_full_path: "test123"
@@ -27,6 +25,10 @@ generate_kibana_discover_url: true
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
+kibana_discover_from_timedelta:
+  minutes: 10
+kibana_discover_to_timedelta:
+  minutes: 10
 match_enhancements: []
 ms_teams_alert_fixed_width: true
 ms_teams_alert_summary: "Message"

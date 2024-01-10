@@ -6,7 +6,7 @@ alert_subject_args: []
 alert_text: this is a test body
 alert_text_args: []
 alert_text_type: alert_text_only
-discord_emoji_title: ':error:'
+discord_emoji_title: ':postal_horn:'
 discord_embed_footer: footer
 discord_embed_icon_url: http://testserver/xxx/test.png
 discord_proxy: https://hostname:8080/

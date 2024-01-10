@@ -3,10 +3,9 @@ import Queries from '@/views/Queries';
 import mockQueryLog from '../mockData/queryLog.json';
 import { mountComponent, mockAxios } from '../setup';
 
-mockAxios.onGet('/api/metadata/elastalert_status').reply(200, mockQueryLog);
-
 describe('Queries log', () => {
   it('renders the query log correctly', (done) => {
+    mockAxios.onGet('/api/metadata/elastalert_status').reply(200, mockQueryLog);
     let wrapper = mountComponent(Queries);
 
     wrapper.setData({

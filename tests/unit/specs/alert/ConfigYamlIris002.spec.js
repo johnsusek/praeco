@@ -3,12 +3,10 @@ import store from '@/store';
 import { mockAxios } from '../../setup.js';
 import { ruleYaml } from '../../mockData/alert/ruleDataIris002.js';
 
-mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
-
 describe('Iris 002 YAML parsing', () => {
   it('renders the correct yaml', async () => {
+    mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
-
     let yaml = store.getters['config/yaml']();
 
     let expected = `__praeco_full_path: "test123"

@@ -3,12 +3,10 @@ import store from '@/store';
 import { mockAxios } from '../../setup';
 import { ruleYaml } from '../../mockData/alert/ruleDataVictorOps.js';
 
-mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
-
 describe('VictorOps YAML parsing', () => {
   it('renders the correct yaml', async () => {
+    mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
-
     let yaml = store.getters['config/yaml']();
 
     let expected = `__praeco_full_path: "test123"

@@ -3,7 +3,7 @@ const webpack = require('webpack');
 module.exports = {
   publicPath: process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : '/',
   configureWebpack: {
-    devtool: process.env.NODE_ENV === 'coverage' ? '#eval' : undefined,
+    devtool: process.env.NODE_ENV === 'coverage' ? 'eval' : undefined,
     performance: {
       hints: false
     },

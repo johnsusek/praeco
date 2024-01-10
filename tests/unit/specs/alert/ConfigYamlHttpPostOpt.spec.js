@@ -3,12 +3,10 @@ import store from '@/store';
 import { mockAxios } from '../../setup';
 import { ruleYaml } from '../../mockData/alert/ruleDataHttpPostOpt.js';
 
-mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
-
 describe('HttpPostOpt YAML parsing', () => {
   it('renders the correct yaml', async () => {
+    mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
-
     let yaml = store.getters['config/yaml']();
 
     let expected = `__praeco_full_path: "test123"
@@ -24,7 +22,8 @@ http_post_ca_certs: "/etc/certs/cert.pem"
 http_post_ignore_ssl_errors: true
 http_post_proxy: "host:8080"
 http_post_timeout: 10
-http_post_url: "http://localhost/webhook"
+http_post_url:
+  - "http://localhost/webhook"
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false

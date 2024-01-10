@@ -27,9 +27,10 @@ async function prep() {
 
 let wrapper;
 
-describe('ConfigCondition log', () => {
+describe('ConfigCondition log', async () => {
+  wrapper = await prep();
+
   it('renders the numEvents', async () => {
-    wrapper = await prep();
     return expect(wrapper.text()).to.contain('ABOVE 10000');
   });
 

@@ -3,12 +3,11 @@ import store from '@/store';
 import { mockAxios } from '../../setup';
 import { ruleYaml } from '../../mockData/alert/ruleDataMattermost.js';
 
-mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
-
+// TODO: Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves.
 describe('Mattermost YAML parsing', () => {
   it('renders the correct yaml', async () => {
+    mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
-
     let yaml = store.getters['config/yaml']();
 
     let expected = `__praeco_full_path: "test123"

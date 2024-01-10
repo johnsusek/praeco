@@ -3,12 +3,10 @@ import store from '@/store';
 import { mockAxios } from '../../setup';
 import { ruleYaml } from '../../mockData/alert/ruleDataDiscordOpt.js';
 
-mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
-
 describe('DiscordOpt YAML parsing', () => {
   it('renders the correct yaml', async () => {
+    mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
-
     let yaml = store.getters['config/yaml']();
 
     let expected = `__praeco_full_path: "test123"
@@ -20,7 +18,7 @@ alert_text: "this is a test body"
 alert_text_type: "alert_text_only"
 discord_embed_footer: "footer"
 discord_embed_icon_url: "http://testserver/xxx/test.png"
-discord_emoji_title: ":error:"
+discord_emoji_title: ":postal_horn:"
 discord_proxy: "https://hostname:8080/"
 discord_proxy_login: "user"
 discord_proxy_password: "password"
