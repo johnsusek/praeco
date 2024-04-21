@@ -242,6 +242,9 @@ export default {
       }, {
         code: '8.12',
         name: '8.12'
+      }, {
+        code: '8.13',
+        name: '8.13'
       }],
     };
   },
