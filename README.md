@@ -520,7 +520,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 18.19.0
+nvm install 20.12.2
 ```
 
 ```sh
@@ -554,14 +554,22 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 18.19.0
+nvm install 20.12.2
 ```
 
 ```sh
 cd ~/praeco
 nvm use "$(cat .nvmrc)"
-npm install --legacy-peer-deps
+npm install
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
+
+# edit src/main.js
+/api-ws/test to /ws/test
+
+# edit vue.config.js
+/api-ws/test to /ws/test
+
+# run
 npm run serve
 ```
 
