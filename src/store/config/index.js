@@ -584,6 +584,15 @@ export default {
         commit('alert/UPDATE_SES_EMAIL_FROM_FIELD', config.ses_email_from_field);
         commit('alert/UPDATE_SES_EMAIL_ADD_DOMAIN', config.ses_email_add_domain);
 
+        /* WorkWechat */
+        commit('alert/UPDATE_WORK_WECHAT_BOT_ID', config.work_wechat_bot_id);
+
+        if (config.work_wechat_msgtype) {
+          commit('alert/UPDATE_WORK_WECHAT_MSGTYPE', config.work_wechat_msgtype);
+        } else {
+          commit('alert/UPDATE_WORK_WECHAT_MSGTYPE', 'text');
+        }
+
         /* Zabbix */
         if (config.zbx_sender_host) {
           commit('alert/UPDATE_ZBX_SENDER_HOST', config.zbx_sender_host);
@@ -2255,6 +2264,20 @@ export default {
       return config;
     },
 
+    workwechat(state) {
+      let config = {};
+
+      if (state.alert.workWechatBotId) {
+        config.work_wechat_bot_id = state.alert.workWechatBotId;
+      }
+
+      if (state.alert.workWechatMsgtype) {
+        config.work_wechat_msgtype = state.alert.workWechatMsgtype;
+      }
+
+      return config;
+    },
+
     zabbix(state) {
       let config = {};
 
@@ -3288,6 +3311,10 @@ export default {
         config = { ...config, ...getters.zabbix };
       }
 
+      if (state.alert.alert.includes('workwechat')) {
+        config = { ...config, ...getters.workwechat };
+      }
+
       if (state.alert.alert.includes('alerta')
         || state.alert.alert.includes('alertmanager')
         || state.alert.alert.includes('chatwork')
@@ -3316,6 +3343,7 @@ export default {
         || state.alert.alert.includes('stomp')
         || state.alert.alert.includes('telegram')
         || state.alert.alert.includes('tencent_sms')
+        || state.alert.alert.includes('workwechat')
         || state.alert.alert.includes('victorops')) {
         config = { ...config, ...getters.subjectBody };
       }

@@ -399,6 +399,10 @@ function initialState() {
     victoropsEntityDisplayName: '',
     victoropsProxy: '',
 
+    /* WorkWechat */
+    workWechatBotId: '',
+    workWechatMsgtype: 'text',
+
     /* Zabbix */
     zbxSenderHost: 'localhost',
     zbxSenderPort: 10051,
@@ -2197,6 +2201,15 @@ export default {
 
     UPDATE_VICTOROPS_PROXY(state, victoropsProxy) {
       state.victoropsProxy = victoropsProxy;
+    },
+
+    /* WorkWechat */
+    UPDATE_WORK_WECHAT_BOT_ID(state, workWechatBotId) {
+      state.workWechatBotId = workWechatBotId;
+    },
+
+    UPDATE_WORK_WECHAT_MSGTYPE(state, workWechatMsgtype) {
+      state.workWechatMsgtype = workWechatMsgtype;
     },
 
     /* Zabbix */
