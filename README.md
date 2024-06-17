@@ -477,7 +477,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 **Python Support version**
 
-- Compatible with 3.9 or later
+- Compatible with 3.12 or later
 
 **Elasticsearch Support version**
 
