@@ -1030,6 +1030,8 @@ export default {
 
         commit('alert/UPDATE_DINGTALK_BTN_ORIENTATION', config.dingtalk_btn_orientation);
 
+        commit('alert/UPDATE_DINGTALK_SIGN', config.dingtalk_sign);
+
         /* Slack */
         if (config.slack_webhook_url) {
           commit('alert/UPDATE_SLACK_WEBHOOK_URL', config.slack_webhook_url);
@@ -3031,6 +3033,10 @@ export default {
       if (state.alert.dingtalkProxyLogin && state.alert.dingtalkProxyPass) {
         config.dingtalk_proxy_login = state.alert.dingtalkProxyLogin;
         config.dingtalk_proxy_pass = state.alert.dingtalkProxy;
+      }
+
+      if (state.alert.dingtalkSign) {
+        config.dingtalk_sign = state.alert.dingtalkSign;
       }
 
       return config;

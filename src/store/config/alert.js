@@ -130,6 +130,7 @@ function initialState() {
     dingtalkSingleTitle: '',
     dingtalkSingleUrl: '',
     dingtalkBtnOrientation: '0',
+    dingtalkSign: '',
 
     /* Datadog */
     datadogApiKey: '',
@@ -976,6 +977,10 @@ export default {
 
     UPDATE_DINGTALK_BTN_ORIENTATION(state, dingtalkBtnOrientation) {
       state.dingtalkBtnOrientation = dingtalkBtnOrientation;
+    },
+
+    UPDATE_DINGTALK_SIGN(state, dingtalkSign) {
+      state.dingtalkSign = dingtalkSign;
     },
 
     /* Discord */

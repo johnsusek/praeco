@@ -9,6 +9,7 @@ alert_text_type: alert_text_only
 dingtalk_access_token: 'abc'
 dingtalk_btn_orientation: '0'
 dingtalk_msgtype: 'action_card'
+dingtalk_sign: 'xxxx'
 dingtalk_single_title: 'elastalert2'
 dingtalk_single_url: 'http://localhost/test.png'
 doc_type: syslog
