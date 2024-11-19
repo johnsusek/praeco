@@ -251,6 +251,9 @@ export default {
       }, {
         code: '8.15',
         name: '8.15'
+      }, {
+        code: '8.16',
+        name: '8.16'
       }],
     };
   },
