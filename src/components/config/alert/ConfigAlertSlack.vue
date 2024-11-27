@@ -262,7 +262,7 @@
         id="slackAttachJiraTicketUrl"
         :value="slackAttachJiraTicketUrl"
         :disabled="viewOnly"
-        @change="changeSlackAttachKibanaDiscoverUrl" />
+        @change="changeSlackAttachJiraTicketUrl" />
     </el-form-item>
 
     <el-form-item label="Jira Ticket Color" prop="slackJiraTicketColor">
