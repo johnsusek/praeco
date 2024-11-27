@@ -122,7 +122,7 @@ Do not use `karql/elastalert2-server` as it does not implement the features requ
 yelp/elastalert is no longer supported as maintenance has been discontinued.
 
 Main challenges of yelp/elastalert
-- Not compatible with python 3.9 or later.
+- Not compatible with python 3.12 or later.
 - Line Notify, PagerTree, Stomp and Zabbix alert notifications do not work due to a bug.
 - kibana Discover only guarantees operation up to kibana 7.3.
 
@@ -474,7 +474,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 **Python Support version**
 
-- Compatible with 3.9 or later
+- Compatible with 3.12 or later
 
 **Elasticsearch Support version**
 
@@ -517,7 +517,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 18.19.0
+nvm install 20.12.2
 ```
 
 ```sh
@@ -551,14 +551,22 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 18.19.0
+nvm install 20.12.2
 ```
 
 ```sh
 cd ~/praeco
 nvm use "$(cat .nvmrc)"
-npm install --legacy-peer-deps
+npm install
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
+
+# edit src/main.js
+/api-ws/test to /ws/test
+
+# edit vue.config.js
+/api-ws/test to /ws/test
+
+# run
 npm run serve
 ```
 

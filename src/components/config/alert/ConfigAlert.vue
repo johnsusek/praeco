@@ -195,6 +195,9 @@
         <el-checkbox id="destinationIris" label="iris" border>
           IRIS
         </el-checkbox>
+        <el-checkbox id="destinationWorkWeChat" label="iris" border>
+          WorkWeChat
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -228,6 +231,7 @@
           || alert.includes('tencent_sms')
           || alert.includes('victorops')
           || alert.includes('gelf')
+          || alert.includes('workwechat')
           || alert.includes('telegram')">
         <template #label>
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
@@ -517,6 +521,14 @@
         </template>
         <ConfigAlertIris ref="iris" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- WorkWeChat -->
+      <el-tab-pane v-if="alert.includes('workwechat')">
+        <template #label>
+          WorkWeChat
+        </template>
+        <ConfigAlertWorkWeChat ref="workwechat" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -560,6 +572,7 @@ import ConfigAlertTheHive from './ConfigAlertTheHive';
 import ConfigAlertTwilio from './ConfigAlertTwilio';
 import ConfigAlertVictorOps from './ConfigAlertVictorOps';
 import ConfigAlertZabbix from './ConfigAlertZabbix';
+import ConfigAlertWorkWeChat from './ConfigAlertWorkWeChat.vue';
 
 let validateEmail = (rule, value, callback) => {
   if (!value || isEmail(value)) {
@@ -678,7 +691,8 @@ export default {
     ConfigAlertTheHive,
     ConfigAlertTwilio,
     ConfigAlertVictorOps,
-    ConfigAlertZabbix
+    ConfigAlertZabbix,
+    ConfigAlertWorkWeChat
   },
 
   props: ['viewOnly'],
