@@ -1,4 +1,4 @@
-FROM node:lts-hydrogen AS base
+FROM node:lts-iron AS base
 
 RUN apt update -qqy && \
     apt upgrade -qqy && \

@@ -130,6 +130,7 @@ function initialState() {
     dingtalkSingleTitle: '',
     dingtalkSingleUrl: '',
     dingtalkBtnOrientation: '0',
+    dingtalkSign: '',
 
     /* Datadog */
     datadogApiKey: '',
@@ -398,6 +399,10 @@ function initialState() {
     victoropsEntityId: '',
     victoropsEntityDisplayName: '',
     victoropsProxy: '',
+
+    /* WorkWechat */
+    workWechatBotId: '',
+    workWechatMsgtype: 'text',
 
     /* Zabbix */
     zbxSenderHost: 'localhost',
@@ -972,6 +977,10 @@ export default {
 
     UPDATE_DINGTALK_BTN_ORIENTATION(state, dingtalkBtnOrientation) {
       state.dingtalkBtnOrientation = dingtalkBtnOrientation;
+    },
+
+    UPDATE_DINGTALK_SIGN(state, dingtalkSign) {
+      state.dingtalkSign = dingtalkSign;
     },
 
     /* Discord */
@@ -2197,6 +2206,15 @@ export default {
 
     UPDATE_VICTOROPS_PROXY(state, victoropsProxy) {
       state.victoropsProxy = victoropsProxy;
+    },
+
+    /* WorkWechat */
+    UPDATE_WORK_WECHAT_BOT_ID(state, workWechatBotId) {
+      state.workWechatBotId = workWechatBotId;
+    },
+
+    UPDATE_WORK_WECHAT_MSGTYPE(state, workWechatMsgtype) {
+      state.workWechatMsgtype = workWechatMsgtype;
     },
 
     /* Zabbix */

@@ -57,6 +57,11 @@
         </el-radio-group>
       </praeco-form-item>
     </div>
+
+    <praeco-form-item label="dingtalk_sign" prop="dingtalkSign">
+      <el-input id="dingtalkSign" :value="dingtalkSign" :disabled="viewOnly" @input="dingtalkSign = $event" />
+      <label>DingTalk HMAC secret, used for message authentication.</label>
+    </praeco-form-item>
   </div>
 </template>
 
@@ -120,6 +125,15 @@ export default {
         this.$store.commit('config/alert/UPDATE_DINGTALK_BTN_ORIENTATION', value);
       }
     },
+
+    dingtalkSign: {
+      get() {
+        return this.$store.state.config.alert.dingtalkSign;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_DINGTALK_SIGN', value);
+      }
+    }
   },
 
   methods: {

@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import store from '@/store';
-import { mockAxios } from '../../setup';
-import { ruleYaml } from '../../mockData/alert/ruleDataDingtalk004.js';
+import { mockAxios } from '../../setup.js';
+import { ruleYaml } from '../../mockData/alert/ruleDataWorkWeChat.js';
 
-describe('Dingtalk 003 YAML parsing', () => {
+describe('WorkWeChat YAML parsing', () => {
   it('renders the correct yaml', async () => {
     mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
@@ -12,14 +12,10 @@ describe('Dingtalk 003 YAML parsing', () => {
     let expected = `__praeco_full_path: "test123"
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
-  - "dingtalk"
+  - "workwechat"
 alert_subject: "this is a test subject"
 alert_text: "this is a test body"
 alert_text_type: "alert_text_only"
-dingtalk_access_token: "abc"
-dingtalk_btn_orientation: "0"
-dingtalk_msgtype: "action_card"
-dingtalk_sign: "xxxx"
 doc_type: "syslog"
 filter:
   - query:
@@ -31,6 +27,8 @@ is_enabled: false
 match_enhancements: []
 name: "test123"
 num_events: 10000
+query_key:
+  - "beat.hostname"
 realert:
   minutes: 5
 terms_size: 50
@@ -41,6 +39,8 @@ timestamp_type: "iso"
 type: "frequency"
 use_count_query: true
 use_strftime_index: false
+work_wechat_bot_id: "your workwechat bot id"
+work_wechat_msgtype: "text"
 `;
 
     return expect(yaml).to.equal(expected);
