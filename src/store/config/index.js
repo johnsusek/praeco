@@ -817,6 +817,33 @@ export default {
           commit('alert/UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE', config.mattermost_kibana_discover_title);
         }
 
+        /* Matrix Hookshot */
+        if (typeof (config.matrixhookshot_webhook_url) === 'string') {
+          let tmpMatrixhookshotWebhookUrl = [];
+          tmpMatrixhookshotWebhookUrl.push(config.matrixhookshot_webhook_url);
+          config.matrixhookshot_webhook_url = tmpMatrixhookshotWebhookUrl;
+        }
+        if (config.matrixhookshot_webhook_url) {
+          commit('alert/UPDATE_MATRIXHOOKSHOT_WEBHOOK_URL', config.matrixhookshot_webhook_url);
+        }
+
+        commit('alert/UPDATE_MATRIXHOOKSHOT_USERNAME', config.matrixhookshot_username);
+
+        if (config.matrixhookshot_timeout) {
+          commit('alert/UPDATE_MATRIXHOOKSHOT_TIMEOUT', config.matrixhookshot_timeout);
+        }
+
+        commit('alert/UPDATE_MATRIXHOOKSHOT_TEXT', config.matrixhookshot_text);
+        commit('alert/UPDATE_MATRIXHOOKSHOT_PROXY', config.matrixhookshot_proxy);
+
+        if (config.matrixhookshot_ca_certs) {
+          commit('alert/UPDATE_MATRIXHOOKSHOT_CA_CERTS', config.matrixhookshot_ca_certs);
+        }
+
+        if (config.matrixhookshot_ignore_ssl_errors) {
+          commit('alert/UPDATE_MATRIXHOOKSHOT_IGNORE_SSL_ERRORS', config.matrixhookshot_ignore_ssl_errors);
+        }
+
         /* Rocket.Chat */
         if (config.rocket_chat_webhook_url) {
           commit('alert/UPDATE_ROCKET_CHAT_WEBHOOK_URL', config.rocket_chat_webhook_url);
@@ -2775,6 +2802,40 @@ export default {
       return config;
     },
 
+    matrixhookshot(state) {
+      let config = {};
+
+      if (state.alert.matrixhookshotWebhookUrl && state.alert.matrixhookshotWebhookUrl.length) {
+        config.matrixhookshot_webhook_url = state.alert.matrixhookshotWebhookUrl;
+      }
+
+      if (state.alert.matrixhookshotUsername) {
+        config.matrixhookshot_username = state.alert.matrixhookshotUsername;
+      }
+
+      if (state.alert.matrixhookshotTimeout) {
+        config.matrixhookshot_timeout = state.alert.matrixhookshotTimeout;
+      }
+
+      if (state.alert.matrixhookshotText) {
+        config.matrixhookshot_text = state.alert.matrixhookshotText;
+      }
+
+      if (state.alert.matrixhookshotProxy) {
+        config.matrixhookshot_proxy = state.alert.matrixhookshotProxy;
+      }
+
+      if (state.alert.matrixhookshotIgnoreSslErrors) {
+        config.matrixhookshot_ignore_ssl_errors = state.alert.matrixhookshotIgnoreSslErrors;
+      }
+
+      if (state.alert.matrixhookshotCaCerts) {
+        config.matrixhookshot_ca_certs = state.alert.matrixhookshotCaCerts;
+      }
+
+      return config;
+    },
+
     rocketchat(state) {
       let config = {};
 
@@ -3245,6 +3306,10 @@ export default {
         config = { ...config, ...getters.mattermost };
       }
 
+      if (state.alert.alert.includes('matrixhookshot')) {
+        config = { ...config, ...getters.matrixhookshot };
+      }
+
       if (state.alert.alert.includes('ms_teams')) {
         config = { ...config, ...getters.ms_teams };
       }
@@ -3337,6 +3402,7 @@ export default {
         || state.alert.alert.includes('lark')
         || state.alert.alert.includes('linenotify')
         || state.alert.alert.includes('mattermost')
+        || state.alert.alert.includes('matrixhookshot')
         || state.alert.alert.includes('ms_teams')
         || state.alert.alert.includes('opsgenie')
         || state.alert.alert.includes('pagerduty')

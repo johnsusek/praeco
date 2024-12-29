@@ -247,6 +247,15 @@ function initialState() {
     mattermostKibanaDiscoverColor: '#ec4b98',
     mattermostKibanaDiscoverTitle: 'Discover in Kibana',
 
+    /* Matrix Hookshot */
+    matrixhookshotWebhookUrl: [],
+    matrixhookshotUsername: '',
+    matrixhookshotTimeout: 0,
+    matrixhookshotText: '',
+    matrixhookshotProxy: '',
+    matrixhookshotIgnoreSslErrors: false,
+    matrixhookshotCaCerts: false,
+
     /* MS Teams */
     msTeamsWebhookUrl: [],
     msTeamsThemeColor: '',
@@ -1460,6 +1469,52 @@ export default {
 
     UPDATE_MATTERMOST_KIBANA_DISCOVER_TITLE(state, mattermostKibanaDiscoverTitle) {
       state.mattermostKibanaDiscoverTitle = mattermostKibanaDiscoverTitle;
+    },
+
+    /* Matrix Hookshot */
+    UPDATE_MATRIXHOOKSHOT_WEBHOOK_URL(state, matrixhookshotWebhookUrl) {
+      state.matrixhookshotWebhookUrl = matrixhookshotWebhookUrl;
+    },
+
+    ADD_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY(state) {
+      state.matrixhookshotWebhookUrl.push('');
+    },
+
+    ADD_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.matrixhookshotWebhookUrl.push(value);
+    },
+
+    REMOVE_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY(state, entry) {
+      state.matrixhookshotWebhookUrl = state.matrixhookshotWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.matrixhookshotWebhookUrl) return;
+      state.matrixhookshotWebhookUrl[index] = entry;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_USERNAME(state, matrixhookshotUsername) {
+      state.matrixhookshotUsername = matrixhookshotUsername;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_TEXT(state, matrixhookshotText) {
+      state.matrixhookshotText = matrixhookshotText;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_IGNORE_SSL_ERRORS(state, matrixhookshotIgnoreSslErrors) {
+      state.matrixhookshotIgnoreSslErrors = matrixhookshotIgnoreSslErrors;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_CA_CERTS(state, matrixhookshotCaCerts) {
+      state.matrixhookshotCaCerts = matrixhookshotCaCerts;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_TIMEOUT(state, matrixhookshotTimeout) {
+      state.matrixhookshotTimeout = matrixhookshotTimeout;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_PROXY(state, matrixhookshotProxy) {
+      state.matrixhookshotProxy = matrixhookshotProxy;
     },
 
     /* MS Teams */

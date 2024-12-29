@@ -195,8 +195,11 @@
         <el-checkbox id="destinationIris" label="iris" border>
           IRIS
         </el-checkbox>
-        <el-checkbox id="destinationWorkWeChat" label="iris" border>
+        <el-checkbox id="destinationWorkWeChat" label="workwechat" border>
           WorkWeChat
+        </el-checkbox>
+        <el-checkbox id="destinationMatrixHookshot" label="matrixhookshot" border>
+          Matrix Hookshot
         </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
@@ -232,6 +235,7 @@
           || alert.includes('victorops')
           || alert.includes('gelf')
           || alert.includes('workwechat')
+          || alert.includes('matrixhookshot')
           || alert.includes('telegram')">
         <template #label>
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
@@ -529,6 +533,14 @@
         </template>
         <ConfigAlertWorkWeChat ref="workwechat" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Matrix Hookshot -->
+      <el-tab-pane v-if="alert.includes('matrixhookshot')">
+        <template #label>
+          Matrix Hookshot
+        </template>
+        <ConfigAlertMatrixHookshot ref="matrixhookshot" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -558,6 +570,7 @@ import ConfigAlertJira from './ConfigAlertJira';
 import ConfigAlertLark from './ConfigAlertLark';
 import ConfigAlertLineNotify from './ConfigAlertLineNotify';
 import ConfigAlertMattermost from './ConfigAlertMattermost';
+import ConfigAlertMatrixHookshot from './ConfigAlertMatrixHookshot';
 import ConfigAlertMsTeams from './ConfigAlertMsTeams';
 import ConfigAlertOpsgenie from './ConfigAlertOpsgenie';
 import ConfigAlertPagerDuty from './ConfigAlertPagerDuty';
@@ -678,6 +691,7 @@ export default {
     ConfigAlertLark,
     ConfigAlertLineNotify,
     ConfigAlertMattermost,
+    ConfigAlertMatrixHookshot,
     ConfigAlertMsTeams,
     ConfigAlertOpsgenie,
     ConfigAlertPagerDuty,
@@ -748,6 +762,12 @@ export default {
           {
             validator: validateMattermostkDestination,
             trigger: 'change'
+          }
+        ],
+        matrixhookshotWebhookUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
           }
         ],
         msTeamsWebhookUrl: [
