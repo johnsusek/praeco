@@ -85,6 +85,7 @@ import ConfigAlertTheHive from '@/components/config/alert/ConfigAlertTheHive.vue
 import ConfigAlertTwilio from '@/components/config/alert/ConfigAlertTwilio.vue';
 import ConfigAlertOpsgenie from '@/components/config/alert/ConfigAlertOpsgenie.vue';
 import ConfigAlertVictorOps from '@/components/config/alert/ConfigAlertVictorOps.vue';
+import ConfigAlertWorkWeChat from './components/config/alert/ConfigAlertWorkWeChat.vue';
 import ConfigAlertZabbix from '@/components/config/alert/ConfigAlertZabbix.vue';
 import ConfigKibanaDiscover from '@/components/config/ConfigKibanaDiscover.vue';
 import ConfigTimeWindowFeature from '@/components/config/ConfigTimeWindowFeature.vue';
@@ -183,6 +184,7 @@ Vue.component('ConfigAlertTheHive', ConfigAlertTheHive);
 Vue.component('ConfigAlertTwilio', ConfigAlertTwilio);
 Vue.component('ConfigAlertOpsgenie', ConfigAlertOpsgenie);
 Vue.component('ConfigAlertVictorOps', ConfigAlertVictorOps);
+Vue.component('ConfigAlertWorkWeChat', ConfigAlertWorkWeChat);
 Vue.component('ConfigAlertZabbix', ConfigAlertZabbix);
 Vue.component('ConfigAggregation', ConfigAggregation);
 Vue.component('ConfigSettings', ConfigSettings);
