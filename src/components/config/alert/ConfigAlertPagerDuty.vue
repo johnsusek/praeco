@@ -364,6 +364,22 @@
           @change="changePagerdutyV2PayloadIncludeAllInfo" />
       </el-form-item>
     </div>
+
+    <el-form-item label="Ignore SSL Errors" prop="pagerdutyIgnoreSslErrors">
+      <el-switch
+        id="pagerdutyIgnoreSslErrors"
+        :value="pagerdutyIgnoreSslErrors"
+        :disabled="viewOnly"
+        @change="changeSlackIgnoreSslErrors" />
+    </el-form-item>
+
+    <el-form-item label="CA Certs" prop="pagerdutyCaCerts">
+      <el-switch
+        id="pagerdutyCaCerts"
+        :value="pagerdutyCaCerts"
+        :disabled="viewOnly"
+        @change="changeSlackCaCerts" />
+    </el-form-item>
   </div>
 </template>
 
@@ -582,6 +598,30 @@ export default {
       set(value) {
         this.$store.commit(
           'config/alert/UPDATE_PAGERDUTY_V2_PAYLOAD_INCLUDE_ALL_INFO',
+          value
+        );
+      }
+    },
+
+    pagerdutyIgnoreSslErrors: {
+      get() {
+        return this.$store.state.config.alert.pagerdutyIgnoreSslErrors;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_PAGERDUTY_IGNORE_SSL_ERRORS',
+          value
+        );
+      }
+    },
+
+    pagerdutyCaCerts: {
+      get() {
+        return this.$store.state.config.alert.pagerdutyCaCerts;
+      },
+      set(value) {
+        this.$store.commit(
+          'config/alert/UPDATE_PAGERDUTY_CA_CERTS',
           value
         );
       }

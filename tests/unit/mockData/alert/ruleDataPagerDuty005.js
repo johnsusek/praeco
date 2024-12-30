@@ -17,6 +17,8 @@ is_enabled: false
 name: test123
 num_events: 10000
 pagerduty_api_version: v2
+pagerduty_ca_certs: true
+pagerduty_ignore_ssl_errors: true
 pagerduty_v2_payload_class_args:
   - a
 pagerduty_v2_payload_component_args:

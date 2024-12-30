@@ -511,6 +511,14 @@ export default {
           commit('alert/UPDATE_PAGERDUTY_V2_PAYLOAD_INCLUDE_ALL_INFO', config.pagerduty_v2_payload_include_all_info);
         }
 
+        if (config.pagerduty_ca_certs) {
+          commit('alert/UPDATE_PAGERDUTY_CA_CERTS', config.pagerduty_ca_certs);
+        }
+
+        if (config.pagerduty_ignore_ssl_errors) {
+          commit('alert/UPDATE_PAGERDUTY_IGNORE_SSL_ERRORS', config.pagerduty_ignore_ssl_errors);
+        }
+
         /* PagerTree */
         commit('alert/UPDATE_PAGERTREE_INTEGRATION_URL', config.pagertree_integration_url);
         commit('alert/UPDATE_PAGERTREE_PROXY', config.pagertree_proxy);
@@ -2248,6 +2256,14 @@ export default {
         if (state.alert.pagerdutyV2PayloadIncludeAllInfo) {
           config.pagerduty_v2_payload_include_all_info = state.alert.pagerdutyV2PayloadIncludeAllInfo;
         }
+      }
+
+      if (state.alert.pagerdutyIgnoreSslErrors) {
+        config.pagerduty_ignore_ssl_errors = state.alert.pagerdutyIgnoreSslErrors;
+      }
+
+      if (state.alert.pagerdutyCaCerts) {
+        config.pagerduty_ca_certs = state.alert.pagerdutyCaCerts;
       }
 
       return config;

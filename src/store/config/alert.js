@@ -295,6 +295,8 @@ function initialState() {
     pagerdutyV2PayloadSource: 'ElastAlert',
     pagerdutyV2PayloadSourceArgs: [],
     pagerdutyV2PayloadIncludeAllInfo: false,
+    pagerdutyIgnoreSslErrors: false,
+    pagerdutyCaCerts: false,
 
     /* PagerTree */
     pagertreeIntegrationUrl: '',
@@ -1760,6 +1762,14 @@ export default {
 
     UPDATE_PAGERDUTY_V2_PAYLOAD_INCLUDE_ALL_INFO(state, pagerdutyV2PayloadIncludeAllInfo) {
       state.pagerdutyV2PayloadIncludeAllInfo = pagerdutyV2PayloadIncludeAllInfo;
+    },
+
+    UPDATE_PAGERDUTY_IGNORE_SSL_ERRORS(state, pagerdutyIgnoreSslErrors) {
+      state.pagerdutyIgnoreSslErrors = pagerdutyIgnoreSslErrors;
+    },
+
+    UPDATE_PAGERDUTY_CA_CERTS(state, pagerdutyCaCerts) {
+      state.pagerdutyCaCerts = pagerdutyCaCerts;
     },
 
     /* Pagertree */
