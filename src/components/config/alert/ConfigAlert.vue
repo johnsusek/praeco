@@ -201,6 +201,9 @@
         <el-checkbox id="destinationMatrixHookshot" label="matrixhookshot" border>
           Matrix Hookshot
         </el-checkbox>
+        <el-checkbox id="destinationMsPowerAutomate" label="ms_power_automate" border>
+          MS PowerAutomate
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -222,6 +225,7 @@
           || alert.includes('linenotify')
           || alert.includes('mattermost')
           || alert.includes('ms_teams')
+          || alert.includes('ms_power_automate')
           || alert.includes('opsgenie')
           || alert.includes('pagerduty')
           || alert.includes('pagertree')
@@ -541,6 +545,14 @@
         </template>
         <ConfigAlertMatrixHookshot ref="matrixhookshot" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- MS PowerAutomate -->
+      <el-tab-pane v-if="alert.includes('ms_power_automate')">
+        <template #label>
+          <Icon :icon="['fab', 'microsoft']" size="1x" /> MS PowerAutomate
+        </template>
+        <ConfigAlertMsPowerAutomate ref="ms_power_automate" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -572,6 +584,7 @@ import ConfigAlertLineNotify from './ConfigAlertLineNotify';
 import ConfigAlertMattermost from './ConfigAlertMattermost';
 import ConfigAlertMatrixHookshot from './ConfigAlertMatrixHookshot';
 import ConfigAlertMsTeams from './ConfigAlertMsTeams';
+import ConfigAlertMsPowerAutomate from './ConfigAlertMsPowerAutomate';
 import ConfigAlertOpsgenie from './ConfigAlertOpsgenie';
 import ConfigAlertPagerDuty from './ConfigAlertPagerDuty';
 import ConfigAlertPagerTree from './ConfigAlertPagerTree';
@@ -693,6 +706,7 @@ export default {
     ConfigAlertMattermost,
     ConfigAlertMatrixHookshot,
     ConfigAlertMsTeams,
+    ConfigAlertMsPowerAutomate,
     ConfigAlertOpsgenie,
     ConfigAlertPagerDuty,
     ConfigAlertPagerTree,
@@ -771,6 +785,12 @@ export default {
           }
         ],
         msTeamsWebhookUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        msPowerAutomateWebhookUrl: [
           {
             validator: validateUrl,
             trigger: ['change', 'blur']

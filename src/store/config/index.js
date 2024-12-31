@@ -1192,6 +1192,37 @@ export default {
           commit('alert/UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE', config.ms_teams_kibana_discover_title);
         }
 
+        /* MS Power Automate */
+        if (typeof (config.ms_power_automate_webhook_url) === 'string') {
+          let tmpMsPowerAutomateWebhookUrl = [];
+          tmpMsPowerAutomateWebhookUrl.push(config.ms_power_automate_webhook_url);
+          config.ms_power_automate_webhook_url = tmpMsPowerAutomateWebhookUrl;
+        }
+        if (config.ms_power_automate_webhook_url) {
+          commit('alert/UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL', config.ms_power_automate_webhook_url);
+        }
+
+        if (config.ms_power_automate_teams_card_width_full) {
+          commit('alert/UPDATE_MS_POWER_AUTOMATE_ALERT_FIXED_WIDTH', config.ms_power_automate_teams_card_width_full);
+        }
+
+        commit('alert/UPDATE_MS_POWER_AUTOMATE_ALERT_SUMMARY', config.ms_power_automate_alert_summary);
+        commit('alert/UPDATE_MS_POWER_AUTOMATE_SUMMARY_TEXT_SIZE', config.ms_power_automate_summary_text_size);
+        commit('alert/UPDATE_MS_POWER_AUTOMATE_BODY_TEXT_SIZE', config.ms_power_automate_body_text_size);
+        commit('alert/UPDATE_MS_POWER_AUTOMATE_PROXY', config.ms_power_automate_proxy);
+
+        if (config.ms_power_automate_ca_certs) {
+          commit('alert/UPDATE_MS_POWER_AUTOMATE_CA_CERTS', config.ms_power_automate_ca_certs);
+        }
+
+        if (config.ms_power_automate_ignore_ssl_errors) {
+          commit('alert/UPDATE_MS_POWER_AUTOMATE_IGNORE_SSL_ERRORS', config.ms_power_automate_ignore_ssl_errors);
+        }
+
+        commit('alert/UPDATE_MS_POWER_AUTOMATE_ATTACH_KIBANA_DISCOVER_URL', config.ms_power_automate_attach_kibana_discover_url);
+        commit('alert/UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_TITLE', config.ms_power_automate_kibana_discover_title);
+        commit('alert/UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_COLOR', config.ms_power_automate_kibana_discover_color);
+
         /* OpsGenie */
         commit('alert/OPSGENIE_KEY', config.opsgenie_key);
         commit('alert/OPSGENIE_ACCOUNT', config.opsgenie_account);
@@ -1971,6 +2002,56 @@ export default {
 
         if (state.alert.msTeamsKibanaDiscoverTitle) {
           config.ms_teams_kibana_discover_title = state.alert.msTeamsKibanaDiscoverTitle;
+        }
+      }
+
+      return config;
+    },
+
+    ms_power_automate(state) {
+      let config = {};
+
+      if (state.alert.msPowerAutomateWebhookUrl && state.alert.msPowerAutomateWebhookUrl.length) {
+        config.ms_power_automate_webhook_url = state.alert.msPowerAutomateWebhookUrl;
+      }
+
+      if (state.alert.msPowerAutomateTeamsCardWidthFull) {
+        config.ms_power_automate_teams_card_width_full = state.alert.msPowerAutomateTeamsCardWidthFull;
+      }
+
+      if (state.alert.msPowerAutomateAlertSummary) {
+        config.ms_power_automate_alert_summary = state.alert.msPowerAutomateAlertSummary;
+      }
+
+      if (state.alert.msPowerAutomateSummaryTextSize) {
+        config.ms_power_automate_summary_text_size = state.alert.msPowerAutomateSummaryTextSize;
+      }
+
+      if (state.alert.msPowerAutomateBodyTextSize) {
+        config.ms_power_automate_body_text_size = state.alert.msPowerAutomateBodyTextSize;
+      }
+
+      if (state.alert.msPowerAutomateProxy) {
+        config.ms_power_automate_proxy = state.alert.msPowerAutomateProxy;
+      }
+
+      if (state.alert.msPowerAutomateIgnoreSslErrors) {
+        config.ms_power_automate_ignore_ssl_errors = state.alert.msPowerAutomateIgnoreSslErrors;
+      }
+
+      if (state.alert.msPowerAutomateCaCerts) {
+        config.ms_power_automate_ca_certs = state.alert.msPowerAutomateCaCerts;
+      }
+
+      if (state.alert.generateKibanaDiscoverUrl && state.alert.msPowerAutomateAttachKibanaDiscoverUrl) {
+        config.ms_power_automate_attach_kibana_discover_url = state.alert.msPowerAutomateAttachKibanaDiscoverUrl;
+
+        if (state.alert.msPowerAutomateKibanaDiscoverTitle) {
+          config.ms_power_automate_kibana_discover_title = state.alert.msPowerAutomateKibanaDiscoverTitle;
+        }
+
+        if (state.alert.msPowerAutomateKibanaDiscoverColor) {
+          config.ms_power_automate_opensearch_discover_color = state.alert.msPowerAutomateKibanaDiscoverColor;
         }
       }
 
@@ -3330,6 +3411,10 @@ export default {
         config = { ...config, ...getters.ms_teams };
       }
 
+      if (state.alert.alert.includes('ms_power_automate')) {
+        config = { ...config, ...getters.ms_power_automate };
+      }
+
       if (state.alert.alert.includes('opsgenie')) {
         config = { ...config, ...getters.opsgenie };
       }
@@ -3420,6 +3505,7 @@ export default {
         || state.alert.alert.includes('mattermost')
         || state.alert.alert.includes('matrixhookshot')
         || state.alert.alert.includes('ms_teams')
+        || state.alert.alert.includes('ms_power_automate')
         || state.alert.alert.includes('opsgenie')
         || state.alert.alert.includes('pagerduty')
         || state.alert.alert.includes('pagertree')

@@ -267,6 +267,19 @@ function initialState() {
     msTeamsAttachKibanaDiscoverUrl: false,
     msTeamsKibanaDiscoverTitle: 'Discover in Kibana',
 
+    /* MS Power Automate */
+    msPowerAutomateWebhookUrl: [],
+    msPowerAutomateAlertSummary: '',
+    msPowerAutomateTeamsCardWidthFull: false,
+    msPowerAutomateProxy: '',
+    msPowerAutomateIgnoreSslErrors: false,
+    msPowerAutomateCaCerts: false,
+    msPowerAutomateKibanaDiscoverAttach_url: '',
+    msPowerAutomateKibanaDiscoverTitle: 'Discover in Kibana',
+    msPowerAutomateKibanaDiscoverColor: 'default',
+    msPowerAutomateSummaryTextSize: 'large',
+    msPowerAutomateBodyTextSize: '',
+
     /* OpsGenie */
     opsgenieKey: '',
     opsgenieAccount: '',
@@ -1571,6 +1584,68 @@ export default {
 
     UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE(state, msTeamsKibanaDiscoverTitle) {
       state.msTeamsKibanaDiscoverTitle = msTeamsKibanaDiscoverTitle;
+    },
+
+    /* MS Power Automate */
+    UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL(state, msPowerAutomateWebhookUrl) {
+      state.msPowerAutomateWebhookUrl = msPowerAutomateWebhookUrl;
+    },
+
+    ADD_MS_POWER_AUTOMATE_WEBHOOK_URL_ENTRY(state) {
+      state.msPowerAutomateWebhookUrl.push('');
+    },
+
+    ADD_MS_POWER_AUTOMATE_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.msPowerAutomateWebhookUrl.push(value);
+    },
+
+    REMOVE_MS_POWER_AUTOMATE_WEBHOOK_URL_ENTRY(state, entry) {
+      state.msPowerAutomateWebhookUrl = state.msPowerAutomateWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.msPowerAutomateWebhookUrl) return;
+      state.msPowerAutomateWebhookUrl[index] = entry;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_ALERT_FIXED_WIDTH(state, msPowerAutomateTeamsCardWidthFull) {
+      state.msPowerAutomateTeamsCardWidthFull = msPowerAutomateTeamsCardWidthFull;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_ALERT_SUMMARY(state, msPowerAutomateAlertSummary) {
+      state.msPowerAutomateAlertSummary = msPowerAutomateAlertSummary;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_SUMMARY_TEXT_SIZE(state, msPowerAutomateSummaryTextSize) {
+      state.msPowerAutomateSummaryTextSize = msPowerAutomateSummaryTextSize;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_BODY_TEXT_SIZE(state, msPowerAutomateBodyTextSize) {
+      state.msPowerAutomateBodyTextSize = msPowerAutomateBodyTextSize;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_PROXY(state, msPowerAutomateProxy) {
+      state.msPowerAutomateProxy = msPowerAutomateProxy;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_IGNORE_SSL_ERRORS(state, msPowerAutomateIgnoreSslErrors) {
+      state.msPowerAutomateIgnoreSslErrors = msPowerAutomateIgnoreSslErrors;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_CA_CERTS(state, msPowerAutomateCaCerts) {
+      state.msPowerAutomateCaCerts = msPowerAutomateCaCerts;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_ATTACH_KIBANA_DISCOVER_URL(state, msPowerAutomateAttachKibanaDiscoverUrl) {
+      state.msPowerAutomateAttachKibanaDiscoverUrl = msPowerAutomateAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_TITLE(state, msPowerAutomateKibanaDiscoverTitle) {
+      state.msPowerAutomateKibanaDiscoverTitle = msPowerAutomateKibanaDiscoverTitle;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_COLOR(state, msPowerAutomateKibanaDiscoverColor) {
+      state.msPowerAutomateKibanaDiscoverColor = msPowerAutomateKibanaDiscoverColor;
     },
 
     /* OpsGenie */

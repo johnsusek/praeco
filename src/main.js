@@ -74,6 +74,7 @@ import ConfigAlertLineNotify from '@/components/config/alert/ConfigAlertLineNoti
 import ConfigAlertMattermost from '@/components/config/alert/ConfigAlertMattermost.vue';
 import ConfigAlertMatrixHookshot from '@/components/config/alert/ConfigAlertMatrixHookshot.vue';
 import ConfigAlertMsTeams from '@/components/config/alert/ConfigAlertMsTeams.vue';
+import ConfigAlertMsPowerAutomate from '@/components/config/alert/ConfigAlertMsPowerAutomate.vue';
 import ConfigAlertPagerDuty from '@/components/config/alert/ConfigAlertPagerDuty.vue';
 import ConfigAlertPagerTree from '@/components/config/alert/ConfigAlertPagerTree.vue';
 import ConfigAlertRocketChat from '@/components/config/alert/ConfigAlertRocketChat.vue';
@@ -174,6 +175,7 @@ Vue.component('ConfigAlertLineNotify', ConfigAlertLineNotify);
 Vue.component('ConfigAlertMattermost', ConfigAlertMattermost);
 Vue.component('ConfigAlertMatrixHookshot', ConfigAlertMatrixHookshot);
 Vue.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
+Vue.component('ConfigAlertMsPowerAutomate', ConfigAlertMsPowerAutomate);
 Vue.component('ConfigAlertPagerDuty', ConfigAlertPagerDuty);
 Vue.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
 Vue.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
