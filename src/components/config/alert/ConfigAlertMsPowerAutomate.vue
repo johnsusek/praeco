@@ -130,7 +130,7 @@
       <label>The title of the Kibana Discover url attachment.</label>
     </el-form-item>
 
-    <el-form-item label="Kibana Discover Color" prop="msPowerAutomateKibanaDiscoverColor" required>
+    <el-form-item label="Kibana Discover Color" prop="msPowerAutomateKibanaDiscoverColor">
       <el-radio-group :value="msPowerAutomateKibanaDiscoverColor" :disabled="viewOnly" @input="msPowerAutomateKibanaDiscoverColor = $event">
         <el-radio id="msPowerAutomateKibanaDiscoverColorDefault" label="default">
           Default
