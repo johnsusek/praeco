@@ -1,6 +1,6 @@
 export const ruleYaml = `__praeco_query_builder: '{"query":{"logicalOperator":"all","children":[]}}'
 alert:
-  - pagerduty
+  - ms_power_automate
 alert_subject: this is a test subject
 alert_subject_args: []
 alert_text: this is a test body
@@ -14,19 +14,9 @@ filter:
 import: BaseRule.config
 index: hannibal-*
 is_enabled: false
+ms_power_automate_webhook_url: https://xxxxxxxxxxxxxxxxxxxxxx/xxxx
 name: test123
 num_events: 10000
-pagerduty_api_version: v2
-pagerduty_ca_certs: true
-pagerduty_ignore_ssl_errors: true
-pagerduty_v2_payload_class_args:
-  - a
-pagerduty_v2_payload_component_args:
-  - b
-pagerduty_v2_payload_group_args:
-  - c
-pagerduty_v2_payload_severity: error
-pagerduty_v2_payload_source: f
 realert:
   minutes: 5
 timeframe:
