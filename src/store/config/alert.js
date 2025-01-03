@@ -274,7 +274,7 @@ function initialState() {
     msPowerAutomateProxy: '',
     msPowerAutomateIgnoreSslErrors: false,
     msPowerAutomateCaCerts: false,
-    msPowerAutomateKibanaDiscoverAttach_url: '',
+    msPowerAutomateAttachKibanaDiscoverUrl: false,
     msPowerAutomateKibanaDiscoverTitle: 'Discover in Kibana',
     msPowerAutomateKibanaDiscoverColor: 'default',
     msPowerAutomateSummaryTextSize: 'large',
