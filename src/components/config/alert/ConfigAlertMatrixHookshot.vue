@@ -225,14 +225,14 @@ export default {
     },
 
     removeMatrixhookshotWebhookUrlEntry(entry) {
-      this.$store.commit('config/alert/REMOVE_MATRIXHOOKSHOTS_WEBHOOK_URL_ENTRY', entry);
+      this.$store.commit('config/alert/REMOVE_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY', entry);
       this.$nextTick(() => {
         this.validate();
       });
     },
 
     addMatrixhookshotWebhookUrlEntry() {
-      this.$store.commit('config/alert/ADD_MATRIXHOOKSHOTS_WEBHOOK_URL_ENTRY');
+      this.$store.commit('config/alert/ADD_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY');
       this.$nextTick(() => {
         this.validate();
       });
