@@ -11,7 +11,8 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat, PagerDuty, Tencent SMS, Dingtalk, Alertmanager, OpsGenie, Graylog GELF, Lark, IRIS or an HTTP POST/HTTP POST 2 endpoint
+- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Line Notify, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat, PagerDuty, Tencent SMS, Dingtalk, Alertmanager, OpsGenie, Graylog GELF, Lark, IRIS, WorkWechat, Matrix Hookshot
+, Microsoft Power Automate or an HTTP POST/HTTP POST 2 endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -517,7 +518,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 20.12.2
+nvm install "$(cat .nvmrc)"
 ```
 
 ```sh
@@ -541,7 +542,7 @@ Finally, run praeco:
 # No need to implement if the environment is the same as elastalert-server
 # nvm install
 # https://github.com/nvm-sh/nvm#install--update-script
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 $ vi ~/.bash_profile
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -551,8 +552,7 @@ source ~/.bash_profile
 
 # npm & node install
 npm install -g npm
-nvm install 20.12.2
-```
+nvm install "$(cat .nvmrc)"
 
 ```sh
 cd ~/praeco
