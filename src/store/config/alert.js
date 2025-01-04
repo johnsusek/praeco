@@ -217,9 +217,6 @@ function initialState() {
     jiraIssueType: '',
     jiraComponents: '',
 
-    /* Line Notify */
-    linenotifyAccessToken: '',
-
     /* Lark */
     larkBotId: '',
     larkMsgtype: 'text',
@@ -1360,11 +1357,6 @@ export default {
 
     UPDATE_LARK_MSGTYPE(state, larkMsgtype) {
       state.larkMsgtype = larkMsgtype;
-    },
-
-    /* LineNotify */
-    UPDATE_LINENOTIFY_ACCESS_TOKEN(state, linenotifyAccessToken) {
-      state.linenotifyAccessToken = linenotifyAccessToken;
     },
 
     /* Mattermost */
