@@ -114,9 +114,6 @@
         <el-checkbox id="destinationGoogleChats" label="googlechat" border>
           Google Chat
         </el-checkbox>
-        <el-checkbox id="destinationlineNotify" label="linenotify" border>
-          LineNotify
-        </el-checkbox>
         <el-checkbox id="destinationMattermost" label="mattermost" border>
           Mattermost
         </el-checkbox>
@@ -222,7 +219,6 @@
           || alert.includes('iris')
           || alert.includes('jira')
           || alert.includes('lark')
-          || alert.includes('linenotify')
           || alert.includes('mattermost')
           || alert.includes('ms_teams')
           || alert.includes('ms_power_automate')
@@ -312,14 +308,6 @@
           Google Chat
         </template>
         <ConfigAlertGoogleChat ref="googlechat" :view-only="viewOnly" />
-      </el-tab-pane>
-
-      <!-- Line Notify -->
-      <el-tab-pane v-if="alert.includes('linenotify')">
-        <template #label>
-          <Icon :icon="['fab', 'line']" size="1x" /> Line Notify
-        </template>
-        <ConfigAlertLineNotify ref="linenotify" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- Mattermost -->
@@ -580,7 +568,6 @@ import ConfigAlertHttpPost2 from './ConfigAlertHttpPost2';
 import ConfigAlertIris from './ConfigAlertIris';
 import ConfigAlertJira from './ConfigAlertJira';
 import ConfigAlertLark from './ConfigAlertLark';
-import ConfigAlertLineNotify from './ConfigAlertLineNotify';
 import ConfigAlertMattermost from './ConfigAlertMattermost';
 import ConfigAlertMatrixHookshot from './ConfigAlertMatrixHookshot';
 import ConfigAlertMsTeams from './ConfigAlertMsTeams';
@@ -702,7 +689,6 @@ export default {
     ConfigAlertIris,
     ConfigAlertJira,
     ConfigAlertLark,
-    ConfigAlertLineNotify,
     ConfigAlertMattermost,
     ConfigAlertMatrixHookshot,
     ConfigAlertMsTeams,
