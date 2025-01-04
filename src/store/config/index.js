@@ -1156,39 +1156,6 @@ export default {
         commit('alert/UPDATE_SLACK_AUTHOR_ICON', config.slack_author_icon);
         commit('alert/UPDATE_SLACK_MSG_PRETEXT', config.slack_msg_pretext);
 
-        /* MS Teams */
-        if (typeof (config.ms_teams_webhook_url) === 'string') {
-          let tmpMsTeamsWebhookUrl = [];
-          tmpMsTeamsWebhookUrl.push(config.ms_teams_webhook_url);
-          config.ms_teams_webhook_url = tmpMsTeamsWebhookUrl;
-        }
-        if (config.ms_teams_webhook_url) {
-          commit('alert/UPDATE_MS_TEAMS_WEBHOOK_URL', config.ms_teams_webhook_url);
-        }
-
-        if (config.ms_teams_theme_color) {
-          commit('alert/UPDATE_MS_TEAMS_THEME_COLOR', config.ms_teams_theme_color);
-        }
-        commit('alert/UPDATE_MS_TEAMS_ALERT_SUMMARY', config.ms_teams_alert_summary);
-        commit('alert/UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH', config.ms_teams_alert_fixed_width);
-        commit('alert/UPDATE_MS_TEAMS_PROXY', config.ms_teams_proxy);
-
-        if (config.ms_teams_ca_certs) {
-          commit('alert/UPDATE_MS_TEAMS_CA_CERTS', config.ms_teams_ca_certs);
-        }
-
-        if (config.ms_teams_ignore_ssl_errors) {
-          commit('alert/UPDATE_MS_TEAMS_IGNORE_SSL_ERRORS', config.ms_teams_ignore_ssl_errors);
-        }
-
-        if (config.ms_teams_attach_kibana_discover_url) {
-          commit('alert/UPDATE_MS_TEAMS_ATTACH_KIBANA_DISCOVER_URL', config.ms_teams_attach_kibana_discover_url);
-        }
-
-        if (config.ms_teams_kibana_discover_title) {
-          commit('alert/UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE', config.ms_teams_kibana_discover_title);
-        }
-
         /* MS Power Automate */
         if (typeof (config.ms_power_automate_webhook_url) === 'string') {
           let tmpMsPowerAutomateWebhookUrl = [];
@@ -1957,48 +1924,6 @@ export default {
 
         if (state.alert.slackJiraTicketTitle) {
           config.slack_jira_ticket_title = state.alert.slackJiraTicketTitle;
-        }
-      }
-
-      return config;
-    },
-
-    ms_teams(state) {
-      let config = {};
-
-      if (state.alert.msTeamsWebhookUrl && state.alert.msTeamsWebhookUrl.length) {
-        config.ms_teams_webhook_url = state.alert.msTeamsWebhookUrl;
-      }
-
-      if (state.alert.msTeamsThemeColor) {
-        config.ms_teams_theme_color = state.alert.msTeamsThemeColor;
-      }
-
-      if (state.alert.msTeamsAlertFixedWidth) {
-        config.ms_teams_alert_fixed_width = state.alert.msTeamsAlertFixedWidth;
-      }
-
-      if (state.alert.msTeamsAlertSummary) {
-        config.ms_teams_alert_summary = state.alert.msTeamsAlertSummary;
-      }
-
-      if (state.alert.msTeamsProxy) {
-        config.ms_teams_proxy = state.alert.msTeamsProxy;
-      }
-
-      if (state.alert.msTeamsIgnoreSslErrors) {
-        config.ms_teams_ignore_ssl_errors = state.alert.msTeamsIgnoreSslErrors;
-      }
-
-      if (state.alert.msTeamsCaCerts) {
-        config.ms_teams_ca_certs = state.alert.msTeamsCaCerts;
-      }
-
-      if (state.alert.generateKibanaDiscoverUrl && state.alert.msTeamsAttachKibanaDiscoverUrl) {
-        config.ms_teams_attach_kibana_discover_url = state.alert.msTeamsAttachKibanaDiscoverUrl;
-
-        if (state.alert.msTeamsKibanaDiscoverTitle) {
-          config.ms_teams_kibana_discover_title = state.alert.msTeamsKibanaDiscoverTitle;
         }
       }
 
@@ -3390,10 +3315,6 @@ export default {
         config = { ...config, ...getters.matrixhookshot };
       }
 
-      if (state.alert.alert.includes('ms_teams')) {
-        config = { ...config, ...getters.ms_teams };
-      }
-
       if (state.alert.alert.includes('ms_power_automate')) {
         config = { ...config, ...getters.ms_power_automate };
       }
@@ -3486,7 +3407,6 @@ export default {
         || state.alert.alert.includes('lark')
         || state.alert.alert.includes('mattermost')
         || state.alert.alert.includes('matrixhookshot')
-        || state.alert.alert.includes('ms_teams')
         || state.alert.alert.includes('ms_power_automate')
         || state.alert.alert.includes('opsgenie')
         || state.alert.alert.includes('pagerduty')

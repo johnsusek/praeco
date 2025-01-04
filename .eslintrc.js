@@ -134,7 +134,6 @@ module.exports = {
         'src/components/config/alert/ConfigAlertHttpPost2.vue',
         'src/components/config/alert/ConfigAlertMattermost.vue',
         'src/components/config/alert/ConfigAlertMatrixHookshot.vue',
-        'src/components/config/alert/ConfigAlertMsTeams.vue',
         'src/components/config/alert/ConfigAlertMsPowerAutomate.vue',
         'src/components/config/alert/ConfigAlertPagerDuty.vue',
         'src/components/config/alert/ConfigAlertRocketChat.vue',

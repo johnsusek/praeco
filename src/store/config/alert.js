@@ -253,17 +253,6 @@ function initialState() {
     matrixhookshotIgnoreSslErrors: false,
     matrixhookshotCaCerts: false,
 
-    /* MS Teams */
-    msTeamsWebhookUrl: [],
-    msTeamsThemeColor: '',
-    msTeamsAlertFixedWidth: false,
-    msTeamsAlertSummary: 'ElastAlert Message',
-    msTeamsProxy: '',
-    msTeamsIgnoreSslErrors: false,
-    msTeamsCaCerts: false,
-    msTeamsAttachKibanaDiscoverUrl: false,
-    msTeamsKibanaDiscoverTitle: 'Discover in Kibana',
-
     /* MS Power Automate */
     msPowerAutomateWebhookUrl: [],
     msPowerAutomateAlertSummary: '',
@@ -1522,60 +1511,6 @@ export default {
 
     UPDATE_MATRIXHOOKSHOT_PROXY(state, matrixhookshotProxy) {
       state.matrixhookshotProxy = matrixhookshotProxy;
-    },
-
-    /* MS Teams */
-    UPDATE_MS_TEAMS_WEBHOOK_URL(state, msTeamsWebhookUrl) {
-      state.msTeamsWebhookUrl = msTeamsWebhookUrl;
-    },
-
-    ADD_MS_TEAMS_WEBHOOK_URL_ENTRY(state) {
-      state.msTeamsWebhookUrl.push('');
-    },
-
-    ADD_MS_TEAMS_WEBHOOK_URL_ENTRY_VALUE(state, value) {
-      state.msTeamsWebhookUrl.push(value);
-    },
-
-    REMOVE_MS_TEAMS_WEBHOOK_URL_ENTRY(state, entry) {
-      state.msTeamsWebhookUrl = state.msTeamsWebhookUrl.filter(b => b !== entry);
-    },
-
-    UPDATE_MS_TEAMS_WEBHOOK_URL_ENTRY(state, { entry, index }) {
-      if (!state.msTeamsWebhookUrl) return;
-      state.msTeamsWebhookUrl[index] = entry;
-    },
-
-    UPDATE_MS_TEAMS_THEME_COLOR(state, msTeamsThemeColor) {
-      state.msTeamsThemeColor = msTeamsThemeColor;
-    },
-
-    UPDATE_MS_TEAMS_ALERT_FIXED_WIDTH(state, msTeamsAlertFixedWidth) {
-      state.msTeamsAlertFixedWidth = msTeamsAlertFixedWidth;
-    },
-
-    UPDATE_MS_TEAMS_ALERT_SUMMARY(state, msTeamsAlertSummary) {
-      state.msTeamsAlertSummary = msTeamsAlertSummary;
-    },
-
-    UPDATE_MS_TEAMS_PROXY(state, msTeamsProxy) {
-      state.msTeamsProxy = msTeamsProxy;
-    },
-
-    UPDATE_MS_TEAMS_IGNORE_SSL_ERRORS(state, msTeamsIgnoreSslErrors) {
-      state.msTeamsIgnoreSslErrors = msTeamsIgnoreSslErrors;
-    },
-
-    UPDATE_MS_TEAMS_CA_CERTS(state, msTeamsCaCerts) {
-      state.msTeamsCaCerts = msTeamsCaCerts;
-    },
-
-    UPDATE_MS_TEAMS_ATTACH_KIBANA_DISCOVER_URL(state, msTeamsAttachKibanaDiscoverUrl) {
-      state.msTeamsAttachKibanaDiscoverUrl = msTeamsAttachKibanaDiscoverUrl;
-    },
-
-    UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE(state, msTeamsKibanaDiscoverTitle) {
-      state.msTeamsKibanaDiscoverTitle = msTeamsKibanaDiscoverTitle;
     },
 
     /* MS Power Automate */

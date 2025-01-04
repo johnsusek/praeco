@@ -11,7 +11,7 @@
 - Interactively build alerts for your Elasticsearch data using a query builder
 - Preview results in an interactive chart
 - Test your alerts against historical data
-- Send notifications to Slack, MS Teams, Email, Telegram, Jira, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat, PagerDuty, Tencent SMS, Dingtalk, Alertmanager, OpsGenie, Graylog GELF, Lark, IRIS, WorkWechat, Matrix Hookshot
+- Send notifications to Slack, Email, Telegram, Jira, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat, PagerDuty, Tencent SMS, Dingtalk, Alertmanager, OpsGenie, Graylog GELF, Lark, IRIS, WorkWechat, Matrix Hookshot
 , Microsoft Power Automate or an HTTP POST/HTTP POST 2 endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
