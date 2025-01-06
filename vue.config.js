@@ -5,9 +5,9 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
 const ICons = require('unplugin-icons/webpack');
 
 module.exports = {
-  publicPath: process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : '/',
+  publicPath: import.meta.env.VUE_APP_BASE_URL ? import.meta.env.VUE_APP_BASE_URL : '/',
   configureWebpack: {
-    devtool: process.env.NODE_ENV === 'coverage' ? 'eval' : undefined,
+    devtool: import.meta.env.NODE_ENV === 'coverage' ? 'eval' : undefined,
     performance: {
       hints: false
     },
@@ -34,7 +34,7 @@ module.exports = {
     ]
   },
   chainWebpack: config => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (import.meta.env.NODE_ENV !== 'production') {
       config.module
         .rule('istanbul')
         .test(/\.(js|vue)$/)

@@ -11,7 +11,7 @@ import TemplateView from './views/TemplateView.vue';
 import ConfigBuilder from './views/ConfigBuilder.vue';
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
 
   routes: [
     {
