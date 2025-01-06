@@ -1,4 +1,8 @@
 const webpack = require('webpack');
+const AutoImport = require('unplugin-auto-import/webpack');
+const Components = require('unplugin-vue-components/webpack');
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
+const ICons = require('unplugin-icons/webpack');
 
 module.exports = {
   publicPath: process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : '/',
@@ -7,12 +11,26 @@ module.exports = {
     performance: {
       hints: false
     },
+    resolve: {
+      extensions: ['.ts', '.js', '.mjs', '.json'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.mjs$/i,
+          resolve: { byDependency: { esm: { fullySpecified: false } } },
+        },
+      ],
+    },
     plugins: [
       new webpack.EnvironmentPlugin({ LATER_COV: false }),
-      new webpack.NormalModuleReplacementPlugin(
-        /element-ui[/\\]lib[/\\]locale[/\\]lang[/\\]zh-CN/,
-        'element-ui/lib/locale/lang/en'
-      )
+      ICons.default({ /* options */ }),
+      AutoImport.default({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components.default({
+        resolvers: [ElementPlusResolver()],
+      }),
     ]
   },
   chainWebpack: config => {

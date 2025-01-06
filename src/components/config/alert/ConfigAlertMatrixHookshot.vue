@@ -10,12 +10,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="matrixhookshotWebhookUrl"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in matrixhookshotWebhookUrl"
             :key="index"
@@ -23,7 +24,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="matrixhookshotWebhookUrl[index]"
@@ -35,7 +36,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeMatrixhookshotWebhookUrlEntry(entry)" />
@@ -249,5 +250,5 @@ export default {
 };
 </script>
 
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
   </style>

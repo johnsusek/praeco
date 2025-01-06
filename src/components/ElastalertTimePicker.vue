@@ -1,6 +1,7 @@
 <template>
   <span class="elastalert-timepicker">
-    <el-input-number v-model="currentAmount" :min="allowZero ? 0 : 1" @input.native="emitNumKeyup" @input="emitValue" />
+    <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+    <el-input-number v-model="currentAmount" :min="allowZero ? 0 : 1" @keyup="emitNumKeyup" @input="emitValue" />
 
     <el-select v-model="currentUnit" @input="emitValue">
       <el-option :label="`Second${plural()}`" value="seconds" />

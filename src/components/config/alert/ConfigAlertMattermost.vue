@@ -10,12 +10,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="mattermostWebhookUrl"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in mattermostWebhookUrl"
             :key="index"
@@ -23,7 +24,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="mattermostWebhookUrl[index]"
@@ -35,7 +36,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeMattermostWebhookUrlEntry(entry)" />
@@ -60,12 +61,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="mattermostChannelOverride"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in mattermostChannelOverride"
             :key="index"
@@ -74,7 +76,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="mattermostChannelOverride[index]"
@@ -86,7 +88,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removemattermostChannelOverrideEntry(entry)" />
@@ -238,7 +240,7 @@
 
 <script>
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
-import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast/src';
 
 let emojiIndex = new EmojiIndex(emojiData);
 

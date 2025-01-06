@@ -1,4 +1,5 @@
 <template>
+  <!-- native modifier has been removed, please confirm whether the function has been affected  -->
   <treeselect
     ref="tree"
     v-model="value"
@@ -11,7 +12,7 @@
     :options="options"
     placeholder="Filter..."
     @select="handleSelect"
-    @click.native="handleClick">
+    @click="handleClick">
     <template #option-label="{ node, labelClassName }">
       <label
         :class="labelClassName">

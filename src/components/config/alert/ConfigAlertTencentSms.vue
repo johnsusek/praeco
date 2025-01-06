@@ -28,13 +28,14 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="tencentSmsToNumber"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
           required
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in tencentSmsToNumber"
             :key="index"
@@ -43,7 +44,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="tencentSmsToNumber[index]"
@@ -55,7 +56,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeTencentSmsToNumberEntry(entry)" />
@@ -103,12 +104,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="tencentSmsTemplateParm"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in tencentSmsTemplateParm"
             :key="index"
@@ -117,7 +119,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="tencentSmsTemplateParm[index]"
@@ -129,7 +131,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeTencentSmsTemplateParmEntry(entry)" />

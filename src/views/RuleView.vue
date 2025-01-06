@@ -4,13 +4,14 @@
       <div v-show="showRename">
         <el-row :gutter="10">
           <el-col :span="6">
+            <!-- native modifier has been removed, please confirm whether the function has been affected  -->
             <el-input
               ref="rename"
               v-model="newName"
               size="large"
               autofocus
               autoselect
-              @keyup.enter.native="rename" />
+              @keyup.enter="rename" />
           </el-col>
           <el-col :span="18">
             <el-button size="large" type="primary" @click="rename">
@@ -43,7 +44,7 @@
             name: 'ruleconfigeditor',
             params: { action: 'edit', path: id },
           }">
-          <el-button icon="el-icon-edit" plain type="primary">
+          <el-button :icon="ElIconEdit" plain type="primary">
             Edit
           </el-button>
         </router-link>
@@ -79,13 +80,17 @@
                 plain
                 type="warning">
                 Silence
-                <i v-if="!silencePopoverVisible" class="el-icon-caret-bottom el-icon-right" />
-                <i v-if="silencePopoverVisible" class="el-icon-caret-top el-icon-right" />
+                <el-icon v-if="!silencePopoverVisible" class="el-icon-right">
+                  <el-icon-caret-bottom />
+                </el-icon>
+                <el-icon v-if="silencePopoverVisible" class="el-icon-right">
+                  <el-icon-caret-top />
+                </el-icon>
               </el-button>
             </span>
           </template>
           <div>
-            <el-row type="flex" justify="space-around">
+            <el-row justify="space-around">
               <el-col :span="24" align="center">
                 <el-button @click="handleSilence('minutes', 5)">
                   5 minutes
@@ -121,7 +126,7 @@
         </el-button>
 
         <el-button
-          icon="el-icon-delete"
+          :icon="ElIconDelete"
           plain
           type="danger"
           @click="showDeleteConfirm">
@@ -129,7 +134,7 @@
         </el-button>
 
         <el-dialog
-          :visible.sync="moveVisible"
+          v-model:visible="moveVisible"
           title="Move"
           width="40%"
           @close="moveVisible = false">

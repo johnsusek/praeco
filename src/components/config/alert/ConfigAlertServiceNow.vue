@@ -1,4 +1,4 @@
-.<template>
+<template>
   <div>
     <praeco-form-item label="Username" prop="serviceNowUsername" required>
       <el-input id="serviceNowUsername" :value="serviceNowUsername" :disabled="viewOnly" @input="serviceNowUsername = $event" />

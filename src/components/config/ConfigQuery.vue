@@ -1,5 +1,6 @@
 <template>
-  <el-form ref="form" label-position="top" @submit.native.prevent>
+  <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+  <el-form ref="form" label-position="top" @submit.prevent>
     <el-tabs v-model="queryType" type="card" @tab-click="changeQueryType">
       <el-tab-pane label="Builder" name="tree">
         <el-popover v-model="popFilterVisible">

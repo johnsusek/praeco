@@ -1,4 +1,4 @@
-import { Notification } from 'element-ui';
+import { ElNotification } from 'element-plus';
 // TODO: error  Dependency cycle via @/store:5=>./configs:4  import/no-cycle
 import { logger } from '@/lib/logger.js';
 
@@ -16,10 +16,11 @@ export default function notifyError(error) {
     console.error(err);
   }
 
-  Notification.error({
+  ElNotification({
     message: error.toString(),
     title: 'API error',
-    duration: 0
+    duration: 0,
+    type: 'error'
   });
 
   return error;

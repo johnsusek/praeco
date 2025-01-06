@@ -169,7 +169,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeQueryKeyEntry(entry)" />
@@ -267,7 +267,7 @@
           <el-col :span="4">
             <el-button
               type="danger"
-              icon="el-icon-delete"
+              :icon="ElIconDelete"
               circle
               plain
               @click="removeQueryKeyEntry(entry)" />
@@ -291,12 +291,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="blacklist"
           :model="$store.state.config.match"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index2) in blacklist"
             :key="index2"
@@ -304,7 +305,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="blacklist[index2]"
@@ -314,7 +315,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click="removeBlacklistEntry(entry)" />
@@ -339,12 +340,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="whitelist"
           :model="$store.state.config.match"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index2) in whitelist"
             :key="index2"
@@ -352,7 +354,7 @@
             required
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="whitelist[index2]"
@@ -362,7 +364,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="ElIconDelete"
                   circle
                   plain
                   @click.prevent="removeWhitelistEntry(entry)" />
@@ -383,7 +385,7 @@
       <span v-if="queryString !== defaultFilter"> {{ queryString }}</span>
     </span>
 
-    <el-dialog :visible.sync="popFilterVisible" :show-close="false" fullscreen>
+    <el-dialog v-model:visible="popFilterVisible" :show-close="false" fullscreen>
       <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">
         Close
       </el-button>
@@ -626,11 +628,12 @@
       </template>
 
       <div v-if="metricAggType === 'field not in list' || metricAggType === 'field changes'">
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="form"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Ignore null">
             <el-switch v-model="ignoreNull" />
             <label>If set, events without the selected field will not match.</label>
@@ -639,11 +642,12 @@
       </div>
 
       <div v-if="metricAggType === 'new term'">
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="form"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Terms window">
             <ElastalertTimePicker
               id="termsWindowSize"
@@ -680,11 +684,12 @@
       </div>
 
       <div v-if="type === 'frequency' || type === 'flatline' || type === 'spike' || type === 'new_term'">
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="freqFlatlineOptions"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <template v-if="type !== 'new_term'">
             <el-form-item label="Use count query">
               <el-switch
@@ -770,11 +775,12 @@
       </div>
 
       <div v-if="type === 'spike'">
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           :model="$store.state.config.match"
           label-position="top"
           class="m-n-lg"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Threshold (reference)" prop="thresholdRef">
             <el-input v-model="thresholdRef" type="number" />
             <label>
@@ -834,7 +840,7 @@
       @update="handleUpdateData"
       @group="val => groupByValue = val" />
 
-    <el-dialog :visible.sync="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
+    <el-dialog v-model:visible="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
       <EventTable
         v-if="eventViewerFrom"
         :group-by-field="queryKey"

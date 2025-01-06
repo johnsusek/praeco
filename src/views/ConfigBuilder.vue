@@ -22,7 +22,7 @@
         <ConfigTest
           :valid="valid"
           class="m-e-sm"
-          @validateForTest="validateForTest" />
+          @validate-for-test="validateForTest" />
 
         <div class="save-button">
           <el-button v-if="!saving" type="primary" size="medium" @click="save">
@@ -117,7 +117,7 @@ export default {
     }
   },
 
-  destroyed() {
+  unmounted() {
     this.$store.dispatch('config/reset');
   },
 
