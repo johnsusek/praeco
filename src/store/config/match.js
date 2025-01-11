@@ -371,7 +371,7 @@ export default {
     // Frequency
     //
     UPDATE_NUM_EVENTS(state, numEvents) {
-      state.numEvents = parseInt(numEvents) || null;
+      state.numEvents = (numEvents !== undefined) ? parseInt(numEvents) : null;
     },
 
     UPDATE_USE_TERMS_QUERY(state, useTermsQuery) {
