@@ -14,7 +14,7 @@ function initialState() {
     useTimeframe: false,
     docType: '',
 
-    numEvents: null,
+    numEvents: 0,
     useCountQuery: false,
     useTermsQuery: false,
     termsSize: 50,

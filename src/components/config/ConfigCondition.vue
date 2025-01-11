@@ -1691,7 +1691,7 @@ export default {
         this.threshold = null;
       } else {
         this.type = 'flatline';
-        this.numEvents = null;
+        this.numEvents = 0;
       }
     },
 
@@ -1736,7 +1736,7 @@ export default {
       this.useTimeframe = true;
 
       this.threshold = null;
-      this.numEvents = null;
+      this.numEvents = 0;
       this.maxThreshold = null;
       this.minThreshold = null;
 
