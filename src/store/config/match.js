@@ -163,7 +163,7 @@ export default {
     },
 
     markLineFrequency(state) {
-      if (state.numEvents > 0) {
+      if (state.numEvents >= 0) {
         return {
           silent: true,
           lineStyle: {
