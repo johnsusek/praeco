@@ -447,7 +447,7 @@
       <template #reference>
         <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
           <span>IS</span>
-          <span v-if="numEvents || maxThreshold">
+          <span v-if="numEvents !== null || maxThreshold">
             ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
           </span>
           <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
