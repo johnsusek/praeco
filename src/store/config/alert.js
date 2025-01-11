@@ -247,6 +247,15 @@ function initialState() {
     mattermostKibanaDiscoverColor: '#ec4b98',
     mattermostKibanaDiscoverTitle: 'Discover in Kibana',
 
+    /* Matrix Hookshot */
+    matrixhookshotWebhookUrl: [],
+    matrixhookshotUsername: '',
+    matrixhookshotTimeout: 0,
+    matrixhookshotText: '',
+    matrixhookshotProxy: '',
+    matrixhookshotIgnoreSslErrors: false,
+    matrixhookshotCaCerts: false,
+
     /* MS Teams */
     msTeamsWebhookUrl: [],
     msTeamsThemeColor: '',
@@ -257,6 +266,19 @@ function initialState() {
     msTeamsCaCerts: false,
     msTeamsAttachKibanaDiscoverUrl: false,
     msTeamsKibanaDiscoverTitle: 'Discover in Kibana',
+
+    /* MS Power Automate */
+    msPowerAutomateWebhookUrl: [],
+    msPowerAutomateAlertSummary: '',
+    msPowerAutomateTeamsCardWidthFull: false,
+    msPowerAutomateProxy: '',
+    msPowerAutomateIgnoreSslErrors: false,
+    msPowerAutomateCaCerts: false,
+    msPowerAutomateAttachKibanaDiscoverUrl: false,
+    msPowerAutomateKibanaDiscoverTitle: 'Discover in Kibana',
+    msPowerAutomateKibanaDiscoverColor: 'default',
+    msPowerAutomateSummaryTextSize: 'large',
+    msPowerAutomateBodyTextSize: '',
 
     /* OpsGenie */
     opsgenieKey: '',
@@ -286,6 +308,8 @@ function initialState() {
     pagerdutyV2PayloadSource: 'ElastAlert',
     pagerdutyV2PayloadSourceArgs: [],
     pagerdutyV2PayloadIncludeAllInfo: false,
+    pagerdutyIgnoreSslErrors: false,
+    pagerdutyCaCerts: false,
 
     /* PagerTree */
     pagertreeIntegrationUrl: '',
@@ -1462,6 +1486,52 @@ export default {
       state.mattermostKibanaDiscoverTitle = mattermostKibanaDiscoverTitle;
     },
 
+    /* Matrix Hookshot */
+    UPDATE_MATRIXHOOKSHOT_WEBHOOK_URL(state, matrixhookshotWebhookUrl) {
+      state.matrixhookshotWebhookUrl = matrixhookshotWebhookUrl;
+    },
+
+    ADD_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY(state) {
+      state.matrixhookshotWebhookUrl.push('');
+    },
+
+    ADD_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.matrixhookshotWebhookUrl.push(value);
+    },
+
+    REMOVE_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY(state, entry) {
+      state.matrixhookshotWebhookUrl = state.matrixhookshotWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_MATRIXHOOKSHOT_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.matrixhookshotWebhookUrl) return;
+      state.matrixhookshotWebhookUrl[index] = entry;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_USERNAME(state, matrixhookshotUsername) {
+      state.matrixhookshotUsername = matrixhookshotUsername;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_TEXT(state, matrixhookshotText) {
+      state.matrixhookshotText = matrixhookshotText;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_IGNORE_SSL_ERRORS(state, matrixhookshotIgnoreSslErrors) {
+      state.matrixhookshotIgnoreSslErrors = matrixhookshotIgnoreSslErrors;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_CA_CERTS(state, matrixhookshotCaCerts) {
+      state.matrixhookshotCaCerts = matrixhookshotCaCerts;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_TIMEOUT(state, matrixhookshotTimeout) {
+      state.matrixhookshotTimeout = matrixhookshotTimeout;
+    },
+
+    UPDATE_MATRIXHOOKSHOT_PROXY(state, matrixhookshotProxy) {
+      state.matrixhookshotProxy = matrixhookshotProxy;
+    },
+
     /* MS Teams */
     UPDATE_MS_TEAMS_WEBHOOK_URL(state, msTeamsWebhookUrl) {
       state.msTeamsWebhookUrl = msTeamsWebhookUrl;
@@ -1514,6 +1584,68 @@ export default {
 
     UPDATE_MS_TEAMS_KIBANA_DISCOVER_TITLE(state, msTeamsKibanaDiscoverTitle) {
       state.msTeamsKibanaDiscoverTitle = msTeamsKibanaDiscoverTitle;
+    },
+
+    /* MS Power Automate */
+    UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL(state, msPowerAutomateWebhookUrl) {
+      state.msPowerAutomateWebhookUrl = msPowerAutomateWebhookUrl;
+    },
+
+    ADD_MS_POWER_AUTOMATE_WEBHOOK_URL_ENTRY(state) {
+      state.msPowerAutomateWebhookUrl.push('');
+    },
+
+    ADD_MS_POWER_AUTOMATE_WEBHOOK_URL_ENTRY_VALUE(state, value) {
+      state.msPowerAutomateWebhookUrl.push(value);
+    },
+
+    REMOVE_MS_POWER_AUTOMATE_WEBHOOK_URL_ENTRY(state, entry) {
+      state.msPowerAutomateWebhookUrl = state.msPowerAutomateWebhookUrl.filter(b => b !== entry);
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL_ENTRY(state, { entry, index }) {
+      if (!state.msPowerAutomateWebhookUrl) return;
+      state.msPowerAutomateWebhookUrl[index] = entry;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_ALERT_FIXED_WIDTH(state, msPowerAutomateTeamsCardWidthFull) {
+      state.msPowerAutomateTeamsCardWidthFull = msPowerAutomateTeamsCardWidthFull;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_ALERT_SUMMARY(state, msPowerAutomateAlertSummary) {
+      state.msPowerAutomateAlertSummary = msPowerAutomateAlertSummary;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_SUMMARY_TEXT_SIZE(state, msPowerAutomateSummaryTextSize) {
+      state.msPowerAutomateSummaryTextSize = msPowerAutomateSummaryTextSize;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_BODY_TEXT_SIZE(state, msPowerAutomateBodyTextSize) {
+      state.msPowerAutomateBodyTextSize = msPowerAutomateBodyTextSize;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_PROXY(state, msPowerAutomateProxy) {
+      state.msPowerAutomateProxy = msPowerAutomateProxy;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_IGNORE_SSL_ERRORS(state, msPowerAutomateIgnoreSslErrors) {
+      state.msPowerAutomateIgnoreSslErrors = msPowerAutomateIgnoreSslErrors;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_CA_CERTS(state, msPowerAutomateCaCerts) {
+      state.msPowerAutomateCaCerts = msPowerAutomateCaCerts;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_ATTACH_KIBANA_DISCOVER_URL(state, msPowerAutomateAttachKibanaDiscoverUrl) {
+      state.msPowerAutomateAttachKibanaDiscoverUrl = msPowerAutomateAttachKibanaDiscoverUrl;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_TITLE(state, msPowerAutomateKibanaDiscoverTitle) {
+      state.msPowerAutomateKibanaDiscoverTitle = msPowerAutomateKibanaDiscoverTitle;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_COLOR(state, msPowerAutomateKibanaDiscoverColor) {
+      state.msPowerAutomateKibanaDiscoverColor = msPowerAutomateKibanaDiscoverColor;
     },
 
     /* OpsGenie */
@@ -1705,6 +1837,14 @@ export default {
 
     UPDATE_PAGERDUTY_V2_PAYLOAD_INCLUDE_ALL_INFO(state, pagerdutyV2PayloadIncludeAllInfo) {
       state.pagerdutyV2PayloadIncludeAllInfo = pagerdutyV2PayloadIncludeAllInfo;
+    },
+
+    UPDATE_PAGERDUTY_IGNORE_SSL_ERRORS(state, pagerdutyIgnoreSslErrors) {
+      state.pagerdutyIgnoreSslErrors = pagerdutyIgnoreSslErrors;
+    },
+
+    UPDATE_PAGERDUTY_CA_CERTS(state, pagerdutyCaCerts) {
+      state.pagerdutyCaCerts = pagerdutyCaCerts;
     },
 
     /* Pagertree */

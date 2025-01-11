@@ -7,6 +7,31 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.20
+
+**New options**
+
+**Microsoft Power Automate**  
+**WorkWechat**  
+**Matrix Hookshot**  
+
+**dingtalk**
+
+add settings.
+
+- dingtalk_sign
+
+**PagerDuty**
+
+add settings.
+
+- pagerduty_ca_certs
+- pagerduty_ignore_ssl_errors
+
+**kibana discover**
+
+- kibana 8.12 - 8.17 support
+
 ## -> 1.8.18
 
 **New options**
