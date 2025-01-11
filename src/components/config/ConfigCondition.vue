@@ -515,7 +515,7 @@
                   <el-input
                     id="numEvents"
                     v-model="numEvents"
-                    min="1"
+                    min="0"
                     type="number"
                     class="el-input-wide"
                     @input="validate" />
