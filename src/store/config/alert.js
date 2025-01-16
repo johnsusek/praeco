@@ -144,7 +144,7 @@ function initialState() {
     bcc: '',
     smtpSsl: false,
     smtpHost: '',
-    smtpPort: 25,
+    smtpPort: null,
     smtpAuthFile: '',
     smtpKeyFile: '',
     smtpCertFile: '',
