@@ -364,8 +364,6 @@ export default {
 
         if (config.smtp_port) {
           commit('alert/UPDATE_SMTP_PORT', config.smtp_port);
-        } else {
-          commit('alert/UPDATE_SMTP_PORT', 25);
         }
 
         commit('alert/UPDATE_SMTP_AUTH_FILE', config.smtp_auth_file);
