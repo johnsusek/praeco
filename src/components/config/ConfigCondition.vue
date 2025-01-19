@@ -421,20 +421,18 @@
         <el-col :span="14">
           <el-form ref="minMaxCardinality" :model="$store.state.config.match">
             <el-form-item v-if="cardinalityAboveOrBelow === 'above'" prop="maxCardinality" required>
-              <el-input
+              <el-input-number
                 id="maxCardinality"
                 v-model="maxCardinality"
-                min="0"
-                type="number"
+                :min="0"
                 class="el-input-wide"
                 @input="validate" />
             </el-form-item>
             <el-form-item v-else prop="minCardinality" required>
-              <el-input
+              <el-input-number
                 id="minCardinality"
                 v-model="minCardinality"
-                min="1"
-                type="number"
+                :min="1"
                 class="el-input-wide"
                 @input="validate" />
             </el-form-item>
@@ -512,29 +510,26 @@
             <el-form ref="spikeOrThreshold" :model="$store.state.config.match">
               <template v-if="spikeOrThreshold === 'is'">
                 <el-form-item v-if="aboveOrBelow === 'above'" prop="numEvents" required>
-                  <el-input
+                  <el-input-number
                     id="numEvents"
                     v-model="numEvents"
-                    min="1"
-                    type="number"
+                    :min="1"
                     class="el-input-wide"
                     @input="validate" />
                 </el-form-item>
                 <el-form-item v-else prop="threshold" required>
-                  <el-input
+                  <el-input-number
                     id="threshold"
                     v-model="threshold"
-                    min="1"
-                    type="number"
+                    :min="1"
                     class="el-input-wide"
                     @input="validate" />
                 </el-form-item>
               </template>
               <el-form-item v-else prop="spikeHeight" required>
-                <el-input
+                <el-input-number
                   id="spikeHeight"
                   v-model="spikeHeight"
-                  type="number"
                   class="el-input-wide"
                   @input="validate" />
               </el-form-item>
@@ -550,10 +545,10 @@
           :model="$store.state.config.match"
           label-width="60px">
           <el-form-item label="Above" prop="maxThreshold">
-            <el-input id="maxThreshold" v-model="maxThreshold" min="1" type="number" @change="validate" />
+            <el-input-number id="maxThreshold" v-model="maxThreshold" :min="1" @change="validate" />
           </el-form-item>
           <el-form-item label="Below" prop="minThreshold">
-            <el-input id="minThreshold" v-model="minThreshold" min="1" type="number" @change="validate" />
+            <el-input-number id="minThreshold" v-model="minThreshold" :min="1" @change="validate" />
           </el-form-item>
         </el-form>
       </div>
@@ -745,7 +740,7 @@
           </el-form-item>
 
           <el-form-item v-if="useTermsQuery" label="Terms size">
-            <el-input v-model="termsSize" type="number" />
+            <el-input-number v-model="termsSize" />
             <label v-if="type === 'new_term'">
               This means that if a new term appears but there are at least this many terms which
               appear more frequently, it will not be found. Default is 50.
@@ -776,7 +771,7 @@
           class="m-n-lg"
           @submit.native.prevent>
           <el-form-item label="Threshold (reference)" prop="thresholdRef">
-            <el-input v-model="thresholdRef" type="number" />
+            <el-input-number v-model="thresholdRef" />
             <label>
               The minimum number of events that must exist in the
               reference window for an alert to trigger.
@@ -788,7 +783,7 @@
           </el-form-item>
 
           <el-form-item label="Threshold (current)" prop="thresholdCur">
-            <el-input v-model="thresholdCur" type="number" />
+            <el-input-number v-model="thresholdCur" />
             <label>
               The minimum number of events that must exist in the current
               window for an alert to trigger.
