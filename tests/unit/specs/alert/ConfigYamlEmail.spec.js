@@ -42,7 +42,6 @@ realert:
 smtp_auth_file: "auth_file"
 smtp_cert_file: "cert_file"
 smtp_key_file: "key_file"
-smtp_port: 25
 smtp_ssl: true
 terms_size: 50
 timeframe:

@@ -364,8 +364,6 @@ export default {
 
         if (config.smtp_port) {
           commit('alert/UPDATE_SMTP_PORT', config.smtp_port);
-        } else {
-          commit('alert/UPDATE_SMTP_PORT', 25);
         }
 
         commit('alert/UPDATE_SMTP_AUTH_FILE', config.smtp_auth_file);
@@ -628,9 +626,6 @@ export default {
         } else {
           commit('alert/UPDATE_LARK_MSGTYPE', 'text');
         }
-
-        /* Line Notify */
-        commit('alert/UPDATE_LINENOTIFY_ACCESS_TOKEN', config.linenotify_access_token);
 
         /* Command */
         if (config.command) {
@@ -2503,16 +2498,6 @@ export default {
       return config;
     },
 
-    linenotify(state) {
-      let config = {};
-
-      if (state.alert.linenotifyAccessToken) {
-        config.linenotify_access_token = state.alert.linenotifyAccessToken;
-      }
-
-      return config;
-    },
-
     command(state) {
       let config = {};
 
@@ -3395,10 +3380,6 @@ export default {
         config = { ...config, ...getters.lark };
       }
 
-      if (state.alert.alert.includes('linenotify')) {
-        config = { ...config, ...getters.linenotify };
-      }
-
       if (state.alert.alert.includes('mattermost')) {
         config = { ...config, ...getters.mattermost };
       }
@@ -3501,7 +3482,6 @@ export default {
         || state.alert.alert.includes('iris')
         || state.alert.alert.includes('jira')
         || state.alert.alert.includes('lark')
-        || state.alert.alert.includes('linenotify')
         || state.alert.alert.includes('mattermost')
         || state.alert.alert.includes('matrixhookshot')
         || state.alert.alert.includes('ms_teams')

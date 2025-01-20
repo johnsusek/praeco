@@ -141,6 +141,8 @@
 </template>
 
 <script>
+import { kibanaVersionOptions } from '@/lib/kibanaVersionOptions.js';
+
 export default {
   props: ['viewOnly'],
   emits: ['validate'],
@@ -149,115 +151,7 @@ export default {
     return {
       popKibanaDiscoverColumnsVisible: false,
       popKibanaDiscoverColumnsValid: true,
-      kibanaVersionOptions: [{
-        code: '7.0',
-        name: '7.0'
-      }, {
-        code: '7.1',
-        name: '7.1'
-      }, {
-        code: '7.2',
-        name: '7.2'
-      }, {
-        code: '7.3',
-        name: '7.3'
-      }, {
-        code: '7.4',
-        name: '7.4'
-      }, {
-        code: '7.5',
-        name: '7.5'
-      }, {
-        code: '7.6',
-        name: '7.6'
-      }, {
-        code: '7.7',
-        name: '7.7'
-      }, {
-        code: '7.8',
-        name: '7.8'
-      }, {
-        code: '7.9',
-        name: '7.9'
-      }, {
-        code: '7.10',
-        name: '7.10'
-      }, {
-        code: '7.11',
-        name: '7.11'
-      }, {
-        code: '7.12',
-        name: '7.12'
-      }, {
-        code: '7.13',
-        name: '7.13'
-      }, {
-        code: '7.14',
-        name: '7.14'
-      }, {
-        code: '7.15',
-        name: '7.15'
-      }, {
-        code: '7.16',
-        name: '7.16'
-      }, {
-        code: '7.17',
-        name: '7.17'
-      }, {
-        code: '8.0',
-        name: '8.0'
-      }, {
-        code: '8.1',
-        name: '8.1'
-      }, {
-        code: '8.2',
-        name: '8.2'
-      }, {
-        code: '8.3',
-        name: '8.3'
-      }, {
-        code: '8.4',
-        name: '8.4'
-      }, {
-        code: '8.5',
-        name: '8.5'
-      }, {
-        code: '8.6',
-        name: '8.6'
-      }, {
-        code: '8.7',
-        name: '8.7'
-      }, {
-        code: '8.8',
-        name: '8.8'
-      }, {
-        code: '8.9',
-        name: '8.9'
-      }, {
-        code: '8.10',
-        name: '8.10'
-      }, {
-        code: '8.11',
-        name: '8.11'
-      }, {
-        code: '8.12',
-        name: '8.12'
-      }, {
-        code: '8.13',
-        name: '8.13'
-      }, {
-        code: '8.14',
-        name: '8.14'
-      }, {
-        code: '8.15',
-        name: '8.15'
-      }, {
-        code: '8.16',
-        name: '8.16'
-      }, {
-        code: '8.17',
-        name: '8.17'
-      }],
+      kibanaVersionOptions,
     };
   },
 
