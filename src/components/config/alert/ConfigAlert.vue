@@ -35,6 +35,13 @@
       </el-col>
     </el-row>
 
+    <!-- buffer_time -->
+    <el-row class="m-s-sm">
+      <el-col :span="19">
+        <ConfigBufferTime ref="bufferTimeLocal" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
     <!-- time_window_change -->
     <el-row class="m-s-sm">
       <el-col :span="19">
