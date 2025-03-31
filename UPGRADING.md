@@ -7,6 +7,12 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.21
+
+**Remove options**
+
+**LINE Notify**
+
 ## -> 1.8.20
 
 **New options**

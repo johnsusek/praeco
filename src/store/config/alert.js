@@ -17,6 +17,10 @@ function initialState() {
     alertSubjectArgs: [],
     alertTextArgs: [],
 
+    /* buffer_time */
+    useBufferTime: false,
+    bufferTimeLocal: { minutes: 1 },
+
     /* Description */
     useDescription: false,
     configDescription: '',
@@ -551,6 +555,15 @@ export default {
 
     UPDATE_ALERT(state, alert) {
       state.alert = alert;
+    },
+
+    /* buffer_time */
+    USE_BUFFER_TIME(state, useBufferTime) {
+      state.useBufferTime = useBufferTime;
+    },
+
+    UPDATE_BUFFER_TIME(state, bufferTimeLocal) {
+      state.bufferTimeLocal = bufferTimeLocal;
     },
 
     /* Description */

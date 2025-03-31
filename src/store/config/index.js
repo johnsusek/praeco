@@ -210,6 +210,9 @@ export default {
         commit('alert/UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA', config.kibana_discover_from_timedelta);
         commit('alert/UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA', config.kibana_discover_to_timedelta);
 
+        /* buffer_time */
+        commit('alert/UPDATE_BUFFER_TIME', config.buffer_time);
+
         /* scan_entire_timeframe */
         commit('alert/UPDATE_SCAN_ENTIRE_TIMEFRAME', config.scan_entire_timeframe);
 
@@ -2591,6 +2594,17 @@ export default {
       return config;
     },
 
+    // buffer_time
+    bufferTime(state) {
+      let config = {};
+
+      if (state.alert.useBufferTime) {
+        config.buffer_time = state.alert.bufferTimeLocal;
+      }
+
+      return config;
+    },
+
     // Description
     description(state) {
       let config = {};
@@ -3527,6 +3541,8 @@ export default {
       config = { ...config, ...getters.limitExcecution };
 
       config = { ...config, ...getters.description };
+
+      config = { ...config, ...getters.bufferTime };
 
       config = { ...config, ...getters.priority };
 
