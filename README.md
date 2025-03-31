@@ -124,7 +124,7 @@ yelp/elastalert is no longer supported as maintenance has been discontinued.
 
 Main challenges of yelp/elastalert
 - Not compatible with python 3.12 or later.
-- Line Notify, PagerTree, Stomp and Zabbix alert notifications do not work due to a bug.
+- PagerTree, Stomp and Zabbix alert notifications do not work due to a bug.
 - kibana Discover only guarantees operation up to kibana 7.3.
 
 #### Does it support elasticsearch 5.x?
