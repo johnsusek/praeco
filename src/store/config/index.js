@@ -3561,9 +3561,6 @@ export default {
       // Sort the keys in the object so it appears alphabetically in the UI
       let conf = {};
 
-      // eslint-disable-next-line
-      console.log(config);
-
       Object.keys(config)
         .sort()
         .forEach(v => {
