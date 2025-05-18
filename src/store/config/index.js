@@ -1244,6 +1244,15 @@ export default {
         commit('alert/OPSGENIE_DESCRIPTION', config.opsgenie_description);
         commit('alert/UPDATE_OPSGENIE_PRIORITY', config.opsgenie_priority);
 
+        /* Webex */
+        if (config.webex_webhook_id) {
+          commit('alert/UPDATE_WEBEX_WEBHOOK_ID', config.webex_webhook_id);
+        }
+
+        if (config.webex_webhook_msgtype) {
+          commit('alert/UPDATE_WEBEX_WEBHOOK_MSGTYPE', config.webex_webhook_msgtype);
+        }
+
         /* realert, alert, alert_text_type, alert_text, alert_subject, alert_subject_args, alert_text_args */
         commit('alert/UPDATE_REALERT', config.realert);
         commit('alert/UPDATE_ALERT', config.alert);
@@ -3229,6 +3238,20 @@ export default {
       return config;
     },
 
+    webex(state) {
+      let config = {};
+
+      if (state.alert.webexWebhookId) {
+        config.webex_webhook_id = state.alert.webexWebhookId;
+      }
+
+      if (state.alert.webexWebhookMsgtype) {
+        config.webex_webhook_msgtype = state.alert.webexWebhookMsgtype;
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
@@ -3368,6 +3391,10 @@ export default {
 
       if (state.alert.alert.includes('datadog')) {
         config = { ...config, ...getters.datadog };
+      }
+
+      if (state.alert.alert.includes('webex_webhook')) {
+        config = { ...config, ...getters.webex };
       }
 
       if (state.alert.alert.includes('dingtalk')) {
@@ -3527,6 +3554,7 @@ export default {
         || state.alert.alert.includes('stomp')
         || state.alert.alert.includes('telegram')
         || state.alert.alert.includes('tencent_sms')
+        || state.alert.alert.includes('webex_webhook')
         || state.alert.alert.includes('workwechat')
         || state.alert.alert.includes('victorops')) {
         config = { ...config, ...getters.subjectBody };

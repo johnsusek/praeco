@@ -208,6 +208,9 @@
         <el-checkbox id="destinationMsPowerAutomate" label="ms_power_automate" border>
           MS PowerAutomate
         </el-checkbox>
+        <el-checkbox id="destinationWebex" label="webex_webhook" border>
+          Webex
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -243,6 +246,7 @@
           || alert.includes('gelf')
           || alert.includes('workwechat')
           || alert.includes('matrixhookshot')
+          || alert.includes('webex_webhook')
           || alert.includes('telegram')">
         <template #label>
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
@@ -548,6 +552,14 @@
         </template>
         <ConfigAlertMsPowerAutomate ref="ms_power_automate" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Webex -->
+      <el-tab-pane v-if="alert.includes('webex_webhook')">
+        <template #label>
+          Webex
+        </template>
+        <ConfigAlertWebex ref="webex_webhook" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -593,6 +605,7 @@ import ConfigAlertTwilio from './ConfigAlertTwilio';
 import ConfigAlertVictorOps from './ConfigAlertVictorOps';
 import ConfigAlertZabbix from './ConfigAlertZabbix';
 import ConfigAlertWorkWeChat from './ConfigAlertWorkWeChat.vue';
+import ConfigAlertWebex from './ConfigAlertWebex.vue';
 
 let validateEmail = (rule, value, callback) => {
   if (!value || isEmail(value)) {
@@ -713,7 +726,8 @@ export default {
     ConfigAlertTwilio,
     ConfigAlertVictorOps,
     ConfigAlertZabbix,
-    ConfigAlertWorkWeChat
+    ConfigAlertWorkWeChat,
+    ConfigAlertWebex
   },
 
   props: ['viewOnly'],

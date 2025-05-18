@@ -426,6 +426,10 @@ function initialState() {
     victoropsEntityDisplayName: '',
     victoropsProxy: '',
 
+    /* Webex */
+    webexWebhookId: '',
+    webexWebhookMsgtype: 'text',
+
     /* WorkWechat */
     workWechatBotId: '',
     workWechatMsgtype: 'text',
@@ -2356,6 +2360,15 @@ export default {
 
     UPDATE_VICTOROPS_PROXY(state, victoropsProxy) {
       state.victoropsProxy = victoropsProxy;
+    },
+
+    /* Webex */
+    UPDATE_WEBEX_WEBHOOK_ID(state, webexWebhookId) {
+      state.webexWebhookId = webexWebhookId;
+    },
+
+    UPDATE_WEBEX_WEBHOOK_MSGTYPE(state, webexWebhookMsgtype) {
+      state.webexWebhookMsgtype = webexWebhookMsgtype;
     },
 
     /* WorkWechat */
