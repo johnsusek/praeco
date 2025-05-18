@@ -211,6 +211,9 @@
         <el-checkbox id="destinationWebex" label="webex_webhook" border>
           Webex
         </el-checkbox>
+        <el-checkbox id="destinationYzj" label="yzj" border>
+          YZJ
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -247,6 +250,7 @@
           || alert.includes('workwechat')
           || alert.includes('matrixhookshot')
           || alert.includes('webex_webhook')
+          || alert.includes('yzj')
           || alert.includes('telegram')">
         <template #label>
           <Icon :icon="['fa', 'bell']" size="1x" /> Alert
@@ -560,6 +564,14 @@
         </template>
         <ConfigAlertWebex ref="webex_webhook" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- YZJ -->
+      <el-tab-pane v-if="alert.includes('yzj')">
+        <template #label>
+          YZJ
+        </template>
+        <ConfigAlertYzj ref="yzj" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -606,6 +618,7 @@ import ConfigAlertVictorOps from './ConfigAlertVictorOps';
 import ConfigAlertZabbix from './ConfigAlertZabbix';
 import ConfigAlertWorkWeChat from './ConfigAlertWorkWeChat.vue';
 import ConfigAlertWebex from './ConfigAlertWebex.vue';
+import ConfigAlertYzj from './ConfigAlertYzj.vue';
 
 let validateEmail = (rule, value, callback) => {
   if (!value || isEmail(value)) {
@@ -727,7 +740,8 @@ export default {
     ConfigAlertVictorOps,
     ConfigAlertZabbix,
     ConfigAlertWorkWeChat,
-    ConfigAlertWebex
+    ConfigAlertWebex,
+    ConfigAlertYzj
   },
 
   props: ['viewOnly'],

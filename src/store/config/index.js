@@ -1253,6 +1253,23 @@ export default {
           commit('alert/UPDATE_WEBEX_WEBHOOK_MSGTYPE', config.webex_webhook_msgtype);
         }
 
+        /* YZJ */
+        if (config.yzj_token) {
+          commit('alert/UPDATE_YZJ_TOKEN', config.yzj_token);
+        }
+
+        if (config.yzj_type) {
+          commit('alert/UPDATE_YZJ_TYPE', config.yzj_type);
+        }
+
+        if (config.yzj_proxy) {
+          commit('alert/UPDATE_YZJ_PROXY', config.yzj_proxy);
+        }
+
+        if (config.yzj_custom_loc) {
+          commit('alert/UPDATE_YZJ_CUSTOM_LOC', config.yzj_custom_loc);
+        }
+
         /* realert, alert, alert_text_type, alert_text, alert_subject, alert_subject_args, alert_text_args */
         commit('alert/UPDATE_REALERT', config.realert);
         commit('alert/UPDATE_ALERT', config.alert);
@@ -3252,6 +3269,28 @@ export default {
       return config;
     },
 
+    yzj(state) {
+      let config = {};
+
+      if (state.alert.yzjToken) {
+        config.yzj_token = state.alert.yzjToken;
+      }
+
+      if (state.alert.yzjType) {
+        config.yzj_type = state.alert.yzjType;
+      }
+
+      if (state.alert.yzjProxy) {
+        config.yzj_proxy = state.alert.yzjProxy;
+      }
+
+      if (state.alert.yzjCustomLoc) {
+        config.yzj_custom_loc = state.alert.yzjCustomLoc;
+      }
+
+      return config;
+    },
+
     subjectBody(state) {
       let config = {};
 
@@ -3395,6 +3434,10 @@ export default {
 
       if (state.alert.alert.includes('webex_webhook')) {
         config = { ...config, ...getters.webex };
+      }
+
+      if (state.alert.alert.includes('yzj')) {
+        config = { ...config, ...getters.yzj };
       }
 
       if (state.alert.alert.includes('dingtalk')) {
@@ -3555,6 +3598,7 @@ export default {
         || state.alert.alert.includes('telegram')
         || state.alert.alert.includes('tencent_sms')
         || state.alert.alert.includes('webex_webhook')
+        || state.alert.alert.includes('yzj')
         || state.alert.alert.includes('workwechat')
         || state.alert.alert.includes('victorops')) {
         config = { ...config, ...getters.subjectBody };

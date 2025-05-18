@@ -434,6 +434,12 @@ function initialState() {
     workWechatBotId: '',
     workWechatMsgtype: 'text',
 
+    /* YZJ */
+    yzj_token: '',
+    yzj_type: 0,
+    yzj_proxy: '',
+    yzj_custom_loc: '',
+
     /* Zabbix */
     zbxSenderHost: 'localhost',
     zbxSenderPort: 10051,
@@ -2378,6 +2384,23 @@ export default {
 
     UPDATE_WORK_WECHAT_MSGTYPE(state, workWechatMsgtype) {
       state.workWechatMsgtype = workWechatMsgtype;
+    },
+
+    /* YZJ */
+    UPDATE_YZJ_TOKEN(state, yzjToken) {
+      state.yzjToken = yzjToken;
+    },
+
+    UPDATE_YZJ_TYPE(state, yzjType) {
+      state.yzjType = yzjType;
+    },
+
+    UPDATE_YZJ_PROXY(state, yzjProxy) {
+      state.yzjProxy = yzjProxy;
+    },
+
+    UPDATE_YZJ_CUSTOM_LOC(state, yzjCustomLoc) {
+      state.yzjCustomLoc = yzjCustomLoc;
     },
 
     /* Zabbix */
