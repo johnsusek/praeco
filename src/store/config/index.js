@@ -1229,6 +1229,10 @@ export default {
           commit('alert/UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_COLOR', config.ms_power_automate_kibana_discover_color);
         }
 
+        if (config.ms_power_automate_webhook_url_from_field) {
+          commit('alert/UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL_FROM_FIELD', config.ms_power_automate_webhook_url_from_field);
+        }
+
         /* OpsGenie */
         commit('alert/OPSGENIE_KEY', config.opsgenie_key);
         commit('alert/OPSGENIE_ACCOUNT', config.opsgenie_account);
@@ -2058,6 +2062,10 @@ export default {
 
         if (state.alert.msPowerAutomateKibanaDiscoverColor) {
           config.ms_power_automate_kibana_discover_color = state.alert.msPowerAutomateKibanaDiscoverColor;
+        }
+
+        if (state.alert.msPowerAutomateWebhookUrlFromField) {
+          config.ms_power_automate_webhook_url_from_field = state.alert.msPowerAutomateWebhookUrlFromField;
         }
       }
 

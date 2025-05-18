@@ -26,6 +26,7 @@ ms_power_automate_kibana_discover_title: kibana title
 ms_power_automate_proxy: http://localhost:8080/
 ms_power_automate_summary_text_size: small
 ms_power_automate_teams_card_width_full: true
+ms_power_automate_webhook_url_from_field: abcd
 name: test123
 num_events: 10000
 realert:

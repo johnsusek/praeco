@@ -159,6 +159,14 @@
         :disabled="viewOnly"
         @change="changeMsPowerAutomateCaCerts" />
     </el-form-item>
+
+    <el-form-item label="WebhookURL From Field" prop="msPowerAutomateWebhookUrlFromField">
+      <el-input :value="msPowerAutomateWebhookUrlFromField" :disabled="viewOnly" @input="msPowerAutomateWebhookUrlFromField = $event" />
+      <label>
+        Use a field from the document that triggered the alert as the webhook.
+        If the field cannot be found, the ms_power_automate_webhook_url value will be used as a default.
+      </label>
+    </el-form-item>
   </div>
 </template>
 
@@ -287,6 +295,15 @@ export default {
           value
         );
       }
+    }
+  },
+
+  msPowerAutomateWebhookUrlFromField: {
+    get() {
+      return this.$store.state.config.alert.msPowerAutomateWebhookUrlFromField;
+    },
+    set(value) {
+      this.$store.commit('config/alert/UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL_FROM_FIELD', value);
     }
   },
 

@@ -280,6 +280,7 @@ function initialState() {
     msPowerAutomateKibanaDiscoverColor: 'default',
     msPowerAutomateSummaryTextSize: 'large',
     msPowerAutomateBodyTextSize: '',
+    msPowerAutomateWebhookUrlFromField: '',
 
     /* OpsGenie */
     opsgenieKey: '',
@@ -1651,6 +1652,10 @@ export default {
 
     UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_COLOR(state, msPowerAutomateKibanaDiscoverColor) {
       state.msPowerAutomateKibanaDiscoverColor = msPowerAutomateKibanaDiscoverColor;
+    },
+
+    UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL_FROM_FIELD(state, msPowerAutomateWebhookUrlFromField) {
+      state.msPowerAutomateWebhookUrlFromField = msPowerAutomateWebhookUrlFromField;
     },
 
     /* OpsGenie */
