@@ -214,6 +214,9 @@
         <el-checkbox id="destinationYzj" label="yzj" border>
           YZJ
         </el-checkbox>
+        <el-checkbox id="destinationFlashduty" label="flashduty" border>
+          Flashduty
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -226,6 +229,7 @@
           || alert.includes('dingtalk')
           || alert.includes('discord')
           || alert.includes('email')
+          || alert.includes('flashduty')
           || alert.includes('gitter')
           || alert.includes('googlechat')
           || alert.includes('hivealerter')
@@ -572,6 +576,14 @@
         </template>
         <ConfigAlertYzj ref="yzj" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- Flashduty -->
+      <el-tab-pane v-if="alert.includes('flashduty')">
+        <template #label>
+          Flashduty
+        </template>
+        <ConfigAlertFlashDuty ref="flashduty" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -591,6 +603,7 @@ import ConfigAlertDatadog from './ConfigAlertDatadog';
 import ConfigAlertDiscord from './ConfigAlertDiscord';
 import ConfigAlertEmail from './ConfigAlertEmail';
 import ConfigAlertExotel from './ConfigAlertExotel';
+import ConfigAlertFlashDuty from './ConfigAlertFlashDuty';
 import ConfigAlertGelf from './ConfigAlertGelf';
 import ConfigAlertGitter from './ConfigAlertGitter';
 import ConfigAlertGoogleChat from './ConfigAlertGoogleChat';
@@ -714,6 +727,7 @@ export default {
     ConfigAlertDiscord,
     ConfigAlertEmail,
     ConfigAlertExotel,
+    ConfigAlertFlashDuty,
     ConfigAlertGelf,
     ConfigAlertGitter,
     ConfigAlertGoogleChat,

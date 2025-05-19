@@ -162,6 +162,21 @@ function initialState() {
     exotelFromNumber: '',
     exotelMessageBody: '',
 
+    /* Flashduty */
+    flashdutyIntegrationKey: '',
+    flashdutyTitle: '',
+    flashdutyAlertKey: '',
+    flashdutyDescription: '',
+    flashdutyEventStatus: 'Info',
+    flashdutyCheck: '',
+    flashdutyService: '',
+    flashdutyCluster: '',
+    flashdutyResource: '',
+    flashdutyMetric: '',
+    flashdutyGroup: '',
+    flashdutyEnv: '',
+    flashdutyApp: '',
+
     /* Gelf */
     gelfType: '',
     gelfEndpoint: '',
@@ -1129,6 +1144,47 @@ export default {
 
     UPDATE_EMAIL_ADD_DOMAIN(state, emailAddDomain) {
       state.emailAddDomain = emailAddDomain;
+    },
+
+    /* Flashduty */
+    UPDATE_FLASHDUTY_INTEGRATION_KEY(state, flashdutyIntegrationKey) {
+      state.flashdutyIntegrationKey = flashdutyIntegrationKey;
+    },
+    UPDATE_FLASHDUTY_TITLE(state, flashdutyTitle) {
+      state.flashdutyTitle = flashdutyTitle;
+    },
+    UPDATE_FLASHDUTY_ALERT_KEY(state, flashdutyAlertKey) {
+      state.flashdutyAlertKey = flashdutyAlertKey;
+    },
+    UPDATE_FLASHDUTY_DESCRIPTION(state, flashdutyDescription) {
+      state.flashdutyDescription = flashdutyDescription;
+    },
+    UPDATE_FLASHDUTY_EVENT_STATUS(state, flashdutyEventStatus) {
+      state.flashdutyEventStatus = flashdutyEventStatus;
+    },
+    UPDATE_FLASHDUTY_CHECK(state, flashdutyCheck) {
+      state.flashdutyCheck = flashdutyCheck;
+    },
+    UPDATE_FLASHDUTY_SERVICE(state, flashdutyService) {
+      state.flashdutyService = flashdutyService;
+    },
+    UPDATE_FLASHDUTY_CLUSTER(state, flashdutyCluster) {
+      state.flashdutyCluster = flashdutyCluster;
+    },
+    UPDATE_FLASHDUTY_RESOURCE(state, flashdutyResource) {
+      state.flashdutyResource = flashdutyResource;
+    },
+    UPDATE_FLASHDUTY_METRIC(state, flashdutyMetric) {
+      state.flashdutyMetric = flashdutyMetric;
+    },
+    UPDATE_FLASHDUTY_GROUP(state, flashdutyGroup) {
+      state.flashdutyGroup = flashdutyGroup;
+    },
+    UPDATE_FLASHDUTY_ENV(state, flashdutyEnv) {
+      state.flashdutyEnv = flashdutyEnv;
+    },
+    UPDATE_FLASHDUTY_APP(state, flashdutyApp) {
+      state.flashdutyApp = flashdutyApp;
     },
 
     /* GoogleChat */

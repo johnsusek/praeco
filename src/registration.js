@@ -25,6 +25,7 @@ import ConfigAlertDingtalk from '@/components/config/alert/ConfigAlertDingtalk.v
 import ConfigAlertDiscord from '@/components/config/alert/ConfigAlertDiscord.vue';
 import ConfigAlertEmail from '@/components/config/alert/ConfigAlertEmail.vue';
 import ConfigAlertExotel from '@/components/config/alert/ConfigAlertExotel.vue';
+import ConfigAlertFlashDuty from '@/components/config/alert/ConfigAlertFlashDuty.vue';
 import ConfigAlertGelf from '@/components/config/alert/ConfigAlertGelf.vue';
 import ConfigAlertGitter from '@/components/config/alert/ConfigAlertGitter.vue';
 import ConfigAlertGoogleChat from '@/components/config/alert/ConfigAlertGoogleChat.vue';
@@ -79,6 +80,7 @@ Vue.component('ConfigAlertDingtalk', ConfigAlertDingtalk);
 Vue.component('ConfigAlertDiscord', ConfigAlertDiscord);
 Vue.component('ConfigAlertEmail', ConfigAlertEmail);
 Vue.component('ConfigAlertExotel', ConfigAlertExotel);
+Vue.component('ConfigAlertFlashDuty', ConfigAlertFlashDuty);
 Vue.component('ConfigAlertGelf', ConfigAlertGelf);
 Vue.component('ConfigAlertGitter', ConfigAlertGitter);
 Vue.component('ConfigAlertGoogleChat', ConfigAlertGoogleChat);

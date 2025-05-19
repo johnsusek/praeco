@@ -375,6 +375,21 @@ export default {
         commit('alert/UPDATE_EMAIL_FROM_FIELD', config.email_from_field);
         commit('alert/UPDATE_EMAIL_ADD_DOMAIN', config.email_add_domain);
 
+        /* Flashduty */
+        commit('alert/UPDATE_FLASHDUTY_INTEGRATION_KEY', config.flashduty_integration_key);
+        commit('alert/UPDATE_FLASHDUTY_TITLE', config.flashduty_title);
+        commit('alert/UPDATE_FLASHDUTY_ALERT_KEY', config.flashduty_alert_key);
+        commit('alert/UPDATE_FLASHDUTY_DESCRIPTION', config.flashduty_description);
+        commit('alert/UPDATE_FLASHDUTY_EVENT_STATUS', config.flashduty_event_status);
+        commit('alert/UPDATE_FLASHDUTY_CHECK', config.flashduty_check);
+        commit('alert/UPDATE_FLASHDUTY_SERVICE', config.flashduty_service);
+        commit('alert/UPDATE_FLASHDUTY_CLUSTER', config.flashduty_cluster);
+        commit('alert/UPDATE_FLASHDUTY_RESOURCE', config.flashduty_resource);
+        commit('alert/UPDATE_FLASHDUTY_METRIC', config.flashduty_metric);
+        commit('alert/UPDATE_FLASHDUTY_GROUP', config.flashduty_group);
+        commit('alert/UPDATE_FLASHDUTY_ENV', config.flashduty_env);
+        commit('alert/UPDATE_FLASHDUTY_APP', config.flashduty_app);
+
         /* Telegram */
         commit('alert/UPDATE_TELEGRAM_ROOM_ID', config.telegram_room_id);
         commit('alert/UPDATE_TELEGRAM_PROXY', config.telegram_proxy);
@@ -1881,6 +1896,52 @@ export default {
 
       if (state.alert.emailAddDomain) {
         config.email_add_domain = state.alert.emailAddDomain;
+      }
+
+      return config;
+    },
+
+    flashduty(state) {
+      let config = {};
+
+      if (state.alert.flashdutyIntegrationKey) {
+        config.flashduty_integration_key = state.alert.flashdutyIntegrationKey;
+      }
+      if (state.alert.flashdutyTitle) {
+        config.flashduty_title = state.alert.flashdutyTitle;
+      }
+      if (state.alert.flashdutyAlertKey) {
+        config.flashduty_alert_key = state.alert.flashdutyAlertKey;
+      }
+      if (state.alert.flashdutyDescription) {
+        config.flashduty_description = state.alert.flashdutyDescription;
+      }
+      if (state.alert.flashdutyEventStatus) {
+        config.flashduty_event_status = state.alert.flashdutyEventStatus;
+      }
+      if (state.alert.flashdutyCheck) {
+        config.flashduty_check = state.alert.flashdutyCheck;
+      }
+      if (state.alert.flashdutyService) {
+        config.flashduty_service = state.alert.flashdutyService;
+      }
+      if (state.alert.flashdutyCluster) {
+        config.flashduty_cluster = state.alert.flashdutyCluster;
+      }
+      if (state.alert.flashdutyResource) {
+        config.flashduty_resource = state.alert.flashdutyResource;
+      }
+      if (state.alert.flashdutyMetric) {
+        config.flashduty_metric = state.alert.flashdutyMetric;
+      }
+      if (state.alert.flashdutyGroup) {
+        config.flashduty_group = state.alert.flashdutyGroup;
+      }
+      if (state.alert.flashdutyEnv) {
+        config.flashduty_env = state.alert.flashdutyEnv;
+      }
+      if (state.alert.flashdutyApp) {
+        config.flashduty_app = state.alert.flashdutyApp;
       }
 
       return config;
@@ -3456,6 +3517,10 @@ export default {
         config = { ...config, ...getters.exotel };
       }
 
+      if (state.alert.alert.includes('flashduty')) {
+        config = { ...config, ...getters.flashduty };
+      }
+
       if (state.alert.alert.includes('gelf')) {
         config = { ...config, ...getters.gelf };
       }
@@ -3575,6 +3640,7 @@ export default {
         || state.alert.alert.includes('dingtalk')
         || state.alert.alert.includes('discord')
         || state.alert.alert.includes('email')
+        || state.alert.alert.includes('flashduty')
         || state.alert.alert.includes('gelf')
         || state.alert.alert.includes('gitter')
         || state.alert.alert.includes('googlechat')

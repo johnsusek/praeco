@@ -12,7 +12,7 @@
 - Preview results in an interactive chart
 - Test your alerts against historical data
 - Send notifications to Slack, MS Teams, Email, Telegram, Jira, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat, PagerDuty, Tencent SMS, Dingtalk, Alertmanager, OpsGenie, Graylog GELF, Lark, IRIS, WorkWechat, Matrix Hookshot
-, Microsoft Power Automate, Webex, YZJ or an HTTP POST/HTTP POST 2 endpoint
+, Microsoft Power Automate, Webex, YZJ, Flashduty or an HTTP POST/HTTP POST 2 endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -144,6 +144,11 @@ Support
 
 - Supports elasticsearch 8 with praeco 1.8.11 or later.<br>
 - elastalert-server is compatible with elasticsearch 8.
+
+#### Does it support elasticsearch 9.x?
+
+- Supports elasticsearch 9 with praeco 1.8.21 or later.<br>
+- elastalert-server is compatible with elasticsearch 9.
 
 #### Can you support a version that is not the latest version?
 
@@ -481,6 +486,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 - 7.x
 - 8.x
+- 9.x
 
 Configure the ElastAlert 2 `config.yaml` with:
 - Your `es_host`
