@@ -10,7 +10,7 @@ import '@/registration.js';
 import store from '@/store';
 import router from '@/router';
 
-config.stubs.transition = false;
+config.global.stubs.transition = false;
 
 export const mockAxios = new MockAdapter(axios);
 
@@ -63,3 +63,12 @@ class MutationObserver {
 global.MutationObserver = MutationObserver;
 
 global.window.getSelection = function() {};
+
+// Polyfill requestAnimationFrame for Element Plus components
+global.requestAnimationFrame = function(callback) {
+  return setTimeout(callback, 16);
+};
+
+global.cancelAnimationFrame = function(id) {
+  clearTimeout(id);
+};
