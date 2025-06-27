@@ -3,12 +3,14 @@
   "version": "1.8.21",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "dev": "vite",
+    "serve": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint --no-fix",
-    "lint:fix": "vue-cli-service lint",
+    "lint": "eslint --ext .js,.vue src",
+    "lint:fix": "eslint --ext .js,.vue src --fix",
     "test": "vue-cli-service test:e2e --headless",
     "test:coverage": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test:unit",
     "test:coverage:watch": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test:watch",
@@ -88,6 +90,9 @@
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",
     "nyc": "17.1.0",
+    "sass": "^1.89.2",
+    "vite": "^4.5.14",
+    "vite-plugin-vue2": "^2.0.3",
     "vue-template-compiler": "^2.7.16"
   },
   "overrides": {
