@@ -1,7 +1,11 @@
+// Element Plus theme customization
+// Note: Element Plus uses CSS custom properties instead of SASS variables
+// These variables are kept for backwards compatibility but may not work as expected
 $--color-primary: #157ce7;
 $--color-warning: #eaa43b;
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
-@import '~element-ui/packages/theme-chalk/src/index';
+
+// Element Plus styles are imported in main.js as 'element-plus/dist/index.css'
+// Custom theme variables should be defined using CSS custom properties in :root
 
 pre {
   font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter',

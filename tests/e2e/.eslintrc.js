@@ -1,8 +1,9 @@
 module.exports = {
-  plugins: ['cypress'],
+  // Cypress plugin removed for Vue 3 migration
+  // plugins: ['cypress'],
   env: {
     mocha: true,
-    'cypress/globals': true
+    // 'cypress/globals': true
   },
   rules: {
     strict: 'off',

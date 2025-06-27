@@ -1,8 +1,6 @@
 import axios from 'axios';
 import ElementPlus from 'element-plus';
-import { createStore } from 'vuex';
 import MockAdapter from 'axios-mock-adapter';
-import { createRouter, createWebHistory } from 'vue-router';
 import 'localstorage-polyfill';
 import {
   config, mount, shallowMount

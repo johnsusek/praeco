@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
-import en from 'element-plus/locale/lang/en';
+import en from 'element-plus/es/locale/lang/en';
 import axios from 'axios';
 import VueNativeWebSocketVue3 from 'vue-native-websocket-vue3';
 import VueSplit from 'coder-vue3-split-panel';
@@ -98,6 +98,7 @@ import ConfigSettings from '@/components/config/ConfigSettings.vue';
 import ConfigCondition from '@/components/config/ConfigCondition.vue';
 import ConfigScanEntireTimeframe from '@/components/config/ConfigScanEntireTimeframe.vue';
 import ConfigLimitExcecution from '@/components/config/ConfigLimitExcecution.vue';
+import ConfigTest from '@/components/config/ConfigTest.vue';
 
 import '@/lib/string.js';
 import { initLogging, logger } from './lib/logger.js';
@@ -137,21 +138,20 @@ library.add(
   faExclamationCircle
 );
 
-
-
 function startApp(config) {
   store.commit('appconfig/SET_APP_CONFIG', config);
 
   initLogging();
 
   const app = createApp(App);
-  
+
   app.use(router);
   app.use(store);
   app.use(ElementPlus, { locale: en, size: 'small' });
   app.use(cronLight);
-  
-  app.use(VueNativeWebSocketVue3, 
+
+  app.use(
+    VueNativeWebSocketVue3,
     `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
       window.location.port
     }/api-ws/test`,
@@ -213,10 +213,8 @@ function startApp(config) {
   app.component('ConfigAlertZabbix', ConfigAlertZabbix);
   app.component('ConfigAggregation', ConfigAggregation);
   app.component('ConfigTest', ConfigTest);
-  app.component('ConfigYaml', ConfigYaml);
   app.component('ConfigSettings', ConfigSettings);
   app.component('ConfigKibanaDiscover', ConfigKibanaDiscover);
-  app.component('ConfigTimeWindowSize', ConfigTimeWindowSize);
   app.component('ConfigTimeWindowFeature', ConfigTimeWindowFeature);
   app.component('ConfigOwner', ConfigOwner);
   app.component('ConfigPriority', ConfigPriority);
@@ -240,7 +238,7 @@ function startApp(config) {
   app.config.errorHandler = (err, instance, info) => {
     logger().error(err);
     console.error(err, instance, info);
-    
+
     // Use ElementPlus notification
     import('element-plus').then(({ ElNotification }) => {
       ElNotification.error({
@@ -250,7 +248,7 @@ function startApp(config) {
       });
     });
   };
-  
+
   app.mount('#app');
 }
 
