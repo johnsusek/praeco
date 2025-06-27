@@ -1,4 +1,8 @@
-import Vue from 'vue';
+// Note: Component registrations moved to main.js for Vue 3 compatibility
+// Components are now registered globally in main.js via app.component()
+
+// This file is kept for backwards compatibility but imports are preserved
+// for use in main.js component registration
 import Bulb from '@/components/Bulb';
 import DateTime from '@/components/DateTime';
 import DefinitionTable from '@/components/DefinitionTable';
@@ -62,65 +66,3 @@ import ConfigCondition from '@/components/config/ConfigCondition.vue';
 import ConfigScanEntireTimeframe from '@/components/config/ConfigScanEntireTimeframe.vue';
 import ConfigLimitExcecution from '@/components/config/ConfigLimitExcecution.vue';
 
-Vue.component('Bulb', Bulb);
-Vue.component('DateTime', DateTime);
-Vue.component('ConfigQuery', ConfigQuery);
-Vue.component('ConfigAlert', ConfigAlert);
-Vue.component('ConfigAlertAlerta', ConfigAlertAlerta);
-Vue.component('ConfigAlertAlertmanager', ConfigAlertAlertmanager);
-Vue.component('ConfigAlertAmazonSes', ConfigAlertAmazonSes);
-Vue.component('ConfigAlertAmazonSns', ConfigAlertAmazonSns);
-Vue.component('ConfigAlertChatwork', ConfigAlertChatwork);
-Vue.component('ConfigAlertCommand', ConfigAlertCommand);
-Vue.component('ConfigAlertDatadog', ConfigAlertDatadog);
-Vue.component('ConfigAlertDingtalk', ConfigAlertDingtalk);
-Vue.component('ConfigAlertDiscord', ConfigAlertDiscord);
-Vue.component('ConfigAlertEmail', ConfigAlertEmail);
-Vue.component('ConfigAlertExotel', ConfigAlertExotel);
-Vue.component('ConfigAlertGelf', ConfigAlertGelf);
-Vue.component('ConfigAlertGitter', ConfigAlertGitter);
-Vue.component('ConfigAlertGoogleChat', ConfigAlertGoogleChat);
-Vue.component('ConfigAlertHttpPost', ConfigAlertHttpPost);
-Vue.component('ConfigAlertHttpPost2', ConfigAlertHttpPost2);
-Vue.component('ConfigAlertIris', ConfigAlertIris);
-Vue.component('ConfigAlertJira', ConfigAlertJira);
-Vue.component('ConfigAlertLark', ConfigAlertLark);
-Vue.component('ConfigAlertMattermost', ConfigAlertMattermost);
-Vue.component('ConfigAlertMatrixHookshot', ConfigAlertMatrixHookshot);
-Vue.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
-Vue.component('ConfigAlertMsPowerAutomate', ConfigAlertMsPowerAutomate);
-Vue.component('ConfigAlertPagerDuty', ConfigAlertPagerDuty);
-Vue.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
-Vue.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
-Vue.component('ConfigAlertServiceNow', ConfigAlertServiceNow);
-Vue.component('ConfigAlertSlack', ConfigAlertSlack);
-Vue.component('ConfigAlertStomp', ConfigAlertStomp);
-Vue.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
-Vue.component('ConfigAlertTelegram', ConfigAlertTelegram);
-Vue.component('ConfigAlertTheHive', ConfigAlertTheHive);
-Vue.component('ConfigAlertTwilio', ConfigAlertTwilio);
-Vue.component('ConfigAlertOpsgenie', ConfigAlertOpsgenie);
-Vue.component('ConfigAlertVictorOps', ConfigAlertVictorOps);
-Vue.component('ConfigAlertZabbix', ConfigAlertZabbix);
-Vue.component('ConfigAlertWorkWeChat', ConfigAlertWorkWeChat);
-Vue.component('ConfigAggregation', ConfigAggregation);
-Vue.component('ConfigSettings', ConfigSettings);
-Vue.component('ConfigKibanaDiscover', ConfigKibanaDiscover);
-Vue.component('ConfigTimeWindowFeature', ConfigTimeWindowFeature);
-Vue.component('ConfigOwner', ConfigOwner);
-Vue.component('ConfigPriority', ConfigPriority);
-Vue.component('ConfigDescription', ConfigDescription);
-Vue.component('ConfigBufferTime', ConfigBufferTime);
-Vue.component('ConfigCondition', ConfigCondition);
-Vue.component('ConfigScanEntireTimeframe', ConfigScanEntireTimeframe);
-Vue.component('ConfigLimitExcecution', ConfigLimitExcecution);
-Vue.component('DefinitionTable', DefinitionTable);
-Vue.component('ElastalertTimePicker', ElastalertTimePicker);
-Vue.component('ESChart', ESChart);
-Vue.component('EventTable', EventTable);
-Vue.component('ExpandableAlert', ExpandableAlert);
-Vue.component('FolderTree', FolderTree);
-Vue.component('NavTree', NavTree);
-Vue.component('PraecoFormItem', PraecoFormItem);
-Vue.component('TableRow', TableRow);
-Vue.component('ElastalertTimeView', ElastalertTimeView);

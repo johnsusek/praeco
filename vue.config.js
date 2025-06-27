@@ -10,8 +10,8 @@ module.exports = {
     plugins: [
       new webpack.EnvironmentPlugin({ LATER_COV: false }),
       new webpack.NormalModuleReplacementPlugin(
-        /element-ui[/\\]lib[/\\]locale[/\\]lang[/\\]zh-CN/,
-        'element-ui/lib/locale/lang/en'
+        /element-plus[/\\]locale[/\\]lang[/\\]zh-cn/,
+        'element-plus/locale/lang/en'
       )
     ]
   },

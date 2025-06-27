@@ -1,10 +1,11 @@
-import Vue from 'vue';
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+import en from 'element-plus/locale/lang/en';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import Treeselect from '@riophae/vue-treeselect';
-import ElementUI from 'element-ui';
+import Treeselect from 'vue3-treeselect';
+import 'vue3-treeselect/dist/vue3-treeselect.css';
 import 'prismjs';
-import locale from 'element-ui/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBell,
@@ -24,11 +25,9 @@ import {
   faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 import ECharts from 'vue-echarts';
 
@@ -55,10 +54,5 @@ library.add(
   faExclamationCircle
 );
 
-Vue.use(ElementUI, { locale, size: 'mini' });
-
-Vue.component('VChart', ECharts);
-Vue.component('Icon', FontAwesomeIcon);
-Vue.component('VueJsonPretty', VueJsonPretty);
-Vue.component('Prism', Prism);
-Vue.component('Treeselect', Treeselect);
+// Note: These component registrations are no longer used in Vue 3
+// Components are registered globally in main.js via app.component()

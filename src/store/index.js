@@ -1,6 +1,5 @@
 import VuexPersistence from 'vuex-persist';
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 // TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import configs from './configs';
 import server from './server';
@@ -10,15 +9,13 @@ import elastalert from './elastalert';
 import config from './config';
 import ui from './ui';
 
-Vue.use(Vuex);
-
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: state => ({ ui: state.ui }),
   key: 'praeco-vuex'
 });
 
-export default new Vuex.Store({
+export default createStore({
   modules: {
     configs,
     server,
