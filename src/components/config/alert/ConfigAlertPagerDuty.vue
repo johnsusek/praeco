@@ -80,7 +80,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removePagerdutyIncidentKeyArgsEntry(entry)" />
@@ -147,7 +147,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="Delete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadClassArgsEntry(entry)" />
@@ -205,7 +205,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="Delete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadComponentArgsEntry(entry)" />
@@ -263,7 +263,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="Delete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadGroupArgsEntry(entry)" />
@@ -341,7 +341,7 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    icon="el-icon-delete"
+                    :icon="Delete"
                     circle
                     plain
                     @click="removePagerdutyV2PayloadSourceArgsEntry(entry)" />

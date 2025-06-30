@@ -61,7 +61,7 @@
           Move
         </el-button>
 
-        <el-button icon="el-icon-delete" plain type="danger" @click="showDeleteConfirm">
+        <el-button :icon="Delete" plain type="danger" @click="showDeleteConfirm">
           Delete...
         </el-button>
       </el-row>

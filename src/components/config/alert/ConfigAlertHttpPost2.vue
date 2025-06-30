@@ -35,7 +35,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removehttpPost2UrlEntry(entry)" />

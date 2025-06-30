@@ -169,7 +169,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removeQueryKeyEntry(entry)" />
@@ -267,7 +267,7 @@
           <el-col :span="4">
             <el-button
               type="danger"
-              icon="el-icon-delete"
+              :icon="Delete"
               circle
               plain
               @click="removeQueryKeyEntry(entry)" />
@@ -314,7 +314,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removeBlacklistEntry(entry)" />
@@ -362,7 +362,7 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click.prevent="removeWhitelistEntry(entry)" />

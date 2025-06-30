@@ -45,7 +45,7 @@
               class="praeco-chart-options"
               circle
               plain
-              icon="el-icon-time" />
+              :icon="Clock" />
           </template>
 
           <div class="praeco-chart-controls">

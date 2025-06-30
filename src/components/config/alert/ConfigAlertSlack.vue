@@ -35,7 +35,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removeslackWebhookUrlEntry(entry)" />
@@ -86,7 +86,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removeslackChannelOverrideEntry(entry)" />

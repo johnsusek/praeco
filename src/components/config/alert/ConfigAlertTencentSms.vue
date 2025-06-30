@@ -55,7 +55,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removeTencentSmsToNumberEntry(entry)" />
@@ -129,7 +129,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removeTencentSmsTemplateParmEntry(entry)" />

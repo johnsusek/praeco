@@ -10,7 +10,7 @@
         v-if="!showDetails"
         :type="type === 'error' ? 'danger' : type"
         plain
-        icon="el-icon-arrow-right"
+        :icon="ArrowRight"
         @click="showDetails = true">
         Details
       </el-button>
@@ -18,7 +18,7 @@
         v-if="showDetails"
         :type="type === 'error' ? 'danger' : type"
         plain
-        icon="el-icon-arrow-down"
+        :icon="ArrowDown"
         @click="showDetails = false">
         Details
       </el-button>

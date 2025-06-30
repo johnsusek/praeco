@@ -63,7 +63,7 @@
                     <el-button
                       :disabled="viewOnly"
                       type="danger"
-                      icon="el-icon-delete"
+                      :icon="Delete"
                       circle
                       plain
                       @click="removeAlertSubjectArgsEntry(entry)" />
@@ -138,7 +138,7 @@
                     <el-button
                       :disabled="viewOnly"
                       type="danger"
-                      icon="el-icon-delete"
+                      :icon="Delete"
                       circle
                       plain
                       @click="removeAlertTextArgsEntry(entry)" />

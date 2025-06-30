@@ -5,8 +5,8 @@
         <span>
           <el-button v-if="!testRunLoading" type="primary" plain size="medium">
             Test
-            <i v-if="!testPopoverVisible" class="el-icon-caret-bottom el-icon-right" />
-            <i v-if="testPopoverVisible" class="el-icon-caret-top el-icon-right" />
+            <el-icon v-if="!testPopoverVisible" class="el-icon-right"><CaretBottom /></el-icon>
+            <el-icon v-if="testPopoverVisible" class="el-icon-right"><CaretTop /></el-icon>
           </el-button>
           <el-button v-else type="primary" plain disabled size="medium">Testing...</el-button>
         </span>
@@ -72,7 +72,7 @@
       type="info">
       <el-container>
         <div>
-          <i class="el-icon-loading" />
+          <el-icon><Loading /></el-icon>
         </div>
         <div style="flex: 1;">
           {{ messages.slice(-1)[0].replace('INFO:elastalert:', '') }}

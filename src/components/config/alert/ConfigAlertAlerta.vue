@@ -86,7 +86,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removeAlertaTagsEntry(entry)" />
@@ -188,7 +188,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removealertaServiceEntry(entry)" />
@@ -239,7 +239,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removealertaCorrelateEntry(entry)" />
@@ -290,7 +290,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removealertaAttributesKeysEntry(entry)" />
@@ -341,7 +341,7 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   circle
                   plain
                   @click="removealertaAttributesValuesEntry(entry)" />

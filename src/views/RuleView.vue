@@ -79,8 +79,12 @@
                 plain
                 type="warning">
                 Silence
-                <i v-if="!silencePopoverVisible" class="el-icon-caret-bottom el-icon-right" />
-                <i v-if="silencePopoverVisible" class="el-icon-caret-top el-icon-right" />
+                <el-icon v-if="!silencePopoverVisible" class="el-icon-right">
+                  <CaretBottom />
+                </el-icon>
+                <el-icon v-if="silencePopoverVisible" class="el-icon-right">
+                  <CaretTop />
+                </el-icon>
               </el-button>
             </span>
           </template>
@@ -121,7 +125,7 @@
         </el-button>
 
         <el-button
-          icon="el-icon-delete"
+          :icon="Delete"
           plain
           type="danger"
           @click="showDeleteConfirm">
