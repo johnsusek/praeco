@@ -201,7 +201,7 @@
 <script>
 import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
-import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast/src';
 
 let emojiIndex = new EmojiIndex(emojiData);
 

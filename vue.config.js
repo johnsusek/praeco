@@ -1,4 +1,8 @@
 const webpack = require('webpack');
+const AutoImport = require('unplugin-auto-import/webpack');
+const Components = require('unplugin-vue-components/webpack');
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
+const ICons = require('unplugin-icons/webpack');
 
 module.exports = {
   publicPath: process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : '/',
@@ -12,7 +16,14 @@ module.exports = {
       new webpack.NormalModuleReplacementPlugin(
         /element-plus[/\\]locale[/\\]lang[/\\]zh-cn/,
         'element-plus/locale/lang/en'
-      )
+      ),
+      ICons.default({ /* options */ }),
+      AutoImport.default({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components.default({
+        resolvers: [ElementPlusResolver()],
+      }),
     ]
   },
   chainWebpack: config => {

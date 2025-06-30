@@ -85,7 +85,10 @@
     "jsdom": "25.0.1",
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",
-    "nyc": "17.1.0"
+    "nyc": "17.1.0",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
+    "unplugin-icons": "^0.18.5"
   },
   "overrides": {
     "@vue/vue-loader-v15": "npm:vue-loader@^15.11.1"
