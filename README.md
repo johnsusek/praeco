@@ -33,14 +33,17 @@ Run the app using Docker compose. Praeco includes everything you need to get sta
 ```bash
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
-echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
+# Copy the comprehensive BaseRule.config template from the repository
+cp rules/BaseRule.config.example rules/BaseRule.config  # if using the repository
+# OR create a minimal config for quick start:
+# echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
 ```
 
 * Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
 
-* To set up notification settings like API keys edit `rules/BaseRule.config`.
+* **Important**: Edit `rules/BaseRule.config` to configure your notification settings (Slack, email, etc.) before creating rules. The file includes comprehensive examples and documentation for all supported alerters.
 
 Praeco should now be available on http://127.0.0.1:8080
 
@@ -66,7 +69,18 @@ You may need to update your config files when a new version comes out. Please se
 
 Edit `rules/BaseRule.config`, `config/api.config.json`, `config/elastalert.yaml`, and/or `public/praeco.config.json` for advanced configuration options. See the [api docs](https://github.com/johnsusek/elastalert-server#configuration) and the [example ElastAlert 2 config](https://github.com/jertel/elastalert/blob/alt/config.yaml.example) for more information.
 
-Any ElastAlert 2 option you put into `rules/BaseRule.config` will be applied to every rule.
+### BaseRule.config
+
+**Any ElastAlert 2 option you put into `rules/BaseRule.config` will be applied to every rule.** This is the most important configuration file as it contains:
+
+- **Alert settings**: Webhook URLs, API keys, and configuration for Slack, Discord, Telegram, Email, PagerDuty, etc.
+- **SMTP settings**: Email server configuration for email alerts  
+- **Proxy settings**: HTTP proxy configuration for various alerters
+- **Default values**: Common settings that all your rules will inherit
+
+The provided `BaseRule.config` file includes comprehensive examples and documentation for all supported alerting options. Edit this file to configure your notification channels before creating rules.
+
+### Other Configuration Files
 
 The following config settings are available in praeco.config.json:
 
