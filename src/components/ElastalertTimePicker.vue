@@ -14,8 +14,8 @@
 
 <script>
 export default {
-  props: ['unit', 'amount', 'allowZero'],
-  emits: ['input'],
+  props: ['unit', 'amount', 'allowZero', 'modelValue'],
+  emits: ['input', 'update:modelValue'],
 
   data() {
     return {
@@ -43,7 +43,10 @@ export default {
 
     emitValue() {
       if (this.currentUnit && this.currentAmount !== undefined) {
-        this.$emit('input', { [this.currentUnit]: parseInt(this.currentAmount) });
+        const value = { [this.currentUnit]: parseInt(this.currentAmount) };
+        // Emit both for backward compatibility and v-model support
+        this.$emit('input', value);
+        this.$emit('update:modelValue', value);
       }
     }
   }
