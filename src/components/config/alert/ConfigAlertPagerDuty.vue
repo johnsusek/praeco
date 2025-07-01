@@ -59,7 +59,7 @@
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in pagerdutyIncidentKeyArgs"
             :key="index"
@@ -126,7 +126,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadClassArgs"
               :key="index"
@@ -184,7 +184,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadComponentArgs"
               :key="index"
@@ -242,7 +242,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadGroupArgs"
               :key="index"
@@ -320,7 +320,7 @@
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadSourceArgs"
               :key="index"

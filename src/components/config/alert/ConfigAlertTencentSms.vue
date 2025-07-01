@@ -34,7 +34,7 @@
           label-position="top"
           style="width: 360px"
           required
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in tencentSmsToNumber"
             :key="index"
@@ -108,7 +108,7 @@
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in tencentSmsTemplateParm"
             :key="index"

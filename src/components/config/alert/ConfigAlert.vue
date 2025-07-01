@@ -4,7 +4,7 @@
     :rules="rules"
     :model="$store.state.config.alert"
     label-position="top"
-    @submit.native.prevent>
+    @submit.prevent>
     <el-row class="m-s-sm">
       <el-col :span="aggregationSchedule ? 24 : 12">
         <ConfigAggregation ref="aggregation" :view-only="viewOnly" />

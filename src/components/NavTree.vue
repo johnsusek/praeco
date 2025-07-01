@@ -11,7 +11,7 @@
     :options="options"
     placeholder="Filter..."
     @select="handleSelect"
-    @click.native="handleClick">
+    @click="handleClick">
     <template #option-label="{ node, labelClassName }">
       <label
         :class="labelClassName">

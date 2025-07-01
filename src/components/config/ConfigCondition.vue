@@ -296,7 +296,7 @@
           :model="$store.state.config.match"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index2) in blacklist"
             :key="index2"
@@ -344,7 +344,7 @@
           :model="$store.state.config.match"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index2) in whitelist"
             :key="index2"
@@ -383,7 +383,7 @@
       <span v-if="queryString !== defaultFilter"> {{ queryString }}</span>
     </span>
 
-    <el-dialog :visible.sync="popFilterVisible" :show-close="false" fullscreen>
+    <el-dialog v-model:visible="popFilterVisible" :show-close="false" fullscreen>
       <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">
         Close
       </el-button>
@@ -625,7 +625,7 @@
           ref="form"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Ignore null">
             <el-switch v-model="ignoreNull" />
             <label>If set, events without the selected field will not match.</label>
@@ -638,7 +638,7 @@
           ref="form"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Terms window">
             <ElastalertTimePicker
               id="termsWindowSize"
@@ -679,7 +679,7 @@
           ref="freqFlatlineOptions"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <template v-if="type !== 'new_term'">
             <el-form-item label="Use count query">
               <el-switch
@@ -769,7 +769,7 @@
           :model="$store.state.config.match"
           label-position="top"
           class="m-n-lg"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Threshold (reference)" prop="thresholdRef">
             <el-input-number v-model="thresholdRef" />
             <label>
@@ -829,7 +829,7 @@
       @update="handleUpdateData"
       @group="val => groupByValue = val" />
 
-    <el-dialog :visible.sync="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
+    <el-dialog v-model:visible="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
       <EventTable
         v-if="eventViewerFrom"
         :group-by-field="queryKey"

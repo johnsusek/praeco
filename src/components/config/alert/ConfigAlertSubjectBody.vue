@@ -3,7 +3,7 @@
     ref="form"
     :model="$store.state.config.alert"
     label-position="top"
-    @submit.native.prevent>
+    @submit.prevent>
     <el-row :gutter="50">
       <el-col :span="12">
         <el-form-item
@@ -16,7 +16,7 @@
             :members="fields"
             :allow-spaces="false"
             at="%"
-            @paste.native="pastePlainText">
+            @paste="pastePlainText">
             <template #embeddedItem="s">
               <span>
                 <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
@@ -42,7 +42,7 @@
               :model="$store.state.config.alert"
               label-position="top"
               style="width: 360px"
-              @submit.native.prevent>
+              @submit.prevent>
               <el-form-item
                 v-for="(entry, index) in alertSubjectArgs"
                 :key="index"
@@ -88,7 +88,7 @@
             :members="fields"
             :allow-spaces="false"
             at="%"
-            @paste.native="pastePlainText">
+            @paste="pastePlainText">
             <template #embeddedItem="s">
               <span>
                 <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
@@ -117,7 +117,7 @@
               :model="$store.state.config.alert"
               label-position="top"
               style="width: 360px"
-              @submit.native.prevent>
+              @submit.prevent>
               <el-form-item
                 v-for="(entry, index) in alertTextArgs"
                 :key="index"
