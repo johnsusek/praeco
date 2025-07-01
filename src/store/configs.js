@@ -98,6 +98,16 @@ export default {
       }
     },
 
+    async checkBaseRuleConfigExists() {
+      try {
+        await axios.get('/api/rules/BaseRule.config');
+        return true;
+      } catch (error) {
+        // 404 or other error means BaseRule.config doesn't exist
+        return false;
+      }
+    },
+
     async renameConfig({ dispatch, state }, { config, type, newName }) {
       // Rename is similar to move, except the path is the same,
       // so our param is just the new name
@@ -144,13 +154,18 @@ export default {
       if (oldConfig.__praeco_full_path === newConfig.__praeco_full_path) return;
 
       if (type === 'rules') {
-        let dots = '';
+        // Check if BaseRule.config exists before setting import
+        const baseRuleConfigExists = await dispatch('checkBaseRuleConfigExists');
+        
+        if (baseRuleConfigExists) {
+          let dots = '';
 
-        for (let i = 1; i < newConfig.__praeco_full_path.split('/').length; i++) {
-          dots += '../';
+          for (let i = 1; i < newConfig.__praeco_full_path.split('/').length; i++) {
+            dots += '../';
+          }
+
+          newConfig.import = `${dots}BaseRule.config`;
         }
-
-        newConfig.import = `${dots}BaseRule.config`;
       }
 
       try {
