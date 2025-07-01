@@ -228,12 +228,12 @@ export default {
   methods: {
     updateKibanaDiscoverFromTimedelta(value) {
       this.kibanaDiscoverFromTimedelta = {};
-      this.$set(this.kibanaDiscoverFromTimedelta, Object.keys(value)[0], Object.values(value)[0]);
+      this.kibanaDiscoverFromTimedelta[Object.keys(value)[0]] = Object.values(value)[0];
     },
 
     updateKibanaDiscoverToTimedelta(value) {
       this.kibanaDiscoverToTimedelta = {};
-      this.$set(this.kibanaDiscoverToTimedelta, Object.keys(value)[0], Object.values(value)[0]);
+      this.kibanaDiscoverToTimedelta[Object.keys(value)[0]] = Object.values(value)[0];
     },
 
     async validate() {
