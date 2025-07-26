@@ -13,12 +13,18 @@
             <el-row :gutter="30" :class="{ empty: !queryTree.children.length }">
               <el-col :span="24">
                 <el-form-item class="el-form-item-tight">
+                  <!-- TODO: Re-enable vue-query-builder after resolving Cypress dependency issue -->
+                  <!--
                   <vue-query-builder
-                    v-if="rules.length"
+                    v-if="rules.length" 
                     v-model="queryTree"
                     :rules="rules"
                     :labels="labels"
                     :styled="false" />
+                  -->
+                  <div class="query-builder-placeholder">
+                    Vue Query Builder component temporarily disabled during migration
+                  </div>
                 </el-form-item>
                 <el-form-item v-if="!queryTree.children.length">
                   <label>
@@ -45,11 +51,12 @@
 </template>
 
 <script>
-import VueQueryBuilder from 'vue-query-builder';
+// TODO: Re-enable vue-query-builder after resolving Cypress dependency issue
+// import VueQueryBuilder from 'vue-query-builder';
 
 export default {
   components: {
-    VueQueryBuilder
+    // VueQueryBuilder
   },
 
   data() {

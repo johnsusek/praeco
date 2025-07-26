@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import ConfigTest from '@/components/config/ConfigTest';
+import ConfigTest from '@/components/config/ConfigTest.vue';
 
 export default {
   components: {
