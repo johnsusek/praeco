@@ -7,8 +7,8 @@ import {
 } from '@vue/test-utils';
 import '@/contrib.js';
 import '@/registration.js';
-import store from '@/store';
-import router from '@/router';
+import store from '@/store/index.js';
+import router from '@/router.js';
 
 config.global.stubs.transition = false;
 

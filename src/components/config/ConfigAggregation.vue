@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import prettycron from 'prettycron';
+import cronstrue from 'cronstrue';
 import CronUI from 'cron-ui';
 
 export default {
@@ -119,7 +119,7 @@ export default {
     },
 
     formattedAggSchedule() {
-      return prettycron.toString(this.aggregationSchedule);
+      return cronstrue.toString(this.aggregationSchedule);
     }
   },
 
