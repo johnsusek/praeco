@@ -104,7 +104,7 @@ import '@/lib/string.js';
 import { initLogging, logger } from './lib/logger.js';
 import App from './App.vue';
 import router from './router.js';
-import store from './store';
+import pinia from './stores';
 
 import './style/style.scss';
 import './style/spacing.scss';
@@ -138,15 +138,18 @@ library.add(
   faExclamationCircle
 );
 
+import { useAppConfigStore } from './stores/appconfig.js';
+
 function startApp(config) {
-  store.commit('appconfig/SET_APP_CONFIG', config);
+  const appConfigStore = useAppConfigStore();
+  appConfigStore.setAppConfig(config);
 
   initLogging();
 
   const app = createApp(App);
 
   app.use(router);
-  app.use(store);
+  app.use(pinia);
   app.use(ElementPlus, { locale: en, size: 'small' });
   app.use(cronLight);
 

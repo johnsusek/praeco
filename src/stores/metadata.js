@@ -1,7 +1,8 @@
+import { defineStore } from 'pinia';
 import axios from 'axios';
 import { formatIndex, buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
-// TODO: error  Dependency cycle via @/lib/logger.js:2=>@/store:3  import/no-cycle
 import networkError from '../lib/networkError.js';
+import { useConfigStore } from './config.js';
 
 function buildObjectFields(fields, prefix, addNonAnalyzedFields) {
   let objectFields = {};
@@ -32,10 +33,8 @@ function buildObjectFields(fields, prefix, addNonAnalyzedFields) {
   return objectFields;
 }
 
-export default {
-  namespaced: true,
-
-  state: {
+export const useMetadataStore = defineStore('metadata', {
+  state: () => ({
     indices: [],
     mappings: {
       // 'ms-*': {
@@ -43,17 +42,17 @@ export default {
       //   fields: {}
       // }
     }
-  },
+  }),
 
   getters: {
-    fieldIsNumeric: (state, getters) => (index, field) => {
+    fieldIsNumeric: (state) => (index, field) => {
       let numTypes = ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float'];
-      if (numTypes.includes(getters.typeForField(index, field))) {
+      if (numTypes.includes(state.typeForField(index, field))) {
         return true;
       }
     },
 
-    typeForField: state => (index, field) => {
+    typeForField: (state) => (index, field) => {
       if (!state.mappings[index]) return;
       if (!state.mappings[index].fields) return;
       if (!state.mappings[index].fields[field]) return;
@@ -78,10 +77,10 @@ export default {
       return Object.keys(indices);
     },
 
-    textFieldsForCurrentConfig: (state, getters) => {
+    textFieldsForCurrentConfig() {
       let fields = {};
 
-      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+      Object.entries(this.fieldsForCurrentConfig).forEach(([name, field]) => {
         if (['text', 'keyword'].includes(field.type)) {
           fields[name] = field;
         }
@@ -90,10 +89,10 @@ export default {
       return fields;
     },
 
-    numberFieldsForCurrentConfig: (state, getters) => {
+    numberFieldsForCurrentConfig() {
       let fields = {};
 
-      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+      Object.entries(this.fieldsForCurrentConfig).forEach(([name, field]) => {
         if (
           ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float'].includes(field.type)
         ) {
@@ -104,10 +103,10 @@ export default {
       return fields;
     },
 
-    dateFieldsForCurrentConfig: (state, getters) => {
+    dateFieldsForCurrentConfig() {
       let fields = {};
 
-      Object.entries(getters.fieldsForCurrentConfig).forEach(([name, field]) => {
+      Object.entries(this.fieldsForCurrentConfig).forEach(([name, field]) => {
         if (field.type === 'date') {
           fields[name] = field;
         }
@@ -116,18 +115,19 @@ export default {
       return fields;
     },
 
-    templateFieldsForCurrentConfig: (state, getters, rootState) => {
+    templateFieldsForCurrentConfig() {
+      const configStore = useConfigStore();
       let templateFields = [];
       let fields = {};
 
       // if using "grouped over field", only allow for the grouped field (queryKey)
       if (
-        rootState.config.match.queryKey
-        && (rootState.config.match.type === 'frequency' || rootState.config.match.type === 'flatline')
+        configStore.match.queryKey
+        && (configStore.match.type === 'frequency' || configStore.match.type === 'flatline')
       ) {
-        fields[rootState.config.match.queryKey] = rootState.config.match.queryKey;
+        fields[configStore.match.queryKey] = configStore.match.queryKey;
       } else {
-        fields = getters.fieldsForCurrentConfig;
+        fields = this.fieldsForCurrentConfig;
       }
 
       // Handle JSON fields with dot notation
@@ -144,9 +144,10 @@ export default {
       return templateFields;
     },
 
-    fieldsForCurrentConfig: (state, getters, rootState) => {
-      let index = rootState.config.settings.index;
-      let mappings = state.mappings[formatIndex(index)];
+    fieldsForCurrentConfig() {
+      const configStore = useConfigStore();
+      let index = configStore.settings.index;
+      let mappings = this.mappings[formatIndex(index)];
 
       if (!mappings) {
         return {};
@@ -167,9 +168,10 @@ export default {
       return fields;
     },
 
-    aggFieldsForCurrentConfig: (state, getters, rootState) => {
-      let index = rootState.config.settings.index;
-      let mappings = state.mappings[formatIndex(index)];
+    aggFieldsForCurrentConfig() {
+      const configStore = useConfigStore();
+      let index = configStore.settings.index;
+      let mappings = this.mappings[formatIndex(index)];
 
       if (!mappings) {
         return {};
@@ -201,9 +203,10 @@ export default {
       return fields;
     },
 
-    typesForCurrentConfig: (state, getters, rootState) => {
-      let index = rootState.config.settings.index;
-      let mappings = state.mappings[formatIndex(index)];
+    typesForCurrentConfig() {
+      const configStore = useConfigStore();
+      let index = configStore.settings.index;
+      let mappings = this.mappings[formatIndex(index)];
       if (mappings) {
         return mappings.types;
       }
@@ -211,24 +214,22 @@ export default {
     }
   },
 
-  mutations: {
-    FETCHED_INDICES(state, payload) {
-      state.indices = payload;
+  actions: {
+    fetchedIndices(payload) {
+      this.indices = payload;
     },
 
-    FETCHED_MAPPINGS(state, { mappings, index }) {
-      if (!state.mappings[index]) {
-        state.mappings[index] = {};
+    fetchedMappings({ mappings, index }) {
+      if (!this.mappings[index]) {
+        this.mappings[index] = {};
       }
 
-      state.mappings[index].types = buildMappingTypes(mappings);
-      state.mappings[index].fields = buildMappingFields(mappings);
-    }
-  },
+      this.mappings[index].types = buildMappingTypes(mappings);
+      this.mappings[index].fields = buildMappingFields(mappings);
+    },
 
-  actions: {
-    async fetchIndices({ commit, state }) {
-      if (state.indices.length) {
+    async fetchIndices() {
+      if (this.indices.length) {
         return true;
       }
 
@@ -237,7 +238,7 @@ export default {
         if (res.data.error) {
           networkError('Error fetching indices.');
         } else {
-          commit('FETCHED_INDICES', res.data);
+          this.fetchedIndices(res.data);
           return true;
         }
       } catch (error) {
@@ -245,18 +246,18 @@ export default {
       }
     },
 
-    async fetchMappings({ commit, state }, index) {
-      if (state.mappings[index]) {
+    async fetchMappings(index) {
+      if (this.mappings[index]) {
         return true;
       }
 
       try {
         let res = await axios.get(`/api/mapping/${index}`);
-        commit('FETCHED_MAPPINGS', { mappings: res.data, index });
+        this.fetchedMappings({ mappings: res.data, index });
         return true;
       } catch (error) {
         return false;
       }
     }
   }
-};
+});

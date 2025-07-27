@@ -12,7 +12,7 @@
             <p>
               <UpdateIndicator />
               <el-tag type="info" class="m-w-xs">
-                elastalert status: {{ $store.state.server.status || '?' }}
+                elastalert status: {{ serverStore.status || '?' }}
               </el-tag>
             </p>
           </el-col>
@@ -33,27 +33,40 @@
 
 <script>
 import UpdateIndicator from '@/components/UpdateIndicator.vue';
+import { useUIStore, useServerStore, useElastalertStore } from '@/stores';
 
 export default {
   components: {
     UpdateIndicator
   },
 
+  setup() {
+    const uiStore = useUIStore();
+    const serverStore = useServerStore();
+    const elastalertStore = useElastalertStore();
+
+    return {
+      uiStore,
+      serverStore,
+      elastalertStore
+    };
+  },
+
   computed: {
     sidebarWidth: {
       get() {
-        return this.$store.state.ui.sidebarWidth;
+        return this.uiStore.sidebarWidth;
       },
       set(value) {
-        this.$store.commit('ui/UPDATE_SIDEBAR_WIDTH', value);
+        this.uiStore.updateSidebarWidth(value);
       }
     }
   },
 
   mounted() {
-    this.$store.dispatch('server/fetchVersion');
-    this.$store.dispatch('server/fetchStatus');
-    this.$store.dispatch('elastalert/fetchConfig');
+    this.serverStore.fetchVersion();
+    this.serverStore.fetchStatus();
+    this.elastalertStore.fetchConfig();
   },
 
   methods: {
