@@ -145,6 +145,11 @@ export default {
   },
 
   mounted() {
+    // Create instance-specific debounced function to avoid context conflicts
+    this.fetchEventsDebounced = debounce(async () => {
+      this.fetchEvents();
+    }, 1000);
+
     if (this.from) {
       this.fetchEvents();
     }
@@ -200,10 +205,6 @@ export default {
         this.fetchEvents();
       }
     },
-
-    fetchEventsDebounced: debounce(async function() {
-      this.fetchEvents();
-    }, 1000),
 
     async fetchEvents() {
       if (!this.$store.state.config.settings.index) return;

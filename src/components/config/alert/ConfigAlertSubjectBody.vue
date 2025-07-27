@@ -299,13 +299,15 @@ export default {
   },
 
   mounted() {
+    // Create instance-specific debounced function to avoid context conflicts
+    this.sampleDebounced = debounce(() => {
+      this.$store.dispatch('config/sample');
+    }, 750);
+
     this.$store.dispatch('config/sample');
   },
 
   methods: {
-    sampleDebounced: debounce(function() {
-      this.$store.dispatch('config/sample');
-    }, 750),
 
     pastePlainText(e) {
       e.preventDefault();
@@ -334,7 +336,7 @@ export default {
         }
         this.$emit('validate', true);
         return true;
-      } catch (error) {
+      } catch {
         this.$emit('validate', false);
         return false;
       }
