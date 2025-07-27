@@ -54,7 +54,6 @@
     "vue-native-websocket-vue3": "^3.1.8",
     "vue-prism-component": "^2.0.0",
     "vue-router": "^4.4.5",
-    "vue3-treeselect": "^0.1.10",
     "zrender": "5.6.1"
   },
   "devDependencies": {

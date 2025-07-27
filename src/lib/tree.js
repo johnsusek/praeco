@@ -8,19 +8,19 @@ export function triggerMouseEvent(node, eventType) {
 }
 
 export function expandNode(id) {
-  let selector = `[data-id="${id}"] .vue-treeselect__option-arrow-container`;
+  // Element Plus TreeSelect uses different selectors
+  let selector = `[data-value="${id}"] .el-tree-node__expand-icon`;
   let targetNode = document.querySelector(selector);
   if (targetNode) {
-    triggerMouseEvent(targetNode, 'mousedown');
+    triggerMouseEvent(targetNode, 'click');
   }
 }
 
 export function selectNode(id) {
-  let targetNode = document.querySelector(`[data-id="${id}"] .vue-treeselect__label-container`);
+  // Element Plus TreeSelect uses different selectors  
+  let targetNode = document.querySelector(`[data-value="${id}"] .el-tree-node__content`);
   if (targetNode) {
     triggerMouseEvent(targetNode, 'mouseover');
-    triggerMouseEvent(targetNode, 'mousedown');
-    triggerMouseEvent(targetNode, 'mouseup');
     triggerMouseEvent(targetNode, 'click');
   }
 }
@@ -43,17 +43,19 @@ export async function loadChildrenOptions({ action, parentNode, callback }, only
 
         if (entry.endsWith('/') && entryParts.length === 2) {
           folderNodes[entry] = {
-            id: entry,
+            value: entry,
             label: entryName,
             isDirectory: true,
             isRule: true,
-            children: null
+            children: [],
+            isLeaf: false
           };
         } else if (entryParts.length === 1 && !onlyFolders) {
           ruleNodes[entry] = {
-            id: entry,
+            value: entry,
             label: entryName,
-            isRule: true
+            isRule: true,
+            isLeaf: true
           };
         }
       });
@@ -77,17 +79,19 @@ export async function loadChildrenOptions({ action, parentNode, callback }, only
 
           if (entry.endsWith('/') && entryParts.length === 2) {
             folderNodes[entry] = {
-              id: entry,
+              value: entry,
               label: entryName,
               isDirectory: true,
-              children: null,
-              isTemplate: true
+              children: [],
+              isTemplate: true,
+              isLeaf: false
             };
           } else if (entryParts.length === 1 && !onlyFolders) {
             templateNodes[entry] = {
-              id: entry,
+              value: entry,
               label: entryName,
-              isTemplate: true
+              isTemplate: true,
+              isLeaf: true
             };
           }
         });
@@ -127,21 +131,23 @@ export async function loadChildrenOptions({ action, parentNode, callback }, only
         if (!match && !onlyFolders) {
           // Direct child rule
           ruleNodes[entry] = {
-            id: entry,
+            value: entry,
             label: stripped,
             isTemplate: parentNode.isTemplate,
-            isRule: parentNode.isRule
+            isRule: parentNode.isRule,
+            isLeaf: true
           };
         } else if (match && match.length === 1) {
           // Direct child folder
           if (stripped.endsWith('/')) {
             folderNodes[entry] = {
-              id: entry,
+              value: entry,
               label: stripped.replace('/', ''),
               isDirectory: true,
-              children: null,
+              children: [],
               isTemplate: parentNode.isTemplate,
-              isRule: parentNode.isRule
+              isRule: parentNode.isRule,
+              isLeaf: false
             };
           }
         }

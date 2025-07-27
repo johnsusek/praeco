@@ -8,8 +8,6 @@ import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import Treeselect from 'vue3-treeselect';
-import 'vue3-treeselect/dist/vue3-treeselect.css';
 import 'prismjs';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -170,7 +168,6 @@ function startApp(config) {
   app.component('Icon', FontAwesomeIcon);
   app.component('VueJsonPretty', VueJsonPretty);
   app.component('Prism', Prism);
-  app.component('Treeselect', Treeselect);
   app.component('Splitpanes', Splitpanes);
   app.component('Pane', Pane);
 
