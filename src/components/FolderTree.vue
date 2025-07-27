@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import * as changeCase from 'change-case';
+import { capitalCase } from 'change-case';
 import { loadChildrenOptions } from '@/lib/tree';
 
 export default {
@@ -27,7 +27,7 @@ export default {
       options: [
         {
           value: `_${this.type}`,
-          label: changeCase.capitalCase(this.type),
+          label: capitalCase(this.type),
           children: []
         }
       ],

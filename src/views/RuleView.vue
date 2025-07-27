@@ -258,7 +258,7 @@ import { nextTick } from 'vue';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import * as changeCase from 'change-case';
+import { capitalCase } from 'change-case';
 import { logger } from '@/lib/logger.js';
 import { selectNode } from '@/lib/tree';
 import networkError from '../lib/networkError.js';
@@ -613,7 +613,7 @@ export default {
     },
 
     titleCase(val) {
-      return changeCase.capitalCase(val);
+      return capitalCase(val);
     },
 
     shortDate(rawDate) {
