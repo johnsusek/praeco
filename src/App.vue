@@ -20,14 +20,14 @@
       </div>
     </el-header>
 
-    <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
-      <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
+    <Splitpanes style="height: calc(100% - 48px)" @resized="onResize">
+      <Pane :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
         <NavTree style="padding: 10px" />
-      </SplitArea>
-      <SplitArea :size="sidebarWidth[1]">
+      </Pane>
+      <Pane :size="sidebarWidth[1]">
         <router-view :key="$route.fullPath" style="padding: 10px" />
-      </SplitArea>
-    </Split>
+      </Pane>
+    </Splitpanes>
   </div>
 </template>
 
@@ -70,8 +70,9 @@ export default {
   },
 
   methods: {
-    onDragEnd(size) {
-      this.sidebarWidth = size;
+    onResize(panes) {
+      // panes is an array of sizes for each pane
+      this.sidebarWidth = panes.map(pane => pane.size);
     }
   }
 };

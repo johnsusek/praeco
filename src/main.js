@@ -4,7 +4,8 @@ import 'element-plus/dist/index.css';
 import en from 'element-plus/es/locale/lang/en';
 import axios from 'axios';
 import VueNativeWebSocketVue3 from 'vue-native-websocket-vue3';
-import VueSplit from 'coder-vue3-split-panel';
+import { Splitpanes, Pane } from 'splitpanes';
+import 'splitpanes/dist/splitpanes.css';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
 import Treeselect from 'vue3-treeselect';
@@ -170,8 +171,8 @@ function startApp(config) {
   app.component('VueJsonPretty', VueJsonPretty);
   app.component('Prism', Prism);
   app.component('Treeselect', Treeselect);
-  app.component('Split', VueSplit.Split);
-  app.component('SplitArea', VueSplit.SplitArea);
+  app.component('Splitpanes', Splitpanes);
+  app.component('Pane', Pane);
 
   app.component('Bulb', Bulb);
   app.component('DateTime', DateTime);
