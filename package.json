@@ -31,7 +31,7 @@
     "cron-ui": "1.0.3",
     "cronstrue": "^3.2.0",
     "dayjs": "^1.11.13",
-    "debounce": "1.2.1",
+    "debounce": "^2.2.0",
     "echarts": "^5.6.0",
     "element-plus": "^2.8.8",
     "emoji-mart-vue-fast": "^15.0.3",
