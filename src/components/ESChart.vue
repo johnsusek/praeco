@@ -24,6 +24,8 @@
               ref="chart"
               v-loading="loading"
               :option="chart"
+              width="100%"
+              height="210px"
               autoresize
               @click="ev => $emit('click', ev)" />
           </el-tab-pane>
@@ -35,6 +37,8 @@
           ref="chart"
           v-loading="loading"
           :option="chart"
+          width="100%"
+          height="210px"
           autoresize
           @click="ev => $emit('click', ev)" />
 
