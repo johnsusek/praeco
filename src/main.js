@@ -105,6 +105,7 @@ import { initLogging, logger } from './lib/logger.js';
 import App from './App.vue';
 import router from './router';
 import pinia from './stores';
+import { createVuexCompatLayer, setupStoreRegistry } from './stores/compat';
 
 import './style/style.scss';
 import './style/spacing.scss';
@@ -231,10 +232,14 @@ function startApp(config) {
   // Setup Pinia
   setActivePinia(pinia);
   
-  // Initialize app config using Pinia store
-  const { useAppconfigStore } = require('./stores');
-  const appconfigStore = useAppconfigStore();
-  appconfigStore.setAppConfig(config);
+  // Setup store registry for compatibility
+  setupStoreRegistry();
+  
+  // Create compatibility layer that mimics Vuex
+  const store = createVuexCompatLayer();
+  
+  // Initialize app config using the compatibility layer
+  store.commit('appconfig/SET_APP_CONFIG', config);
 
   initLogging();
 
@@ -252,6 +257,7 @@ function startApp(config) {
   new Vue({
     router,
     pinia,
+    store,  // Add the compatibility store
     render: h => h(App)
   }).$mount('#app');
 }

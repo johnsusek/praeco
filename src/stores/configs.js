@@ -298,9 +298,7 @@ export const useConfigsStore = defineStore('configs', {
     },
 
     async disableRule(conf) {
-      // We need access to config store here - will update when that's converted
-      const configStore = this.configStore // This will be injected later
-      
+      // TODO: When config store is converted, this will need to be updated
       conf.is_enabled = false
 
       try {
@@ -309,7 +307,8 @@ export const useConfigsStore = defineStore('configs', {
         })
 
         if (res.data.created) {
-          configStore?.updateEnabled(false)
+          // TODO: Update config store when available
+          // configStore?.updateEnabled(false)
           this.updatedConfig({
             path: conf.__praeco_full_path,
             type: 'rules',
@@ -324,9 +323,7 @@ export const useConfigsStore = defineStore('configs', {
     },
 
     async enableRule(conf) {
-      // We need access to config store here - will update when that's converted
-      const configStore = this.configStore // This will be injected later
-      
+      // TODO: When config store is converted, this will need to be updated
       conf.is_enabled = true
 
       try {
@@ -335,7 +332,8 @@ export const useConfigsStore = defineStore('configs', {
         })
 
         if (res.data.created) {
-          configStore?.updateEnabled(true)
+          // TODO: Update config store when available
+          // configStore?.updateEnabled(true)
           this.updatedConfig({
             path: conf.__praeco_full_path,
             type: 'rules',

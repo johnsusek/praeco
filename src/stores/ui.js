@@ -12,8 +12,6 @@ export const useUiStore = defineStore('ui', {
   },
 
   persist: {
-    key: 'praeco-ui',
-    storage: localStorage,
-    pick: ['sidebarWidth']
+    key: 'praeco-ui'
   }
 })

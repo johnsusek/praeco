@@ -15,4 +15,5 @@ export { useServerStore } from './server.js'
 export { useElastalertStore } from './elastalert.js'
 export { useMetadataStore } from './metadata.js'
 export { useConfigsStore } from './configs.js'
+export { useConfigSettingsStore } from './config/settings.js'
 // Additional stores will be exported here as they are converted

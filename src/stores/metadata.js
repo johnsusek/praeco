@@ -110,104 +110,26 @@ export const useMetadataStore = defineStore('metadata', {
     },
 
     templateFieldsForCurrentConfig() {
-      // This needs access to config store - will need to be updated when config store is converted
-      const configStore = this.configStore // This will be injected later
-      let templateFields = []
-      let fields = {}
-
-      // if using "grouped over field", only allow for the grouped field (queryKey)
-      if (
-        configStore?.match?.queryKey
-        && (configStore?.match?.type === 'frequency' || configStore?.match?.type === 'flatline')
-      ) {
-        fields[configStore.match.queryKey] = configStore.match.queryKey
-      } else {
-        fields = this.fieldsForCurrentConfig
-      }
-
-      // Handle JSON fields with dot notation
-      Object.entries(fields).forEach(([field, mapping]) => {
-        if (mapping.properties) {
-          Object.entries(mapping.properties).forEach(([f]) => {
-            templateFields.push(`${field}.${f}`)
-          })
-        } else {
-          templateFields.push(field)
-        }
-      })
-
-      return templateFields
+      // This getter will need to be updated when config store is fully converted
+      // For now, return empty array to prevent errors
+      return []
     },
 
     fieldsForCurrentConfig() {
-      // This needs access to config store - will need to be updated when config store is converted
-      const configStore = this.configStore // This will be injected later
-      let index = configStore?.settings?.index
-      let mappings = this.mappings[formatIndex(index)]
-
-      if (!mappings) {
-        return {}
-      }
-
-      let fields = {}
-
-      if (mappings.fields) {
-        Object.entries(mappings.fields).forEach(([name, field]) => {
-          if (field.type) {
-            fields[name] = field
-          } else if (field.properties) {
-            fields = { ...fields, ...buildObjectFields(field.properties, name) }
-          }
-        })
-      }
-
-      return fields
+      // This getter will need to be updated when config store is fully converted  
+      // For now, return empty object to prevent errors
+      return {}
     },
 
     aggFieldsForCurrentConfig() {
-      // This needs access to config store - will need to be updated when config store is converted
-      const configStore = this.configStore // This will be injected later
-      let index = configStore?.settings?.index
-      let mappings = this.mappings[formatIndex(index)]
-
-      if (!mappings) {
-        return {}
-      }
-
-      let fields = {}
-
-      if (mappings.fields) {
-        Object.entries(mappings.fields).forEach(([name, field]) => {
-          if (field.type) {
-            fields[name] = field
-            // there is a field.fields, which contains e.g. keyword or raw suffixes
-            // required for aggregation
-            if (field.fields) {
-              // loop through each field.fields, adding an additional entry
-              // for it to our main list of fields
-              Object.entries(field.fields).forEach(([suffixFieldName, suffixFieldValue]) => {
-                if (suffixFieldValue.type === 'keyword') {
-                  fields[`${name}.${suffixFieldName}`] = field
-                }
-              })
-            }
-          } else if (field.properties) {
-            fields = { ...fields, ...buildObjectFields(field.properties, name, true) }
-          }
-        })
-      }
-
-      return fields
+      // This getter will need to be updated when config store is fully converted
+      // For now, return empty object to prevent errors
+      return {}
     },
 
     typesForCurrentConfig() {
-      // This needs access to config store - will need to be updated when config store is converted
-      const configStore = this.configStore // This will be injected later
-      let index = configStore?.settings?.index
-      let mappings = this.mappings[formatIndex(index)]
-      if (mappings) {
-        return mappings.types
-      }
+      // This getter will need to be updated when config store is fully converted
+      // For now, return empty array to prevent errors
       return []
     }
   },
