@@ -6,6 +6,7 @@ import VueSplit from 'vue-split-panel';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
 import Treeselect from '@riophae/vue-treeselect';
+import { PiniaVuePlugin, setActivePinia } from 'pinia';
 import 'prismjs';
 import locale from 'element-ui/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -103,7 +104,7 @@ import '@/lib/string.js';
 import { initLogging, logger } from './lib/logger.js';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import pinia from './stores';
 
 import './style/style.scss';
 import './style/spacing.scss';
@@ -137,6 +138,7 @@ library.add(
   faExclamationCircle
 );
 
+Vue.use(PiniaVuePlugin);
 Vue.use(cronLight);
 Vue.use(VueSplit);
 
@@ -226,7 +228,13 @@ Vue.config.errorHandler = function(err, vm, info) {
 };
 
 function startApp(config) {
-  store.commit('appconfig/SET_APP_CONFIG', config);
+  // Setup Pinia
+  setActivePinia(pinia);
+  
+  // Initialize app config using Pinia store
+  const { useAppconfigStore } = require('./stores');
+  const appconfigStore = useAppconfigStore();
+  appconfigStore.setAppConfig(config);
 
   initLogging();
 
@@ -243,7 +251,7 @@ function startApp(config) {
 
   new Vue({
     router,
-    store,
+    pinia,
     render: h => h(App)
   }).$mount('#app');
 }
