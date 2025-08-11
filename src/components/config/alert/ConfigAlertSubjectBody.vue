@@ -300,9 +300,9 @@ export default {
 
   mounted() {
     // Create debounced function for this component instance
-    this.sampleDebounced = debounce(function() {
+    this.sampleDebounced = debounce(() => {
       this.$store.dispatch('config/sample');
-    }.bind(this), 750);
+    }, 750);
 
     this.$store.dispatch('config/sample');
   },

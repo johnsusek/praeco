@@ -472,7 +472,7 @@ export default {
     }
 
     // Create debounced function for this component instance
-    this.fetchData = debounce(async function() {
+    this.fetchData = debounce(async () => {
       if (!this.index) return;
       if (!Object.keys(this.timespan)[0]) return;
 
@@ -614,7 +614,7 @@ export default {
 
         this.loading = false;
       }
-    }.bind(this), 800);
+    }, 800);
 
     this.updateChart();
   },

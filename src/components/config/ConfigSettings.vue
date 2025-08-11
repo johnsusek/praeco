@@ -184,9 +184,9 @@ export default {
 
   async mounted() {
     // Create debounced function for this component instance
-    this.getMappingDebounced = debounce(async function() {
+    this.getMappingDebounced = debounce(async () => {
       this.getMapping();
-    }.bind(this), 1000);
+    }, 1000);
 
     // Get the indices needed to build the suggestions list
     this.indicesLoading = true;

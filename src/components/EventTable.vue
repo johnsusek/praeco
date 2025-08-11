@@ -146,9 +146,9 @@ export default {
 
   mounted() {
     // Create debounced function for this component instance
-    this.fetchEventsDebounced = debounce(async function() {
+    this.fetchEventsDebounced = debounce(async () => {
       this.fetchEvents();
-    }.bind(this), 1000);
+    }, 1000);
 
     if (this.from) {
       this.fetchEvents();
