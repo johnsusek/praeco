@@ -57,7 +57,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // Remove additionalData if variables.scss doesn't exist
+        // Silence deprecation warnings from element-ui and legacy Sass usage
+        silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin', 'slash-div', 'function-units', 'bogus-combinators']
       }
     }
   },

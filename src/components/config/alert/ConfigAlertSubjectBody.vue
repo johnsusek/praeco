@@ -420,7 +420,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.atwho-wrap >>> .atwho-panel {
+.atwho-wrap :deep(.atwho-panel) {
   position: initial;
 }
 .preview-container {
