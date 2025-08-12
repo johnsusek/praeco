@@ -154,7 +154,7 @@ export default {
       } else if (payload.event === 'result') {
         try {
           this.testRunResult = JSON.parse(payload.data);
-        } catch (error) {
+        } catch {
           this.testRunError = payload.data;
         } finally {
           this.testRunLoading = false;

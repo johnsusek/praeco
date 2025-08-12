@@ -255,7 +255,7 @@ export const useMetadataStore = defineStore('metadata', {
         let res = await axios.get(`/api/mapping/${index}`);
         this.fetchedMappings({ mappings: res.data, index });
         return true;
-      } catch (error) {
+      } catch {
         return false;
       }
     }

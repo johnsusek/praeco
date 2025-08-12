@@ -1,10 +1,4 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
-import yaml from 'js-yaml';
-import { htmlToConfigFormat } from '@/lib/alertText';
-import { logger } from '@/lib/logger.js';
-
-let sampleCancelToken = null;
 
 export const useConfigStore = defineStore('config', {
   state: () => ({

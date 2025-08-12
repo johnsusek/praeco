@@ -630,7 +630,7 @@ let validateUrl = (rule, value, callback) => {
       } else {
         callback(new Error('Invalid URL'));
       }
-    } catch (error) {
+    } catch {
       callback(new Error('Invalid URL'));
     }
   } else {
@@ -884,7 +884,7 @@ export default {
       try {
         this.$emit('validate', true);
         return true;
-      } catch (error) {
+      } catch {
         this.$emit('validate', false);
         return false;
       }

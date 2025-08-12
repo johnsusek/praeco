@@ -39,7 +39,9 @@ export default {
           this.latestRelease = res.data[0];
           sessionStorage.setItem('latestRelease', JSON.stringify(this.latestRelease));
         }
-      } catch (error) {}
+      } catch {
+        // Silently fail - this is optional functionality for checking updates
+      }
     }
   }
 };

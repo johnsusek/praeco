@@ -216,7 +216,7 @@ export default {
         }
         this.$emit('validate', true);
         return true;
-      } catch (error) {
+      } catch {
         this.$emit('validate', false);
         return false;
       }
