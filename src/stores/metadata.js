@@ -1,14 +1,15 @@
-import { defineStore } from 'pinia'
-import axios from 'axios'
-import { formatIndex, buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js'
-import networkError from '../lib/networkError.js'
+import { defineStore } from 'pinia';
+import axios from 'axios';
+import { buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
+import networkError from '../lib/networkError.js';
 
+// eslint-disable-next-line no-unused-vars
 function buildObjectFields(fields, prefix, addNonAnalyzedFields) {
-  let objectFields = {}
+  let objectFields = {};
 
   Object.entries(fields).forEach(([name, field]) => {
     if (field.type) {
-      objectFields[`${prefix}.${name}`] = field
+      objectFields[`${prefix}.${name}`] = field;
 
       // there is a field.fields, which contains e.g. keyword or raw suffixes
       // required for aggregation
@@ -17,19 +18,19 @@ function buildObjectFields(fields, prefix, addNonAnalyzedFields) {
         // for it to our main list of fields
         Object.entries(field.fields).forEach(([suffixFieldName, suffixFieldValue]) => {
           if (suffixFieldValue.type === 'keyword') {
-            objectFields[`${prefix}.${name}.${suffixFieldName}`] = field
+            objectFields[`${prefix}.${name}.${suffixFieldName}`] = field;
           }
-        })
+        });
       }
     } else if (field.properties) {
       objectFields = {
         ...objectFields,
         ...buildObjectFields(field.properties, `${prefix}.${name}`, addNonAnalyzedFields)
-      }
+      };
     }
-  })
+  });
 
-  return objectFields
+  return objectFields;
 }
 
 export const useMetadataStore = defineStore('metadata', {
@@ -45,139 +46,137 @@ export const useMetadataStore = defineStore('metadata', {
 
   getters: {
     fieldIsNumeric: (state) => (index, field) => {
-      let numTypes = ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float']
-      const typeForField = state.mappings[index]?.fields?.[field]?.type
-      return numTypes.includes(typeForField)
+      let numTypes = ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float'];
+      const typeForField = state.mappings[index]?.fields?.[field]?.type;
+      return numTypes.includes(typeForField);
     },
 
-    typeForField: (state) => (index, field) => {
-      return state.mappings[index]?.fields?.[field]?.type
-    },
+    typeForField: (state) => (index, field) => state.mappings[index]?.fields?.[field]?.type,
 
     suggestedIndices(state) {
-      let indices = {}
+      let indices = {};
 
       state.indices.forEach(item => {
-        if (item.includes('elastalert')) return
-        let parts = item.split(/-/)
-        if (parts[0].startsWith('.')) return
+        if (item.includes('elastalert')) return;
+        let parts = item.split(/-/);
+        if (parts[0].startsWith('.')) return;
         if (parts.length > 1) {
-          indices[`${parts[0]}-*`] = true
+          indices[`${parts[0]}-*`] = true;
         } else {
-          indices[parts[0]] = true
+          indices[parts[0]] = true;
         }
-      })
+      });
 
-      return Object.keys(indices)
+      return Object.keys(indices);
     },
 
     textFieldsForCurrentConfig() {
-      let fields = {}
+      let fields = {};
 
       Object.entries(this.fieldsForCurrentConfig).forEach(([name, field]) => {
         if (['text', 'keyword'].includes(field.type)) {
-          fields[name] = field
+          fields[name] = field;
         }
-      })
+      });
 
-      return fields
+      return fields;
     },
 
     numberFieldsForCurrentConfig() {
-      let fields = {}
+      let fields = {};
 
       Object.entries(this.fieldsForCurrentConfig).forEach(([name, field]) => {
         if (
           ['long', 'integer', 'short', 'byte', 'double', 'float', 'half_float', 'scaled_float'].includes(field.type)
         ) {
-          fields[name] = field
+          fields[name] = field;
         }
-      })
+      });
 
-      return fields
+      return fields;
     },
 
     dateFieldsForCurrentConfig() {
-      let fields = {}
+      let fields = {};
 
       Object.entries(this.fieldsForCurrentConfig).forEach(([name, field]) => {
         if (field.type === 'date') {
-          fields[name] = field
+          fields[name] = field;
         }
-      })
+      });
 
-      return fields
+      return fields;
     },
 
     templateFieldsForCurrentConfig() {
       // This getter will need to be updated when config store is fully converted
       // For now, return empty array to prevent errors
-      return []
+      return [];
     },
 
     fieldsForCurrentConfig() {
-      // This getter will need to be updated when config store is fully converted  
+      // This getter will need to be updated when config store is fully converted
       // For now, return empty object to prevent errors
-      return {}
+      return {};
     },
 
     aggFieldsForCurrentConfig() {
       // This getter will need to be updated when config store is fully converted
       // For now, return empty object to prevent errors
-      return {}
+      return {};
     },
 
     typesForCurrentConfig() {
       // This getter will need to be updated when config store is fully converted
       // For now, return empty array to prevent errors
-      return []
+      return [];
     }
   },
 
   actions: {
     setIndices(payload) {
-      this.indices = payload
+      this.indices = payload;
     },
 
     setMappings({ mappings, index }) {
       if (!this.mappings[index]) {
-        this.mappings[index] = {}
+        this.mappings[index] = {};
       }
 
-      this.mappings[index].types = buildMappingTypes(mappings)
-      this.mappings[index].fields = buildMappingFields(mappings)
+      this.mappings[index].types = buildMappingTypes(mappings);
+      this.mappings[index].fields = buildMappingFields(mappings);
     },
 
     async fetchIndices() {
       if (this.indices.length) {
-        return true
+        return true;
       }
 
       try {
-        let res = await axios.get('/api/indices')
+        let res = await axios.get('/api/indices');
         if (res.data.error) {
-          networkError('Error fetching indices.')
+          networkError('Error fetching indices.');
         } else {
-          this.setIndices(res.data)
-          return true
+          this.setIndices(res.data);
+          return true;
         }
       } catch (error) {
-        networkError(error)
+        networkError(error);
       }
     },
 
     async fetchMappings(index) {
       if (this.mappings[index]) {
-        return true
+        return true;
       }
 
       try {
-        let res = await axios.get(`/api/mapping/${index}`)
-        this.setMappings({ mappings: res.data, index })
-        return true
+        let res = await axios.get(`/api/mapping/${index}`);
+        this.setMappings({ mappings: res.data, index });
+        return true;
       } catch (error) {
-        return false
+        return false;
       }
     }
   }
-})
+});

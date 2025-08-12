@@ -24,8 +24,8 @@ mounted() {
 
 // AFTER (using Pinia stores directly):
 
-import { useUiStore, useServerStore, useElastalertStore } from '@/stores'
-import { mapState, mapActions } from '@/stores/helpers'
+import { useUiStore, useServerStore, useElastalertStore } from '@/stores';
+import { mapState, mapActions } from '@/stores/helpers';
 
 export default {
   components: {
@@ -35,15 +35,15 @@ export default {
   computed: {
     // Option 1: Direct store access
     uiStore() {
-      return useUiStore()
+      return useUiStore();
     },
-    
+
     sidebarWidth: {
       get() {
-        return this.uiStore.sidebarWidth
+        return this.uiStore.sidebarWidth;
       },
       set(value) {
-        this.uiStore.updateSidebarWidth(value)
+        this.uiStore.updateSidebarWidth(value);
       }
     },
 
@@ -54,12 +54,12 @@ export default {
 
   mounted() {
     // Option 1: Direct method calls
-    const serverStore = useServerStore()
-    const elastalertStore = useElastalertStore()
-    
-    serverStore.fetchVersion()
-    serverStore.fetchStatus()
-    elastalertStore.fetchConfig()
+    const serverStore = useServerStore();
+    const elastalertStore = useElastalertStore();
+
+    serverStore.fetchVersion();
+    serverStore.fetchStatus();
+    elastalertStore.fetchConfig();
 
     // Option 2: Using helper (if you have many actions)
     // ...mapActions(useServerStore, ['fetchVersion', 'fetchStatus']),
@@ -68,10 +68,10 @@ export default {
 
   methods: {
     onDragEnd(size) {
-      this.sidebarWidth = size
+      this.sidebarWidth = size;
     }
   }
-}
+};
 
 /*
 Template remains the same:

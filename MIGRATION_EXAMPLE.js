@@ -27,8 +27,8 @@
 // }
 
 // AFTER (Pinia):
-import { useConfigsStore, useConfigSettingsStore } from '@/stores'
-import { mapState, mapActions } from '@/stores/helpers'
+import { useConfigsStore, useConfigSettingsStore } from '@/stores';
+import { mapState, mapActions } from '@/stores/helpers';
 
 export default {
   // ... other component options
@@ -37,24 +37,24 @@ export default {
     // Option 1: Using helper functions
     ...mapState(useConfigsStore, {
       rule(store) {
-        return store.rules[this.id] || {}
+        return store.rules[this.id] || {};
       }
     }),
     ...mapState(useConfigSettingsStore, ['name', 'isEnabled']),
 
     // Option 2: Direct store access
     configsStore() {
-      return useConfigsStore()
+      return useConfigsStore();
     },
     settingsStore() {
-      return useConfigSettingsStore()
+      return useConfigSettingsStore();
     },
 
     // Option 3: Individual computed properties
     yaml() {
-      if (!this.name) return false
+      if (!this.name) return false;
       // This would need to be updated when config store with yaml getter is converted
-      return this.configStore.getYaml?.() || ''
+      return this.configStore.getYaml?.() || '';
     }
   },
 
@@ -64,13 +64,13 @@ export default {
 
     // Option 2: Direct method calls
     async rename() {
-      const configsStore = useConfigsStore()
+      const configsStore = useConfigsStore();
       let res = await configsStore.renameConfig({
         config: this.configStore.getConfig?.() || {},
         newName: this.newName.trim(),
         type: 'rules'
-      })
+      });
       // ... rest of the method
     }
   }
-}
+};

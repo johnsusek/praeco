@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
-import { luceneSyntaxFromQueryBuilder } from '@/lib/luceneSyntaxBuilder.js'
+import { defineStore } from 'pinia';
+import { luceneSyntaxFromQueryBuilder } from '@/lib/luceneSyntaxBuilder.js';
 
 function initialState() {
   return {
@@ -9,7 +9,7 @@ function initialState() {
     },
     manual: '',
     type: 'tree'
-  }
+  };
 }
 
 export const useConfigQueryStore = defineStore('configQuery', {
@@ -20,28 +20,28 @@ export const useConfigQueryStore = defineStore('configQuery', {
   getters: {
     queryString(state) {
       if (state.type === 'manual') {
-        return state.manual
+        return state.manual;
       }
 
-      return luceneSyntaxFromQueryBuilder(state.tree)
+      return luceneSyntaxFromQueryBuilder(state.tree);
     }
   },
 
   actions: {
     reset() {
-      Object.assign(this, initialState())
+      Object.assign(this, initialState());
     },
 
     updateTree(tree) {
-      this.tree = tree
+      this.tree = tree;
     },
 
     updateManual(manual) {
-      this.manual = manual
+      this.manual = manual;
     },
 
     updateType(type) {
-      this.type = type
+      this.type = type;
     }
   }
-})
+});

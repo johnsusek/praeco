@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 function initialState() {
   return {
@@ -8,7 +8,7 @@ function initialState() {
     isEnabled: true,
     timeField: '',
     timeType: 'iso'
-  }
+  };
 }
 
 export const useConfigSettingsStore = defineStore('configSettings', {
@@ -18,46 +18,46 @@ export const useConfigSettingsStore = defineStore('configSettings', {
 
   getters: {
     wildcardIndex(state) {
-      if (!state.index) return ''
-      return state.index.replace(/%[Ymd]/g, '*')
+      if (!state.index) return '';
+      return state.index.replace(/%[Ymd]/g, '*');
     },
 
     strftime(state) {
-      return state.index.includes('%Y') || state.index.includes('%m') || state.index.includes('%d')
+      return state.index.includes('%Y') || state.index.includes('%m') || state.index.includes('%d');
     }
   },
 
   actions: {
     reset() {
-      Object.assign(this, initialState())
+      Object.assign(this, initialState());
     },
 
     updateName(name) {
-      this.name = name
+      this.name = name;
     },
 
     updateDescription(description) {
       if (description) {
-        this.description = description
+        this.description = description;
       } else {
-        delete this.description
+        delete this.description;
       }
     },
 
     updateIndex(index) {
-      this.index = index
+      this.index = index;
     },
 
     updateTimeField(timeField) {
-      this.timeField = timeField
+      this.timeField = timeField;
     },
 
     updateTimeType(timeType) {
-      this.timeType = timeType
+      this.timeType = timeType;
     },
 
     updateEnabled(isEnabled) {
-      this.isEnabled = isEnabled
+      this.isEnabled = isEnabled;
     }
   }
-})
+});

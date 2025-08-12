@@ -1,161 +1,165 @@
 // Transition helper to gradually migrate from Vuex to Pinia
 // This allows components to work with both old and new systems during migration
 
-import { 
-  useAppconfigStore, 
-  useUiStore, 
-  useServerStore, 
-  useElastalertStore, 
+import {
+  useAppconfigStore,
+  useUiStore,
+  useServerStore,
+  useElastalertStore,
   useMetadataStore,
-  useConfigsStore 
-} from './index'
+  useConfigsStore,
+  useConfigQueryStore
+} from './index';
 
 // Global store registry for Vue 2 compatibility
-let storeRegistry = null
+let storeRegistry = null;
 
 export function setupStoreRegistry() {
-  if (storeRegistry) return storeRegistry
-  
+  if (storeRegistry) return storeRegistry;
+
   storeRegistry = {
     appconfig: useAppconfigStore(),
     ui: useUiStore(),
     server: useServerStore(),
     elastalert: useElastalertStore(),
     metadata: useMetadataStore(),
-    configs: useConfigsStore()
-  }
-  
-  return storeRegistry
+    configs: useConfigsStore(),
+    configQuery: useConfigQueryStore()
+  };
+
+  return storeRegistry;
 }
 
 // Compatibility layer that mimics Vuex API for gradual migration
 export const createVuexCompatLayer = () => {
-  const stores = setupStoreRegistry()
-  
+  const stores = setupStoreRegistry();
+
   return {
     state: {
-      get appconfig() { return { config: stores.appconfig.config } },
-      get ui() { return { sidebarWidth: stores.ui.sidebarWidth } },
-      get server() { return { version: stores.server.version, status: stores.server.status } },
-      get elastalert() { return { bufferTime: stores.elastalert.bufferTime, runEvery: stores.elastalert.runEvery } },
-      get metadata() { return { indices: stores.metadata.indices, mappings: stores.metadata.mappings } },
-      get configs() { return { 
-        templates: stores.configs.templates, 
-        rules: stores.configs.rules, 
-        tree: stores.configs.tree 
-      }},
+      get appconfig() { return { config: stores.appconfig.config }; },
+      get ui() { return { sidebarWidth: stores.ui.sidebarWidth }; },
+      get server() { return { version: stores.server.version, status: stores.server.status }; },
+      get elastalert() { return { bufferTime: stores.elastalert.bufferTime, runEvery: stores.elastalert.runEvery }; },
+      get metadata() { return { indices: stores.metadata.indices, mappings: stores.metadata.mappings }; },
+      get configs() {
+        return {
+          templates: stores.configs.templates,
+          rules: stores.configs.rules,
+          tree: stores.configs.tree
+        };
+      },
       // TODO: Add config store state when it's converted
     },
-    
+
     getters: {
       // Metadata getters
-      'metadata/fieldIsNumeric': (state) => (index, field) => stores.metadata.fieldIsNumeric(index, field),
-      'metadata/typeForField': (state) => (index, field) => stores.metadata.typeForField(index, field),
-      'metadata/suggestedIndices': (state) => stores.metadata.suggestedIndices,
-      'metadata/textFieldsForCurrentConfig': (state) => stores.metadata.textFieldsForCurrentConfig,
-      'metadata/numberFieldsForCurrentConfig': (state) => stores.metadata.numberFieldsForCurrentConfig,
-      'metadata/dateFieldsForCurrentConfig': (state) => stores.metadata.dateFieldsForCurrentConfig,
-      'metadata/templateFieldsForCurrentConfig': (state) => stores.metadata.templateFieldsForCurrentConfig,
-      'metadata/fieldsForCurrentConfig': (state) => stores.metadata.fieldsForCurrentConfig,
-      'metadata/aggFieldsForCurrentConfig': (state) => stores.metadata.aggFieldsForCurrentConfig,
-      'metadata/typesForCurrentConfig': (state) => stores.metadata.typesForCurrentConfig,
+      'metadata/fieldIsNumeric': () => (index, field) => stores.metadata.fieldIsNumeric(index, field),
+      'metadata/typeForField': () => (index, field) => stores.metadata.typeForField(index, field),
+      'metadata/suggestedIndices': () => stores.metadata.suggestedIndices,
+      'metadata/textFieldsForCurrentConfig': () => stores.metadata.textFieldsForCurrentConfig,
+      'metadata/numberFieldsForCurrentConfig': () => stores.metadata.numberFieldsForCurrentConfig,
+      'metadata/dateFieldsForCurrentConfig': () => stores.metadata.dateFieldsForCurrentConfig,
+      'metadata/templateFieldsForCurrentConfig': () => stores.metadata.templateFieldsForCurrentConfig,
+      'metadata/fieldsForCurrentConfig': () => stores.metadata.fieldsForCurrentConfig,
+      'metadata/aggFieldsForCurrentConfig': () => stores.metadata.aggFieldsForCurrentConfig,
+      'metadata/typesForCurrentConfig': () => stores.metadata.typesForCurrentConfig
       // TODO: Add config getters when config store is converted
     },
-    
+
     commit(mutation, payload) {
-      const [module, mutationName] = mutation.split('/')
-      
+      const [/* module */,] = mutation.split('/');
+
       switch (mutation) {
         // Appconfig
         case 'appconfig/SET_APP_CONFIG':
-          stores.appconfig.setAppConfig(payload)
-          break
-          
+          stores.appconfig.setAppConfig(payload);
+          break;
+
         // UI
         case 'ui/UPDATE_SIDEBAR_WIDTH':
-          stores.ui.updateSidebarWidth(payload)
-          break
-          
+          stores.ui.updateSidebarWidth(payload);
+          break;
+
         // Configs
         case 'configs/FETCHED_CONFIGS':
-          stores.configs.fetchedConfigs(payload)
-          break
+          stores.configs.fetchedConfigs(payload);
+          break;
         case 'configs/FETCHED_CONFIGS_TREE':
-          stores.configs.fetchedConfigsTree(payload)
-          break
+          stores.configs.fetchedConfigsTree(payload);
+          break;
         case 'configs/FETCHED_CONFIG':
-          stores.configs.fetchedConfig(payload)
-          break
+          stores.configs.fetchedConfig(payload);
+          break;
         case 'configs/UPDATED_CONFIG':
-          stores.configs.updatedConfig(payload)
-          break
+          stores.configs.updatedConfig(payload);
+          break;
         case 'configs/DELETED_CONFIG':
-          stores.configs.deletedConfig(payload)
-          break
-          
+          stores.configs.deletedConfig(payload);
+          break;
+
         // Metadata
         case 'metadata/FETCHED_INDICES':
-          stores.metadata.setIndices(payload)
-          break
+          stores.metadata.setIndices(payload);
+          break;
         case 'metadata/FETCHED_MAPPINGS':
-          stores.metadata.setMappings(payload)
-          break
-          
+          stores.metadata.setMappings(payload);
+          break;
+
         // TODO: Add more mutations as stores are converted
         default:
-          console.warn(`Unhandled mutation: ${mutation}`)
+          console.warn(`Unhandled mutation: ${mutation}`);
       }
     },
-    
+
     async dispatch(action, payload) {
-      const [module, actionName] = action.split('/')
-      
+      const [/* module */,] = action.split('/');
+
       switch (action) {
         // Server
         case 'server/fetchVersion':
-          return stores.server.fetchVersion()
+          return stores.server.fetchVersion();
         case 'server/fetchStatus':
-          return stores.server.fetchStatus()
-          
+          return stores.server.fetchStatus();
+
         // Elastalert
         case 'elastalert/fetchConfig':
-          return stores.elastalert.fetchConfig()
-          
+          return stores.elastalert.fetchConfig();
+
         // Metadata
         case 'metadata/fetchIndices':
-          return stores.metadata.fetchIndices()
+          return stores.metadata.fetchIndices();
         case 'metadata/fetchMappings':
-          return stores.metadata.fetchMappings(payload)
-          
+          return stores.metadata.fetchMappings(payload);
+
         // Configs
         case 'configs/fetchConfig':
-          return stores.configs.fetchConfig(payload)
+          return stores.configs.fetchConfig(payload);
         case 'configs/renameConfig':
-          return stores.configs.renameConfig(payload)
+          return stores.configs.renameConfig(payload);
         case 'configs/moveConfig':
-          return stores.configs.moveConfig(payload)
+          return stores.configs.moveConfig(payload);
         case 'configs/duplicateConfig':
-          return stores.configs.duplicateConfig(payload)
+          return stores.configs.duplicateConfig(payload);
         case 'configs/createConfig':
-          return stores.configs.createConfig(payload)
+          return stores.configs.createConfig(payload);
         case 'configs/deleteConfig':
-          return stores.configs.deleteConfig(payload)
+          return stores.configs.deleteConfig(payload);
         case 'configs/createFolder':
-          return stores.configs.createFolder(payload)
+          return stores.configs.createFolder(payload);
         case 'configs/deleteFolder':
-          return stores.configs.deleteFolder(payload)
+          return stores.configs.deleteFolder(payload);
         case 'configs/silenceRule':
-          return stores.configs.silenceRule(payload)
+          return stores.configs.silenceRule(payload);
         case 'configs/disableRule':
-          return stores.configs.disableRule(payload)
+          return stores.configs.disableRule(payload);
         case 'configs/enableRule':
-          return stores.configs.enableRule(payload)
-          
+          return stores.configs.enableRule(payload);
+
         // TODO: Add more actions as stores are converted
         default:
-          console.warn(`Unhandled action: ${action}`)
-          return Promise.resolve()
+          console.warn(`Unhandled action: ${action}`);
+          return Promise.resolve();
       }
     }
-  }
-}
+  };
+};

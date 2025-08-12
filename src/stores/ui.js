@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useUiStore = defineStore('ui', {
   state: () => ({
@@ -7,11 +7,11 @@ export const useUiStore = defineStore('ui', {
 
   actions: {
     updateSidebarWidth(payload) {
-      this.sidebarWidth = payload
+      this.sidebarWidth = payload;
     }
   },
 
   persist: {
     key: 'praeco-ui'
   }
-})
+});

@@ -231,13 +231,13 @@ Vue.config.errorHandler = function(err, vm, info) {
 function startApp(config) {
   // Setup Pinia
   setActivePinia(pinia);
-  
+
   // Setup store registry for compatibility
   setupStoreRegistry();
-  
+
   // Create compatibility layer that mimics Vuex
   const store = createVuexCompatLayer();
-  
+
   // Initialize app config using the compatibility layer
   store.commit('appconfig/SET_APP_CONFIG', config);
 
@@ -257,7 +257,7 @@ function startApp(config) {
   new Vue({
     router,
     pinia,
-    store,  // Add the compatibility store
+    store, // Add the compatibility store
     render: h => h(App)
   }).$mount('#app');
 }

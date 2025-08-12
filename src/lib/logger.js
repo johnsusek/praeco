@@ -1,7 +1,6 @@
 import { createLogger, ERROR, stdSerializers } from 'browser-bunyan';
 import { ServerStream } from '@browser-bunyan/server-stream';
-// TODO:  error  Dependency cycle via ./configs:4  import/no-cycle
-import store from '@/store';
+import { useAppconfigStore } from '@/stores';
 
 let bunyan = null;
 
@@ -12,12 +11,13 @@ export function initLogging() {
     src: true
   };
 
-  if (store.state.appconfig.config.errorLoggerUrl) {
+  const appconfigStore = useAppconfigStore();
+  if (appconfigStore.config.errorLoggerUrl) {
     options.streams = [
       {
         level: ERROR,
         stream: new ServerStream({
-          url: store.state.appconfig.config.errorLoggerUrl,
+          url: appconfigStore.config.errorLoggerUrl,
           method: 'PUT'
         })
       }

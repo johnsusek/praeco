@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useAppconfigStore = defineStore('appconfig', {
   state: () => ({
@@ -7,7 +7,7 @@ export const useAppconfigStore = defineStore('appconfig', {
 
   actions: {
     setAppConfig(payload) {
-      this.config = payload
+      this.config = payload;
     }
   }
-})
+});
