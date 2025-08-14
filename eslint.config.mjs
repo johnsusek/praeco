@@ -1,4 +1,5 @@
 import rulesdir from "eslint-plugin-rulesdir";
+import importPlugin from "eslint-plugin-import";
 import globals from "globals";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -21,10 +22,11 @@ export default [
         ignores: ["node_modules/", "dist/", ".eslintrc.js", "eslint.config.mjs"],
     },
     js.configs.recommended,
-    ...compat.extends("plugin:vue/vue3-recommended", "@vue/eslint-config-airbnb"),
+    ...compat.extends("plugin:vue/vue3-recommended"),
     {
         plugins: {
             rulesdir,
+            import: importPlugin,
         },
 
         languageOptions: {
@@ -39,6 +41,20 @@ export default [
 
         rules: {
             "rulesdir/custom1": "off",
+            // Essential code quality rules (Airbnb-style)
+            "indent": ["error", 2],
+            "semi": ["error", "always"],
+            "object-curly-spacing": ["error", "always"],
+            "array-bracket-spacing": ["error", "never"],
+            "comma-spacing": ["error", { "before": false, "after": true }],
+            "key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
+            "keyword-spacing": ["error", { "before": true, "after": true }],
+            "space-before-blocks": ["error", "always"],
+            "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+            "eol-last": ["error", "always"],
+            "no-trailing-spaces": "error",
+            "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+            // Vue and custom overrides
             "vue/max-len": "off",
             "import/no-unresolved": "off",
             "vuejs-accessibility/rule-name": "off",
