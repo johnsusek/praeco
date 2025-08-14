@@ -2,6 +2,7 @@ const webpack = require('webpack');
 
 module.exports = {
   publicPath: process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : '/',
+  lintOnSave: false, // Disable ESLint during Vue CLI build since we use ESLint 9.x with separate lint scripts
   configureWebpack: {
     devtool: process.env.NODE_ENV === 'coverage' ? 'eval' : undefined,
     performance: {

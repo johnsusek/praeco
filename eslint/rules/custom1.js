@@ -1,6 +1,4 @@
-'use strict'
-
-const utils = require('eslint-plugin-vue/lib/utils')
+const utils = require('eslint-plugin-vue/lib/utils');
 
 module.exports = {
   meta: {
@@ -29,21 +27,21 @@ module.exports = {
   },
   /** @param {RuleContext} context */
   create(context) {
-    const ignoreComponentNames = context.options[0]?.ignoreComponentNames ?? []
+    const ignoreComponentNames = context.options[0]?.ignoreComponentNames ?? [];
     return utils.defineTemplateBodyVisitor(context, {
-      "VAttribute[directive=true][key.name.name='model']"(node) {
-        const element = node.parent.parent
+      'VAttribute[directive=true][key.name.name=\'model\']': function(node) {
+        const element = node.parent.parent;
         if (
-          utils.isCustomComponent(node.parent.parent) &&
-          !ignoreComponentNames.includes(element.name)
+          utils.isCustomComponent(node.parent.parent)
+          && !ignoreComponentNames.includes(element.name)
         ) {
           context.report({
             node,
             loc: node.loc,
             messageId: 'error',
-          })
+          });
         }
       },
-    })
+    });
   },
-}
+};
