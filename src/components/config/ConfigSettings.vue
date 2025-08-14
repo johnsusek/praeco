@@ -183,6 +183,11 @@ export default {
   },
 
   async mounted() {
+    // Create debounced function for this component instance
+    this.getMappingDebounced = debounce(async () => {
+      this.getMapping();
+    }, 1000);
+
     // Get the indices needed to build the suggestions list
     this.indicesLoading = true;
     await this.$store.dispatch('metadata/fetchIndices');
@@ -195,10 +200,6 @@ export default {
   },
 
   methods: {
-    getMappingDebounced: debounce(async function() {
-      this.getMapping();
-    }, 1000),
-
     async getMapping() {
       this.mappingError = '';
 

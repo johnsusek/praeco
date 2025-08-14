@@ -299,14 +299,15 @@ export default {
   },
 
   mounted() {
+    // Create debounced function for this component instance
+    this.sampleDebounced = debounce(() => {
+      this.$store.dispatch('config/sample');
+    }, 750);
+
     this.$store.dispatch('config/sample');
   },
 
   methods: {
-    sampleDebounced: debounce(function() {
-      this.$store.dispatch('config/sample');
-    }, 750),
-
     pastePlainText(e) {
       e.preventDefault();
       let text = (e.originalEvent || e).clipboardData.getData('text/plain');

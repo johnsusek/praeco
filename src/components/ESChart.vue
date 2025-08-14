@@ -471,6 +471,151 @@ export default {
       this.interval = this.bucket;
     }
 
+    // Create debounced function for this component instance
+    this.fetchData = debounce(async () => {
+      if (!this.index) return;
+      if (!Object.keys(this.timespan)[0]) return;
+
+      let lte;
+      let gte;
+
+      if (this.timeType === 'iso') {
+        lte = 'now';
+        gte = `now-${intervalFromTimeframe(this.timespan)}`;
+      } else if (this.timeType === 'unix_ms') {
+        lte = Math.trunc(+new Date());
+        gte = dayjs()
+          .subtract(
+            parseInt(Object.values(this.timespan)[0]), // example. 500
+            Object.keys(this.timespan)[0] // example. minutes
+          )
+          .valueOf();
+      } else {
+        lte = Math.trunc(+new Date() / 1000);
+        gte = dayjs()
+          .subtract(
+            parseInt(Object.values(this.timespan)[0]), // example. 500
+            Object.keys(this.timespan)[0] // example. minutes
+          )
+          .unix();
+      }
+
+      let query = {
+        query: {
+          bool: {
+            must: [
+              {
+                query_string: { query: this.query }
+              },
+              {
+                range: {
+                  [this.timeField]: {
+                    lte,
+                    gte
+                  }
+                }
+              }
+            ]
+          }
+        },
+        size: 0,
+        aggs: this.aggs
+      };
+
+      this.loading = true;
+      this.searchError = '';
+
+      let res;
+
+      // Cancel any currently running requests
+      if (this.source) {
+        this.source.cancel();
+      }
+
+      try {
+        this.source = CancelToken.source();
+        res = await axios.post(`/api/search/${formatIndex(this.index)}`, query, {
+          cancelToken: this.source.token
+        });
+      } catch (error) {
+        if (!axios.isCancel(error)) {
+          console.error(error);
+        }
+      } finally {
+        this.source = null;
+      }
+
+      if (res && res.data) {
+        if (res.data.error) {
+          this.searchError = res.data.error.msg;
+        } else if (res.data.aggregations) {
+          this.chart.title.text = null;
+
+          let x = null;
+          let y = null;
+
+          if (this.groupBy) {
+            if (
+              res.data.aggregations.group_by_field
+              && res.data.aggregations.group_by_field.buckets.length
+            ) {
+              let buckets = res.data.aggregations.group_by_field.buckets;
+
+              x = buckets[this.activeGroupIndex].by_minute.buckets.map(r => ({
+                value: this.timeType === 'iso' ? r.key_as_string : r.key
+              }));
+
+              y = buckets[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
+
+              buckets.forEach(item => { item.key = (typeof item.key === 'object') ? Object.values(item.key).join(' - ') : item.key; });
+
+              this.groups = buckets;
+
+              if (this.groups.length) {
+                this.$emit('group', this.groups[0].key);
+              }
+            } else {
+              this.groups = [];
+            }
+          } else {
+            x = res.data.aggregations.by_minute.buckets.map(r => ({
+              value: this.timeType === 'iso' ? r.key_as_string : r.key
+            }));
+
+            y = res.data.aggregations.by_minute.buckets.map(this.getYValue);
+          }
+
+          this.chart.xAxis.data = x;
+          this.chart.series[0].data = y;
+
+          this.$emit('update', y);
+
+          // Charts can have one or more marklines on their main axis,
+          // passed in as a prop to this component.
+          // We'll want to redraw it now that new data has arrived.
+          if (this.markLine) {
+            this.chart.series[0].markLine = this.markLine;
+          }
+
+          // It the spikeHeight prop is set, we'll want to add the tooltip
+          // and colored bars for it
+          if (this.spikeHeight) {
+            this.setTooltipSpike();
+            this.addSpikes();
+          } else {
+            this.setTooltipDefault();
+          }
+        } else {
+          this.chart.title.text = 'No data.\nSelected field may not support aggregations.';
+          this.chart.xAxis.data = null;
+          this.chart.series[0].data = null;
+          this.$emit('update', this.chart.series[0].data);
+        }
+
+        this.loading = false;
+      }
+    }, 800);
+
     this.updateChart();
   },
 
@@ -613,151 +758,7 @@ export default {
     updateTimespan(value) {
       this.timespan = value;
       this.updateChart();
-    },
-
-    fetchData: debounce(async function() {
-      if (!this.index) return;
-      if (!Object.keys(this.timespan)[0]) return;
-
-      let lte;
-      let gte;
-
-      if (this.timeType === 'iso') {
-        lte = 'now';
-        gte = `now-${intervalFromTimeframe(this.timespan)}`;
-      } else if (this.timeType === 'unix_ms') {
-        lte = Math.trunc(+new Date());
-        gte = dayjs()
-          .subtract(
-            parseInt(Object.values(this.timespan)[0]), // example. 500
-            Object.keys(this.timespan)[0] // example. minutes
-          )
-          .valueOf();
-      } else {
-        lte = Math.trunc(+new Date() / 1000);
-        gte = dayjs()
-          .subtract(
-            parseInt(Object.values(this.timespan)[0]), // example. 500
-            Object.keys(this.timespan)[0] // example. minutes
-          )
-          .unix();
-      }
-
-      let query = {
-        query: {
-          bool: {
-            must: [
-              {
-                query_string: { query: this.query }
-              },
-              {
-                range: {
-                  [this.timeField]: {
-                    lte,
-                    gte
-                  }
-                }
-              }
-            ]
-          }
-        },
-        size: 0,
-        aggs: this.aggs
-      };
-
-      this.loading = true;
-      this.searchError = '';
-
-      let res;
-
-      // Cancel any currently running requests
-      if (this.source) {
-        this.source.cancel();
-      }
-
-      try {
-        this.source = CancelToken.source();
-        res = await axios.post(`/api/search/${formatIndex(this.index)}`, query, {
-          cancelToken: this.source.token
-        });
-      } catch (error) {
-        if (!axios.isCancel(error)) {
-          console.error(error);
-        }
-      } finally {
-        this.source = null;
-      }
-
-      if (res && res.data) {
-        if (res.data.error) {
-          this.searchError = res.data.error.msg;
-        } else if (res.data.aggregations) {
-          this.chart.title.text = null;
-
-          let x = null;
-          let y = null;
-
-          if (this.groupBy) {
-            if (
-              res.data.aggregations.group_by_field
-              && res.data.aggregations.group_by_field.buckets.length
-            ) {
-              let buckets = res.data.aggregations.group_by_field.buckets;
-
-              x = buckets[this.activeGroupIndex].by_minute.buckets.map(r => ({
-                value: this.timeType === 'iso' ? r.key_as_string : r.key
-              }));
-
-              y = buckets[this.activeGroupIndex].by_minute.buckets.map(this.getYValue);
-
-              buckets.forEach(item => { item.key = (typeof item.key === 'object') ? Object.values(item.key).join(' - ') : item.key; });
-
-              this.groups = buckets;
-
-              if (this.groups.length) {
-                this.$emit('group', this.groups[0].key);
-              }
-            } else {
-              this.groups = [];
-            }
-          } else {
-            x = res.data.aggregations.by_minute.buckets.map(r => ({
-              value: this.timeType === 'iso' ? r.key_as_string : r.key
-            }));
-
-            y = res.data.aggregations.by_minute.buckets.map(this.getYValue);
-          }
-
-          this.chart.xAxis.data = x;
-          this.chart.series[0].data = y;
-
-          this.$emit('update', y);
-
-          // Charts can have one or more marklines on their main axis,
-          // passed in as a prop to this component.
-          // We'll want to redraw it now that new data has arrived.
-          if (this.markLine) {
-            this.chart.series[0].markLine = this.markLine;
-          }
-
-          // It the spikeHeight prop is set, we'll want to add the tooltip
-          // and colored bars for it
-          if (this.spikeHeight) {
-            this.setTooltipSpike();
-            this.addSpikes();
-          } else {
-            this.setTooltipDefault();
-          }
-        } else {
-          this.chart.title.text = 'No data.\nSelected field may not support aggregations.';
-          this.chart.xAxis.data = null;
-          this.chart.series[0].data = null;
-          this.$emit('update', this.chart.series[0].data);
-        }
-
-        this.loading = false;
-      }
-    }, 800)
+    }
   }
 };
 </script>
