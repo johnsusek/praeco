@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia';
 import get from 'lodash.get';
 import format from 'string-format';
 import { htmlToConfigFormat } from '@/lib/alertText';
@@ -438,15 +439,14 @@ function initialState() {
   };
 }
 
-export default {
-  namespaced: true,
-
-  state: {
+export const useConfigAlertStore = defineStore('config-alert', {
+  state: () => ({
     ...initialState()
-  },
+  }),
 
   getters: {
     slackTitleLink(state, getters, rootState) {
+      // TODO: Update to access other Pinia stores when fully converted
       let appUrl = rootState.appconfig.config.appUrl;
       let path = rootState.config.settings.name;
 
@@ -476,7 +476,7 @@ export default {
     }
   },
 
-  mutations: {
+  actions: {
     /*eslint-disable */
     RESET(state) {
       /* eslint-enable */
@@ -2383,4 +2383,4 @@ export default {
       state.zbxHostFromField = zbxHostFromField;
     }
   }
-};
+});

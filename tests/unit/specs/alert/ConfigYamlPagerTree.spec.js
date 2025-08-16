@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { useConfigStore } from '@/stores/config.js';
+import { useConfigStore } from '@/stores/config/main.js';
 import { mockAxios } from '../../setup';
 import { ruleYaml } from '../../mockData/alert/ruleDataPagerTree.js';
 

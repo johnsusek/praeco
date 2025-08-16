@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia';
+
 function initialState() {
   return {
     type: 'any',
@@ -40,13 +42,12 @@ function initialState() {
   };
 }
 
-export default {
-  namespaced: true,
-
-  state: {
+export const useConfigMatchStore = defineStore('config-match', {
+  state: () => ({
     ...initialState()
-  },
+  }),
 
+  // Keep all original getters - convert them later
   getters: {
     markLine(state, getters) {
       if (state.type === 'spike') {
@@ -256,7 +257,9 @@ export default {
     }
   },
 
-  mutations: {
+  // Convert all mutations to actions - keep the business logic exactly the same
+  actions: {
+    // For now, just add a placeholder - will convert all mutations systematically
     /*eslint-disable */
     RESET(state) {
       /* eslint-enable */
@@ -485,4 +488,4 @@ export default {
       state.useKeywordPostfix = value;
     }
   }
-};
+});

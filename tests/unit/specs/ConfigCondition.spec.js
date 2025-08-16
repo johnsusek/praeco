@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { expect } from 'chai';
 
-import { useConfigStore } from '@/stores/config.js';
+import { useConfigStore } from '@/stores/config/main.js';
 import ConfigCondition from '@/components/config/ConfigCondition';
 import { mountComponent, mockAxios } from '../setup';
 import mockChartData from '../mockData/chartData.json';
