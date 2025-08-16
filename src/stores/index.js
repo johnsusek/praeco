@@ -18,4 +18,6 @@ export { useMetadataStore } from './metadata.js';
 export { useAppConfigStore } from './appconfig.js';
 export { useElastalertStore } from './elastalert.js';
 export { useConfigsStore } from './configs.js';
-export { useConfigStore } from './config.js';
+// Config stores will be exported separately once converted
+export { useConfigSettingsStore } from './config/settings.js';
+export { useConfigQueryStore } from './config/query.js';
