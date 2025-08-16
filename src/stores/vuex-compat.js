@@ -5,6 +5,7 @@ import {
   useConfigStore,
   useConfigSettingsStore,
   useConfigQueryStore,
+  useConfigAlertStore,
   useUIStore,
   useServerStore,
   useMetadataStore,
@@ -15,7 +16,7 @@ import {
 
 export function createStoreCompat(app) {
   // Create store instances that will be reused
-  let configStore, settingsStore, queryStore, uiStore, serverStore, metadataStore, appConfigStore, elastalertStore, configsStore;
+  let configStore, settingsStore, queryStore, alertStore, uiStore, serverStore, metadataStore, appConfigStore, elastalertStore, configsStore;
 
   // Initialize stores lazily to ensure Pinia is ready
   function getStores() {
@@ -23,6 +24,7 @@ export function createStoreCompat(app) {
       configStore = useConfigStore();
       settingsStore = useConfigSettingsStore();
       queryStore = useConfigQueryStore();
+      alertStore = useConfigAlertStore();
       uiStore = useUIStore();
       serverStore = useServerStore();
       metadataStore = useMetadataStore();
@@ -35,6 +37,7 @@ export function createStoreCompat(app) {
       configStore,
       settingsStore,
       queryStore,
+      alertStore,
       uiStore,
       serverStore,
       metadataStore,
@@ -58,7 +61,8 @@ export function createStoreCompat(app) {
           validateError: stores.configStore.validateError,
           sampleResult: stores.configStore.sampleResult,
           settings: stores.settingsStore,
-          query: stores.queryStore
+          query: stores.queryStore,
+          alert: stores.alertStore
         },
 
         ui: stores.uiStore,
@@ -110,6 +114,25 @@ export function createStoreCompat(app) {
               stores.settingsStore.updateTimeType(payload);
               break;
             // Add more settings mutations as needed
+          }
+        } else if (submodule === 'alert') {
+          switch (action) {
+            case 'UPDATE_ALERT':
+              stores.alertStore.updateAlert(payload);
+              break;
+            case 'UPDATE_REALERT':
+              stores.alertStore.updateRealert(payload);
+              break;
+            case 'UPDATE_AGGREGATION_SCHEDULE':
+              stores.alertStore.updateAggregationSchedule(payload);
+              break;
+            case 'UPDATE_SUBJECT':
+              stores.alertStore.updateSubject(payload);
+              break;
+            case 'UPDATE_BODY':
+              stores.alertStore.updateBody(payload);
+              break;
+            // Add more alert mutations as needed
           }
         } else {
           // Direct config mutations

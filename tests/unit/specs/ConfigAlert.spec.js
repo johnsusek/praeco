@@ -20,13 +20,13 @@ async function prep() {
 let wrapper;
 
 describe('ConfigAlert', function() {
-  this.timeout(20000);
+  // Vitest equivalent of this.timeout(20000) - set at test level
 
   it('renders the realert amount', async () => {
     wrapper = await prep();
     let value = wrapper.find('#realert input[min="0"]').element.value;
     return expect(value).to.equal('5');
-  });
+  }, 20000);
 
   it('renders the realert unit', () => {
     return expect(wrapper.find('#realert .el-select input').element.value).to.equal('Minutes');

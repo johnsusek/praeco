@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import yaml from 'js-yaml';
 import { useConfigSettingsStore } from './settings.js';
 import { useConfigQueryStore } from './query.js';
+import { useConfigAlertStore } from './alert-basic.js';
 import { useConfigsStore } from '../configs.js';
 
 // Simplified main config store that provides essential functionality
@@ -123,8 +124,10 @@ export const useConfigStore = defineStore('config', {
       // Reset sub-stores
       const settingsStore = useConfigSettingsStore();
       const queryStore = useConfigQueryStore();
+      const alertStore = useConfigAlertStore();
       settingsStore.reset();
       queryStore.reset();
+      alertStore.reset();
     },
 
     async load({ type, path }) {

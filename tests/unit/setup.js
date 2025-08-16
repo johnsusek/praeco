@@ -9,6 +9,7 @@ import { setActivePinia, createPinia } from 'pinia';
 import '@/contrib.js';
 import '@/registration.js';
 import router from '@/router.js';
+import { createStoreCompat } from '@/stores/vuex-compat.js';
 
 // Create and set active pinia for tests
 const pinia = createPinia();
@@ -21,7 +22,17 @@ export const mockAxios = new MockAdapter(axios);
 export function mountComponent(comp, opts = {}) {
   return mount(comp, {
     global: {
-      plugins: [pinia, router, ElementPlus],
+      plugins: [
+        pinia, 
+        router, 
+        ElementPlus,
+        // Plugin to add Vuex compatibility
+        {
+          install(app) {
+            app.config.globalProperties.$store = createStoreCompat(app);
+          }
+        }
+      ],
       stubs: {
         transition: false
       }
@@ -33,7 +44,17 @@ export function mountComponent(comp, opts = {}) {
 export function shallowMountComponent(comp, opts = {}) {
   return shallowMount(comp, {
     global: {
-      plugins: [pinia, router, ElementPlus],
+      plugins: [
+        pinia, 
+        router, 
+        ElementPlus,
+        // Plugin to add Vuex compatibility
+        {
+          install(app) {
+            app.config.globalProperties.$store = createStoreCompat(app);
+          }
+        }
+      ],
       stubs: {
         transition: false
       }

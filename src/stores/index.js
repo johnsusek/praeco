@@ -22,3 +22,4 @@ export { useConfigsStore } from './configs.js';
 export { useConfigStore } from './config/main.js';
 export { useConfigSettingsStore } from './config/settings.js';
 export { useConfigQueryStore } from './config/query.js';
+export { useConfigAlertStore } from './config/alert-basic.js';
