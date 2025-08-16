@@ -152,7 +152,7 @@ function startApp(config) {
   app.use(pinia);
 
   // Provide Vuex compatibility layer for existing Vue components
-  app.config.globalProperties.$store = createStoreCompat(app);
+  app.config.globalProperties.$store = createStoreCompat();
 
   app.use(ElementPlus, { locale: en, size: 'small' });
   app.use(cronLight);

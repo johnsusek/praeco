@@ -14,7 +14,7 @@ import {
   useConfigsStore
 } from './index.js';
 
-export function createStoreCompat(app) {
+export function createStoreCompat() {
   // Create store instances that will be reused
   let configStore, settingsStore, queryStore, alertStore, uiStore, serverStore, metadataStore, appConfigStore, elastalertStore, configsStore;
 
