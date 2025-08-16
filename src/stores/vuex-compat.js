@@ -84,6 +84,53 @@ export function createStoreCompat(app) {
       'config/yaml': (forTest) => {
         const stores = getStores();
         return stores.configStore.yaml(forTest);
+      },
+
+      // Query getters
+      'config/query/queryString': () => {
+        const stores = getStores();
+        return stores.queryStore.queryString;
+      },
+
+      // Metadata getters
+      'metadata/numberFieldsForCurrentConfig': () => {
+        const stores = getStores();
+        return stores.metadataStore.numberFieldsForCurrentConfig;
+      },
+
+      'metadata/dateFieldsForCurrentConfig': () => {
+        const stores = getStores();
+        return stores.metadataStore.dateFieldsForCurrentConfig;
+      },
+
+      'metadata/suggestedIndices': () => {
+        const stores = getStores();
+        return stores.metadataStore.suggestedIndices;
+      },
+
+      'metadata/typesForCurrentConfig': () => {
+        const stores = getStores();
+        return stores.metadataStore.typesForCurrentConfig;
+      },
+
+      'metadata/textFieldsForCurrentConfig': () => {
+        const stores = getStores();
+        return stores.metadataStore.textFieldsForCurrentConfig;
+      },
+
+      'metadata/fieldsForCurrentConfig': () => {
+        const stores = getStores();
+        return stores.metadataStore.fieldsForCurrentConfig;
+      },
+
+      'metadata/aggFieldsForCurrentConfig': () => {
+        const stores = getStores();
+        return stores.metadataStore.aggFieldsForCurrentConfig;
+      },
+
+      'metadata/templateFieldsForCurrentConfig': () => {
+        const stores = getStores();
+        return stores.metadataStore.templateFieldsForCurrentConfig;
       }
     },
 
