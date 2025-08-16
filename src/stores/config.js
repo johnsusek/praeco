@@ -157,12 +157,7 @@ export const useConfigStore = defineStore('config', {
             }
           });
           
-          return yaml.dump(yamlConfig, { 
-            quotingType: '"', 
-            forceQuotes: true,
-            flowLevel: -1,
-            sortKeys: true
-          });
+          return yaml.dump(yamlConfig, { quotingType: '"', forceQuotes: true });
         }
         
         return '';
