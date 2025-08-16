@@ -5,10 +5,14 @@ import 'localstorage-polyfill';
 import {
   config, mount, shallowMount
 } from '@vue/test-utils';
+import { setActivePinia, createPinia } from 'pinia';
 import '@/contrib.js';
 import '@/registration.js';
-import store from '@/store/index.js';
 import router from '@/router.js';
+
+// Create and set active pinia for tests
+const pinia = createPinia();
+setActivePinia(pinia);
 
 config.global.stubs.transition = false;
 
@@ -17,7 +21,7 @@ export const mockAxios = new MockAdapter(axios);
 export function mountComponent(comp, opts = {}) {
   return mount(comp, {
     global: {
-      plugins: [store, router, ElementPlus],
+      plugins: [pinia, router, ElementPlus],
       stubs: {
         transition: false
       }
@@ -29,7 +33,7 @@ export function mountComponent(comp, opts = {}) {
 export function shallowMountComponent(comp, opts = {}) {
   return shallowMount(comp, {
     global: {
-      plugins: [store, router, ElementPlus],
+      plugins: [pinia, router, ElementPlus],
       stubs: {
         transition: false
       }

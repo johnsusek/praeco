@@ -1,13 +1,14 @@
 import { expect } from 'chai';
-import store from '@/store';
+import { useConfigStore } from '@/stores/config.js';
 import { mockAxios } from '../../setup';
 import { ruleYaml } from '../../mockData/alert/ruleDataPagerDuty004.js';
 
 describe('PagerDuty 004 YAML parsing', () => {
   it('renders the correct yaml', async () => {
     mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
-    await store.dispatch('config/load', { type: 'rules', path: 'test123' });
-    let yaml = store.getters['config/yaml']();
+    const configStore = useConfigStore();
+    await configStore.load({ type: 'rules', path: 'test123' });
+    let yaml = configStore.yaml();
 
     let expected = `__praeco_full_path: "test123"
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"

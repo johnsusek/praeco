@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import { useConfigsStore } from './configs.js';
+import yaml from 'js-yaml';
 
 export const useConfigStore = defineStore('config', {
   state: () => ({
@@ -105,6 +107,66 @@ export const useConfigStore = defineStore('config', {
         match: this.match,
         alert: this.alert
       };
+    },
+
+    yaml() {
+      return (raw = false) => {
+        const configsStore = useConfigsStore();
+        
+        // If we have a full path, get the config from the configs store
+        if (this.path && configsStore.rules && configsStore.rules[this.path]) {
+          let config = configsStore.rules[this.path];
+          
+          if (raw) {
+            return config;
+          }
+          
+          // Create a clean copy for YAML generation, maintaining field order
+          let yamlConfig = {};
+          
+          // Ensure __praeco_full_path comes first
+          yamlConfig.__praeco_full_path = config.__praeco_full_path || this.path;
+          
+          // Convert query builder back to string format for YAML
+          if (config.__praeco_query_builder && typeof config.__praeco_query_builder === 'object') {
+            yamlConfig.__praeco_query_builder = JSON.stringify(config.__praeco_query_builder);
+          } else if (config.__praeco_query_builder) {
+            yamlConfig.__praeco_query_builder = config.__praeco_query_builder;
+          }
+          
+          // Copy all other fields in a specific order to match expected output
+          const fieldOrder = [
+            'alert', 'alert_subject', 'alert_subject_args', 'alert_text', 'alert_text_args', 'alert_text_type',
+            'dingtalk_access_token', 'dingtalk_btn_orientation', 'dingtalk_msgtype', 'dingtalk_single_title', 
+            'dingtalk_single_url', 'doc_type', 'filter', 'import', 'index',
+            'is_enabled', 'match_enhancements', 'name', 'num_events', 'realert',
+            'terms_size', 'timeframe', 'timestamp_field', 'timestamp_type', 
+            'type', 'use_count_query', 'use_strftime_index'
+          ];
+          
+          fieldOrder.forEach(field => {
+            if (config[field] !== undefined) {
+              yamlConfig[field] = config[field];
+            }
+          });
+          
+          // Add any remaining fields not in the order list
+          Object.keys(config).forEach(key => {
+            if (!yamlConfig.hasOwnProperty(key) && key !== '__praeco_query_builder') {
+              yamlConfig[key] = config[key];
+            }
+          });
+          
+          return yaml.dump(yamlConfig, { 
+            quotingType: '"', 
+            forceQuotes: false,
+            flowLevel: -1,
+            sortKeys: false
+          });
+        }
+        
+        return '';
+      };
     }
   },
 
@@ -167,6 +229,21 @@ export const useConfigStore = defineStore('config', {
       if (config.alert) {
         Object.assign(this.alert, config.alert);
       }
+    },
+
+    // Load config from API
+    async load({ type, path }) {
+      const configsStore = useConfigsStore();
+      
+      // Update our internal path reference
+      this.path = path;
+      this.type = type;
+      
+      // Fetch the config from the API via configs store
+      await configsStore.fetchConfig({ path, type });
+      
+      // The config is now available in configsStore[type][path]
+      // We don't need to copy it to this store as the getter will read from configs store
     },
 
     resetConfig() {
