@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { expect } from 'chai';
 
-import { useConfigStore } from '@/stores/config/main.js';
+import store from '@/store';
 import ConfigCondition from '@/components/config/ConfigCondition';
 import { mountComponent, mockAxios } from '../setup';
 import mockChartData from '../mockData/chartData.json';
@@ -11,8 +11,7 @@ mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 mockAxios.onPost('/api/search/hannibal-*').reply(200, mockChartData);
 
 async function prep() {
-  const configStore = useConfigStore();
-    await configStore.load({ type: 'rules', path: 'test123' });
+  await store.dispatch('config/load', { type: 'rules', path: 'test123' });
   let wrapper = mountComponent(ConfigCondition);
 
   wrapper.setData({

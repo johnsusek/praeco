@@ -10,7 +10,7 @@
               size="large"
               autofocus
               autoselect
-              @keyup.enter="rename" />
+              @keyup.enter.native="rename" />
           </el-col>
           <el-col :span="18">
             <el-button size="large" type="primary" @click="rename">
@@ -61,13 +61,13 @@
           Move
         </el-button>
 
-        <el-button :icon="Delete" plain type="danger" @click="showDeleteConfirm">
+        <el-button icon="el-icon-delete" plain type="danger" @click="showDeleteConfirm">
           Delete...
         </el-button>
       </el-row>
 
       <el-dialog
-        v-model:visible="moveVisible"
+        :visible.sync="moveVisible"
         title="Move"
         width="40%"
         @close="moveVisible = false">

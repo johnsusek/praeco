@@ -1,5 +1,4 @@
 import VuexPersistence from 'vuex-persist';
-import { createStore } from 'vuex';
 // TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import configs from './configs';
 import server from './server';
@@ -15,7 +14,7 @@ const vuexLocal = new VuexPersistence({
   key: 'praeco-vuex'
 });
 
-export default createStore({
+export default {
   modules: {
     configs,
     server,
@@ -26,4 +25,4 @@ export default createStore({
     ui
   },
   plugins: [vuexLocal.plugin]
-});
+};

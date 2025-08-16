@@ -10,7 +10,7 @@
               size="large"
               autofocus
               autoselect
-              @keyup.enter="rename" />
+              @keyup.enter.native="rename" />
           </el-col>
           <el-col :span="18">
             <el-button size="large" type="primary" @click="rename">
@@ -79,12 +79,8 @@
                 plain
                 type="warning">
                 Silence
-                <el-icon v-if="!silencePopoverVisible" class="el-icon-right">
-                  <CaretBottom />
-                </el-icon>
-                <el-icon v-if="silencePopoverVisible" class="el-icon-right">
-                  <CaretTop />
-                </el-icon>
+                <i v-if="!silencePopoverVisible" class="el-icon-caret-bottom el-icon-right" />
+                <i v-if="silencePopoverVisible" class="el-icon-caret-top el-icon-right" />
               </el-button>
             </span>
           </template>
@@ -125,7 +121,7 @@
         </el-button>
 
         <el-button
-          :icon="Delete"
+          icon="el-icon-delete"
           plain
           type="danger"
           @click="showDeleteConfirm">
@@ -133,7 +129,7 @@
         </el-button>
 
         <el-dialog
-          v-model:visible="moveVisible"
+          :visible.sync="moveVisible"
           title="Move"
           width="40%"
           @close="moveVisible = false">
@@ -258,7 +254,7 @@ import { nextTick } from 'vue';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { capitalCase } from 'change-case';
+import * as changeCase from 'change-case';
 import { logger } from '@/lib/logger.js';
 import { selectNode } from '@/lib/tree';
 import networkError from '../lib/networkError.js';
@@ -613,7 +609,7 @@ export default {
     },
 
     titleCase(val) {
-      return capitalCase(val);
+      return changeCase.capitalCase(val);
     },
 
     shortDate(rawDate) {

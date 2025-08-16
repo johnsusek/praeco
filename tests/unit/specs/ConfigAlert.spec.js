@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { expect } from 'chai';
-import { useConfigStore } from '@/stores/config/main.js';
-import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
+import store from '@/store';
+import ConfigAlert from '@/components/config/alert/ConfigAlert';
 import { mountComponent, mockAxios } from '../setup';
 import mockChartData from '../mockData/chartData.json';
 import { ruleYaml } from '../mockData/ruleData.js';
@@ -10,8 +10,7 @@ mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
 mockAxios.onPost('/api/search/hannibal-*').reply(200, mockChartData);
 
 async function prep() {
-  const configStore = useConfigStore();
-    await configStore.load({ type: 'rules', path: 'test123' });
+  await store.dispatch('config/load', { type: 'rules', path: 'test123' });
   let wrapper = mountComponent(ConfigAlert);
   await nextTick();
   return wrapper;
@@ -20,13 +19,13 @@ async function prep() {
 let wrapper;
 
 describe('ConfigAlert', function() {
-  // Vitest equivalent of this.timeout(20000) - set at test level
+  this.timeout(20000);
 
   it('renders the realert amount', async () => {
     wrapper = await prep();
     let value = wrapper.find('#realert input[min="0"]').element.value;
     return expect(value).to.equal('5');
-  }, 20000);
+  });
 
   it('renders the realert unit', () => {
     return expect(wrapper.find('#realert .el-select input').element.value).to.equal('Minutes');

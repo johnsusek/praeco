@@ -1,65 +1,50 @@
 import axios from 'axios';
-import ElementPlus from 'element-plus';
+import ElementUI from 'element-ui';
+import Vuex from 'vuex';
 import MockAdapter from 'axios-mock-adapter';
+import VueRouter from 'vue-router';
 import 'localstorage-polyfill';
 import {
-  config, mount, shallowMount
+  config, mount, shallowMount, createLocalVue
 } from '@vue/test-utils';
-import { setActivePinia, createPinia } from 'pinia';
 import '@/contrib.js';
 import '@/registration.js';
-import router from '@/router.js';
-import { createStoreCompat } from '@/stores/vuex-compat.js';
+import store from '@/store';
+import router from '@/router';
 
-// Create and set active pinia for tests
-const pinia = createPinia();
-setActivePinia(pinia);
-
-config.global.stubs.transition = false;
+config.stubs.transition = false;
 
 export const mockAxios = new MockAdapter(axios);
 
 export function mountComponent(comp, opts = {}) {
+  let localVue = createLocalVue();
+  localVue.use(VueRouter);
+  localVue.use(ElementUI);
+  localVue.use(Vuex);
+
   return mount(comp, {
-    global: {
-      plugins: [
-        pinia, 
-        router, 
-        ElementPlus,
-        // Plugin to add Vuex compatibility
-        {
-          install(app) {
-            app.config.globalProperties.$store = createStoreCompat(app);
-          }
-        }
-      ],
-      stubs: {
-        transition: false
-      }
-    },
-    props: opts.propsData || {}
+    attachTo: false,
+    sync: false,
+    localVue,
+    router,
+    store,
+    propsData: opts.propsData
   });
 }
 
 export function shallowMountComponent(comp, opts = {}) {
+  let localVue = createLocalVue();
+  localVue.use(VueRouter);
+  localVue.use(ElementUI);
+  localVue.use(Vuex);
+
   return shallowMount(comp, {
-    global: {
-      plugins: [
-        pinia, 
-        router, 
-        ElementPlus,
-        // Plugin to add Vuex compatibility
-        {
-          install(app) {
-            app.config.globalProperties.$store = createStoreCompat(app);
-          }
-        }
-      ],
-      stubs: {
-        transition: false
-      }
-    },
-    props: opts.propsData || {}
+    attachTo: false,
+    sync: false,
+    localVue,
+    router,
+    store,
+    propsData: opts.propsData
   });
 }
 
@@ -88,12 +73,3 @@ class MutationObserver {
 global.MutationObserver = MutationObserver;
 
 global.window.getSelection = function() {};
-
-// Polyfill requestAnimationFrame for Element Plus components
-global.requestAnimationFrame = function(callback) {
-  return setTimeout(callback, 16);
-};
-
-global.cancelAnimationFrame = function(id) {
-  clearTimeout(id);
-};

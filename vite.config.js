@@ -58,7 +58,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           // Separate Vue ecosystem
-          'vue-vendor': ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate'],
+          'vue-vendor': ['vue', 'vue-router', 'vuex'],
           
           // Separate Element Plus UI library
           'element-plus': ['element-plus'],

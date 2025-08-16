@@ -12,7 +12,7 @@
             <p>
               <UpdateIndicator />
               <el-tag type="info" class="m-w-xs">
-                elastalert status: {{ serverStore.status || '?' }}
+                elastalert status: {{ $store.state.server.status || '?' }}
               </el-tag>
             </p>
           </el-col>
@@ -20,59 +20,45 @@
       </div>
     </el-header>
 
-    <Splitpanes style="height: calc(100% - 48px)" @resized="onResize">
-      <Pane :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
+    <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
+      <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
         <NavTree style="padding: 10px" />
-      </Pane>
-      <Pane :size="sidebarWidth[1]">
+      </SplitArea>
+      <SplitArea :size="sidebarWidth[1]">
         <router-view :key="$route.fullPath" style="padding: 10px" />
-      </Pane>
-    </Splitpanes>
+      </SplitArea>
+    </Split>
   </div>
 </template>
 
 <script>
 import UpdateIndicator from '@/components/UpdateIndicator.vue';
-import { useUIStore, useServerStore, useElastalertStore } from '@/stores';
 
 export default {
   components: {
     UpdateIndicator
   },
 
-  setup() {
-    const uiStore = useUIStore();
-    const serverStore = useServerStore();
-    const elastalertStore = useElastalertStore();
-
-    return {
-      uiStore,
-      serverStore,
-      elastalertStore
-    };
-  },
-
   computed: {
     sidebarWidth: {
       get() {
-        return this.uiStore.sidebarWidth;
+        return this.$store.state.ui.sidebarWidth;
       },
       set(value) {
-        this.uiStore.updateSidebarWidth(value);
+        this.$store.commit('ui/UPDATE_SIDEBAR_WIDTH', value);
       }
     }
   },
 
   mounted() {
-    this.serverStore.fetchVersion();
-    this.serverStore.fetchStatus();
-    this.elastalertStore.fetchConfig();
+    this.$store.dispatch('server/fetchVersion');
+    this.$store.dispatch('server/fetchStatus');
+    this.$store.dispatch('elastalert/fetchConfig');
   },
 
   methods: {
-    onResize(panes) {
-      // panes is an array of sizes for each pane
-      this.sidebarWidth = panes.map(pane => pane.size);
+    onDragEnd(size) {
+      this.sidebarWidth = size;
     }
   }
 };

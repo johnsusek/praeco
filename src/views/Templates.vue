@@ -26,20 +26,10 @@
 </template>
 
 <script>
-import { useConfigsStore } from '@/stores';
-
 export default {
-  setup() {
-    const configsStore = useConfigsStore();
-    
-    return {
-      configsStore
-    };
-  },
-
   computed: {
     templates() {
-      return Object.keys(this.configsStore.templates)
+      return Object.keys(this.$store.state.configs.templates)
         .filter(val => !val.includes('/'))
         .map(val => ({
           val
@@ -54,7 +44,7 @@ export default {
         cancelButtonText: 'Cancel'
       })
         .then(async ({ value }) => {
-          await this.configsStore.createFolder({
+          await this.$store.dispatch('configs/createFolder', {
             path: value,
             type: 'templates'
           });

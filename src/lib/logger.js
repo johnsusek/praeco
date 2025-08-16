@@ -1,11 +1,11 @@
 import { createLogger, ERROR, stdSerializers } from 'browser-bunyan';
 import { ServerStream } from '@browser-bunyan/server-stream';
-import { useAppConfigStore } from '@/stores';
 
 let bunyan = null;
+let appStore = null;
 
-export function initLogging() {
-  const appConfigStore = useAppConfigStore();
+export function initLogging(store) {
+  appStore = store;
   
   let options = {
     name: 'praeco',
@@ -13,12 +13,12 @@ export function initLogging() {
     src: true
   };
 
-  if (appConfigStore.config.errorLoggerUrl) {
+  if (appStore && appStore.state.appconfig.config.errorLoggerUrl) {
     options.streams = [
       {
         level: ERROR,
         stream: new ServerStream({
-          url: appConfigStore.config.errorLoggerUrl,
+          url: appStore.state.appconfig.config.errorLoggerUrl,
           method: 'PUT'
         })
       }

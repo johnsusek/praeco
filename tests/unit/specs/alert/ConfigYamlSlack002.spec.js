@@ -1,23 +1,20 @@
 import { expect } from 'chai';
-import { useConfigStore } from '@/stores/config/main.js';
+import store from '@/store';
 import { mockAxios } from '../../setup';
 import { ruleYaml } from '../../mockData/alert/ruleDataSlack002.js';
 
 describe('Slack 002 YAML parsing', () => {
   it('renders the correct yaml', async () => {
     mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
-    const configStore = useConfigStore();
-    await configStore.load({ type: 'rules', path: 'test123' });
-    let yaml = configStore.yaml();
+    await store.dispatch('config/load', { type: 'rules', path: 'test123' });
+    let yaml = store.getters['config/yaml']();
 
     let expected = `__praeco_full_path: "test123"
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
   - "slack"
 alert_subject: "this is a test subject"
-alert_subject_args: []
 alert_text: "this is a test body"
-alert_text_args: []
 alert_text_type: "alert_text_only"
 doc_type: "syslog"
 filter:
@@ -32,6 +29,7 @@ kibana_discover_from_timedelta:
   minutes: 10
 kibana_discover_to_timedelta:
   minutes: 10
+match_enhancements: []
 name: "test123"
 num_events: 10000
 realert:
@@ -42,8 +40,10 @@ slack_author_icon: "http://localhost/icon.png"
 slack_author_link: "http://localhost/author"
 slack_author_name: "author_name"
 slack_ca_certs: true
-slack_channel_override: "#elastalert-debugging"
+slack_channel_override:
+  - "#elastalert-debugging"
   - "#elastalert-debugging2"
+slack_emoji_override: ":postal_horn:"
 slack_footer: "footer"
 slack_footer_icon: "footer_icon"
 slack_icon_url_override: "http://test.com/xxxx.png"
@@ -53,14 +53,19 @@ slack_jira_ticket_color: "#ec4b96"
 slack_jira_ticket_title: "jira title"
 slack_kibana_discover_color: "#ec4b98"
 slack_kibana_discover_title: "Discover in Kibana"
+slack_msg_color: "good"
 slack_msg_pretext: "abcd"
+slack_parse_override: "none2"
 slack_proxy: "https://hostname:8080/"
 slack_text_string: "abc"
 slack_thumb_url: "http://localhost/thumb.png"
-slack_title_link: "http://localhost:8080/rules/test123"
+slack_timeout: 20
+slack_title_link: "undefined/rules/test123"
+slack_username_override: "Praeco"
 slack_webhook_url:
   - "a"
   - "b"
+terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"
