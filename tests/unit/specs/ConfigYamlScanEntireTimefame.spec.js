@@ -1,6 +1,5 @@
 import { expect } from 'chai';
-import store from '@/store';
-import { mockAxios } from '../setup';
+import { store, mockAxios } from '../setup';
 import { ruleYaml } from '../mockData/ruleDataScanEntireTimefame.js';
 
 describe('ScanEntireTimefame YAML parsing', () => {

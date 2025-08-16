@@ -1,8 +1,7 @@
 import { nextTick } from 'vue';
 import { expect } from 'chai';
-import store from '@/store';
-import ConfigAlert from '@/components/config/alert/ConfigAlert';
-import { mountComponent, mockAxios } from '../setup';
+import { store, mockAxios, mountComponent } from '../setup';
+import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
 import mockChartData from '../mockData/chartData.json';
 import { ruleYaml } from '../mockData/ruleData.js';
 
@@ -18,8 +17,7 @@ async function prep() {
 
 let wrapper;
 
-describe('ConfigAlert', function() {
-  this.timeout(20000);
+describe('ConfigAlert', () => {
 
   it('renders the realert amount', async () => {
     wrapper = await prep();

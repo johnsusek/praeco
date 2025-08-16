@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import store from '@/store';
+import { store, mockAxios } from '../../setup';
 import { mockAxios } from '../../setup.js';
 import { ruleYaml } from '../../mockData/alert/ruleDataIris002.js';
 

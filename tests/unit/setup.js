@@ -7,8 +7,6 @@ import 'localstorage-polyfill';
 import {
   config, mount, shallowMount
 } from '@vue/test-utils';
-import '@/contrib.js';
-import '@/registration.js';
 import storeConfig from '@/store';
 import routerConfig from '@/router';
 
@@ -17,7 +15,7 @@ config.global.stubs.transition = false;
 export const mockAxios = new MockAdapter(axios);
 
 // Create store and router instances for testing
-const store = createStore(storeConfig);
+export const store = createStore(storeConfig);
 const router = createRouter({
   history: createWebHistory(),
   routes: routerConfig.options.routes
