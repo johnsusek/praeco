@@ -159,9 +159,9 @@ export const useConfigStore = defineStore('config', {
           
           return yaml.dump(yamlConfig, { 
             quotingType: '"', 
-            forceQuotes: false,
+            forceQuotes: true,
             flowLevel: -1,
-            sortKeys: false
+            sortKeys: true
           });
         }
         
