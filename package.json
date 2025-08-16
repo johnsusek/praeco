@@ -3,18 +3,18 @@
   "version": "1.8.21",
   "private": true,
   "scripts": {
-    "dev": "node node_modules/vite/bin/vite.js",
-    "serve": "node node_modules/vite/bin/vite.js",
-    "build": "node node_modules/vite/bin/vite.js build",
-    "preview": "node node_modules/vite/bin/vite.js preview",
-    "test:unit": "node node_modules/vitest/vitest.mjs run --config vitest.config.js",
+    "dev": "npx vite",
+    "serve": "npx vite",
+    "build": "npx vite build",
+    "preview": "npx vite preview",
+    "test:unit": "npx vitest run --config vitest.config.js",
     "test:e2e": "cypress run",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "test": "cypress run",
-    "test:coverage": "node node_modules/vitest/vitest.mjs run --config vitest.config.js --coverage",
-    "test:coverage:watch": "node node_modules/vitest/vitest.mjs --config vitest.config.js --coverage",
-    "test:watch": "node node_modules/vitest/vitest.mjs --config vitest.config.js"
+    "test:coverage": "npx vitest run --config vitest.config.js --coverage",
+    "test:coverage:watch": "npx vitest --config vitest.config.js --coverage",
+    "test:watch": "npx vitest --config vitest.config.js"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",

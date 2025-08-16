@@ -42,8 +42,35 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    // Increase chunk size warning limit to 1MB to reduce noise
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      // Handle externals and globals if needed
+      output: {
+        // Manual chunks configuration for better code splitting
+        manualChunks: {
+          // Vue core libraries
+          'vue-vendor': ['vue', 'vue-router', 'vuex'],
+          // UI framework
+          'element-ui': ['element-ui'],
+          // Charts and visualization
+          'charts': ['echarts', 'vue-echarts', 'zrender'],
+          // Utilities and other dependencies
+          'utils': [
+            'axios', 'lodash.clonedeep', 'lodash.get', 'lodash.throttle',
+            'dayjs', 'js-yaml', 'validator', 'semver', 'change-case'
+          ],
+          // Editor and syntax highlighting
+          'editor': ['prismjs', 'vue-prism-component'],
+          // Font icons
+          'icons': [
+            '@fortawesome/fontawesome-svg-core',
+            '@fortawesome/free-solid-svg-icons',
+            '@fortawesome/free-regular-svg-icons',
+            '@fortawesome/free-brands-svg-icons',
+            '@fortawesome/vue-fontawesome'
+          ]
+        }
+      }
     }
   },
   
