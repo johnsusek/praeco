@@ -53,6 +53,54 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    chunkSizeWarningLimit: 1500, // Increase warning limit to 1.5MB (from default 500KB)
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Separate Vue ecosystem
+          'vue-vendor': ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate'],
+          
+          // Separate Element Plus UI library
+          'element-plus': ['element-plus'],
+          
+          // Separate charts libraries (echarts is large)
+          'charts': ['echarts', 'vue-echarts', 'zrender'],
+          
+          // Separate FontAwesome (multiple icon packages)
+          'fontawesome': [
+            '@fortawesome/fontawesome-svg-core',
+            '@fortawesome/free-brands-svg-icons', 
+            '@fortawesome/free-regular-svg-icons',
+            '@fortawesome/free-solid-svg-icons',
+            '@fortawesome/vue-fontawesome'
+          ],
+          
+          // Separate utility libraries
+          'utilities': [
+            'lodash.clonedeep',
+            'lodash.get', 
+            'lodash.throttle',
+            'js-yaml',
+            'dayjs',
+            'axios',
+            'semver',
+            'validator'
+          ],
+          
+          // Separate code editing/syntax highlighting
+          'editor': ['prismjs', 'vue-prism-component'],
+          
+          // Separate specialized components
+          'components': [
+            'vue-json-pretty',
+            'vue-at',
+            'emoji-mart-vue-fast',
+            '@vue-js-cron/light',
+            'splitpanes'
+          ]
+        }
+      }
+    }
   },
   test: {
     globals: true,

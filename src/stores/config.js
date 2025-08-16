@@ -152,7 +152,7 @@ export const useConfigStore = defineStore('config', {
           
           // Add any remaining fields not in the order list
           Object.keys(config).forEach(key => {
-            if (!yamlConfig.hasOwnProperty(key) && key !== '__praeco_query_builder') {
+            if (!Object.prototype.hasOwnProperty.call(yamlConfig, key) && key !== '__praeco_query_builder') {
               yamlConfig[key] = config[key];
             }
           });
