@@ -104,6 +104,7 @@ import { initLogging, logger } from './lib/logger.js';
 import App from './App.vue';
 import router from './router.js';
 import pinia from './stores';
+import { createStoreCompat } from './stores/vuex-compat.js';
 
 import './style/style.scss';
 import './style/spacing.scss';
@@ -149,6 +150,10 @@ function startApp(config) {
 
   app.use(router);
   app.use(pinia);
+
+  // Provide Vuex compatibility layer for existing Vue components
+  app.config.globalProperties.$store = createStoreCompat(app);
+
   app.use(ElementPlus, { locale: en, size: 'small' });
   app.use(cronLight);
 
