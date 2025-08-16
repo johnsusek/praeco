@@ -1,50 +1,49 @@
 import axios from 'axios';
-import ElementUI from 'element-ui';
-import Vuex from 'vuex';
+import ElementPlus from 'element-plus';
+import { createStore } from 'vuex';
 import MockAdapter from 'axios-mock-adapter';
-import VueRouter from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import 'localstorage-polyfill';
 import {
-  config, mount, shallowMount, createLocalVue
+  config, mount, shallowMount
 } from '@vue/test-utils';
 import '@/contrib.js';
 import '@/registration.js';
-import store from '@/store';
-import router from '@/router';
+import storeConfig from '@/store';
+import routerConfig from '@/router';
 
-config.stubs.transition = false;
+config.global.stubs.transition = false;
 
 export const mockAxios = new MockAdapter(axios);
 
-export function mountComponent(comp, opts = {}) {
-  let localVue = createLocalVue();
-  localVue.use(VueRouter);
-  localVue.use(ElementUI);
-  localVue.use(Vuex);
+// Create store and router instances for testing
+const store = createStore(storeConfig);
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routerConfig.options.routes
+});
 
+export function mountComponent(comp, opts = {}) {
   return mount(comp, {
-    attachTo: false,
-    sync: false,
-    localVue,
-    router,
-    store,
-    propsData: opts.propsData
+    global: {
+      plugins: [ElementPlus, store, router],
+      stubs: {
+        transition: false
+      }
+    },
+    props: opts.propsData || {}
   });
 }
 
 export function shallowMountComponent(comp, opts = {}) {
-  let localVue = createLocalVue();
-  localVue.use(VueRouter);
-  localVue.use(ElementUI);
-  localVue.use(Vuex);
-
   return shallowMount(comp, {
-    attachTo: false,
-    sync: false,
-    localVue,
-    router,
-    store,
-    propsData: opts.propsData
+    global: {
+      plugins: [ElementPlus, store, router],
+      stubs: {
+        transition: false
+      }
+    },
+    props: opts.propsData || {}
   });
 }
 
