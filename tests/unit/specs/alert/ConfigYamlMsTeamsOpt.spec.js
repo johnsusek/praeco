@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "ms_teams"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 doc_type: "syslog"
 filter:
@@ -30,7 +32,6 @@ kibana_discover_from_timedelta:
   minutes: 10
 kibana_discover_to_timedelta:
   minutes: 10
-match_enhancements: []
 ms_teams_alert_fixed_width: true
 ms_teams_alert_summary: "Message"
 ms_teams_attach_kibana_discover_url: true
@@ -44,7 +45,6 @@ name: "test123"
 num_events: 10000
 realert:
   minutes: 5
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

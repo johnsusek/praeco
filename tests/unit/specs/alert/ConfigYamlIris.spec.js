@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "iris"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 doc_type: "syslog"
 filter:
@@ -31,14 +33,12 @@ iris_customer_id: 1
 iris_host: "testserver"
 iris_type: "alert"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 query_key:
   - "beat.hostname"
 realert:
   minutes: 5
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

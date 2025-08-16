@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "slack"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 doc_type: "syslog"
 filter:
@@ -25,23 +27,15 @@ filter:
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 realert:
   minutes: 5
-slack_channel_override:
-  - "#elastalert-debugging"
-slack_emoji_override: ":ghost:"
-slack_msg_color: "danger"
-slack_parse_override: "none"
-slack_timeout: 10
-slack_title_link: "undefined/rules/test123"
-slack_username_override: "elastalert"
+slack_channel_override: "#elastalert-debugging"
+slack_title_link: "http://localhost:8080/rules/test123"
 slack_webhook_url:
   - "a"
   - "b"
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

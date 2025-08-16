@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "servicenow"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 assignment_group: "a1"
 caller_id: "a2"
@@ -30,7 +32,6 @@ filter:
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 password: "a6"
@@ -42,7 +43,6 @@ servicenow_rest_url: "http://testserver/"
 servicenow_urgency: "a11"
 short_description: "a8"
 subcategory: "a9"
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "pagerduty"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 doc_type: "syslog"
 filter:
@@ -25,7 +27,6 @@ filter:
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 pagerduty_api_version: "v2"
@@ -38,7 +39,6 @@ pagerduty_v2_payload_severity: "critical"
 pagerduty_v2_payload_source: "ElastAlert"
 realert:
   minutes: 5
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

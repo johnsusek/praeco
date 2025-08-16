@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "alerta"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 alerta_api_key: "a"
 alerta_api_skip_ssl: true
@@ -38,14 +40,12 @@ filter:
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 query_key:
   - "beat.hostname"
 realert:
   minutes: 5
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

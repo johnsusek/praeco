@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "alertmanager"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 alertmanager_alert_subject_labelname: "summary2"
 alertmanager_alert_text_labelname: "description2"
@@ -32,12 +34,10 @@ filter:
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 realert:
   minutes: 5
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

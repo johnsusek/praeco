@@ -15,15 +15,14 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "email"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
-bcc:
-  - "bcc@test.com"
-cc:
-  - "cc@test.com"
+bcc: "bcc@test.com"
+cc: "cc@test.com"
 doc_type: "syslog"
-email:
-  - "to@test.com"
+email: "to@test.com"
 email_add_domain: "test001.com"
 email_from_field: "a"
 email_reply_to: "admin@test.com"
@@ -35,7 +34,6 @@ from_addr: "abc"
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 realert:
@@ -44,7 +42,6 @@ smtp_auth_file: "auth_file"
 smtp_cert_file: "cert_file"
 smtp_key_file: "key_file"
 smtp_ssl: true
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

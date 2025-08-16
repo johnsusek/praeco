@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "sns"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 doc_type: "syslog"
 filter:
@@ -25,7 +27,6 @@ filter:
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 realert:
@@ -34,7 +35,6 @@ sns_aws_access_key_id: "xxxxx1"
 sns_aws_region: "xxxxx2"
 sns_aws_secret_access_key: "xxxxx3"
 sns_topic_arn: "xxxxx4"
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"

@@ -15,7 +15,9 @@ __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"childr
 alert:
   - "stomp"
 alert_subject: "this is a test subject"
+alert_subject_args: []
 alert_text: "this is a test body"
+alert_text_args: []
 alert_text_type: "alert_text_only"
 doc_type: "syslog"
 filter:
@@ -25,7 +27,6 @@ filter:
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-match_enhancements: []
 name: "test123"
 num_events: 10000
 realert:
@@ -35,7 +36,6 @@ stomp_hostname: "localhost2"
 stomp_hostport: 61612
 stomp_login: "admin2"
 stomp_password: "admin2"
-terms_size: 50
 timeframe:
   minutes: 5
 timestamp_field: "@timestamp"
