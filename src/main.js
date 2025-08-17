@@ -2,7 +2,8 @@ import Vue from 'vue';
 import ElementUI, { Notification } from 'element-ui';
 import axios from 'axios';
 import VueNativeSock from 'vue-native-websocket';
-import VueSplit from 'vue-split-panel';
+import { Splitpanes, Pane } from 'splitpanes';
+import 'splitpanes/dist/splitpanes.css';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
 import Treeselect from '@riophae/vue-treeselect';
@@ -21,10 +22,17 @@ import {
   faFolder,
   faFolderOpen,
   faQuestionCircle,
-  faExclamationCircle
+  faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
+  faSlack,
+  faMicrosoft,
+  faGitter,
+  faAws,
+  faLine,
+  faTelegram,
+  faJira,
+  faRocketchat,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -138,7 +146,8 @@ library.add(
 );
 
 Vue.use(cronLight);
-Vue.use(VueSplit);
+Vue.use(Splitpanes);
+Vue.use(Pane);
 
 Vue.use(ElementUI, { locale, size: 'mini' });
 
@@ -213,7 +222,7 @@ Vue.component('ElastalertTimeView', ElastalertTimeView);
 
 Vue.config.productionTip = false;
 
-Vue.config.errorHandler = function(err, vm, info) {
+Vue.config.errorHandler = function (err, vm, info) {
   logger().error(err);
 
   console.error(err, vm, info);
@@ -221,7 +230,7 @@ Vue.config.errorHandler = function(err, vm, info) {
   Notification.error({
     message: err.toString(),
     title: 'Internal error',
-    duration: 0
+    duration: 0,
   });
 };
 
@@ -232,19 +241,19 @@ function startApp(config) {
 
   Vue.use(
     VueNativeSock,
-    `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
-      window.location.port
-    }/api-ws/test`,
+    `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${
+      window.location.hostname
+    }:${window.location.port}/api-ws/test`,
     {
       connectManually: true,
-      format: 'json'
+      format: 'json',
     }
   );
 
   new Vue({
     router,
     store,
-    render: h => h(App)
+    render: (h) => h(App),
   }).$mount('#app');
 }
 
@@ -254,7 +263,7 @@ function startApp(config) {
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios
   .get('/praeco.config.json')
-  .then(res => {
+  .then((res) => {
     startApp(res.data);
   })
   .catch(() => {

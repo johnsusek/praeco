@@ -94,6 +94,46 @@ export default defineConfig({
             id.includes('@fortawesome/free-brands-svg-icons')
           ) {
             return 'icons';
+          } // Separate specialized components
+          if (
+            id.includes('vue-json-pretty') ||
+            id.includes('vue-at') ||
+            id.includes('emoji-mart-vue-fast') ||
+            id.includes('@vue-js-cron/light') ||
+            id.includes('splitpanes')
+          ) {
+            return 'components';
+          }
+
+          // Application-specific chunking
+          // Separate main application views/pages
+          if (id.includes('src/views/')) {
+            return 'app-views';
+          }
+
+          // Separate config-related components (largest part of the app)
+          if (id.includes('src/components/config/')) {
+            return 'app-config';
+          }
+
+          // Separate Vuex store modules
+          if (id.includes('src/store/')) {
+            return 'app-store';
+          }
+
+          // Separate other common components
+          if (id.includes('src/components/')) {
+            return 'app-components';
+          }
+
+          // Keep router and main entry separate
+          if (
+            id.includes('src/router.js') ||
+            id.includes('src/main.js') ||
+            id.includes('src/contrib.js') ||
+            id.includes('src/registration.js')
+          ) {
+            return 'app-core';
           }
         },
       },
