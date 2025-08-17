@@ -5,7 +5,7 @@
         <el-row>
           <el-col :span="12">
             <router-link to="/">
-              <img alt="praeco" src="@/assets/logo.png">
+              <img alt="praeco" src="@/assets/logo.png" />
             </router-link>
           </el-col>
           <el-col :span="12" align="right">
@@ -20,14 +20,14 @@
       </div>
     </el-header>
 
-    <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
-      <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
+    <Splitpanes style="height: calc(100% - 48px)" @resized="onResize">
+      <Pane :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
         <NavTree style="padding: 10px" />
-      </SplitArea>
-      <SplitArea :size="sidebarWidth[1]">
+      </Pane>
+      <Pane :size="sidebarWidth[1]">
         <router-view :key="$route.fullPath" style="padding: 10px" />
-      </SplitArea>
-    </Split>
+      </Pane>
+    </Splitpanes>
   </div>
 </template>
 
@@ -36,7 +36,7 @@ import UpdateIndicator from '@/components/UpdateIndicator.vue';
 
 export default {
   components: {
-    UpdateIndicator
+    UpdateIndicator,
   },
 
   computed: {
@@ -46,8 +46,8 @@ export default {
       },
       set(value) {
         this.$store.commit('ui/UPDATE_SIDEBAR_WIDTH', value);
-      }
-    }
+      },
+    },
   },
 
   mounted() {
@@ -57,10 +57,11 @@ export default {
   },
 
   methods: {
-    onDragEnd(size) {
-      this.sidebarWidth = size;
-    }
-  }
+    onResize(panes) {
+      // panes is an array of sizes for each pane
+      this.sidebarWidth = panes.map((pane) => pane.size);
+    },
+  },
 };
 </script>
 
@@ -71,7 +72,7 @@ body {
 }
 
 body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   color: #303133;
 }
