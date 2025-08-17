@@ -11,11 +11,12 @@
     :options="options"
     class="folders-only"
     placeholder="Filter..."
-    @input="(val) => $emit('input', val)" />
+    @input="(val) => $emit('input', val)"
+  />
 </template>
 
 <script>
-import * as changeCase from 'change-case';
+import { capitalCase } from 'change-case';
 import { loadChildrenOptions } from '@/lib/tree';
 
 export default {
@@ -26,17 +27,17 @@ export default {
       options: [
         {
           id: `_${this.type}`,
-          label: changeCase.capitalCase(this.type),
-          children: null
-        }
-      ]
+          label: capitalCase(this.type),
+          children: null,
+        },
+      ],
     };
   },
   methods: {
     async loadOptions(context) {
       await loadChildrenOptions(context, true);
-    }
-  }
+    },
+  },
 };
 </script>
 

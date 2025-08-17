@@ -29,7 +29,7 @@
     "axios": "1.11.0",
     "browser-bunyan": "1.8.0",
     "canvas": "^3.1.2",
-    "change-case": "4.1.2",
+    "change-case": "5.4.4",
     "comma-number": "2.1.0",
     "core-js": "^3.45.0",
     "cron-ui": "1.0.3",
