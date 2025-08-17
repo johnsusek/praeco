@@ -56,48 +56,84 @@ export default defineConfig({
     chunkSizeWarningLimit: 1500, // Increase warning limit to 1.5MB (from default 500KB)
     rollupOptions: {
       output: {
-        manualChunks: {
+        manualChunks: (id) => {
           // Separate Vue ecosystem
-          'vue-vendor': ['vue', 'vue-router', 'vuex'],
+          if (id.includes('vue') && !id.includes('src/') || 
+              id.includes('vue-router') || 
+              id.includes('vuex')) {
+            return 'vue-vendor';
+          }
           
           // Separate Element Plus UI library
-          'element-plus': ['element-plus'],
+          if (id.includes('element-plus')) {
+            return 'element-plus';
+          }
           
           // Separate charts libraries (echarts is large)
-          'charts': ['echarts', 'vue-echarts', 'zrender'],
+          if (id.includes('echarts') || 
+              id.includes('vue-echarts') || 
+              id.includes('zrender')) {
+            return 'charts';
+          }
           
           // Separate FontAwesome (multiple icon packages)
-          'fontawesome': [
-            '@fortawesome/fontawesome-svg-core',
-            '@fortawesome/free-brands-svg-icons', 
-            '@fortawesome/free-regular-svg-icons',
-            '@fortawesome/free-solid-svg-icons',
-            '@fortawesome/vue-fontawesome'
-          ],
+          if (id.includes('@fortawesome/')) {
+            return 'fontawesome';
+          }
           
           // Separate utility libraries
-          'utilities': [
-            'lodash.clonedeep',
-            'lodash.get', 
-            'lodash.throttle',
-            'js-yaml',
-            'dayjs',
-            'axios',
-            'semver',
-            'validator'
-          ],
+          if (id.includes('lodash.clonedeep') ||
+              id.includes('lodash.get') ||
+              id.includes('lodash.throttle') ||
+              id.includes('js-yaml') ||
+              id.includes('dayjs') ||
+              id.includes('axios') ||
+              id.includes('semver') ||
+              id.includes('validator')) {
+            return 'utilities';
+          }
           
           // Separate code editing/syntax highlighting
-          'editor': ['prismjs', 'vue-prism-component'],
+          if (id.includes('prismjs') || 
+              id.includes('vue-prism-component')) {
+            return 'editor';
+          }
           
           // Separate specialized components
-          'components': [
-            'vue-json-pretty',
-            'vue-at',
-            'emoji-mart-vue-fast',
-            '@vue-js-cron/light',
-            'splitpanes'
-          ]
+          if (id.includes('vue-json-pretty') ||
+              id.includes('vue-at') ||
+              id.includes('emoji-mart-vue-fast') ||
+              id.includes('@vue-js-cron/light') ||
+              id.includes('splitpanes')) {
+            return 'components';
+          }
+          
+          // Application-specific chunking
+          // Separate main application views/pages
+          if (id.includes('src/views/')) {
+            return 'app-views';
+          }
+          
+          // Separate config-related components (largest part of the app)
+          if (id.includes('src/components/config/')) {
+            return 'app-config';
+          }
+          
+          // Separate Vuex store modules
+          if (id.includes('src/store/')) {
+            return 'app-store';
+          }
+          
+          // Separate other common components
+          if (id.includes('src/components/')) {
+            return 'app-components';
+          }
+          
+          // Keep router and main entry separate
+          if (id.includes('src/router.js') || 
+              id.includes('src/main.js')) {
+            return 'app-core';
+          }
         }
       }
     }
