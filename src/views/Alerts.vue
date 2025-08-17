@@ -50,7 +50,7 @@ export default {
 
   methods: {
     titleCase(val) {
-      return changeCase.capitalCase(val);
+      return capitalCase(val);
     },
 
     shortDate(rawDate) {

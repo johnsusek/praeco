@@ -10,8 +10,7 @@
               size="large"
               autofocus
               autoselect
-              @keyup.enter.native="rename"
-            />
+              @keyup.enter.native="rename" />
           </el-col>
           <el-col :span="18">
             <el-button size="large" type="primary" @click="rename">
@@ -31,7 +30,9 @@
           <Bulb success />
           Enabled
         </el-tag>
-        <el-tag v-else type="warning"> Disabled </el-tag>
+        <el-tag v-else type="warning">
+          Disabled
+        </el-tag>
       </h1>
 
       <el-alert
@@ -39,26 +40,30 @@
         :closable="false"
         :title="silenceNotice"
         show-icon
-        type="info"
-      />
+        type="info" />
 
       <el-row>
         <router-link
           :to="{
             name: 'ruleconfigeditor',
             params: { action: 'edit', path: id },
-          }"
-        >
-          <el-button icon="el-icon-edit" plain type="primary"> Edit </el-button>
+          }">
+          <el-button icon="el-icon-edit" plain type="primary">
+            Edit
+          </el-button>
         </router-link>
 
         <el-button plain type="info" @click="showRenameInput">
           Rename
         </el-button>
 
-        <el-button plain type="info" @click="duplicate"> Duplicate </el-button>
+        <el-button plain type="info" @click="duplicate">
+          Duplicate
+        </el-button>
 
-        <el-button plain type="info" @click="showMoveDialog"> Move </el-button>
+        <el-button plain type="info" @click="showMoveDialog">
+          Move
+        </el-button>
 
         <el-button v-if="isEnabled" plain type="warning" @click="handleDisable">
           Disable...
@@ -67,20 +72,17 @@
         <el-popover
           v-if="isEnabled"
           v-model="silencePopoverVisible"
-          :disabled="!!silenceNotice"
-        >
+          :disabled="!!silenceNotice">
           <template #reference>
             <span>
               <el-button :disabled="!!silenceNotice" plain type="warning">
                 Silence
                 <i
                   v-if="!silencePopoverVisible"
-                  class="el-icon-caret-bottom el-icon-right"
-                />
+                  class="el-icon-caret-bottom el-icon-right" />
                 <i
                   v-if="silencePopoverVisible"
-                  class="el-icon-caret-top el-icon-right"
-                />
+                  class="el-icon-caret-top el-icon-right" />
               </el-button>
             </span>
           </template>
@@ -93,7 +95,9 @@
                 <el-button @click="handleSilence('hour', 1)">
                   1 hour
                 </el-button>
-                <el-button @click="handleSilence('day', 1)"> 1 day </el-button>
+                <el-button @click="handleSilence('day', 1)">
+                  1 day
+                </el-button>
               </el-col>
             </el-row>
             <hr />
@@ -101,17 +105,15 @@
               v-if="silenceTime"
               :unit="Object.keys(silenceTime)[0]"
               :amount="Object.values(silenceTime)[0]"
-              @input="updateSilenceTime"
-            />
+              @input="updateSilenceTime" />
             <el-button
               class="m-w-sm"
               @click="
                 handleSilence(
                   Object.keys(silenceTime)[0],
-                  Object.values(silenceTime)[0]
+                  Object.values(silenceTime)[0],
                 )
-              "
-            >
+              ">
               Silence
             </el-button>
           </div>
@@ -125,8 +127,7 @@
           icon="el-icon-delete"
           plain
           type="danger"
-          @click="showDeleteConfirm"
-        >
+          @click="showDeleteConfirm">
           Delete...
         </el-button>
 
@@ -134,8 +135,7 @@
           :visible.sync="moveVisible"
           title="Move"
           width="40%"
-          @close="moveVisible = false"
-        >
+          @close="moveVisible = false">
           <div>
             <FolderTree v-model="moveDest" type="rules" />
           </div>
@@ -154,10 +154,9 @@
         <el-tab-pane label="Overview">
           <template
             v-if="
-              $store.state.config.settings.index &&
-              $store.getters['config/config']()
-            "
-          >
+              $store.state.config.settings.index
+                && $store.getters['config/config']()
+            ">
             <ConfigSettings :view-only="true" type="rule" />
             <ConfigCondition class="condition-view m-n-med m-s-sm" />
             <ConfigAlert :view-only="true" />
@@ -169,9 +168,7 @@
             <el-table-column label="Alert sent" width="100">
               <template #default="scope">
                 <span>
-                  <el-tag v-if="scope.row.alert_sent" type="success"
-                    >Sent</el-tag
-                  >
+                  <el-tag v-if="scope.row.alert_sent" type="success">Sent</el-tag>
                   <el-tag v-else type="danger">Not sent</el-tag>
                 </span>
               </template>
@@ -222,8 +219,7 @@
           <el-alert
             show-icon
             title="NOTE: Matches are automatically silenced when you've already
-          been alerted within the rule's re-alert timeframe."
-          />
+          been alerted within the rule's re-alert timeframe." />
           <el-table :data="silenceLog" empty-text="">
             <el-table-column label="Until" width="170">
               <template #default="scope">
@@ -249,9 +245,7 @@
             <a
               href="https://github.com/jertel/elastalert2"
               target="_blank"
-              rel="noopener noreferrer"
-              >ElastAlert 2</a
-            >
+              rel="noopener noreferrer">ElastAlert 2</a>
             server. You may copy/paste this yaml and run it in any outside
             ElastAlert 2 instance.
           </div>
@@ -267,8 +261,7 @@
         :closable="false"
         title="Rule not found, it may have been moved or deleted."
         type="error"
-        show-icon
-      />
+        show-icon />
     </template>
   </div>
 </template>
@@ -643,7 +636,7 @@ export default {
     },
 
     titleCase(val) {
-      return changeCase.capitalCase(val);
+      return capitalCase(val);
     },
 
     shortDate(rawDate) {

@@ -11,8 +11,7 @@
     :options="options"
     class="folders-only"
     placeholder="Filter..."
-    @input="(val) => $emit('input', val)"
-  />
+    @input="(val) => $emit('input', val)" />
 </template>
 
 <script>
