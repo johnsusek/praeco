@@ -12,7 +12,7 @@
 - Preview results in an interactive chart
 - Test your alerts against historical data
 - Send notifications to Slack, MS Teams, Email, Telegram, Jira, Mattermost, Command, Gitter, Amazon SNS, Amazon SES, Zabbix, Twilio, PagerTree, Exotel, GoogleChat, Stomp, Splunk On-Call (Formerly VictorOps), ServiceNow, Chatwork, Discord, TheHive, Alerta, Datadog, Rocket.Chat, PagerDuty, Tencent SMS, Dingtalk, Alertmanager, OpsGenie, Graylog GELF, Lark, IRIS, WorkWechat, Matrix Hookshot
-, Microsoft Power Automate or an HTTP POST/HTTP POST 2 endpoint
+  , Microsoft Power Automate or an HTTP POST/HTTP POST 2 endpoint
 - Supports the Any, Blacklist, Whitelist, Change, Frequency, Flatline, Spike, Cardinality, New Term, and Metric Aggregation rule types
 - View logs of when your alerts check, fire and fail
 
@@ -24,7 +24,6 @@
 ##
 
 ![](https://user-images.githubusercontent.com/611996/47752071-7c4a9080-dc61-11e8-8ccf-2196f13429b2.png)
-
 
 ## Quickstart
 
@@ -38,21 +37,20 @@ export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
 ```
 
-* Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
+- Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
 
-* To set up notification settings like API keys edit `rules/BaseRule.config`.
+- To set up notification settings like API keys edit `rules/BaseRule.config`.
 
 Praeco should now be available on http://127.0.0.1:8080
 
 ~~A walkthrough article is available to guide you through creating your first rule.~~
-
 
 ## Upgrading
 
 If you use docker-compose.yml published on github as it is, it will be the current latest version instead of a specific version. If you want to specify a specific version, edit it yourself and then run `docker-compose up --force-recreate --build`.
 
 ```
-docker-compose down 
+docker-compose down
 docker rmi praecoapp/praeco:latest
 docker rmi praecoapp/elastalert-server:latest
 docker pull praecoapp/praeco:latest
@@ -80,6 +78,7 @@ The following config settings are available in praeco.config.json:
 // Hide these fields when editing rules, if they are already filled in template
 "hidePreconfiguredFields": []
 ```
+
 ## DockerHub
 
 [Praeco](https://hub.docker.com/r/praecoapp/praeco)
@@ -94,7 +93,7 @@ The following config settings are available in praeco.config.json:
 
 #### Is there a sample to start elasticsearch, kibana, elastalert-server, Praeco with docker-compose?
 
-[docker compose sample(telegram)](https://github.com/johnsusek/praeco/wiki/docker-compose-sample(telegram))
+[docker compose sample(telegram)](<https://github.com/johnsusek/praeco/wiki/docker-compose-sample(telegram)>)
 
 #### Please tell me the response status of the alert notification destination.
 
@@ -123,6 +122,7 @@ Do not use `karql/elastalert2-server` as it does not implement the features requ
 yelp/elastalert is no longer supported as maintenance has been discontinued.
 
 Main challenges of yelp/elastalert
+
 - Not compatible with python 3.12 or later.
 - PagerTree, Stomp and Zabbix alert notifications do not work due to a bug.
 - kibana Discover only guarantees operation up to kibana 7.3.
@@ -144,6 +144,11 @@ Support
 
 - Supports elasticsearch 8 with praeco 1.8.11 or later.<br>
 - elastalert-server is compatible with elasticsearch 8.
+
+#### Does it support elasticsearch 9.x?
+
+- Supports elasticsearch 9 with praeco 1.8.21 or later.<br>
+- elastalert-server is compatible with elasticsearch 9.
 
 #### Can you support a version that is not the latest version?
 
@@ -267,14 +272,18 @@ The praeco UI is served by an included nginx server (see Dockerfile). Configure 
 #### How do I serve the praeco UI under a custom base path, i.e. `http://www.my-domain.com:8080/my-path/`
 
 Uncomment the declaration of the `VUE_APP_BASE_URL` environment variable in `docker-compose.yml` and define the path you want.
+
 ```yaml
-    environment:
-      VUE_APP_BASE_URL: /my-path/
+environment:
+  VUE_APP_BASE_URL: /my-path/
 ```
+
 Uncomment the rewrite command in `nginx.config/default.conf` and define the same path as in teh environment variable above.
+
 ```
 rewrite ^/my-path(/.*)$ $1 last;
 ```
+
 #### How do I change the writeback index?
 
 Edit `config/elastalert.yaml` and `config/api.config.json` and change the writeback_index values.
@@ -296,7 +305,7 @@ Replace 1.2.3.4 with your Elasticsearch IP.
 
 Unfortunately this is not a possibility for two reasons. First, praeco only supports a subset of ElastAlert 2 features, so only certain rules would work. Second, praeco cannot automatically create the query builder ui from an arbitrary ElastAlert 2 `filter` entry, due to the potential complexity and combinations of filters someone can put in their rule file.
 
-#### Can I export my praeco rules into another elastalert  2 instance?
+#### Can I export my praeco rules into another elastalert 2 instance?
 
 Yes, the praeco rule files are 100% compatible with other elastalert servers.
 
@@ -342,20 +351,20 @@ Make sure the channel/username you are trying to post to exists.
 
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#thehive for how to configure your BaseRule.config file.
 
-- ``hive_connection`` is set in BaseRule.config.
+- `hive_connection` is set in BaseRule.config.
 
 ```yaml
- hive_connection:
-   hive_host: http://localhost
-   hive_port: <hive_port>
-   hive_apikey: <hive_apikey>
-   hive_proxies:
-     http: ''
-     https: ''
+hive_connection:
+  hive_host: http://localhost
+  hive_port: <hive_port>
+  hive_apikey: <hive_apikey>
+  hive_proxies:
+    http: ''
+    https: ''
 ```
 
-- ``hive_alert_config`` is set on the Praeco screen.
-- Not Support ``hive_observable_data_mapping``.
+- `hive_alert_config` is set on the Praeco screen.
+- Not Support `hive_observable_data_mapping`.
 
 #### How to setup Slack?
 
@@ -381,7 +390,7 @@ Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#telegram 
 telegram_bot_token: 'xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ```
 
-#### How to setup Mattermost? 
+#### How to setup Mattermost?
 
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#mattermost for how to configure your `BaseRule.config` file.
 
@@ -392,7 +401,7 @@ Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#mattermos
 mattermost_webhook_url: 'https://xxxxxx/hooks/xxxxxxxxxxxxxxxx'
 ```
 
-#### How to setup Rocket.Chat? 
+#### How to setup Rocket.Chat?
 
 Please see https://elastalert2.readthedocs.io/en/latest/ruletypes.html#rocket-chat for how to configure your `BaseRule.config` file.
 
@@ -429,6 +438,7 @@ Google account in advance → Apps that can access your account → Allow less s
 ```yaml
 smtp_auth_file: '/opt/elastalert/smtp/smtp_auth_user.yaml"
 ```
+
 smtp_auth_user.yaml
 
 ```yaml
@@ -483,6 +493,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 - 8.x
 
 Configure the ElastAlert 2 `config.yaml` with:
+
 - Your `es_host`
 - A unique `writeback_index`
 - Change the rules_folder to `rules`
@@ -501,6 +512,7 @@ vi config.yaml
 ### Setting up the API server
 
 Configure the api server `config.json` with:
+
 - An _absolute path_ to your ElastAlert 2 folder for `elastalertPath`
 - The address of your elasticsearch instance for `es_host`
 - The same `writeback_index` from the config.yaml
@@ -508,7 +520,7 @@ Configure the api server `config.json` with:
 ```sh
 # nvm install
 # https://github.com/nvm-sh/nvm#install--update-script
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 $ vi ~/.bash_profile
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -530,6 +542,7 @@ npm run start
 ```
 
 You should see this line if it started successfully:
+
 ```
 INFO elastalert-server: Server:  Server started
 ```
@@ -538,7 +551,7 @@ INFO elastalert-server: Server:  Server started
 
 Finally, run praeco:
 
-```sh
+````sh
 # No need to implement if the environment is the same as elastalert-server
 # nvm install
 # https://github.com/nvm-sh/nvm#install--update-script
@@ -568,13 +581,11 @@ export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 
 # run
 npm run serve
-```
+````
 
 You should now see the UI running at [http://localhost:8080](http://localhost:8080).
 
 If you have any difficulties please open a github issue with your problem.
-
-
 
 ## Maintainers
 

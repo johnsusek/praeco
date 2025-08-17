@@ -1,6 +1,6 @@
 {
   "name": "praeco",
-  "version": "1.8.21",
+  "version": "2.0.0",
   "type": "module",
   "private": true,
   "scripts": {
