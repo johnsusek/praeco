@@ -1,0 +1,19 @@
+{
+  "entry": [
+    "src/main.js",
+    "index.html"
+  ],
+  "project": [
+    "src/**/*.{js,vue}",
+    "tests/**/*.{js,vue}"
+  ],
+  "ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.git/**"
+  ],
+  "vue": true,
+  "vite": true,
+  "vitest": true,
+  "eslint": true
+}

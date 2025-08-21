@@ -11,7 +11,12 @@
     "test:coverage": "vitest --coverage",
     "test:watch": "vitest --watch",
     "lint": "eslint src --ext .js,.vue",
-    "lint:fix": "eslint src --ext .js,.vue --fix"
+    "lint:fix": "eslint src --ext .js,.vue --fix",
+    "knip": "knip",
+    "knip:unused-deps": "knip --dependencies",
+    "knip:unused-files": "knip --files",
+    "knip:unused-exports": "knip --exports",
+    "knip:production": "knip --production"
   },
   "dependencies": {
     "@browser-bunyan/server-stream": "1.8.0",
@@ -28,7 +33,6 @@
     "comma-number": "2.1.0",
     "core-js": "^3.45.0",
     "cron-ui": "1.0.3",
-    "prettycron": "github:nsano-rururu/prettycron",
     "dayjs": "^1.11.13",
     "debounce": "^2.2.0",
     "echarts": "^5.6.0",
@@ -39,6 +43,7 @@
     "lodash.get": "^4.4.2",
     "lodash.throttle": "4.1.1",
     "normalize.css": "8.0.1",
+    "prettycron": "github:nsano-rururu/prettycron",
     "prismjs": "1.30.0",
     "sass": "^1.90.0",
     "semver": "7.7.2",
@@ -69,6 +74,7 @@
     "eslint-plugin-vue": "^10.4.0",
     "globals": "^16.3.0",
     "jsdom": "^26.1.0",
+    "knip": "^5.63.0",
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",
     "unplugin-auto-import": "20.0.0",
