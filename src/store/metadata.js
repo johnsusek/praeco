@@ -254,7 +254,7 @@ export default {
         let res = await axios.get(`/api/mapping/${index}`);
         commit('FETCHED_MAPPINGS', { mappings: res.data, index });
         return true;
-      } catch (error) {
+      } catch {
         return false;
       }
     }

@@ -5,7 +5,7 @@
         <el-row>
           <el-col :span="12">
             <router-link to="/">
-              <img alt="praeco" src="@/assets/logo.png" />
+              <img alt="praeco" src="@/assets/logo.png">
             </router-link>
           </el-col>
           <el-col :span="12" align="right">

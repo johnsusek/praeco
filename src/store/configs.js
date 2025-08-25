@@ -41,9 +41,9 @@ export default {
       state.tree[type] = paths;
     },
 
-    /*eslint-disable */
+     
     FETCHED_CONFIG(state, { path, config, type, isYaml = true }) {
-      /* eslint-enable */
+       
       try {
         let conf = isYaml ? yaml.load(config, 'utf8') : config;
 
@@ -197,9 +197,9 @@ export default {
       }
     },
 
-    /*eslint-disable */
+     
     async createConfig({ dispatch }, { config, type, overwrite, rootPath }) {
-      /* eslint-enable */
+       
 
       let fullPath;
       if (rootPath) {
@@ -227,7 +227,7 @@ export default {
         if (res.data) {
           return { error: 'A rule by that name already exists at that path' };
         }
-      } catch (error) {
+      } catch {
         // 404 on this file, which means it is safe to save
         // because no file exists here
         return dispatch('createConfigFinal', { type, path, conf: config });

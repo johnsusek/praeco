@@ -108,7 +108,7 @@ export default {
             });
           }
         }
-      } catch (error) {
+      } catch {
         this.$message.error('Error deleting folder, is it empty?');
       }
     }
