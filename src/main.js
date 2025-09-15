@@ -36,18 +36,18 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import ECharts from 'vue-echarts';
 
 import cronLight from '@vue-js-cron/light';
-import Bulb from '@/components/Bulb';
-import DateTime from '@/components/DateTime';
-import DefinitionTable from '@/components/DefinitionTable';
-import ElastalertTimePicker from '@/components/ElastalertTimePicker';
-import ESChart from '@/components/ESChart';
-import EventTable from '@/components/EventTable';
-import ExpandableAlert from '@/components/ExpandableAlert';
-import FolderTree from '@/components/FolderTree';
-import NavTree from '@/components/NavTree';
-import PraecoFormItem from '@/components/PraecoFormItem';
-import TableRow from '@/components/TableRow';
-import ElastalertTimeView from '@/components/ElastalertTimeView';
+import Bulb from '@/components/Bulb.vue';
+import DateTime from '@/components/DateTime.vue';
+import DefinitionTable from '@/components/DefinitionTable.vue';
+import ElastalertTimePicker from '@/components/ElastalertTimePicker.vue';
+import ESChart from '@/components/ESChart.vue';
+import EventTable from '@/components/EventTable.vue';
+import ExpandableAlert from '@/components/ExpandableAlert.vue';
+import FolderTree from '@/components/FolderTree.vue';
+import NavTree from '@/components/NavTree.vue';
+import PraecoFormItem from '@/components/PraecoFormItem.vue';
+import TableRow from '@/components/TableRow.vue';
+import ElastalertTimeView from '@/components/ElastalertTimeView.vue';
 import ConfigQuery from '@/components/config/ConfigQuery.vue';
 import ConfigAggregation from '@/components/config/ConfigAggregation.vue';
 import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
@@ -251,7 +251,7 @@ function startApp(config) {
 // First get the config from the server
 // In development this will be in /public and served by webpack
 // In prod it is linked into the docker container
-axios.defaults.baseURL = process.env.BASE_URL;
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios
   .get('/praeco.config.json')
   .then(res => {

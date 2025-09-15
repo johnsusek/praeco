@@ -107,5 +107,17 @@ export const kibanaVersionOptions = [
   }, {
     code: '8.17',
     name: '8.17'
+  }, {
+    code: '8.18',
+    name: '8.18'
+  }, {
+    code: '8.19',
+    name: '8.19'
+  }, {
+    code: '9.0',
+    name: '9.0'
+  }, {
+    code: '9.1',
+    name: '9.1'
   }
 ];

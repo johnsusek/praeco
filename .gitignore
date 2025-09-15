@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+# Vite build cache
+.vite
+
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
@@ -23,8 +26,12 @@ yarn-error.log*
 *.sln
 *.sw*
 
+# Test coverage output
 coverage/
 .nyc_output/
+
+# Vitest coverage
+coverage/
 
 rules/**
 rule_templates/**

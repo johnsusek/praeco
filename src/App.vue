@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import UpdateIndicator from '@/components/UpdateIndicator';
+import UpdateIndicator from '@/components/UpdateIndicator.vue';
 
 export default {
   components: {

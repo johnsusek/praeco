@@ -2,10 +2,14 @@
   <el-row :gutter="20">
     <el-col :span="enableAgg ? 6 : 24">
       <el-form-item label="Aggregation">
-        <el-switch v-model="enableAgg" :disabled="viewOnly" @change="changeAgg" />
+        <el-switch
+          v-model="enableAgg"
+          :disabled="viewOnly"
+          @change="changeAgg"
+        />
         <label>
-          Instead of sending alerts immediately, send a report of
-          alerts on a schedule.
+          Instead of sending alerts immediately, send a report of alerts on a
+          schedule.
         </label>
       </el-form-item>
     </el-col>
@@ -15,9 +19,7 @@
         <div v-show="viewOnly">
           {{ formattedAggSchedule }}
         </div>
-        <div v-show="!viewOnly" class="cron-line">
-          Every <span id="cron" />
-        </div>
+        <div v-show="!viewOnly" class="cron-line">Every <span id="cron" /></div>
         <label>Schedule is in the server's time zone.</label>
       </el-form-item>
     </el-col>
@@ -25,19 +27,22 @@
     <el-col v-show="enableAgg" :span="6">
       <el-form-item
         v-if="!viewOnly || (summaryTableFields && summaryTableFields.length)"
-        label="Summary table">
+        label="Summary table"
+      >
         <el-select
           v-model="summaryTableFields"
           :disabled="viewOnly"
           filterable
           clearable
           multiple
-          placeholder="Select field">
+          placeholder="Select field"
+        >
           <el-option
             v-for="field in Object.keys(fields)"
             :key="field"
             :label="field"
-            :value="field" />
+            :value="field"
+          />
         </el-select>
         <label>Include a summary table of these fields in alert.</label>
       </el-form-item>
@@ -50,12 +55,14 @@
           :disabled="viewOnly"
           filterable
           clearable
-          placeholder="Select field">
+          placeholder="Select field"
+        >
           <el-option
             v-for="field in Object.keys(fields)"
             :key="field"
             :label="field"
-            :value="field" />
+            :value="field"
+          />
         </el-select>
         <label>Send separate reports grouped by the value of this field.</label>
       </el-form-item>
@@ -73,7 +80,7 @@ export default {
   data() {
     return {
       enableAgg: false,
-      recurrentEventForm: {}
+      recurrentEventForm: {},
     };
   },
 
@@ -84,7 +91,7 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_REALERT', value);
-      }
+      },
     },
 
     fields() {
@@ -97,7 +104,7 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_AGGREGATION_SCHEDULE', value);
-      }
+      },
     },
 
     summaryTableFields: {
@@ -106,7 +113,7 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_SUMMARY_TABLE_FIELDS', value);
-      }
+      },
     },
 
     aggregationKey: {
@@ -115,12 +122,12 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_AGGREGATION_KEY', value);
-      }
+      },
     },
 
     formattedAggSchedule() {
       return prettycron.toString(this.aggregationSchedule);
-    }
+    },
   },
 
   mounted() {
@@ -130,9 +137,9 @@ export default {
       }
       this.recurrentEventForm = new CronUI('#cron', {
         initial: '0 * * * *',
-        changeEvent: val => {
+        changeEvent: (val) => {
           this.aggregationSchedule = val;
-        }
+        },
       });
     }
 
@@ -155,8 +162,8 @@ export default {
         this.aggregationSchedule = '0 * * * *';
         this.realert = { minutes: 0 };
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

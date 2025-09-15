@@ -31,7 +31,7 @@
 
 <script>
 import axios from 'axios';
-import * as changeCase from 'change-case';
+import { capitalCase } from 'change-case';
 import { logger } from '@/lib/logger.js';
 import networkError from '../lib/networkError.js';
 
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       alertLog: [],
-      loading: true
+      loading: true,
     };
   },
 
@@ -50,7 +50,7 @@ export default {
 
   methods: {
     titleCase(val) {
-      return changeCase.capitalCase(val);
+      return capitalCase(val);
     },
 
     shortDate(rawDate) {
@@ -65,7 +65,7 @@ export default {
           this.$notify.error({
             message: res.data.error.msg,
             title: 'Elasticsearch error',
-            duration: 0
+            duration: 0,
           });
           logger().error({ error: res.data.error });
         } else {
@@ -74,7 +74,7 @@ export default {
       } catch (error) {
         networkError(error);
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -30,7 +30,7 @@ export default {
   },
 
   async mounted() {
-    if (process.env.NODE_ENV === 'development' && sessionStorage.getItem('latestRelease')) {
+    if (import.meta.env.DEV && sessionStorage.getItem('latestRelease')) {
       this.latestRelease = JSON.parse(sessionStorage.getItem('latestRelease'));
     } else {
       try {
