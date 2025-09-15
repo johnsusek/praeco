@@ -26,7 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "7.0.1",
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "@vue-js-cron/light": "^5.1.0",
-    "axios": "1.12.1",
+    "axios": "1.12.2",
     "browser-bunyan": "1.8.0",
     "canvas": "^3.2.0",
     "change-case": "5.4.4",
