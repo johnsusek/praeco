@@ -5,8 +5,7 @@
         <el-switch
           v-model="enableAgg"
           :disabled="viewOnly"
-          @change="changeAgg"
-        />
+          @change="changeAgg" />
         <label>
           Instead of sending alerts immediately, send a report of alerts on a
           schedule.
@@ -19,7 +18,9 @@
         <div v-show="viewOnly">
           {{ formattedAggSchedule }}
         </div>
-        <div v-show="!viewOnly" class="cron-line">Every <span id="cron" /></div>
+        <div v-show="!viewOnly" class="cron-line">
+          Every <span id="cron" />
+        </div>
         <label>Schedule is in the server's time zone.</label>
       </el-form-item>
     </el-col>
@@ -27,22 +28,19 @@
     <el-col v-show="enableAgg" :span="6">
       <el-form-item
         v-if="!viewOnly || (summaryTableFields && summaryTableFields.length)"
-        label="Summary table"
-      >
+        label="Summary table">
         <el-select
           v-model="summaryTableFields"
           :disabled="viewOnly"
           filterable
           clearable
           multiple
-          placeholder="Select field"
-        >
+          placeholder="Select field">
           <el-option
             v-for="field in Object.keys(fields)"
             :key="field"
             :label="field"
-            :value="field"
-          />
+            :value="field" />
         </el-select>
         <label>Include a summary table of these fields in alert.</label>
       </el-form-item>
@@ -55,14 +53,12 @@
           :disabled="viewOnly"
           filterable
           clearable
-          placeholder="Select field"
-        >
+          placeholder="Select field">
           <el-option
             v-for="field in Object.keys(fields)"
             :key="field"
             :label="field"
-            :value="field"
-          />
+            :value="field" />
         </el-select>
         <label>Send separate reports grouped by the value of this field.</label>
       </el-form-item>

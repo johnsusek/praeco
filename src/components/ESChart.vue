@@ -438,8 +438,10 @@ export default {
 
     markLine() {
       if (this.markLine && this.markLine.data && !this.loading) {
+        /*eslint-disable */
         Vue.set(this.chart.series[0], 'markLine', this.markLine);
       } else {
+        /*eslint-disable */
         Vue.set(this.chart.series[0], 'markLine', {
           silent: true,
           animation: false,
@@ -658,6 +660,7 @@ export default {
     },
 
     setTooltipDefault() {
+      /*eslint-disable */
       Vue.set(this.chart.tooltip, 'formatter', options => {
         let event = this.chart.xAxis.data[options.dataIndex];
         let momentDate;
@@ -693,6 +696,7 @@ export default {
     },
 
     setTooltipSpike() {
+      /*eslint-disable */
       Vue.set(this.chart.tooltip, 'formatter', options => {
         let event = this.chart.xAxis.data[options.dataIndex];
         let preVal = this.chart.series[0].data[

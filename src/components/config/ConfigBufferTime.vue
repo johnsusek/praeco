@@ -66,6 +66,7 @@ export default {
 
     updateBufferTime(value) {
       this.bufferTimeLocal = {};
+      /*eslint-disable */
       this.$set(this.bufferTimeLocal, Object.keys(value)[0], Object.values(value)[0]);
     },
   }

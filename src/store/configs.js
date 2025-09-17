@@ -42,9 +42,8 @@ export default {
       Vue.set(state.tree, type, paths);
     },
 
-    /*eslint-disable */
     FETCHED_CONFIG(state, { path, config, type, isYaml = true }) {
-      /* eslint-enable */
+
       try {
         let conf = isYaml ? yaml.load(config, 'utf8') : config;
 
@@ -198,9 +197,7 @@ export default {
       }
     },
 
-    /*eslint-disable */
     async createConfig({ dispatch }, { config, type, overwrite, rootPath }) {
-      /* eslint-enable */
 
       let fullPath;
       if (rootPath) {

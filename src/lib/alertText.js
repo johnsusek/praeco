@@ -60,12 +60,10 @@ export function configFormatToHtml(text, args) {
   // found a newline, place next line into a div...
   text = text.replace(/\n/g, '<br>');
 
-  /*eslint-disable */
   let formattedArgs = args.map(
     a =>
       `<span data-at-embedded="" contenteditable="false"> <span class="el-tag el-tag--info el-tag--mini" data-term="${a}">${a}<!----></span> </span>`
   );
-  /* eslint-enable */
 
   return format(text, ...formattedArgs);
 }

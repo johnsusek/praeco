@@ -22,7 +22,7 @@ export default [
         ignores: ["node_modules/", "dist/", ".eslintrc.js", "eslint.config.mjs"],
     },
     js.configs.recommended,
-    ...compat.extends("plugin:vue/vue3-recommended"),
+    ...compat.extends("plugin:vue/recommended"),
     {
         plugins: {
             rulesdir,

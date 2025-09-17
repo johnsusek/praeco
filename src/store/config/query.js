@@ -19,9 +19,9 @@ export default {
   },
 
   mutations: {
-    /*eslint-disable */
+
     RESET(state) {
-      /* eslint-enable */
+
       state = Object.assign(state, initialState()); // eslint-disable-line no-unused-vars
     },
 

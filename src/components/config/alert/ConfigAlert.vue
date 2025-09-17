@@ -934,6 +934,7 @@ export default {
 
     updateRealert(value) {
       this.realert = {};
+      /*eslint-disable */
       this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
     }
   }

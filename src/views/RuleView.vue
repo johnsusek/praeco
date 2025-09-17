@@ -21,7 +21,7 @@
             </el-button>
           </el-col>
         </el-row>
-        <br />
+        <br>
       </div>
 
       <h1 v-show="!showRename">
@@ -100,7 +100,7 @@
                 </el-button>
               </el-col>
             </el-row>
-            <hr />
+            <hr>
             <ElastalertTimePicker
               v-if="silenceTime"
               :unit="Object.keys(silenceTime)[0]"
@@ -148,7 +148,7 @@
         </el-dialog>
       </el-row>
 
-      <br />
+      <br>
 
       <el-tabs type="card" class="m-n-sm">
         <el-tab-pane label="Overview">
