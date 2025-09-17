@@ -2,7 +2,6 @@ import Vue from 'vue';
 import ElementUI, { Notification } from 'element-ui';
 import axios from 'axios';
 import VueNativeSock from 'vue-native-websocket';
-import VueSplit from 'vue-split-panel';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
 import Treeselect from '@riophae/vue-treeselect';
@@ -138,7 +137,6 @@ library.add(
 );
 
 Vue.use(cronLight);
-Vue.use(VueSplit);
 
 Vue.use(ElementUI, { locale, size: 'mini' });
 
