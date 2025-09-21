@@ -4,8 +4,6 @@ import 'element-plus/dist/index.css';
 import en from 'element-plus/es/locale/lang/en';
 import axios from 'axios';
 import VueNativeWebSocketVue3 from 'vue-native-websocket-vue3';
-import { Splitpanes, Pane } from 'splitpanes';
-import 'splitpanes/dist/splitpanes.css';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
 import 'prismjs';
@@ -22,10 +20,17 @@ import {
   faFolder,
   faFolderOpen,
   faQuestionCircle,
-  faExclamationCircle
+  faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
+  faSlack,
+  faMicrosoft,
+  faGitter,
+  faAws,
+  faLine,
+  faTelegram,
+  faJira,
+  faRocketchat,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import 'normalize.css';
@@ -140,13 +145,13 @@ library.add(
 
 function startApp(config) {
   const app = createApp(App);
-  
+
   // Create Vuex store for Vue 3
   const store = createStore(storeConfig);
-  
+
   // Set app config in store
   store.commit('appconfig/SET_APP_CONFIG', config);
-  
+
   // Initialize logging with store
   initLogging(store);
 
@@ -158,12 +163,12 @@ function startApp(config) {
 
   app.use(
     VueNativeWebSocketVue3,
-    `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
-      window.location.port
-    }/api-ws/test`,
+    `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${
+      window.location.hostname
+    }:${window.location.port}/api-ws/test`,
     {
       connectManually: true,
-      format: 'json'
+      format: 'json',
     }
   );
 
@@ -172,8 +177,6 @@ function startApp(config) {
   app.component('Icon', FontAwesomeIcon);
   app.component('VueJsonPretty', VueJsonPretty);
   app.component('Prism', Prism);
-  app.component('Splitpanes', Splitpanes);
-  app.component('Pane', Pane);
 
   app.component('Bulb', Bulb);
   app.component('DateTime', DateTime);
@@ -249,7 +252,7 @@ function startApp(config) {
       ElNotification.error({
         message: err.toString(),
         title: 'Internal error',
-        duration: 0
+        duration: 0,
       });
     });
   };
@@ -263,7 +266,7 @@ function startApp(config) {
 axios.defaults.baseURL = process.env.BASE_URL;
 axios
   .get('/praeco.config.json')
-  .then(res => {
+  .then((res) => {
     startApp(res.data);
   })
   .catch(() => {

@@ -33,10 +33,14 @@
 
 <script>
 import UpdateIndicator from '@/components/UpdateIndicator.vue';
+import { Splitpanes, Pane } from 'splitpanes';
+import 'splitpanes/dist/splitpanes.css';
 
 export default {
   components: {
     UpdateIndicator,
+    Splitpanes,
+    Pane,
   },
 
   computed: {
@@ -108,5 +112,16 @@ body {
 
 .gutter.gutter-horizontal:hover {
   opacity: 1;
+}
+
+.split-container {
+  height: calc(100% - 48px);
+  display: flex;
+  flex-direction: row;
+}
+
+.pane-content {
+  height: 100%;
+  overflow-y: auto;
 }
 </style>
