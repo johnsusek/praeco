@@ -491,6 +491,7 @@ $ git clone https://github.com/johnsusek/praeco.git
 
 - 7.x
 - 8.x
+- 9.x
 
 Configure the ElastAlert 2 `config.yaml` with:
 
