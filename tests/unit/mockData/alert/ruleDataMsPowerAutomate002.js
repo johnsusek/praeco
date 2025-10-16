@@ -11,7 +11,7 @@ filter:
   - query:
       query_string:
         query: '@timestamp:*'
-generateKibanaDiscoverUrl: true
+generate_kibana_discover_url: true
 import: BaseRule.config
 index: hannibal-*
 is_enabled: false

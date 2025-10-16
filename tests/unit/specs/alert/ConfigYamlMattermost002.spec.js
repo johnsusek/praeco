@@ -25,10 +25,6 @@ generate_kibana_discover_url: true
 import: "BaseRule.config"
 index: "hannibal-*"
 is_enabled: false
-kibana_discover_from_timedelta:
-  minutes: 10
-kibana_discover_to_timedelta:
-  minutes: 10
 match_enhancements: []
 mattermost_attach_kibana_discover_url: true
 mattermost_author_icon: "author_icon"

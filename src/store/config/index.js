@@ -1217,9 +1217,17 @@ export default {
           commit('alert/UPDATE_MS_POWER_AUTOMATE_IGNORE_SSL_ERRORS', config.ms_power_automate_ignore_ssl_errors);
         }
 
-        commit('alert/UPDATE_MS_POWER_AUTOMATE_ATTACH_KIBANA_DISCOVER_URL', config.ms_power_automate_attach_kibana_discover_url);
-        commit('alert/UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_TITLE', config.ms_power_automate_kibana_discover_title);
-        commit('alert/UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_COLOR', config.ms_power_automate_kibana_discover_color);
+        if (config.ms_power_automate_kibana_discover_attach_url) {
+          commit('alert/UPDATE_MS_POWER_AUTOMATE_ATTACH_KIBANA_DISCOVER_URL', config.ms_power_automate_kibana_discover_attach_url);
+        }
+
+        if (config.ms_power_automate_kibana_discover_title) {
+          commit('alert/UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_TITLE', config.ms_power_automate_kibana_discover_title);
+        }
+
+        if (config.ms_power_automate_kibana_discover_color) {
+          commit('alert/UPDATE_MS_POWER_AUTOMATE_KIBANA_DISCOVER_COLOR', config.ms_power_automate_kibana_discover_color);
+        }
 
         /* OpsGenie */
         commit('alert/OPSGENIE_KEY', config.opsgenie_key);
@@ -2042,14 +2050,14 @@ export default {
       }
 
       if (state.alert.generateKibanaDiscoverUrl && state.alert.msPowerAutomateAttachKibanaDiscoverUrl) {
-        config.ms_power_automate_attach_kibana_discover_url = state.alert.msPowerAutomateAttachKibanaDiscoverUrl;
+        config.ms_power_automate_kibana_discover_attach_url = state.alert.msPowerAutomateAttachKibanaDiscoverUrl;
 
         if (state.alert.msPowerAutomateKibanaDiscoverTitle) {
           config.ms_power_automate_kibana_discover_title = state.alert.msPowerAutomateKibanaDiscoverTitle;
         }
 
         if (state.alert.msPowerAutomateKibanaDiscoverColor) {
-          config.ms_power_automate_opensearch_discover_color = state.alert.msPowerAutomateKibanaDiscoverColor;
+          config.ms_power_automate_kibana_discover_color = state.alert.msPowerAutomateKibanaDiscoverColor;
         }
       }
 
