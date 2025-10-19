@@ -20,27 +20,27 @@
             v-model="activeGroupIndex"
             :label="group.key.toString()"
             :name="index2.toString()">
-            <VChart
-              ref="chart"
-              v-loading="loading"
-              :option="chart"
-              width="100%"
-              height="210px"
-              autoresize
-              @click="ev => $emit('click', ev)" />
+            <div class="chart-container">
+              <VChart
+                ref="chart"
+                v-loading="loading"
+                :option="chart"
+                autoresize
+                @click="ev => $emit('click', ev)" />
+            </div>
           </el-tab-pane>
         </el-tabs>
       </div>
 
       <div v-else>
-        <VChart
-          ref="chart"
-          v-loading="loading"
-          :option="chart"
-          width="100%"
-          height="210px"
-          autoresize
-          @click="ev => $emit('click', ev)" />
+        <div class="chart-container">
+          <VChart
+            ref="chart"
+            v-loading="loading"
+            :option="chart"
+            autoresize
+            @click="ev => $emit('click', ev)" />
+        </div>
 
         <el-popover v-if="showControls" trigger="click" class="praeco-chart-popover">
           <template #reference>
@@ -776,6 +776,11 @@ export default {
     right: 0;
     border: 0;
     padding-bottom: 0;
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 210px;
   }
 
   .echarts {
