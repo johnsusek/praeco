@@ -19,7 +19,8 @@
             :key="index2"
             v-model="activeGroupIndex"
             :label="group.key.toString()"
-            :name="index2.toString()">
+            :name="index2.toString()"
+            lazy>
             <div class="chart-container">
               <VChart
                 ref="chart"
