@@ -25,6 +25,7 @@
                 ref="chart"
                 v-loading="loading"
                 :option="chart"
+                :init-options="{ width: 'auto', height: 210 }"
                 autoresize
                 @click="ev => $emit('click', ev)" />
             </div>
@@ -38,6 +39,7 @@
             ref="chart"
             v-loading="loading"
             :option="chart"
+            :init-options="{ width: 'auto', height: 210 }"
             autoresize
             @click="ev => $emit('click', ev)" />
         </div>
