@@ -109,6 +109,7 @@ export default {
       indicesLoading: false,
       mappingLoading: false,
       mappingError: '',
+      getMappingDebounced: null,
       rules: {
         name: [{
           validator: this.validateName
