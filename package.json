@@ -45,7 +45,7 @@
     "lodash.clonedeep": "4.5.0",
     "lodash.get": "4.4.2",
     "lodash.throttle": "4.1.1",
-    "node-sass": "^9.0.0",
+    "node-sass": "github:nsano-rururu/node-sass#dev",
     "normalize.css": "8.0.1",
     "prettycron": "github:nsano-rururu/prettycron",
     "prismjs": "1.30.0",
