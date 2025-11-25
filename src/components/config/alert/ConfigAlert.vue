@@ -217,6 +217,9 @@
         <el-checkbox id="destinationFlashduty" label="flashduty" border>
           Flashduty
         </el-checkbox>
+        <el-checkbox id="destinationline" label="line" border>
+          LINE Message API
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -236,6 +239,7 @@
           || alert.includes('iris')
           || alert.includes('jira')
           || alert.includes('lark')
+          || alert.includes('line')
           || alert.includes('mattermost')
           || alert.includes('ms_teams')
           || alert.includes('ms_power_automate')
@@ -584,6 +588,14 @@
         </template>
         <ConfigAlertFlashDuty ref="flashduty" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- LINE Message API -->
+      <el-tab-pane v-if="alert.includes('line')">
+        <template #label>
+          <Icon :icon="['fab', 'line']" size="1x" /> LINE Message API
+        </template>
+        <ConfigAlertLineMessageApi ref="line" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -612,6 +624,7 @@ import ConfigAlertHttpPost2 from './ConfigAlertHttpPost2.vue';
 import ConfigAlertIris from './ConfigAlertIris.vue';
 import ConfigAlertJira from './ConfigAlertJira.vue';
 import ConfigAlertLark from './ConfigAlertLark.vue';
+import ConfigAlertLineMessageApi from './ConfigAlertLineMessageApi.vue';
 import ConfigAlertMattermost from './ConfigAlertMattermost.vue';
 import ConfigAlertMatrixHookshot from './ConfigAlertMatrixHookshot.vue';
 import ConfigAlertMsTeams from './ConfigAlertMsTeams.vue';
@@ -736,6 +749,7 @@ export default {
     ConfigAlertIris,
     ConfigAlertJira,
     ConfigAlertLark,
+    ConfigAlertLineMessageApi,
     ConfigAlertMattermost,
     ConfigAlertMatrixHookshot,
     ConfigAlertMsTeams,

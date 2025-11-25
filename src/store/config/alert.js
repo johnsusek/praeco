@@ -240,6 +240,10 @@ function initialState() {
     larkBotId: '',
     larkMsgtype: 'text',
 
+    /* LINE Message API */
+    lineChannelAccessToken: '',
+    lineTo: '',
+
     /* Mattermost */
     mattermostWebhookUrl: [],
     mattermostChannelOverride: [],
@@ -1437,6 +1441,15 @@ export default {
 
     UPDATE_LARK_MSGTYPE(state, larkMsgtype) {
       state.larkMsgtype = larkMsgtype;
+    },
+
+    /* LINE Message API */
+    UPDATE_LINE_CHANNEL_ACCESS_TOKEN(state, lineChannelAccessToken) {
+      state.lineChannelAccessToken = lineChannelAccessToken;
+    },
+
+    UPDATE_LINE_TO(state, lineTo) {
+      state.lineTo = lineTo;
     },
 
     /* Mattermost */

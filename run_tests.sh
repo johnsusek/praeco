@@ -39,6 +39,7 @@ npx vitest run tests/unit/specs/alert/ConfigYamlIris.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlIris002.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlJira.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlLark.spec.js &&
+npx vitest run tests/unit/specs/alert/ConfigYamlLineMessageApi.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlMattermost.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlMattermost002.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlMatrixhookshot001.spec.js &&

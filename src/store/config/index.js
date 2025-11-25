@@ -645,6 +645,10 @@ export default {
           commit('alert/UPDATE_LARK_MSGTYPE', 'text');
         }
 
+        /* LINE Message API */
+        commit('alert/UPDATE_LINE_CHANNEL_ACCESS_TOKEN', config.line_channel_access_token);
+        commit('alert/UPDATE_LINE_TO', config.line_to);
+
         /* Command */
         if (config.command) {
           config.command.forEach(entry => commit('alert/ADD_COMMAND_ENTRY_VALUE', entry));
@@ -2604,6 +2608,20 @@ export default {
       return config;
     },
 
+    line(state) {
+      let config = {};
+
+      if (state.alert.lineChannelAccessToken) {
+        config.line_channel_access_token = state.alert.lineChannelAccessToken;
+      }
+
+      if (state.alert.lineTo) {
+        config.line_to = state.alert.lineTo;
+      }
+
+      return config;
+    },
+
     command(state) {
       let config = {};
 
@@ -3545,6 +3563,10 @@ export default {
         config = { ...config, ...getters.lark };
       }
 
+      if (state.alert.alert.includes('line')) {
+        config = { ...config, ...getters.line };
+      }
+
       if (state.alert.alert.includes('mattermost')) {
         config = { ...config, ...getters.mattermost };
       }
@@ -3648,6 +3670,7 @@ export default {
         || state.alert.alert.includes('iris')
         || state.alert.alert.includes('jira')
         || state.alert.alert.includes('lark')
+        || state.alert.alert.includes('line')
         || state.alert.alert.includes('mattermost')
         || state.alert.alert.includes('matrixhookshot')
         || state.alert.alert.includes('ms_teams')

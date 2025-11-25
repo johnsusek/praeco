@@ -34,6 +34,7 @@ import ConfigAlertHttpPost2 from '@/components/config/alert/ConfigAlertHttpPost2
 import ConfigAlertIris from '@/components/config/alert/ConfigAlertIris.vue';
 import ConfigAlertJira from '@/components/config/alert/ConfigAlertJira.vue';
 import ConfigAlertLark from '@/components/config/alert/ConfigAlertLark.vue';
+import ConfigAlertLineMessageApi from '@/components/config/alert/ConfigAlertLineMessageApi.vue';
 import ConfigAlertMattermost from '@/components/config/alert/ConfigAlertMattermost.vue';
 import ConfigAlertMatrixHookshot from '@/components/config/alert/ConfigAlertMatrixHookshot.vue';
 import ConfigAlertMsTeams from '@/components/config/alert/ConfigAlertMsTeams.vue';
@@ -89,6 +90,7 @@ Vue.component('ConfigAlertHttpPost2', ConfigAlertHttpPost2);
 Vue.component('ConfigAlertIris', ConfigAlertIris);
 Vue.component('ConfigAlertJira', ConfigAlertJira);
 Vue.component('ConfigAlertLark', ConfigAlertLark);
+Vue.component('ConfigAlertLineMessageApi', ConfigAlertLineMessageApi);
 Vue.component('ConfigAlertMattermost', ConfigAlertMattermost);
 Vue.component('ConfigAlertMatrixHookshot', ConfigAlertMatrixHookshot);
 Vue.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
