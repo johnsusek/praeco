@@ -99,3 +99,9 @@ npx vitest run tests/unit/specs/SilenceLog.spec.js
 
 # TODO: Tests that fail
 # npx vitest run tests/unit/specs/ConfigCondition.spec.js &&
+# npx vitest run tests/unit/specs/ConfigAlert.spec.js &&
+# npx vitest run tests/unit/specs/ConfigYaml.spec.js &&
+# npx vitest run tests/unit/specs/ErrorsLog.spec.js
+# npx vitest run tests/unit/specs/QueriesLog.spec.js
+# npx vitest run tests/unit/specs/RuleView.spec.js
+# npx vitest run tests/unit/specs/SilenceLog.spec.js
