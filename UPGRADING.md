@@ -7,6 +7,29 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.22
+
+**New options**
+
+- LINE Message API
+- Flashduty
+- YJZ general robot
+- Webex Webhook
+
+**kibana discover**
+
+- kibana 8.18/9.0～9.2 support
+
+**Microsoft Power Automate**
+
+add settings.
+
+- ms_power_automate_webhook_url_from_field
+
+**bug fix**
+
+- Microsoft Power Automate
+
 ## -> 1.8.21
 
 **Remove options**
