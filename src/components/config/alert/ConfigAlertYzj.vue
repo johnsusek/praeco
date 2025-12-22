@@ -7,13 +7,6 @@
       </label>
     </el-form-item>
 
-    <el-form-item label="Type" prop="yzjType">
-      <el-input-number id="yzjType" :value="yzjType" :disabled="viewOnly" @input="yzjType = $event" />
-      <label>
-        Default 0, send text message.
-      </label>
-    </el-form-item>
-
     <el-form-item label="Proxy" prop="yzjProxy">
       <el-input id="yzjProxy" :value="yzjProxy" :disabled="viewOnly" @input="yzjProxy = $event" />
       <label>
@@ -50,14 +43,6 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_YZJ_TOKEN', value);
-      }
-    },
-    yzjType: {
-      get() {
-        return this.$store.state.config.alert.yzjType;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_YZJ_TYPE', value);
       }
     },
     yzjProxy: {

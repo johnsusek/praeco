@@ -1273,21 +1273,9 @@ export default {
         }
 
         /* YZJ */
-        if (config.yzj_token) {
-          commit('alert/UPDATE_YZJ_TOKEN', config.yzj_token);
-        }
-
-        if (config.yzj_type) {
-          commit('alert/UPDATE_YZJ_TYPE', config.yzj_type);
-        }
-
-        if (config.yzj_proxy) {
-          commit('alert/UPDATE_YZJ_PROXY', config.yzj_proxy);
-        }
-
-        if (config.yzj_custom_loc) {
-          commit('alert/UPDATE_YZJ_CUSTOM_LOC', config.yzj_custom_loc);
-        }
+        commit('alert/UPDATE_YZJ_TOKEN', config.yzj_token);
+        commit('alert/UPDATE_YZJ_PROXY', config.yzj_proxy);
+        commit('alert/UPDATE_YZJ_CUSTOM_LOC', config.yzj_custom_loc);
 
         /* realert, alert, alert_text_type, alert_text, alert_subject, alert_subject_args, alert_text_args */
         commit('alert/UPDATE_REALERT', config.realert);
@@ -3353,10 +3341,6 @@ export default {
 
       if (state.alert.yzjToken) {
         config.yzj_token = state.alert.yzjToken;
-      }
-
-      if (state.alert.yzjType) {
-        config.yzj_type = state.alert.yzjType;
       }
 
       if (state.alert.yzjProxy) {

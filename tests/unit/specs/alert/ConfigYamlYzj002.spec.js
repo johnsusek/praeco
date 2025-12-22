@@ -42,7 +42,6 @@ use_strftime_index: false
 yzj_custom_loc: "loc"
 yzj_proxy: "proxy"
 yzj_token: "token"
-yzj_type: 1
 `;
 
     return expect(yaml).to.equal(expected);

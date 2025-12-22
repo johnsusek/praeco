@@ -27,7 +27,6 @@ type: frequency
 use_count_query: true
 use_strftime_index: false
 yzj_token: token
-yzj_type: 1
 yzj_proxy: proxy
 yzj_custom_loc: loc
 `;

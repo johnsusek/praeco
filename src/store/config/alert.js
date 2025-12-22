@@ -454,10 +454,9 @@ function initialState() {
     workWechatMsgtype: 'text',
 
     /* YZJ */
-    yzj_token: '',
-    yzj_type: 0,
-    yzj_proxy: '',
-    yzj_custom_loc: '',
+    yzjToken: '',
+    yzjProxy: '',
+    yzjCustomLoc: '',
 
     /* Zabbix */
     zbxSenderHost: 'localhost',
@@ -2458,10 +2457,6 @@ export default {
     /* YZJ */
     UPDATE_YZJ_TOKEN(state, yzjToken) {
       state.yzjToken = yzjToken;
-    },
-
-    UPDATE_YZJ_TYPE(state, yzjType) {
-      state.yzjType = yzjType;
     },
 
     UPDATE_YZJ_PROXY(state, yzjProxy) {

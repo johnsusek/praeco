@@ -581,10 +581,10 @@
         <ConfigAlertYzj ref="yzj" :view-only="viewOnly" />
       </el-tab-pane>
 
-      <!-- Flashduty -->
+      <!-- Flashduty -->
       <el-tab-pane v-if="alert.includes('flashduty')">
         <template #label>
-          Flashduty
+          Flashduty
         </template>
         <ConfigAlertFlashDuty ref="flashduty" :view-only="viewOnly" />
       </el-tab-pane>
