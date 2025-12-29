@@ -6,10 +6,15 @@ import { useWebSocket } from '@vueuse/core';
  * Migrated from vue-native-websocket to VueUse
  */
 export default {
-  install(Vue, url) {
+  install(Vue, url /* , options = {} */) {
     // Store the WebSocket controls globally
     let wsControls = null;
     let wsUrl = url;
+
+    // Options are preserved for API compatibility but not currently used
+    // The original options were: { connectManually: true, format: 'json' }
+    // connectManually is handled by the $connect/$disconnect methods
+    // format: 'json' is handled by the sendObj method
 
     // Add $connect method to Vue prototype
     Vue.prototype.$connect = function() {
@@ -53,9 +58,9 @@ export default {
         },
         set onopen(handler) {
           this._onopen = handler;
-          // If already connected, call the handler immediately
+          // If already connected, call the handler asynchronously
           if (isConnected && handler) {
-            setTimeout(() => handler.call(this), 0);
+            queueMicrotask(() => handler.call(this));
           }
         },
         get onclose() {
