@@ -39,6 +39,7 @@ export function createVueUseStoragePlugin(options) {
     const { key, paths } = options;
 
     // Initialize storage with current state or stored value
+    // Note: Uses window.localStorage directly - this plugin is for browser-only usage
     const storedValue = useStorage(key, null, window.localStorage, {
       serializer: {
         read: (v) => {
@@ -64,7 +65,8 @@ export function createVueUseStoragePlugin(options) {
 
     // Subscribe to mutations and persist specified paths
     store.subscribe((mutation, state) => {
-      // Only check if mutation affects one of the persisted paths
+      // Only persist if mutation affects one of the tracked paths
+      // Assumes namespaced modules with mutation types like 'module/MUTATION_NAME'
       const mutationPath = mutation.type.split('/')[0];
       if (!paths.includes(mutationPath)) {
         return;
