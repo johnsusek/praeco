@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Vuex from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
 import ui from '@/store/ui';
-import { useStorage } from '@vueuse/core';
+import { createVueUseStoragePlugin } from '@/store';
 
 describe('Store Persistence with VueUse', () => {
   let localVue;
@@ -19,37 +19,6 @@ describe('Store Persistence with VueUse', () => {
   });
 
   it('should persist ui state to localStorage using VueUse', (done) => {
-    // Create a Vuex plugin using VueUse for state persistence
-    function createVueUseStoragePlugin(options) {
-      return store => {
-        const { key, paths } = options;
-
-        // Initialize storage with current state or stored value
-        const storedValue = useStorage(key, null, window.localStorage, {
-          serializer: {
-            read: (v) => v ? JSON.parse(v) : null,
-            write: (v) => JSON.stringify(v)
-          }
-        });
-
-        // Restore state from storage on initialization
-        if (storedValue.value) {
-          store.replaceState(
-            Object.assign({}, store.state, storedValue.value)
-          );
-        }
-
-        // Subscribe to mutations and persist specified paths
-        store.subscribe((mutation, state) => {
-          const stateToPersist = {};
-          paths.forEach(path => {
-            stateToPersist[path] = state[path];
-          });
-          storedValue.value = stateToPersist;
-        });
-      };
-    }
-
     const storagePlugin = createVueUseStoragePlugin({
       key: 'test-praeco-vuex',
       paths: ['ui']
@@ -85,37 +54,6 @@ describe('Store Persistence with VueUse', () => {
         sidebarWidth: [15, 85]
       }
     }));
-
-    // Create a Vuex plugin using VueUse for state persistence
-    function createVueUseStoragePlugin(options) {
-      return store => {
-        const { key, paths } = options;
-
-        // Initialize storage with current state or stored value
-        const storedValue = useStorage(key, null, window.localStorage, {
-          serializer: {
-            read: (v) => v ? JSON.parse(v) : null,
-            write: (v) => JSON.stringify(v)
-          }
-        });
-
-        // Restore state from storage on initialization
-        if (storedValue.value) {
-          store.replaceState(
-            Object.assign({}, store.state, storedValue.value)
-          );
-        }
-
-        // Subscribe to mutations and persist specified paths
-        store.subscribe((mutation, state) => {
-          const stateToPersist = {};
-          paths.forEach(path => {
-            stateToPersist[path] = state[path];
-          });
-          storedValue.value = stateToPersist;
-        });
-      };
-    }
 
     const storagePlugin = createVueUseStoragePlugin({
       key: 'test-praeco-vuex-restore',

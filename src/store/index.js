@@ -12,8 +12,29 @@ import ui from './ui';
 
 Vue.use(Vuex);
 
-// Create a Vuex plugin using VueUse for state persistence
-function createVueUseStoragePlugin(options) {
+/**
+ * Create a Vuex plugin using VueUse for state persistence
+ *
+ * This plugin uses VueUse's useStorage composable to automatically persist
+ * and restore specified parts of the Vuex state to/from localStorage.
+ *
+ * @param {Object} options - Configuration options for the plugin
+ * @param {string} options.key - The localStorage key to use for persisting state
+ * @param {string[]} options.paths - Array of state module names to persist (e.g., ['ui', 'config'])
+ * @returns {Function} A Vuex plugin function that can be added to the store's plugins array
+ *
+ * @example
+ * const storagePlugin = createVueUseStoragePlugin({
+ *   key: 'my-app-state',
+ *   paths: ['ui', 'settings']
+ * });
+ *
+ * const store = new Vuex.Store({
+ *   modules: { ui, settings },
+ *   plugins: [storagePlugin]
+ * });
+ */
+export function createVueUseStoragePlugin(options) {
   return store => {
     const { key, paths } = options;
 
