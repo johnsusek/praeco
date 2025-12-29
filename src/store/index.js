@@ -41,7 +41,16 @@ export function createVueUseStoragePlugin(options) {
     // Initialize storage with current state or stored value
     const storedValue = useStorage(key, null, window.localStorage, {
       serializer: {
-        read: (v) => v ? JSON.parse(v) : null,
+        read: (v) => {
+          if (!v) return null;
+          try {
+            return JSON.parse(v);
+          } catch (e) {
+            // Handle corrupted localStorage data gracefully
+            console.warn(`Failed to parse stored state from key "${key}":`, e);
+            return null;
+          }
+        },
         write: (v) => JSON.stringify(v)
       }
     });
@@ -55,6 +64,12 @@ export function createVueUseStoragePlugin(options) {
 
     // Subscribe to mutations and persist specified paths
     store.subscribe((mutation, state) => {
+      // Only check if mutation affects one of the persisted paths
+      const mutationPath = mutation.type.split('/')[0];
+      if (!paths.includes(mutationPath)) {
+        return;
+      }
+
       const stateToPersist = {};
       paths.forEach(path => {
         stateToPersist[path] = state[path];

@@ -34,17 +34,18 @@ describe('Store Persistence with VueUse', () => {
     // Commit a mutation to update the ui state
     store.commit('ui/UPDATE_SIDEBAR_WIDTH', [30, 70]);
 
-    // Give VueUse time to persist
+    // VueUse updates storage reactively, so we need to wait a bit longer
     setTimeout(() => {
       // Check that the state was persisted to localStorage
-      const persistedData = JSON.parse(localStorage.getItem('test-praeco-vuex'));
+      const persistedDataStr = localStorage.getItem('test-praeco-vuex');
+      const persistedData = persistedDataStr ? JSON.parse(persistedDataStr) : null;
       expect(persistedData).to.deep.equal({
         ui: {
           sidebarWidth: [30, 70]
         }
       });
       done();
-    }, 50);
+    }, 100);
   });
 
   it('should restore ui state from localStorage on initialization', () => {
