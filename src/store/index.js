@@ -1,4 +1,4 @@
-import VuexPersistence from 'vuex-persist';
+import { useStorage } from '@vueuse/core';
 import Vue from 'vue';
 import Vuex from 'vuex';
 // TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
@@ -12,10 +12,40 @@ import ui from './ui';
 
 Vue.use(Vuex);
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-  reducer: state => ({ ui: state.ui }),
-  key: 'praeco-vuex'
+// Create a Vuex plugin using VueUse for state persistence
+function createVueUseStoragePlugin(options) {
+  return store => {
+    const { key, paths } = options;
+
+    // Initialize storage with current state or stored value
+    const storedValue = useStorage(key, null, window.localStorage, {
+      serializer: {
+        read: (v) => v ? JSON.parse(v) : null,
+        write: (v) => JSON.stringify(v)
+      }
+    });
+
+    // Restore state from storage on initialization
+    if (storedValue.value) {
+      store.replaceState(
+        Object.assign({}, store.state, storedValue.value)
+      );
+    }
+
+    // Subscribe to mutations and persist specified paths
+    store.subscribe((mutation, state) => {
+      const stateToPersist = {};
+      paths.forEach(path => {
+        stateToPersist[path] = state[path];
+      });
+      storedValue.value = stateToPersist;
+    });
+  };
+}
+
+const storagePlugin = createVueUseStoragePlugin({
+  key: 'praeco-vuex',
+  paths: ['ui']
 });
 
 export default new Vuex.Store({
@@ -28,5 +58,5 @@ export default new Vuex.Store({
     config,
     ui
   },
-  plugins: [vuexLocal.plugin]
+  plugins: [storagePlugin]
 });
