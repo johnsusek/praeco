@@ -234,11 +234,7 @@ function startApp(config) {
     WebSocketPlugin,
     `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
       window.location.port
-    }/api-ws/test`,
-    {
-      connectManually: true,
-      format: 'json'
-    }
+    }/api-ws/test`
   );
 
   new Vue({

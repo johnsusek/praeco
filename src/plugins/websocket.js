@@ -6,18 +6,15 @@ import { useWebSocket } from '@vueuse/core';
  * Migrated from vue-native-websocket to VueUse
  */
 export default {
-  install(Vue, url /* , options = {} */) {
-    // Store the WebSocket controls globally
-    let wsControls = null;
+  install(Vue, url) {
+    // WebSocket URL
     let wsUrl = url;
-
-    // Options are preserved for API compatibility but not currently used
-    // The original options were: { connectManually: true, format: 'json' }
-    // connectManually is handled by the $connect/$disconnect methods
-    // format: 'json' is handled by the sendObj method
 
     // Add $connect method to Vue prototype
     Vue.prototype.$connect = function() {
+      // Store instance-specific WebSocket controls
+      let wsControls = this._wsControls;
+
       // Close existing connection if any
       if (wsControls && wsControls.close) {
         wsControls.close();
@@ -77,12 +74,12 @@ export default {
         }
       };
 
-      // Assign wrapper to $socket immediately
+      // Assign wrapper to $socket
       component.$socket = socketWrapper;
 
-      // Create WebSocket using VueUse
+      // Create WebSocket using VueUse - immediate: false for manual connection
       wsControls = useWebSocket(wsUrl, {
-        immediate: true,
+        immediate: false,
         autoReconnect: false,
         onConnected: () => {
           isConnected = true;
@@ -111,20 +108,26 @@ export default {
           }
         }
       });
+
+      // Store controls on the component instance
+      component._wsControls = wsControls;
+
+      // Now open the connection
+      if (wsControls.open) {
+        wsControls.open();
+      }
     };
 
     // Add $disconnect method to Vue prototype
     Vue.prototype.$disconnect = function() {
+      const wsControls = this._wsControls;
       if (wsControls && wsControls.close) {
         wsControls.close();
-        wsControls = null;
+        this._wsControls = null;
       }
       if (this.$socket) {
         this.$socket = null;
       }
     };
-
-    // Initialize $socket as null
-    Vue.prototype.$socket = null;
   }
 };
