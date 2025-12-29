@@ -12,18 +12,16 @@ export default {
 
     // Add $connect method to Vue prototype
     Vue.prototype.$connect = function() {
-      // Store instance-specific WebSocket controls
-      let wsControls = this._wsControls;
-
       // Close existing connection if any
-      if (wsControls && wsControls.close) {
-        wsControls.close();
-        wsControls = null;
+      if (this._wsControls && this._wsControls.close) {
+        this._wsControls.close();
+        this._wsControls = null;
       }
 
       // Store reference to component context
       const component = this;
       let isConnected = false;
+      let wsControls = null;
 
       // Create wrapper first so it can be assigned immediately
       const socketWrapper = {
