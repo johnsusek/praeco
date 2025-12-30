@@ -119,10 +119,13 @@ export default {
       // Store controls on the component instance
       component._wsControls = wsControls;
 
-      // Now open the connection
-      if (wsControls.open) {
-        wsControls.open();
-      }
+      // Defer opening the connection to allow handlers to be set
+      // This ensures onopen/onclose handlers can be set after $connect() is called
+      queueMicrotask(() => {
+        if (wsControls.open) {
+          wsControls.open();
+        }
+      });
     };
 
     // Add $disconnect method to Vue prototype
