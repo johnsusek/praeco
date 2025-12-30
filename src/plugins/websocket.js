@@ -164,8 +164,18 @@ export default {
       // Defer opening the connection to allow handlers to be set
       // This ensures onopen/onclose handlers can be set after $connect() is called
       queueMicrotask(() => {
-        if (wsControls.open) {
+        // Guard against wsControls being cleared or missing open by the time this runs
+        if (!wsControls || typeof wsControls.open !== 'function') {
+          console.error('WebSocket controls are not available to open the connection.');
+          return;
+        }
+        try {
           wsControls.open();
+        } catch (error) {
+          console.error('Failed to open WebSocket connection:', error);
+          if (socketWrapper._onerror) {
+            socketWrapper._onerror.call(socketWrapper, error);
+          }
         }
       });
     };
