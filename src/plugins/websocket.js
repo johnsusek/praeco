@@ -1,9 +1,52 @@
 import { useWebSocket } from '@vueuse/core';
 
 /**
- * WebSocket plugin for Vue 2 using VueUse
- * Provides similar API to vue-native-websocket for compatibility
- * Migrated from vue-native-websocket to VueUse
+ * WebSocket plugin for Vue 2 using VueUse.
+ *
+ * Provides a similar API to vue-native-websocket for compatibility, exposing
+ * the following instance members on Vue components:
+ *
+ * - `this.$connect()`
+ *    Opens a WebSocket connection to the URL passed when installing the
+ *    plugin. If a previous connection exists for the component, it is closed
+ *    before a new one is created.
+ *
+ * - `this.$disconnect()`
+ *    Closes the current WebSocket connection (if any) and removes the
+ *    associated `$socket` wrapper from the component instance.
+ *
+ * - `this.$socket`
+ *    A lightweight wrapper around the underlying WebSocket that provides:
+ *      - `this.$socket.send(data)` to send data through the connection.
+ *      - `this.$socket.close()` to close the connection.
+ *      - `this.$socket.onopen`, `this.$socket.onclose`, `this.$socket.onerror`
+ *        handler properties, which can be assigned functions to react to the
+ *        corresponding lifecycle events.
+ *
+ * - `this.$options.sockets.onmessage`
+ *    Optional handler defined in the component options. If provided, it will
+ *    be invoked with the WebSocket `MessageEvent` each time a message is
+ *    received.
+ *
+ * Example usage in a component:
+ *
+ * ```js
+ * export default {
+ *   sockets: {
+ *     onmessage(event) {
+ *       console.log('Received:', event.data);
+ *     }
+ *   },
+ *   created() {
+ *     this.$connect();
+ *   },
+ *   beforeDestroy() {
+ *     this.$disconnect();
+ *   }
+ * }
+ * ```
+ *
+ * Migrated from vue-native-websocket to VueUse.
  */
 export default {
   install(Vue, wsUrl) {
