@@ -151,7 +151,7 @@ export default {
           }
         },
         onError: (ws, event) => {
-          console.error('WebSocket error:', event);
+          // Let component handle errors through onerror callback
           if (socketWrapper._onerror) {
             socketWrapper._onerror.call(socketWrapper, event);
           }
