@@ -71,4 +71,41 @@ describe('Store Persistence with VueUse', () => {
     // Check that the state was restored from localStorage
     expect(store.state.ui.sidebarWidth).to.deep.equal([15, 85]);
   });
+
+  it('should persist initial state when localStorage is empty', (done) => {
+    // Ensure localStorage is empty
+    localStorage.clear();
+    
+    // Verify localStorage is truly empty for this key
+    expect(localStorage.getItem('test-praeco-vuex-initial')).to.be.null;
+
+    const storagePlugin = createVueUseStoragePlugin({
+      key: 'test-praeco-vuex-initial',
+      paths: ['ui']
+    });
+
+    const store = new Vuex.Store({
+      modules: {
+        ui
+      },
+      plugins: [storagePlugin]
+    });
+
+    // Wait for VueUse to persist the initial state
+    setTimeout(() => {
+      // Verify the store still has the initial state
+      expect(store.state.ui.sidebarWidth).to.deep.equal([20, 80]);
+      
+      // Check that the initial state was persisted to localStorage
+      const persistedDataStr = localStorage.getItem('test-praeco-vuex-initial');
+      const persistedData = persistedDataStr ? JSON.parse(persistedDataStr) : null;
+
+      expect(persistedData).to.deep.equal({
+        ui: {
+          sidebarWidth: [20, 80] // Default initial state from ui.js
+        }
+      });
+      done();
+    }, 100);
+  });
 });

@@ -61,6 +61,14 @@ export function createVueUseStoragePlugin(options) {
       store.replaceState(
         Object.assign({}, store.state, storedValue.value)
       );
+    } else {
+      // If no stored value exists, persist the initial state
+      // This matches vuex-persist behavior of saving defaults on first load
+      const stateToPersist = {};
+      paths.forEach(path => {
+        stateToPersist[path] = store.state[path];
+      });
+      storedValue.value = stateToPersist;
     }
 
     // Subscribe to mutations and persist specified paths
