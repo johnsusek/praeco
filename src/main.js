@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import ElementUI, { Notification } from 'element-ui';
 import axios from 'axios';
-import VueNativeSock from 'vue-native-websocket';
+import WebSocketPlugin from './plugins/websocket';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
 import Treeselect from '@riophae/vue-treeselect';
@@ -231,14 +231,10 @@ function startApp(config) {
   initLogging();
 
   Vue.use(
-    VueNativeSock,
+    WebSocketPlugin,
     `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
       window.location.port
-    }/api-ws/test`,
-    {
-      connectManually: true,
-      format: 'json'
-    }
+    }/api-ws/test`
   );
 
   new Vue({
