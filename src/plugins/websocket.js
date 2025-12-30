@@ -6,9 +6,8 @@ import { useWebSocket } from '@vueuse/core';
  * Migrated from vue-native-websocket to VueUse
  */
 export default {
-  install(Vue, url) {
+  install(Vue, wsUrl) {
     // WebSocket URL
-    let wsUrl = url;
 
     // Initialize $options.sockets for components that use it
     Vue.mixin({
