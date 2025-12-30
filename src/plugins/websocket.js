@@ -10,6 +10,15 @@ export default {
     // WebSocket URL
     let wsUrl = url;
 
+    // Initialize $options.sockets for components that use it
+    Vue.mixin({
+      beforeCreate() {
+        if (!this.$options.sockets) {
+          this.$options.sockets = {};
+        }
+      }
+    });
+
     // Add $connect method to Vue prototype
     Vue.prototype.$connect = function() {
       // Close existing connection if any
