@@ -83,7 +83,7 @@ export default {
     async load({ dispatch, commit, rootState }, { type, path }) {
       // Check if BaseRule.config exists before loading any rule
       await dispatch('checkBaseRuleConfig');
-      
+
       await dispatch('configs/fetchConfig', { type, path }, { root: true });
       let config = rootState.configs[type][path];
 
@@ -1271,7 +1271,7 @@ export default {
     async save({ state, getters, dispatch }, { type, overwrite }) {
       // Check if BaseRule.config exists before saving
       await dispatch('checkBaseRuleConfig');
-      
+
       await dispatch('validate');
 
       if (!state.valid) {

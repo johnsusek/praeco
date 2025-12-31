@@ -28,6 +28,8 @@ export default {
   mutations: {
     FETCHED_CONFIGS(state, { paths, type }) {
       // Configs are stored with their full path as their key
+      // Filter out BaseRule.config as it's not a rule, just a config import file
+      paths = paths.filter(path => path !== 'BaseRule.config');
       paths.forEach(path => {
         if (!state[type][path]) {
           // Since we are just getting a list of configs without their
@@ -156,7 +158,7 @@ export default {
       if (type === 'rules') {
         // Check if BaseRule.config exists before setting import
         const baseRuleConfigExists = await dispatch('checkBaseRuleConfigExists');
-        
+
         if (baseRuleConfigExists) {
           let dots = '';
 
