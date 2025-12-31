@@ -29,8 +29,8 @@ export default {
     validateError: null,
 
     sampleResult: null,
-    baseRuleConfigExists: true // Default to true since BaseRule.config ships with the repository.
-    // This is checked/updated by checkBaseRuleConfig() before load/save operations.
+    baseRuleConfigExists: true, // Default to true since BaseRule.config ships with the repository.
+    baseRuleConfigChecked: false // Track whether we've already checked for BaseRule.config existence
   },
 
   mutations: {
@@ -64,11 +64,17 @@ export default {
 
     UPDATE_BASE_RULE_CONFIG_EXISTS(state, exists) {
       state.baseRuleConfigExists = exists;
+      state.baseRuleConfigChecked = true;
     }
   },
 
   actions: {
-    async checkBaseRuleConfig({ commit, dispatch }) {
+    async checkBaseRuleConfig({ commit, dispatch, state }) {
+      // Only check once to avoid repeated 404 errors in console
+      if (state.baseRuleConfigChecked) {
+        return;
+      }
+
       const exists = await dispatch('configs/checkBaseRuleConfigExists', {}, { root: true });
       commit('UPDATE_BASE_RULE_CONFIG_EXISTS', exists);
     },
