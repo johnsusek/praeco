@@ -89,6 +89,11 @@ export default {
 
   actions: {
     async fetchConfig({ commit }, { path, type }) {
+      // Prevent fetching BaseRule.config as it's not a rule, just a config import file
+      if (path === 'BaseRule.config') {
+        return null;
+      }
+
       try {
         let res = await axios.get(`/api/${type}/${path}`);
         // We have got the config, so save it to our store keyed on its path
