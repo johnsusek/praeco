@@ -33,10 +33,8 @@ Run the app using Docker compose. Praeco includes everything you need to get sta
 ```bash
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
-# Copy the comprehensive BaseRule.config template from the repository
-cp rules/BaseRule.config.example rules/BaseRule.config  # if using the repository
-# OR create a minimal config for quick start:
-# echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
+# BaseRule.config is already in the rules/ directory with comprehensive examples
+# All settings are commented out by default - uncomment only what you need
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
 docker-compose up
 ```

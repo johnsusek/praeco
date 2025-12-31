@@ -29,7 +29,8 @@ export default {
     validateError: null,
 
     sampleResult: null,
-    baseRuleConfigExists: true // Assume it exists by default to avoid breaking existing behavior
+    baseRuleConfigExists: true // Default to true since BaseRule.config ships with the repository.
+    // This is checked/updated by checkBaseRuleConfig() before load/save operations.
   },
 
   mutations: {
