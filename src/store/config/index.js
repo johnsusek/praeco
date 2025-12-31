@@ -30,7 +30,7 @@ export default {
 
     sampleResult: null,
     baseRuleConfigExists: true, // Default to true since BaseRule.config ships with the repository.
-    baseRuleConfigChecked: false // Track whether we've already checked for BaseRule.config existence
+    baseRuleConfigChecked: false // Track whether we've already checked for BaseRule.config existence.
   },
 
   mutations: {
