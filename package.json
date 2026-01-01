@@ -49,6 +49,7 @@
     "lodash.throttle": "4.1.1",
     "node-sass": "9.0.0",
     "normalize.css": "8.0.1",
+    "pinia": "^2.3.1",
     "prettycron": "github:nsano-rururu/prettycron",
     "prismjs": "1.30.0",
     "sass-loader": "^16.0.6",
@@ -63,7 +64,6 @@
     "vue-prism-component": "1.2.0",
     "vue-query-builder": "github:nsano-rururu/vue-query-builder#v0.6.1vue2",
     "vue-router": "3.6.5",
-    "vuex": "3.6.2",
     "webpack": "5.104.1",
     "zrender": "6.0.0"
   },
