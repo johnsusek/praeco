@@ -28,7 +28,9 @@ export default {
     validating: false,
     validateError: null,
 
-    sampleResult: null
+    sampleResult: null,
+    baseRuleConfigExists: true, // Default to true since BaseRule.config ships with the repository.
+    baseRuleConfigChecked: false // Track whether we've already checked for BaseRule.config existence.
   },
 
   mutations: {
@@ -58,10 +60,25 @@ export default {
 
     UPDATE_PATH(state, path) {
       state.path = path || '';
+    },
+
+    UPDATE_BASE_RULE_CONFIG_EXISTS(state, exists) {
+      state.baseRuleConfigExists = exists;
+      state.baseRuleConfigChecked = true;
     }
   },
 
   actions: {
+    async checkBaseRuleConfig({ commit, dispatch, state }) {
+      // Only check once to avoid repeated 404 errors in console
+      if (state.baseRuleConfigChecked) {
+        return;
+      }
+
+      const exists = await dispatch('configs/checkBaseRuleConfigExists', {}, { root: true });
+      commit('UPDATE_BASE_RULE_CONFIG_EXISTS', exists);
+    },
+
     reset({ commit }) {
       commit('CLEAR_SAMPLE');
       commit('settings/RESET');
@@ -71,6 +88,9 @@ export default {
     },
 
     async load({ dispatch, commit, rootState }, { type, path }) {
+      // Check if BaseRule.config exists before loading any rule
+      await dispatch('checkBaseRuleConfig');
+
       await dispatch('configs/fetchConfig', { type, path }, { root: true });
       let config = rootState.configs[type][path];
 
@@ -1301,6 +1321,9 @@ export default {
     },
 
     async save({ state, getters, dispatch }, { type, overwrite }) {
+      // Check if BaseRule.config exists before saving
+      await dispatch('checkBaseRuleConfig');
+
       await dispatch('validate');
 
       if (!state.valid) {
@@ -3393,28 +3416,31 @@ export default {
         ...getters.queryString
       };
 
-      if (forTest) {
-        config.import = '../../rules/BaseRule.config';
-      } else {
-        let dots;
-
-        if (!state.path) {
-          dots = '';
+      // Only include import if BaseRule.config exists to prevent errors
+      if (state.baseRuleConfigExists) {
+        if (forTest) {
+          config.import = '../../rules/BaseRule.config';
         } else {
-          dots = '../';
+          let dots;
+
+          if (!state.path) {
+            dots = '';
+          } else {
+            dots = '../';
+          }
+
+          let path = state.path;
+
+          if (path.endsWith('/')) {
+            path = path.slice(0, -1);
+          }
+
+          for (let i = 1; i < path.split('/').length; i++) {
+            dots += '../';
+          }
+
+          config.import = `${dots}BaseRule.config`;
         }
-
-        let path = state.path;
-
-        if (path.endsWith('/')) {
-          path = path.slice(0, -1);
-        }
-
-        for (let i = 1; i < path.split('/').length; i++) {
-          dots += '../';
-        }
-
-        config.import = `${dots}BaseRule.config`;
       }
 
       if (state.path) {
