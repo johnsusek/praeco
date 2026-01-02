@@ -28,8 +28,6 @@ export default {
   mutations: {
     FETCHED_CONFIGS(state, { paths, type }) {
       // Configs are stored with their full path as their key
-      // Filter out BaseRule.config as it's not a rule, just a config import file
-      paths = paths.filter(path => path !== 'BaseRule.config');
       paths.forEach(path => {
         if (!state[type][path]) {
           // Since we are just getting a list of configs without their
@@ -88,11 +86,6 @@ export default {
 
   actions: {
     async fetchConfig({ commit }, { path, type }) {
-      // Prevent fetching BaseRule.config as it's not a rule, just a config import file
-      if (path === 'BaseRule.config') {
-        return null;
-      }
-
       try {
         let res = await axios.get(`/api/${type}/${path}`);
         // We have got the config, so save it to our store keyed on its path
@@ -101,16 +94,6 @@ export default {
         return res.data;
       } catch (error) {
         networkError(error);
-      }
-    },
-
-    async checkBaseRuleConfigExists() {
-      try {
-        await axios.get('/api/rules/BaseRule.config');
-        return true;
-      } catch (error) {
-        // 404 or other error means BaseRule.config doesn't exist
-        return false;
       }
     },
 
@@ -160,18 +143,13 @@ export default {
       if (oldConfig.__praeco_full_path === newConfig.__praeco_full_path) return;
 
       if (type === 'rules') {
-        // Check if BaseRule.config exists before setting import
-        const baseRuleConfigExists = await dispatch('checkBaseRuleConfigExists');
+        let dots = '';
 
-        if (baseRuleConfigExists) {
-          let dots = '';
-
-          for (let i = 1; i < newConfig.__praeco_full_path.split('/').length; i++) {
-            dots += '../';
-          }
-
-          newConfig.import = `${dots}BaseRule.config`;
+        for (let i = 1; i < newConfig.__praeco_full_path.split('/').length; i++) {
+          dots += '../';
         }
+
+        newConfig.import = `${dots}BaseRule.config`;
       }
 
       try {
