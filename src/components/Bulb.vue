@@ -7,10 +7,8 @@
   </span>
 </template>
 
-<script>
-export default {
-  props: ['success', 'warning', 'danger', 'info']
-};
+<script setup>
+defineProps(['success', 'warning', 'danger', 'info']);
 </script>
 
 <style scoped>

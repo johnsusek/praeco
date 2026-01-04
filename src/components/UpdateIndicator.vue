@@ -9,40 +9,33 @@
   </span>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import semver from 'semver';
 import packageData from '@/../package.json';
 
-export default {
-  data() {
-    return {
-      currentVersion: packageData.version,
-      latestRelease: {}
-    };
-  },
+const currentVersion = ref(packageData.version);
+const latestRelease = ref({});
 
-  computed: {
-    updateAvailable() {
-      if (!this.latestRelease.tag_name) return false;
-      return semver.lt(this.currentVersion, this.latestRelease.tag_name);
-    }
-  },
+const updateAvailable = computed(() => {
+  if (!latestRelease.value.tag_name) return false;
+  return semver.lt(currentVersion.value, latestRelease.value.tag_name);
+});
 
-  async mounted() {
-    if (import.meta.env.DEV && sessionStorage.getItem('latestRelease')) {
-      this.latestRelease = JSON.parse(sessionStorage.getItem('latestRelease'));
-    } else {
-      try {
-        let res = await axios.get('/api-app/releases');
-        if (res && res.data) {
-          this.latestRelease = res.data[0];
-          sessionStorage.setItem('latestRelease', JSON.stringify(this.latestRelease));
-        }
-      } catch (error) {}
-    }
+onMounted(async () => {
+  if (import.meta.env.DEV && sessionStorage.getItem('latestRelease')) {
+    latestRelease.value = JSON.parse(sessionStorage.getItem('latestRelease'));
+  } else {
+    try {
+      let res = await axios.get('/api-app/releases');
+      if (res && res.data) {
+        latestRelease.value = res.data[0];
+        sessionStorage.setItem('latestRelease', JSON.stringify(latestRelease.value));
+      }
+    } catch (error) {}
   }
-};
+});
 </script>
 
 <style>

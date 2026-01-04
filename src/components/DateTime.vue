@@ -9,7 +9,8 @@
   </span>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import dayjs from 'dayjs';
 import dayjs_advancedFormat from 'dayjs/plugin/advancedFormat';
 import dayjs_relativeTime from 'dayjs/plugin/relativeTime';
@@ -23,60 +24,55 @@ dayjs.extend(dayjs_relativeTime);
 dayjs.extend(dayjs_timezone);
 dayjs.extend(dayjs_utc);
 
-export default {
-  props: {
-    date: {
-      default: null,
-      validator (value) {
-        return (typeof value === 'string' || typeof value === 'number');
-      }
-    },
-    fromNow: {
-      type: Boolean,
-      default: false
+const props = defineProps({
+  date: {
+    default: null,
+    validator (value) {
+      return (typeof value === 'string' || typeof value === 'number');
     }
   },
-  data() {
-    return {
-      formattedUpdated: null,
-      timers: [],
-      timerId: null
-    };
-  },
-  computed: {
-    formatted() {
-      if (!this.date) return;
-      let momentDate = parseDate(this.date);
-      return momentDate.format('M/D/YYYY h:mm:ssa');
-    }
-  },
-  watch: {
-    date() {
-      if (this.date && this.fromNow) {
-        this.beginTimer();
-      }
-    }
-  },
-  created() {
-    if (this.date && this.fromNow) {
-      this.beginTimer();
-    }
-  },
-  destroyed() {
-    clearInterval(this.timerId);
-  },
-  methods: {
-    beginTimer() {
-      this.formattedUpdated = dayjs(String(this.date))
-        .tz(this.timeZone)
-        .fromNow();
-
-      this.timerId = setInterval(() => {
-        this.formattedUpdated = dayjs(String(this.date))
-          .tz(this.timeZone)
-          .fromNow();
-      }, 1000);
-    }
+  fromNow: {
+    type: Boolean,
+    default: false
   }
+});
+
+const formattedUpdated = ref(null);
+const timerId = ref(null);
+
+const formatted = computed(() => {
+  if (!props.date) return;
+  let momentDate = parseDate(props.date);
+  return momentDate.format('M/D/YYYY h:mm:ssa');
+});
+
+const beginTimer = () => {
+  formattedUpdated.value = dayjs(String(props.date))
+    .tz('UTC')
+    .fromNow();
+
+  timerId.value = setInterval(() => {
+    formattedUpdated.value = dayjs(String(props.date))
+      .tz('UTC')
+      .fromNow();
+  }, 1000);
 };
+
+watch(() => props.date, (newDate) => {
+  if (newDate && props.fromNow) {
+    beginTimer();
+  }
+});
+
+onMounted(() => {
+  if (props.date && props.fromNow) {
+    beginTimer();
+  }
+});
+
+onUnmounted(() => {
+  if (timerId.value) {
+    clearInterval(timerId.value);
+  }
+});
 </script>

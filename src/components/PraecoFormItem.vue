@@ -14,27 +14,32 @@
   </el-form-item>
 </template>
 
-<script>
-export default {
-  props: [
-    'value',
-    'label',
-    'prop',
-    'required',
-    'labelWidth',
-    'rules',
-    'error',
-    'showMessage',
-    'inlineMessage',
-    'size'
-  ],
-  computed: {
-    hidePreconfiguredFields() {
-      return this.$store.state.appconfig.config.hidePreconfiguredFields || [];
-    },
-    type() {
-      return this.$route.meta.type;
-    }
-  }
-};
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+
+defineProps([
+  'value',
+  'label',
+  'prop',
+  'required',
+  'labelWidth',
+  'rules',
+  'error',
+  'showMessage',
+  'inlineMessage',
+  'size'
+]);
+
+const store = useStore();
+const route = useRoute();
+
+const hidePreconfiguredFields = computed(() => {
+  return store.state.appconfig.config.hidePreconfiguredFields || [];
+});
+
+const type = computed(() => {
+  return route.meta.type;
+});
 </script>

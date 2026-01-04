@@ -8,10 +8,8 @@
   </tr>
 </template>
 
-<script>
-export default {
-  props: ['name', 'value']
-};
+<script setup>
+defineProps(['name', 'value']);
 </script>
 
 <style scoped>
