@@ -47,14 +47,15 @@ const formatted = computed(() => {
 });
 
 const beginTimer = () => {
-  formattedUpdated.value = dayjs(String(props.date))
-    .tz('UTC')
-    .fromNow();
+  // Clear any existing timer first to prevent memory leaks
+  if (timerId.value) {
+    clearInterval(timerId.value);
+  }
+
+  formattedUpdated.value = dayjs(String(props.date)).fromNow();
 
   timerId.value = setInterval(() => {
-    formattedUpdated.value = dayjs(String(props.date))
-      .tz('UTC')
-      .fromNow();
+    formattedUpdated.value = dayjs(String(props.date)).fromNow();
   }, 1000);
 };
 
