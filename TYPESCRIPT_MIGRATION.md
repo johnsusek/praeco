@@ -1293,20 +1293,25 @@ export default defineComponent({
 **Migrated (TypeScript with Composition API):**
 ```vue
 <script setup lang="ts">
-import { computed, getCurrentInstance } from 'vue';
+import { computed, getCurrentInstance, PropType } from 'vue';
 
-interface Props {
-  value?: any;
-  label?: string;
-  prop?: string;
-  required?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  value: undefined,
-  label: '',
-  prop: '',
-  required: false
+const props = defineProps({
+  value: {
+    type: [String, Number, Boolean, Object, Array] as PropType<any>,
+    default: undefined
+  },
+  label: {
+    type: String,
+    default: ''
+  },
+  prop: {
+    type: String,
+    default: ''
+  },
+  required: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const instance = getCurrentInstance();
