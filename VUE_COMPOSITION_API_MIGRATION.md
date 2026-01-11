@@ -980,17 +980,27 @@ const { permissions } = usePermissions();
 
 ### 2. Use Proper Reactive Types
 ```javascript
-// For primitives, use ref
+// Two common patterns; pick one and use it consistently with your team:
+
+// 1) Use ref for primitives and reactive for objects
 const count = ref(0);
 const message = ref('');
 
-// For objects, use reactive
+// reactive works well when you mostly access properties via dot-notation
 const state = reactive({
   user: {},
   settings: {}
 });
 
-// For props, use toRefs to maintain reactivity
+// 2) Or use ref for everything (primitives and objects)
+const stateRef = ref({
+  user: {},
+  settings: {}
+});
+// This avoids reactivity loss when destructuring (a common reactive gotcha),
+// but requires accessing stateRef.value instead of state.
+
+// For props, use toRefs (or toRef) to maintain reactivity when destructuring
 const props = defineProps({ userId: String });
 const { userId } = toRefs(props);
 ```
