@@ -289,7 +289,7 @@ password: your-password
 **Troubleshooting**:
 - Connection refused: Check SMTP host and port
 - Authentication failed: Verify credentials in auth file
-- Gmail blocking: Enable less secure apps or use app passwords
+- Gmail authentication issues: Use App Passwords (see Gmail Setup section)
 - Timeout: Check firewall rules and network connectivity
 
 ### Telegram
@@ -1195,6 +1195,7 @@ Before deploying alerts to production:
    - Tests the rule query against historical data
    - Shows if matches would be found
    - Displays sample alert content
+   - **Note**: If no matches are found, this doesn't mean the rule is broken - it may simply indicate no matching events exist in the test timeframe. Try adjusting the time range or creating test events.
 
 2. **Test Configurations**:
    - Create a test channel/room/email for each alert type
@@ -1244,15 +1245,29 @@ Before deploying alerts to production:
    - Check alert aggregation
 
 **Debug Steps**:
+
+For Docker deployments:
 ```bash
-# Check ElastAlert logs
+# First, find your container names
+docker ps
+
+# Check ElastAlert logs (container name may vary, common names: elastalert-server, elastalert)
 docker logs elastalert-server
 
-# Check Praeco logs
+# Check Praeco logs (container name may vary, common names: praeco, webapp)
 docker logs praeco
 
+# Test rule manually inside container
+docker exec -it elastalert-server elastalert-test-rule --config /opt/elastalert/config.yaml /opt/elastalert/rules/your-rule.yaml
+```
+
+For non-Docker deployments:
+```bash
+# Check ElastAlert logs (location may vary)
+tail -f /var/log/elastalert/elastalert.log
+
 # Test rule manually
-elastalert-test-rule --config config.yaml rules/your-rule.yaml
+elastalert-test-rule --config /etc/elastalert/config.yaml /etc/elastalert/rules/your-rule.yaml
 ```
 
 ### Incorrect Alert Content
