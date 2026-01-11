@@ -723,7 +723,7 @@ async function fetchLatestRelease() {
         sessionStorage.setItem('latestRelease', JSON.stringify(latestRelease.value));
       }
     } catch (error) {
-      // Handle error silently
+      console.error('Failed to fetch latest release:', error);
     }
   }
 }
