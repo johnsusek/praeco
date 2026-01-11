@@ -1934,6 +1934,7 @@ export default {
         this.type = 'percentage_match';
       } else if (val === 'spike aggregation') {
         this.type = 'spike_aggregation';
+        this.spikeOrThreshold = 'spike';
       } else {
         this.type = 'metric_aggregation';
       }
