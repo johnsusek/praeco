@@ -641,11 +641,11 @@ const type = computed(() => route.meta.type);
 <template>
   <span>
     <el-tag v-if="updateAvailable" type="info">
-      <a href="https://github.com/johnsusek/praeco/releases" target="_blank">
+      <a href="https://github.com/johnsusek/praeco/releases" target="_blank" rel="noopener noreferrer">
         Update available
       </a>
     </el-tag>
-    <el-tag type="info">praeco {{ currentVersion }}</el-tag>
+    <el-tag type="info" class="m-w-xs">praeco {{ currentVersion }}</el-tag>
   </span>
 </template>
 
