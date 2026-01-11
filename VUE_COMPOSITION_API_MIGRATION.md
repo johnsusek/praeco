@@ -1154,7 +1154,7 @@ Migrate in this order:
 
 ## Additional Resources
 
-- [Vue 2.7 Release Notes](https://github.com/vuejs/vue/blob/main/CHANGELOG.md#270-2022-07-01)
+- [Vue 2.7 Release Notes](https://blog.vuejs.org/posts/vue-2-7-naruto.html)
 - [Vue 3 Composition API Docs](https://vuejs.org/guide/extras/composition-api-faq.html)
 - [VueUse Documentation](https://vueuse.org/)
 - [Vue 2 to Vue 3 Migration Guide](https://v3-migration.vuejs.org/)
