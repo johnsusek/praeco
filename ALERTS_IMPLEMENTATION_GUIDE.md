@@ -186,8 +186,15 @@ slack_webhook_url: 'https://hooks.slack.com/services/YOUR/WEBHOOK/URL'
 - **Slack Title**: Message title
 - **Slack Title Link**: URL to link from title
 - **Slack Timeout**: Connection timeout in seconds
-- **Slack CA Certs**: Path to CA certificate for SSL
-- **Slack Ignore SSL Errors**: Skip SSL verification (not recommended)
+- **Slack CA Certs**: Path to CA certificate for SSL verification
+
+> **⚠️ Security Warning**: The "Ignore SSL Errors" option is available but **strongly discouraged** in production. Disabling SSL verification:
+> - Exposes you to man-in-the-middle (MITM) attacks
+> - Allows attackers to intercept sensitive alert data
+> - Should ONLY be used in isolated development/testing environments
+> - Never use in production or with sensitive data
+> 
+> **Instead**: Provide proper CA certificates via the CA Certs option
 
 **Best Practices**:
 - Use different channels for different alert priorities
@@ -256,13 +263,22 @@ password: your-password
 - **SMTP Cert File**: Path to TLS certificate file
 
 **Gmail Setup**:
-1. Enable "Allow less secure apps" in Google account settings
-2. Or use App Passwords for 2FA-enabled accounts
-3. Configure SMTP: `smtp.gmail.com:587` with SSL
+1. **Important**: Google no longer supports "less secure apps" (deprecated May 2022)
+2. **Required**: Use App Passwords for 2FA-enabled accounts:
+   - Go to Google Account → Security → 2-Step Verification → App passwords
+   - Generate an app password for "Mail"
+   - Use this password in smtp_auth_user.yaml
+3. **Alternative**: Use OAuth2 authentication (requires ElastAlert 2 OAuth support)
+4. Configure SMTP: `smtp.gmail.com:587` with SSL
 
 **Microsoft 365**:
-- No known workaround for strict security policies
-- Consider using MS Teams instead
+- **SMTP Authentication**: Supported via App Passwords or OAuth2
+- **Setup for Microsoft 365**:
+  1. Enable SMTP AUTH in Microsoft 365 admin center
+  2. Use `smtp.office365.com:587` with STARTTLS
+  3. For OAuth2: Configure Azure AD application
+  4. For App Password: Generate in account security settings
+- **Alternative**: Use MS Teams alert type for better integration
 
 **Best Practices**:
 - Use descriptive subject lines
@@ -342,7 +358,8 @@ telegram_bot_token: 'YOUR_BOT_TOKEN_HERE'
 - **HTTP POST2 Payload**: Request body template
 - **HTTP POST2 Timeout**: Request timeout
 - **HTTP POST2 CA Certs**: SSL certificates
-- **HTTP POST2 Ignore SSL Errors**: Skip SSL verification
+
+> **⚠️ Security Warning**: The "Ignore SSL Errors" option should **never** be used in production. Disabling SSL verification exposes your system to man-in-the-middle attacks. Always provide proper CA certificates instead.
 
 **Example Payload**:
 ```json
@@ -693,8 +710,9 @@ datadog_api_key: 'YOUR_API_KEY'
 **Praeco Configuration**:
 - **Alertmanager URL**: Alertmanager host URL (required)
 - **Alertmanager Timeout**: Request timeout
-- **Alertmanager CA Certs**: CA certificates for SSL
-- **Alertmanager Ignore SSL Errors**: Skip SSL verification
+- **Alertmanager CA Certs**: CA certificates for SSL verification
+
+> **⚠️ Security Warning**: Disabling SSL verification (if available) is **strongly discouraged**. Always use proper CA certificates to prevent man-in-the-middle attacks.
 - **Alertmanager Proxy**: HTTP proxy
 - **Alertmanager Alert Subject Args**: Fields for labels
 - **Alertmanager Alert Text Args**: Fields for annotations
@@ -736,7 +754,24 @@ twilio_from_number: '+1234567890'
 
 **Purpose**: Execute shell commands when alerts fire
 
-**Security Warning**: Command execution can be dangerous. Only use with trusted inputs and avoid user-controlled data in commands.
+> **⚠️ CRITICAL SECURITY WARNING ⚠️**
+> 
+> Command execution presents **severe security risks** including:
+> - **Remote Code Execution (RCE)** vulnerabilities
+> - **Privilege escalation** if running with elevated permissions
+> - **System compromise** through shell injection attacks
+> 
+> **ONLY use this alert type if absolutely necessary**. Consider alternatives like:
+> - HTTP POST webhooks to trigger automation
+> - Message queue integrations (STOMP, SNS)
+> - Dedicated incident management tools (PagerDuty, Opsgenie)
+> 
+> If you must use Command alerting:
+> - Never include user-controlled or untrusted data in commands
+> - Use absolute paths and parameter validation
+> - Run with minimal required permissions (never as root)
+> - Implement extensive logging and monitoring
+> - Conduct security reviews of all command configurations
 
 **Praeco Configuration**:
 - **Command**: Shell command to execute (required)
@@ -1271,9 +1306,11 @@ elastalert-test-rule --config config.yaml rules/your-rule.yaml
 
 **Solutions**:
 1. **Certificate Verification**:
-   - Provide CA certificates
-   - Temporarily disable SSL verification for testing
-   - Check certificate expiration
+   - Provide proper CA certificates for verification
+   - Check certificate expiration dates
+   - Verify certificate chain is complete
+   
+   > **Security Note**: Never disable SSL verification in production environments. This exposes you to man-in-the-middle attacks. If you must test connectivity, use isolated development environments only.
 
 2. **Hostname Mismatch**:
    - Use correct hostname in URL
