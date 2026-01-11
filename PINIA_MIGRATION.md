@@ -1592,11 +1592,13 @@ onMounted(() => {
 
 ```javascript
 // router.js
-import { createRouter } from 'vue-router';
+import Vue from 'vue';
+import Router from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 
-const router = createRouter({ /* ... */ });
+Vue.use(Router);
 
+const router = new Router({ /* ... */ });
 // ❌ Wrong - Pinia not yet installed when file loads
 const authStore = useAuthStore();
 router.beforeEach((to, from, next) => {
