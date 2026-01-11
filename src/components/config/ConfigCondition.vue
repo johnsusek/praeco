@@ -4,7 +4,10 @@
       <template #reference>
         <span class="pop-trigger pop-when">
           <span>WHEN </span>
-          <span>{{ metricAggType === 'avg' ? 'average' : metricAggType }}</span>
+          <span v-if="metricAggType === 'spike aggregation'">
+            {{ spikeAggMetricAggType === 'avg' ? 'average' : spikeAggMetricAggType }} spike aggregation
+          </span>
+          <span v-else>{{ metricAggType === 'avg' ? 'average' : metricAggType }}</span>
         </span>
       </template>
       <div>
@@ -85,11 +88,26 @@
       <template #reference>
         <span class="pop-trigger">
           <span>OF </span>
-          <span>{{ metricAggKey || 'select a field' }}</span>
+          <span v-if="metricAggType === 'spike aggregation'">{{ spikeAggMetricAggKey || 'select a field' }}</span>
+          <span v-else>{{ metricAggKey || 'select a field' }}</span>
         </span>
       </template>
       <el-form ref="of" :model="$store.state.config.match">
-        <el-form-item prop="metricAggKey" required>
+        <el-form-item v-if="metricAggType === 'spike aggregation'" prop="spikeAggMetricAggKey" required>
+          <el-select
+            v-model="spikeAggMetricAggKey"
+            filterable
+            clearable
+            placeholder="Select field"
+            @input="popOfVisible = false; validate();">
+            <el-option
+              v-for="field in Object.keys(numberFields)"
+              :key="field"
+              :label="field"
+              :value="field" />
+          </el-select>
+        </el-form-item>
+        <el-form-item v-else prop="metricAggKey" required>
           <el-select
             v-model="metricAggKey"
             filterable
@@ -439,6 +457,59 @@
                 id="minCardinality"
                 v-model="minCardinality"
                 :min="1"
+                class="el-input-wide"
+                @input="validate" />
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </el-popover>
+
+    <el-popover
+      v-if="showPopPercentageThresholds"
+      v-model="popPercentageThresholdsVisible"
+      :class="{ 'is-invalid': !popPercentageThresholdsValid }">
+      <template #reference>
+        <span class="pop-trigger">
+          <span>IS</span>
+          <span v-if="maxPercentage !== null && maxPercentage !== undefined">
+            ABOVE {{ maxPercentage }}%
+          </span>
+          <span v-if="minPercentage !== null && minPercentage !== undefined">
+            BELOW {{ minPercentage }}%
+          </span>
+        </span>
+      </template>
+
+      <el-row :gutter="10" style="width: 260px">
+        <el-col :span="10">
+          <el-select
+            id="percentageAboveOrBelow"
+            v-model="percentageAboveOrBelow"
+            class="el-select-wide"
+            @input="updatePercentageAboveOrBelow">
+            <el-option key="above" label="Above" value="above" />
+            <el-option key="below" label="Below" value="below" />
+          </el-select>
+        </el-col>
+
+        <el-col :span="14">
+          <el-form ref="minMaxPercentage" :model="$store.state.config.match">
+            <el-form-item v-if="percentageAboveOrBelow === 'above'" prop="maxPercentage" required>
+              <el-input-number
+                id="maxPercentage"
+                v-model="maxPercentage"
+                :min="0"
+                :max="100"
+                class="el-input-wide"
+                @input="validate" />
+            </el-form-item>
+            <el-form-item v-else prop="minPercentage" required>
+              <el-input-number
+                id="minPercentage"
+                v-model="minPercentage"
+                :min="0"
+                :max="100"
                 class="el-input-wide"
                 @input="validate" />
             </el-form-item>
@@ -800,15 +871,54 @@
           </el-form-item>
         </el-form>
       </div>
-    </el-popover>
 
-    <el-alert
-      v-if="bigBuckets && !useCountQuery && metricAggType === 'count' && spikeOrThreshold !== 'any'"
-      :closable="false"
-      class="m-n-med"
-      type="warning"
-      title="Large data size detected"
-      show-icon>
+      <div v-if="type === 'spike_aggregation'">
+        <el-form
+          :model="$store.state.config.match"
+          label-position="top"
+          class="m-n-lg"
+          @submit.native.prevent>
+          <el-form-item label="Aggregation type" prop="spikeAggMetricAggType">
+            <el-select v-model="spikeAggMetricAggType">
+              <el-option label="Average" value="avg" />
+              <el-option label="Sum" value="sum" />
+              <el-option label="Minimum" value="min" />
+              <el-option label="Maximum" value="max" />
+              <el-option label="Median" value="median" />
+              <el-option label="Mode" value="mode" />
+              <el-option label="Percentiles" value="percentiles" />
+            </el-select>
+            <label>
+              The type of aggregation to apply to the metric field. 
+              This determines how values are aggregated within each time window.
+            </label>
+          </el-form-item>
+
+          <el-form-item label="Threshold (reference)" prop="thresholdRef">
+            <el-input-number v-model="thresholdRef" />
+            <label>
+              The minimum aggregated value that must exist in the
+              reference window for an alert to trigger.
+              For example, if "spike height" is 3 and "threshold reference" is 10,
+              then the 'reference' window must have an aggregated value of
+              at least 10 and the 'current' window at least
+              30 for an alert to be triggered.
+            </label>
+          </el-form-item>
+
+          <el-form-item label="Threshold (current)" prop="thresholdCur">
+            <el-input-number v-model="thresholdCur" />
+            <label>
+              The minimum aggregated value that must exist in the current
+              window for an alert to trigger.
+              For example, if 'spike height' is 3 and 'threshold current' is 60, then an alert
+              will occur if the current window has an aggregated value more than 60 and the reference
+              window has less than 20.
+            </label>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-popover>
       <div>
         This rule is processing large amounts of data and should use the
         "Use count query" option under "WITH OPTIONS" to avoid high CPU usage.
@@ -826,10 +936,10 @@
       :show-axis-pointer="false"
       :group-by="groupedOver === 'field' && queryKey"
       :agg-cardinality="metricAggType === 'cardinality' && cardinalityField"
-      :agg-avg="metricAggType === 'avg' && metricAggKey"
-      :agg-sum="metricAggType === 'sum' && metricAggKey"
-      :agg-min="metricAggType === 'min' && metricAggKey"
-      :agg-max="metricAggType === 'max' && metricAggKey"
+      :agg-avg="(metricAggType === 'avg' && metricAggKey) || (metricAggType === 'spike aggregation' && spikeAggMetricAggType === 'avg' && spikeAggMetricAggKey)"
+      :agg-sum="(metricAggType === 'sum' && metricAggKey) || (metricAggType === 'spike aggregation' && spikeAggMetricAggType === 'sum' && spikeAggMetricAggKey)"
+      :agg-min="(metricAggType === 'min' && metricAggKey) || (metricAggType === 'spike aggregation' && spikeAggMetricAggType === 'min' && spikeAggMetricAggKey)"
+      :agg-max="(metricAggType === 'max' && metricAggKey) || (metricAggType === 'spike aggregation' && spikeAggMetricAggType === 'max' && spikeAggMetricAggKey)"
       class="m-n-med"
       @click="clickChart"
       @update="handleUpdateData"
@@ -870,10 +980,13 @@ export default {
       popAboveVisible: false,
       popCardinalityThresholdsVisible: false,
       cardinalityAboveOrBelow: 'above',
+      percentageAboveOrBelow: 'above',
       aboveOrBelow: 'above',
       spikeOrThreshold: 'any',
       popCardinalityValid: true,
       popCardinalityThresholdsValid: true,
+      popPercentageThresholdsVisible: false,
+      popPercentageThresholdsValid: true,
       popOfValid: true,
       popOverValid: true,
       popCompareValid: true,
@@ -1091,10 +1204,15 @@ export default {
       return this.metricAggType === 'cardinality';
     },
 
+    showPopPercentageThresholds() {
+      return this.metricAggType === 'percentage match';
+    },
+
     showPopOf() {
       return (
-        this.metricAggType !== 'count' && this.metricAggType !== 'new term' && this.metricAggType !== 'cardinality'
-        && !['field changes', 'field in list', 'field not in list', 'percentage match', 'spike aggregation'].includes(this.metricAggType)
+        (this.metricAggType !== 'count' && this.metricAggType !== 'new term' && this.metricAggType !== 'cardinality'
+        && !['field changes', 'field in list', 'field not in list', 'percentage match'].includes(this.metricAggType))
+        || this.metricAggType === 'spike aggregation'
       );
     },
 
@@ -1392,6 +1510,11 @@ export default {
         }
       } else if (this.type === 'percentage_match') {
         this.metricAggType = 'percentage match';
+        if (this.maxPercentage !== null && this.maxPercentage !== undefined) {
+          this.percentageAboveOrBelow = 'above';
+        } else if (this.minPercentage !== null && this.minPercentage !== undefined) {
+          this.percentageAboveOrBelow = 'below';
+        }
       } else if (this.type === 'spike_aggregation') {
         this.metricAggType = 'spike aggregation';
         this.spikeOrThreshold = 'spike';
@@ -1445,6 +1568,10 @@ export default {
         if (this.$refs.cardinalityField) {
           await this.validateCardinality();
           await this.validateCardinalityThresholds();
+        }
+
+        if (this.$refs.minMaxPercentage) {
+          await this.validatePercentageThresholds();
         }
 
         await this.validateOver();
@@ -1597,6 +1724,15 @@ export default {
         this.popCardinalityThresholdsValid = await this.$refs.minMaxCardinality.validate();
       } catch (error) {
         this.popCardinalityThresholdsValid = false;
+        throw error;
+      }
+    },
+
+    async validatePercentageThresholds() {
+      try {
+        this.popPercentageThresholdsValid = await this.$refs.minMaxPercentage.validate();
+      } catch (error) {
+        this.popPercentageThresholdsValid = false;
         throw error;
       }
     },
@@ -1757,6 +1893,16 @@ export default {
         this.minCardinality = null;
       } else {
         this.maxCardinality = null;
+      }
+    },
+
+    updatePercentageAboveOrBelow(val) {
+      // reset any old min/max values
+      if (val === 'above') {
+        // reset the *other*
+        this.minPercentage = null;
+      } else {
+        this.maxPercentage = null;
       }
     },
 
