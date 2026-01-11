@@ -384,7 +384,7 @@ telegram_bot_token: 'YOUR_BOT_TOKEN_HERE'
 - Connection errors: Verify URL and network connectivity
 - 401/403 errors: Check authentication credentials
 - Timeout: Increase timeout or check endpoint performance
-- SSL errors: Verify certificates or temporarily disable for testing
+- SSL errors: Verify certificates or test with proper CA certificates in an isolated development environment
 
 ### Jira
 
