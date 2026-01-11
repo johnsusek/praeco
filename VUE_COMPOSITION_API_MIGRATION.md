@@ -599,6 +599,7 @@ export default {
 </script>
 ```
 
+_Note: This example is intentionally simplified to show the change in component structure. The real `PraecoFormItem.vue` component also defines additional props such as `labelWidth`, `rules`, `error`, `showMessage`, `inlineMessage`, and `size`; they would be migrated in exactly the same way as the props shown here._
 **Migrated (Composition API):**
 ```vue
 <template>
