@@ -963,7 +963,7 @@ Common VueUse composables:
 - `useTitle` - Reactive document title
 - `useWindowSize` - Reactive window dimensions
 
-See [VueUse documentation](https://vueuse.org/) for complete list.
+See [VueUse documentation](https://vueuse.org/) for a complete list of composables, and ensure you are viewing the docs for the version you have installed (for example, `@vueuse/core` v11.x for Vue 2.7). Not all VueUse composables are compatible with Vue 2; some are Vue 3–only or have different requirements, so verify or test each composable before using it in Vue 2.7.
 
 ## Best Practices
 
