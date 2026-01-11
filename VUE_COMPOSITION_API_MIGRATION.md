@@ -849,7 +849,7 @@ export function useRoute() {
   if (!instance) {
     throw new Error('useRoute must be called within a setup function');
   }
-  return instance.proxy.$route;
+  return computed(() => instance.proxy.$route);
 }
 ```
 
