@@ -152,8 +152,9 @@ import App from './App.vue';
 import router from './router';
 import store from './store'; // Keep Vuex during migration
 import pinia from './store/pinia'; // Add Pinia
+import { PiniaVuePlugin } from 'pinia';
 
-Vue.use(pinia);
+Vue.use(PiniaVuePlugin);
 
 new Vue({
   router,
