@@ -858,7 +858,7 @@ export function useRoute() {
 ```vue
 <script setup>
 import { computed } from 'vue';
-import { useStore, useRouter, useRoute } from '@/composables/useStore';
+import { useStore, useRouter, useRoute } from '../composables/useStore';
 
 const store = useStore();
 const router = useRouter();
