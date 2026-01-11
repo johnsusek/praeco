@@ -408,8 +408,9 @@ onMounted(() => {
 </script>
 ```
 
-**Note**: For Praeco, since we're using Vue 2.7, `useStore` and `useRouter` are not built-in. Use `getCurrentInstance()` instead:
+The previous example uses Vue 3-style `useStore`/`useRouter` helpers for familiarity. In Vue 2.7, adapt it as shown below.
 
+**Note (Vue 2.7 adaptation of Pattern 4)**: For Praeco, since we're using Vue 2.7, `useStore` and `useRouter` are not built-in. Use `getCurrentInstance()` instead:
 ```vue
 <script setup>
 import { computed, getCurrentInstance } from 'vue';
