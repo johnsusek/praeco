@@ -78,14 +78,14 @@ Create `tsconfig.json` in the project root:
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     
-    // Type checking
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
+    // Type checking (initially relaxed for incremental migration)
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": false,
+    "alwaysStrict": false,
     
     // Additional checks
     "noUnusedLocals": true,
