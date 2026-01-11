@@ -601,11 +601,11 @@ export default {
     },
 
     UPDATE_MIN_PERCENTAGE(state, minPercentage) {
-      state.minPercentage = parseFloat(minPercentage) || null;
+      state.minPercentage = minPercentage === null || minPercentage === undefined ? null : parseFloat(minPercentage);
     },
 
     UPDATE_MAX_PERCENTAGE(state, maxPercentage) {
-      state.maxPercentage = parseFloat(maxPercentage) || null;
+      state.maxPercentage = maxPercentage === null || maxPercentage === undefined ? null : parseFloat(maxPercentage);
     },
 
     //
