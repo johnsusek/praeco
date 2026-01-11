@@ -870,7 +870,7 @@ function navigateHome() {
   router.push('/');
 }
 
-console.log('Current route:', route.path);
+console.log('Current route:', route.value.path);
 </script>
 ```
 
