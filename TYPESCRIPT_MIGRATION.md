@@ -1988,7 +1988,7 @@ For each file migration:
 - [ ] Add return type annotations to functions
 - [ ] Replace `any` with proper types
 - [ ] Add interfaces for complex objects
-- [ ] Update imports to use `.ts` extensions
+- [ ] Ensure imports do **not** use `.ts`/`.tsx` extensions (use `./module`, not `./module.ts`)
 - [ ] Fix all TypeScript errors
 - [ ] Run tests to ensure functionality unchanged
 - [ ] Commit changes
