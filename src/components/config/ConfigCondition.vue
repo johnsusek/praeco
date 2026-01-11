@@ -889,7 +889,7 @@
               <el-option label="Percentiles" value="percentiles" />
             </el-select>
             <label>
-              The type of aggregation to apply to the metric field. 
+              The type of aggregation to apply to the metric field.
               This determines how values are aggregated within each time window.
             </label>
           </el-form-item>
