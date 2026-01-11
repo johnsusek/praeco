@@ -1932,6 +1932,7 @@ export default {
         this.type = 'cardinality';
       } else if (val === 'percentage match') {
         this.type = 'percentage_match';
+        this.percentageAboveOrBelow = 'above';
       } else if (val === 'spike aggregation') {
         this.type = 'spike_aggregation';
         this.spikeOrThreshold = 'spike';
