@@ -24,6 +24,12 @@
           <el-menu-item index="max">
             max
           </el-menu-item>
+          <el-menu-item index="percentage match">
+            percentage match
+          </el-menu-item>
+          <el-menu-item index="spike aggregation">
+            spike aggregation
+          </el-menu-item>
           <el-menu-item index="field in list">
             field value in list
           </el-menu-item>
@@ -899,7 +905,9 @@ export default {
         spike: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#spike',
         new_term: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#new-term',
         metric_aggregation: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#metric-aggregation',
-        cardinality: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#cardinality'
+        cardinality: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#cardinality',
+        percentage_match: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#percentage-match',
+        spike_aggregation: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#spike-aggregation'
       };
 
       return helpLinks[this.type];
@@ -1065,11 +1073,11 @@ export default {
     },
 
     showChart() {
-      return !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType);
+      return !['field changes', 'field in list', 'field not in list', 'percentage match'].includes(this.metricAggType);
     },
 
     showOptions() {
-      let shouldShowOptions = ['field not in list', 'field changes', 'new term'].includes(this.metricAggType);
+      let shouldShowOptions = ['field not in list', 'field changes', 'new term', 'spike aggregation'].includes(this.metricAggType);
       let shouldShowOptionsSt = this.metricAggType === 'count' && this.spikeOrThreshold !== 'any';
 
       return shouldShowOptions || shouldShowOptionsSt;
@@ -1086,18 +1094,18 @@ export default {
     showPopOf() {
       return (
         this.metricAggType !== 'count' && this.metricAggType !== 'new term' && this.metricAggType !== 'cardinality'
-        && !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
+        && !['field changes', 'field in list', 'field not in list', 'percentage match', 'spike aggregation'].includes(this.metricAggType)
       );
     },
 
     showPopOver() {
       return (
-        !['field changes', 'field in list', 'field not in list', 'new term'].includes(this.metricAggType)
+        !['field changes', 'field in list', 'field not in list', 'new term', 'percentage match'].includes(this.metricAggType)
       );
     },
 
     showPopAbove() {
-      return !['field changes', 'field in list', 'field not in list', 'new term', 'cardinality'].includes(this.metricAggType);
+      return !['field changes', 'field in list', 'field not in list', 'new term', 'cardinality', 'percentage match'].includes(this.metricAggType);
     },
 
     showPopCompare() {
@@ -1118,8 +1126,8 @@ export default {
 
     showTime() {
       return (
-        !['field in list', 'field not in list', 'new term'].includes(this.metricAggType)
-        && (this.spikeOrThreshold !== 'any' || this.metricAggType === 'cardinality')
+        !['field in list', 'field not in list', 'new term', 'percentage match'].includes(this.metricAggType)
+        && (this.spikeOrThreshold !== 'any' || this.metricAggType === 'cardinality' || this.metricAggType === 'spike aggregation')
       );
     },
 
@@ -1242,6 +1250,53 @@ export default {
       }
     },
 
+    // Percentage Match
+    matchBucketFilter: {
+      get() {
+        return this.$store.state.config.match.matchBucketFilter;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_MATCH_BUCKET_FILTER', value);
+      }
+    },
+
+    minPercentage: {
+      get() {
+        return this.$store.state.config.match.minPercentage;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_MIN_PERCENTAGE', value);
+      }
+    },
+
+    maxPercentage: {
+      get() {
+        return this.$store.state.config.match.maxPercentage;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_MAX_PERCENTAGE', value);
+      }
+    },
+
+    // Spike Aggregation
+    spikeAggMetricAggKey: {
+      get() {
+        return this.$store.state.config.match.spikeAggMetricAggKey;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_SPIKE_AGG_METRIC_AGG_KEY', value);
+      }
+    },
+
+    spikeAggMetricAggType: {
+      get() {
+        return this.$store.state.config.match.spikeAggMetricAggType;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_SPIKE_AGG_METRIC_AGG_TYPE', value);
+      }
+    },
+
     queryKey: {
       get() {
         return this.$store.state.config.match.queryKey;
@@ -1335,18 +1390,23 @@ export default {
         } else if (this.minCardinality) {
           this.cardinalityAboveOrBelow = 'below';
         }
+      } else if (this.type === 'percentage_match') {
+        this.metricAggType = 'percentage match';
+      } else if (this.type === 'spike_aggregation') {
+        this.metricAggType = 'spike aggregation';
+        this.spikeOrThreshold = 'spike';
       }
 
       // if rule supports and has a queryKey, set groupedOver to field
       if (
         this.queryKey.length
         && ['metric_aggregation', 'frequency', 'flatline', 'any',
-          'change', 'spike', 'flatline', 'cardinality'].includes(this.type)
+          'change', 'spike', 'flatline', 'cardinality', 'percentage_match', 'spike_aggregation'].includes(this.type)
       ) {
         this.groupedOver = 'field';
       }
 
-      if (this.metricAggType === 'count' || this.metricAggType === 'cardinality') {
+      if (this.metricAggType === 'count' || this.metricAggType === 'cardinality' || this.metricAggType === 'percentage match' || this.metricAggType === 'spike aggregation') {
         this.useTimeframe = true;
       }
 
@@ -1724,6 +1784,10 @@ export default {
         this.compareKey = [];
       } else if (val === 'cardinality') {
         this.type = 'cardinality';
+      } else if (val === 'percentage match') {
+        this.type = 'percentage_match';
+      } else if (val === 'spike aggregation') {
+        this.type = 'spike_aggregation';
       } else {
         this.type = 'metric_aggregation';
       }

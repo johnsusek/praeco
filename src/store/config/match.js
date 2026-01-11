@@ -38,7 +38,16 @@ function initialState() {
     termsWindowSize: { days: 30 },
     windowStepSize: { days: 1 },
     alertOnMissingField: false,
-    useKeywordPostfix: true
+    useKeywordPostfix: true,
+
+    // Percentage Match
+    matchBucketFilter: null,
+    minPercentage: null,
+    maxPercentage: null,
+
+    // Spike Aggregation
+    spikeAggMetricAggKey: '',
+    spikeAggMetricAggType: 'avg'
   };
 }
 
@@ -61,13 +70,109 @@ export default {
         return getters.markLineMetricAggregation;
       } if (state.type === 'cardinality') {
         return getters.markLineCardinality;
+      } if (state.type === 'percentage_match') {
+        return getters.markLinePercentageMatch;
+      } if (state.type === 'spike_aggregation') {
+        return getters.markLineSpikeAggregation;
       }
     },
 
     spikeHeight(state) {
-      if (state.type === 'spike') {
+      if (state.type === 'spike' || state.type === 'spike_aggregation') {
         return state.spikeHeight;
       }
+    },
+
+    markLinePercentageMatch(state) {
+      let data = [];
+
+      if (state.minPercentage !== null && state.minPercentage !== undefined) {
+        data.push({
+          name: 'Minimum percentage',
+          yAxis: state.minPercentage,
+          lineStyle: {
+            color: '#F56C6C'
+          },
+          label: {
+            formatter: `Minimum percentage - ${state.minPercentage}%`,
+            position: 'middle',
+            color: '#F56C6C',
+            fontSize: 14
+          }
+        });
+      }
+
+      if (state.maxPercentage !== null && state.maxPercentage !== undefined) {
+        data.push({
+          name: 'Maximum percentage',
+          yAxis: state.maxPercentage,
+          lineStyle: {
+            color: '#F56C6C'
+          },
+          label: {
+            formatter: `Maximum percentage - ${state.maxPercentage}%`,
+            position: 'middle',
+            color: '#F56C6C',
+            fontSize: 14
+          }
+        });
+      }
+
+      return {
+        silent: true,
+        lineStyle: {
+          color: '#F56C6C',
+          type: 'solid'
+        },
+        animation: false,
+        symbol: 'none',
+        data
+      };
+    },
+
+    markLineSpikeAggregation(state) {
+      let data = [];
+
+      if (state.thresholdRef) {
+        data.push({
+          name: 'Threshold (reference)',
+          yAxis: state.thresholdRef,
+          lineStyle: {
+            color: '#F56C6C'
+          },
+          label: {
+            formatter: `Threshold (reference) - ${state.thresholdRef}`,
+            position: 'middle',
+            color: '#F56C6C',
+            fontSize: 14
+          }
+        });
+      }
+
+      if (state.thresholdCur) {
+        data.push({
+          name: 'Threshold (current)',
+          yAxis: state.thresholdCur,
+          label: {
+            formatter: `Threshold (current) - ${state.thresholdCur}`,
+            position: 'middle',
+            color: 'green',
+            fontWeight: 'bold',
+            fontSize: 14
+          }
+        });
+      }
+
+      return {
+        silent: true,
+        lineStyle: {
+          color: 'green',
+          type: 'solid'
+        },
+        animation: false,
+        symbol: 'none',
+        data
+      };
     },
 
     markLineCardinality(state) {
@@ -485,6 +590,34 @@ export default {
 
     UPDATE_USE_KEYWORD_POSTFIX(state, value) {
       state.useKeywordPostfix = value;
+    },
+
+    //
+    // Percentage Match
+    //
+
+    UPDATE_MATCH_BUCKET_FILTER(state, matchBucketFilter) {
+      state.matchBucketFilter = matchBucketFilter;
+    },
+
+    UPDATE_MIN_PERCENTAGE(state, minPercentage) {
+      state.minPercentage = parseFloat(minPercentage) || null;
+    },
+
+    UPDATE_MAX_PERCENTAGE(state, maxPercentage) {
+      state.maxPercentage = parseFloat(maxPercentage) || null;
+    },
+
+    //
+    // Spike Aggregation
+    //
+
+    UPDATE_SPIKE_AGG_METRIC_AGG_KEY(state, spikeAggMetricAggKey) {
+      state.spikeAggMetricAggKey = spikeAggMetricAggKey;
+    },
+
+    UPDATE_SPIKE_AGG_METRIC_AGG_TYPE(state, spikeAggMetricAggType) {
+      state.spikeAggMetricAggType = spikeAggMetricAggType;
     }
   }
 };

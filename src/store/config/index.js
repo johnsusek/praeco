@@ -182,6 +182,19 @@ export default {
         commit('match/UPDATE_MAX_CARDINALITY', config.max_cardinality);
         commit('match/UPDATE_CARDINALITY_FIELD', config.cardinality_field);
 
+        // Percentage Match
+        if (config.match_bucket_filter) {
+          commit('match/UPDATE_MATCH_BUCKET_FILTER', config.match_bucket_filter);
+        }
+        commit('match/UPDATE_MIN_PERCENTAGE', config.min_percentage);
+        commit('match/UPDATE_MAX_PERCENTAGE', config.max_percentage);
+
+        // Spike Aggregation
+        if (config.type === 'spike_aggregation') {
+          commit('match/UPDATE_SPIKE_AGG_METRIC_AGG_KEY', config.metric_agg_key);
+          commit('match/UPDATE_SPIKE_AGG_METRIC_AGG_TYPE', config.metric_agg_type);
+        }
+
         if (config.aggregation && config.aggregation.schedule) {
           commit('alert/UPDATE_AGGREGATION_SCHEDULE', config.aggregation.schedule);
         }
@@ -1610,6 +1623,66 @@ export default {
 
       if (state.match.minCardinality) {
         config.min_cardinality = state.match.minCardinality;
+      }
+
+      return config;
+    },
+
+    percentageMatch(state) {
+      let config = {};
+
+      if (state.match.matchBucketFilter && state.match.matchBucketFilter.length) {
+        config.match_bucket_filter = state.match.matchBucketFilter;
+      }
+
+      if (state.match.minPercentage !== null && state.match.minPercentage !== undefined) {
+        config.min_percentage = state.match.minPercentage;
+      }
+
+      if (state.match.maxPercentage !== null && state.match.maxPercentage !== undefined) {
+        config.max_percentage = state.match.maxPercentage;
+      }
+
+      return config;
+    },
+
+    spikeAggregation(state) {
+      let config = {};
+
+      if (state.match.spikeAggMetricAggKey) {
+        config.metric_agg_key = state.match.spikeAggMetricAggKey;
+      }
+
+      if (state.match.spikeAggMetricAggType) {
+        config.metric_agg_type = state.match.spikeAggMetricAggType;
+      }
+
+      if (state.match.spikeHeight) {
+        config.spike_height = state.match.spikeHeight;
+      }
+
+      if (state.match.spikeType) {
+        config.spike_type = state.match.spikeType;
+      }
+
+      if (state.match.thresholdRef) {
+        config.threshold_ref = state.match.thresholdRef;
+      }
+
+      if (state.match.thresholdCur) {
+        config.threshold_cur = state.match.thresholdCur;
+      }
+
+      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
+        config.timeframe = state.match.timeframe;
+      }
+
+      if (state.match.useCountQuery) {
+        config.use_count_query = state.match.useCountQuery;
+      }
+
+      if (state.match.docType) {
+        config.doc_type = state.match.docType;
       }
 
       return config;
@@ -3695,6 +3768,10 @@ export default {
         config = { ...config, ...getters.newterm };
       } else if (state.match.type === 'cardinality') {
         config = { ...config, ...getters.cardinality };
+      } else if (state.match.type === 'percentage_match') {
+        config = { ...config, ...getters.percentageMatch };
+      } else if (state.match.type === 'spike_aggregation') {
+        config = { ...config, ...getters.spikeAggregation };
       }
 
       config = { ...config, ...getters.kibanaDiscover };
