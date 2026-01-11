@@ -1525,7 +1525,7 @@ export const useUserStore = defineStore('user', {
         const res = await api.get<User[]>('/users');
         this.users = res.data;
       } catch (error) {
-        this.error = error.message;
+        this.error = error instanceof Error ? error.message : String(error);
       } finally {
         this.loading = false;
       }
