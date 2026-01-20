@@ -1643,6 +1643,10 @@ export default {
         config.max_percentage = state.match.maxPercentage;
       }
 
+      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
+        config.timeframe = state.match.timeframe;
+      }
+
       return config;
     },
 
