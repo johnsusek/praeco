@@ -173,8 +173,16 @@ export default {
         commit('match/UPDATE_SPIKE_HEIGHT', config.spike_height);
         commit('match/UPDATE_SPIKE_TYPE', config.spike_type);
 
-        commit('match/UPDATE_METRIC_AGG_KEY', config.metric_agg_key);
-        commit('match/UPDATE_METRIC_AGG_TYPE', config.metric_agg_type);
+        // Spike Aggregation - load into dedicated fields
+        if (config.type === 'spike_aggregation') {
+          commit('match/UPDATE_SPIKE_AGG_METRIC_AGG_KEY', config.metric_agg_key);
+          commit('match/UPDATE_SPIKE_AGG_METRIC_AGG_TYPE', config.metric_agg_type);
+        } else {
+          // For other rule types, use the general metric aggregation fields
+          commit('match/UPDATE_METRIC_AGG_KEY', config.metric_agg_key);
+          commit('match/UPDATE_METRIC_AGG_TYPE', config.metric_agg_type);
+        }
+        
         commit('match/UPDATE_MAX_THRESHOLD', config.max_threshold);
         commit('match/UPDATE_MIN_THRESHOLD', config.min_threshold);
 
@@ -188,12 +196,6 @@ export default {
         }
         commit('match/UPDATE_MIN_PERCENTAGE', config.min_percentage);
         commit('match/UPDATE_MAX_PERCENTAGE', config.max_percentage);
-
-        // Spike Aggregation
-        if (config.type === 'spike_aggregation') {
-          commit('match/UPDATE_SPIKE_AGG_METRIC_AGG_KEY', config.metric_agg_key);
-          commit('match/UPDATE_SPIKE_AGG_METRIC_AGG_TYPE', config.metric_agg_type);
-        }
 
         if (config.aggregation && config.aggregation.schedule) {
           commit('alert/UPDATE_AGGREGATION_SCHEDULE', config.aggregation.schedule);
