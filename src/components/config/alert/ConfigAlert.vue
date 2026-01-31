@@ -100,9 +100,6 @@
         <el-checkbox id="destinationSlack" label="slack" border>
           Slack
         </el-checkbox>
-        <el-checkbox id="destinationMsTeams" label="ms_teams" border>
-          MS Teams
-        </el-checkbox>
         <el-checkbox id="destinationEmail" label="email" border>
           Email
         </el-checkbox>
@@ -241,7 +238,6 @@
           || alert.includes('lark')
           || alert.includes('line')
           || alert.includes('mattermost')
-          || alert.includes('ms_teams')
           || alert.includes('ms_power_automate')
           || alert.includes('opsgenie')
           || alert.includes('pagerduty')
@@ -299,14 +295,6 @@
           <span><Icon icon="globe" /> HTTP POST 2</span>
         </template>
         <ConfigAlertHttpPost2 ref="post2" :view-only="viewOnly" />
-      </el-tab-pane>
-
-      <!-- MS Teams -->
-      <el-tab-pane v-if="alert.includes('ms_teams')">
-        <template #label>
-          <Icon :icon="['fab', 'microsoft']" size="1x" /> MS Teams
-        </template>
-        <ConfigAlertMsTeams ref="ms_teams" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- Telegram -->
@@ -627,7 +615,6 @@ import ConfigAlertLark from './ConfigAlertLark.vue';
 import ConfigAlertLineMessageApi from './ConfigAlertLineMessageApi.vue';
 import ConfigAlertMattermost from './ConfigAlertMattermost.vue';
 import ConfigAlertMatrixHookshot from './ConfigAlertMatrixHookshot.vue';
-import ConfigAlertMsTeams from './ConfigAlertMsTeams.vue';
 import ConfigAlertMsPowerAutomate from './ConfigAlertMsPowerAutomate.vue';
 import ConfigAlertOpsgenie from './ConfigAlertOpsgenie.vue';
 import ConfigAlertPagerDuty from './ConfigAlertPagerDuty.vue';
@@ -752,7 +739,6 @@ export default {
     ConfigAlertLineMessageApi,
     ConfigAlertMattermost,
     ConfigAlertMatrixHookshot,
-    ConfigAlertMsTeams,
     ConfigAlertMsPowerAutomate,
     ConfigAlertOpsgenie,
     ConfigAlertPagerDuty,
@@ -828,12 +814,6 @@ export default {
           }
         ],
         matrixhookshotWebhookUrl: [
-          {
-            validator: validateUrl,
-            trigger: ['change', 'blur']
-          }
-        ],
-        msTeamsWebhookUrl: [
           {
             validator: validateUrl,
             trigger: ['change', 'blur']
