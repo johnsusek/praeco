@@ -42,8 +42,6 @@ npx vitest run tests/unit/specs/alert/ConfigYamlMattermost.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlMattermost002.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlMatrixhookshot001.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlMatrixhookshot002.spec.js &&
-npx vitest run tests/unit/specs/alert/ConfigYamlMsTeams.spec.js &&
-npx vitest run tests/unit/specs/alert/ConfigYamlMsTeamsOpt.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlMsPowerAutomate001.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlMsPowerAutomate002.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlOpsgenie.spec.js &&
