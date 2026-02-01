@@ -92,7 +92,6 @@ Vue.component('ConfigAlertLark', ConfigAlertLark);
 Vue.component('ConfigAlertLineMessageApi', ConfigAlertLineMessageApi);
 Vue.component('ConfigAlertMattermost', ConfigAlertMattermost);
 Vue.component('ConfigAlertMatrixHookshot', ConfigAlertMatrixHookshot);
-Vue.component('ConfigAlertMsTeams', ConfigAlertMsTeams);
 Vue.component('ConfigAlertMsPowerAutomate', ConfigAlertMsPowerAutomate);
 Vue.component('ConfigAlertPagerDuty', ConfigAlertPagerDuty);
 Vue.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
