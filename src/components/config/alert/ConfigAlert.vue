@@ -594,7 +594,7 @@
         <template #label>
           SMSEagle
         </template>
-        <ConfigAlertSmsEagle ref="line" :view-only="viewOnly" />
+        <ConfigAlertSmsEagle ref="smseagle" :view-only="viewOnly" />
       </el-tab-pane>
     </el-tabs>
   </el-form>
