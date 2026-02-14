@@ -9,8 +9,6 @@ describe('SmsEagle 001 YAML parsing', () => {
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
     let yaml = store.getters['config/yaml']();
 
-    console.log(yaml);
-
     let expected = `__praeco_full_path: "test123"
 __praeco_query_builder: "{\\"query\\":{\\"logicalOperator\\":\\"all\\",\\"children\\":[]}}"
 alert:
