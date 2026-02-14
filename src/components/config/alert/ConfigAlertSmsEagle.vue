@@ -109,7 +109,7 @@
                 <el-input
                   v-model="smseagleContacts[index]"
                   :disabled="viewOnly"
-                  placeholder="SmseagleContactss"
+                  placeholder="SmseagleContacts"
                   @input="(val) => updateSmseagleContacts(val, index)" />
               </el-col>
               <el-col :span="4">
