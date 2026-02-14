@@ -160,7 +160,7 @@
                 <el-input
                   v-model="smseagleGroups[index]"
                   :disabled="viewOnly"
-                  placeholder="SmseagleGroupss"
+                  placeholder="SmseagleGroups"
                   @input="(val) => updateSmseagleGroups(val, index)" />
               </el-col>
               <el-col :span="4">
