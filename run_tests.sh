@@ -63,12 +63,10 @@ npx vitest run tests/unit/specs/alert/ConfigYamlSes.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlSesProfile.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlSlack.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlSlack002.spec.js &&
-
 npx vitest run tests/unit/specs/alert/ConfigYamlSmsEagle001.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlSmsEagle002.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlSmsEagle003.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlSmsEagle004.spec.js &&
-
 npx vitest run tests/unit/specs/alert/ConfigYamlSns.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlSnsProfile.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlStomp.spec.js &&
