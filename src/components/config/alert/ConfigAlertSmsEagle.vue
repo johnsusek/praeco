@@ -51,8 +51,7 @@
             :prop="`smseagleTo.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
-            label=""
-            required>
+            label="">
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
                 <el-input
@@ -102,11 +101,10 @@
             :prop="`smseagleContacts.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
-            label=""
-            required>
+            label="">
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
-                <el-input
+                <el-input-number
                   v-model="smseagleContacts[index]"
                   :disabled="viewOnly"
                   placeholder="SmseagleContactss"
@@ -153,11 +151,10 @@
             :prop="`smseagleGroups.${index}`"
             :disabled="viewOnly"
             class="el-form-item-list"
-            label=""
-            required>
+            label="">
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
-                <el-input
+                <el-input-number
                   v-model="smseagleGroups[index]"
                   :disabled="viewOnly"
                   placeholder="SmseagleGroupss"
