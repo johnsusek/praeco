@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Errors from '@/views/Errors';
+import Errors from '@/views/Errors.vue';
 import mockErrorLog from '../mockData/errorsLog.json';
 import { mountComponent, mockAxios } from '../setup';
 

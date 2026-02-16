@@ -7,6 +7,16 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.8.23
+
+**New options**
+
+- SMS Eagle
+
+**Remove Option**
+
+-- ms teams
+
 ## -> 1.8.22
 
 **New options**

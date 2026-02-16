@@ -2,7 +2,7 @@ import { nextTick } from 'vue';
 import { expect } from 'chai';
 
 import store from '@/store';
-import ConfigCondition from '@/components/config/ConfigCondition';
+import ConfigCondition from '@/components/config/ConfigCondition.vue';
 import { mountComponent, mockAxios } from '../setup';
 import mockChartData from '../mockData/chartData.json';
 import { ruleYaml } from '../mockData/ruleData.js';

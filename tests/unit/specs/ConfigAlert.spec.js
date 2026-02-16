@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { expect } from 'chai';
 import store from '@/store';
-import ConfigAlert from '@/components/config/alert/ConfigAlert';
+import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
 import { mountComponent, mockAxios } from '../setup';
 import mockChartData from '../mockData/chartData.json';
 import { ruleYaml } from '../mockData/ruleData.js';
@@ -19,8 +19,6 @@ async function prep() {
 let wrapper;
 
 describe('ConfigAlert', function() {
-  this.timeout(20000);
-
   it('renders the realert amount', async () => {
     wrapper = await prep();
     let value = wrapper.find('#realert input[min="0"]').element.value;
@@ -60,5 +58,5 @@ describe('ConfigAlert', function() {
 
   it('renders the right slack message color', () => {
     return expect(wrapper.find('#slackMsgColorDanger input').element.checked).to.equal(true);
-  });
+  }, 20000);
 });

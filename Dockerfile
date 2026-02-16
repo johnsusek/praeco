@@ -1,4 +1,4 @@
-FROM node:lts-iron AS base
+FROM node:20.20.0-bookworm AS base
 
 RUN apt update -qqy && \
     apt upgrade -qqy && \
