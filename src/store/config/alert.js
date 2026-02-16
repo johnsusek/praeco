@@ -368,6 +368,17 @@ function initialState() {
     slackJiraTicketColor: '#ec4b98',
     slackJiraTicketTitle: 'Jira Ticket',
 
+    /* SMSEagle */
+    smseagleUrl: '',
+    smseagleToken: '',
+    smseagleMessageType: '',
+    smseagleText: '',
+    smseagleTo: [],
+    smseagleContacts: [],
+    smseagleGroups: [],
+    smseagleDuration: '',
+    smseagleVoiceId: '',
+
     /* ServiceNow */
     serviceNowUsername: '',
     serviceNowPassword: '',
@@ -2156,6 +2167,94 @@ export default {
 
     UPDATE_SLACK_JIRA_TICKET_TITLE(state, slackJiraTicketTitle) {
       state.slackJiraTicketTitle = slackJiraTicketTitle;
+    },
+
+    /* SMSEagle */
+    UPDATE_SMSEAGLE_URL(state, smseagleUrl) {
+      state.smseagleUrl = smseagleUrl;
+    },
+
+    UPDATE_SMSEAGLE_TOKEN(state, smseagleToken) {
+      state.smseagleToken = smseagleToken;
+    },
+
+    UPDATE_SMSEAGLE_MESSAGE_TYPE(state, smseagleMessageType) {
+      state.smseagleMessageType = smseagleMessageType;
+    },
+
+    UPDATE_SMSEAGLE_TEXT(state, smseagleText) {
+      state.smseagleText = smseagleText;
+    },
+
+    UPDATE_SMSEAGLE_TO(state, smseagleTo) {
+      state.smseagleTo = smseagleTo;
+    },
+
+    ADD_SMSEAGLE_TO_ENTRY(state) {
+      state.smseagleTo.push('');
+    },
+
+    ADD_SMSEAGLE_TO_ENTRY_VALUE(state, value) {
+      state.smseagleTo.push(value);
+    },
+
+    REMOVE_SMSEAGLE_TO_ENTRY(state, entry) {
+      state.smseagleTo = state.smseagleTo.filter(b => b !== entry);
+    },
+
+    UPDATE_SMSEAGLE_TO_ENTRY(state, { entry, index }) {
+      if (!state.smseagleTo) return;
+      state.smseagleTo[index] = entry;
+    },
+
+    UPDATE_SMSEAGLE_CONTACTS(state, smseagleContacts) {
+      state.smseagleContacts = smseagleContacts;
+    },
+
+    ADD_SMSEAGLE_CONTACTS_ENTRY(state) {
+      state.smseagleContacts.push('');
+    },
+
+    ADD_SMSEAGLE_CONTACTS_ENTRY_VALUE(state, value) {
+      state.smseagleContacts.push(value);
+    },
+
+    REMOVE_SMSEAGLE_CONTACTS_ENTRY(state, entry) {
+      state.smseagleContacts = state.smseagleContacts.filter(b => b !== entry);
+    },
+
+    UPDATE_SMSEAGLE_CONTACTS_ENTRY(state, { entry, index }) {
+      if (!state.smseagleContacts) return;
+      state.smseagleContacts[index] = entry;
+    },
+
+    UPDATE_SMSEAGLE_GROUPS(state, smseagleGroups) {
+      state.smseagleGroups = smseagleGroups;
+    },
+
+    ADD_SMSEAGLE_GROUPS_ENTRY(state) {
+      state.smseagleGroups.push('');
+    },
+
+    ADD_SMSEAGLE_GROUPS_ENTRY_VALUE(state, value) {
+      state.smseagleGroups.push(value);
+    },
+
+    REMOVE_SMSEAGLE_GROUPS_ENTRY(state, entry) {
+      state.smseagleGroups = state.smseagleGroups.filter(b => b !== entry);
+    },
+
+    UPDATE_SMSEAGLE_GROUPS_ENTRY(state, { entry, index }) {
+      if (!state.smseagleGroups) return;
+      state.smseagleGroups[index] = entry;
+    },
+
+    UPDATE_SMSEAGLE_DURATION(state, smseagleDuration) {
+      state.smseagleDuration = smseagleDuration;
+    },
+
+    UPDATE_SMSEAGLE_VOICE_ID(state, smseagleVoiceId) {
+      state.smseagleVoiceId = smseagleVoiceId;
     },
 
     /* Stomp */

@@ -156,6 +156,7 @@ export default [
             "src/components/config/alert/ConfigAlertPagerDuty.vue",
             "src/components/config/alert/ConfigAlertRocketChat.vue",
             "src/components/config/alert/ConfigAlertSlack.vue",
+            "src/components/config/alert/ConfigAlertSmsEagle.vue",
             "src/components/config/alert/ConfigAlertSubjectBody.vue",
             "src/components/config/alert/ConfigAlertTencentSms.vue",
             "src/components/config/alert/ConfigAlertTheHive.vue",

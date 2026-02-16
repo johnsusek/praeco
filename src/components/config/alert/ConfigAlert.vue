@@ -217,6 +217,9 @@
         <el-checkbox id="destinationline" label="line" border>
           LINE Message API
         </el-checkbox>
+        <el-checkbox id="destinationsmseagle" label="smseagle" border>
+          SMSEagle
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -246,6 +249,7 @@
           || alert.includes('servicenow')
           || alert.includes('ses')
           || alert.includes('slack')
+          || alert.includes('smseagle')
           || alert.includes('sns')
           || alert.includes('stomp')
           || alert.includes('tencent_sms')
@@ -584,6 +588,14 @@
         </template>
         <ConfigAlertLineMessageApi ref="line" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- SMSEagle -->
+      <el-tab-pane v-if="alert.includes('smseagle')">
+        <template #label>
+          SMSEagle
+        </template>
+        <ConfigAlertSmsEagle ref="smseagle" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -622,6 +634,7 @@ import ConfigAlertPagerTree from './ConfigAlertPagerTree.vue';
 import ConfigAlertRocketChat from './ConfigAlertRocketChat.vue';
 import ConfigAlertServiceNow from './ConfigAlertServiceNow.vue';
 import ConfigAlertSlack from './ConfigAlertSlack.vue';
+import ConfigAlertSmsEagle from './ConfigAlertSmsEagle.vue';
 import ConfigAlertStomp from './ConfigAlertStomp.vue';
 import ConfigAlertTencentSms from './ConfigAlertTencentSms.vue';
 import ConfigAlertTelegram from './ConfigAlertTelegram.vue';
@@ -746,6 +759,7 @@ export default {
     ConfigAlertRocketChat,
     ConfigAlertServiceNow,
     ConfigAlertSlack,
+    ConfigAlertSmsEagle,
     ConfigAlertStomp,
     ConfigAlertTencentSms,
     ConfigAlertTelegram,
@@ -877,6 +891,12 @@ export default {
           {
             validator: validateSlackDestination,
             trigger: 'change'
+          }
+        ],
+        smseagleUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
           }
         ],
       }

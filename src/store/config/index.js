@@ -1176,6 +1176,27 @@ export default {
         commit('alert/UPDATE_SLACK_AUTHOR_ICON', config.slack_author_icon);
         commit('alert/UPDATE_SLACK_MSG_PRETEXT', config.slack_msg_pretext);
 
+        /* SMSEagle */
+        commit('alert/UPDATE_SMSEAGLE_URL', config.smseagle_url);
+        commit('alert/UPDATE_SMSEAGLE_TOKEN', config.smseagle_token);
+        commit('alert/UPDATE_SMSEAGLE_MESSAGE_TYPE', config.smseagle_message_type);
+        commit('alert/UPDATE_SMSEAGLE_TEXT', config.smseagle_text);
+
+        if (config.smseagle_to) {
+          commit('alert/UPDATE_SMSEAGLE_TO', config.smseagle_to);
+        }
+
+        if (config.smseagle_contacts) {
+          commit('alert/UPDATE_SMSEAGLE_CONTACTS', config.smseagle_contacts);
+        }
+
+        if (config.smseagle_groups) {
+          commit('alert/UPDATE_SMSEAGLE_GROUPS', config.smseagle_groups);
+        }
+
+        commit('alert/UPDATE_SMSEAGLE_DURATION', config.smseagle_duration);
+        commit('alert/UPDATE_SMSEAGLE_VOICE_ID', config.smseagle_voice_id);
+
         /* MS Power Automate */
         if (typeof (config.ms_power_automate_webhook_url) === 'string') {
           let tmpMsPowerAutomateWebhookUrl = [];
@@ -2017,6 +2038,48 @@ export default {
         if (state.alert.slackJiraTicketTitle) {
           config.slack_jira_ticket_title = state.alert.slackJiraTicketTitle;
         }
+      }
+
+      return config;
+    },
+
+    smseagle(state) {
+      let config = {};
+
+      if (state.alert.smseagleUrl) {
+        config.smseagle_url = state.alert.smseagleUrl;
+      }
+
+      if (state.alert.smseagleToken) {
+        config.smseagle_token = state.alert.smseagleToken;
+      }
+
+      if (state.alert.smseagleMessageType) {
+        config.smseagle_message_type = state.alert.smseagleMessageType;
+      }
+
+      if (state.alert.smseagleText) {
+        config.smseagle_text = state.alert.smseagleText;
+      }
+
+      if (state.alert.smseagleTo && state.alert.smseagleTo.length) {
+        config.smseagle_to = state.alert.smseagleTo;
+      }
+
+      if (state.alert.smseagleContacts && state.alert.smseagleContacts.length) {
+        config.smseagle_contacts = state.alert.smseagleContacts;
+      }
+
+      if (state.alert.smseagleGroups && state.alert.smseagleGroups.length) {
+        config.smseagle_groups = state.alert.smseagleGroups;
+      }
+
+      if (state.alert.smseagleDuration) {
+        config.smseagle_duration = state.alert.smseagleDuration;
+      }
+
+      if (state.alert.smseagleVoiceId) {
+        config.smseagle_voice_id = state.alert.smseagleVoiceId;
       }
 
       return config;
@@ -3528,6 +3591,10 @@ export default {
         config = { ...config, ...getters.slack };
       }
 
+      if (state.alert.alert.includes('smseagle')) {
+        config = { ...config, ...getters.smseagle };
+      }
+
       if (state.alert.alert.includes('sns')) {
         config = { ...config, ...getters.sns };
       }
@@ -3586,6 +3653,7 @@ export default {
         || state.alert.alert.includes('servicenow')
         || state.alert.alert.includes('ses')
         || state.alert.alert.includes('slack')
+        || state.alert.alert.includes('smseagle')
         || state.alert.alert.includes('sns')
         || state.alert.alert.includes('stomp')
         || state.alert.alert.includes('telegram')
