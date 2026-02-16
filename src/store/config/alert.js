@@ -368,7 +368,7 @@ function initialState() {
     slackJiraTicketColor: '#ec4b98',
     slackJiraTicketTitle: 'Jira Ticket',
 
-    /* SNS EAGLE */
+    /* SMSEagle */
     smseagleUrl: '',
     smseagleToken: '',
     smseagleMessageType: '',

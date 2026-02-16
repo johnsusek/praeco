@@ -107,7 +107,7 @@
                 <el-input-number
                   v-model="smseagleContacts[index]"
                   :disabled="viewOnly"
-                  placeholder="SmseagleContactss"
+                  placeholder="SmseagleContacts"
                   @input="(val) => updateSmseagleContacts(val, index)" />
               </el-col>
               <el-col :span="4">
@@ -157,7 +157,7 @@
                 <el-input-number
                   v-model="smseagleGroups[index]"
                   :disabled="viewOnly"
-                  placeholder="SmseagleGroupss"
+                  placeholder="SmseagleGroups"
                   @input="(val) => updateSmseagleGroups(val, index)" />
               </el-col>
               <el-col :span="4">

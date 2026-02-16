@@ -99,7 +99,7 @@ Vue.component('ConfigAlertPagerTree', ConfigAlertPagerTree);
 Vue.component('ConfigAlertRocketChat', ConfigAlertRocketChat);
 Vue.component('ConfigAlertServiceNow', ConfigAlertServiceNow);
 Vue.component('ConfigAlertSlack', ConfigAlertSlack);
-Vue.component('ConfigAlertSlack', ConfigAlertSmsEagle);
+Vue.component('ConfigAlertSmsEagle', ConfigAlertSmsEagle);
 Vue.component('ConfigAlertStomp', ConfigAlertStomp);
 Vue.component('ConfigAlertTencentSms', ConfigAlertTencentSms);
 Vue.component('ConfigAlertTelegram', ConfigAlertTelegram);
