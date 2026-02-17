@@ -383,7 +383,7 @@
       <span v-if="queryString !== defaultFilter"> {{ queryString }}</span>
     </span>
 
-    <el-dialog :visible.sync="popFilterVisible" :show-close="false" fullscreen>
+    <el-dialog v-model:visible="popFilterVisible" :show-close="false" fullscreen>
       <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">
         Close
       </el-button>
@@ -829,7 +829,7 @@
       @update="handleUpdateData"
       @group="val => groupByValue = val" />
 
-    <el-dialog :visible.sync="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
+    <el-dialog v-model:visible="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
       <EventTable
         v-if="eventViewerFrom"
         :group-by-field="queryKey"

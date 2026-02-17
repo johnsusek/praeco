@@ -67,7 +67,7 @@
       </el-row>
 
       <el-dialog
-        :visible.sync="moveVisible"
+        v-model:visible="moveVisible"
         title="Move"
         width="40%"
         @close="moveVisible = false">

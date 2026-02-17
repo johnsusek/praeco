@@ -128,7 +128,7 @@ export default {
     }
   },
 
-  destroyed() {
+  unmounted() {
     this.$disconnect();
   },
 

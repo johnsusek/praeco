@@ -1,3 +1,4 @@
+import vue from "eslint-plugin-vue";
 import rulesdir from "eslint-plugin-rulesdir";
 import importPlugin from "eslint-plugin-import";
 import globals from "globals";
@@ -22,9 +23,10 @@ export default [
         ignores: ["node_modules/", "dist/", ".eslintrc.js", "eslint.config.mjs"],
     },
     js.configs.recommended,
-    ...compat.extends("plugin:vue/recommended"),
+    ...vue.configs["flat/strongly-recommended"],
     {
         plugins: {
+            vue,
             rulesdir,
             import: importPlugin,
         },
@@ -35,12 +37,11 @@ export default [
                 ...globals.mocha,
                 ...globals.browser,
             },
-            ecmaVersion: 2020,
+            ecmaVersion: 2022,
             sourceType: "module",
         },
 
         rules: {
-            "rulesdir/custom1": "off",
             // Essential code quality rules (Airbnb-style)
             "indent": ["error", 2],
             "semi": ["error", "always"],
@@ -89,7 +90,9 @@ export default [
             "import/prefer-default-export": "off",
             "vue/multi-word-component-names": "off",
             "import/no-cycle": "off",
-
+            "vue/no-deprecated-destroyed-lifecycle": "error",
+            "vue/no-deprecated-v-on-native-modifier": "error",
+            "vue/no-deprecated-v-bind-sync": "error",
             "import/extensions": ["off", "always", {
                 js: "never",
                 vue: "never",
@@ -128,47 +131,6 @@ export default [
     },
     {
         files: [
-            "src/components/DateTime.vue",
-            "src/components/config/ConfigTest.vue",
-            "src/views/ConfigBuilder.vue",
-        ],
-        rules: {
-            "vue/no-deprecated-destroyed-lifecycle": "off",
-        },
-    },
-    {
-        files: [
-            "src/components/ElastalertTimePicker.vue",
-            "src/components/NavTree.vue",
-            "src/components/config/ConfigCondition.vue",
-            "src/components/config/ConfigKibanaDiscover.vue",
-            "src/components/config/ConfigQuery.vue",
-            "src/components/config/ConfigSettings.vue",
-            "src/components/config/alert/ConfigAlert.vue",
-            "src/components/config/alert/ConfigAlertAlerta.vue",
-            "src/components/config/alert/ConfigAlertCommand.vue",
-            "src/components/config/alert/ConfigAlertGoogleChat.vue",
-            "src/components/config/alert/ConfigAlertHttpPost.vue",
-            "src/components/config/alert/ConfigAlertHttpPost2.vue",
-            "src/components/config/alert/ConfigAlertMattermost.vue",
-            "src/components/config/alert/ConfigAlertMatrixHookshot.vue",
-            "src/components/config/alert/ConfigAlertMsPowerAutomate.vue",
-            "src/components/config/alert/ConfigAlertPagerDuty.vue",
-            "src/components/config/alert/ConfigAlertRocketChat.vue",
-            "src/components/config/alert/ConfigAlertSlack.vue",
-            "src/components/config/alert/ConfigAlertSmsEagle.vue",
-            "src/components/config/alert/ConfigAlertSubjectBody.vue",
-            "src/components/config/alert/ConfigAlertTencentSms.vue",
-            "src/components/config/alert/ConfigAlertTheHive.vue",
-            "src/views/RuleView.vue",
-            "src/views/TemplateView.vue",
-        ],
-        rules: {
-            "vue/no-deprecated-v-on-native-modifier": "off",
-        },
-    },
-    {
-        files: [
             "src/components/ESChart.vue",
             "src/contrib.js",
             "src/main.js",
@@ -182,16 +144,6 @@ export default [
         ],
         rules: {
             "no-restricted-imports": "off",
-        },
-    },
-    {
-        files: [
-            "src/components/config/ConfigCondition.vue",
-            "src/views/RuleView.vue",
-            "src/views/TemplateView.vue",
-        ],
-        rules: {
-            "vue/no-deprecated-v-bind-sync": "off",
         },
     },
     {
