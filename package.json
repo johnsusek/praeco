@@ -39,6 +39,7 @@
     "dayjs": "^1.11.19",
     "debounce": "^3.0.0",
     "echarts": "^6.0.0",
+    "element-plus": "^2.13.2",
     "emoji-mart-vue-fast": "^15.0.5",
     "globals": "^17.3.0",
     "js-yaml": "4.1.1",
