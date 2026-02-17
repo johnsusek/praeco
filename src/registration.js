@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import * as Vue from 'vue';
 import Bulb from '@/components/Bulb.vue';
 import DateTime from '@/components/DateTime.vue';
 import DefinitionTable from '@/components/DefinitionTable.vue';

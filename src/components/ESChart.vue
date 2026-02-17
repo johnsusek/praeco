@@ -49,7 +49,7 @@
           </template>
 
           <div class="praeco-chart-controls">
-            <el-row type="flex" class="row-bg" justify="space-around">
+            <el-row class="row-bg" justify="space-around">
               <el-col :span="24" align="right">
                 <label>Group</label>
                 <ElastalertTimePicker
@@ -60,7 +60,7 @@
               </el-col>
             </el-row>
 
-            <el-row type="flex" class="row-bg" justify="space-around">
+            <el-row class="row-bg" justify="space-around">
               <el-col :span="24" align="right">
                 <label>View previous</label>
                 <ElastalertTimePicker
@@ -78,7 +78,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import axios from 'axios';
 
 import dayjs from 'dayjs';
@@ -438,16 +437,16 @@ export default {
 
     markLine() {
       if (this.markLine && this.markLine.data && !this.loading) {
-        /*eslint-disable */
-        Vue.set(this.chart.series[0], 'markLine', this.markLine);
+
+        this.chart.series[0]['markLine'] = this.markLine;
       } else {
-        /*eslint-disable */
-        Vue.set(this.chart.series[0], 'markLine', {
+
+        this.chart.series[0]['markLine'] = {
           silent: true,
           animation: false,
           symbol: 'none',
           data: []
-        });
+        };
       }
     },
 
@@ -660,8 +659,8 @@ export default {
     },
 
     setTooltipDefault() {
-      /*eslint-disable */
-      Vue.set(this.chart.tooltip, 'formatter', options => {
+
+      this.chart.tooltip['formatter'] = options => {
         let event = this.chart.xAxis.data[options.dataIndex];
         let momentDate;
 
@@ -692,12 +691,12 @@ export default {
         }
 
         return tip;
-      });
+      };
     },
 
     setTooltipSpike() {
       /*eslint-disable */
-      Vue.set(this.chart.tooltip, 'formatter', options => {
+      this.chart.tooltip['formatter'] = options => {
         let event = this.chart.xAxis.data[options.dataIndex];
         let preVal = this.chart.series[0].data[
           options.dataIndex > 0 ? options.dataIndex - 1 : options.dataIndex
@@ -730,7 +729,7 @@ export default {
         return `${momentDate.format('M/D/YYYY h:mm:ssa')} <br> 
               ${options.data.value} Events - Spike ${spike > 1 ? 'up' : 'down'} 
               ${spikeVal.toFixed(1)}`;
-      });
+      };
     },
 
     addSpikes() {

@@ -1,4 +1,4 @@
-import { Notification } from 'element-ui';
+import { ElNotification as Notification } from 'element-plus';
 // TODO: error  Dependency cycle via @/store:5=>./configs:4  import/no-cycle
 import { logger } from '@/lib/logger.js';
 

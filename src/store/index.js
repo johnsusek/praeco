@@ -1,6 +1,5 @@
 import { useStorage } from '@vueuse/core';
-import Vue from 'vue';
-import Vuex from 'vuex';
+import * as Vuex from 'vuex';
 // TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import configs from './configs';
 import server from './server';
@@ -9,8 +8,6 @@ import appconfig from './appconfig';
 import elastalert from './elastalert';
 import config from './config';
 import ui from './ui';
-
-Vue.use(Vuex);
 
 /**
  * Create a Vuex plugin using VueUse for state persistence
@@ -94,7 +91,7 @@ const storagePlugin = createVueUseStoragePlugin({
   paths: ['ui']
 });
 
-export default new Vuex.Store({
+export default Vuex.createStore({
   modules: {
     configs,
     server,

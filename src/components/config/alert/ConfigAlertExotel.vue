@@ -1,4 +1,5 @@
-.<template>
+
+<template>
   <div>
     <praeco-form-item label="Account Sid" prop="exotelAccountSid" required>
       <el-input id="exotelAccountSid" :value="exotelAccountSid" :disabled="viewOnly" @input="exotelAccountSid = $event" />

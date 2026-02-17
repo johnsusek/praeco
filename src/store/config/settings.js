@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 function initialState() {
   return {
     name: '',
@@ -44,7 +42,7 @@ export default {
       if (description) {
         state.description = description;
       } else {
-        Vue.delete(state, 'description');
+        delete state['description'];
       }
     },
 

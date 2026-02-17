@@ -39,12 +39,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="smseagleTo"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in smseagleTo"
             :key="index"
@@ -52,7 +53,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="smseagleTo[index]"
@@ -89,12 +90,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="smseagleContacts"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in smseagleContacts"
             :key="index"
@@ -102,7 +104,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input-number
                   v-model="smseagleContacts[index]"
@@ -139,12 +141,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="smseagleGroups"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in smseagleGroups"
             :key="index"
@@ -152,7 +155,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input-number
                   v-model="smseagleGroups[index]"
@@ -443,5 +446,5 @@ export default {
 };
 </script>
 
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
   </style>

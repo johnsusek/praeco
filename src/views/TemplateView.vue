@@ -4,13 +4,14 @@
       <div v-show="showRename">
         <el-row :gutter="10">
           <el-col :span="6">
+            <!-- native modifier has been removed, please confirm whether the function has been affected  -->
             <el-input
               ref="rename"
               v-model="newName"
               size="large"
               autofocus
               autoselect
-              @keyup.enter.native="rename" />
+              @keyup.enter="rename" />
           </el-col>
           <el-col :span="18">
             <el-button size="large" type="primary" @click="rename">

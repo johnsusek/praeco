@@ -10,12 +10,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="slackWebhookUrl"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in slackWebhookUrl"
             :key="index"
@@ -23,7 +24,7 @@
             :disabled="viewOnly"
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="slackWebhookUrl[index]"
@@ -60,12 +61,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="slackChannelOverride"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in slackChannelOverride"
             :key="index"
@@ -74,7 +76,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="slackChannelOverride[index]"

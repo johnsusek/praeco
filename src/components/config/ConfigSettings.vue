@@ -1,10 +1,11 @@
 <template>
+  <!-- native modifier has been removed, please confirm whether the function has been affected  -->
   <el-form
     ref="form"
     :rules="rules"
     :model="$store.state.config.settings"
     label-position="top"
-    @submit.native.prevent>
+    @submit.prevent>
     <el-alert
       v-if="mappingError"
       :description="mappingError"

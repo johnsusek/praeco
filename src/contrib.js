@@ -1,10 +1,10 @@
-import Vue from 'vue';
+import * as Vue from 'vue';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
 import Treeselect from '@riophae/vue-treeselect';
-import ElementUI from 'element-ui';
+import ElementUI from 'element-plus';
 import 'prismjs';
-import locale from 'element-ui/lib/locale/lang/en';
+import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBell,
@@ -24,7 +24,7 @@ import {
   faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import 'element-ui/lib/theme-chalk/index.css';
+import 'element-plus/lib/theme-chalk/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';

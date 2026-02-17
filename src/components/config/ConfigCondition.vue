@@ -291,12 +291,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="blacklist"
           :model="$store.state.config.match"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index2) in blacklist"
             :key="index2"
@@ -304,7 +305,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="blacklist[index2]"
@@ -339,12 +340,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="whitelist"
           :model="$store.state.config.match"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index2) in whitelist"
             :key="index2"
@@ -352,7 +354,7 @@
             required
             class="el-form-item-list"
             label="">
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="whitelist[index2]"
@@ -621,11 +623,12 @@
       </template>
 
       <div v-if="metricAggType === 'field not in list' || metricAggType === 'field changes'">
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="form"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Ignore null">
             <el-switch v-model="ignoreNull" />
             <label>If set, events without the selected field will not match.</label>
@@ -634,11 +637,12 @@
       </div>
 
       <div v-if="metricAggType === 'new term'">
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="form"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Terms window">
             <ElastalertTimePicker
               id="termsWindowSize"
@@ -675,11 +679,12 @@
       </div>
 
       <div v-if="type === 'frequency' || type === 'flatline' || type === 'spike' || type === 'new_term'">
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="freqFlatlineOptions"
           :model="$store.state.config.match"
           label-position="top"
-          @submit.native.prevent>
+          @submit.prevent>
           <template v-if="type !== 'new_term'">
             <el-form-item label="Use count query">
               <el-switch
@@ -765,11 +770,12 @@
       </div>
 
       <div v-if="type === 'spike'">
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           :model="$store.state.config.match"
           label-position="top"
           class="m-n-lg"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item label="Threshold (reference)" prop="thresholdRef">
             <el-input-number v-model="thresholdRef" />
             <label>

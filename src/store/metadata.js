@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import axios from 'axios';
 import { formatIndex, buildMappingFields, buildMappingTypes } from '@/lib/elasticSearchMetadata.js';
 // TODO: error  Dependency cycle via @/lib/logger.js:2=>@/store:3  import/no-cycle
@@ -219,11 +218,11 @@ export default {
 
     FETCHED_MAPPINGS(state, { mappings, index }) {
       if (!state.mappings[index]) {
-        Vue.set(state.mappings, index, {});
+        state.mappings[index] = {};
       }
 
-      Vue.set(state.mappings[index], 'types', buildMappingTypes(mappings));
-      Vue.set(state.mappings[index], 'fields', buildMappingFields(mappings));
+      state.mappings[index]['types'] = buildMappingTypes(mappings);
+      state.mappings[index]['fields'] = buildMappingFields(mappings);
     }
   },
 

@@ -1,4 +1,5 @@
-.<template>
+
+<template>
   <div>
     <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="profile" border @change="changeSns">
       Profile

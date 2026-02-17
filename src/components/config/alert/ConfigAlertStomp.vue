@@ -1,4 +1,5 @@
-.<template>
+
+<template>
   <div>
     <praeco-form-item label="Host Name" prop="stompHostname" required>
       <el-input id="stompHostname" :value="stompHostname" :disabled="viewOnly" @input="stompHostname = $event" />

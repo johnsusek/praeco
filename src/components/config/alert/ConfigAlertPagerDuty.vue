@@ -54,12 +54,13 @@
         </span>
       </template>
       <div>
+        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
         <el-form
           ref="pagerdutyIncidentKeyArgs"
           :model="$store.state.config.alert"
           label-position="top"
           style="width: 360px"
-          @submit.native.prevent>
+          @submit.prevent>
           <el-form-item
             v-for="(entry, index) in pagerdutyIncidentKeyArgs"
             :key="index"
@@ -68,7 +69,7 @@
             class="el-form-item-list"
             label=""
             required>
-            <el-row :gutter="5" type="flex" justify="space-between">
+            <el-row :gutter="5" justify="space-between">
               <el-col :span="20">
                 <el-input
                   v-model="pagerdutyIncidentKeyArgs[index]"
@@ -121,12 +122,13 @@
           </span>
         </template>
         <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <el-form
             ref="pagerdutyV2PayloadClassArgs"
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadClassArgs"
               :key="index"
@@ -135,7 +137,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5" justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="pagerdutyV2PayloadClassArgs[index]"
@@ -179,12 +181,13 @@
           </span>
         </template>
         <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <el-form
             ref="pagerdutyV2PayloadComponentArgs"
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadComponentArgs"
               :key="index"
@@ -193,7 +196,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5" justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="pagerdutyV2PayloadComponentArgs[index]"
@@ -237,12 +240,13 @@
           </span>
         </template>
         <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <el-form
             ref="pagerdutyV2PayloadGroupArgs"
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadGroupArgs"
               :key="index"
@@ -251,7 +255,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5" justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="pagerdutyV2PayloadGroupArgs[index]"
@@ -315,12 +319,13 @@
           </span>
         </template>
         <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <el-form
             ref="pagerdutyV2PayloadSourceArgs"
             :model="$store.state.config.alert"
             label-position="top"
             style="width: 360px"
-            @submit.native.prevent>
+            @submit.prevent>
             <el-form-item
               v-for="(entry, index) in pagerdutyV2PayloadSourceArgs"
               :key="index"
@@ -329,7 +334,7 @@
               class="el-form-item-list"
               label=""
               required>
-              <el-row :gutter="5" type="flex" justify="space-between">
+              <el-row :gutter="5" justify="space-between">
                 <el-col :span="20">
                   <el-input
                     v-model="pagerdutyV2PayloadSourceArgs[index]"

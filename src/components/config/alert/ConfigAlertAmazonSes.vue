@@ -1,4 +1,5 @@
-.<template>
+
+<template>
   <div>
     <el-radio id="groupSes" v-model="groupSes" :disabled="viewOnly" label="profile" border @change="changeSes">
       Profile

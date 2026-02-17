@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import cloneDeep from 'lodash.clonedeep';
@@ -32,14 +31,14 @@ export default {
         if (!state[type][path]) {
           // Since we are just getting a list of configs without their
           // details, we set to an empty object in the store
-          Vue.set(state[type], path, {});
+          state[type][path] = {};
         }
       });
     },
 
     FETCHED_CONFIGS_TREE(state, { paths, type }) {
       paths = paths.filter(path => path !== 'BaseRule.config');
-      Vue.set(state.tree, type, paths);
+      state.tree[type] = paths;
     },
 
     FETCHED_CONFIG(state, { path, config, type, isYaml = true }) {
@@ -68,7 +67,7 @@ export default {
         // Save the config at the full path in the store, how we'll refer to it later
         // The rule name is just for display, we should use __praeco_full_path to refer
         // to the rule internally.
-        Vue.set(state[type], path, conf);
+        state[type][path] = conf;
       } catch (error) {
         console.error(error);
         logger().error({ error });
@@ -76,11 +75,11 @@ export default {
     },
 
     UPDATED_CONFIG(state, { path, config, type }) {
-      Vue.set(state[type], path, config);
+      state[type][path] = config;
     },
 
     DELETED_CONFIG(state, { path, type }) {
-      Vue.delete(state[type], path);
+      delete state[type][path];
     }
   },
 

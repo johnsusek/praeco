@@ -1,10 +1,11 @@
 <template>
+  <!-- native modifier has been removed, please confirm whether the function has been affected  -->
   <el-form
     ref="form"
     :rules="rules"
     :model="$store.state.config.alert"
     label-position="top"
-    @submit.native.prevent>
+    @submit.prevent>
     <el-row class="m-s-sm">
       <el-col :span="aggregationSchedule ? 24 : 12">
         <ConfigAggregation ref="aggregation" :view-only="viewOnly" />
@@ -949,7 +950,7 @@ export default {
     updateRealert(value) {
       this.realert = {};
       /*eslint-disable */
-      this.$set(this.realert, Object.keys(value)[0], Object.values(value)[0]);
+      this.realert[Object.keys(value)[0]] = Object.values(value)[0];
     }
   }
 };

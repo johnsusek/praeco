@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 function initialState() {
   return {
     type: 'any',
@@ -308,7 +306,7 @@ export default {
     UPDATE_TIMEFRAME(state, timeframe) {
       if (!timeframe) return;
 
-      Vue.delete(state, 'timeframe');
+      delete state['timeframe'];
 
       if (typeof timeframe === 'object' && Object.keys(timeframe).length) {
         state.timeframe = {
@@ -458,7 +456,7 @@ export default {
     UPDATE_TERMS_WINDOW_SIZE(state, termsWindowSize) {
       if (!termsWindowSize) return;
 
-      Vue.delete(state, 'termsWindowSize');
+      delete state['termsWindowSize'];
 
       if (typeof termsWindowSize === 'object' && Object.keys(termsWindowSize).length) {
         state.termsWindowSize = {
@@ -470,7 +468,7 @@ export default {
     UPDATE_WINDOW_STEP_SIZE(state, windowStepSize) {
       if (!windowStepSize) return;
 
-      Vue.delete(state, 'windowStepSize');
+      delete state['windowStepSize'];
 
       if (typeof windowStepSize === 'object' && Object.keys(windowStepSize).length) {
         state.windowStepSize = {

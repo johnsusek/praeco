@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import * as Vue from 'vue';
+import Router, { createRouter, createWebHistory } from 'vue-router';
 import Home from './views/Home.vue';
 import Errors from './views/Errors.vue';
 import Silences from './views/Silences.vue';
@@ -13,9 +13,9 @@ import ConfigBuilder from './views/ConfigBuilder.vue';
 
 Vue.use(Router);
 
-export default new Router({
-  mode: 'history',
-  base: import.meta.env.VITE_BASE_URL,
+export default createRouter({
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+
   routes: [
     {
       path: '/',

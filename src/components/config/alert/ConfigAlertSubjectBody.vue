@@ -1,9 +1,10 @@
 <template>
+  <!-- native modifier has been removed, please confirm whether the function has been affected  -->
   <el-form
     ref="form"
     :model="$store.state.config.alert"
     label-position="top"
-    @submit.native.prevent>
+    @submit.prevent>
     <el-row :gutter="50">
       <el-col :span="12">
         <el-form-item
@@ -11,12 +12,13 @@
           label="Subject"
           prop="subject"
           required>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <at
             v-model="subject"
             :members="fields"
             :allow-spaces="false"
             at="%"
-            @paste.native="pastePlainText">
+            @paste="pastePlainText">
             <template #embeddedItem="s">
               <span>
                 <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
@@ -37,12 +39,13 @@
             </span>
           </template>
           <div>
+            <!-- native modifier has been removed, please confirm whether the function has been affected  -->
             <el-form
               ref="alertSubjectArgs"
               :model="$store.state.config.alert"
               label-position="top"
               style="width: 360px"
-              @submit.native.prevent>
+              @submit.prevent>
               <el-form-item
                 v-for="(entry, index) in alertSubjectArgs"
                 :key="index"
@@ -51,7 +54,7 @@
                 class="el-form-item-list"
                 label=""
                 required>
-                <el-row :gutter="5" type="flex" justify="space-between">
+                <el-row :gutter="5" justify="space-between">
                   <el-col :span="20">
                     <el-input
                       v-model="alertSubjectArgs[index]"
@@ -83,12 +86,13 @@
           id="body"
           label="Body text"
           prop="body">
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <at
             v-model="body"
             :members="fields"
             :allow-spaces="false"
             at="%"
-            @paste.native="pastePlainText">
+            @paste="pastePlainText">
             <template #embeddedItem="s">
               <span>
                 <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
@@ -112,12 +116,13 @@
             </span>
           </template>
           <div>
+            <!-- native modifier has been removed, please confirm whether the function has been affected  -->
             <el-form
               ref="alertTextArgs"
               :model="$store.state.config.alert"
               label-position="top"
               style="width: 360px"
-              @submit.native.prevent>
+              @submit.prevent>
               <el-form-item
                 v-for="(entry, index) in alertTextArgs"
                 :key="index"
@@ -126,7 +131,7 @@
                 class="el-form-item-list"
                 label=""
                 required>
-                <el-row :gutter="5" type="flex" justify="space-between">
+                <el-row :gutter="5" justify="space-between">
                   <el-col :span="20">
                     <el-input
                       v-model="alertTextArgs[index]"
