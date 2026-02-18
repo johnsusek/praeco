@@ -1,8 +1,8 @@
-import * as Vue from 'vue';
+import { createApp } from 'vue';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
 import Treeselect from '@riophae/vue-treeselect';
-import ElementUI from 'element-plus';
+import ElementPlus from 'element-plus';
 import 'prismjs';
 import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -55,10 +55,11 @@ library.add(
   faExclamationCircle
 );
 
-Vue.use(ElementUI, { locale, size: 'mini' });
+const app = createApp();
+app.use(ElementPlus, { locale, size: 'mini' });
 
-Vue.component('VChart', ECharts);
-Vue.component('Icon', FontAwesomeIcon);
-Vue.component('VueJsonPretty', VueJsonPretty);
-Vue.component('Prism', Prism);
-Vue.component('Treeselect', Treeselect);
+app.component('VChart', ECharts);
+app.component('Icon', FontAwesomeIcon);
+app.component('VueJsonPretty', VueJsonPretty);
+app.component('Prism', Prism);
+app.component('Treeselect', Treeselect);
