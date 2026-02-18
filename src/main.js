@@ -1,4 +1,5 @@
-import ElementPlus, { ElNotification as Notification } from 'element-plus';
+import { createApp } from 'vue';
+import ElementPlus, { ElNotification } from 'element-plus';
 import axios from 'axios';
 import WebSocketPlugin from './plugins/websocket';
 import VueJsonPretty from 'vue-json-pretty';
@@ -136,35 +137,37 @@ library.add(
   faExclamationCircle
 );
 
-Vue.use(cronLight);
-
-Vue.use(ElementUI, { locale, size: 'mini' });
-
-Vue.config.errorHandler = function(err, vm, info) {
-  logger().error(err);
-
-  console.error(err, vm, info);
-
-  Notification.error({
-    message: err.toString(),
-    title: 'Internal error',
-    duration: 0
-  });
-};
-
 function startApp(config) {
+  const app = createApp(App);
+
+  app.use(cronLight);
+
+  app.use(ElementPlus, { locale, size: 'mini' });
+
+  app.config.errorHandler = function(err, vm, info) {
+    logger().error(err);
+
+    console.error(err, vm, info);
+
+    ElNotification.error({
+      message: err.toString(),
+      title: 'Internal error',
+      duration: 0
+    });
+  };
+
   store.commit('appconfig/SET_APP_CONFIG', config);
 
   initLogging();
 
-  Vue.use(
+  app.use(
     WebSocketPlugin,
     `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
       window.location.port
     }/api-ws/test`
   );
 
-  const app = Vue.createApp(App).use(router).use(store);
+  app.use(router).use(store);
 
   app.component('VChart', ECharts);
   app.component('Icon', FontAwesomeIcon);
