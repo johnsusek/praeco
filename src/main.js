@@ -1,5 +1,4 @@
-import * as Vue from 'vue';
-import ElementUI, { ElNotification as Notification } from 'element-plus';
+import ElementPlus, { ElNotification as Notification } from 'element-plus';
 import axios from 'axios';
 import WebSocketPlugin from './plugins/websocket';
 import VueJsonPretty from 'vue-json-pretty';

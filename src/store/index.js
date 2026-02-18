@@ -1,5 +1,5 @@
 import { useStorage } from '@vueuse/core';
-import * as Vuex from 'vuex';
+import { createStore } from 'vuex';
 // TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import configs from './configs';
 import server from './server';
@@ -91,7 +91,7 @@ const storagePlugin = createVueUseStoragePlugin({
   paths: ['ui']
 });
 
-export default Vuex.createStore({
+export default createStore({
   modules: {
     configs,
     server,

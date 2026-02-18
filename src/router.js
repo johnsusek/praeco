@@ -1,5 +1,4 @@
-import * as Vue from 'vue';
-import Router, { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import Home from './views/Home.vue';
 import Errors from './views/Errors.vue';
 import Silences from './views/Silences.vue';
@@ -11,9 +10,7 @@ import RuleView from './views/RuleView.vue';
 import TemplateView from './views/TemplateView.vue';
 import ConfigBuilder from './views/ConfigBuilder.vue';
 
-Vue.use(Router);
-
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
 
   routes: [
@@ -115,3 +112,4 @@ export default createRouter({
     }
   ]
 });
+export default router;
