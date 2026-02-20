@@ -49,7 +49,7 @@
             name: 'ruleconfigeditor',
             params: { action: 'edit', path: id },
           }">
-          <el-button icon="el-icon-edit" plain type="primary">
+          <el-button :icon="ElIconEdit" plain type="primary">
             Edit
           </el-button>
         </router-link>
@@ -125,7 +125,7 @@
         </el-button>
 
         <el-button
-          icon="el-icon-delete"
+          :icon="ElIconDelete"
           plain
           type="danger"
           @click="showDeleteConfirm">

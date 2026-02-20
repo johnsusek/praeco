@@ -48,7 +48,7 @@
     <el-popover title="Hide columns">
       <template #reference>
         <el-button circle class="show-columns-button">
-          <Icon icon="ellipsis-h" />
+          <Icon icon="ellipsis" />
         </el-button>
       </template>
       <el-checkbox-group v-model="hidden">

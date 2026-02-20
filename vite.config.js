@@ -1,22 +1,37 @@
 import { defineConfig } from 'vite'
-import { createVuePlugin } from 'vite-plugin-vue2'
+import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
 export default defineConfig({
-  plugins: [createVuePlugin()],
-  
-  // Equivalent to publicPath in vue.config.js
+  plugins: [
+    vue(),
+
+    // Vue API auto import
+    AutoImport({
+      imports: ['vue', 'vue-router'],
+      dts: true,
+      resolvers: [ElementPlusResolver()],
+    }),
+
+    // Element Plus components auto import
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
+  ],
+
   base: process.env.VITE_BASE_URL || '/',
-  
+
   resolve: {
-    extensions: ['.js', '.vue', '.jsx', 'tsx', '.json'],
+    extensions: ['.js', '.vue', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
       '@': resolve(__dirname, 'src'),
-       "vue": "vue/dist/vue.runtime.esm.js",
     },
   },
-  
-  // Development server configuration
+
   server: {
     host: '0.0.0.0',
     port: 8080,
@@ -39,31 +54,31 @@ export default defineConfig({
       }
     }
   },
-  
-  // Build configuration
+
   build: {
     outDir: 'dist',
     sourcemap: false,
-    // Increase chunk size warning limit to 1MB to reduce noise
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        // Manual chunks configuration for better code splitting
         manualChunks: {
-          // Vue core libraries
-          'vue-vendor': ['vue', 'vue-router', 'vuex'],
-          // UI framework
-          'element-ui': ['element-ui'],
-          // Charts and visualization
+          // Vue3
+          'vue-vendor': ['vue', 'vue-router'],
+
+          // Element Plus
+          'element-plus': ['element-plus'],
+
+          // Charts
           'charts': ['echarts', 'vue-echarts', 'zrender'],
-          // Utilities and other dependencies
+
+          // Utils
           'utils': [
             'axios', 'lodash.clonedeep', 'lodash.get', 'lodash.throttle',
             'dayjs', 'js-yaml', 'validator', 'semver', 'change-case'
           ],
-          // Editor and syntax highlighting
+
           'editor': ['prismjs', 'vue-prism-component'],
-          // Font icons
+
           'icons': [
             '@fortawesome/fontawesome-svg-core',
             '@fortawesome/free-solid-svg-icons',
@@ -75,35 +90,20 @@ export default defineConfig({
       }
     }
   },
-  
-  // Environment variables - make process.env available for compatibility
+
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
     'process.env.LATER_COV': JSON.stringify(process.env.LATER_COV || false),
   },
-  
-  // CSS preprocessor options
-  css: {
-    preprocessorOptions: {
-      scss: {
-        // Silence deprecation warnings from element-ui and legacy Sass usage
-        silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin', 'slash-div', 'function-units', 'bogus-combinators']
-      }
-    }
-  },
-  
-  // Optimize dependencies
+
   optimizeDeps: {
     include: [
       'vue',
       'vue-router',
-      'vuex',
       'axios',
-      'element-ui',
+      'element-plus',
       'echarts',
       'vue-echarts'
-    ],
-    // Exclude problematic packages that need special handling
-    exclude: []
+    ]
   }
 })

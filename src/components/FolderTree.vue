@@ -11,7 +11,7 @@
     :options="options"
     class="folders-only"
     placeholder="Filter..."
-    @input="(val) => $emit('input', val)" />
+    @update:model-value="(val) => $emit('update:modelValue', val)" />
 </template>
 
 <script>
@@ -20,7 +20,7 @@ import { loadChildrenOptions } from '@/lib/tree';
 
 export default {
   props: ['type'],
-  emits: ['input'],
+  emits: ['update:modelValue'],
   data() {
     return {
       options: [

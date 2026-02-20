@@ -10,7 +10,7 @@ import {
   faBell,
   faChevronDown,
   faChevronUp,
-  faEllipsisH,
+  faEllipsis,
   faEnvelope,
   faGlobe,
   faFile,
@@ -24,7 +24,7 @@ import {
   faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import 'element-plus/lib/theme-chalk/index.css';
+import 'element-plus/dist/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
@@ -48,7 +48,7 @@ library.add(
   faEnvelope,
   faChevronUp,
   faChevronDown,
-  faEllipsisH,
+  faEllipsis,
   faFolder,
   faFolderOpen,
   faQuestionCircle,

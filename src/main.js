@@ -4,15 +4,14 @@ import axios from 'axios';
 import WebSocketPlugin from './plugins/websocket';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import Treeselect from '@riophae/vue-treeselect';
+import Treeselect from 'vue3-treeselect';
 import 'prismjs';
-import locale from 'element-plus/lib/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBell,
   faChevronDown,
   faChevronUp,
-  faEllipsisH,
+  faEllipsis,
   faEnvelope,
   faGlobe,
   faFile,
@@ -26,11 +25,11 @@ import {
   faSlack, faMicrosoft, faGitter, faAws, faLine, faTelegram, faJira, faRocketchat
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import 'element-plus/lib/theme-chalk/index.css';
+import 'element-plus/dist/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+import 'vue3-treeselect/dist/vue3-treeselect.css';
 
 import ECharts from 'vue-echarts';
 
@@ -113,6 +112,7 @@ import './style/query-builder.scss';
 import './style/element.scss';
 import './style/pop-trigger.scss';
 import '@vue-js-cron/light/dist/light.css';
+import { en } from 'element-plus/es/locale/index.mjs';
 
 library.add(
   faBell,
@@ -130,7 +130,7 @@ library.add(
   faEnvelope,
   faChevronUp,
   faChevronDown,
-  faEllipsisH,
+  faEllipsis,
   faFolder,
   faFolderOpen,
   faQuestionCircle,
@@ -142,7 +142,7 @@ function startApp(config) {
 
   app.use(cronLight);
 
-  app.use(ElementPlus, { locale, size: 'mini' });
+  app.use(ElementPlus, { locale: en, size: 'mini' });
 
   app.config.errorHandler = function(err, vm, info) {
     logger().error(err);

@@ -35,7 +35,7 @@
             params: { action: 'add' },
             query: { prefill: id },
           }">
-          <el-button icon="el-icon-plus" plain type="primary">
+          <el-button :icon="ElIconPlus" plain type="primary">
             Create rule from template
           </el-button>
         </router-link>
@@ -45,7 +45,7 @@
             name: 'templateconfigeditor',
             params: { action: 'edit', path: id },
           }">
-          <el-button type="primary" icon="el-icon-edit" plain>
+          <el-button type="primary" :icon="ElIconEdit" plain>
             Edit
           </el-button>
         </router-link>
@@ -62,7 +62,7 @@
           Move
         </el-button>
 
-        <el-button icon="el-icon-delete" plain type="danger" @click="showDeleteConfirm">
+        <el-button :icon="ElIconDelete" plain type="danger" @click="showDeleteConfirm">
           Delete...
         </el-button>
       </el-row>

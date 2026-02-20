@@ -17,11 +17,9 @@
         <el-time-select
           v-model="timeWindowStartTime"
           :disabled="viewOnly"
-          :picker-options="{
-            start: '00:00',
-            step: '00:15',
-            end: '23:59',
-          }"
+          start="00:00"
+          step="00:15"
+          end="23:59"
           placeholder="Select time" />
         <label v-if="!viewOnly">Start time of the range.</label>
       </el-form-item>
@@ -32,11 +30,9 @@
         <el-time-select
           v-model="timeWindowEndTime"
           :disabled="viewOnly"
-          :picker-options="{
-            start: '00:00',
-            step: '00:15',
-            end: '23:59',
-          }"
+          start="00:00"
+          step="00:15"
+          end="23:59"
           placeholder="Select time" />
         <label v-if="!viewOnly">Start time of the range.</label>
       </el-form-item>
