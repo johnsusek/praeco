@@ -19,7 +19,8 @@ export default function notifyError(error) {
   ElNotification({
     message: error.toString(),
     title: 'API error',
-    duration: 0
+    duration: 0,
+    type: 'error'
   });
 
   return error;
