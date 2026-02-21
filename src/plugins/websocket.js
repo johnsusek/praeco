@@ -1,59 +1,10 @@
 import { useWebSocket } from '@vueuse/core';
 
-/**
- * WebSocket plugin for Vue 2 using VueUse.
- *
- * Provides a similar API to vue-native-websocket for compatibility, exposing
- * the following instance members on Vue components:
- *
- * - `this.$connect()`
- *    Opens a WebSocket connection to the URL passed when installing the
- *    plugin. If a previous connection exists for the component, it is closed
- *    before a new one is created.
- *
- * - `this.$disconnect()`
- *    Closes the current WebSocket connection (if any) and removes the
- *    associated `$socket` wrapper from the component instance.
- *
- * - `this.$socket`
- *    A lightweight wrapper around the underlying WebSocket that provides:
- *      - `this.$socket.send(data)` to send data through the connection.
- *      - `this.$socket.close()` to close the connection.
- *      - `this.$socket.onopen`, `this.$socket.onclose`, `this.$socket.onerror`
- *        handler properties, which can be assigned functions to react to the
- *        corresponding lifecycle events.
- *
- * - `this.$options.sockets.onmessage`
- *    Optional handler defined in the component options. If provided, it will
- *    be invoked with the WebSocket `MessageEvent` each time a message is
- *    received.
- *
- * Example usage in a component:
- *
- * ```js
- * export default {
- *   sockets: {
- *     onmessage(event) {
- *       console.log('Received:', event.data);
- *     }
- *   },
- *   created() {
- *     this.$connect();
- *   },
- *   beforeDestroy() {
- *     this.$disconnect();
- *   }
- * }
- * ```
- *
- * Migrated from vue-native-websocket to VueUse.
- */
 export default {
-  install(Vue, wsUrl) {
-    // WebSocket URL
+  install(app, wsUrl) {
 
-    // Initialize $options.sockets for components that use it
-    Vue.mixin({
+    // mixin
+    app.mixin({
       beforeCreate() {
         if (!this.$options.sockets) {
           this.$options.sockets = {};
@@ -61,135 +12,82 @@ export default {
       }
     });
 
-    // Add $connect method to Vue prototype
-    Vue.prototype.$connect = function() {
-      // Close existing connection if any
-      if (this._wsControls && this._wsControls.close) {
+    // $connect
+    app.config.globalProperties.$connect = function() {
+
+      if (this._wsControls?.close) {
         this._wsControls.close();
         this._wsControls = null;
       }
 
-      // Store reference to component context
       const component = this;
       let isConnected = false;
       let wsControls = null;
 
-      // Create wrapper first so it can be assigned immediately
       const socketWrapper = {
         get readyState() {
-          return wsControls && wsControls.ws && wsControls.ws.value
+          return wsControls?.ws?.value
             ? wsControls.ws.value.readyState
             : WebSocket.CLOSED;
         },
         send(data) {
-          if (wsControls && wsControls.send) {
-            wsControls.send(data);
-          }
+          wsControls?.send?.(data);
         },
         sendObj(obj) {
           this.send(JSON.stringify(obj));
         },
         close() {
-          if (wsControls && wsControls.close) {
-            wsControls.close();
-          }
+          wsControls?.close?.();
         },
-        // These will be set by the component
         _onopen: null,
         _onclose: null,
         _onerror: null,
-        // Use getters/setters to handle delayed onopen call
-        get onopen() {
-          return this._onopen;
-        },
+        get onopen() { return this._onopen },
         set onopen(handler) {
           this._onopen = handler;
-          // If already connected, call the handler asynchronously
           if (isConnected && handler) {
             queueMicrotask(() => handler.call(this));
           }
         },
-        get onclose() {
-          return this._onclose;
-        },
-        set onclose(handler) {
-          this._onclose = handler;
-        },
-        get onerror() {
-          return this._onerror;
-        },
-        set onerror(handler) {
-          this._onerror = handler;
-        }
+        get onclose() { return this._onclose },
+        set onclose(handler) { this._onclose = handler },
+        get onerror() { return this._onerror },
+        set onerror(handler) { this._onerror = handler }
       };
 
-      // Assign wrapper to $socket
       component.$socket = socketWrapper;
 
-      // Create WebSocket using VueUse - immediate: false for manual connection
       wsControls = useWebSocket(wsUrl, {
         immediate: false,
         autoReconnect: false,
         onConnected: () => {
           isConnected = true;
-          // Call the custom onopen handler if already set
-          if (socketWrapper._onopen) {
-            socketWrapper._onopen.call(socketWrapper);
-          }
+          socketWrapper._onopen?.call(socketWrapper);
         },
         onMessage: (_ws, event) => {
-          // Call the component's onmessage handler if defined via $options
-          if (component.$options.sockets && component.$options.sockets.onmessage) {
-            component.$options.sockets.onmessage(event);
-          }
+          component.$options.sockets?.onmessage?.(event);
         },
-        onDisconnected: (ws, event) => {
+        onDisconnected: (_ws, event) => {
           isConnected = false;
-          // Call the custom onclose handler if set
-          if (socketWrapper._onclose) {
-            socketWrapper._onclose.call(socketWrapper, event);
-          }
+          socketWrapper._onclose?.call(socketWrapper, event);
         },
-        onError: (ws, event) => {
-          // Let component handle errors through onerror callback
-          if (socketWrapper._onerror) {
-            socketWrapper._onerror.call(socketWrapper, event);
-          }
+        onError: (_ws, event) => {
+          socketWrapper._onerror?.call(socketWrapper, event);
         }
       });
 
-      // Store controls on the component instance
       component._wsControls = wsControls;
 
-      // Defer opening the connection to allow handlers to be set
-      // This ensures onopen/onclose handlers can be set after $connect() is called
       queueMicrotask(() => {
-        // Guard against wsControls being cleared or missing open by the time this runs
-        if (!wsControls || typeof wsControls.open !== 'function') {
-          console.error('WebSocket controls are not available to open the connection.');
-          return;
-        }
-        try {
-          wsControls.open();
-        } catch (error) {
-          console.error('Failed to open WebSocket connection:', error);
-          if (socketWrapper._onerror) {
-            socketWrapper._onerror.call(socketWrapper, error);
-          }
-        }
+        wsControls?.open?.();
       });
     };
 
-    // Add $disconnect method to Vue prototype
-    Vue.prototype.$disconnect = function() {
-      const wsControls = this._wsControls;
-      if (wsControls && wsControls.close) {
-        wsControls.close();
-        this._wsControls = null;
-      }
-      if (this.$socket) {
-        this.$socket = null;
-      }
+    // $disconnect
+    app.config.globalProperties.$disconnect = function() {
+      this._wsControls?.close?.();
+      this._wsControls = null;
+      this.$socket = null;
     };
   }
 };

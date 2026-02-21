@@ -246,12 +246,12 @@ function startApp(config) {
 // First get the config from the server
 // In development this will be in /public and served by webpack
 // In prod it is linked into the docker container
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
-axios
-  .get('/praeco.config.json')
+axios.get(import.meta.env.BASE_URL + 'praeco.config.json')
   .then(res => {
+    console.log("CONFIG OK:", res.data);
     startApp(res.data);
   })
-  .catch(() => {
+  .catch(err => {
+    console.error("CONFIG ERROR:", err);
     alert('praeco.config.json missing');
   });

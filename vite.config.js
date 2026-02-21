@@ -5,10 +5,13 @@ import { resolve } from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { loadEnv } from 'vite'
 
-export default defineConfig({
-  plugins: [
-    vue(),
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd())
+  return {
+    plugins: [
+      vue(),
 
     // Vue API auto import
     AutoImport({
@@ -23,8 +26,8 @@ export default defineConfig({
     }),
   ],
 
-  base: process.env.VITE_BASE_URL || '/',
-
+  //base: process.env.VITE_BASE_URL || '/',
+  base: env.VITE_BASE_URL || '/',
   resolve: {
     extensions: ['.js', '.vue', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
@@ -106,4 +109,4 @@ export default defineConfig({
       'vue-echarts'
     ]
   }
-})
+}})
