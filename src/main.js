@@ -149,10 +149,11 @@ function startApp(config) {
 
     console.error(err, vm, info);
 
-    ElNotification.error({
+    ElNotification({
       message: err.toString(),
       title: 'Internal error',
-      duration: 0
+      duration: 0,
+      type: 'error',
     });
   };
 

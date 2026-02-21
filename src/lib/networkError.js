@@ -16,7 +16,7 @@ export default function notifyError(error) {
     console.error(err);
   }
 
-  ElNotification.error({
+  ElNotification({
     message: error.toString(),
     title: 'API error',
     duration: 0
