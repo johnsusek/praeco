@@ -2,27 +2,27 @@
 <template>
   <div>
     <praeco-form-item label="Account Sid" prop="exotelAccountSid" required>
-      <el-input id="exotelAccountSid" :value="exotelAccountSid" :disabled="viewOnly" @input="exotelAccountSid = $event" />
+      <el-input id="exotelAccountSid" v-model="exotelAccountSid" :disabled="viewOnly" @update:model-value="exotelAccountSid = $event" />
       <label>This is sid of your Exotel account.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Auth Token" prop="exotelAuthToken" required>
-      <el-input id="exotelAuthToken" :value="exotelAuthToken" :disabled="viewOnly" @input="exotelAuthToken = $event" />
+      <el-input id="exotelAuthToken" v-model="exotelAuthToken" :disabled="viewOnly" @update:model-value="exotelAuthToken = $event" />
       <label>Auth token assosiated with your Exotel account.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Number" prop="exotelToNumber" required>
-      <el-input id="exotelToNumber" :value="exotelToNumber" :disabled="viewOnly" @input="exotelToNumber = $event" />
+      <el-input id="exotelToNumber" v-model="exotelToNumber" :disabled="viewOnly" @update:model-value="exotelToNumber = $event" />
       <label>The phone number where you would like send the notification.</label>
     </praeco-form-item>
 
     <praeco-form-item label="From Number" prop="exotelFromNumber" required>
-      <el-input id="exotelFromNumber" :value="exotelFromNumber" :disabled="viewOnly" @input="exotelFromNumber = $event" />
+      <el-input id="exotelFromNumber" v-model="exotelFromNumber" :disabled="viewOnly" @update:model-value="exotelFromNumber = $event" />
       <label>Your exophone number from which message will be sent.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Message Body" prop="exotelMessageBody">
-      <el-input id="exotelMessageBody" :value="exotelMessageBody" :disabled="viewOnly" @input="exotelMessageBody = $event" />
+      <el-input id="exotelMessageBody" v-model="exotelMessageBody" :disabled="viewOnly" @update:model-value="exotelMessageBody = $event" />
       <label>Message you want to send in the sms, is you don’t specify this argument only the rule name is sent</label>
     </praeco-form-item>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <praeco-form-item label="Type" prop="gelfType" required>
-      <el-radio-group :value="gelfType" :disabled="viewOnly" @input="gelfType = $event">
+      <el-radio-group v-model="gelfType" :disabled="viewOnly" @update:model-value="gelfType = $event">
         <el-radio id="gelfTypeHttp" label="http" border>
           http
         </el-radio>
@@ -13,14 +13,14 @@
 
     <div v-if="gelfType === 'http'">
       <praeco-form-item label="EndPoint" prop="gelfEndpoint">
-        <el-input id="gelfEndpoint" :value="gelfEndpoint" :disabled="viewOnly" @input="gelfEndpoint = $event" />
+        <el-input id="gelfEndpoint" v-model="gelfEndpoint" :disabled="viewOnly" @update:model-value="gelfEndpoint = $event" />
         <label>Link to GELF HTTP Input as an example: ‘http://example.com/gelf'</label>
       </praeco-form-item>
 
       <praeco-form-item label="Ignore SSL Errors" prop="gelfHttpIgnoreSslErrors">
         <el-switch
           id="gelfHttpIgnoreSslErrors"
-          :value="gelfHttpIgnoreSslErrors"
+          v-model="gelfHttpIgnoreSslErrors"
           :disabled="viewOnly"
           @change="changeGelfHttpIgnoreSslErrors" />
       </praeco-form-item>
@@ -28,28 +28,28 @@
 
     <div v-if="gelfType === 'tcp'">
       <praeco-form-item label="Host" prop="gelfHost" required>
-        <el-input id="gelfHost" :value="gelfHost" :disabled="viewOnly" @input="gelfHost = $event" />
+        <el-input id="gelfHost" v-model="gelfHost" :disabled="viewOnly" @update:model-value="gelfHost = $event" />
         <label>Graylog server address where Input launched.</label>
       </praeco-form-item>
 
       <praeco-form-item label="Port" prop="gelfPort" required>
-        <el-input-number id="gelfPort" :value="gelfPort" :disabled="viewOnly" @input="gelfPort = $event" />
+        <el-input-number id="gelfPort" v-model="gelfPort" :disabled="viewOnly" @update:model-value="gelfPort = $event" />
         <label>Port, specified for Input.</label>
       </praeco-form-item>
     </div>
 
     <praeco-form-item label="LogLevel" prop="gelfLogLevel">
-      <el-input-number id="gelfLogLevel" :value="gelfLogLevel" :disabled="viewOnly" :min="0" :max="7" @input="gelfLogLevel = $event" />
+      <el-input-number id="gelfLogLevel" v-model="gelfLogLevel" :disabled="viewOnly" :min="0" :max="7" @update:model-value="gelfLogLevel = $event" />
       <label>Standard syslog severity levels. </label>
     </praeco-form-item>
 
     <praeco-form-item label="CaCert" prop="gelfCaCert">
-      <el-input id="gelfCaCert" :value="gelfCaCert" :disabled="viewOnly" @input="gelfCaCert = $event" />
+      <el-input id="gelfCaCert" v-model="gelfCaCert" :disabled="viewOnly" @update:model-value="gelfCaCert = $event" />
       <label>Path to custom CA certificate.</label>
     </praeco-form-item>
 
     <praeco-form-item label="TimeOut" prop="gelfTimeout">
-      <el-input-number id="gelfTimeout" :value="gelfTimeout" :disabled="viewOnly" @input="gelfTimeout = $event" />
+      <el-input-number id="gelfTimeout" v-model="gelfTimeout" :disabled="viewOnly" @update:model-value="gelfTimeout = $event" />
       <label>Custom timeout.</label>
     </praeco-form-item>
   </div>

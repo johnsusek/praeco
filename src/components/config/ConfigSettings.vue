@@ -34,7 +34,7 @@
             :fetch-suggestions="(qs, cb) => { cb(links); }"
             :placeholder="indicesLoading ? `Loading indices...` : ''"
             class="el-input-wide"
-            @input="getMappingDebounced" />
+            @update:model-value="getMappingDebounced" />
           <label v-if="!viewOnly">
             e.g. logstash-* or logstash-%Y.%m.%d
             [<a href="https://elastalert2.readthedocs.io/en/latest/ruletypes.html#index" target="_blank" rel="noopener noreferrer">?</a>]

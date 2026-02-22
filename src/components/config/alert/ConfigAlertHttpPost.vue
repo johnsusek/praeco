@@ -30,7 +30,7 @@
                   v-model="httpPostUrl[index]"
                   :disabled="viewOnly"
                   placeholder="HttpPostUrls"
-                  @input="(val) => updatehttpPostUrl(val, index)" />
+                  @update:model-value="(val) => updatehttpPostUrl(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -54,7 +54,7 @@
     <el-form-item label="CA Certs" prop="httpPostCaCerts">
       <el-switch
         id="httpPostCaCerts"
-        :value="httpPostCaCerts"
+        v-model="httpPostCaCerts"
         :disabled="viewOnly"
         @change="changeHttpPostCaCerts" />
     </el-form-item>
@@ -62,13 +62,13 @@
     <el-form-item label="Ignore SSL Errors" prop="httpPostIgnoreSslErrors">
       <el-switch
         id="httpPostIgnoreSslErrors"
-        :value="httpPostIgnoreSslErrors"
+        v-model="httpPostIgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeHttpPostIgnoreSslErrors" />
     </el-form-item>
 
     <el-form-item label="Timeout" prop="httpPostTimeout">
-      <el-input-number id="httpPostTimeout" :value="httpPostTimeout" :disabled="viewOnly" @input="httpPostTimeout = $event" />
+      <el-input-number id="httpPostTimeout" v-model="httpPostTimeout" :disabled="viewOnly" @update:model-value="httpPostTimeout = $event" />
       <label>
         The timeout value, in seconds, for making the post.
         The default is 10.
@@ -77,7 +77,7 @@
     </el-form-item>
 
     <el-form-item label="Proxy" prop="httpPostProxy">
-      <el-input id="httpPostProxy" :value="httpPostProxy" :disabled="viewOnly" @input="httpPostProxy = $event" />
+      <el-input id="httpPostProxy" v-model="httpPostProxy" :disabled="viewOnly" @update:model-value="httpPostProxy = $event" />
       <label>URL of proxy, if required.</label>
     </el-form-item>
   </div>

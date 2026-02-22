@@ -10,29 +10,29 @@
 
     <div v-if="groupSns === 'notProfile'">
       <praeco-form-item label="TopicArn" prop="snsTopicArn" required>
-        <el-input id="snsTopicArn" :value="snsTopicArn" :disabled="viewOnly" @input="snsTopicArn = $event" />
+        <el-input id="snsTopicArn" v-model="snsTopicArn" :disabled="viewOnly" @update:model-value="snsTopicArn = $event" />
         <label>The SNS topic’s ARN. For example, arn:aws:sns:us-east-1:123456789:somesnstopic</label>
       </praeco-form-item>
       <praeco-form-item label="SnsAwsAccessKeyId" prop="snsAwsAccessKeyId" required>
-        <el-input id="snsAwsAccessKeyId" :value="snsAwsAccessKeyId" :disabled="viewOnly" @input="snsAwsAccessKeyId = $event" />
+        <el-input id="snsAwsAccessKeyId" v-model="snsAwsAccessKeyId" :disabled="viewOnly" @update:model-value="snsAwsAccessKeyId = $event" />
         <label>An access key to connect to Amazon SNS with.</label>
       </praeco-form-item>
       <praeco-form-item label="SnsAwsSecretAccessKey" prop="snsAwsSecretAccessKey" required>
-        <el-input id="snsAwsSecretAccessKey" :value="snsAwsSecretAccessKey" :disabled="viewOnly" @input="snsAwsSecretAccessKey = $event" />
+        <el-input id="snsAwsSecretAccessKey" v-model="snsAwsSecretAccessKey" :disabled="viewOnly" @update:model-value="snsAwsSecretAccessKey = $event" />
         <label>The secret key associated with the access key.</label>
       </praeco-form-item>
       <praeco-form-item label="SnsAwsRegion" prop="snsAwsRegion" required>
-        <el-input id="snsAwsRegion" :value="snsAwsRegion" :disabled="viewOnly" @input="snsAwsRegion = $event" />
+        <el-input id="snsAwsRegion" v-model="snsAwsRegion" :disabled="viewOnly" @update:model-value="snsAwsRegion = $event" />
         <label>The AWS region in which the Amazon SNS resource is located. For example, us-east-1</label>
       </praeco-form-item>
     </div>
     <div v-if="groupSns === 'profile'">
       <praeco-form-item label="TopicArn" prop="snsTopicArn" required>
-        <el-input id="snsTopicArn" :value="snsTopicArn" :disabled="viewOnly" @input="snsTopicArn = $event" />
+        <el-input id="snsTopicArn" v-model="snsTopicArn" :disabled="viewOnly" @update:model-value="snsTopicArn = $event" />
         <label>The Amazon SNS topic’s ARN. For example, arn:aws:sns:us-east-1:123456789:somesnstopic</label>
       </praeco-form-item>
       <praeco-form-item label="SnsAwsProfile" prop="snsAwsProfile" required>
-        <el-input id="snsAwsProfile" :value="snsAwsProfile" :disabled="viewOnly" @input="snsAwsProfile = $event" />
+        <el-input id="snsAwsProfile" v-model="snsAwsProfile" :disabled="viewOnly" @update:model-value="snsAwsProfile = $event" />
         <label>The AWS profile to use. If none specified, the default will be used.</label>
       </praeco-form-item>
     </div>

@@ -30,7 +30,7 @@
                   v-model="mattermostWebhookUrl[index]"
                   :disabled="viewOnly"
                   placeholder="WebhookUrl"
-                  @input="(val) => updateMattermostWebhookUrl(val, index)" />
+                  @update:model-value="(val) => updateMattermostWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -82,7 +82,7 @@
                   v-model="mattermostChannelOverride[index]"
                   :disabled="viewOnly"
                   placeholder="MattermostChannelOverrides"
-                  @input="(val) => updatemattermostChannelOverride(val, index)" />
+                  @update:model-value="(val) => updatemattermostChannelOverride(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -104,7 +104,7 @@
     </el-popover>
 
     <praeco-form-item label="Post as" prop="mattermostUsernameOverride" required>
-      <el-input id="mattermostUsernameOverride" :value="mattermostUsernameOverride" :disabled="viewOnly" @input="mattermostUsernameOverride = $event" />
+      <el-input id="mattermostUsernameOverride" v-model="mattermostUsernameOverride" :disabled="viewOnly" @update:model-value="mattermostUsernameOverride = $event" />
       <label>This is the username that will appear in Mattermost for the alert</label>
     </praeco-form-item>
 
@@ -129,7 +129,7 @@
     </div>
 
     <el-form-item label="Message color" prop="mattermostMsgColor" required>
-      <el-radio-group :value="mattermostMsgColor" :disabled="viewOnly" @input="mattermostMsgColor = $event">
+      <el-radio-group v-model="mattermostMsgColor" :disabled="viewOnly" @update:model-value="mattermostMsgColor = $event">
         <el-radio id="mattermostMsgColorDanger" label="danger" border class="mattermost-danger">
           Danger
         </el-radio>
@@ -145,13 +145,13 @@
     <el-form-item label="Ignore SSL Errors" prop="mattermostIgnoreSslErrors">
       <el-switch
         id="mattermostIgnoreSslErrors"
-        :value="mattermostIgnoreSslErrors"
+        v-model="mattermostIgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeMattermostIgnoreSslErrors" />
     </el-form-item>
 
     <el-form-item label="Icon URL Override" prop="mattermostIconUrlOverride">
-      <el-input id="mattermostIconUrlOverride" :value="mattermostIconUrlOverride" :disabled="viewOnly" @input="mattermostIconUrlOverride = $event" />
+      <el-input id="mattermostIconUrlOverride" v-model="mattermostIconUrlOverride" :disabled="viewOnly" @update:model-value="mattermostIconUrlOverride = $event" />
       <label>
         By default ElastAlert 2 will use the default webhook icon when posting to the channel.
         You can provide icon_url to use custom image.
@@ -160,12 +160,12 @@
     </el-form-item>
 
     <el-form-item label="Msg Pretext" prop="mattermostMsgPretext">
-      <el-input id="mattermostMsgPretext" :value="mattermostMsgPretext" :disabled="viewOnly" @input="mattermostMsgPretext = $event" />
+      <el-input id="mattermostMsgPretext" v-model="mattermostMsgPretext" :disabled="viewOnly" @update:model-value="mattermostMsgPretext = $event" />
       <label>You can set the message attachment pretext using this option.</label>
     </el-form-item>
 
     <el-form-item label="Proxy" prop="mattermostProxy">
-      <el-input id="mattermostProxy" :value="mattermostProxy" :disabled="viewOnly" @input="mattermostProxy = $event" />
+      <el-input id="mattermostProxy" v-model="mattermostProxy" :disabled="viewOnly" @update:model-value="mattermostProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Mattermost.
         Set this option using hostname:port if you need to use a proxy.
@@ -173,54 +173,54 @@
     </el-form-item>
 
     <el-form-item label="Title" prop="mattermostTitle">
-      <el-input :value="mattermostTitle" :disabled="viewOnly" @input="mattermostTitle = $event" />
+      <el-input v-model="mattermostTitle" :disabled="viewOnly" @update:model-value="mattermostTitle = $event" />
       <label>Sets a title for the message, this shows up as a blue text at the start of the message.</label>
     </el-form-item>
 
     <el-form-item label="Title Link" prop="mattermostTitleLink">
-      <el-input :value="mattermostTitleLink" :disabled="viewOnly" @input="mattermostTitleLink = $event" />
+      <el-input v-model="mattermostTitleLink" :disabled="viewOnly" @update:model-value="mattermostTitleLink = $event" />
       <label>You can add a link in your Mattermost notification by setting this to a valid URL.</label>
     </el-form-item>
 
     <el-form-item label="Footer" prop="mattermostFooter">
-      <el-input :value="mattermostFooter" :disabled="viewOnly" @input="mattermostFooter = $event" />
+      <el-input v-model="mattermostFooter" :disabled="viewOnly" @update:model-value="mattermostFooter = $event" />
       <label>Add a static footer text for alert.</label>
     </el-form-item>
 
     <el-form-item label="Footer Icon" prop="mattermostFooterIcon">
-      <el-input :value="mattermostFooterIcon" :disabled="viewOnly" @input="mattermostFooterIcon = $event" />
+      <el-input v-model="mattermostFooterIcon" :disabled="viewOnly" @update:model-value="mattermostFooterIcon = $event" />
       <label>A Public Url for a footer icon.</label>
     </el-form-item>
 
     <el-form-item label="Image URL" prop="mattermostImageUrl">
-      <el-input :value="mattermostImageUrl" :disabled="viewOnly" @input="mattermostImageUrl = $event" />
+      <el-input v-model="mattermostImageUrl" :disabled="viewOnly" @update:model-value="mattermostImageUrl = $event" />
       <label>An optional URL to an image file (GIF, JPEG, PNG, BMP, or SVG).</label>
     </el-form-item>
 
     <el-form-item label="Thumb URL" prop="mattermostThumbUrl">
-      <el-input :value="mattermostThumbUrl" :disabled="viewOnly" @input="mattermostThumbUrl = $event" />
+      <el-input v-model="mattermostThumbUrl" :disabled="viewOnly" @update:model-value="mattermostThumbUrl = $event" />
       <label>An optional URL to an image file (GIF, JPEG, PNG, BMP, or SVG) that is displayed as thumbnail.</label>
     </el-form-item>
 
     <el-form-item label="Author Name" prop="mattermostAuthorName">
-      <el-input :value="mattermostAuthorName" :disabled="viewOnly" @input="mattermostAuthorName = $event" />
+      <el-input v-model="mattermostAuthorName" :disabled="viewOnly" @update:model-value="mattermostAuthorName = $event" />
       <label>An optional name used to identify the author.</label>
     </el-form-item>
 
     <el-form-item label="Author Link" prop="mattermostAuthorLink">
-      <el-input :value="mattermostAuthorLink" :disabled="viewOnly" @input="mattermostAuthorLink = $event" />
+      <el-input v-model="mattermostAuthorLink" :disabled="viewOnly" @update:model-value="mattermostAuthorLink = $event" />
       <label>An optional URL used to hyperlink the author_name.</label>
     </el-form-item>
 
     <el-form-item label="Author Icon" prop="mattermostAuthorIcon">
-      <el-input :value="mattermostAuthorIcon" :disabled="viewOnly" @input="mattermostAuthorIcon = $event" />
+      <el-input v-model="mattermostAuthorIcon" :disabled="viewOnly" @update:model-value="mattermostAuthorIcon = $event" />
       <label>An optional URL used to display a 16x16 pixel icon beside the author_name.</label>
     </el-form-item>
 
     <el-form-item label="Attach Kibana Discover URL" prop="mattermostAttachKibanaDiscoverUrl">
       <el-switch
         id="mattermostAttachKibanaDiscoverUrl"
-        :value="mattermostAttachKibanaDiscoverUrl"
+        v-model="mattermostAttachKibanaDiscoverUrl"
         :disabled="viewOnly"
         @change="changeMattermostAttachKibanaDiscoverUrl" />
     </el-form-item>
@@ -232,7 +232,7 @@
     </el-form-item>
 
     <el-form-item label="Kibana Discover Title" prop="mattermostKibanaDiscoverTitle">
-      <el-input :value="mattermostKibanaDiscoverTitle" :disabled="viewOnly" @input="mattermostKibanaDiscoverTitle = $event" />
+      <el-input v-model="mattermostKibanaDiscoverTitle" :disabled="viewOnly" @update:model-value="mattermostKibanaDiscoverTitle = $event" />
       <label>The title of the Kibana Discover url attachment.</label>
     </el-form-item>
   </div>

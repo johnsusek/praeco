@@ -248,10 +248,8 @@ function startApp(config) {
 // In prod it is linked into the docker container
 axios.get(import.meta.env.BASE_URL + 'praeco.config.json')
   .then(res => {
-    console.log("CONFIG OK:", res.data);
     startApp(res.data);
   })
-  .catch(err => {
-    console.error("CONFIG ERROR:", err);
+  .catch(() => {
     alert('praeco.config.json missing');
   });

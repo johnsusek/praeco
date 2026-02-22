@@ -12,7 +12,7 @@
           v-if="groups.length"
           v-model="activeGroupIndex"
           tab-position="bottom"
-          @input="updateGroupIndex"
+          @update:model-value="updateGroupIndex"
           @tab-click="clickTab">
           <el-tab-pane
             v-for="(group, index2) in groups"
@@ -56,7 +56,7 @@
                   v-if="interval"
                   :unit="Object.keys(interval)[0]"
                   :amount="Object.values(interval)[0]"
-                  @input="updateInterval" />
+                  @update:model-value="updateInterval" />
               </el-col>
             </el-row>
 
@@ -67,7 +67,7 @@
                   v-if="timespan"
                   :unit="Object.keys(timespan)[0]"
                   :amount="Object.values(timespan)[0]"
-                  @input="updateTimespan" />
+                  @update:model-value="updateTimespan" />
               </el-col>
             </el-row>
           </div>

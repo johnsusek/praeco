@@ -30,7 +30,7 @@
                   v-model="googleChatWebhookUrl[index]"
                   :disabled="viewOnly"
                   placeholder="WebhookUrl"
-                  @input="(val) => updategoogleChatWebhookUrl(val, index)" />
+                  @update:model-value="(val) => updategoogleChatWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -52,7 +52,7 @@
     </el-popover>
 
     <praeco-form-item label="GoogleChat Format" prop="googleChatFormat" required>
-      <el-radio-group :value="googleChatFormat" :disabled="viewOnly" @input="googleChatFormat = $event">
+      <el-radio-group v-model="googleChatFormat" :disabled="viewOnly" @update:model-value="googleChatFormat = $event">
         <el-radio id="googleChatFormatBasic" label="basic" border>
           basic
         </el-radio>
@@ -64,28 +64,28 @@
 
     <div v-if="googleChatFormat === 'card'">
       <praeco-form-item label="Header Title" prop="googleChatHeaderTitle">
-        <el-input id="googleChatHeaderTitle" :value="googleChatHeaderTitle" :disabled="viewOnly" @input="googleChatHeaderTitle = $event" />
+        <el-input id="googleChatHeaderTitle" v-model="googleChatHeaderTitle" :disabled="viewOnly" @update:model-value="googleChatHeaderTitle = $event" />
         <label>GoogleChat Header Title</label>
       </praeco-form-item>
 
       <praeco-form-item label="Header Subtitle" prop="googleChatHeaderSubtitle">
-        <el-input id="googleChatHeaderSubtitle" :value="googleChatHeaderSubtitle" :disabled="viewOnly" @input="googleChatHeaderSubtitle = $event" />
+        <el-input id="googleChatHeaderSubtitle" v-model="googleChatHeaderSubtitle" :disabled="viewOnly" @update:model-value="googleChatHeaderSubtitle = $event" />
         <label>Sets the text for the card header subtitle.</label>
       </praeco-form-item>
 
       <praeco-form-item label="Header Image" prop="googleChatHeaderImage">
-        <el-input id="googleChatHeaderImage" :value="googleChatHeaderImage" :disabled="viewOnly" @input="googleChatHeaderImage = $event" />
+        <el-input id="googleChatHeaderImage" v-model="googleChatHeaderImage" :disabled="viewOnly" @update:model-value="googleChatHeaderImage = $event" />
         <label>URL for the card header icon.</label>
       </praeco-form-item>
 
       <praeco-form-item label="Footer Kibanalink" prop="googleFooterKibanalink">
-        <el-input id="googleFooterKibanalink" :value="googleFooterKibanalink" :disabled="viewOnly" @input="googleFooterKibanalink = $event" />
+        <el-input id="googleFooterKibanalink" v-model="googleFooterKibanalink" :disabled="viewOnly" @update:model-value="googleFooterKibanalink = $event" />
         <label>URL to Kibana to include in the card footer.</label>
       </praeco-form-item>
     </div>
 
     <praeco-form-item label="Proxy" prop="googleChatProxy">
-      <el-input id="googleChatProxy" :value="googleChatProxy" :disabled="viewOnly" @input="googleChatProxy = $event" />
+      <el-input id="googleChatProxy" v-model="googleChatProxy" :disabled="viewOnly" @update:model-value="googleChatProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to GoogleChat.
         Set this option using hostname:port if you need to use a proxy.

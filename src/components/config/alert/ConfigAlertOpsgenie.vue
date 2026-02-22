@@ -1,56 +1,56 @@
 <template>
   <div>
     <el-form-item label="opsgenie_key" prop="opsgenieKey" required>
-      <el-input :value="opsgenieKey" :disabled="viewOnly" @input="opsgenieKey = $event" />
+      <el-input v-model="opsgenieKey" :disabled="viewOnly" @update:model-value="opsgenieKey = $event" />
       <label>
         The randomly generated API Integration key created by OpsGenie.
       </label>
     </el-form-item>
 
     <el-form-item label="opsgenie_account" prop="opsgenieAccount">
-      <el-input :value="opsgenieAccount" :disabled="viewOnly" @input="opsgenieAccount = $event" />
+      <el-input v-model="opsgenieAccount" :disabled="viewOnly" @update:model-value="opsgenieAccount = $event" />
       <label>
         The randomly generated API Integration key created by OpsGenie.
       </label>
     </el-form-item>
 
     <el-form-item label="opsgenie_message" prop="opsgenieMessage">
-      <el-input :value="opsgenieMessage" :disabled="viewOnly" @input="opsgenieMessage = $event" />
+      <el-input v-model="opsgenieMessage" :disabled="viewOnly" @update:model-value="opsgenieMessage = $event" />
       <label>
         Set the OpsGenie message to something other than the rule name. The message can be formatted with fields from the first match e.g. “Error occurred for {app_name} at {timestamp}.”.
       </label>
     </el-form-item>
 
     <el-form-item label="opsgenie_subject" prop="opsgenieSubject">
-      <el-input :value="opsgenieSubject" :disabled="viewOnly" @input="opsgenieSubject = $event" />
+      <el-input v-model="opsgenieSubject" :disabled="viewOnly" @update:model-value="opsgenieSubject = $event" />
       <label>
         A string used to create the title of the OpsGenie alert. Can use Python string formatting.
       </label>
     </el-form-item>
 
     <el-form-item label="opsgenie_alias" prop="opsgenieAlias">
-      <el-input :value="opsgenieAlias" :disabled="viewOnly" @input="opsgenieAlias = $event" />
+      <el-input v-model="opsgenieAlias" :disabled="viewOnly" @update:model-value="opsgenieAlias = $event" />
       <label>
         Set the OpsGenie alias. The alias can be formatted with fields from the first match e.g “{app_name} error”.
       </label>
     </el-form-item>
 
     <el-form-item label="opsgenie_proxy" prop="opsgenieProxy">
-      <el-input :value="opsgenieProxy" :disabled="viewOnly" @input="opsgenieProxy = $event" />
+      <el-input v-model="opsgenieProxy" :disabled="viewOnly" @update:model-value="opsgenieProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to OpsGenie. Set this option using hostname:port if you need to use a proxy. only supports https.
       </label>
     </el-form-item>
 
     <el-form-item label="opsgenie_description" prop="opsgenieDescription">
-      <el-input :value="opsgenieDescription" :disabled="viewOnly" @input="opsgenieDescription = $event" />
+      <el-input v-model="opsgenieDescription" :disabled="viewOnly" @update:model-value="opsgenieDescription = $event" />
       <label>
         Set the OpsGenie description to something other than the rule body. The message can be formatted with fields from the first match e.g. “Error occurred for {app_name} at {timestamp}.”.
       </label>
     </el-form-item>
 
     <el-form-item label="opsgenie_priority" prop="opsgeniePriority">
-      <el-radio-group :value="opsgeniePriority" :disabled="viewOnly" @input="opsgeniePriority = $event">
+      <el-radio-group v-model="opsgeniePriority" :disabled="viewOnly" @update:model-value="opsgeniePriority = $event">
         <el-radio id="opsgeniePriorityP1" label="P1" border>
           P1
         </el-radio>

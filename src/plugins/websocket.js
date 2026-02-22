@@ -42,17 +42,17 @@ export default {
         _onopen: null,
         _onclose: null,
         _onerror: null,
-        get onopen() { return this._onopen },
+        get onopen() { return this._onopen; },
         set onopen(handler) {
           this._onopen = handler;
           if (isConnected && handler) {
             queueMicrotask(() => handler.call(this));
           }
         },
-        get onclose() { return this._onclose },
-        set onclose(handler) { this._onclose = handler },
-        get onerror() { return this._onerror },
-        set onerror(handler) { this._onerror = handler }
+        get onclose() { return this._onclose; },
+        set onclose(handler) { this._onclose = handler; },
+        get onerror() { return this._onerror; },
+        set onerror(handler) { this._onerror = handler; }
       };
 
       component.$socket = socketWrapper;

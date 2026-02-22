@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-form-item label="Webhook id" prop="webexWebhookId" required>
-      <el-input :value="webexWebhookId" :disabled="viewOnly" @input="webexWebhookId = $event" />
+      <el-input v-model="webexWebhookId" :disabled="viewOnly" @update:model-value="webexWebhookId = $event" />
       <label>Webex webhook ID.</label>
     </el-form-item>
 
     <el-form-item label="Message color" prop="webexWebhookMsgtype" required>
-      <el-radio-group :value="webexWebhookMsgtype" :disabled="viewOnly" @input="webexWebhookMsgtype = $event">
+      <el-radio-group v-model="webexWebhookMsgtype" :disabled="viewOnly" @update:model-value="webexWebhookMsgtype = $event">
         <el-radio id="webexWebhookMsgtypeText" label="text" border>
           Text
         </el-radio>

@@ -10,31 +10,31 @@
 
     <div v-if="groupSes === 'notProfile'">
       <praeco-form-item label="SesAwsAccessKeyId" prop="sesAwsAccessKeyId" required>
-        <el-input id="sesAwsAccessKeyId" :value="sesAwsAccessKeyId" :disabled="viewOnly" @input="sesAwsAccessKeyId = $event" />
+        <el-input id="sesAwsAccessKeyId" v-model="sesAwsAccessKeyId" :disabled="viewOnly" @update:model-value="sesAwsAccessKeyId = $event" />
         <label>An access key to connect to Amazon SES with.</label>
       </praeco-form-item>
       <praeco-form-item label="SesAwsSecretAccessKey" prop="sesAwsSecretAccessKey" required>
-        <el-input id="sesAwsSecretAccessKey" :value="sesAwsSecretAccessKey" :disabled="viewOnly" @input="sesAwsSecretAccessKey = $event" />
+        <el-input id="sesAwsSecretAccessKey" v-model="sesAwsSecretAccessKey" :disabled="viewOnly" @update:model-value="sesAwsSecretAccessKey = $event" />
         <label>The secret key associated with the access key.</label>
       </praeco-form-item>
       <praeco-form-item label="SesAwsRegion" prop="sesAwsRegion" required>
-        <el-input id="sesAwsRegion" :value="sesAwsRegion" :disabled="viewOnly" @input="sesAwsRegion = $event" />
+        <el-input id="sesAwsRegion" v-model="sesAwsRegion" :disabled="viewOnly" @update:model-value="sesAwsRegion = $event" />
         <label>The AWS region in which the Amazon SES resource is located. For example, us-east-1</label>
       </praeco-form-item>
     </div>
     <div v-if="groupSes === 'profile'">
       <praeco-form-item label="SesAwsProfile" prop="sesAwsProfile" required>
-        <el-input id="sesAwsProfile" :value="sesAwsProfile" :disabled="viewOnly" @input="sesAwsProfile = $event" />
+        <el-input id="sesAwsProfile" v-model="sesAwsProfile" :disabled="viewOnly" @update:model-value="sesAwsProfile = $event" />
         <label>The AWS profile to use. If none specified, the default will be used.</label>
       </praeco-form-item>
     </div>
 
     <praeco-form-item
       v-if="!viewOnly || sesFromAddr"
-      :value="sesFromAddr"
+      v-model="sesFromAddr"
       label="From address"
       prop="sesFromAddr">
-      <el-input :value="sesFromAddr" :disabled="viewOnly" @input="sesFromAddr = $event" />
+      <el-input v-model="sesFromAddr" :disabled="viewOnly" @update:model-value="sesFromAddr = $event" />
       <label>
         This sets the From header in the email.
         By default, the from address is ElastAlert2@
@@ -44,10 +44,10 @@
 
     <praeco-form-item
       v-if="!viewOnly || sesEmailReplyTo"
-      :value="sesEmailReplyTo"
+      v-model="sesEmailReplyTo"
       label="Reply to"
       prop="sesEmailReplyTo">
-      <el-input :value="sesEmailReplyTo" :disabled="viewOnly" @input="sesEmailReplyTo = $event" />
+      <el-input v-model="sesEmailReplyTo" :disabled="viewOnly" @update:model-value="sesEmailReplyTo = $event" />
       <label>
         This sets the Reply-To header in the email.
         By default, the from address is ElastAlert2@ and the
@@ -56,26 +56,26 @@
     </praeco-form-item>
 
     <el-form-item label="To" prop="sesEmail" required>
-      <el-input :value="sesEmail" :disabled="viewOnly" @input="sesEmail = $event" />
+      <el-input v-model="sesEmail" :disabled="viewOnly" @update:model-value="sesEmail = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item v-if="!viewOnly || sesCc" label="CC" prop="sesCc">
-      <el-input :value="sesCc" :disabled="viewOnly" @input="sesCc = $event" />
+      <el-input v-model="sesCc" :disabled="viewOnly" @update:model-value="sesCc = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item v-if="!viewOnly || sesBcc" label="BCC" prop="sesBcc">
-      <el-input :value="sesBcc" :disabled="viewOnly" @input="sesBcc = $event" />
+      <el-input v-model="sesBcc" :disabled="viewOnly" @update:model-value="sesBcc = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item label="Email From Field" prop="sesEmailFromField">
-      <el-input :value="sesEmailFromField" :disabled="viewOnly" @input="sesEmailFromField = $event" />
+      <el-input v-model="sesEmailFromField" :disabled="viewOnly" @update:model-value="sesEmailFromField = $event" />
     </el-form-item>
 
     <el-form-item label="Email Add Domain" prop="sesEmailAddDomain">
-      <el-input :value="sesEmailAddDomain" :disabled="viewOnly" @input="sesEmailAddDomain = $event" />
+      <el-input v-model="sesEmailAddDomain" :disabled="viewOnly" @update:model-value="sesEmailAddDomain = $event" />
     </el-form-item>
   </div>
 </template>

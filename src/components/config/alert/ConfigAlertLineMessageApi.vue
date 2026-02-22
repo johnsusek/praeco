@@ -1,11 +1,11 @@
 <template>
   <div>
     <praeco-form-item label="line_channel_access_token" prop="lineChannelAccessToken" required>
-      <el-input id="lineChannelAccessToken" :value="lineChannelAccessToken" :disabled="viewOnly" @input="lineChannelAccessToken = $event" />
+      <el-input id="lineChannelAccessToken" v-model="lineChannelAccessToken" :disabled="viewOnly" @update:model-value="lineChannelAccessToken = $event" />
     </praeco-form-item>
 
     <praeco-form-item label="line_to" prop="lineTo" required>
-      <el-input id="lineTo" :value="lineTo" :disabled="viewOnly" @input="lineTo = $event" />
+      <el-input id="lineTo" v-model="lineTo" :disabled="viewOnly" @update:model-value="lineTo = $event" />
     </praeco-form-item>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <praeco-form-item label="WebhookURL" prop="discordWebhookUrl">
-      <el-input id="discordWebhookUrl" :value="discordWebhookUrl" :disabled="viewOnly" @input="discordWebhookUrl = $event" />
+      <el-input id="discordWebhookUrl" v-model="discordWebhookUrl" :disabled="viewOnly" @update:model-value="discordWebhookUrl = $event" />
       <label>The webhook URL.</label>
     </praeco-form-item>
 
@@ -26,12 +26,12 @@
     </div>
 
     <praeco-form-item label="Discord Embed Footer" prop="discordEmbedFooter">
-      <el-input id="discordEmbedFooter" :value="discordEmbedFooter" :disabled="viewOnly" @input="discordEmbedFooter = $event" />
+      <el-input id="discordEmbedFooter" v-model="discordEmbedFooter" :disabled="viewOnly" @update:model-value="discordEmbedFooter = $event" />
       <label>embed footer.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Embed IconUrl" prop="discordEmbedIconUrl">
-      <el-input id="discordEmbedIconUrl" :value="discordEmbedIconUrl" :disabled="viewOnly" @input="discordEmbedIconUrl = $event" />
+      <el-input id="discordEmbedIconUrl" v-model="discordEmbedIconUrl" :disabled="viewOnly" @update:model-value="discordEmbedIconUrl = $event" />
       <label>
         You can provide icon_url to use custom image.
         Provide absolute address of the pciture.(exampmle : http://domain/picure.png)
@@ -39,7 +39,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Proxy" prop="discordProxy">
-      <el-input id="discordProxy" :value="discordProxy" :disabled="viewOnly" @input="discordProxy = $event" />
+      <el-input id="discordProxy" v-model="discordProxy" :disabled="viewOnly" @update:model-value="discordProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Discord.
         Set this option using hostname:port if you need to use a proxy.
@@ -47,12 +47,12 @@
     </praeco-form-item>
 
     <praeco-form-item label="Proxy Login" prop="discordProxyLogin">
-      <el-input id="discordProxyLogin" :value="discordProxyLogin" :disabled="viewOnly" @input="discordProxyLogin = $event" />
+      <el-input id="discordProxyLogin" v-model="discordProxyLogin" :disabled="viewOnly" @update:model-value="discordProxyLogin = $event" />
       <label>The Discord proxy auth username.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Proxy Password" prop="discordProxyPassword">
-      <el-input id="discordProxyPassword" :value="discordProxyPassword" :disabled="viewOnly" @input="discordProxyPassword = $event" />
+      <el-input id="discordProxyPassword" v-model="discordProxyPassword" :disabled="viewOnly" @update:model-value="discordProxyPassword = $event" />
       <label>The Discord proxy auth password.</label>
     </praeco-form-item>
   </div>

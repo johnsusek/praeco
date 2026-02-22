@@ -1,23 +1,23 @@
 <template>
   <div>
     <el-form-item label="integration key" prop="flashdutyIntegrationKey" required>
-      <el-input :value="flashdutyIntegrationKey" :disabled="viewOnly" @input="flashdutyIntegrationKey = $event" />
+      <el-input v-model="flashdutyIntegrationKey" :disabled="viewOnly" @update:model-value="flashdutyIntegrationKey = $event" />
     </el-form-item>
 
     <el-form-item label="alert_key" prop="flashdutyAlertKey">
-      <el-input :value="flashdutyAlertKey" :disabled="viewOnly" @input="flashdutyAlertKey = $event" />
+      <el-input v-model="flashdutyAlertKey" :disabled="viewOnly" @update:model-value="flashdutyAlertKey = $event" />
     </el-form-item>
 
     <el-form-item label="title" prop="flashdutyTitle">
-      <el-input :value="flashdutyTitle" :disabled="viewOnly" @input="flashdutyTitle = $event" />
+      <el-input v-model="flashdutyTitle" :disabled="viewOnly" @update:model-value="flashdutyTitle = $event" />
     </el-form-item>
 
     <el-form-item label="description" prop="flashdutyDescription">
-      <el-input :value="flashdutyDescription" :disabled="viewOnly" @input="flashdutyDescription = $event" />
+      <el-input v-model="flashdutyDescription" :disabled="viewOnly" @update:model-value="flashdutyDescription = $event" />
     </el-form-item>
 
     <el-form-item label="event_status" prop="flashdutyEventStatus">
-      <el-radio-group :value="flashdutyEventStatus" :disabled="viewOnly" @input="flashdutyEventStatus = $event">
+      <el-radio-group v-model="flashdutyEventStatus" :disabled="viewOnly" @update:model-value="flashdutyEventStatus = $event">
         <el-radio id="flashdutyEventStatusInfo" label="Info" border>
           Info
         </el-radio>
@@ -34,35 +34,35 @@
     </el-form-item>
 
     <el-form-item label="check" prop="flashdutyCheck">
-      <el-input :value="flashdutyCheck" :disabled="viewOnly" @input="flashdutyCheck = $event" />
+      <el-input v-model="flashdutyCheck" :disabled="viewOnly" @update:model-value="flashdutyCheck = $event" />
     </el-form-item>
 
     <el-form-item label="service" prop="flashdutyService">
-      <el-input :value="flashdutyService" :disabled="viewOnly" @input="flashdutyService = $event" />
+      <el-input v-model="flashdutyService" :disabled="viewOnly" @update:model-value="flashdutyService = $event" />
     </el-form-item>
 
     <el-form-item label="cluster" prop="flashdutyCluster">
-      <el-input :value="flashdutyCluster" :disabled="viewOnly" @input="flashdutyCluster = $event" />
+      <el-input v-model="flashdutyCluster" :disabled="viewOnly" @update:model-value="flashdutyCluster = $event" />
     </el-form-item>
 
     <el-form-item label="resource" prop="flashdutyResource">
-      <el-input :value="flashdutyResource" :disabled="viewOnly" @input="flashdutyResource = $event" />
+      <el-input v-model="flashdutyResource" :disabled="viewOnly" @update:model-value="flashdutyResource = $event" />
     </el-form-item>
 
     <el-form-item label="metric" prop="flashdutyMetric">
-      <el-input :value="flashdutyMetric" :disabled="viewOnly" @input="flashdutyMetric = $event" />
+      <el-input v-model="flashdutyMetric" :disabled="viewOnly" @update:model-value="flashdutyMetric = $event" />
     </el-form-item>
 
     <el-form-item label="group" prop="flashdutyGroup">
-      <el-input :value="flashdutyGroup" :disabled="viewOnly" @input="flashdutyGroup = $event" />
+      <el-input v-model="flashdutyGroup" :disabled="viewOnly" @update:model-value="flashdutyGroup = $event" />
     </el-form-item>
 
     <el-form-item label="env" prop="flashdutyEnv">
-      <el-input :value="flashdutyEnv" :disabled="viewOnly" @input="flashdutyEnv = $event" />
+      <el-input v-model="flashdutyEnv" :disabled="viewOnly" @update:model-value="flashdutyEnv = $event" />
     </el-form-item>
 
     <el-form-item label="app" prop="flashdutyApp">
-      <el-input :value="flashdutyApp" :disabled="viewOnly" @input="flashdutyApp = $event" />
+      <el-input v-model="flashdutyApp" :disabled="viewOnly" @update:model-value="flashdutyApp = $event" />
     </el-form-item>
   </div>
 </template>

@@ -1,17 +1,17 @@
 <template>
   <div>
     <praeco-form-item label="Api Key" prop="victoropsApiKey" required>
-      <el-input id="victoropsApiKey" :value="victoropsApiKey" :disabled="viewOnly" @input="victoropsApiKey = $event" />
+      <el-input id="victoropsApiKey" v-model="victoropsApiKey" :disabled="viewOnly" @update:model-value="victoropsApiKey = $event" />
       <label>API key generated under the ‘REST Endpoint’ in the Integrations settings.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Routing Key" prop="victoropsRoutingKey" required>
-      <el-input id="victoropsRoutingKey" :value="victoropsRoutingKey" :disabled="viewOnly" @input="victoropsRoutingKey = $event" />
+      <el-input id="victoropsRoutingKey" v-model="victoropsRoutingKey" :disabled="viewOnly" @update:model-value="victoropsRoutingKey = $event" />
       <label>VictorOps routing key to route the alert to.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Message Type" prop="victoropsMessageType" required>
-      <el-radio-group :value="victoropsMessageType" :disabled="viewOnly" @input="victoropsMessageType = $event">
+      <el-radio-group v-model="victoropsMessageType" :disabled="viewOnly" @update:model-value="victoropsMessageType = $event">
         <el-radio id="victoropsMessageTypeInfo" label="INFO" border>
           INFO
         </el-radio>
@@ -35,7 +35,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Entity Id" prop="victoropsEntityId">
-      <el-input id="victoropsEntityId" :value="victoropsEntityId" :disabled="viewOnly" @input="victoropsEntityId = $event" />
+      <el-input id="victoropsEntityId" v-model="victoropsEntityId" :disabled="viewOnly" @update:model-value="victoropsEntityId = $event" />
       <label>
         The identity of the incident used by VictorOps to correlate incidents throughout the alert lifecycle.
         If not defined, VictorOps will assign a random string to each alert.
@@ -44,12 +44,12 @@
     </praeco-form-item>
 
     <praeco-form-item label="Entity Display Name" prop="victoropsEntityDisplayName">
-      <el-input id="victoropsEntityDisplayName" :value="victoropsEntityDisplayName" :disabled="viewOnly" @input="victoropsEntityDisplayName = $event" />
+      <el-input id="victoropsEntityDisplayName" v-model="victoropsEntityDisplayName" :disabled="viewOnly" @update:model-value="victoropsEntityDisplayName = $event" />
       <label>Human-readable name of alerting entity to summarize incidents without affecting the life-cycle workflow.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Proxy" prop="victoropsProxy">
-      <el-input id="victoropsProxy" :value="victoropsProxy" :disabled="viewOnly" @input="victoropsProxy = $event" />
+      <el-input id="victoropsProxy" v-model="victoropsProxy" :disabled="viewOnly" @update:model-value="victoropsProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to VictorOps.
         Set this option using hostname:port if you need to use a proxy.

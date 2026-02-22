@@ -1,14 +1,14 @@
 <template>
   <div>
     <el-form-item label="Token" prop="yzjToken" required>
-      <el-input id="yzjToken" :value="yzjToken" :disabled="viewOnly" @input="yzjToken = $event" />
+      <el-input id="yzjToken" v-model="yzjToken" :disabled="viewOnly" @update:model-value="yzjToken = $event" />
       <label>
         The YZJ custom net location, include domain name and port, like: www.xxxx.com:80.
       </label>
     </el-form-item>
 
     <el-form-item label="Proxy" prop="yzjProxy">
-      <el-input id="yzjProxy" :value="yzjProxy" :disabled="viewOnly" @input="yzjProxy = $event" />
+      <el-input id="yzjProxy" v-model="yzjProxy" :disabled="viewOnly" @update:model-value="yzjProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to YZJ.
         Set this option using hostname:port if you need to use a proxy. only supports https.
@@ -16,7 +16,7 @@
     </el-form-item>
 
     <el-form-item label="CustomLoc" prop="yzjCustomLoc">
-      <el-input id="yzjCustomLoc" :value="yzjCustomLoc" :disabled="viewOnly" @input="yzjCustomLoc = $event" />
+      <el-input id="yzjCustomLoc" v-model="yzjCustomLoc" :disabled="viewOnly" @update:model-value="yzjCustomLoc = $event" />
       <label>
         The YZJ custom net location, include domain name and port, like: www.xxxx.com:80.
       </label>

@@ -17,7 +17,7 @@
             <ElastalertTimePicker
               :unit="Object.keys(testTime)[0]"
               :amount="Object.values(testTime)[0]"
-              @input="updateTestTime" />
+              @update:model-value="updateTestTime" />
             <el-button class="m-w-med" type="primary" plain @click="runTest">Run</el-button>
           </el-form-item>
         </div>

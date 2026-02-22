@@ -1,27 +1,27 @@
 <template>
   <div>
     <praeco-form-item label="Hive Alert Config Title" prop="hiveAlertConfigTitle">
-      <el-input id="hiveAlertConfigTitle" :value="hiveAlertConfigTitle" :disabled="viewOnly" @input="hiveAlertConfigTitle = $event" />
+      <el-input id="hiveAlertConfigTitle" v-model="hiveAlertConfigTitle" :disabled="viewOnly" @update:model-value="hiveAlertConfigTitle = $event" />
       <label>Alert's description.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Type" prop="hiveAlertConfigType">
-      <el-input id="hiveAlertConfigType" :value="hiveAlertConfigType" :disabled="viewOnly" @input="hiveAlertConfigType = $event" />
+      <el-input id="hiveAlertConfigType" v-model="hiveAlertConfigType" :disabled="viewOnly" @update:model-value="hiveAlertConfigType = $event" />
       <label>Alert's type.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Source" prop="hiveAlertConfigSource">
-      <el-input id="hiveAlertConfigSource" :value="hiveAlertConfigSource" :disabled="viewOnly" @input="hiveAlertConfigSource = $event" />
+      <el-input id="hiveAlertConfigSource" v-model="hiveAlertConfigSource" :disabled="viewOnly" @update:model-value="hiveAlertConfigSource = $event" />
       <label>Alert's source.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Description" prop="hiveAlertConfigDescription">
-      <el-input id="hiveAlertConfigDescription" :value="hiveAlertConfigDescription" :disabled="viewOnly" @input="hiveAlertConfigDescription = $event" />
+      <el-input id="hiveAlertConfigDescription" v-model="hiveAlertConfigDescription" :disabled="viewOnly" @update:model-value="hiveAlertConfigDescription = $event" />
       <label>Alert's description.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Severity" prop="hiveAlertConfigSeverity">
-      <el-input-number id="hiveAlertConfigSeverity" :value="hiveAlertConfigSeverity" :min="1" :max="4" :disabled="viewOnly" @input="hiveAlertConfigSeverity = $event" />
+      <el-input-number id="hiveAlertConfigSeverity" v-model="hiveAlertConfigSeverity" :min="1" :max="4" :disabled="viewOnly" @update:model-value="hiveAlertConfigSeverity = $event" />
       <label>Alert's severity: 1, 2, 3, 4 for LOW, MEDIUM, HIGH, CRTICAL.</label>
     </praeco-form-item>
 
@@ -56,7 +56,7 @@
                   v-model="hiveAlertConfigTags[index]"
                   :disabled="viewOnly"
                   placeholder="HiveAlertConfigTags"
-                  @input="(val) => updateHiveAlertConfigTags(val, index)" />
+                  @update:model-value="(val) => updateHiveAlertConfigTags(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -78,12 +78,12 @@
     </el-popover>
 
     <praeco-form-item label="Hive Alert Config Tlp" prop="hiveAlertConfigTlp">
-      <el-input-number id="hiveAlertConfigTlp" :value="hiveAlertConfigTlp" :min="0" :max="3" :disabled="viewOnly" @input="hiveAlertConfigTlp = $event" />
+      <el-input-number id="hiveAlertConfigTlp" v-model="hiveAlertConfigTlp" :min="0" :max="3" :disabled="viewOnly" @update:model-value="hiveAlertConfigTlp = $event" />
       <label>Alert's TLP: 0, 1, 2, 3 for WHITE, GREEN, AMBER, RED.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Status" prop="hiveAlertConfigStatus">
-      <el-radio-group :value="hiveAlertConfigStatus" :disabled="viewOnly" @input="hiveAlertConfigStatus = $event">
+      <el-radio-group v-model="hiveAlertConfigStatus" :disabled="viewOnly" @update:model-value="hiveAlertConfigStatus = $event">
         <el-radio id="hiveAlertConfigStatusWaiting" label="Waiting" border>
           Waiting
         </el-radio>
@@ -103,7 +103,7 @@
     <el-form-item label="Hive Alert Config Follow" prop="hiveAlertConfigFollow">
       <el-switch
         id="hiveAlertConfigFollow"
-        :value="hiveAlertConfigFollow"
+        v-model="hiveAlertConfigFollow"
         :disabled="viewOnly"
         @change="changeHiveAlertConfigFollow" />
     </el-form-item>

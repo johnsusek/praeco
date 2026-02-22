@@ -30,7 +30,7 @@
                   v-model="matrixhookshotWebhookUrl[index]"
                   :disabled="viewOnly"
                   placeholder="WebhookUrl"
-                  @input="(val) => updateMatrixhookshotWebhookUrl(val, index)" />
+                  @update:model-value="(val) => updateMatrixhookshotWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -52,12 +52,12 @@
     </el-popover>
 
     <el-form-item label="Post as" prop="matrixhookshotUsername">
-      <el-input id="matrixhookshotUsername" :value="matrixhookshotUsername" :disabled="viewOnly" @input="matrixhookshotUsername = $event" />
+      <el-input id="matrixhookshotUsername" v-model="matrixhookshotUsername" :disabled="viewOnly" @update:model-value="matrixhookshotUsername = $event" />
       <label>Optional username to prepend to the text body.</label>
     </el-form-item>
 
     <el-form-item label="Timeout" prop="matrixhookshotTimeout">
-      <el-input-number id="matrixhookshotTimeout" :value="matrixhookshotTimeout" :disabled="viewOnly" @input="matrixhookshotTimeout = $event" />
+      <el-input-number id="matrixhookshotTimeout" v-model="matrixhookshotTimeout" :disabled="viewOnly" @update:model-value="matrixhookshotTimeout = $event" />
       <label>
         You can specify a timeout value, in seconds, for making communicating with Hookshot.
         The default is 10. If a timeout occurs, the alert will be retried next time ElastAlert 2 cycles.
@@ -65,12 +65,12 @@
     </el-form-item>
 
     <el-form-item label="text" prop="matrixhookshotText">
-      <el-input id="matrixhookshotText" :value="matrixhookshotText" :disabled="viewOnly" @input="matrixhookshotText = $event" />
+      <el-input id="matrixhookshotText" v-model="matrixhookshotText" :disabled="viewOnly" @update:model-value="matrixhookshotText = $event" />
       <label>Override the default alert text with custom text formatting.</label>
     </el-form-item>
 
     <el-form-item label="Proxy" prop="matrixhookshotProxy">
-      <el-input :value="matrixhookshotProxy" :disabled="viewOnly" @input="matrixhookshotProxy = $event" />
+      <el-input v-model="matrixhookshotProxy" :disabled="viewOnly" @update:model-value="matrixhookshotProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Hookshot.
         Set this option using ``hostname:port`` if you need to use a proxy. only supports https.
@@ -80,7 +80,7 @@
     <el-form-item label="Ignore SSL Errors" prop="matrixhookshotIgnoreSslErrors">
       <el-switch
         id="matrixhookshotIgnoreSslErrors"
-        :value="matrixhookshotIgnoreSslErrors"
+        v-model="matrixhookshotIgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeMatrixhookshotIgnoreSslErrors" />
     </el-form-item>
@@ -88,7 +88,7 @@
     <el-form-item label="CA Certs" prop="matrixhookshotCaCerts">
       <el-switch
         id="matrixhookshotCaCerts"
-        :value="matrixhookshotCaCerts"
+        v-model="matrixhookshotCaCerts"
         :disabled="viewOnly"
         @change="changeMatrixhookshotCaCerts" />
     </el-form-item>

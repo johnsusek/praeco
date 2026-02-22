@@ -64,7 +64,7 @@
             filterable
             clearable
             placeholder="Select field"
-            @input="popCardinalityVisible = false; validate();">
+            @update:model-value="popCardinalityVisible = false; validate();">
             <el-option
               v-for="field in Object.keys(fieldsForAgg)"
               :key="field"
@@ -89,7 +89,7 @@
             filterable
             clearable
             placeholder="Select field"
-            @input="popOfVisible = false; validate();">
+            @update:model-value="popOfVisible = false; validate();">
             <el-option
               v-for="field in Object.keys(numberFields)"
               :key="field"
@@ -159,7 +159,7 @@
                 placeholder="Select field"
                 class="el-select-wide m-n-sm"
                 style="width: 280px"
-                @input="popOverVisible = false; validate();">
+                @update:model-value="popOverVisible = false; validate();">
                 <el-option
                   v-for="field in Object.keys(fieldsForAgg)"
                   :key="field"
@@ -214,7 +214,7 @@
             clearable
             placeholder="Field"
             style="width: 280px"
-            @input="popCompareVisible = false; validate();">
+            @update:model-value="popCompareVisible = false; validate();">
             <template v-if="['field in list', 'field not in list'].includes(metricAggType)">
               <el-option
                 v-for="field in Object.keys(textFields)"
@@ -257,7 +257,7 @@
             placeholder="Select field"
             class="el-select-wide"
             style="width: 280px"
-            @input="popGroupVisible = false; validate();">
+            @update:model-value="popGroupVisible = false; validate();">
             <el-option
               v-for="field in Object.keys(fieldsForAgg)"
               :key="field"
@@ -310,7 +310,7 @@
                 <el-input
                   v-model="blacklist[index2]"
                   placeholder="Keyword"
-                  @input="(val) => updateBlacklist(val, index2)" />
+                  @update:model-value="(val) => updateBlacklist(val, index2)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -359,7 +359,7 @@
                 <el-input
                   v-model="whitelist[index2]"
                   placeholder="Keyword"
-                  @input="(val) => updateWhitelist(val, index2)" />
+                  @update:model-value="(val) => updateWhitelist(val, index2)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -414,7 +414,7 @@
             id="cardinalityAboveOrBelow"
             v-model="cardinalityAboveOrBelow"
             class="el-select-wide"
-            @input="updateCardinalityAboveOrBelow">
+            @update:model-value="updateCardinalityAboveOrBelow">
             <el-option key="above" label="Above" value="above" />
             <el-option key="below" label="Below" value="below" />
           </el-select>
@@ -428,7 +428,7 @@
                 v-model="maxCardinality"
                 :min="0"
                 class="el-input-wide"
-                @input="validate" />
+                @update:model-value="validate" />
             </el-form-item>
             <el-form-item v-else prop="minCardinality" required>
               <el-input-number
@@ -436,7 +436,7 @@
                 v-model="minCardinality"
                 :min="1"
                 class="el-input-wide"
-                @input="validate" />
+                @update:model-value="validate" />
             </el-form-item>
           </el-form>
         </el-col>
@@ -484,7 +484,7 @@
               id="spikeOrThreshold"
               v-model="spikeOrThreshold"
               class="el-select-wide"
-              @input="updateSpikeOrThreshold">
+              @update:model-value="updateSpikeOrThreshold">
               <el-option key="any" label="Is not empty" value="any" />
               <el-option key="is" label="Is" value="is" />
               <el-option key="spike" label="Spikes" value="spike" />
@@ -497,7 +497,7 @@
               id="aboveOrBelow"
               v-model="aboveOrBelow"
               class="el-select-wide"
-              @input="updateAboveOrBelow">
+              @update:model-value="updateAboveOrBelow">
               <el-option key="above" label="Above" value="above" />
               <el-option key="below" label="Below" value="below" />
             </el-select>
@@ -517,7 +517,7 @@
                     v-model="numEvents"
                     :min="1"
                     class="el-input-wide"
-                    @input="validate" />
+                    @update:model-value="validate" />
                 </el-form-item>
                 <el-form-item v-else prop="threshold" required>
                   <el-input-number
@@ -525,7 +525,7 @@
                     v-model="threshold"
                     :min="1"
                     class="el-input-wide"
-                    @input="validate" />
+                    @update:model-value="validate" />
                 </el-form-item>
               </template>
               <el-form-item v-else prop="spikeHeight" required>
@@ -533,7 +533,7 @@
                   id="spikeHeight"
                   v-model="spikeHeight"
                   class="el-input-wide"
-                  @input="validate" />
+                  @update:model-value="validate" />
               </el-form-item>
             </el-form>
           </el-col>
@@ -591,7 +591,7 @@
             id="timeframe"
             :unit="Object.keys(timeframe)[0]"
             :amount="Object.values(timeframe)[0]"
-            @input="updateTimeframe" />
+            @update:model-value="updateTimeframe" />
           <label v-if="metricAggType === 'field changes'">
             The maximum time between changes.
             After this time period, elastalert will forget the old
@@ -648,7 +648,7 @@
               id="termsWindowSize"
               :unit="Object.keys(termsWindowSize)[0]"
               :amount="Object.values(termsWindowSize)[0]"
-              @input="updateTermsWindowSize" />
+              @update:model-value="updateTermsWindowSize" />
             <label>
               The amount of time used for the initial query to find existing terms.
               No term that has occurred within this time frame will trigger an alert.
@@ -661,7 +661,7 @@
               id="windowStepSize"
               :unit="Object.keys(windowStepSize)[0]"
               :amount="Object.values(windowStepSize)[0]"
-              @input="updateWindowStepSize" />
+              @update:model-value="updateWindowStepSize" />
             <label>
               When querying for existing terms, split up the time range into steps of this size.
               For example, using the default 30 day window size, and the default 1 day step size,
@@ -691,7 +691,7 @@
                 id="useCountQuery"
                 v-model="useCountQuery"
                 :disabled="useTermsQuery"
-                @input="refreshOptionsPop" />
+                @update:model-value="refreshOptionsPop" />
               <label>
                 If true, ElastAlert 2 will poll Elasticsearch using the count api,
                 and not download all of the matching documents.
@@ -703,7 +703,7 @@
           </template>
 
           <el-form-item v-if="type !== 'spike'" :class="{ 'm-n-sm': type === 'new_term' }" label="Use terms query">
-            <el-switch v-model="useTermsQuery" :disabled="useCountQuery" @input="refreshOptionsPop" />
+            <el-switch v-model="useTermsQuery" :disabled="useCountQuery" @update:model-value="refreshOptionsPop" />
             <label v-if="type === 'new_term'">
               If true, ElastAlert 2 will use aggregation queries to get terms instead of regular search queries.
               This is faster than regular searching if there is a large number of documents.

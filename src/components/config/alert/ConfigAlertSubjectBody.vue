@@ -60,7 +60,7 @@
                       v-model="alertSubjectArgs[index]"
                       :disabled="viewOnly"
                       placeholder=""
-                      @input="(val) => updateAlertSubjectArgs(val, index)" />
+                      @update:model-value="(val) => updateAlertSubjectArgs(val, index)" />
                   </el-col>
                   <el-col :span="4">
                     <el-button
@@ -137,7 +137,7 @@
                       v-model="alertTextArgs[index]"
                       :disabled="viewOnly"
                       placeholder=""
-                      @input="(val) => updateAlertTextArgs(val, index)" />
+                      @update:model-value="(val) => updateAlertTextArgs(val, index)" />
                   </el-col>
                   <el-col :span="4">
                     <el-button

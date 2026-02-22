@@ -4,7 +4,7 @@
       <el-form-item label="Kibana Discover">
         <el-switch
           id="generateKibanaDiscoverUrl"
-          :value="generateKibanaDiscoverUrl"
+          v-model="generateKibanaDiscoverUrl"
           :disabled="viewOnly"
           @change="changeGenerateKibanaDiscoverUrl" />
         <label>Kibana Discover application.</label>
@@ -14,10 +14,10 @@
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
       <el-form-item label="APP URL" prop="kibanaDiscoverAppUrl" required>
         <el-input
-          :value="kibanaDiscoverAppUrl"
+          v-model="kibanaDiscoverAppUrl"
           :disabled="viewOnly"
           placeholder="http://localhost:5601/app/discover#/"
-          @input="kibanaDiscoverAppUrl = $event" />
+          @update:model-value="kibanaDiscoverAppUrl = $event" />
         <label>The url of the Kibana Discover application used to generate the kibana_discover_url variable.</label>
       </el-form-item>
     </el-col>
@@ -33,7 +33,7 @@
             v-for="v in kibanaVersionOptions"
             :key="v.code"
             :label="v.name"
-            :value="v.code" />
+            v-model="v.code" />
         </el-select>
         <label>Specifies the version of the Kibana Discover application.</label>
       </el-form-item>
@@ -42,9 +42,9 @@
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
       <el-form-item label="Index Pattern Id" prop="kibanaDiscoverIndexPatternId" required>
         <el-input
-          :value="kibanaDiscoverIndexPatternId"
+          v-model="kibanaDiscoverIndexPatternId"
           :disabled="viewOnly"
-          @input="kibanaDiscoverIndexPatternId = $event" />
+          @update:model-value="kibanaDiscoverIndexPatternId = $event" />
         <label>The id of the index pattern to link to in the Kibana Discover application.</label>
       </el-form-item>
     </el-col>
@@ -81,7 +81,7 @@
                     v-model="kibanaDiscoverColumns[index]"
                     :disabled="viewOnly"
                     placeholder="Keyword"
-                    @input="(val) => updateKibanaDiscoverColumns(val, index)" />
+                    @update:model-value="(val) => updateKibanaDiscoverColumns(val, index)" />
                 </el-col>
                 <el-col :span="4">
                   <el-button
@@ -112,7 +112,7 @@
           :allow-zero="true"
           :unit="Object.keys(kibanaDiscoverFromTimedelta)[0]"
           :amount="Object.values(kibanaDiscoverFromTimedelta)[0]"
-          @input="updateKibanaDiscoverFromTimedelta" />
+          @update:model-value="updateKibanaDiscoverFromTimedelta" />
         <label>
           The offset to the from time of the Kibana Discover link's time range.<br>
           The from time is calculated by subtracting this timedelta from the event time.<br>
@@ -130,7 +130,7 @@
           :allow-zero="true"
           :unit="Object.keys(kibanaDiscoverToTimedelta)[0]"
           :amount="Object.values(kibanaDiscoverToTimedelta)[0]"
-          @input="updateKibanaDiscoverToTimedelta" />
+          @update:model-value="updateKibanaDiscoverToTimedelta" />
         <label>
           The offset to the to time of the Kibana Discover link's time range.<br>
           The to time is calculated by adding this timedelta to the event time.<br>

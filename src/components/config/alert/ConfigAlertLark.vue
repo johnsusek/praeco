@@ -1,7 +1,7 @@
 <template>
   <div>
     <praeco-form-item label="Bot Id" prop="larkBotId" required>
-      <el-input id="larkBotId" :value="larkBotId" :disabled="viewOnly" @input="larkBotId = $event" />
+      <el-input id="larkBotId" v-model="larkBotId" :disabled="viewOnly" @update:model-value="larkBotId = $event" />
       <label>Lark bot id.</label>
     </praeco-form-item>
   </div>

@@ -1,14 +1,14 @@
 <template>
   <div>
     <praeco-form-item label="Host" prop="irisHost" required>
-      <el-input id="irisHost" :value="irisHost" :disabled="viewOnly" @input="irisHost = $event" />
+      <el-input id="irisHost" v-model="irisHost" :disabled="viewOnly" @update:model-value="irisHost = $event" />
       <label>
         Address of the Iris host. Exclude https:// For example: iris.example.com.
       </label>
     </praeco-form-item>
 
     <praeco-form-item label="irisApiToken" prop="irisApiToken" required>
-      <el-input id="irisApiToken" :value="irisApiToken" :disabled="viewOnly" @input="irisApiToken = $event" />
+      <el-input id="irisApiToken" v-model="irisApiToken" :disabled="viewOnly" @update:model-value="irisApiToken = $event" />
       <label>
         The API key of the user you created, which will be used to initiate alerts and cases on behalf of this user.
       </label>
@@ -19,14 +19,14 @@
     <praeco-form-item label="CA Cert" prop="irisCaCert">
       <el-switch
         id="irisCaCert"
-        :value="irisCaCert"
+        v-model="irisCaCert"
         :disabled="viewOnly"
         @change="changeIrisCaCert" />
     </praeco-form-item>
     -->
 
     <praeco-form-item label="Customer Id" prop="irisCustomerId">
-      <el-input-number id="irisCustomerId" :value="irisCustomerId" :disabled="viewOnly" @input="irisCustomerId = $event" />
+      <el-input-number id="irisCustomerId" v-model="irisCustomerId" :disabled="viewOnly" @update:model-value="irisCustomerId = $event" />
       <label>
         This field represents the unique identifier of the customer for whom an incident/case will be created within the system.
         Configure and view the existing options in the section Advanced -> Customers of your IRIS instance.
@@ -37,13 +37,13 @@
     <praeco-form-item label="Ignore SSL Errors" prop="irisIgnoreSslErrors">
       <el-switch
         id="irisIgnoreSslErrors"
-        :value="irisIgnoreSslErrors"
+        v-model="irisIgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeIrisIgnoreSslErrors" />
     </praeco-form-item>
 
     <praeco-form-item label="Description" prop="irisDescription">
-      <el-input id="irisDescription" :value="irisDescription" :disabled="viewOnly" @input="irisDescription = $event" />
+      <el-input id="irisDescription" v-model="irisDescription" :disabled="viewOnly" @update:model-value="irisDescription = $event" />
       <label>
         Description of the alert or case.
       </label>
@@ -52,13 +52,13 @@
     <praeco-form-item label="Overwrite Timestamp" prop="irisOverwriteTimestamp">
       <el-switch
         id="irisOverwriteTimestamp"
-        :value="irisOverwriteTimestamp"
+        v-model="irisOverwriteTimestamp"
         :disabled="viewOnly"
         @change="changeIrisOverwriteTimestamp" />
     </praeco-form-item>
 
     <praeco-form-item label="Type" prop="irisType">
-      <el-radio-group :value="irisType" :disabled="viewOnly" @input="irisType = $event">
+      <el-radio-group v-model="irisType" :disabled="viewOnly" @update:model-value="irisType = $event">
         <el-radio id="irisTypeAlert" label="alert" border>
           alert
         </el-radio>
@@ -70,42 +70,42 @@
     </praeco-form-item>
 
     <praeco-form-item label="Case template ID" prop="irisCaseTemplateId">
-      <el-input-number id="irisCaseTemplateId" :value="irisCaseTemplateId" :disabled="viewOnly" @input="irisCaseTemplateId = $event" />
+      <el-input-number id="irisCaseTemplateId" v-model="irisCaseTemplateId" :disabled="viewOnly" @update:model-value="irisCaseTemplateId = $event" />
       <label>
         Case template ID, if you want to apply a pre-prepared template.
       </label>
     </praeco-form-item>
 
     <praeco-form-item label="Alert Note" prop="irisAlertNote">
-      <el-input id="irisAlertNote" :value="irisAlertNote" :disabled="viewOnly" @input="irisAlertNote = $event" />
+      <el-input id="irisAlertNote" v-model="irisAlertNote" :disabled="viewOnly" @update:model-value="irisAlertNote = $event" />
       <label>
         Note for the alert.
       </label>
     </praeco-form-item>
 
     <praeco-form-item label="Alert Tags" prop="irisAlertTags">
-      <el-input id="irisAlertTags" :value="irisAlertTags" :disabled="viewOnly" @input="irisAlertTags = $event" />
+      <el-input id="irisAlertTags" v-model="irisAlertTags" :disabled="viewOnly" @update:model-value="irisAlertTags = $event" />
       <label>
         List of tags.
       </label>
     </praeco-form-item>
 
     <praeco-form-item label="Alert Status Id" prop="irisAlertStatusId">
-      <el-input-number id="irisAlertStatusId" :value="irisAlertStatusId" :disabled="viewOnly" :min="1" :max="7" @input="irisAlertStatusId = $event" />
+      <el-input-number id="irisAlertStatusId" v-model="irisAlertStatusId" :disabled="viewOnly" :min="1" :max="7" @update:model-value="irisAlertStatusId = $event" />
       <label>
         The alert status of the alert, default value is 2. This parameter requires an integer input.
       </label>
     </praeco-form-item>
 
     <praeco-form-item label="Alert Source Link" prop="irisAlertSourceLink">
-      <el-input id="irisAlertSourceLink" :value="irisAlertSourceLink" :disabled="viewOnly" @input="irisAlertSourceLink = $event" />
+      <el-input id="irisAlertSourceLink" v-model="irisAlertSourceLink" :disabled="viewOnly" @update:model-value="irisAlertSourceLink = $event" />
       <label>
         Your custom link, if needed.
       </label>
     </praeco-form-item>
 
     <praeco-form-item label="Alert Severity Id" prop="irisAlertSeverityId">
-      <el-input-number id="irisAlertSeverityId" :value="irisAlertSeverityId" :disabled="viewOnly" :min="1" :max="6" @input="irisAlertSeverityId = $event" />
+      <el-input-number id="irisAlertSeverityId" v-model="irisAlertSeverityId" :disabled="viewOnly" :min="1" :max="6" @update:model-value="irisAlertSeverityId = $event" />
       <label>
         The severity level of the alert, default value is 1. This parameter requires an integer input.
       </label>

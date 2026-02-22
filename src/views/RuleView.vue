@@ -106,7 +106,7 @@
               v-if="silenceTime"
               :unit="Object.keys(silenceTime)[0]"
               :amount="Object.values(silenceTime)[0]"
-              @input="updateSilenceTime" />
+              @update:model-value="updateSilenceTime" />
             <el-button
               class="m-w-sm"
               @click="

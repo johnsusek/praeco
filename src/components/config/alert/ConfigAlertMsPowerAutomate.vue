@@ -30,7 +30,7 @@
                   v-model="msPowerAutomateWebhookUrl[index]"
                   :disabled="viewOnly"
                   placeholder="WebhookUrl"
-                  @input="(val) => updateMsPowerAutomateWebhookUrl(val, index)" />
+                  @update:model-value="(val) => updateMsPowerAutomateWebhookUrl(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -52,7 +52,7 @@
     </el-popover>
 
     <el-form-item label="Alert Summary" prop="msPowerAutomateAlertSummary">
-      <el-input :value="msPowerAutomateAlertSummary" :disabled="viewOnly" @input="msPowerAutomateAlertSummary = $event" />
+      <el-input v-model="msPowerAutomateAlertSummary" :disabled="viewOnly" @update:model-value="msPowerAutomateAlertSummary = $event" />
       <label>
         Summary should be configured according to MS documentation, although it seems not displayed by PowerAutomate currently.
       </label>
@@ -61,7 +61,7 @@
     <el-form-item label="Card Width Full" prop="msPowerAutomateTeamsCardWidthFull">
       <el-switch
         id="msPowerAutomateTeamsCardWidthFull"
-        :value="msPowerAutomateTeamsCardWidthFull"
+        v-model="msPowerAutomateTeamsCardWidthFull"
         :disabled="viewOnly"
         @change="changemsPowerAutomateTeamsCardWidthFull" />
       <label>
@@ -71,7 +71,7 @@
     </el-form-item>
 
     <el-form-item label="Summary Text Size" prop="msPowerAutomateSummaryTextSize">
-      <el-radio-group :value="msPowerAutomateSummaryTextSize" :disabled="viewOnly" @input="msPowerAutomateSummaryTextSize = $event">
+      <el-radio-group v-model="msPowerAutomateSummaryTextSize" :disabled="viewOnly" @update:model-value="msPowerAutomateSummaryTextSize = $event">
         <el-radio id="msPowerAutomateSummaryTextSizeDefault" label="default">
           Default
         </el-radio>
@@ -91,7 +91,7 @@
     </el-form-item>
 
     <el-form-item label="Body Text Size" prop="msPowerAutomateBodyTextSize">
-      <el-radio-group :value="msPowerAutomateBodyTextSize" :disabled="viewOnly" @input="msPowerAutomateBodyTextSize = $event">
+      <el-radio-group v-model="msPowerAutomateBodyTextSize" :disabled="viewOnly" @update:model-value="msPowerAutomateBodyTextSize = $event">
         <el-radio id="msPowerAutomateBodyTextSizeDefault" label="default">
           Default
         </el-radio>
@@ -111,7 +111,7 @@
     </el-form-item>
 
     <el-form-item label="Proxy" prop="msPowerAutomateProxy">
-      <el-input :value="msPowerAutomateProxy" :disabled="viewOnly" @input="msPowerAutomateProxy = $event" />
+      <el-input v-model="msPowerAutomateProxy" :disabled="viewOnly" @update:model-value="msPowerAutomateProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to MS Teams.
         Set this option using hostname:port if you need to use a proxy. only supports https.
@@ -121,18 +121,18 @@
     <el-form-item label="Attach Kibana Discover URL" prop="msPowerAutomateAttachKibanaDiscoverUrl">
       <el-switch
         id="msPowerAutomateAttachKibanaDiscoverUrl"
-        :value="msPowerAutomateAttachKibanaDiscoverUrl"
+        v-model="msPowerAutomateAttachKibanaDiscoverUrl"
         :disabled="viewOnly"
         @change="changeMsPowerAutomateAttachKibanaDiscoverUrl" />
     </el-form-item>
 
     <el-form-item label="Kibana Discover Title" prop="msPowerAutomateKibanaDiscoverTitle">
-      <el-input :value="msPowerAutomateKibanaDiscoverTitle" :disabled="viewOnly" @input="msPowerAutomateKibanaDiscoverTitle = $event" />
+      <el-input v-model="msPowerAutomateKibanaDiscoverTitle" :disabled="viewOnly" @update:model-value="msPowerAutomateKibanaDiscoverTitle = $event" />
       <label>The title of the Kibana Discover url attachment.</label>
     </el-form-item>
 
     <el-form-item label="Kibana Discover Color" prop="msPowerAutomateKibanaDiscoverColor">
-      <el-radio-group :value="msPowerAutomateKibanaDiscoverColor" :disabled="viewOnly" @input="msPowerAutomateKibanaDiscoverColor = $event">
+      <el-radio-group v-model="msPowerAutomateKibanaDiscoverColor" :disabled="viewOnly" @update:model-value="msPowerAutomateKibanaDiscoverColor = $event">
         <el-radio id="msPowerAutomateKibanaDiscoverColorDefault" label="default">
           Default
         </el-radio>
@@ -148,7 +148,7 @@
     <el-form-item label="Ignore SSL Errors" prop="msPowerAutomateIgnoreSslErrors">
       <el-switch
         id="msPowerAutomateIgnoreSslErrors"
-        :value="msPowerAutomateIgnoreSslErrors"
+        v-model="msPowerAutomateIgnoreSslErrors"
         :disabled="viewOnly"
         @change="changeMsPowerAutomateIgnoreSslErrors" />
     </el-form-item>
@@ -156,13 +156,13 @@
     <el-form-item label="CA Certs" prop="msPowerAutomateCaCerts">
       <el-switch
         id="msPowerAutomateCaCerts"
-        :value="msPowerAutomateCaCerts"
+        v-model="msPowerAutomateCaCerts"
         :disabled="viewOnly"
         @change="changeMsPowerAutomateCaCerts" />
     </el-form-item>
 
     <el-form-item label="WebhookURL From Field" prop="msPowerAutomateWebhookUrlFromField">
-      <el-input :value="msPowerAutomateWebhookUrlFromField" :disabled="viewOnly" @input="msPowerAutomateWebhookUrlFromField = $event" />
+      <el-input v-model="msPowerAutomateWebhookUrlFromField" :disabled="viewOnly" @update:model-value="msPowerAutomateWebhookUrlFromField = $event" />
       <label>
         Use a field from the document that triggered the alert as the webhook.
         If the field cannot be found, the ms_power_automate_webhook_url value will be used as a default.

@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-form-item label="API URL" prop="alertaApiUrl">
-      <el-input id="alertaApiUrl" :value="alertaApiUrl" :disabled="viewOnly" @input="alertaApiUrl = $event" />
+      <el-input id="alertaApiUrl" v-model="alertaApiUrl" :disabled="viewOnly" @update:model-value="alertaApiUrl = $event" />
       <label>API server URL.</label>
     </el-form-item>
 
     <el-form-item label="API Key" prop="alertaApiKey">
-      <el-input id="alertaApiKey" :value="alertaApiKey" :disabled="viewOnly" @input="alertaApiKey = $event" />
+      <el-input id="alertaApiKey" v-model="alertaApiKey" :disabled="viewOnly" @update:model-value="alertaApiKey = $event" />
       <label>
         This is the api key for alerta server, sent in an Authorization HTTP header.
         If not defined, no Authorization header is sent.
@@ -23,17 +23,17 @@
           v-for="v in alertaSeverityOptions"
           :key="v.code"
           :label="v.name"
-          :value="v.code" />
+          v-model="v.code" />
       </el-select>
     </el-form-item>
 
     <el-form-item label="Resource" prop="alertaResource">
-      <el-input id="alertaResource" :value="alertaResource" :disabled="viewOnly" @input="alertaResource = $event" />
+      <el-input id="alertaResource" v-model="alertaResource" :disabled="viewOnly" @update:model-value="alertaResource = $event" />
       <label>If true and query_key is present, this will override alerta_resource field with the query_key value (Can be useful if query_key is a hostname).</label>
     </el-form-item>
 
     <el-form-item label="Text" prop="alertaText">
-      <el-input id="alertaText" :value="alertaText" :disabled="viewOnly" @input="alertaText = $event" />
+      <el-input id="alertaText" v-model="alertaText" :disabled="viewOnly" @update:model-value="alertaText = $event" />
       <label>
         This is the api key for alerta server, sent in an Authorization HTTP header.
         If not defined, no Authorization header is sent.
@@ -41,12 +41,12 @@
     </el-form-item>
 
     <el-form-item label="Event" prop="alertaEvent">
-      <el-input id="alertaEvent" :value="alertaEvent" :disabled="viewOnly" @input="alertaEvent = $event" />
+      <el-input id="alertaEvent" v-model="alertaEvent" :disabled="viewOnly" @update:model-value="alertaEvent = $event" />
       <label>Defaults to “elastalert”.</label>
     </el-form-item>
 
     <el-form-item label="Group" prop="alertaGroup">
-      <el-input id="alertaGroup" :value="alertaGroup" :disabled="viewOnly" @input="alertaGroup = $event" />
+      <el-input id="alertaGroup" v-model="alertaGroup" :disabled="viewOnly" @update:model-value="alertaGroup = $event" />
       <label>Defaults to “”.</label>
     </el-form-item>
 
@@ -81,7 +81,7 @@
                   v-model="alertaTags[index]"
                   :disabled="viewOnly"
                   placeholder="Tags"
-                  @input="(val) => updateAlertaTags(val, index)" />
+                  @update:model-value="(val) => updateAlertaTags(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -103,12 +103,12 @@
     </el-popover>
 
     <el-form-item label="Environment" prop="alertaEnvironment">
-      <el-input id="alertaEnvironment" :value="alertaEnvironment" :disabled="viewOnly" @input="alertaEnvironment = $event" />
+      <el-input id="alertaEnvironment" v-model="alertaEnvironment" :disabled="viewOnly" @update:model-value="alertaEnvironment = $event" />
       <label>Defaults to “Production”.</label>
     </el-form-item>
 
     <el-form-item label="Timeout" prop="alertaTimeout">
-      <el-input-number id="alertaTimeout" :value="alertaTimeout" :disabled="viewOnly" @input="alertaTimeout = $event" />
+      <el-input-number id="alertaTimeout" v-model="alertaTimeout" :disabled="viewOnly" @update:model-value="alertaTimeout = $event" />
       <label>
         Defaults 84600 (1 Day).
       </label>
@@ -117,7 +117,7 @@
     <el-form-item label="Use Match Timestamp" prop="alertaUseMatchTimestamp">
       <el-switch
         id="alertaUseMatchTimestamp"
-        :value="alertaUseMatchTimestamp"
+        v-model="alertaUseMatchTimestamp"
         :disabled="viewOnly"
         @change="changeAlertaUseMatchTimestamp" />
     </el-form-item>
@@ -125,7 +125,7 @@
     <el-form-item label="Use Qk As Resource" prop="alertaUseQkAsResource">
       <el-switch
         id="alertaUseQkAsResource"
-        :value="alertaUseQkAsResource"
+        v-model="alertaUseQkAsResource"
         :disabled="viewOnly"
         @change="changeAlertaUseQkAsResource" />
     </el-form-item>
@@ -133,23 +133,23 @@
     <el-form-item label="Api Skip Ssl" prop="alertaApiSkipSsl">
       <el-switch
         id="alertaApiSkipSsl"
-        :value="alertaApiSkipSsl"
+        v-model="alertaApiSkipSsl"
         :disabled="viewOnly"
         @change="changeAlertaApiSkipSsl" />
     </el-form-item>
 
     <el-form-item label="Origin" prop="alertaOrigin">
-      <el-input id="alertaOrigin" :value="alertaOrigin" :disabled="viewOnly" @input="alertaOrigin = $event" />
+      <el-input id="alertaOrigin" v-model="alertaOrigin" :disabled="viewOnly" @update:model-value="alertaOrigin = $event" />
       <label>Defaults to “elastalert”.</label>
     </el-form-item>
 
     <el-form-item label="Value" prop="alertaValue">
-      <el-input id="alertaValue" :value="alertaValue" :disabled="viewOnly" @input="alertaValue = $event" />
+      <el-input id="alertaValue" v-model="alertaValue" :disabled="viewOnly" @update:model-value="alertaValue = $event" />
       <label>Defaults to “”.</label>
     </el-form-item>
 
     <el-form-item label="Type" prop="alertaType">
-      <el-input id="alertaType" :value="alertaType" :disabled="viewOnly" @input="alertaType = $event" />
+      <el-input id="alertaType" v-model="alertaType" :disabled="viewOnly" @update:model-value="alertaType = $event" />
       <label>Defaults to “elastalert”.</label>
     </el-form-item>
 
@@ -184,7 +184,7 @@
                   v-model="alertaService[index]"
                   :disabled="viewOnly"
                   placeholder="Tags"
-                  @input="(val) => updatealertaService(val, index)" />
+                  @update:model-value="(val) => updatealertaService(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -236,7 +236,7 @@
                   v-model="alertaCorrelate[index]"
                   :disabled="viewOnly"
                   placeholder="Correlates"
-                  @input="(val) => updatealertaCorrelate(val, index)" />
+                  @update:model-value="(val) => updatealertaCorrelate(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -288,7 +288,7 @@
                   v-model="alertaAttributesKeys[index]"
                   :disabled="viewOnly"
                   placeholder="AttributesKeys"
-                  @input="(val) => updatealertaAttributesKeys(val, index)" />
+                  @update:model-value="(val) => updatealertaAttributesKeys(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -340,7 +340,7 @@
                   v-model="alertaAttributesValues[index]"
                   :disabled="viewOnly"
                   placeholder="AttributesValues"
-                  @input="(val) => updatealertaAttributesValues(val, index)" />
+                  @update:model-value="(val) => updatealertaAttributesValues(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button

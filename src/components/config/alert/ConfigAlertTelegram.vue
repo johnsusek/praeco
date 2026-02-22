@@ -1,7 +1,7 @@
 <template>
   <div>
     <praeco-form-item label="Room ID" prop="telegramRoomId" required>
-      <el-input id="telegramRoomId" :value="telegramRoomId" :disabled="viewOnly" @input="telegramRoomId = $event" />
+      <el-input id="telegramRoomId" v-model="telegramRoomId" :disabled="viewOnly" @update:model-value="telegramRoomId = $event" />
       <label>
         Unique identifier for the target chat or username of the
         target channel using telegram chat_id (in the format “-xxxxxxxx”)
@@ -9,7 +9,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Proxy" prop="telegramProxy">
-      <el-input id="telegramProxy" :value="telegramProxy" :disabled="viewOnly" @input="telegramProxy = $event" />
+      <el-input id="telegramProxy" v-model="telegramProxy" :disabled="viewOnly" @update:model-value="telegramProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Telegram.
         Set this option using hostname:port if you need to use a proxy.
@@ -17,17 +17,17 @@
     </praeco-form-item>
 
     <praeco-form-item label="Proxy Login" prop="telegramProxyLogin">
-      <el-input id="telegramProxyLogin" :value="telegramProxyLogin" :disabled="viewOnly" @input="telegramProxyLogin = $event" />
+      <el-input id="telegramProxyLogin" v-model="telegramProxyLogin" :disabled="viewOnly" @update:model-value="telegramProxyLogin = $event" />
       <label>The Telegram proxy auth username.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Proxy Password" prop="telegramProxyPass">
-      <el-input id="telegramProxyPass" :value="telegramProxyPass" :disabled="viewOnly" @input="telegramProxyPass = $event" />
+      <el-input id="telegramProxyPass" v-model="telegramProxyPass" :disabled="viewOnly" @update:model-value="telegramProxyPass = $event" />
       <label>The Telegram proxy auth password.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Parse Mode" prop="telegramParseMode" required>
-      <el-radio-group :value="telegramParseMode" :disabled="viewOnly" @input="telegramParseMode = $event">
+      <el-radio-group v-model="telegramParseMode" :disabled="viewOnly" @update:model-value="telegramParseMode = $event">
         <el-radio id="telegramParseModeMarkdown" label="markdown" border>
           markdown
         </el-radio>
@@ -41,7 +41,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Thread Id" prop="telegramThreadId">
-      <el-input-number id="telegramThreadId" :value="telegramThreadId" :disabled="viewOnly" @input="telegramThreadId = $event" />
+      <el-input-number id="telegramThreadId" v-model="telegramThreadId" :disabled="viewOnly" @update:model-value="telegramThreadId = $event" />
       <label>Unique identifier for the target thread of supergroup/forum using telegram message_thread_id.</label>
     </praeco-form-item>
   </div>

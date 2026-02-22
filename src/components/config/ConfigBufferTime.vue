@@ -3,7 +3,7 @@
     <el-col :span="19">
       <el-form-item label="buffer_time">
         <el-switch
-          :value="useBufferTime"
+          v-model="useBufferTime"
           :disabled="viewOnly"
           @change="changeUseBufferTime" />
         <label>buffer_time Setting.</label>
@@ -19,7 +19,7 @@
           :allow-zero="true"
           :unit="Object.keys(bufferTimeLocal)[0]"
           :amount="Object.values(bufferTimeLocal)[0]"
-          @input="updateBufferTime" />
+          @update:model-value="updateBufferTime" />
       </el-form-item>
     </el-col>
   </el-row>

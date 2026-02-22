@@ -2,10 +2,10 @@
   <div>
     <praeco-form-item
       v-if="!viewOnly || fromAddr"
-      :value="fromAddr"
+      v-model="fromAddr"
       label="From address"
       prop="fromAddr">
-      <el-input :value="fromAddr" :disabled="viewOnly" @input="fromAddr = $event" />
+      <el-input v-model="fromAddr" :disabled="viewOnly" @update:model-value="fromAddr = $event" />
       <label>
         This sets the From header in the email.
         By default, the from address is ElastAlert2@
@@ -15,10 +15,10 @@
 
     <praeco-form-item
       v-if="!viewOnly || replyTo"
-      :value="replyTo"
+      v-model="replyTo"
       label="Reply to"
       prop="replyTo">
-      <el-input :value="replyTo" :disabled="viewOnly" @input="replyTo = $event" />
+      <el-input v-model="replyTo" :disabled="viewOnly" @update:model-value="replyTo = $event" />
       <label>
         This sets the Reply-To header in the email.
         By default, the from address is ElastAlert2@ and the
@@ -27,24 +27,24 @@
     </praeco-form-item>
 
     <el-form-item label="To" prop="email" required>
-      <el-input :value="email" :disabled="viewOnly" @input="email = $event" />
+      <el-input v-model="email" :disabled="viewOnly" @update:model-value="email = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item v-if="!viewOnly || cc" label="CC" prop="cc">
-      <el-input :value="cc" :disabled="viewOnly" @input="cc = $event" />
+      <el-input v-model="cc" :disabled="viewOnly" @update:model-value="cc = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item v-if="!viewOnly || bcc" label="BCC" prop="bcc">
-      <el-input :value="bcc" :disabled="viewOnly" @input="bcc = $event" />
+      <el-input v-model="bcc" :disabled="viewOnly" @update:model-value="bcc = $event" />
       <label>Comma separated list of email addresses</label>
     </el-form-item>
 
     <el-form-item label="SMTP SSL" prop="smtpSsl">
       <el-switch
         id="smtpSsl"
-        :value="smtpSsl"
+        v-model="smtpSsl"
         :disabled="viewOnly"
         @change="changeSmtpSsl" />
       <label>
@@ -54,17 +54,17 @@
     </el-form-item>
 
     <el-form-item label="SMTP Host" prop="smtpHost">
-      <el-input :value="smtpHost" :disabled="viewOnly" @input="smtpHost = $event" />
+      <el-input v-model="smtpHost" :disabled="viewOnly" @update:model-value="smtpHost = $event" />
       <label>The SMTP host to use, defaults to localhost.</label>
     </el-form-item>
 
     <el-form-item label="SMTP Port" prop="smtpPort">
-      <el-input-number id="smtpPort" :value="smtpPort" :disabled="viewOnly" @input="smtpPort = $event" />
+      <el-input-number id="smtpPort" v-model="smtpPort" :disabled="viewOnly" @update:model-value="smtpPort = $event" />
       <label>The port to use. Default is 25.</label>
     </el-form-item>
 
     <el-form-item label="SMTP Auth File" prop="smtpAuthFile">
-      <el-input :value="smtpAuthFile" :disabled="viewOnly" @input="smtpAuthFile = $event" />
+      <el-input v-model="smtpAuthFile" :disabled="viewOnly" @update:model-value="smtpAuthFile = $event" />
       <label>
         The path to a file which contains SMTP authentication credentials.
         The path can be either absolute or relative to the given rule.
@@ -74,21 +74,21 @@
     </el-form-item>
 
     <el-form-item label="SMTP Key File" prop="smtpKeyFile">
-      <el-input :value="smtpKeyFile" :disabled="viewOnly" @input="smtpKeyFile = $event" />
+      <el-input v-model="smtpKeyFile" :disabled="viewOnly" @update:model-value="smtpKeyFile = $event" />
       <label>Connect the SMTP host using the given path to a TLS key file, default to None.</label>
     </el-form-item>
 
     <el-form-item label="SMTP Cert File" prop="smtpCertFile">
-      <el-input :value="smtpCertFile" :disabled="viewOnly" @input="smtpCertFile = $event" />
+      <el-input v-model="smtpCertFile" :disabled="viewOnly" @update:model-value="smtpCertFile = $event" />
       <label> Connect the SMTP host using the given path to a TLS certificate file, default to None.</label>
     </el-form-item>
 
     <el-form-item label="Email From Field" prop="emailFromField">
-      <el-input :value="emailFromField" :disabled="viewOnly" @input="emailFromField = $event" />
+      <el-input v-model="emailFromField" :disabled="viewOnly" @update:model-value="emailFromField = $event" />
     </el-form-item>
 
     <el-form-item label="Email Add Domain" prop="emailAddDomain">
-      <el-input :value="emailAddDomain" :disabled="viewOnly" @input="emailAddDomain = $event" />
+      <el-input v-model="emailAddDomain" :disabled="viewOnly" @update:model-value="emailAddDomain = $event" />
     </el-form-item>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <praeco-form-item label="Webhook URL" prop="gitterWebhookUrl">
-      <el-input id="gitterWebhookUrl" :value="gitterWebhookUrl" :disabled="viewOnly" @input="gitterWebhookUrl = $event" />
+      <el-input id="gitterWebhookUrl" v-model="gitterWebhookUrl" :disabled="viewOnly" @update:model-value="gitterWebhookUrl = $event" />
       <label>
         The webhook URL that includes your auth data and the ID of the channel (room) you want to post to.
         Go to the Integration Settings of the channel: (example  https://gitter.im/ORGA/CHANNEL#integrations ) ,
@@ -10,7 +10,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Message level" prop="gitterMsgLevel" required>
-      <el-radio-group :value="gitterMsgLevel" :disabled="viewOnly" @input="gitterMsgLevel = $event">
+      <el-radio-group v-model="gitterMsgLevel" :disabled="viewOnly" @update:model-value="gitterMsgLevel = $event">
         <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">
           Error
         </el-radio>
@@ -21,7 +21,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Proxy" prop="gitterProxy">
-      <el-input id="gitterProxy" :value="gitterProxy" :disabled="viewOnly" @input="gitterProxy = $event" />
+      <el-input id="gitterProxy" v-model="gitterProxy" :disabled="viewOnly" @update:model-value="gitterProxy = $event" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Gitter.
         Set this option using hostname:port if you need to use a proxy.

@@ -1,29 +1,29 @@
 <template>
   <div>
     <praeco-form-item label="Zbx Sender Host" prop="zbxSenderHost" required>
-      <el-input id="zbxSenderHost" :value="zbxSenderHost" :disabled="viewOnly" @input="zbxSenderHost = $event" />
+      <el-input id="zbxSenderHost" v-model="zbxSenderHost" :disabled="viewOnly" @update:model-value="zbxSenderHost = $event" />
       <label>The address where zabbix server is running.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Zbx Sender Port" prop="zbxSenderPort" required>
-      <el-input-number id="zbxSenderPort" :value="zbxSenderPort" :disabled="viewOnly" @input="zbxSenderPort = $event" />
+      <el-input-number id="zbxSenderPort" v-model="zbxSenderPort" :disabled="viewOnly" @update:model-value="zbxSenderPort = $event" />
       <label>The port where zabbix server is listenning.</label>
     </praeco-form-item>
 
     <praeco-form-item label="ZbxHost" prop="zbxHost" required>
-      <el-input id="zbxHost" :value="zbxHost" :disabled="viewOnly" @input="zbxHost = $event" />
+      <el-input id="zbxHost" v-model="zbxHost" :disabled="viewOnly" @update:model-value="zbxHost = $event" />
       <label>This field setup the host in zabbix that receives the value sent by ElastAlert 2.</label>
     </praeco-form-item>
 
     <praeco-form-item label="ZbxKey" prop="zbxKey" required>
-      <el-input id="zbxKey" :value="zbxKey" :disabled="viewOnly" @input="zbxKey = $event" />
+      <el-input id="zbxKey" v-model="zbxKey" :disabled="viewOnly" @update:model-value="zbxKey = $event" />
       <label>This field setup the key in the host that receives the value sent by ElastAlert 2.</label>
     </praeco-form-item>
 
     <el-form-item label="Host From Field" prop="zbxHostFromField">
       <el-switch
         id="zbxHostFromField"
-        :value="zbxHostFromField"
+        v-model="zbxHostFromField"
         :disabled="viewOnly"
         @change="changeZbxHostFromField" />
     </el-form-item>

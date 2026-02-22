@@ -1,12 +1,12 @@
 <template>
   <div>
     <praeco-form-item label="Secret ID" prop="tencentSmsSecretId" required>
-      <el-input id="tencentSmsSecretId" :value="tencentSmsSecretId" :disabled="viewOnly" @input="tencentSmsSecretId = $event" />
+      <el-input id="tencentSmsSecretId" v-model="tencentSmsSecretId" :disabled="viewOnly" @update:model-value="tencentSmsSecretId = $event" />
       <label>is used to identify the API caller.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Secret Key" prop="tencentSmsSecretKey" required>
-      <el-input id="tencentSmsSecretKey" :value="tencentSmsSecretKey" :disabled="viewOnly" @input="tencentSmsSecretKey = $event" />
+      <el-input id="tencentSmsSecretKey" v-model="tencentSmsSecretKey" :disabled="viewOnly" @update:model-value="tencentSmsSecretKey = $event" />
       <label>
         is used to encrypt the string to sign that can be verified on the server.
         You should keep it private and avoid disclosure.
@@ -14,7 +14,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Sdk Appid" prop="tencentSmsSdkAppid" required>
-      <el-input id="tencentSmsSdkAppid" :value="tencentSmsSdkAppid" :disabled="viewOnly" @input="tencentSmsSdkAppid = $event" />
+      <el-input id="tencentSmsSdkAppid" v-model="tencentSmsSdkAppid" :disabled="viewOnly" @update:model-value="tencentSmsSdkAppid = $event" />
       <label>SMS application ID, which is the SdkAppId generated after an application is added in the SMS console.</label>
     </praeco-form-item>
 
@@ -50,7 +50,7 @@
                   v-model="tencentSmsToNumber[index]"
                   :disabled="viewOnly"
                   placeholder="TencentSmsToNumber"
-                  @input="(val) => updateTencentSmsToNumber(val, index)" />
+                  @update:model-value="(val) => updateTencentSmsToNumber(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -72,7 +72,7 @@
     </el-popover>
 
     <praeco-form-item label="TemplateId" prop="tencentSmsTemplateId" required>
-      <el-input id="tencentSmsTemplateId" :value="tencentSmsTemplateId" :disabled="viewOnly" @input="tencentSmsTemplateId = $event" />
+      <el-input id="tencentSmsTemplateId" v-model="tencentSmsTemplateId" :disabled="viewOnly" @update:model-value="tencentSmsTemplateId = $event" />
       <label>
         Template ID.
         You must enter the ID of an approved template, which can be viewed in the SMS console.
@@ -80,7 +80,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Sign Name" prop="tencentSmsSignName">
-      <el-input id="tencentSmsSignName" :value="tencentSmsSignName" :disabled="viewOnly" @input="tencentSmsSignName = $event" />
+      <el-input id="tencentSmsSignName" v-model="tencentSmsSignName" :disabled="viewOnly" @update:model-value="tencentSmsSignName = $event" />
       <label>
         Content of the SMS signature, which should be encoded in UTF-8.
         You must enter an approved signature, such as Tencent Cloud.
@@ -89,7 +89,7 @@
     </praeco-form-item>
 
     <praeco-form-item label="Region" prop="tencentSmsRegion">
-      <el-input id="tencentSmsSdkAppid" :value="tencentSmsRegion" :disabled="viewOnly" @input="tencentSmsRegion = $event" />
+      <el-input id="tencentSmsSdkAppid" v-model="tencentSmsRegion" :disabled="viewOnly" @update:model-value="tencentSmsRegion = $event" />
       <label>Region parameter, which is used to identify the region(Mainland China or Global) to which the data you want to work with belongs.</label>
     </praeco-form-item>
 
@@ -125,7 +125,7 @@
                   v-model="tencentSmsTemplateParm[index]"
                   :disabled="viewOnly"
                   placeholder="TencentSmsTemplateParm"
-                  @input="(val) => updateTencentSmsTemplateParm(val, index)" />
+                  @update:model-value="(val) => updateTencentSmsTemplateParm(val, index)" />
               </el-col>
               <el-col :span="4">
                 <el-button

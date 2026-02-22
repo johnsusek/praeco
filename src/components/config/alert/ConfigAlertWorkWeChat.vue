@@ -1,12 +1,12 @@
 <template>
   <div>
     <praeco-form-item label="Bot Id" prop="workWechatBotId" required>
-      <el-input id="workWechatBotId" :value="workWechatBotId" :disabled="viewOnly" @input="workWechatBotId = $event" />
+      <el-input id="workWechatBotId" v-model="workWechatBotId" :disabled="viewOnly" @update:model-value="workWechatBotId = $event" />
       <label>WorkWechat bot id.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Msg Type" prop="workWechatMsgtype" required>
-      <el-radio-group :value="workWechatMsgtype" :disabled="viewOnly" @input="workWechatMsgtype = $event">
+      <el-radio-group v-model="workWechatMsgtype" :disabled="viewOnly" @update:model-value="workWechatMsgtype = $event">
         <el-radio id="workWechatMsgtypeText" label="text" border>
           text
         </el-radio>
