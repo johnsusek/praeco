@@ -4,7 +4,7 @@ import axios from 'axios';
 import WebSocketPlugin from './plugins/websocket';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import Treeselect from 'vue3-treeselect';
+import Treeselect from '@zanmato/vue3-treeselect';
 import 'prismjs';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -29,7 +29,7 @@ import 'element-plus/dist/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
-import 'vue3-treeselect/dist/vue3-treeselect.css';
+import '@zanmato/vue3-treeselect/dist/vue3-treeselect.min.css';
 
 import ECharts from 'vue-echarts';
 

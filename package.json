@@ -29,6 +29,7 @@
     "@vue-js-cron/light": "^5.1.1",
     "@vueuse/core": "^14.2.1",
     "@vueuse/shared": "^14.2.1",
+    "@zanmato/vue3-treeselect": "^0.4.3",
     "axios": "1.13.5",
     "browser-bunyan": "1.8.0",
     "canvas": "^3.2.1",
