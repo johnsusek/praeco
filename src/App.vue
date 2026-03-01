@@ -20,31 +20,23 @@
       </div>
     </el-header>
 
-    <Splitpanes class="split-container" @resized="onDragEnd">
-      <Pane :size="sidebarWidth[0]" min-size="0" style="background: #f8f8fb">
-        <div class="pane-content">
-          <NavTree style="padding: 10px" />
-        </div>
-      </Pane>
-      <Pane :size="sidebarWidth[1]">
-        <div class="pane-content">
-          <router-view :key="$route.fullPath" style="padding: 10px" />
-        </div>
-      </Pane>
-    </Splitpanes>
+    <Split style="height: calc(100% - 48px)" @onDragEnd="onDragEnd">
+      <SplitArea :size="sidebarWidth[0]" :min-size="0" style="background: #f8f8fb">
+        <NavTree style="padding: 10px" />
+      </SplitArea>
+      <SplitArea :size="sidebarWidth[1]">
+        <router-view :key="$route.fullPath" style="padding: 10px" />
+      </SplitArea>
+    </Split>
   </div>
 </template>
 
 <script>
 import UpdateIndicator from '@/components/UpdateIndicator.vue';
-import { Splitpanes, Pane } from 'splitpanes';
-import 'splitpanes/dist/splitpanes.css';
 
 export default {
   components: {
-    UpdateIndicator,
-    Splitpanes,
-    Pane
+    UpdateIndicator
   },
 
   computed: {
@@ -115,16 +107,5 @@ body {
 
 .gutter.gutter-horizontal:hover {
   opacity: 1;
-}
-
-.split-container {
-  height: calc(100% - 48px); /* 既存のSplitと同じ高さ指定 */
-  display: flex;
-  flex-direction: row;
-}
-
-.pane-content {
-  height: 100%;
-  overflow-y: auto; /* ★ここが重要：Pane内でスクロール可能にする */
 }
 </style>
