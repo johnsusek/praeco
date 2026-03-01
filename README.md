@@ -44,9 +44,6 @@ docker-compose up
 
 Praeco should now be available on http://127.0.0.1:8080
 
-~~A walkthrough article is available to guide you through creating your first rule.~~
-
-
 ## Upgrading
 
 If you use docker-compose.yml published on github as it is, it will be the current latest version instead of a specific version. If you want to specify a specific version, edit it yourself and then run `docker-compose up --force-recreate --build`.
