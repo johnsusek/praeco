@@ -36,10 +36,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeRocketChatWebhookUrlEntry(entry)" />
+                  @click="removeRocketChatWebhookUrlEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -88,10 +89,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeRocketChatChannelOverrideEntry(entry)" />
+                  @click="removeRocketChatChannelOverrideEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -130,13 +132,13 @@
 
     <el-form-item label="Message color" prop="rocketChatMsgColor" required>
       <el-radio-group v-model="rocketChatMsgColor" :disabled="viewOnly" @update:model-value="rocketChatMsgColor = $event">
-        <el-radio id="rocketChatMsgColorDanger" label="danger" border class="rocketChat-danger">
+        <el-radio id="rocketChatMsgColorDanger" value="danger" border class="rocketChat-danger">
           Danger
         </el-radio>
-        <el-radio id="rocketChatMsgColorWarning" label="warning" border class="rocketChat-warning">
+        <el-radio id="rocketChatMsgColorWarning" value="warning" border class="rocketChat-warning">
           Warning
         </el-radio>
-        <el-radio id="rocketChatMsgColorGood" label="good" border class="rocketChat-good">
+        <el-radio id="rocketChatMsgColorGood" value="good" border class="rocketChat-good">
           Good
         </el-radio>
       </el-radio-group>
@@ -204,13 +206,15 @@
 import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
 import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast/src';
+import { Delete } from '@element-plus/icons-vue'
 
 let emojiIndex = new EmojiIndex(emojiData);
 
 export default {
   components: {
     Emoji,
-    Picker
+    Picker,
+    Delete
   },
 
   props: ['viewOnly'],

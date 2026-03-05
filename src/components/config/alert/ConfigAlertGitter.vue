@@ -11,10 +11,10 @@
 
     <praeco-form-item label="Message level" prop="gitterMsgLevel" required>
       <el-radio-group v-model="gitterMsgLevel" :disabled="viewOnly" @update:model-value="gitterMsgLevel = $event">
-        <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">
+        <el-radio id="gitterMsgLevelError" value="error" border class="gitter-error">
           Error
         </el-radio>
-        <el-radio id="gitterMsgLevelInfo" label="info" border class="gitter-info">
+        <el-radio id="gitterMsgLevelInfo" value="info" border class="gitter-info">
           Info
         </el-radio>
       </el-radio-group>

@@ -53,7 +53,7 @@
       </template>
       <el-checkbox-group v-model="hidden">
         <div v-for="col in columns" :key="col">
-          <el-checkbox :label="col" @change="saveColumns">
+          <el-checkbox :value="col" @change="saveColumns">
             {{ col }}
           </el-checkbox>
         </div>

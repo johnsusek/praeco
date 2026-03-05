@@ -7,10 +7,10 @@
 
     <el-form-item label="Message color" prop="webexWebhookMsgtype" required>
       <el-radio-group v-model="webexWebhookMsgtype" :disabled="viewOnly" @update:model-value="webexWebhookMsgtype = $event">
-        <el-radio id="webexWebhookMsgtypeText" label="text" border>
+        <el-radio id="webexWebhookMsgtypeText" value="text" border>
           Text
         </el-radio>
-        <el-radio id="webexWebhookMsgtypeMarkDown" label="markdown" border>
+        <el-radio id="webexWebhookMsgtypeMarkDown" value="markdown" border>
           MarkDown
         </el-radio>
       </el-radio-group>

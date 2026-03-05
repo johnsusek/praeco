@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-radio id="groupPagerduty" v-model="groupPagerduty" label="v1" @change="changePagerDutyV1">
+    <el-radio id="groupPagerduty" v-model="groupPagerduty" value="v1" @change="changePagerDutyV1">
       v1
     </el-radio>
-    <el-radio id="groupPagerduty" v-model="groupPagerduty" label="v2" @change="changePagerDutyV2">
+    <el-radio id="groupPagerduty" v-model="groupPagerduty" value="v2" @change="changePagerDutyV2">
       v2
     </el-radio>
 
@@ -23,13 +23,13 @@
 
     <el-form-item label="Event Type" prop="pagerdutyEventType" required>
       <el-radio-group v-model="pagerdutyEventType" :disabled="viewOnly" @update:model-value="pagerdutyEventType = $event">
-        <el-radio id="pagerdutyEventTypeTrigger" label="trigger">
+        <el-radio id="pagerdutyEventTypeTrigger" value="trigger">
           Trigger
         </el-radio>
-        <el-radio id="pagerdutyEventTypeResolve" label="resolve">
+        <el-radio id="pagerdutyEventTypeResolve" value="resolve">
           Resolve
         </el-radio>
-        <el-radio id="pagerdutyEventTypeAcknowledge" label="acknowledge">
+        <el-radio id="pagerdutyEventTypeAcknowledge" value="acknowledge">
           Acknowledge
         </el-radio>
       </el-radio-group>
@@ -81,10 +81,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removePagerdutyIncidentKeyArgsEntry(entry)" />
+                  @click="removePagerdutyIncidentKeyArgsEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -149,10 +150,11 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    :icon="ElIconDelete"
                     circle
                     plain
-                    @click="removePagerdutyV2PayloadClassArgsEntry(entry)" />
+                    @click="removePagerdutyV2PayloadClassArgsEntry(entry)">
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -208,10 +210,11 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    :icon="ElIconDelete"
                     circle
                     plain
-                    @click="removePagerdutyV2PayloadComponentArgsEntry(entry)" />
+                    @click="removePagerdutyV2PayloadComponentArgsEntry(entry)">
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -267,10 +270,11 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    :icon="ElIconDelete"
                     circle
                     plain
-                    @click="removePagerdutyV2PayloadGroupArgsEntry(entry)" />
+                    @click="removePagerdutyV2PayloadGroupArgsEntry(entry)">
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -284,16 +288,16 @@
 
       <el-form-item label="Severity" prop="pagerdutyV2PayloadSeverity">
         <el-radio-group v-model="pagerdutyV2PayloadSeverity" :disabled="viewOnly" @update:model-value="pagerdutyV2PayloadSeverity = $event">
-          <el-radio id="pagerdutyV2PayloadSeverityCritical" label="critical">
+          <el-radio id="pagerdutyV2PayloadSeverityCritical" value="critical">
             Critical
           </el-radio>
-          <el-radio id="pagerdutyV2PayloadSeverityError" label="error">
+          <el-radio id="pagerdutyV2PayloadSeverityError" value="error">
             Error
           </el-radio>
-          <el-radio id="pagerdutyV2PayloadSeverityWarning" label="warning">
+          <el-radio id="pagerdutyV2PayloadSeverityWarning" value="warning">
             Warning
           </el-radio>
-          <el-radio id="pagerdutyV2PayloadSeverityInfo" label="info">
+          <el-radio id="pagerdutyV2PayloadSeverityInfo" value="info">
             Info
           </el-radio>
         </el-radio-group>
@@ -346,10 +350,11 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    :icon="ElIconDelete"
                     circle
                     plain
-                    @click="removePagerdutyV2PayloadSourceArgsEntry(entry)" />
+                    @click="removePagerdutyV2PayloadSourceArgsEntry(entry)">
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -389,8 +394,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
 
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

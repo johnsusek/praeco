@@ -44,7 +44,7 @@ docker-compose up
 
 Praeco should now be available on http://127.0.0.1:8080
 
-~~A walkthrough article is available to guide you through creating your first rule.~~
+
 
 
 ## Upgrading

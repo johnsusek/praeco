@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popCommandVisible" :class="{ 'is-invalid': !popCommandValid }">
+      <el-popover v-model="popCommandVisible" :class="{ 'is-invalid': !popCommandValid }">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="command.length" :content="command.join(', ')" placement="top">
@@ -37,10 +37,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeCommandEntry(entry)" />
+                  @click="removeCommandEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -92,7 +93,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

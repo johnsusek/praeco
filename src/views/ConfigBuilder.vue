@@ -25,10 +25,10 @@
           @validateForTest="validateForTest" />
 
         <div class="save-button">
-          <el-button v-if="!saving" type="primary" size="medium" @click="save">
+          <el-button v-if="!saving" type="primary" size="default" @click="save">
             Save
           </el-button>
-          <el-button v-else type="primary" disabled size="medium">
+          <el-button v-else type="primary" disabled size="default">
             Saving...
           </el-button>
         </div>

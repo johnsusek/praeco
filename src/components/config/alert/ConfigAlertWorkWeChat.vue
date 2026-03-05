@@ -7,10 +7,10 @@
 
     <praeco-form-item label="Msg Type" prop="workWechatMsgtype" required>
       <el-radio-group v-model="workWechatMsgtype" :disabled="viewOnly" @update:model-value="workWechatMsgtype = $event">
-        <el-radio id="workWechatMsgtypeText" label="text" border>
+        <el-radio id="workWechatMsgtypeText" value="text" border>
           text
         </el-radio>
-        <el-radio id="workWechatMsgtypeMarkdown" label="markdown" border>
+        <el-radio id="workWechatMsgtypeMarkdown" value="markdown" border>
           markdown
         </el-radio>
       </el-radio-group>

@@ -62,10 +62,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeHiveAlertConfigTagsEntry(entry)" />
+                  @click="removeHiveAlertConfigTagsEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -84,16 +85,16 @@
 
     <praeco-form-item label="Hive Alert Config Status" prop="hiveAlertConfigStatus">
       <el-radio-group v-model="hiveAlertConfigStatus" :disabled="viewOnly" @update:model-value="hiveAlertConfigStatus = $event">
-        <el-radio id="hiveAlertConfigStatusWaiting" label="Waiting" border>
+        <el-radio id="hiveAlertConfigStatusWaiting" value="Waiting" border>
           Waiting
         </el-radio>
-        <el-radio id="hiveAlertConfigStatusInProgress" label="InProgress" border>
+        <el-radio id="hiveAlertConfigStatusInProgress" value="InProgress" border>
           InProgress
         </el-radio>
-        <el-radio id="hiveAlertConfigStatusCancel" label="Cancel" border>
+        <el-radio id="hiveAlertConfigStatusCancel" value="Cancel" border>
           Cancel
         </el-radio>
-        <el-radio id="hiveAlertConfigStatusCompleted" label="Completed" border>
+        <el-radio id="hiveAlertConfigStatusCompleted" value="Completed" border>
           Completed
         </el-radio>
       </el-radio-group>
@@ -111,7 +112,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

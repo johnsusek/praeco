@@ -18,16 +18,16 @@
 
     <el-form-item label="event_status" prop="flashdutyEventStatus">
       <el-radio-group v-model="flashdutyEventStatus" :disabled="viewOnly" @update:model-value="flashdutyEventStatus = $event">
-        <el-radio id="flashdutyEventStatusInfo" label="Info" border>
+        <el-radio id="flashdutyEventStatusInfo" value="Info" border>
           Info
         </el-radio>
-        <el-radio id="flashdutyEventStatusWarning" label="Warning" border>
+        <el-radio id="flashdutyEventStatusWarning" value="Warning" border>
           Warning
         </el-radio>
-        <el-radio id="flashdutyEventStatusCritical" label="Critical" border>
+        <el-radio id="flashdutyEventStatusCritical" value="Critical" border>
           Critical
         </el-radio>
-        <el-radio id="flashdutyEventStatusOk" label="Ok" border>
+        <el-radio id="flashdutyEventStatusOk" value="Ok" border>
           Ok
         </el-radio>
       </el-radio-group>

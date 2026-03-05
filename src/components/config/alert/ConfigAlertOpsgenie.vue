@@ -51,19 +51,19 @@
 
     <el-form-item label="opsgenie_priority" prop="opsgeniePriority">
       <el-radio-group v-model="opsgeniePriority" :disabled="viewOnly" @update:model-value="opsgeniePriority = $event">
-        <el-radio id="opsgeniePriorityP1" label="P1" border>
+        <el-radio id="opsgeniePriorityP1" value="P1" border>
           P1
         </el-radio>
-        <el-radio id="opsgeniePriorityP2" label="P2" border>
+        <el-radio id="opsgeniePriorityP2" value="P2" border>
           P2
         </el-radio>
-        <el-radio id="opsgeniePriorityP3" label="P3" border>
+        <el-radio id="opsgeniePriorityP3" value="P3" border>
           P3
         </el-radio>
-        <el-radio id="opsgeniePriorityP4" label="P4" border>
+        <el-radio id="opsgeniePriorityP4" value="P4" border>
           P4
         </el-radio>
-        <el-radio id="opsgeniePriorityP5" label="P5" border>
+        <el-radio id="opsgeniePriorityP5" value="P5" border>
           P5
         </el-radio>
       </el-radio-group>

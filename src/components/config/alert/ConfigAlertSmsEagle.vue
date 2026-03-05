@@ -10,16 +10,16 @@
 
     <el-form-item label="smseagle_message_type" prop="smseagleMessageType" required>
       <el-radio-group v-model="smseagleMessageType" :disabled="viewOnly" @update:model-value="smseagleMessageType = $event">
-        <el-radio id="smseagleMessageTypeSms" label="sms">
+        <el-radio id="smseagleMessageTypeSms" value="sms">
           sms
         </el-radio>
-        <el-radio id="smseagleMessageTypeRing" label="ring">
+        <el-radio id="smseagleMessageTypeRing" value="ring">
           ring
         </el-radio>
-        <el-radio id="smseagleMessageTypeTts" label="tts">
+        <el-radio id="smseagleMessageTypeTts" value="tts">
           tts
         </el-radio>
-        <el-radio id="smseagleMessageTypeTtsAdv" label="tts_adv">
+        <el-radio id="smseagleMessageTypeTtsAdv" value="tts_adv">
           tts_adv
         </el-radio>
       </el-radio-group>
@@ -65,10 +65,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeSmseagleToEntry(entry)" />
+                  @click="removeSmseagleToEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -116,10 +117,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeSmseagleContactsEntry(entry)" />
+                  @click="removeSmseagleContactsEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -167,10 +169,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeSmseagleGroupsEntry(entry)" />
+                  @click="removeSmseagleGroupsEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -193,7 +196,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

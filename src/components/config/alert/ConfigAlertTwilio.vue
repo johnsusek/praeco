@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-radio id="groupTwilio" v-model="groupTwilio" :disabled="viewOnly" label="sms" border @change="changeTwilio">
+    <el-radio id="groupTwilio" v-model="groupTwilio" :disabled="viewOnly" value="sms" border @change="changeTwilio">
       SMS
     </el-radio>
-    <el-radio id="groupTwilio" v-model="groupTwilio" :disabled="viewOnly" label="copilot" border @change="changeTwilio">
+    <el-radio id="groupTwilio" v-model="groupTwilio" :disabled="viewOnly" value="copilot" border @change="changeTwilio">
       Copilot
     </el-radio>
 

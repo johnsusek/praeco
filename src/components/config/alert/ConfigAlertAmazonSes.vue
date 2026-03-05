@@ -1,10 +1,10 @@
 
 <template>
   <div>
-    <el-radio id="groupSes" v-model="groupSes" :disabled="viewOnly" label="profile" border @change="changeSes">
+    <el-radio id="groupSes" v-model="groupSes" :disabled="viewOnly" value="profile" border @change="changeSes">
       Profile
     </el-radio>
-    <el-radio id="groupSes" v-model="groupSes" :disabled="viewOnly" label="notProfile" border @change="changeSes">
+    <el-radio id="groupSes" v-model="groupSes" :disabled="viewOnly" value="notProfile" border @change="changeSes">
       NotProfile
     </el-radio>
 

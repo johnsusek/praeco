@@ -3,12 +3,12 @@
     <el-popover v-model="testPopoverVisible" placement="top" width="310">
       <template #reference>
         <span>
-          <el-button v-if="!testRunLoading" type="primary" plain size="medium">
+          <el-button v-if="!testRunLoading" type="primary" plain size="default">
             Test
             <el-icon v-if="!testPopoverVisible" class="el-icon-right"><el-icon-caret-bottom /></el-icon>
             <el-icon v-if="testPopoverVisible" class="el-icon-right"><el-icon-caret-top /></el-icon>
           </el-button>
-          <el-button v-else type="primary" plain disabled size="medium">Testing...</el-button>
+          <el-button v-else type="primary" plain disabled size="default">Testing...</el-button>
         </span>
       </template>
       <el-form label-position="top">

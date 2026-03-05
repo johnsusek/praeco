@@ -21,7 +21,7 @@
             @paste="pastePlainText">
             <template #embeddedItem="s">
               <span>
-                <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
+                <el-tag :data-term="s.current" size="small" type="info">{{ s.current }}</el-tag>
               </span>
             </template>
             <div :contenteditable="!viewOnly" />
@@ -66,10 +66,11 @@
                     <el-button
                       :disabled="viewOnly"
                       type="danger"
-                      :icon="ElIconDelete"
                       circle
                       plain
-                      @click="removeAlertSubjectArgsEntry(entry)" />
+                      @click="removeAlertSubjectArgsEntry(entry)">
+                      <el-icon><Delete /></el-icon>
+                    </el-button>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -95,7 +96,7 @@
             @paste="pastePlainText">
             <template #embeddedItem="s">
               <span>
-                <el-tag :data-term="s.current" size="mini" type="info">{{ s.current }}</el-tag>
+                <el-tag :data-term="s.current" size="small" type="info">{{ s.current }}</el-tag>
               </span>
             </template>
             <div :contenteditable="!viewOnly" />
@@ -143,10 +144,11 @@
                     <el-button
                       :disabled="viewOnly"
                       type="danger"
-                      :icon="ElIconDelete"
                       circle
                       plain
-                      @click="removeAlertTextArgsEntry(entry)" />
+                      @click="removeAlertTextArgsEntry(entry)">
+                      <el-icon><Delete /></el-icon>
+                    </el-button>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -218,10 +220,12 @@
 <script>
 import debounce from 'debounce';
 import At from 'vue-at';
+import { Delete } from '@element-plus/icons-vue'
 
 export default {
   components: {
-    At
+    At,
+    Delete
   },
 
   props: ['viewOnly'],
