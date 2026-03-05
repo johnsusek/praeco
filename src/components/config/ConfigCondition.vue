@@ -49,7 +49,8 @@
 
     <el-popover
       v-if="showPopCardinalityField"
-      v-model="popCardinalityVisible"
+      v-model:visible="popCardinalityVisible"
+      :teleported="false"
       :class="{ 'is-invalid': !popCardinalityValid }">
       <template #reference>
         <span class="pop-trigger">
@@ -63,19 +64,19 @@
             v-model="cardinalityField"
             filterable
             clearable
+            :teleported="false"
             placeholder="Select field"
-            @update:model-value="popCardinalityVisible = false; validate();">
             <el-option
               v-for="field in Object.keys(fieldsForAgg)"
               :key="field"
               :label="field"
-              :value="field" />
+              :value="field">
           </el-select>
         </el-form-item>
       </el-form>
     </el-popover>
 
-    <el-popover v-if="showPopOf" v-model="popOfVisible" :class="{ 'is-invalid': !popOfValid }">
+    <el-popover v-if="showPopOf" v-model:visible="popOfVisible" :teleported="false" :class="{ 'is-invalid': !popOfValid }">
       <template #reference>
         <span class="pop-trigger">
           <span>OF </span>
@@ -88,6 +89,7 @@
             v-model="metricAggKey"
             filterable
             clearable
+            :teleported="false"
             placeholder="Select field"
             @update:model-value="popOfVisible = false; validate();">
             <el-option
@@ -100,7 +102,7 @@
       </el-form>
     </el-popover>
 
-    <el-popover v-if="showPopOver" v-model="popOverVisible" :class="{ 'is-invalid': !popOverValid }">
+    <el-popover v-if="showPopOver" v-model:visible="popOverVisible" :teleported="false" :class="{ 'is-invalid': !popOverValid }">
       <template #reference>
         <span class="pop-trigger">
           <span>
@@ -115,7 +117,7 @@
         <el-radio
           id="groupedOverAll"
           v-model="groupedOver"
-          label="all"
+          value="all"
           border
           @change="changeGroupedOver">
           All documents
@@ -124,7 +126,7 @@
         <el-radio
           id="groupedOverField"
           v-model="groupedOver"
-          label="field"
+          value="field"
           border
           @change="changeGroupedOver">
           Field
@@ -159,7 +161,7 @@
                 placeholder="Select field"
                 class="el-select-wide m-n-sm"
                 style="width: 280px"
-                @update:model-value="popOverVisible = false; validate();">
+                :teleported="false">
                 <el-option
                   v-for="field in Object.keys(fieldsForAgg)"
                   :key="field"
@@ -169,10 +171,11 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeQueryKeyEntry(entry)" />
+                  @click="removeQueryKeyEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-form-item>
           </el-form>
@@ -188,7 +191,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-if="showPopCompare" v-model="popCompareVisible" :class="{ 'is-invalid': !popCompareValid }">
+    <el-popover v-if="showPopCompare" v-model:visible="popCompareVisible" :teleported="false" :class="{ 'is-invalid': !popCompareValid }">
       <template #reference>
         <span class="pop-trigger">
           <template v-if="compareKey && compareKey.length > 1">
@@ -212,6 +215,7 @@
             :multiple="metricAggType === 'field changes'"
             :filterable="metricAggType !== 'field changes'"
             clearable
+            :teleported="false"
             placeholder="Field"
             style="width: 280px"
             @update:model-value="popCompareVisible = false; validate();">
@@ -235,9 +239,9 @@
       </el-form>
     </el-popover>
 
-    <el-popover v-if="showPopGroup" v-model="popGroupVisible" :class="{ 'is-invalid': !popGroupValid }">
+    <el-popover v-if="showPopGroup" v-model:visible="popGroupVisible" :teleported="false" :class="{ 'is-invalid': !popGroupValid }">
       <template #reference>
-        <span class="pop-trigger">
+        <span class="pop-trigger" @click.stop="popGroupVisible = true">
           <span>
             <span v-if="metricAggType === 'new term'">IN FIELD </span>
             <span v-else>GROUPED OVER </span>
@@ -254,10 +258,10 @@
             v-model="queryKey[index2]"
             filterable
             clearable
+            :teleported="false"
             placeholder="Select field"
             class="el-select-wide"
-            style="width: 280px"
-            @update:model-value="popGroupVisible = false; validate();">
+            style="width: 280px">
             <el-option
               v-for="field in Object.keys(fieldsForAgg)"
               :key="field"
@@ -267,10 +271,11 @@
           <el-col :span="4">
             <el-button
               type="danger"
-              :icon="ElIconDelete"
               circle
               plain
-              @click="removeQueryKeyEntry(entry)" />
+              @click="removeQueryKeyEntry(entry)">
+              <el-icon><Delete /></el-icon>
+            </el-button>
           </el-col>
           <label v-if="metricAggType === 'field changes'">Field change will be checked per-group.</label>
         </el-form-item>
@@ -315,10 +320,11 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeBlacklistEntry(entry)" />
+                  @click="removeBlacklistEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -364,10 +370,11 @@
               <el-col :span="4">
                 <el-button
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click.prevent="removeWhitelistEntry(entry)" />
+                  @click.prevent="removeWhitelistEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -385,7 +392,7 @@
       <span v-if="queryString !== defaultFilter"> {{ queryString }}</span>
     </span>
 
-    <el-dialog v-model:visible="popFilterVisible" :show-close="false" fullscreen>
+    <el-dialog v-model="popFilterVisible" :show-close="false" fullscreen>
       <el-button type="primary" plain class="close-button" @click="popFilterVisible = false">
         Close
       </el-button>
@@ -394,7 +401,8 @@
 
     <el-popover
       v-if="showPopCardinalityThresholds"
-      v-model="popCardinalityThresholdsVisible"
+      v-model:visible="popCardinalityThresholdsVisible"
+      :teleported="false"
       :class="{ 'is-invalid': !popCardinalityThresholdsValid }">
       <template #reference>
         <span class="pop-trigger">
@@ -443,7 +451,7 @@
       </el-row>
     </el-popover>
 
-    <el-popover v-if="showPopAbove" v-model="popAboveVisible" :class="{ 'is-invalid': !popAboveValid }">
+    <el-popover v-if="showPopAbove" v-model="popAboveVisible" :teleported="false" :class="{ 'is-invalid': !popAboveValid }">
       <template #reference>
         <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
           <span>IS</span>
@@ -484,7 +492,7 @@
               id="spikeOrThreshold"
               v-model="spikeOrThreshold"
               class="el-select-wide"
-              @update:model-value="updateSpikeOrThreshold">
+              :teleported="false">
               <el-option key="any" label="Is not empty" value="any" />
               <el-option key="is" label="Is" value="is" />
               <el-option key="spike" label="Spikes" value="spike" />
@@ -497,7 +505,7 @@
               id="aboveOrBelow"
               v-model="aboveOrBelow"
               class="el-select-wide"
-              @update:model-value="updateAboveOrBelow">
+              :teleported="false">
               <el-option key="above" label="Above" value="above" />
               <el-option key="below" label="Below" value="below" />
             </el-select>
@@ -835,7 +843,7 @@
       @update="handleUpdateData"
       @group="val => groupByValue = val" />
 
-    <el-dialog v-model:visible="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
+    <el-dialog v-model="eventViewerVisible" title="Event viewer" fullscreen custom-class="event-table-dialog">
       <EventTable
         v-if="eventViewerFrom"
         :group-by-field="queryKey"
@@ -848,7 +856,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    Delete
+  },
+
   emits: ['validate'],
   data() {
     return {

@@ -36,10 +36,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeMsPowerAutomateWebhookUrlEntry(entry)" />
+                  @click="removeMsPowerAutomateWebhookUrlEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -72,19 +73,19 @@
 
     <el-form-item label="Summary Text Size" prop="msPowerAutomateSummaryTextSize">
       <el-radio-group v-model="msPowerAutomateSummaryTextSize" :disabled="viewOnly" @update:model-value="msPowerAutomateSummaryTextSize = $event">
-        <el-radio id="msPowerAutomateSummaryTextSizeDefault" label="default">
+        <el-radio id="msPowerAutomateSummaryTextSizeDefault" value="default">
           Default
         </el-radio>
-        <el-radio id="msPowerAutomateSummaryTextSizeSmall" label="small">
+        <el-radio id="msPowerAutomateSummaryTextSizeSmall" value="small">
           Small
         </el-radio>
-        <el-radio id="msPowerAutomateSummaryTextSizeMedium" label="medium">
+        <el-radio id="msPowerAutomateSummaryTextSizeMedium" value="default">
           Medium
         </el-radio>
-        <el-radio id="msPowerAutomateSummaryTextSizeLarge" label="large">
+        <el-radio id="msPowerAutomateSummaryTextSizeLarge" value="large">
           Large
         </el-radio>
-        <el-radio id="msPowerAutomateSummaryTextSizeExtraLarge" label="extraLarge">
+        <el-radio id="msPowerAutomateSummaryTextSizeExtraLarge" value="extraLarge">
           ExtraLarge
         </el-radio>
       </el-radio-group>
@@ -92,19 +93,19 @@
 
     <el-form-item label="Body Text Size" prop="msPowerAutomateBodyTextSize">
       <el-radio-group v-model="msPowerAutomateBodyTextSize" :disabled="viewOnly" @update:model-value="msPowerAutomateBodyTextSize = $event">
-        <el-radio id="msPowerAutomateBodyTextSizeDefault" label="default">
+        <el-radio id="msPowerAutomateBodyTextSizeDefault" value="default">
           Default
         </el-radio>
-        <el-radio id="msPowerAutomateBodyTextSizeSmall" label="small">
+        <el-radio id="msPowerAutomateBodyTextSizeSmall" value="small">
           Small
         </el-radio>
-        <el-radio id="msPowerAutomateBodyTextSizeMedium" label="medium">
+        <el-radio id="msPowerAutomateBodyTextSizeMedium" value="default">
           Medium
         </el-radio>
-        <el-radio id="msPowerAutomateBodyTextSizeLarge" label="large">
+        <el-radio id="msPowerAutomateBodyTextSizeLarge" value="large">
           Large
         </el-radio>
-        <el-radio id="msPowerAutomateBodyTextSizeExtraLarge" label="extraLarge">
+        <el-radio id="msPowerAutomateBodyTextSizeExtraLarge" value="extraLarge">
           ExtraLarge
         </el-radio>
       </el-radio-group>
@@ -133,13 +134,13 @@
 
     <el-form-item label="Kibana Discover Color" prop="msPowerAutomateKibanaDiscoverColor">
       <el-radio-group v-model="msPowerAutomateKibanaDiscoverColor" :disabled="viewOnly" @update:model-value="msPowerAutomateKibanaDiscoverColor = $event">
-        <el-radio id="msPowerAutomateKibanaDiscoverColorDefault" label="default">
+        <el-radio id="msPowerAutomateKibanaDiscoverColorDefault" value="default">
           Default
         </el-radio>
-        <el-radio id="msPowerAutomateKibanaDiscoverColorPositive" label="positive">
+        <el-radio id="msPowerAutomateKibanaDiscoverColorPositive" value="positive">
           Positive
         </el-radio>
-        <el-radio id="msPowerAutomateKibanaDiscoverColorDestructive" label="destructive">
+        <el-radio id="msPowerAutomateKibanaDiscoverColorDestructive" value="destructive">
           Destructive
         </el-radio>
       </el-radio-group>
@@ -172,7 +173,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

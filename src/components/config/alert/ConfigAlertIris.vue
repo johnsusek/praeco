@@ -59,10 +59,10 @@
 
     <praeco-form-item label="Type" prop="irisType">
       <el-radio-group v-model="irisType" :disabled="viewOnly" @update:model-value="irisType = $event">
-        <el-radio id="irisTypeAlert" label="alert" border>
+        <el-radio id="irisTypeAlert" value="alert" border>
           alert
         </el-radio>
-        <el-radio id="irisTypeCase" label="case" border>
+        <el-radio id="irisTypeCase" value="case" border>
           case
         </el-radio>
       </el-radio-group>

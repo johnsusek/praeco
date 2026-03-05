@@ -12,11 +12,6 @@
           create a new template
         </router-link>.
       </li>
-      <li>
-        For more assistance, this
-        <a href="https://medium.com/@john_8166/praeco-walkthrough-5aada7e078a9" target="_blank" rel="noopener noreferrer">
-          walkthrough guide</a> is available.
-      </li>
     </ul>
 
     <br>

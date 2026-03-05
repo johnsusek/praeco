@@ -36,10 +36,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeslackWebhookUrlEntry(entry)" />
+                  @click="removeslackWebhookUrlEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -88,10 +89,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeslackChannelOverrideEntry(entry)" />
+                  @click="removeslackChannelOverrideEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -130,13 +132,13 @@
 
     <el-form-item label="Message color" prop="slackMsgColor" required>
       <el-radio-group v-model="slackMsgColor" :disabled="viewOnly" @update:model-value="slackMsgColor = $event">
-        <el-radio id="slackMsgColorDanger" label="danger" border class="slack-danger">
+        <el-radio id="slackMsgColorDanger" value="danger" border class="slack-danger">
           Danger
         </el-radio>
-        <el-radio id="slackMsgColorWarning" label="warning" border class="slack-warning">
+        <el-radio id="slackMsgColorWarning" value="warning" border class="slack-warning">
           Warning
         </el-radio>
-        <el-radio id="slackMsgColorGood" label="good" border class="slack-good">
+        <el-radio id="slackMsgColorGood" value="good" border class="slack-good">
           Good
         </el-radio>
       </el-radio-group>
@@ -144,10 +146,10 @@
 
     <el-form-item label="Parse Override" prop="slackParseOverride">
       <el-radio-group v-model="slackParseOverride" :disabled="viewOnly" @update:model-value="slackParseOverride = $event">
-        <el-radio id="slackParseOverrideNone" label="none" border>
+        <el-radio id="slackParseOverrideNone" value="none" border>
           none
         </el-radio>
-        <el-radio id="slackParseOverrideFull" label="full" border>
+        <el-radio id="slackParseOverrideFull" value="full" border>
           full
         </el-radio>
       </el-radio-group>
@@ -284,13 +286,15 @@
 import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
 import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast/src';
+import { Delete } from '@element-plus/icons-vue'
 
 let emojiIndex = new EmojiIndex(emojiData);
 
 export default {
   components: {
     Emoji,
-    Picker
+    Picker,
+    Delete
   },
 
   props: ['viewOnly'],

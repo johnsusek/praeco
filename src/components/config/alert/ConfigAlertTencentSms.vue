@@ -56,10 +56,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeTencentSmsToNumberEntry(entry)" />
+                  @click="removeTencentSmsToNumberEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -131,10 +132,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeTencentSmsTemplateParmEntry(entry)" />
+                  @click="removeTencentSmsTemplateParmEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -149,7 +151,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

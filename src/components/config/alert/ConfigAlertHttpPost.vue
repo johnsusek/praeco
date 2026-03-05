@@ -36,10 +36,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removehttpPostUrlEntry(entry)" />
+                  @click="removehttpPostUrlEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -84,7 +85,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

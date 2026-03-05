@@ -12,19 +12,19 @@
 
     <praeco-form-item label="Message Type" prop="victoropsMessageType" required>
       <el-radio-group v-model="victoropsMessageType" :disabled="viewOnly" @update:model-value="victoropsMessageType = $event">
-        <el-radio id="victoropsMessageTypeInfo" label="INFO" border>
+        <el-radio id="victoropsMessageTypeInfo" value="INFO" border>
           INFO
         </el-radio>
-        <el-radio id="victoropsMessageTypeWarning" label="WARNING" border>
+        <el-radio id="victoropsMessageTypeWarning" value="WARNING" border>
           WARNING
         </el-radio>
-        <el-radio id="victoropsMessageTypeAcknowledgement" label="ACKNOWLEDGEMENT" border>
+        <el-radio id="victoropsMessageTypeAcknowledgement" value="ACKNOWLEDGEMENT" border>
           ACKNOWLEDGEMENT
         </el-radio>
-        <el-radio id="victoropsMessageTypeCritical" label="CRITICAL" border>
+        <el-radio id="victoropsMessageTypeCritical" value="CRITICAL" border>
           CRITICAL
         </el-radio>
-        <el-radio id="victoropsMessageTypeRecovery" label="RECOVERY" border>
+        <el-radio id="victoropsMessageTypeRecovery" value="RECOVERY" border>
           RECOVERY
         </el-radio>
       </el-radio-group>

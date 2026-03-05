@@ -41,11 +41,12 @@
         <el-popover v-if="showControls" trigger="click" class="praeco-chart-popover">
           <template #reference>
             <el-button
-              size="medium"
+              size="default"
               class="praeco-chart-options"
               circle
-              plain
-              :icon="Clock" />
+              plain>
+              <el-icon><Clock /></el-icon>
+            </el-button>
           </template>
 
           <div class="praeco-chart-controls">
@@ -105,6 +106,7 @@ import {
 import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
+import { Clock } from '@element-plus/icons-vue'
 
 dayjs.extend(dayjs_advancedFormat);
 dayjs.extend(dayjs_relativeTime);
@@ -147,6 +149,10 @@ function getColorForIndex(index, data, spikeHeight) {
 }
 
 export default {
+  components: {
+    Clock
+  },
+
   props: [
     'index',
     'query',

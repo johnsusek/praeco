@@ -23,7 +23,8 @@
           v-for="v in alertaSeverityOptions"
           :key="v.code"
           :label="v.name"
-          v-model="v.code" />
+          v-model="v.code"
+          :value="v.code" />
       </el-select>
     </el-form-item>
 
@@ -87,10 +88,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removeAlertaTagsEntry(entry)" />
+                  @click="removeAlertaTagsEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -190,10 +192,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removealertaServiceEntry(entry)" />
+                  @click="removealertaServiceEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -242,10 +245,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removealertaCorrelateEntry(entry)" />
+                  @click="removealertaCorrelateEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -294,10 +298,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removealertaAttributesKeysEntry(entry)" />
+                  @click="removealertaAttributesKeysEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -346,10 +351,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removealertaAttributesValuesEntry(entry)" />
+                  @click="removealertaAttributesValuesEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -364,7 +370,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

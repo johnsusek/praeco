@@ -1,10 +1,10 @@
 
 <template>
   <div>
-    <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="profile" border @change="changeSns">
+    <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" value="profile" border @change="changeSns">
       Profile
     </el-radio>
-    <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" label="notProfile" border @change="changeSns">
+    <el-radio id="groupSns" v-model="groupSns" :disabled="viewOnly" value="notProfile" border @change="changeSns">
       NotProfile
     </el-radio>
 

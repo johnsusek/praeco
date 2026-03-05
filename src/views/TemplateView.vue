@@ -35,7 +35,8 @@
             params: { action: 'add' },
             query: { prefill: id },
           }">
-          <el-button :icon="ElIconPlus" plain type="primary">
+          <el-button plain type="primary">
+            <el-icon><Plus /></el-icon>
             Create rule from template
           </el-button>
         </router-link>
@@ -45,7 +46,8 @@
             name: 'templateconfigeditor',
             params: { action: 'edit', path: id },
           }">
-          <el-button type="primary" :icon="ElIconEdit" plain>
+          <el-button type="primary" plain>
+            <el-icon><Edit /></el-icon>
             Edit
           </el-button>
         </router-link>
@@ -62,13 +64,14 @@
           Move
         </el-button>
 
-        <el-button :icon="ElIconDelete" plain type="danger" @click="showDeleteConfirm">
+        <el-button plain type="danger" @click="showDeleteConfirm">
+          <el-icon><Delete /></el-icon>
           Delete...
         </el-button>
       </el-row>
 
       <el-dialog
-        v-model:visible="moveVisible"
+        v-mode="moveVisible"
         title="Move"
         width="40%"
         @close="moveVisible = false">
@@ -102,8 +105,15 @@
 <script>
 import { nextTick } from 'vue';
 import { selectNode } from '@/lib/tree';
+import { Delete, Plus, Edit } from '@element-plus/icons-vue'
 
 export default {
+  components: {
+    Delete,
+    Plus,
+    Edit
+  },
+
   props: ['id'],
 
   data() {
@@ -114,6 +124,10 @@ export default {
       showRename: false,
       newName: ''
     };
+  },
+
+  setup() {
+    return { Delete }
   },
 
   computed: {

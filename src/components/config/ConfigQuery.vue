@@ -37,7 +37,7 @@
           ref="manual"
           v-model="manual"
           placeholder="Search... (e.g. status:200 AND extension:PL)"
-          size="medium" />
+          size="default" />
       </el-tab-pane>
     </el-tabs>
 

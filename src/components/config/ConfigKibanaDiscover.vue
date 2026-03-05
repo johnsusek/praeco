@@ -33,7 +33,8 @@
             v-for="v in kibanaVersionOptions"
             :key="v.code"
             :label="v.name"
-            v-model="v.code" />
+            v-model="v.code"
+            :value="v.code" />
         </el-select>
         <label>Specifies the version of the Kibana Discover application.</label>
       </el-form-item>
@@ -87,10 +88,11 @@
                   <el-button
                     :disabled="viewOnly"
                     type="danger"
-                    :icon="ElIconDelete"
                     circle
                     plain
-                    @click="removeKibanaDiscoverColumnsEntry(entry)" />
+                    @click="removeKibanaDiscoverColumnsEntry(entry)">
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -143,8 +145,13 @@
 
 <script>
 import { kibanaVersionOptions } from '@/lib/kibanaVersionOptions.js';
+import { Delete } from '@element-plus/icons-vue'
 
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

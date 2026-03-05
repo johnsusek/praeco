@@ -10,16 +10,16 @@
         v-if="!showDetails"
         :type="type === 'error' ? 'danger' : type"
         plain
-        :icon="ElIconArrowRight"
         @click="showDetails = true">
+        <el-icon><ArrowRight /></el-icon>
         Details
       </el-button>
       <el-button
         v-if="showDetails"
         :type="type === 'error' ? 'danger' : type"
         plain
-        :icon="ElIconArrowDown"
         @click="showDetails = false">
+        <el-icon><ArrowDown /></el-icon>
         Details
       </el-button>
       <pre v-if="showDetails">{{ contents.trim() }}</pre>
@@ -28,7 +28,14 @@
 </template>
 
 <script>
+import { ArrowRight, ArrowDown } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    ArrowRight,
+    ArrowDown
+  },
+
   props: ['title', 'type', 'contents'],
   data() {
     return {

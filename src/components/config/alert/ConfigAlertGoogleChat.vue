@@ -36,10 +36,11 @@
                 <el-button
                   :disabled="viewOnly"
                   type="danger"
-                  :icon="ElIconDelete"
                   circle
                   plain
-                  @click="removegoogleChatWebhookUrlEntry(entry)" />
+                  @click="removegoogleChatWebhookUrlEntry(entry)">
+                  <el-icon><Delete /></el-icon>
+                </el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -53,10 +54,10 @@
 
     <praeco-form-item label="GoogleChat Format" prop="googleChatFormat" required>
       <el-radio-group v-model="googleChatFormat" :disabled="viewOnly" @update:model-value="googleChatFormat = $event">
-        <el-radio id="googleChatFormatBasic" label="basic" border>
+        <el-radio id="googleChatFormatBasic" value="basic" border>
           basic
         </el-radio>
-        <el-radio id="googleChatFormatCard" label="card" border>
+        <el-radio id="googleChatFormatCard" value="card" border>
           card
         </el-radio>
       </el-radio-group>
@@ -95,8 +96,13 @@
 </template>
 
 <script>
+import { Delete } from '@element-plus/icons-vue'
 
 export default {
+  components: {
+    Delete
+  },
+
   props: ['viewOnly'],
   emits: ['validate'],
 

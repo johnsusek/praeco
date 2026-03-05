@@ -2,10 +2,10 @@
   <div>
     <praeco-form-item label="Type" prop="gelfType" required>
       <el-radio-group v-model="gelfType" :disabled="viewOnly" @update:model-value="gelfType = $event">
-        <el-radio id="gelfTypeHttp" label="http" border>
+        <el-radio id="gelfTypeHttp" value="http" border>
           http
         </el-radio>
-        <el-radio id="gelfTypeTcp" label="tcp" border>
+        <el-radio id="gelfTypeTcp" value="tcp" border>
           tcp
         </el-radio>
       </el-radio-group>

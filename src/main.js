@@ -142,7 +142,7 @@ function startApp(config) {
 
   app.use(cronLight);
 
-  app.use(ElementPlus, { locale: en, size: 'mini' });
+  app.use(ElementPlus, { locale: en, size: 'small' });
 
   app.config.errorHandler = function(err, vm, info) {
     logger().error(err);

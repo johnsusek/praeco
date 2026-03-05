@@ -20,31 +20,30 @@
       </div>
     </el-header>
 
-    <Splitpanes class="split-container" @resized="onDragEnd">
-      <Pane :size="sidebarWidth[0]" min-size="0" style="background: #f8f8fb">
+    <el-splitter style="height:calc(100%-48px)" @resize-end="resizeEnd">
+      <el-splitter-panel :size="sidebarWidth[0]" :min="0" style="background: #f8f8fb">
         <div class="pane-content">
           <NavTree style="padding: 10px" />
         </div>
-      </Pane>
-      <Pane :size="sidebarWidth[1]">
+      </el-splitter-panel>
+      <el-splitter-panel :size="sidebarWidth[1]">
         <div class="pane-content">
           <router-view :key="$route.fullPath" style="padding: 10px" />
         </div>
-      </Pane>
-    </Splitpanes>
+      </el-splitter-panel>
+    </el-splitter>
   </div>
 </template>
 
 <script>
 import UpdateIndicator from '@/components/UpdateIndicator.vue';
-import { Splitpanes, Pane } from 'splitpanes';
-import 'splitpanes/dist/splitpanes.css';
+import { ElSplitter, ElSplitterPanel } from 'element-plus'
 
 export default {
   components: {
     UpdateIndicator,
-    Splitpanes,
-    Pane
+    ElSplitter,
+    ElSplitterPanel
   },
 
   computed: {
@@ -65,8 +64,8 @@ export default {
   },
 
   methods: {
-    onDragEnd(size) {
-      this.sidebarWidth = size;
+    resizeEnd(index, sizes) {
+      this.sidebarWidth = sizes;
     }
   }
 };
@@ -115,16 +114,5 @@ body {
 
 .gutter.gutter-horizontal:hover {
   opacity: 1;
-}
-
-.split-container {
-  height: calc(100% - 48px); /* 既存のSplitと同じ高さ指定 */
-  display: flex;
-  flex-direction: row;
-}
-
-.pane-content {
-  height: 100%;
-  overflow-y: auto; /* ★ここが重要：Pane内でスクロール可能にする */
 }
 </style>

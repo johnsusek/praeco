@@ -56,7 +56,7 @@ library.add(
 );
 
 const app = createApp();
-app.use(ElementPlus, { locale, size: 'mini' });
+app.use(ElementPlus, { locale, size: 'small' });
 
 app.component('VChart', ECharts);
 app.component('Icon', FontAwesomeIcon);

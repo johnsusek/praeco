@@ -2,16 +2,16 @@
   <div>
     <!-- dingtalk_msgtype -->
 
-    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" label="text" border @change="changeDingtalk">
+    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" value="text" border @change="changeDingtalk">
       Text
     </el-radio>
-    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" label="markdown" border @change="changeDingtalk">
+    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" value="markdown" border @change="changeDingtalk">
       Markdown
     </el-radio>
-    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" label="single_action_card" border @change="changeDingtalk">
+    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" value="single_action_card" border @change="changeDingtalk">
       Single Action Card
     </el-radio>
-    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" label="action_card" border @change="changeDingtalk">
+    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" value="action_card" border @change="changeDingtalk">
       Action Card
     </el-radio>
 
@@ -48,10 +48,10 @@
       <!-- dingtalk_btn_orientation -->
       <praeco-form-item label="Msg Type" prop="dingtalkBtnOrientation" required>
         <el-radio-group v-model="dingtalkBtnOrientation" :disabled="viewOnly" @update:model-value="dingtalkBtnOrientation = $event">
-          <el-radio id="dingtalkBtnOrientation0" label="0">
+          <el-radio id="dingtalkBtnOrientation0" value="0">
             Buttons are arranged vertically
           </el-radio><br>
-          <el-radio id="dingtalkBtnOrientation1" label="1">
+          <el-radio id="dingtalkBtnOrientation1" value="1">
             Buttons are arranged horizontally
           </el-radio>
         </el-radio-group>

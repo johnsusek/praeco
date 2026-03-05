@@ -28,13 +28,13 @@
 
     <praeco-form-item label="Parse Mode" prop="telegramParseMode" required>
       <el-radio-group v-model="telegramParseMode" :disabled="viewOnly" @update:model-value="telegramParseMode = $event">
-        <el-radio id="telegramParseModeMarkdown" label="markdown" border>
+        <el-radio id="telegramParseModeMarkdown" value="markdown" border>
           markdown
         </el-radio>
-        <el-radio id="telegramParseModeMarkdownV2" label="markdownV2" border>
+        <el-radio id="telegramParseModeMarkdownV2" value="markdownV2" border>
           markdownV2
         </el-radio>
-        <el-radio id="telegramParseModeHtml" label="html" border>
+        <el-radio id="telegramParseModeHtml" value="html" border>
           html
         </el-radio>
       </el-radio-group>
