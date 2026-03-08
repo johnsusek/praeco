@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ElementUI from 'element-ui';
+import ElementPlus from 'element-plus';
 import Vuex from 'vuex';
 import MockAdapter from 'axios-mock-adapter';
 import VueRouter from 'vue-router';
@@ -23,7 +23,7 @@ export const mockAxios = new MockAdapter(axios);
 export function mountComponent(comp, opts = {}) {
   let localVue = createLocalVue();
   localVue.use(VueRouter);
-  localVue.use(ElementUI);
+  localVue.use(ElementPlus);
   localVue.use(Vuex);
 
   return mount(comp, {
@@ -39,7 +39,7 @@ export function mountComponent(comp, opts = {}) {
 export function shallowMountComponent(comp, opts = {}) {
   let localVue = createLocalVue();
   localVue.use(VueRouter);
-  localVue.use(ElementUI);
+  localVue.use(ElementPlus);
   localVue.use(Vuex);
 
   return shallowMount(comp, {
