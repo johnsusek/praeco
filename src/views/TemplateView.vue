@@ -71,7 +71,7 @@
       </el-row>
 
       <el-dialog
-        v-mode="moveVisible"
+        v-model="moveVisible"
         title="Move"
         width="40%"
         @close="moveVisible = false">
