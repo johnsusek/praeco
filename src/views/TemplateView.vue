@@ -126,10 +126,6 @@ export default {
     };
   },
 
-  setup() {
-    return { Delete };
-  },
-
   computed: {
     template() {
       return this.$store.state.configs.templates[this.id] || {};
