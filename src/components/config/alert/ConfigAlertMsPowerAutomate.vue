@@ -79,7 +79,7 @@
         <el-radio id="msPowerAutomateSummaryTextSizeSmall" value="small">
           Small
         </el-radio>
-        <el-radio id="msPowerAutomateSummaryTextSizeMedium" value="default">
+        <el-radio id="msPowerAutomateSummaryTextSizeMedium" value="medium">
           Medium
         </el-radio>
         <el-radio id="msPowerAutomateSummaryTextSizeLarge" value="large">
@@ -99,7 +99,7 @@
         <el-radio id="msPowerAutomateBodyTextSizeSmall" value="small">
           Small
         </el-radio>
-        <el-radio id="msPowerAutomateBodyTextSizeMedium" value="default">
+        <el-radio id="msPowerAutomateBodyTextSizeMedium" value="medium">
           Medium
         </el-radio>
         <el-radio id="msPowerAutomateBodyTextSizeLarge" value="large">
