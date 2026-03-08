@@ -145,7 +145,7 @@
 
 <script>
 import { kibanaVersionOptions } from '@/lib/kibanaVersionOptions.js';
-import { Delete } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue';
 
 export default {
   components: {

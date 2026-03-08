@@ -105,7 +105,7 @@
 <script>
 import { nextTick } from 'vue';
 import { selectNode } from '@/lib/tree';
-import { Delete, Plus, Edit } from '@element-plus/icons-vue'
+import { Delete, Plus, Edit } from '@element-plus/icons-vue';
 
 export default {
   components: {
@@ -127,7 +127,7 @@ export default {
   },
 
   setup() {
-    return { Delete }
+    return { Delete };
   },
 
   computed: {

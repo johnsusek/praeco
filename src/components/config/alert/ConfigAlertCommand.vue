@@ -1,6 +1,6 @@
 <template>
   <div>
-      <el-popover v-model="popCommandVisible" :class="{ 'is-invalid': !popCommandValid }">
+    <el-popover v-model="popCommandVisible" :class="{ 'is-invalid': !popCommandValid }">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="command.length" :content="command.join(', ')" placement="top">
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { Delete } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue';
 
 export default {
   components: {

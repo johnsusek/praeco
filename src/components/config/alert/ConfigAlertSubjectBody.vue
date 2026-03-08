@@ -220,7 +220,7 @@
 <script>
 import debounce from 'debounce';
 import At from 'vue-at';
-import { Delete } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue';
 
 export default {
   components: {

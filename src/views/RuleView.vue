@@ -277,7 +277,7 @@ import { capitalCase } from 'change-case';
 import { logger } from '@/lib/logger.js';
 import { selectNode } from '@/lib/tree';
 import networkError from '../lib/networkError.js';
-import { Delete, Edit } from '@element-plus/icons-vue'
+import { Delete, Edit } from '@element-plus/icons-vue';
 
 dayjs.extend(advancedFormat);
 

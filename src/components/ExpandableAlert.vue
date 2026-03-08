@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { ArrowRight, ArrowDown } from '@element-plus/icons-vue'
+import { ArrowRight, ArrowDown } from '@element-plus/icons-vue';
 
 export default {
   components: {

@@ -243,7 +243,7 @@
 <script>
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
 import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast/src';
-import { Delete } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue';
 
 let emojiIndex = new EmojiIndex(emojiData);
 

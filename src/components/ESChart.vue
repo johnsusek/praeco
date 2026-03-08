@@ -106,7 +106,7 @@ import {
 import { formatIndex } from '@/lib/elasticSearchMetadata.js';
 import { intervalFromTimeframe } from '../lib/intervalFromTimeframe';
 import chartOptions from '../lib/chartOptions';
-import { Clock } from '@element-plus/icons-vue'
+import { Clock } from '@element-plus/icons-vue';
 
 dayjs.extend(dayjs_advancedFormat);
 dayjs.extend(dayjs_relativeTime);

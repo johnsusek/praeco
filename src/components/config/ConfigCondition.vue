@@ -65,12 +65,12 @@
             filterable
             clearable
             :teleported="false"
-            placeholder="Select field"
+            placeholder="Select field">
             <el-option
               v-for="field in Object.keys(fieldsForAgg)"
               :key="field"
               :label="field"
-              :value="field">
+              :value="field" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -856,7 +856,7 @@
 </template>
 
 <script>
-import { Delete } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue';
 
 export default {
   components: {

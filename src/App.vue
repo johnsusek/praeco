@@ -37,7 +37,7 @@
 
 <script>
 import UpdateIndicator from '@/components/UpdateIndicator.vue';
-import { ElSplitter, ElSplitterPanel } from 'element-plus'
+import { ElSplitter, ElSplitterPanel } from 'element-plus';
 
 export default {
   components: {
