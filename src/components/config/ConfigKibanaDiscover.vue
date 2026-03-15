@@ -228,7 +228,7 @@ export default {
   methods: {
     updateKibanaDiscoverFromTimedelta(value) {
       this.kibanaDiscoverFromTimedelta = {};
-      /*eslint-disable */
+
       this.$set(this.kibanaDiscoverFromTimedelta, Object.keys(value)[0], Object.values(value)[0]);
     },
 
