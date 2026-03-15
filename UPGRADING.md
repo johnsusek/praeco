@@ -7,6 +7,12 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 1.9.0
+
+**New options**
+
+- AWS SQS
+
 ## -> 1.8.23
 
 **New options**
