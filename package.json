@@ -1,6 +1,6 @@
 {
   "name": "praeco",
-  "version": "1.8.25",
+  "version": "1.9.0",
   "private": true,
   "scripts": {
     "dev": "npx vite",
@@ -86,7 +86,7 @@
     "eslint-plugin-cypress": "^6.2.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-rulesdir": "^0.2.2",
-    "eslint-plugin-vue": "^10.8.0",
+    "eslint-plugin-vue": "^9.33.0",
     "jsdom": "^28.1.0",
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",

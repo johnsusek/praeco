@@ -608,6 +608,13 @@ export default {
         commit('alert/UPDATE_SES_EMAIL_FROM_FIELD', config.ses_email_from_field);
         commit('alert/UPDATE_SES_EMAIL_ADD_DOMAIN', config.ses_email_add_domain);
 
+        /* Amazon SQS */
+        commit('alert/UPDATE_SQS_QUEUE_URL', config.sqs_queue_url);
+        commit('alert/UPDATE_SQS_AWS_ACCESS_KEY_ID', config.sqs_aws_access_key_id);
+        commit('alert/UPDATE_SQS_AWS_SECRET_ACCESS_KEY', config.sqs_aws_secret_access_key);
+        commit('alert/UPDATE_SQS_AWS_REGION', config.sqs_aws_region);
+        commit('alert/UPDATE_SQS_AWS_PROFILE', config.sqs_aws_profile);
+
         /* WorkWechat */
         commit('alert/UPDATE_WORK_WECHAT_BOT_ID', config.work_wechat_bot_id);
 
@@ -2573,6 +2580,32 @@ export default {
       return config;
     },
 
+    sqs(state) {
+      let config = {};
+
+      if (state.alert.sqsQueueUrl) {
+        config.sqs_queue_url = state.alert.sqsQueueUrl;
+      }
+
+      if (state.alert.sqsAwsProfile) {
+        config.sqs_aws_profile = state.alert.sqsAwsProfile;
+      } else {
+        if (state.alert.sqsAwsAccessKeyId) {
+          config.sqs_aws_access_key_id = state.alert.sqsAwsAccessKeyId;
+        }
+
+        if (state.alert.sqsAwsSecretAccessKey) {
+          config.sqs_aws_secret_access_key = state.alert.sqsAwsSecretAccessKey;
+        }
+
+        if (state.alert.sqsAwsRegion) {
+          config.sqs_aws_region = state.alert.sqsAwsRegion;
+        }
+      }
+
+      return config;
+    },
+
     lark(state) {
       let config = {};
 
@@ -3583,6 +3616,10 @@ export default {
         config = { ...config, ...getters.ses };
       }
 
+      if (state.alert.alert.includes('sqs')) {
+        config = { ...config, ...getters.sqs };
+      }
+
       if (state.alert.alert.includes('servicenow')) {
         config = { ...config, ...getters.servicenow };
       }
@@ -3651,6 +3688,7 @@ export default {
         || state.alert.alert.includes('pagertree')
         || state.alert.alert.includes('rocketchat')
         || state.alert.alert.includes('servicenow')
+        || state.alert.alert.includes('sqs')
         || state.alert.alert.includes('ses')
         || state.alert.alert.includes('slack')
         || state.alert.alert.includes('smseagle')

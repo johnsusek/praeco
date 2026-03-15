@@ -106,6 +106,13 @@ function initialState() {
     sesAwsRegion: '',
     sesAwsProfile: '',
 
+    /* Amazon SQS */
+    sqsQueueUrl: '',
+    sqsAwsAccessKeyId: '',
+    sqsAwsSecretAccessKey: '',
+    sqsAwsRegion: '',
+    sqsAwsProfile: '',
+
     /* Chatwork */
     chatworkApikey: '',
     chatworkRoomId: '',
@@ -955,6 +962,27 @@ export default {
 
     UPDATE_SES_AWS_PROFILE(state, sesAwsProfile) {
       state.sesAwsProfile = sesAwsProfile;
+    },
+
+    /* Amazon SQS */
+    UPDATE_SQS_QUEUE_URL(state, sqsQueueUrl) {
+      state.sqsQueueUrl = sqsQueueUrl;
+    },
+
+    UPDATE_SQS_AWS_ACCESS_KEY_ID(state, sqsAwsAccessKeyId) {
+      state.sqsAwsAccessKeyId = sqsAwsAccessKeyId;
+    },
+
+    UPDATE_SQS_AWS_SECRET_ACCESS_KEY(state, sqsAwsSecretAccessKey) {
+      state.sqsAwsSecretAccessKey = sqsAwsSecretAccessKey;
+    },
+
+    UPDATE_SQS_AWS_REGION(state, sqsAwsRegion) {
+      state.sqsAwsRegion = sqsAwsRegion;
+    },
+
+    UPDATE_SQS_AWS_PROFILE(state, sqsAwsProfile) {
+      state.sqsAwsProfile = sqsAwsProfile;
     },
 
     /* Chatwork */
