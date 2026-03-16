@@ -152,7 +152,7 @@
 
       <br>
 
-      <el-tabs type="card" class="m-n-sm">
+      <el-tabs type="card" class="m-n-sm" v-model="activeTab">
         <el-tab-pane label="Overview" name="overview">
           <template
             v-if="
@@ -290,6 +290,7 @@ export default {
   props: ['id'],
   data() {
     return {
+      activeTab:'overview',
       loaded: false,
       silencePopoverVisible: false,
       now: new Date(),
