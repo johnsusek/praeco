@@ -47,7 +47,7 @@
         <router-link
           :to="{
             name: 'ruleconfigeditor',
-            params: { action: 'edit', path: id },
+            params: { path: id },
           }">
           <el-button plain type="primary">
             <el-icon><Edit /></el-icon>

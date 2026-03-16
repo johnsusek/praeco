@@ -32,7 +32,6 @@
         <router-link
           :to="{
             name: 'ruleconfigbuilder',
-            params: { action: 'add' },
             query: { prefill: id },
           }">
           <el-button plain type="primary">
@@ -44,7 +43,7 @@
         <router-link
           :to="{
             name: 'templateconfigeditor',
-            params: { action: 'edit', path: id },
+            params: { path: id },
           }">
           <el-button type="primary" plain>
             <el-icon><Edit /></el-icon>

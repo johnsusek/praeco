@@ -59,7 +59,7 @@
     "vue-json-pretty": "2.6.0",
     "vue-prism-component": "2.0.0",
     "vue-query-builder": "github:nsano-rururu/vue-query-builder#v0.6.1vue3",
-    "vue-router": "^4.6.4",
+    "vue-router": "^5.0.3",
     "vuex": "^4.1.0",
     "zrender": "6.0.0",
     "@element-plus/icons-vue": "^2.3.2"
