@@ -1,11 +1,10 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import { loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
@@ -64,31 +63,52 @@ export default defineConfig(({ mode }) => {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Vue3
-          'vue-vendor': ['vue', 'vue-router'],
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+
+          // Vue
+          if (id.includes('vue-router')) return 'vue-router'
+          if (id.includes('vue')) return 'vue'
 
           // Element Plus
-          'element-plus': ['element-plus'],
+          if (id.includes('element-plus')) return 'element-plus'
 
           // Charts
-          'charts': ['echarts', 'vue-echarts', 'zrender'],
+          if (
+            id.includes('echarts') ||
+            id.includes('vue-echarts') ||
+            id.includes('zrender')
+          ) {
+            return 'charts'
+          }
 
           // Utils
-          'utils': [
-            'axios', 'lodash.clonedeep', 'lodash.get', 'lodash.throttle',
-            'dayjs', 'js-yaml', 'validator', 'semver', 'change-case'
-          ],
+          if (
+            id.includes('axios') ||
+            id.includes('lodash') ||
+            id.includes('dayjs') ||
+            id.includes('js-yaml') ||
+            id.includes('validator') ||
+            id.includes('semver') ||
+            id.includes('change-case')
+          ) {
+            return 'utils'
+          }
 
-          'editor': ['prismjs', 'vue-prism-component'],
+          // Editor
+          if (
+            id.includes('prismjs') ||
+            id.includes('vue-prism-component')
+          ) {
+            return 'editor'
+          }
 
-          'icons': [
-            '@fortawesome/fontawesome-svg-core',
-            '@fortawesome/free-solid-svg-icons',
-            '@fortawesome/free-regular-svg-icons',
-            '@fortawesome/free-brands-svg-icons',
-            '@fortawesome/vue-fontawesome'
-          ]
+          // FontAwesome
+          if (id.includes('@fortawesome')) {
+            return 'icons'
+          }
+
+          return 'vendor'
         }
       }
     }
