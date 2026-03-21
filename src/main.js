@@ -1,5 +1,12 @@
 import { createApp } from 'vue';
 import ElementPlus, { ElNotification } from 'element-plus';
+
+const originalWarn = console.warn;
+console.warn = (...args) => {
+  if (args[0] && args[0].toString().includes('ElInfiniteScroll')) return;
+  originalWarn(...args);
+};
+
 import axios from 'axios';
 import WebSocketPlugin from './plugins/websocket';
 import VueJsonPretty from 'vue-json-pretty';
