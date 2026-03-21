@@ -47,344 +47,357 @@
       <Icon icon="question-circle" class="pop-when-help" />
     </a>
 
-    <el-popover
-      v-if="showPopCardinalityField"
-      v-model:visible="popCardinalityVisible"
-      :teleported="false"
-      :class="{ 'is-invalid': !popCardinalityValid }">
-      <template #reference>
-        <span class="pop-trigger">
-          <span>OF </span>
-          <span>{{ cardinalityField || 'select a field' }}</span>
-        </span>
-      </template>
-      <el-form ref="cardinalityField" :model="$store.state.config.match">
-        <el-form-item prop="cardinalityField" required>
-          <el-select
-            v-model="cardinalityField"
-            filterable
-            clearable
-            :teleported="false"
-            placeholder="Select field">
-            <el-option
-              v-for="field in Object.keys(fieldsForAgg)"
-              :key="field"
-              :label="field"
-              :value="field" />
-          </el-select>
-        </el-form-item>
-      </el-form>
-    </el-popover>
-
-    <el-popover v-if="showPopOf" v-model:visible="popOfVisible" :teleported="false" :class="{ 'is-invalid': !popOfValid }">
-      <template #reference>
-        <span class="pop-trigger">
-          <span>OF </span>
-          <span>{{ metricAggKey || 'select a field' }}</span>
-        </span>
-      </template>
-      <el-form ref="of" :model="$store.state.config.match">
-        <el-form-item prop="metricAggKey" required>
-          <el-select
-            v-model="metricAggKey"
-            filterable
-            clearable
-            :teleported="false"
-            placeholder="Select field"
-            @update:model-value="popOfVisible = false; validate();">
-            <el-option
-              v-for="field in Object.keys(numberFields)"
-              :key="field"
-              :label="field"
-              :value="field" />
-          </el-select>
-        </el-form-item>
-      </el-form>
-    </el-popover>
-
-    <el-popover v-if="showPopOver" v-model:visible="popOverVisible" :teleported="false" :class="{ 'is-invalid': !popOverValid }">
-      <template #reference>
-        <span class="pop-trigger">
-          <span>
-            <span v-if="groupedOver === 'field'">GROUPED </span>
-            <span>OVER </span>
+    <span v-if="showPopCardinalityField">
+      <el-popover
+        v-model:visible="popCardinalityVisible"
+        :teleported="false"
+        :class="{ 'is-invalid': !popCardinalityValid }">
+        <template #reference>
+          <span class="pop-trigger">
+            <span>OF </span>
+            <span>{{ cardinalityField || 'select a field' }}</span>
           </span>
-          <span v-if="groupedOver === 'all'">all documents</span>
-          <span v-if="groupedOver === 'field'">{{ queryKey }}</span>
-        </span>
-      </template>
-      <div>
-        <el-radio
-          id="groupedOverAll"
-          v-model="groupedOver"
-          value="all"
-          border
-          @change="changeGroupedOver">
-          All documents
-        </el-radio>
+        </template>
+        <el-form ref="cardinalityField" :model="$store.state.config.match">
+          <el-form-item prop="cardinalityField" required>
+            <el-select
+              v-model="cardinalityField"
+              filterable
+              clearable
+              :teleported="false"
+              placeholder="Select field">
+              <el-option
+                v-for="field in Object.keys(fieldsForAgg)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </el-popover>
+    </span>
 
-        <el-radio
-          id="groupedOverField"
-          v-model="groupedOver"
-          value="field"
-          border
-          @change="changeGroupedOver">
-          Field
-        </el-radio>
+    <span v-if="showPopOf">
+      <el-popover v-model:visible="popOfVisible" :teleported="false" :class="{ 'is-invalid': !popOfValid }">
+        <template #reference>
+          <span class="pop-trigger">
+            <span>OF </span>
+            <span>{{ metricAggKey || 'select a field' }}</span>
+          </span>
+        </template>
+        <el-form ref="of" :model="$store.state.config.match">
+          <el-form-item prop="metricAggKey" required>
+            <el-select
+              v-model="metricAggKey"
+              filterable
+              clearable
+              :teleported="false"
+              placeholder="Select field"
+              @update:model-value="popOfVisible = false; validate();">
+              <el-option
+                v-for="field in Object.keys(numberFields)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </el-popover>
+    </span>
 
-        <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
-          <el-form ref="overall" :model="$store.state.config.match">
-            <el-form-item label="" prop="docType" required>
-              <el-select
-                v-model="docType"
-                filterable
-                clearable
-                allow-create
-                class="el-select-wide m-n-sm"
-                placeholder="Select doc type"
-                @change="validate">
-                <el-option v-for="type2 in types" :key="type2" :label="type2" :value="type2" />
-              </el-select>
-            </el-form-item>
-          </el-form>
+    <span v-if="showPopOver">
+      <el-popover v-model:visible="popOverVisible" :teleported="false" :class="{ 'is-invalid': !popOverValid }">
+        <template #reference>
+          <span class="pop-trigger">
+            <span>
+              <span v-if="groupedOver === 'field'">GROUPED </span>
+              <span>OVER </span>
+            </span>
+            <span v-if="groupedOver === 'all'">all documents</span>
+            <span v-if="groupedOver === 'field'">{{ queryKey }}</span>
+          </span>
+        </template>
+        <div>
+          <el-radio
+            id="groupedOverAll"
+            v-model="groupedOver"
+            value="all"
+            border
+            @change="changeGroupedOver">
+            All documents
+          </el-radio>
+
+          <el-radio
+            id="groupedOverField"
+            v-model="groupedOver"
+            value="field"
+            border
+            @change="changeGroupedOver">
+            Field
+          </el-radio>
+
+          <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
+            <el-form ref="overall" :model="$store.state.config.match">
+              <el-form-item label="" prop="docType" required>
+                <el-select
+                  v-model="docType"
+                  filterable
+                  clearable
+                  allow-create
+                  class="el-select-wide m-n-sm"
+                  placeholder="Select doc type"
+                  @change="validate">
+                  <el-option v-for="type2 in types" :key="type2" :label="type2" :value="type2" />
+                </el-select>
+              </el-form-item>
+            </el-form>
+          </div>
+          <div v-if="groupedOver === 'field'">
+            <el-form ref="over" :model="$store.state.config.match">
+              <el-form-item
+                v-for="(entry, index2) in queryKey"
+                :key="index2"
+                :prop="`queryKey.${index2}`" required>
+                <el-select
+                  v-model="queryKey[index2]"
+                  filterable
+                  clearable
+                  placeholder="Select field"
+                  class="el-select-wide m-n-sm"
+                  style="width: 280px"
+                  :teleported="false">
+                  <el-option
+                    v-for="field in Object.keys(fieldsForAgg)"
+                    :key="field"
+                    :label="field"
+                    :value="field" />
+                </el-select>
+                <el-col :span="4">
+                  <el-button
+                    type="danger"
+                    circle
+                    plain
+                    @click="removeQueryKeyEntry(entry)">
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
+                </el-col>
+              </el-form-item>
+            </el-form>
+
+            <el-button class="m-n-sm" @click="addQueryKeyEntry">
+              Add querykey
+            </el-button>
+          </div>
+
+          <label class="m-n-xs mini">
+            Grouping over a field changes the re-alert<br> behavior to apply on a per-group basis.
+          </label>
         </div>
-        <div v-if="groupedOver === 'field'">
-          <el-form ref="over" :model="$store.state.config.match">
-            <el-form-item
-              v-for="(entry, index2) in queryKey"
-              :key="index2"
-              :prop="`queryKey.${index2}`" required>
-              <el-select
-                v-model="queryKey[index2]"
-                filterable
-                clearable
-                placeholder="Select field"
-                class="el-select-wide m-n-sm"
-                style="width: 280px"
-                :teleported="false">
+      </el-popover>
+    </span>
+
+    <span v-if="showPopCompare">
+      <el-popover v-model:visible="popCompareVisible" :teleported="false" :class="{ 'is-invalid': !popCompareValid }">
+        <template #reference>
+          <span class="pop-trigger">
+            <template v-if="compareKey && compareKey.length > 1">
+              <span>FIELDS</span>
+              <span> {{ compareKey }}</span>
+            </template>
+            <template v-else-if="compareKey && compareKey.length === 1">
+              <span>FIELD</span>
+              <span> {{ compareKey[0] }}</span>
+            </template>
+            <template v-else>
+              <span>FIELD</span>
+              <span> {{ compareKey }}</span>
+            </template>
+          </span>
+        </template>
+        <el-form ref="compare" :model="$store.state.config.match">
+          <el-form-item prop="compareKey" required>
+            <el-select
+              v-model="compareKey"
+              :multiple="metricAggType === 'field changes'"
+              :filterable="metricAggType !== 'field changes'"
+              clearable
+              :teleported="false"
+              placeholder="Field"
+              style="width: 280px"
+              @update:model-value="popCompareVisible = false; validate();">
+              <template v-if="['field in list', 'field not in list'].includes(metricAggType)">
                 <el-option
-                  v-for="field in Object.keys(fieldsForAgg)"
+                  v-for="field in Object.keys(textFields)"
                   :key="field"
                   :label="field"
                   :value="field" />
-              </el-select>
-              <el-col :span="4">
-                <el-button
-                  type="danger"
-                  circle
-                  plain
-                  @click="removeQueryKeyEntry(entry)">
-                  <el-icon><Delete /></el-icon>
-                </el-button>
-              </el-col>
+              </template>
+              <template v-else>
+                <el-option
+                  v-for="field in Object.keys(fields)"
+                  :key="field"
+                  :label="field"
+                  :value="field" />
+              </template>
+            </el-select>
+            <label v-if="metricAggType === 'field changes'">The field to check for changes.</label>
+          </el-form-item>
+        </el-form>
+      </el-popover>
+    </span>
+
+    <span v-if="showPopGroup">
+      <el-popover v-model:visible="popGroupVisible" :teleported="false" :class="{ 'is-invalid': !popGroupValid }">
+        <template #reference>
+          <span class="pop-trigger" @click.stop="popGroupVisible = true">
+            <span>
+              <span v-if="metricAggType === 'new term'">IN FIELD </span>
+              <span v-else>GROUPED OVER </span>
+            </span>
+            <span>{{ queryKey }}</span>
+          </span>
+        </template>
+        <el-form ref="group" :model="$store.state.config.match">
+          <el-form-item
+            v-for="(entry, index2) in queryKey"
+            :key="index2"
+            :prop="`queryKey.${index2}`" required>
+            <el-select
+              v-model="queryKey[index2]"
+              filterable
+              clearable
+              :teleported="false"
+              placeholder="Select field"
+              class="el-select-wide"
+              style="width: 280px">
+              <el-option
+                v-for="field in Object.keys(fieldsForAgg)"
+                :key="field"
+                :label="field"
+                :value="field" />
+            </el-select>
+            <el-col :span="4">
+              <el-button
+                type="danger"
+                circle
+                plain
+                @click="removeQueryKeyEntry(entry)">
+                <el-icon><Delete /></el-icon>
+              </el-button>
+            </el-col>
+            <label v-if="metricAggType === 'field changes'">Field change will be checked per-group.</label>
+          </el-form-item>
+        </el-form>
+
+        <el-button class="m-n-sm" @click="addQueryKeyEntry">
+          Add querykey
+        </el-button>
+      </el-popover>
+    </span>
+
+    <span v-if="showPopBlacklist">
+      <el-popover v-model="popBlacklistVisible" :class="{ 'is-invalid': !popBlacklistValid }">
+        <template #reference>
+          <span class="pop-trigger">
+            <el-tooltip v-if="blacklist.length" :content="blacklist.join(', ')" placement="top">
+              <span>IN LIST ({{ blacklist.length }})</span>
+            </el-tooltip>
+            <span v-else>IN LIST ({{ blacklist.length }})</span>
+          </span>
+        </template>
+        <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+          <el-form
+            ref="blacklist"
+            :model="$store.state.config.match"
+            label-position="top"
+            style="width: 360px"
+            @submit.prevent>
+            <el-form-item
+              v-for="(entry, index2) in blacklist"
+              :key="index2"
+              :prop="`blacklist.${index2}`"
+              class="el-form-item-list"
+              label=""
+              required>
+              <el-row :gutter="5" justify="space-between">
+                <el-col :span="20">
+                  <el-input
+                    v-model="blacklist[index2]"
+                    placeholder="Keyword"
+                    @update:model-value="(val) => updateBlacklist(val, index2)" />
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    type="danger"
+                    circle
+                    plain
+                    @click="removeBlacklistEntry(entry)">
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
+                </el-col>
+              </el-row>
             </el-form-item>
           </el-form>
 
-          <el-button class="m-n-sm" @click="addQueryKeyEntry">
-            Add querykey
+          <el-button class="m-n-sm" @click="addBlacklistEntry">
+            Add keyword
           </el-button>
         </div>
+      </el-popover>
+    </span>
 
-        <label class="m-n-xs mini">
-          Grouping over a field changes the re-alert<br> behavior to apply on a per-group basis.
-        </label>
-      </div>
-    </el-popover>
-
-    <el-popover v-if="showPopCompare" v-model:visible="popCompareVisible" :teleported="false" :class="{ 'is-invalid': !popCompareValid }">
-      <template #reference>
-        <span class="pop-trigger">
-          <template v-if="compareKey && compareKey.length > 1">
-            <span>FIELDS</span>
-            <span> {{ compareKey }}</span>
-          </template>
-          <template v-else-if="compareKey && compareKey.length === 1">
-            <span>FIELD</span>
-            <span> {{ compareKey[0] }}</span>
-          </template>
-          <template v-else>
-            <span>FIELD</span>
-            <span> {{ compareKey }}</span>
-          </template>
-        </span>
-      </template>
-      <el-form ref="compare" :model="$store.state.config.match">
-        <el-form-item prop="compareKey" required>
-          <el-select
-            v-model="compareKey"
-            :multiple="metricAggType === 'field changes'"
-            :filterable="metricAggType !== 'field changes'"
-            clearable
-            :teleported="false"
-            placeholder="Field"
-            style="width: 280px"
-            @update:model-value="popCompareVisible = false; validate();">
-            <template v-if="['field in list', 'field not in list'].includes(metricAggType)">
-              <el-option
-                v-for="field in Object.keys(textFields)"
-                :key="field"
-                :label="field"
-                :value="field" />
-            </template>
-            <template v-else>
-              <el-option
-                v-for="field in Object.keys(fields)"
-                :key="field"
-                :label="field"
-                :value="field" />
-            </template>
-          </el-select>
-          <label v-if="metricAggType === 'field changes'">The field to check for changes.</label>
-        </el-form-item>
-      </el-form>
-    </el-popover>
-
-    <el-popover v-if="showPopGroup" v-model:visible="popGroupVisible" :teleported="false" :class="{ 'is-invalid': !popGroupValid }">
-      <template #reference>
-        <span class="pop-trigger" @click.stop="popGroupVisible = true">
-          <span>
-            <span v-if="metricAggType === 'new term'">IN FIELD </span>
-            <span v-else>GROUPED OVER </span>
+    <span v-if="showPopWhitelist">
+      <el-popover v-model="popWhitelistVisible" :class="{ 'is-invalid': !popWhitelistValid }">
+        <template #reference>
+          <span class="pop-trigger">
+            <el-tooltip v-if="whitelist.length" :content="whitelist.join(', ')" placement="top">
+              <span>NOT IN LIST ({{ whitelist.length }})</span>
+            </el-tooltip>
+            <span v-else>NOT IN LIST ({{ whitelist.length }})</span>
           </span>
-          <span>{{ queryKey }}</span>
-        </span>
-      </template>
-      <el-form ref="group" :model="$store.state.config.match">
-        <el-form-item
-          v-for="(entry, index2) in queryKey"
-          :key="index2"
-          :prop="`queryKey.${index2}`" required>
-          <el-select
-            v-model="queryKey[index2]"
-            filterable
-            clearable
-            :teleported="false"
-            placeholder="Select field"
-            class="el-select-wide"
-            style="width: 280px">
-            <el-option
-              v-for="field in Object.keys(fieldsForAgg)"
-              :key="field"
-              :label="field"
-              :value="field" />
-          </el-select>
-          <el-col :span="4">
-            <el-button
-              type="danger"
-              circle
-              plain
-              @click="removeQueryKeyEntry(entry)">
-              <el-icon><Delete /></el-icon>
-            </el-button>
-          </el-col>
-          <label v-if="metricAggType === 'field changes'">Field change will be checked per-group.</label>
-        </el-form-item>
-      </el-form>
+        </template>
+        <div>
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+          <el-form
+            ref="whitelist"
+            :model="$store.state.config.match"
+            label-position="top"
+            style="width: 360px"
+            @submit.prevent>
+            <el-form-item
+              v-for="(entry, index2) in whitelist"
+              :key="index2"
+              :prop="`whitelist.${index}`"
+              required
+              class="el-form-item-list"
+              label="">
+              <el-row :gutter="5" justify="space-between">
+                <el-col :span="20">
+                  <el-input
+                    v-model="whitelist[index2]"
+                    placeholder="Keyword"
+                    @update:model-value="(val) => updateWhitelist(val, index2)" />
+                </el-col>
+                <el-col :span="4">
+                  <el-button
+                    type="danger"
+                    circle
+                    plain
+                    @click.prevent="removeWhitelistEntry(entry)">
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-form>
 
-      <el-button class="m-n-sm" @click="addQueryKeyEntry">
-        Add querykey
-      </el-button>
-    </el-popover>
-
-    <el-popover v-if="showPopBlacklist" v-model="popBlacklistVisible" :class="{ 'is-invalid': !popBlacklistValid }">
-      <template #reference>
-        <span class="pop-trigger">
-          <el-tooltip v-if="blacklist.length" :content="blacklist.join(', ')" placement="top">
-            <span>IN LIST ({{ blacklist.length }})</span>
-          </el-tooltip>
-          <span v-else>IN LIST ({{ blacklist.length }})</span>
-        </span>
-      </template>
-      <div>
-        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
-        <el-form
-          ref="blacklist"
-          :model="$store.state.config.match"
-          label-position="top"
-          style="width: 360px"
-          @submit.prevent>
-          <el-form-item
-            v-for="(entry, index2) in blacklist"
-            :key="index2"
-            :prop="`blacklist.${index2}`"
-            class="el-form-item-list"
-            label=""
-            required>
-            <el-row :gutter="5" justify="space-between">
-              <el-col :span="20">
-                <el-input
-                  v-model="blacklist[index2]"
-                  placeholder="Keyword"
-                  @update:model-value="(val) => updateBlacklist(val, index2)" />
-              </el-col>
-              <el-col :span="4">
-                <el-button
-                  type="danger"
-                  circle
-                  plain
-                  @click="removeBlacklistEntry(entry)">
-                  <el-icon><Delete /></el-icon>
-                </el-button>
-              </el-col>
-            </el-row>
-          </el-form-item>
-        </el-form>
-
-        <el-button class="m-n-sm" @click="addBlacklistEntry">
-          Add keyword
-        </el-button>
-      </div>
-    </el-popover>
-
-    <el-popover v-if="showPopWhitelist" v-model="popWhitelistVisible" :class="{ 'is-invalid': !popWhitelistValid }">
-      <template #reference>
-        <span class="pop-trigger">
-          <el-tooltip v-if="whitelist.length" :content="whitelist.join(', ')" placement="top">
-            <span>NOT IN LIST ({{ whitelist.length }})</span>
-          </el-tooltip>
-          <span v-else>NOT IN LIST ({{ whitelist.length }})</span>
-        </span>
-      </template>
-      <div>
-        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
-        <el-form
-          ref="whitelist"
-          :model="$store.state.config.match"
-          label-position="top"
-          style="width: 360px"
-          @submit.prevent>
-          <el-form-item
-            v-for="(entry, index2) in whitelist"
-            :key="index2"
-            :prop="`whitelist.${index}`"
-            required
-            class="el-form-item-list"
-            label="">
-            <el-row :gutter="5" justify="space-between">
-              <el-col :span="20">
-                <el-input
-                  v-model="whitelist[index2]"
-                  placeholder="Keyword"
-                  @update:model-value="(val) => updateWhitelist(val, index2)" />
-              </el-col>
-              <el-col :span="4">
-                <el-button
-                  type="danger"
-                  circle
-                  plain
-                  @click.prevent="removeWhitelistEntry(entry)">
-                  <el-icon><Delete /></el-icon>
-                </el-button>
-              </el-col>
-            </el-row>
-          </el-form-item>
-        </el-form>
-
-        <el-button class="m-n-sm" @click="addWhitelistEntry">
-          Add keyword
-        </el-button>
-      </div>
-    </el-popover>
+          <el-button class="m-n-sm" @click="addWhitelistEntry">
+            Add keyword
+          </el-button>
+        </div>
+      </el-popover>
+    </span>
 
     <span class="pop-trigger" @click="popFilterVisible = true">
       <span v-if="queryString === defaultFilter">UNFILTERED</span>
@@ -399,416 +412,423 @@
       <ConfigQuery ref="query" class="config-query" />
     </el-dialog>
 
-    <el-popover
-      v-if="showPopCardinalityThresholds"
-      v-model:visible="popCardinalityThresholdsVisible"
-      :teleported="false"
-      :class="{ 'is-invalid': !popCardinalityThresholdsValid }">
-      <template #reference>
-        <span class="pop-trigger">
-          <span>IS</span>
-          <span v-if="maxCardinality">
-            ABOVE {{ maxCardinality }}
+    <span v-if="showPopCardinalityThresholds">
+      <el-popover
+        v-model:visible="popCardinalityThresholdsVisible"
+        :teleported="false"
+        :class="{ 'is-invalid': !popCardinalityThresholdsValid }">
+        <template #reference>
+          <span class="pop-trigger">
+            <span>IS</span>
+            <span v-if="maxCardinality">
+              ABOVE {{ maxCardinality }}
+            </span>
+            <span v-if="minCardinality">
+              BELOW {{ minCardinality }}
+            </span>
           </span>
-          <span v-if="minCardinality">
-            BELOW {{ minCardinality }}
-          </span>
-        </span>
-      </template>
+        </template>
 
-      <el-row :gutter="10" style="width: 260px">
-        <el-col :span="10">
-          <el-select
-            id="cardinalityAboveOrBelow"
-            v-model="cardinalityAboveOrBelow"
-            class="el-select-wide"
-            @update:model-value="updateCardinalityAboveOrBelow">
-            <el-option key="above" label="Above" value="above" />
-            <el-option key="below" label="Below" value="below" />
-          </el-select>
-        </el-col>
-
-        <el-col :span="14">
-          <el-form ref="minMaxCardinality" :model="$store.state.config.match">
-            <el-form-item v-if="cardinalityAboveOrBelow === 'above'" prop="maxCardinality" required>
-              <el-input-number
-                id="maxCardinality"
-                v-model="maxCardinality"
-                :min="0"
-                class="el-input-wide"
-                @update:model-value="validate" />
-            </el-form-item>
-            <el-form-item v-else prop="minCardinality" required>
-              <el-input-number
-                id="minCardinality"
-                v-model="minCardinality"
-                :min="1"
-                class="el-input-wide"
-                @update:model-value="validate" />
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-    </el-popover>
-
-    <el-popover v-if="showPopAbove" v-model="popAboveVisible" :teleported="false" :class="{ 'is-invalid': !popAboveValid }">
-      <template #reference>
-        <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
-          <span>IS</span>
-          <span v-if="numEvents || maxThreshold">
-            ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
-          </span>
-          <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
-            &amp;
-          </span>
-          <span v-if="threshold || minThreshold">
-            BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}
-          </span>
-        </span>
-
-        <span v-else-if="spikeOrThreshold === 'spike'" class="pop-trigger">
-          <span>SPIKES</span>
-          <span v-if="spikeType === 'up'">
-            UP
-          </span>
-          <span v-if="spikeType === 'down'">
-            DOWN
-          </span>
-          <span v-if="spikeType === 'both'">
-            EITHER DIRECTION
-          </span>
-          {{ spikeHeight }}x
-        </span>
-
-        <span v-else-if="spikeOrThreshold === 'any'" class="pop-trigger">
-          <span>IS NOT EMPTY</span>
-        </span>
-      </template>
-
-      <div v-if="metricAggType === 'count'">
-        <el-row :gutter="10" style="width: 360px">
-          <el-col :span="spikeOrThreshold === 'any' ? 24 : 8">
+        <el-row :gutter="10" style="width: 260px">
+          <el-col :span="10">
             <el-select
-              id="spikeOrThreshold"
-              v-model="spikeOrThreshold"
+              id="cardinalityAboveOrBelow"
+              v-model="cardinalityAboveOrBelow"
               class="el-select-wide"
-              :teleported="false">
-              <el-option key="any" label="Is not empty" value="any" />
-              <el-option key="is" label="Is" value="is" />
-              <el-option key="spike" label="Spikes" value="spike" />
-            </el-select>
-          </el-col>
-
-          <el-col v-if="spikeOrThreshold !== 'any'" :span="8">
-            <el-select
-              v-if="spikeOrThreshold === 'is'"
-              id="aboveOrBelow"
-              v-model="aboveOrBelow"
-              class="el-select-wide"
-              :teleported="false">
+              @update:model-value="updateCardinalityAboveOrBelow">
               <el-option key="above" label="Above" value="above" />
               <el-option key="below" label="Below" value="below" />
             </el-select>
-            <el-select v-else v-model="spikeType" class="el-select-wide">
-              <el-option label="Up" value="up" />
-              <el-option label="Down" value="down" />
-              <el-option label="Both" value="both" />
-            </el-select>
           </el-col>
 
-          <el-col v-if="spikeOrThreshold !== 'any'" :span="8">
-            <el-form ref="spikeOrThreshold" :model="$store.state.config.match">
-              <template v-if="spikeOrThreshold === 'is'">
-                <el-form-item v-if="aboveOrBelow === 'above'" prop="numEvents" required>
-                  <el-input-number
-                    id="numEvents"
-                    v-model="numEvents"
-                    :min="1"
-                    class="el-input-wide"
-                    @update:model-value="validate" />
-                </el-form-item>
-                <el-form-item v-else prop="threshold" required>
-                  <el-input-number
-                    id="threshold"
-                    v-model="threshold"
-                    :min="1"
-                    class="el-input-wide"
-                    @update:model-value="validate" />
-                </el-form-item>
-              </template>
-              <el-form-item v-else prop="spikeHeight" required>
+          <el-col :span="14">
+            <el-form ref="minMaxCardinality" :model="$store.state.config.match">
+              <el-form-item v-if="cardinalityAboveOrBelow === 'above'" prop="maxCardinality" required>
                 <el-input-number
-                  id="spikeHeight"
-                  v-model="spikeHeight"
+                  id="maxCardinality"
+                  v-model="maxCardinality"
+                  :min="0"
+                  class="el-input-wide"
+                  @update:model-value="validate" />
+              </el-form-item>
+              <el-form-item v-else prop="minCardinality" required>
+                <el-input-number
+                  id="minCardinality"
+                  v-model="minCardinality"
+                  :min="1"
                   class="el-input-wide"
                   @update:model-value="validate" />
               </el-form-item>
             </el-form>
           </el-col>
         </el-row>
-      </div>
-
-      <div v-else>
-        <el-form
-          ref="minMaxThreshold"
-          :rules="minMaxThresholdRules"
-          :model="$store.state.config.match"
-          label-width="60px">
-          <el-form-item label="Above" prop="maxThreshold">
-            <el-input-number id="maxThreshold" v-model="maxThreshold" :min="1" @change="validate" />
-          </el-form-item>
-          <el-form-item label="Below" prop="minThreshold">
-            <el-input-number id="minThreshold" v-model="minThreshold" :min="1" @change="validate" />
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-popover>
-
-    <span v-show="showTime">
-      <el-popover
-        v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max'"
-        popper-class="popover-time">
-        <template #reference>
-          <span class="pop-trigger">
-            <span>
-              <span v-if="metricAggType === 'field changes'">
-                WITHIN
-                <span v-if="!useTimeframe">ANY TIMEFRAME</span>
-              </span>
-              <span v-if="metricAggType === 'count' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max'">FOR </span>
-              <span v-if="useTimeframe">THE LAST</span>
-            </span>
-            <ElastalertTimeView
-              v-if="useTimeframe"
-              :time="timeframe" />
-          </span>
-        </template>
-
-        <el-form v-if="metricAggType === 'field changes'" :class="{ 'm-s-lg': useTimeframe }">
-          <el-form-item label="Limit timeframe">
-            <el-switch v-model="useTimeframe" />
-            <label>
-              By default, the change rule type has no maximum time limit between changes.
-              Enable this option to check for a change within a limited time window.
-            </label>
-          </el-form-item>
-        </el-form>
-
-        <div v-if="useTimeframe">
-          <ElastalertTimePicker
-            id="timeframe"
-            :unit="Object.keys(timeframe)[0]"
-            :amount="Object.values(timeframe)[0]"
-            @update:model-value="updateTimeframe" />
-          <label v-if="metricAggType === 'field changes'">
-            The maximum time between changes.
-            After this time period, elastalert will forget the old
-            value of the {{ compareKey }} field.
-          </label>
-        </div>
-      </el-popover>
-
-      <el-popover v-show="showForTheLast">
-        <template #reference>
-          <span class="pop-trigger-pseudo">
-            <span>FOR THE LAST </span>
-            <ElastalertTimeView :time="bufferTime" />
-          </span>
-        </template>
       </el-popover>
     </span>
 
-    <el-popover
-      v-if="showOptions"
-      ref="optionsPop"
-      v-model="popOptionsVisible"
-      :class="{ 'is-invalid': !popOptionsValid }"
-      popper-class="popover-options">
-      <template #reference>
-        <span class="pop-trigger">
-          <span>WITH OPTIONS</span>
-        </span>
-      </template>
+    <span v-if="showPopAbove">
+      <el-popover v-model="popAboveVisible" :teleported="false" :class="{ 'is-invalid': !popAboveValid }">
+        <template #reference>
+          <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
+            <span>IS</span>
+            <span v-if="numEvents || maxThreshold">
+              ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
+            </span>
+            <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
+              &amp;
+            </span>
+            <span v-if="threshold || minThreshold">
+              BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}
+            </span>
+          </span>
 
-      <div v-if="metricAggType === 'field not in list' || metricAggType === 'field changes'">
-        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
-        <el-form
-          ref="form"
-          :model="$store.state.config.match"
-          label-position="top"
-          @submit.prevent>
-          <el-form-item label="Ignore null">
-            <el-switch v-model="ignoreNull" />
-            <label>If set, events without the selected field will not match.</label>
-          </el-form-item>
-        </el-form>
-      </div>
+          <span v-else-if="spikeOrThreshold === 'spike'" class="pop-trigger">
+            <span>SPIKES</span>
+            <span v-if="spikeType === 'up'">
+              UP
+            </span>
+            <span v-if="spikeType === 'down'">
+              DOWN
+            </span>
+            <span v-if="spikeType === 'both'">
+              EITHER DIRECTION
+            </span>
+            {{ spikeHeight }}x
+          </span>
 
-      <div v-if="metricAggType === 'new term'">
-        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
-        <el-form
-          ref="form"
-          :model="$store.state.config.match"
-          label-position="top"
-          @submit.prevent>
-          <el-form-item label="Terms window">
-            <ElastalertTimePicker
-              id="termsWindowSize"
-              :unit="Object.keys(termsWindowSize)[0]"
-              :amount="Object.values(termsWindowSize)[0]"
-              @update:model-value="updateTermsWindowSize" />
-            <label>
-              The amount of time used for the initial query to find existing terms.
-              No term that has occurred within this time frame will trigger an alert.
-              The default is 30 days.
-            </label>
-          </el-form-item>
+          <span v-else-if="spikeOrThreshold === 'any'" class="pop-trigger">
+            <span>IS NOT EMPTY</span>
+          </span>
+        </template>
 
-          <el-form-item label="Window step">
-            <ElastalertTimePicker
-              id="windowStepSize"
-              :unit="Object.keys(windowStepSize)[0]"
-              :amount="Object.values(windowStepSize)[0]"
-              @update:model-value="updateWindowStepSize" />
-            <label>
-              When querying for existing terms, split up the time range into steps of this size.
-              For example, using the default 30 day window size, and the default 1 day step size,
-              30 invidivdual queries will be made.
-              This helps to avoid timeouts for very expensive aggregation queries.
-              The default is 1 day.
-            </label>
-          </el-form-item>
+        <div v-if="metricAggType === 'count'">
+          <el-row :gutter="10" style="width: 360px">
+            <el-col :span="spikeOrThreshold === 'any' ? 24 : 8">
+              <el-select
+                id="spikeOrThreshold"
+                v-model="spikeOrThreshold"
+                class="el-select-wide"
+                :teleported="false">
+                <el-option key="any" label="Is not empty" value="any" />
+                <el-option key="is" label="Is" value="is" />
+                <el-option key="spike" label="Spikes" value="spike" />
+              </el-select>
+            </el-col>
 
-          <el-form-item label="Alert on missing field">
-            <el-switch v-model="alertOnMissingField" />
-            <label>Whether or not to alert when a field is missing from a document.</label>
-          </el-form-item>
-        </el-form>
-      </div>
+            <el-col v-if="spikeOrThreshold !== 'any'" :span="8">
+              <el-select
+                v-if="spikeOrThreshold === 'is'"
+                id="aboveOrBelow"
+                v-model="aboveOrBelow"
+                class="el-select-wide"
+                :teleported="false">
+                <el-option key="above" label="Above" value="above" />
+                <el-option key="below" label="Below" value="below" />
+              </el-select>
+              <el-select v-else v-model="spikeType" class="el-select-wide">
+                <el-option label="Up" value="up" />
+                <el-option label="Down" value="down" />
+                <el-option label="Both" value="both" />
+              </el-select>
+            </el-col>
 
-      <div v-if="type === 'frequency' || type === 'flatline' || type === 'spike' || type === 'new_term'">
-        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
-        <el-form
-          ref="freqFlatlineOptions"
-          :model="$store.state.config.match"
-          label-position="top"
-          @submit.prevent>
-          <template v-if="type !== 'new_term'">
-            <el-form-item label="Use count query">
-              <el-switch
-                id="useCountQuery"
-                v-model="useCountQuery"
-                :disabled="useTermsQuery"
-                @update:model-value="refreshOptionsPop" />
-              <label>
-                If true, ElastAlert 2 will poll Elasticsearch using the count api,
-                and not download all of the matching documents.
-                This is useful is you care only about numbers and not the actual data.
-                It should also be used if you expect a large number of query hits, in the order of
-                tens of thousands or more.
-              </label>
+            <el-col v-if="spikeOrThreshold !== 'any'" :span="8">
+              <el-form ref="spikeOrThreshold" :model="$store.state.config.match">
+                <template v-if="spikeOrThreshold === 'is'">
+                  <el-form-item v-if="aboveOrBelow === 'above'" prop="numEvents" required>
+                    <el-input-number
+                      id="numEvents"
+                      v-model="numEvents"
+                      :min="1"
+                      class="el-input-wide"
+                      @update:model-value="validate" />
+                  </el-form-item>
+                  <el-form-item v-else prop="threshold" required>
+                    <el-input-number
+                      id="threshold"
+                      v-model="threshold"
+                      :min="1"
+                      class="el-input-wide"
+                      @update:model-value="validate" />
+                  </el-form-item>
+                </template>
+                <el-form-item v-else prop="spikeHeight" required>
+                  <el-input-number
+                    id="spikeHeight"
+                    v-model="spikeHeight"
+                    class="el-input-wide"
+                    @update:model-value="validate" />
+                </el-form-item>
+              </el-form>
+            </el-col>
+          </el-row>
+        </div>
+
+        <div v-else>
+          <el-form
+            ref="minMaxThreshold"
+            :rules="minMaxThresholdRules"
+            :model="$store.state.config.match"
+            label-width="60px">
+            <el-form-item label="Above" prop="maxThreshold">
+              <el-input-number id="maxThreshold" v-model="maxThreshold" :min="1" @change="validate" />
             </el-form-item>
+            <el-form-item label="Below" prop="minThreshold">
+              <el-input-number id="minThreshold" v-model="minThreshold" :min="1" @change="validate" />
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-popover>
+    </span>
+
+    <span v-show="showTime">
+      <span v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max'">
+        <el-popover
+          popper-class="popover-time">
+          <template #reference>
+            <span class="pop-trigger">
+              <span>
+                <span v-if="metricAggType === 'field changes'">
+                  WITHIN
+                  <span v-if="!useTimeframe">ANY TIMEFRAME</span>
+                </span>
+                <span v-if="metricAggType === 'count' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max'">FOR </span>
+                <span v-if="useTimeframe">THE LAST</span>
+              </span>
+              <ElastalertTimeView
+                v-if="useTimeframe"
+                :time="timeframe" />
+            </span>
           </template>
 
-          <el-form-item v-if="type !== 'spike'" :class="{ 'm-n-sm': type === 'new_term' }" label="Use terms query">
-            <el-switch v-model="useTermsQuery" :disabled="useCountQuery" @update:model-value="refreshOptionsPop" />
-            <label v-if="type === 'new_term'">
-              If true, ElastAlert 2 will use aggregation queries to get terms instead of regular search queries.
-              This is faster than regular searching if there is a large number of documents.
-              <span v-if="useTermsQuery">
-                When using use_terms_query, make sure that the field you are using is not analyzed.
-                If it is, the results of each terms query may return tokens rather than full values.
-                ElastAlert 2 will by default turn on use_keyword_postfix, which attempts to use the non-analyzed version
-                (.keyword or .raw) to gather initial terms. These will not match the partial values and result
-                in false positives.
-              </span>
-            </label>
-            <label v-else>
-              If true, ElastAlert 2 will make an aggregation query against Elasticsearch
-              to get counts of documents matching each unique value of "query key". This
-              must be used with "query key" and "doc type". This will only return a maximum
-              of "terms size", default 50, unique terms.
-            </label>
-          </el-form-item>
+          <el-form v-if="metricAggType === 'field changes'" :class="{ 'm-s-lg': useTimeframe }">
+            <el-form-item label="Limit timeframe">
+              <el-switch v-model="useTimeframe" />
+              <label>
+                By default, the change rule type has no maximum time limit between changes.
+                Enable this option to check for a change within a limited time window.
+              </label>
+            </el-form-item>
+          </el-form>
 
-          <el-form-item
-            v-if="useCountQuery || useTermsQuery"
-            label="Doc type"
-            prop="docType"
-            required>
-            <el-select
-              id="docType"
-              v-model="docType"
-              filterable
-              clearable
-              allow-create
-              placeholder=""
-              @change="validateFreqFlatlineOptions">
-              <el-option v-for="type2 in types" :key="type2" :label="type2" :value="type2" />
-            </el-select>
-            <label>
-              Specify the _type of document to search for.
-              This must be present if "use count query" or "use terms query" is set.
+          <span v-if="useTimeframe">
+            <ElastalertTimePicker
+              id="timeframe"
+              :unit="Object.keys(timeframe)[0]"
+              :amount="Object.values(timeframe)[0]"
+              @update:model-value="updateTimeframe" />
+            <label v-if="metricAggType === 'field changes'">
+              The maximum time between changes.
+              After this time period, elastalert will forget the old
+              value of the {{ compareKey }} field.
             </label>
-          </el-form-item>
+          </span>
+        </el-popover>
+      </span>
 
-          <el-form-item v-if="useTermsQuery" label="Terms size">
-            <el-input-number v-model="termsSize" />
-            <label v-if="type === 'new_term'">
-              This means that if a new term appears but there are at least this many terms which
-              appear more frequently, it will not be found. Default is 50.
-            </label>
-            <label v-else>
-              When used with "use terms query", this is the maximum number of terms returned
-              per query. Default is 50.
-            </label>
-          </el-form-item>
+      <span v-show="showForTheLast">
+        <el-popover>
+          <template #reference>
+            <span class="pop-trigger-pseudo">
+              <span>FOR THE LAST </span>
+              <ElastalertTimeView :time="bufferTime" />
+            </span>
+          </template>
+        </el-popover>
+      </span>
+    </span>
 
-          <el-form-item label="Use keyword postfix">
-            <el-switch id="useKeywordPostfix" v-model="useKeywordPostfix" />
-            <label>
-              If true, ElastAlert 2 will automatically try to add .keyword (ES5+) or
-              .raw to the fields when making an initial query.
-              These are non-analyzed fields added by Logstash.
-              If the field used is analyzed, the initial query will return only the tokenized values,
-              potentially causing false positives. Defaults to true.
-            </label>
-          </el-form-item>
-        </el-form>
-      </div>
+    <span v-if="showOptions">
+      <el-popover
+        ref="optionsPop"
+        v-model="popOptionsVisible"
+        :class="{ 'is-invalid': !popOptionsValid }"
+        popper-class="popover-options">
+        <template #reference>
+          <span class="pop-trigger">
+            <span>WITH OPTIONS</span>
+          </span>
+        </template>
 
-      <div v-if="type === 'spike'">
-        <!-- native modifier has been removed, please confirm whether the function has been affected  -->
-        <el-form
-          :model="$store.state.config.match"
-          label-position="top"
-          class="m-n-lg"
-          @submit.prevent>
-          <el-form-item label="Threshold (reference)" prop="thresholdRef">
-            <el-input-number v-model="thresholdRef" />
-            <label>
-              The minimum number of events that must exist in the
-              reference window for an alert to trigger.
-              For example, if "spike height" is 3 and "threshold reference" is 10,
-              then the ‘reference’ window must contain
-              at least 10 events and the ‘current’ window at least
-              30 events for an alert to be triggered.
-            </label>
-          </el-form-item>
+        <div v-if="metricAggType === 'field not in list' || metricAggType === 'field changes'">
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+          <el-form
+            ref="form"
+            :model="$store.state.config.match"
+            label-position="top"
+            @submit.prevent>
+            <el-form-item label="Ignore null">
+              <el-switch v-model="ignoreNull" />
+              <label>If set, events without the selected field will not match.</label>
+            </el-form-item>
+          </el-form>
+        </div>
 
-          <el-form-item label="Threshold (current)" prop="thresholdCur">
-            <el-input-number v-model="thresholdCur" />
-            <label>
-              The minimum number of events that must exist in the current
-              window for an alert to trigger.
-              For example, if 'spike height' is 3 and 'threshold current' is 60, then an alert
-              will occur if the current window has more than 60 events and the reference
-              window has less than 20.
-            </label>
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-popover>
+        <div v-if="metricAggType === 'new term'">
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+          <el-form
+            ref="form"
+            :model="$store.state.config.match"
+            label-position="top"
+            @submit.prevent>
+            <el-form-item label="Terms window">
+              <ElastalertTimePicker
+                id="termsWindowSize"
+                :unit="Object.keys(termsWindowSize)[0]"
+                :amount="Object.values(termsWindowSize)[0]"
+                @update:model-value="updateTermsWindowSize" />
+              <label>
+                The amount of time used for the initial query to find existing terms.
+                No term that has occurred within this time frame will trigger an alert.
+                The default is 30 days.
+              </label>
+            </el-form-item>
+
+            <el-form-item label="Window step">
+              <ElastalertTimePicker
+                id="windowStepSize"
+                :unit="Object.keys(windowStepSize)[0]"
+                :amount="Object.values(windowStepSize)[0]"
+                @update:model-value="updateWindowStepSize" />
+              <label>
+                When querying for existing terms, split up the time range into steps of this size.
+                For example, using the default 30 day window size, and the default 1 day step size,
+                30 invidivdual queries will be made.
+                This helps to avoid timeouts for very expensive aggregation queries.
+                The default is 1 day.
+              </label>
+            </el-form-item>
+
+            <el-form-item label="Alert on missing field">
+              <el-switch v-model="alertOnMissingField" />
+              <label>Whether or not to alert when a field is missing from a document.</label>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <div v-if="type === 'frequency' || type === 'flatline' || type === 'spike' || type === 'new_term'">
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+          <el-form
+            ref="freqFlatlineOptions"
+            :model="$store.state.config.match"
+            label-position="top"
+            @submit.prevent>
+            <template v-if="type !== 'new_term'">
+              <el-form-item label="Use count query">
+                <el-switch
+                  id="useCountQuery"
+                  v-model="useCountQuery"
+                  :disabled="useTermsQuery"
+                  @update:model-value="refreshOptionsPop" />
+                <label>
+                  If true, ElastAlert 2 will poll Elasticsearch using the count api,
+                  and not download all of the matching documents.
+                  This is useful is you care only about numbers and not the actual data.
+                  It should also be used if you expect a large number of query hits, in the order of
+                  tens of thousands or more.
+                </label>
+              </el-form-item>
+            </template>
+
+            <el-form-item v-if="type !== 'spike'" :class="{ 'm-n-sm': type === 'new_term' }" label="Use terms query">
+              <el-switch v-model="useTermsQuery" :disabled="useCountQuery" @update:model-value="refreshOptionsPop" />
+              <label v-if="type === 'new_term'">
+                If true, ElastAlert 2 will use aggregation queries to get terms instead of regular search queries.
+                This is faster than regular searching if there is a large number of documents.
+                <span v-if="useTermsQuery">
+                  When using use_terms_query, make sure that the field you are using is not analyzed.
+                  If it is, the results of each terms query may return tokens rather than full values.
+                  ElastAlert 2 will by default turn on use_keyword_postfix, which attempts to use the non-analyzed version
+                  (.keyword or .raw) to gather initial terms. These will not match the partial values and result
+                  in false positives.
+                </span>
+              </label>
+              <label v-else>
+                If true, ElastAlert 2 will make an aggregation query against Elasticsearch
+                to get counts of documents matching each unique value of "query key". This
+                must be used with "query key" and "doc type". This will only return a maximum
+                of "terms size", default 50, unique terms.
+              </label>
+            </el-form-item>
+
+            <el-form-item
+              v-if="useCountQuery || useTermsQuery"
+              label="Doc type"
+              prop="docType"
+              required>
+              <el-select
+                id="docType"
+                v-model="docType"
+                filterable
+                clearable
+                allow-create
+                placeholder=""
+                @change="validateFreqFlatlineOptions">
+                <el-option v-for="type2 in types" :key="type2" :label="type2" :value="type2" />
+              </el-select>
+              <label>
+                Specify the _type of document to search for.
+                This must be present if "use count query" or "use terms query" is set.
+              </label>
+            </el-form-item>
+
+            <el-form-item v-if="useTermsQuery" label="Terms size">
+              <el-input-number v-model="termsSize" />
+              <label v-if="type === 'new_term'">
+                This means that if a new term appears but there are at least this many terms which
+                appear more frequently, it will not be found. Default is 50.
+              </label>
+              <label v-else>
+                When used with "use terms query", this is the maximum number of terms returned
+                per query. Default is 50.
+              </label>
+            </el-form-item>
+
+            <el-form-item label="Use keyword postfix">
+              <el-switch id="useKeywordPostfix" v-model="useKeywordPostfix" />
+              <label>
+                If true, ElastAlert 2 will automatically try to add .keyword (ES5+) or
+                .raw to the fields when making an initial query.
+                These are non-analyzed fields added by Logstash.
+                If the field used is analyzed, the initial query will return only the tokenized values,
+                potentially causing false positives. Defaults to true.
+              </label>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <div v-if="type === 'spike'">
+          <!-- native modifier has been removed, please confirm whether the function has been affected  -->
+          <el-form
+            :model="$store.state.config.match"
+            label-position="top"
+            class="m-n-lg"
+            @submit.prevent>
+            <el-form-item label="Threshold (reference)" prop="thresholdRef">
+              <el-input-number v-model="thresholdRef" />
+              <label>
+                The minimum number of events that must exist in the
+                reference window for an alert to trigger.
+                For example, if "spike height" is 3 and "threshold reference" is 10,
+                then the ‘reference’ window must contain
+                at least 10 events and the ‘current’ window at least
+                30 events for an alert to be triggered.
+              </label>
+            </el-form-item>
+
+            <el-form-item label="Threshold (current)" prop="thresholdCur">
+              <el-input-number v-model="thresholdCur" />
+              <label>
+                The minimum number of events that must exist in the current
+                window for an alert to trigger.
+                For example, if 'spike height' is 3 and 'threshold current' is 60, then an alert
+                will occur if the current window has more than 60 events and the reference
+                window has less than 20.
+              </label>
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-popover>
+    </span>
 
     <el-alert
       v-if="bigBuckets && !useCountQuery && metricAggType === 'count' && spikeOrThreshold !== 'any'"
