@@ -290,7 +290,7 @@ export default {
   props: ['id'],
   data() {
     return {
-      activeTab:'overview',
+      activeTab: 'overview',
       loaded: false,
       silencePopoverVisible: false,
       now: new Date(),
