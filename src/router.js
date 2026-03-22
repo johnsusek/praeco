@@ -45,7 +45,7 @@ const router = createRouter({
       component: Rules
     },
     {
-      path: '/folders/:type/:path*',
+      path: '/folders/:type/:path(.*)',
       name: 'folder',
       component: Folder,
       props: route => ({ ...route.params, ...route.query })
