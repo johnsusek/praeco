@@ -13,35 +13,19 @@
 </template>
 
 <script>
+import { useConfigAlertDatadog } from '@/composables/useConfigAlertDatadog';
 
 export default {
-  props: ['viewOnly'],
-
-  computed: {
-    datadogApiKey: {
-      get() {
-        return this.$store.state.config.alert.datadogApiKey;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DATADOG_API_KEY', value);
-      }
-    },
-
-    datadogAppKey: {
-      get() {
-        return this.$store.state.config.alert.datadogAppKey;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DATADOG_APP_KEY', value);
-      }
-    }
+  props: {
+    viewOnly: Boolean
   },
 
-  methods: {
+  setup() {
+    const datadog = useConfigAlertDatadog();
+
+    return {
+      ...datadog
+    };
   }
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>

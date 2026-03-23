@@ -8,18 +8,19 @@
 </template>
 
 <script>
-export default {
-  props: ['viewOnly'],
+import { useConfigAlertLark } from '@/composables/useConfigAlertLark';
 
-  computed: {
-    larkBotId: {
-      get() {
-        return this.$store.state.config.alert.larkBotId;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_LARK_BOT_ID', value);
-      }
-    }
+export default {
+  props: {
+    viewOnly: Boolean
+  },
+
+  setup() {
+    const lark = useConfigAlertLark();
+
+    return {
+      ...lark
+    };
   }
 };
 </script>

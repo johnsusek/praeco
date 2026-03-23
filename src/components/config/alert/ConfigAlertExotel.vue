@@ -28,72 +28,19 @@
 </template>
 
 <script>
+import { useConfigAlertExotel } from '@/composables/useConfigAlertExotel';
+
 export default {
-  props: ['viewOnly'],
-
-  computed: {
-    exotelAccountSid: {
-      get() {
-        return this.$store.state.config.alert.exotelAccountSid;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_EXOTEL_ACCOUNT_SID',
-          value
-        );
-      }
-    },
-
-    exotelAuthToken: {
-      get() {
-        return this.$store.state.config.alert.exotelAuthToken;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_EXOTEL_AUTH_TOKEN',
-          value
-        );
-      }
-    },
-
-    exotelToNumber: {
-      get() {
-        return this.$store.state.config.alert.exotelToNumber;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_EXOTEL_TO_NUMBER',
-          value
-        );
-      }
-    },
-
-    exotelFromNumber: {
-      get() {
-        return this.$store.state.config.alert.exotelFromNumber;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_EXOTEL_FROM_NUMBER',
-          value
-        );
-      }
-    },
-
-    exotelMessageBody: {
-      get() {
-        return this.$store.state.config.alert.exotelMessageBody;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_EXOTEL_MESSAGE_BODY',
-          value
-        );
-      }
-    }
+  props: {
+    viewOnly: Boolean
   },
 
-  methods: {
+  setup() {
+    const exotel = useConfigAlertExotel();
+
+    return {
+      ...exotel
+    };
   }
 };
 </script>
