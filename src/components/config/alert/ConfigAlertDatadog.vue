@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { useConfigAlertDatadog } from '@/composables/useConfigAlertDatadog';
+import { useConfigAlertDatadog } from '@/composables/config/alert/useConfigAlertDatadog';
 
 export default {
   props: {

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { useConfigAlertExotel } from '@/composables/useConfigAlertExotel';
+import { useConfigAlertExotel } from '@/composables/config/alert/useConfigAlertExotel';
 
 export default {
   props: {

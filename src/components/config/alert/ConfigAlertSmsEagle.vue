@@ -190,7 +190,7 @@
 </template>
 
 <script>
-import { useConfigAlertSmsEagle } from '@/composables/useConfigAlertSmsEagle';
+import { useConfigAlertSmsEagle } from '@/composables/config/alert/useConfigAlertSmsEagle';
 
 export default {
   props: ['viewOnly'],

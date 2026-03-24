@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { useConfigAlertLark } from '@/composables/useConfigAlertLark';
+import { useConfigAlertLark } from '@/composables/config/alert/useConfigAlertLark';
 
 export default {
   props: {
