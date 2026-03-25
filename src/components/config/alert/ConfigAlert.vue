@@ -220,6 +220,9 @@
         <el-checkbox id="destinationsmseagle" label="smseagle" border>
           SMSEagle
         </el-checkbox>
+        <el-checkbox id="destindestinationsqs" label="sqs" border>
+          AWS SQS
+        </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
 
@@ -248,6 +251,7 @@
           || alert.includes('rocketchat')
           || alert.includes('servicenow')
           || alert.includes('ses')
+          || alert.includes('sqs')
           || alert.includes('slack')
           || alert.includes('smseagle')
           || alert.includes('sns')
@@ -596,6 +600,14 @@
         </template>
         <ConfigAlertSmsEagle ref="smseagle" :view-only="viewOnly" />
       </el-tab-pane>
+
+      <!-- AmazonSQS -->
+      <el-tab-pane v-if="alert.includes('sqs')">
+        <template #label>
+          AWS SQS
+        </template>
+        <ConfigAlertAmazonSqs ref="sqs" :view-only="viewOnly" />
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
@@ -608,6 +620,7 @@ import ConfigAlertAlerta from './ConfigAlertAlerta.vue';
 import ConfigAlertAlertmanager from './ConfigAlertAlertmanager.vue';
 import ConfigAlertAmazonSes from './ConfigAlertAmazonSes.vue';
 import ConfigAlertAmazonSns from './ConfigAlertAmazonSns.vue';
+import ConfigAlertAmazonSqs from './ConfigAlertAmazonSqs.vue';
 import ConfigAlertChatwork from './ConfigAlertChatwork.vue';
 import ConfigAlertCommand from './ConfigAlertCommand.vue';
 import ConfigAlertDingtalk from './ConfigAlertDingtalk.vue';
@@ -733,6 +746,7 @@ export default {
     ConfigAlertAlertmanager,
     ConfigAlertAmazonSes,
     ConfigAlertAmazonSns,
+    ConfigAlertAmazonSqs,
     ConfigAlertChatwork,
     ConfigAlertCommand,
     ConfigAlertDingtalk,

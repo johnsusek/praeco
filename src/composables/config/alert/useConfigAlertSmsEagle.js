@@ -4,11 +4,36 @@ export function useConfigAlertSmsEagle(emit) {
   const { proxy } = getCurrentInstance();
 
   // ===== state =====
+  const popSmseagleToVisible = ref(false);
   const popSmseagleToValid = ref(true);
+
+  const popSmseagleContactsVisible = ref(false);
   const popSmseagleContactsValid = ref(true);
+
+  const popSmseagleGroupsVisible = ref(false);
   const popSmseagleGroupsValid = ref(true);
 
   // ===== computed (Vuex) =====
+  const smseagleUrl = computed({
+    get: () => proxy.$store.state.config.alert.smseagleUrl,
+    set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_URL', v)
+  });
+
+  const smseagleToken = computed({
+    get: () => proxy.$store.state.config.alert.smseagleToken,
+    set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_TOKEN', v)
+  });
+
+  const smseagleMessageType = computed({
+    get: () => proxy.$store.state.config.alert.smseagleMessageType,
+    set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_MESSAGE_TYPE', v)
+  });
+
+  const smseagleText = computed({
+    get: () => proxy.$store.state.config.alert.smseagleText,
+    set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_TEXT', v)
+  });
+
   const smseagleTo = computed({
     get: () => proxy.$store.state.config.alert.smseagleTo,
     set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_TO', v)
@@ -24,7 +49,17 @@ export function useConfigAlertSmsEagle(emit) {
     set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_GROUPS', v)
   });
 
-  // ===== validate =====
+  const smseagleDuration = computed({
+    get: () => proxy.$store.state.config.alert.smseagleDuration,
+    set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_DURATION', v)
+  });
+
+  const smseagleVoiceId = computed({
+    get: () => proxy.$store.state.config.alert.smseagleVoiceId,
+    set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_VOICE_ID', v)
+  });
+
+  // ===== methods =====
   const validate = async () => {
     try {
       if (proxy.$refs.smseagleTo) {
@@ -36,10 +71,10 @@ export function useConfigAlertSmsEagle(emit) {
       if (proxy.$refs.smseagleGroups) {
         await validateSmseagleGroups();
       }
-      emit && emit('validate', true);
+      emit('validate', true);
       return true;
     } catch {
-      emit && emit('validate', false);
+      emit('validate', false);
       return false;
     }
   };
@@ -57,33 +92,6 @@ export function useConfigAlertSmsEagle(emit) {
     }
   };
 
-  const validateSmseagleContacts = async () => {
-    if (!smseagleContacts.value.length) {
-      popSmseagleContactsValid.value = false;
-      return;
-    }
-    try {
-      popSmseagleContactsValid.value = await proxy.$refs.smseagleContacts.validate();
-    } catch {
-      popSmseagleContactsValid.value = false;
-      throw new Error();
-    }
-  };
-
-  const validateSmseagleGroups = async () => {
-    if (!smseagleGroups.value.length) {
-      popSmseagleGroupsValid.value = false;
-      return;
-    }
-    try {
-      popSmseagleGroupsValid.value = await proxy.$refs.smseagleGroups.validate();
-    } catch {
-      popSmseagleGroupsValid.value = false;
-      throw new Error();
-    }
-  };
-
-  // ===== CRUD =====
   const updateSmseagleTo = (entry, index) => {
     if (Number.isNaN(entry)) return;
     proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_TO_ENTRY', { entry, index });
@@ -100,20 +108,96 @@ export function useConfigAlertSmsEagle(emit) {
     nextTick(validate);
   };
 
-  // ===== return =====
+  // --- Contacts ---
+  const validateSmseagleContacts = async () => {
+    if (!smseagleContacts.value.length) {
+      popSmseagleContactsValid.value = false;
+      return;
+    }
+    try {
+      popSmseagleContactsValid.value = await proxy.$refs.smseagleContacts.validate();
+    } catch {
+      popSmseagleContactsValid.value = false;
+      throw new Error();
+    }
+  };
+
+  const updateSmseagleContacts = (entry, index) => {
+    if (Number.isNaN(entry)) return;
+    proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_CONTACTS_ENTRY', { entry, index });
+    nextTick(validate);
+  };
+
+  const removeSmseagleContactsEntry = (entry) => {
+    proxy.$store.commit('config/alert/REMOVE_SMSEAGLE_CONTACTS_ENTRY', entry);
+    nextTick(validate);
+  };
+
+  const addSmseagleContactsEntry = () => {
+    proxy.$store.commit('config/alert/ADD_SMSEAGLE_CONTACTS_ENTRY');
+    nextTick(validate);
+  };
+
+  // --- Groups ---
+  const validateSmseagleGroups = async () => {
+    if (!smseagleGroups.value.length) {
+      popSmseagleGroupsValid.value = false;
+      return;
+    }
+    try {
+      popSmseagleGroupsValid.value = await proxy.$refs.smseagleGroups.validate();
+    } catch {
+      popSmseagleGroupsValid.value = false;
+      throw new Error();
+    }
+  };
+
+  const updateSmseagleGroups = (entry, index) => {
+    if (Number.isNaN(entry)) return;
+    proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_GROUPS_ENTRY', { entry, index });
+    nextTick(validate);
+  };
+
+  const removeSmseagleGroupsEntry = (entry) => {
+    proxy.$store.commit('config/alert/REMOVE_SMSEAGLE_GROUPS_ENTRY', entry);
+    nextTick(validate);
+  };
+
+  const addSmseagleGroupsEntry = () => {
+    proxy.$store.commit('config/alert/ADD_SMSEAGLE_GROUPS_ENTRY');
+    nextTick(validate);
+  };
+
   return {
+    // state
+    popSmseagleToVisible,
+    popSmseagleToValid,
+    popSmseagleContactsVisible,
+    popSmseagleContactsValid,
+    popSmseagleGroupsVisible,
+    popSmseagleGroupsValid,
+
+    // computed
+    smseagleUrl,
+    smseagleToken,
+    smseagleMessageType,
+    smseagleText,
     smseagleTo,
     smseagleContacts,
     smseagleGroups,
+    smseagleDuration,
+    smseagleVoiceId,
 
-    popSmseagleToValid,
-    popSmseagleContactsValid,
-    popSmseagleGroupsValid,
-
+    // methods
     validate,
-
     updateSmseagleTo,
     removeSmseagleToEntry,
-    addSmseagleToEntry
+    addSmseagleToEntry,
+    updateSmseagleContacts,
+    removeSmseagleContactsEntry,
+    addSmseagleContactsEntry,
+    updateSmseagleGroups,
+    removeSmseagleGroupsEntry,
+    addSmseagleGroupsEntry
   };
 }
