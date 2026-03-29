@@ -32,36 +32,42 @@
 </template>
 
 <script>
+import { useStore } from '@/composables/useStore';
+import { computed, onMounted } from 'vue';
 import UpdateIndicator from '@/components/UpdateIndicator.vue';
 
 export default {
   components: {
     UpdateIndicator
   },
+  setup() {
+    const store = useStore();
 
-  computed: {
-    sidebarWidth: {
+    const sidebarWidth = computed({
       get() {
-        return this.$store.state.ui.sidebarWidth;
+        return store.state.ui.sidebarWidth;
       },
       set(value) {
-        this.$store.commit('ui/UPDATE_SIDEBAR_WIDTH', value);
+        store.commit('ui/UPDATE_SIDEBAR_WIDTH', value);
       }
-    }
-  },
+    });
 
-  mounted() {
-    this.$store.dispatch('server/fetchVersion');
-    this.$store.dispatch('server/fetchStatus');
-    this.$store.dispatch('elastalert/fetchConfig');
-  },
-
-  methods: {
-    onDragEnd(size) {
-      this.sidebarWidth = size;
+    function onDragEnd(size) {
+      sidebarWidth.value = size;
     }
+
+    onMounted(() => {
+      store.dispatch('server/fetchVersion');
+      store.dispatch('server/fetchStatus');
+      store.dispatch('elastalert/fetchConfig');
+    });
+
+    return {
+      sidebarWidth,
+      onDragEnd
+    };
   }
-};
+}
 </script>
 
 <style lang="scss">
