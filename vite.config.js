@@ -58,7 +58,7 @@ export default defineConfig({
           'charts': ['echarts', 'vue-echarts', 'zrender'],
           // Utilities and other dependencies
           'utils': [
-            'axios', 'lodash.clonedeep', 'lodash.get', 'lodash.throttle',
+            'axios', 'lodash.clonedeep', 'lodash.get',
             'dayjs', 'js-yaml', 'validator', 'semver', 'change-case'
           ],
           // Editor and syntax highlighting
@@ -67,7 +67,6 @@ export default defineConfig({
           'icons': [
             '@fortawesome/fontawesome-svg-core',
             '@fortawesome/free-solid-svg-icons',
-            '@fortawesome/free-regular-svg-icons',
             '@fortawesome/free-brands-svg-icons',
             '@fortawesome/vue-fontawesome'
           ]
