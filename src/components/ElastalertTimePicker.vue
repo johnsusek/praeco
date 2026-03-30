@@ -12,42 +12,31 @@
   </span>
 </template>
 
-<script>
-export default {
-  props: ['unit', 'amount', 'allowZero'],
-  emits: ['input'],
+<script setup>
+import { useElastalertTimePicker } from '@/composables/useElastalertTimePicker';
 
-  data() {
-    return {
-      currentUnit: 'minutes',
-      currentAmount: 888
-    };
+const props = defineProps({
+  unit: {
+    type: String,
+    default: 'minutes',
   },
-
-  mounted() {
-    this.currentUnit = this.unit;
-    this.currentAmount = this.amount;
+  amount: {
+    type: Number,
+    default: 888,
   },
+  allowZero: {
+    type: Boolean,
+    default: false,
+  },
+  value: {
+    type: Object,
+    default: () => ({ unit: 'minutes', amount: 888 }),
+  },
+});
 
-  methods: {
-    plural() {
-      if (this.currentAmount !== 1) return 's';
-      return '';
-    },
+const emit = defineEmits(['update:value']);
 
-    emitNumKeyup(ev) {
-      if (ev.target) {
-        this.currentAmount = parseInt(ev.target.value);
-      }
-    },
-
-    emitValue() {
-      if (this.currentUnit && this.currentAmount !== undefined) {
-        this.$emit('input', { [this.currentUnit]: parseInt(this.currentAmount) });
-      }
-    }
-  }
-};
+const { currentUnit, currentAmount, plural, emitNumKeyup, emitValue } = useElastalertTimePicker(props, emit);
 </script>
 
 <style scoped>

@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@fortawesome/vue-fontawesome": "2.0.10",
     "@riophae/vue-treeselect": "0.4.0",
+    "@vitejs/plugin-vue2": "^2.3.4",
     "@vue-js-cron/light": "^1.1.0",
     "@vueuse/core": "^11.3.0",
     "@vueuse/shared": "^11.3.0",
@@ -78,8 +79,7 @@
     "localstorage-polyfill": "1.0.1",
     "mutationobserver-simple-polyfill": "0.0.2",
     "sass": "^1.98.0",
-    "vite": "^4.5.14",
-    "vite-plugin-vue2": "^2.0.3",
+    "vite": "^6.3.5",
     "vitest": "^3.2.4",
     "vue-eslint-parser": "^10.4.0",
     "vue-template-compiler": "^2.7.16"

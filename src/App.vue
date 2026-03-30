@@ -31,43 +31,33 @@
   </div>
 </template>
 
-<script>
-import { useStore } from '@/composables/useStore';
+<script setup>
 import { computed, onMounted } from 'vue';
+import { useStore } from '@/composables/useStore';
 import UpdateIndicator from '@/components/UpdateIndicator.vue';
 
-export default {
-  components: {
-    UpdateIndicator
-  },
-  setup() {
-    const store = useStore();
+// store
+const store = useStore();
 
-    const sidebarWidth = computed({
-      get() {
-        return store.state.ui.sidebarWidth;
-      },
-      set(value) {
-        store.commit('ui/UPDATE_SIDEBAR_WIDTH', value);
-      }
-    });
-
-    function onDragEnd(size) {
-      sidebarWidth.value = size;
-    }
-
-    onMounted(() => {
-      store.dispatch('server/fetchVersion');
-      store.dispatch('server/fetchStatus');
-      store.dispatch('elastalert/fetchConfig');
-    });
-
-    return {
-      sidebarWidth,
-      onDragEnd
-    };
+// computed（getter / setter）
+const sidebarWidth = computed({
+  get: () => store.state.ui.sidebarWidth,
+  set: (value) => {
+    store.commit('ui/UPDATE_SIDEBAR_WIDTH', value);
   }
-}
+});
+
+// methods
+const onDragEnd = (size) => {
+  sidebarWidth.value = size;
+};
+
+// lifecycle
+onMounted(() => {
+  store.dispatch('server/fetchVersion');
+  store.dispatch('server/fetchStatus');
+  store.dispatch('elastalert/fetchConfig');
+});
 </script>
 
 <style lang="scss">

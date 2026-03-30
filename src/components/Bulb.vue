@@ -7,10 +7,18 @@
   </span>
 </template>
 
-<script>
-export default {
-  props: ['success', 'warning', 'danger', 'info']
-};
+<script setup>
+const {
+  success,
+  warning,
+  danger,
+  info
+} = defineProps([
+  'success',
+  'warning',
+  'danger',
+  'info'
+]);
 </script>
 
 <style scoped>

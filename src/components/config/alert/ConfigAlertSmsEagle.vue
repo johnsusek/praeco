@@ -1,15 +1,15 @@
 <template>
   <div>
     <el-form-item label="smseagle_url" prop="smseagleUrl" required>
-      <el-input id="smseagleUrl" :value="smseagleUrl" :disabled="viewOnly" @input="smseagleUrl = $event" />
+      <el-input id="smseagleUrl" :value="smseagleUrl" :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="smseagle_token" prop="smseagleToken" required>
-      <el-input id="smseagleToken" :value="smseagleToken" :disabled="viewOnly" @input="smseagleToken = $event" />
+      <el-input id="smseagleToken" :value="smseagleToken" :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="smseagle_message_type" prop="smseagleMessageType" required>
-      <el-radio-group :value="smseagleMessageType" :disabled="viewOnly" @input="smseagleMessageType = $event">
+      <el-radio-group :value="smseagleMessageType" :disabled="viewOnly">
         <el-radio id="smseagleMessageTypeSms" label="sms">
           sms
         </el-radio>
@@ -26,10 +26,10 @@
     </el-form-item>
 
     <el-form-item label="smseagle_text" prop="smseagleText">
-      <el-input id="smseagleText" :value="smseagleText" :disabled="viewOnly" @input="smseagleText = $event" />
+      <el-input id="smseagleText" :value="smseagleText" :disabled="viewOnly" />
     </el-form-item>
 
-    <el-popover v-model="popSmseagleToVisible" :class="{ 'is-invalid': !popSmseagleToValid }">
+    <el-popover v-model="popSmseagleToVisible" :destroy-on-close="true" :class="{ 'is-invalid': !popSmseagleToValid }">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="smseagleTo.length" :content="smseagleTo.join(', ')" placement="top">
@@ -55,10 +55,9 @@
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
                 <el-input
-                  v-model="smseagleTo[index]"
+                  :value="smseagleTo[index]"
                   :disabled="viewOnly"
-                  placeholder="SmseagleTos"
-                  @input="(val) => updateSmseagleTo(val, index)" />
+                  placeholder="SmseagleTos" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -79,7 +78,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popSmseagleContactsVisible" :class="{ 'is-invalid': !popSmseagleContactsValid }">
+    <el-popover v-model="popSmseagleContactsVisible" :destroy-on-close="true" :class="{ 'is-invalid': !popSmseagleContactsValid }">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="smseagleContacts.length" :content="smseagleContacts.join(', ')" placement="top">
@@ -105,10 +104,9 @@
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
                 <el-input-number
-                  v-model="smseagleContacts[index]"
+                  :value="smseagleContacts[index]"
                   :disabled="viewOnly"
-                  placeholder="SmseagleContacts"
-                  @input="(val) => updateSmseagleContacts(val, index)" />
+                  placeholder="SmseagleContacts" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -129,7 +127,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popSmseagleGroupsVisible" :class="{ 'is-invalid': !popSmseagleGroupsValid }">
+    <el-popover v-model="popSmseagleGroupsVisible" :destroy-on-close="true" :class="{ 'is-invalid': !popSmseagleGroupsValid }">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="smseagleGroups.length" :content="smseagleGroups.join(', ')" placement="top">
@@ -155,10 +153,9 @@
             <el-row :gutter="5" type="flex" justify="space-between">
               <el-col :span="20">
                 <el-input-number
-                  v-model="smseagleGroups[index]"
+                  :value="smseagleGroups[index]"
                   :disabled="viewOnly"
-                  placeholder="SmseagleGroups"
-                  @input="(val) => updateSmseagleGroups(val, index)" />
+                  placeholder="SmseagleGroups" />
               </el-col>
               <el-col :span="4">
                 <el-button
@@ -179,266 +176,163 @@
       </div>
     </el-popover>
 
-    <el-form-item label="smseagle_duration" prop="smseagleDuration">
-      <el-input-number id="smseagleDuration" :value="smseagleDuration" :disabled="viewOnly" @input="smseagleDuration = $event" />
+    <el-form-item label="smseagle_duration" :destroy-on-close="true" prop="smseagleDuration">
+      <el-input-number id="smseagleDuration" :value="smseagleDuration" :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="smseagle_voice_id" prop="smseagleVoiceId">
-      <el-input-number id="smseagleVoiceId" :value="smseagleVoiceId" :disabled="viewOnly" @input="smseagleVoiceId = $event" />
+      <el-input-number id="smseagleVoiceId" :value="smseagleVoiceId" :disabled="viewOnly" />
     </el-form-item>
   </div>
 </template>
 
 <script>
+import { ref, computed, getCurrentInstance, watchEffect } from 'vue';
+
 export default {
   props: ['viewOnly'],
-  emits: ['validate'],
 
-  data() {
-    return {
-      popSmseagleToVisible: false,
-      popSmseagleToValid: true,
-      popSmseagleContactsVisible: false,
-      popSmseagleContactsValid: true,
-      popSmseagleGroupsVisible: false,
-      popSmseagleGroupsValid: true,
+  setup() {
+    const { proxy } = getCurrentInstance();
+
+    // ===== state =====
+    const popSmseagleToVisible = ref(false);
+    const popSmseagleToValid = ref(true);
+
+    const popSmseagleContactsVisible = ref(false);
+    const popSmseagleContactsValid = ref(true);
+
+    const popSmseagleGroupsVisible = ref(false);
+    const popSmseagleGroupsValid = ref(true);
+
+    // ===== computed (Vuex) =====
+    const smseagleUrl = computed({
+      get: () => proxy.$store.state.config.alert.smseagleUrl || '',
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_URL', v)
+    });
+
+    const smseagleToken = computed({
+      get: () => proxy.$store.state.config.alert.smseagleToken || '',
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_TOKEN', v)
+    });
+
+    const smseagleMessageType = computed({
+      get: () => proxy.$store.state.config.alert.smseagleMessageType || '',
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_MESSAGE_TYPE', v)
+    });
+
+    const smseagleText = computed({
+      get: () => proxy.$store.state.config.alert.smseagleText || '',
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_TEXT', v)
+    });
+
+    const smseagleTo = computed({
+      get: () => proxy.$store.state.config.alert.smseagleTo,
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_TO', v)
+    });
+
+    const smseagleContacts = computed({
+      get: () => proxy.$store.state.config.alert.smseagleContacts,
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_CONTACTS', v)
+    });
+
+    const smseagleGroups = computed({
+      get: () => proxy.$store.state.config.alert.smseagleGroups,
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_GROUPS', v)
+    });
+
+    const smseagleDuration = computed({
+      get: () => proxy.$store.state.config.alert.smseagleDuration || '',
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_DURATION', v)
+    });
+
+    const smseagleVoiceId = computed({
+      get: () => proxy.$store.state.config.alert.smseagleVoiceId || '',
+      set: v => proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_VOICE_ID', v)
+    });
+
+    // ===== methods =====
+    const updateSmseagleTo = (entry, index) => {
+      if (Number.isNaN(entry)) return;
+      proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_TO_ENTRY', { entry, index });
+
     };
-  },
 
-  computed: {
-    smseagleUrl: {
-      get() {
-        return this.$store.state.config.alert.smseagleUrl;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_SMSEAGLE_URL',
-          value
-        );
-      }
-    },
+    const removeSmseagleToEntry = (entry) => {
+      proxy.$store.commit('config/alert/REMOVE_SMSEAGLE_TO_ENTRY', entry);
 
-    smseagleToken: {
-      get() {
-        return this.$store.state.config.alert.smseagleToken;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_SMSEAGLE_TOKEN',
-          value
-        );
-      }
-    },
+    };
 
-    smseagleMessageType: {
-      get() {
-        return this.$store.state.config.alert.smseagleMessageType;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_SMSEAGLE_MESSAGE_TYPE',
-          value
-        );
-      }
-    },
+    const addSmseagleToEntry = () => {
+      proxy.$store.commit('config/alert/ADD_SMSEAGLE_TO_ENTRY');
 
-    smseagleText: {
-      get() {
-        return this.$store.state.config.alert.smseagleText;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_SMSEAGLE_TEXT',
-          value
-        );
-      }
-    },
+    };
 
-    smseagleTo: {
-      get() {
-        return this.$store.state.config.alert.smseagleTo;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_SMSEAGLE_TO', value);
-      }
-    },
+    // --- Contacts ---
 
-    smseagleContacts: {
-      get() {
-        return this.$store.state.config.alert.smseagleContacts;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_SMSEAGLE_CONTACTS', value);
-      }
-    },
-
-    smseagleGroups: {
-      get() {
-        return this.$store.state.config.alert.smseagleGroups;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_SMSEAGLE_GROUPS', value);
-      }
-    },
-
-    smseagleDuration: {
-      get() {
-        return this.$store.state.config.alert.smseagleDuration;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_SMSEAGLE_DURATION',
-          value
-        );
-      }
-    },
-
-    smseagleVoiceId: {
-      get() {
-        return this.$store.state.config.alert.smseagleVoiceId;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_SMSEAGLE_VOICE_ID',
-          value
-        );
-      }
-    },
-  },
-
-  methods: {
-    async validate() {
-      try {
-        if (this.$refs.smseagleTo) {
-          await this.validateSmseagleTo();
-        }
-        if (this.$refs.smseagleContacts) {
-          await this.validateSmseagleContacts();
-        }
-        if (this.$refs.smseagleGroups) {
-          await this.validateSmseagleGroups();
-        }
-        this.$emit('validate', true);
-        return true;
-      } catch (error) {
-        this.$emit('validate', false);
-        return false;
-      }
-    },
-
-    async validateSmseagleTo() {
-      if (!this.smseagleTo.length) {
-        this.popSmseagleToValid = false;
-        return;
-      }
-      try {
-        this.popSmseagleToValid = await this.$refs.smseagleTo.validate();
-      } catch (error) {
-        this.popSmseagleToValid = false;
-        throw error;
-      }
-    },
-
-    updateSmseagleTo(entry, index) {
+    const updateSmseagleContacts = (entry, index) => {
       if (Number.isNaN(entry)) return;
-      this.$store.commit('config/alert/UPDATE_SMSEAGLE_TO_ENTRY', {
-        entry,
-        index
-      });
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+      proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_CONTACTS_ENTRY', { entry, index });
+    };
 
-    removeSmseagleToEntry(entry) {
-      this.$store.commit('config/alert/REMOVE_SMSEAGLE_TO_ENTRY', entry);
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+    const removeSmseagleContactsEntry = (entry) => {
+      proxy.$store.commit('config/alert/REMOVE_SMSEAGLE_CONTACTS_ENTRY', entry);
+    };
 
-    addSmseagleToEntry() {
-      this.$store.commit('config/alert/ADD_SMSEAGLE_TO_ENTRY');
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+    const addSmseagleContactsEntry = () => {
+      proxy.$store.commit('config/alert/ADD_SMSEAGLE_CONTACTS_ENTRY');
+    };
 
-    async validateSmseagleContacts() {
-      if (!this.smseagleContacts.length) {
-        this.popSmseagleContactsValid = false;
-        return;
-      }
-      try {
-        this.popSmseagleContactsValid = await this.$refs.smseagleContacts.validate();
-      } catch (error) {
-        this.popSmseagleContactsValid = false;
-        throw error;
-      }
-    },
-
-    updateSmseagleContacts(entry, index) {
+    // --- Groups ---
+    const updateSmseagleGroups = (entry, index) => {
       if (Number.isNaN(entry)) return;
-      this.$store.commit('config/alert/UPDATE_SMSEAGLE_CONTACTS_ENTRY', {
-        entry,
-        index
-      });
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+      proxy.$store.commit('config/alert/UPDATE_SMSEAGLE_GROUPS_ENTRY', { entry, index });
+    };
 
-    removeSmseagleContactsEntry(entry) {
-      this.$store.commit('config/alert/REMOVE_SMSEAGLE_CONTACTS_ENTRY', entry);
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+    const removeSmseagleGroupsEntry = (entry) => {
+      proxy.$store.commit('config/alert/REMOVE_SMSEAGLE_GROUPS_ENTRY', entry);
+    };
 
-    addSmseagleContactsEntry() {
-      this.$store.commit('config/alert/ADD_SMSEAGLE_CONTACTS_ENTRY');
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+    const addSmseagleGroupsEntry = () => {
+      proxy.$store.commit('config/alert/ADD_SMSEAGLE_GROUPS_ENTRY');
+    };
 
-    async validateSmseagleGroups() {
-      if (!this.smseagleGroups.length) {
-        this.popSmseagleGroupsValid = false;
-        return;
-      }
-      try {
-        this.popSmseagleGroupsValid = await this.$refs.smseagleGroups.validate();
-      } catch (error) {
-        this.popSmseagleGroupsValid = false;
-        throw error;
-      }
-    },
+    watchEffect(() => {
+      console.log(smseagleUrl.value);
+      console.log('URL型:', typeof smseagleUrl.value, smseagleUrl.value);
+    });
 
-    updateSmseagleGroups(entry, index) {
-      if (Number.isNaN(entry)) return;
-      this.$store.commit('config/alert/UPDATE_SMSEAGLE_GROUPS_ENTRY', {
-        entry,
-        index
-      });
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+    return {
+      // state
+      popSmseagleToVisible,
+      popSmseagleToValid,
+      popSmseagleContactsVisible,
+      popSmseagleContactsValid,
+      popSmseagleGroupsVisible,
+      popSmseagleGroupsValid,
 
-    removeSmseagleGroupsEntry(entry) {
-      this.$store.commit('config/alert/REMOVE_SMSEAGLE_GROUPS_ENTRY', entry);
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+      // computed
+      smseagleUrl,
+      smseagleToken,
+      smseagleMessageType,
+      smseagleText,
+      smseagleTo,
+      smseagleContacts,
+      smseagleGroups,
+      smseagleDuration,
+      smseagleVoiceId,
 
-    addSmseagleGroupsEntry() {
-      this.$store.commit('config/alert/ADD_SMSEAGLE_GROUPS_ENTRY');
-      this.$nextTick(() => {
-        this.validate();
-      });
-    },
+      // methods
+      updateSmseagleTo,
+      removeSmseagleToEntry,
+      addSmseagleToEntry,
+      updateSmseagleContacts,
+      removeSmseagleContactsEntry,
+      addSmseagleContactsEntry,
+      updateSmseagleGroups,
+      removeSmseagleGroupsEntry,
+      addSmseagleGroupsEntry
+    };
   }
 };
 </script>

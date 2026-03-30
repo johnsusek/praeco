@@ -8,10 +8,14 @@
   </tr>
 </template>
 
-<script>
-export default {
-  props: ['name', 'value']
-};
+<script setup>
+const {
+  name,
+  value
+} = defineProps([
+  'name',
+  'value'
+]);
 </script>
 
 <style scoped>

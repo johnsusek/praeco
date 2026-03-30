@@ -1,15 +1,15 @@
 import { defineConfig } from 'vite'
-import { createVuePlugin } from 'vite-plugin-vue2'
+import vue from '@vitejs/plugin-vue2'
 import { resolve } from 'path'
 
 export default defineConfig({
-  plugins: [createVuePlugin()],
+  plugins: [vue()],
   
   // Equivalent to publicPath in vue.config.js
   base: process.env.VITE_BASE_URL || '/',
   
   resolve: {
-    extensions: ['.js', '.vue', '.jsx', 'tsx', '.json'],
+    extensions: ['.js', '.vue', '.jsx', '.tsx', '.json'],
     alias: {
       '@': resolve(__dirname, 'src'),
        "vue": "vue/dist/vue.runtime.esm.js",
