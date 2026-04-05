@@ -270,7 +270,7 @@
       </el-tab-pane>
 
       <!-- Slack -->
-      <el-tab-pane v-if="alert.includes('slack')">
+      <el-tab-pane v-if="alert.includes('slack')" :key="'slack'" name="slack">
         <template #label>
           <Icon :icon="['fab', 'slack']" size="1x" /> Slack
         </template>
@@ -278,7 +278,7 @@
       </el-tab-pane>
 
       <!-- Email -->
-      <el-tab-pane v-if="alert.includes('email')">
+      <el-tab-pane v-if="alert.includes('email')" :key="'email'" name="email">
         <template #label>
           <span><Icon icon="envelope" size="1x" /> Email</span>
         </template>
@@ -286,7 +286,7 @@
       </el-tab-pane>
 
       <!-- HTTP POST -->
-      <el-tab-pane v-if="alert.includes('post')" label="HTTP">
+      <el-tab-pane v-if="alert.includes('post')" :key="'post'" name="post" label="HTTP">
         <template #label>
           <span><Icon icon="globe" /> HTTP POST</span>
         </template>
@@ -294,7 +294,7 @@
       </el-tab-pane>
 
       <!-- HTTP POST 2 -->
-      <el-tab-pane v-if="alert.includes('post2')" label="HTTP2">
+      <el-tab-pane v-if="alert.includes('post2')" :key="'post2'" name="post2" label="HTTP2">
         <template #label>
           <span><Icon icon="globe" /> HTTP POST 2</span>
         </template>
@@ -302,7 +302,7 @@
       </el-tab-pane>
 
       <!-- Telegram -->
-      <el-tab-pane v-if="alert.includes('telegram')">
+      <el-tab-pane v-if="alert.includes('telegram')" :key="'telegram'" name="telegram">
         <template #label>
           <Icon :icon="['fab', 'telegram']" size="1x" /> Telegram
         </template>
@@ -310,7 +310,7 @@
       </el-tab-pane>
 
       <!-- Jira -->
-      <el-tab-pane v-if="alert.includes('jira')">
+      <el-tab-pane v-if="alert.includes('jira')" :key="'jira'" name="jira">
         <template #label>
           <Icon :icon="['fab', 'jira']" size="1x" /> Jira
         </template>
@@ -318,7 +318,7 @@
       </el-tab-pane>
 
       <!-- Google Chat -->
-      <el-tab-pane v-if="alert.includes('googlechat')">
+      <el-tab-pane v-if="alert.includes('googlechat')" :key="'googlechat'" name="googlechat">
         <template #label>
           Google Chat
         </template>
@@ -326,7 +326,7 @@
       </el-tab-pane>
 
       <!-- Mattermost -->
-      <el-tab-pane v-if="alert.includes('mattermost')">
+      <el-tab-pane v-if="alert.includes('mattermost')" :key="'mattermost'" name="mattermost">
         <template #label>
           Mattermost
         </template>
@@ -334,7 +334,7 @@
       </el-tab-pane>
 
       <!-- Command -->
-      <el-tab-pane v-if="alert.includes('command')">
+      <el-tab-pane v-if="alert.includes('command')" :key="'command'" name="command">
         <template #label>
           Command
         </template>
@@ -342,7 +342,7 @@
       </el-tab-pane>
 
       <!-- Gitter -->
-      <el-tab-pane v-if="alert.includes('gitter')">
+      <el-tab-pane v-if="alert.includes('gitter')" :key="'gitter'" name="gitter">
         <template #label>
           <Icon :icon="['fab', 'gitter']" size="1x" /> Gitter
         </template>
@@ -350,7 +350,7 @@
       </el-tab-pane>
 
       <!-- Amazon SNS -->
-      <el-tab-pane v-if="alert.includes('sns')">
+      <el-tab-pane v-if="alert.includes('sns')" :key="'sns'" name="sns">
         <template #label>
           <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SNS
         </template>
@@ -358,7 +358,7 @@
       </el-tab-pane>
 
       <!-- Amazon SES -->
-      <el-tab-pane v-if="alert.includes('ses')">
+      <el-tab-pane v-if="alert.includes('ses')" :key="'ses'" name="ses">
         <template #label>
           <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SES
         </template>
@@ -366,7 +366,7 @@
       </el-tab-pane>
 
       <!-- Zabbix -->
-      <el-tab-pane v-if="alert.includes('zabbix')">
+      <el-tab-pane v-if="alert.includes('zabbix')" :key="'zabbix'" name="zabbix">
         <template #label>
           Zabbix
         </template>
@@ -374,7 +374,7 @@
       </el-tab-pane>
 
       <!-- Twilio -->
-      <el-tab-pane v-if="alert.includes('twilio')">
+      <el-tab-pane v-if="alert.includes('twilio')" :key="'twilio'" name="twilio">
         <template #label>
           Twilio
         </template>
@@ -382,7 +382,7 @@
       </el-tab-pane>
 
       <!-- PagerTree -->
-      <el-tab-pane v-if="alert.includes('pagertree')">
+      <el-tab-pane v-if="alert.includes('pagertree')" :key="'pagertree'" name="pagertree">
         <template #label>
           PagerTree
         </template>
@@ -390,7 +390,7 @@
       </el-tab-pane>
 
       <!-- Exotel -->
-      <el-tab-pane v-if="alert.includes('exotel')">
+      <el-tab-pane v-if="alert.includes('exotel')" :key="'exotel'" name="exotel">
         <template #label>
           Exotel
         </template>
@@ -398,7 +398,7 @@
       </el-tab-pane>
 
       <!-- Stomp -->
-      <el-tab-pane v-if="alert.includes('stomp')">
+      <el-tab-pane v-if="alert.includes('stomp')" :key="'stomp'" name="stomp">
         <template #label>
           Stomp
         </template>
@@ -406,7 +406,7 @@
       </el-tab-pane>
 
       <!-- VictorOps -->
-      <el-tab-pane v-if="alert.includes('victorops')">
+      <el-tab-pane v-if="alert.includes('victorops')" :key="'victorops'" name="victorops">
         <template #label>
           VictorOps
         </template>
@@ -414,7 +414,7 @@
       </el-tab-pane>
 
       <!-- ServiceNow -->
-      <el-tab-pane v-if="alert.includes('servicenow')">
+      <el-tab-pane v-if="alert.includes('servicenow')" :key="'servicenow'" name="servicenow">
         <template #label>
           ServiceNow
         </template>
@@ -422,7 +422,7 @@
       </el-tab-pane>
 
       <!-- Chatwork -->
-      <el-tab-pane v-if="alert.includes('chatwork')">
+      <el-tab-pane v-if="alert.includes('chatwork')" :key="'chatwork'" name="chatwork">
         <template #label>
           Chatwork
         </template>
@@ -430,7 +430,7 @@
       </el-tab-pane>
 
       <!-- Discord -->
-      <el-tab-pane v-if="alert.includes('discord')">
+      <el-tab-pane v-if="alert.includes('discord')" :key="'discord'" name="discord">
         <template #label>
           Discord
         </template>
@@ -438,7 +438,7 @@
       </el-tab-pane>
 
       <!-- TheHive -->
-      <el-tab-pane v-if="alert.includes('hivealerter')">
+      <el-tab-pane v-if="alert.includes('hivealerter')" :key="'hivealerter'" name="hivealerter">
         <template #label>
           TheHive
         </template>
@@ -446,7 +446,7 @@
       </el-tab-pane>
 
       <!-- Alerta -->
-      <el-tab-pane v-if="alert.includes('alerta')">
+      <el-tab-pane v-if="alert.includes('alerta')" :key="'alerta'" name="alerta">
         <template #label>
           Alerta
         </template>
@@ -454,7 +454,7 @@
       </el-tab-pane>
 
       <!-- Datadog -->
-      <el-tab-pane v-if="alert.includes('datadog')">
+      <el-tab-pane v-if="alert.includes('datadog')" :key="'datadog'" name="datadog">
         <template #label>
           Datadog
         </template>
@@ -462,7 +462,7 @@
       </el-tab-pane>
 
       <!-- Rocket.Chat -->
-      <el-tab-pane v-if="alert.includes('rocketchat')">
+      <el-tab-pane v-if="alert.includes('rocketchat')" :key="'rocketchat'" name="rocketchat">
         <template #label>
           <Icon :icon="['fab', 'rocketchat']" size="1x" /> Rocket.Chat
         </template>
@@ -470,7 +470,7 @@
       </el-tab-pane>
 
       <!-- PagerDuty -->
-      <el-tab-pane v-if="alert.includes('pagerduty')">
+      <el-tab-pane v-if="alert.includes('pagerduty')" :key="'pagerduty'" name="pagerduty">
         <template #label>
           PagerDuty
         </template>
@@ -478,7 +478,7 @@
       </el-tab-pane>
 
       <!-- Tencent SMS -->
-      <el-tab-pane v-if="alert.includes('tencent_sms')">
+      <el-tab-pane v-if="alert.includes('tencent_sms')" :key="'tencent_sms'" name="tencent_sms">
         <template #label>
           TencentSMS
         </template>
@@ -486,7 +486,7 @@
       </el-tab-pane>
 
       <!-- Alertmanager -->
-      <el-tab-pane v-if="alert.includes('alertmanager')">
+      <el-tab-pane v-if="alert.includes('alertmanager')" :key="'alertmanager'" name="alertmanager">
         <template #label>
           Alertmanager
         </template>
@@ -494,7 +494,7 @@
       </el-tab-pane>
 
       <!-- Dingtalk -->
-      <el-tab-pane v-if="alert.includes('dingtalk')">
+      <el-tab-pane v-if="alert.includes('dingtalk')" :key="'dingtalk'" name="dingtalk">
         <template #label>
           Dingtalk
         </template>
@@ -502,7 +502,7 @@
       </el-tab-pane>
 
       <!-- Opsgenie -->
-      <el-tab-pane v-if="alert.includes('opsgenie')">
+      <el-tab-pane v-if="alert.includes('opsgenie')" :key="'opsgenie'" name="opsgenie">
         <template #label>
           Opsgenie
         </template>
@@ -510,7 +510,7 @@
       </el-tab-pane>
 
       <!-- Gelf -->
-      <el-tab-pane v-if="alert.includes('gelf')" label="Gelf">
+      <el-tab-pane v-if="alert.includes('gelf')" :key="'gelf'" label="Gelf" name="gelf">
         <template #label>
           <span><Icon icon="globe" /> Gelf</span>
         </template>
@@ -518,7 +518,7 @@
       </el-tab-pane>
 
       <!-- Lark -->
-      <el-tab-pane v-if="alert.includes('lark')">
+      <el-tab-pane v-if="alert.includes('lark')" :key="'lark'" name="lark">
         <template #label>
           Lark
         </template>
@@ -526,7 +526,7 @@
       </el-tab-pane>
 
       <!-- IRIS -->
-      <el-tab-pane v-if="alert.includes('iris')">
+      <el-tab-pane v-if="alert.includes('iris')" :key="'iris'" name="iris">
         <template #label>
           IRIS
         </template>
@@ -534,7 +534,7 @@
       </el-tab-pane>
 
       <!-- WorkWeChat -->
-      <el-tab-pane v-if="alert.includes('workwechat')">
+      <el-tab-pane v-if="alert.includes('workwechat')" :key="'workwechat'" name="workwechat">
         <template #label>
           WorkWeChat
         </template>
@@ -542,7 +542,7 @@
       </el-tab-pane>
 
       <!-- Matrix Hookshot -->
-      <el-tab-pane v-if="alert.includes('matrixhookshot')">
+      <el-tab-pane v-if="alert.includes('matrixhookshot')" :key="'matrixhookshot'" name="matrixhookshot">
         <template #label>
           Matrix Hookshot
         </template>
@@ -550,7 +550,7 @@
       </el-tab-pane>
 
       <!-- MS PowerAutomate -->
-      <el-tab-pane v-if="alert.includes('ms_power_automate')">
+      <el-tab-pane v-if="alert.includes('ms_power_automate')" :key="'ms_power_automate'" name="ms_power_automate">
         <template #label>
           <Icon :icon="['fab', 'microsoft']" size="1x" /> MS PowerAutomate
         </template>
@@ -558,7 +558,7 @@
       </el-tab-pane>
 
       <!-- Webex -->
-      <el-tab-pane v-if="alert.includes('webex_webhook')">
+      <el-tab-pane v-if="alert.includes('webex_webhook')" :key="'webex_webhook'" name="webex_webhook">
         <template #label>
           Webex
         </template>
@@ -566,7 +566,7 @@
       </el-tab-pane>
 
       <!-- YZJ -->
-      <el-tab-pane v-if="alert.includes('yzj')">
+      <el-tab-pane v-if="alert.includes('yzj')" :key="'yzj'" name="yzj">
         <template #label>
           YZJ
         </template>
@@ -574,7 +574,7 @@
       </el-tab-pane>
 
       <!-- Flashduty -->
-      <el-tab-pane v-if="alert.includes('flashduty')">
+      <el-tab-pane v-if="alert.includes('flashduty')" :key="'flashduty'" name="flashduty">
         <template #label>
           Flashduty
         </template>
@@ -582,7 +582,7 @@
       </el-tab-pane>
 
       <!-- LINE Message API -->
-      <el-tab-pane v-if="alert.includes('line')">
+      <el-tab-pane v-if="alert.includes('line')" :key="'line'" name="line">
         <template #label>
           <Icon :icon="['fab', 'line']" size="1x" /> LINE Message API
         </template>
@@ -590,7 +590,7 @@
       </el-tab-pane>
 
       <!-- SMSEagle -->
-      <el-tab-pane v-if="alert.includes('smseagle')">
+      <el-tab-pane v-if="alert.includes('smseagle')" :key="'smseagle'" name="smseagle">
         <template #label>
           SMSEagle
         </template>
