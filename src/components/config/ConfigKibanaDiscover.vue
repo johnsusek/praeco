@@ -3,27 +3,24 @@
     <el-col :span="generateKibanaDiscoverUrl ? 6 : 24">
       <el-form-item label="Kibana Discover">
         <el-switch
-          id="generateKibanaDiscoverUrl"
-          :value="generateKibanaDiscoverUrl"
-          :disabled="viewOnly"
-          @change="changeGenerateKibanaDiscoverUrl" />
+          v-model="generateKibanaDiscoverUrl"
+          :disabled="viewOnly" />
         <label>Kibana Discover application.</label>
       </el-form-item>
     </el-col>
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
-      <el-form-item label="APP URL" prop="kibanaDiscoverAppUrl" required>
+      <el-form-item label="generate_kibana_discover_url" prop="kibanaDiscoverAppUrl" required>
         <el-input
-          :value="kibanaDiscoverAppUrl"
+          v-model="kibanaDiscoverAppUrl"
           :disabled="viewOnly"
-          placeholder="http://localhost:5601/app/discover#/"
-          @input="kibanaDiscoverAppUrl = $event" />
+          placeholder="http://localhost:5601/app/discover#/" />
         <label>The url of the Kibana Discover application used to generate the kibana_discover_url variable.</label>
       </el-form-item>
     </el-col>
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="4">
-      <el-form-item label="Kibana Version" prop="kibanaDiscoverVersion" required>
+      <el-form-item label="kibana_discover_version" prop="kibanaDiscoverVersion" required>
         <el-select
           v-model="kibanaDiscoverVersion"
           :disabled="viewOnly"
@@ -32,19 +29,18 @@
           <el-option
             v-for="v in kibanaVersionOptions"
             :key="v.code"
-            :label="v.name"
-            :value="v.code" />
+            v-model="v.code"
+            :label="v.name" />
         </el-select>
         <label>Specifies the version of the Kibana Discover application.</label>
       </el-form-item>
     </el-col>
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
-      <el-form-item label="Index Pattern Id" prop="kibanaDiscoverIndexPatternId" required>
+      <el-form-item label="kibana_discover_index_pattern_id" prop="kibanaDiscoverIndexPatternId" required>
         <el-input
-          :value="kibanaDiscoverIndexPatternId"
-          :disabled="viewOnly"
-          @input="kibanaDiscoverIndexPatternId = $event" />
+          v-model="kibanaDiscoverIndexPatternId"
+          :disabled="viewOnly" />
         <label>The id of the index pattern to link to in the Kibana Discover application.</label>
       </el-form-item>
     </el-col>
@@ -54,9 +50,9 @@
         <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="kibanaDiscoverColumns.length" :content="kibanaDiscoverColumns.join(', ')" placement="top">
-              <span>Kibana Discover Columns ({{ kibanaDiscoverColumns.length }})</span>
+              <span>kibana_discover_columns ({{ kibanaDiscoverColumns.length }})</span>
             </el-tooltip>
-            <span v-else>Kibana Discover Columns ({{ kibanaDiscoverColumns.length }})</span>
+            <span v-else>kibana_discover_columns ({{ kibanaDiscoverColumns.length }})</span>
           </span>
         </template>
         <div>
@@ -107,7 +103,6 @@
         <ElastalertTimeView v-if="viewOnly" :time="kibanaDiscoverFromTimedelta" />
         <ElastalertTimePicker
           v-else-if="kibanaDiscoverFromTimedelta"
-          id="kibanaDiscoverFromTimedelta"
           :allow-zero="true"
           :unit="Object.keys(kibanaDiscoverFromTimedelta)[0]"
           :amount="Object.values(kibanaDiscoverFromTimedelta)[0]"
@@ -125,7 +120,6 @@
         <ElastalertTimeView v-if="viewOnly" :time="kibanaDiscoverToTimedelta" />
         <ElastalertTimePicker
           v-else-if="kibanaDiscoverToTimedelta"
-          id="kibanaDiscoverToTimedelta"
           :allow-zero="true"
           :unit="Object.keys(kibanaDiscoverToTimedelta)[0]"
           :amount="Object.values(kibanaDiscoverToTimedelta)[0]"
@@ -194,7 +188,7 @@ export default {
 
     kibanaDiscoverFromTimedelta: {
       get() {
-        return this.$store.state.config.alert.kibanaDiscoverFromTimedelta || { minutes: 10 };
+        return this.$store.state.config.alert.kibanaDiscoverFromTimedelta;
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA', value);
@@ -203,7 +197,7 @@ export default {
 
     kibanaDiscoverToTimedelta: {
       get() {
-        return this.$store.state.config.alert.kibanaDiscoverToTimedelta || { minutes: 10 };
+        return this.$store.state.config.alert.kibanaDiscoverToTimedelta;
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA', value);
@@ -289,14 +283,6 @@ export default {
       this.$nextTick(() => {
         this.validate();
       });
-    },
-
-    changeGenerateKibanaDiscoverUrl(val) {
-      if (val) {
-        this.generateKibanaDiscoverUrl = true;
-      } else {
-        this.generateKibanaDiscoverUrl = false;
-      }
     }
   }
 };

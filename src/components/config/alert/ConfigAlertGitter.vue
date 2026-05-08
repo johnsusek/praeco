@@ -1,7 +1,7 @@
 <template>
   <div>
-    <praeco-form-item label="Webhook URL" prop="gitterWebhookUrl">
-      <el-input id="gitterWebhookUrl" :value="gitterWebhookUrl" :disabled="viewOnly" @input="gitterWebhookUrl = $event" />
+    <praeco-form-item label="gitter_webhook_url" prop="gitterWebhookUrl">
+      <el-input v-model="gitterWebhookUrl" :disabled="viewOnly" />
       <label>
         The webhook URL that includes your auth data and the ID of the channel (room) you want to post to.
         Go to the Integration Settings of the channel: (example  https://gitter.im/ORGA/CHANNEL#integrations ) ,
@@ -9,19 +9,19 @@
       </label>
     </praeco-form-item>
 
-    <praeco-form-item label="Message level" prop="gitterMsgLevel" required>
-      <el-radio-group :value="gitterMsgLevel" :disabled="viewOnly" @input="gitterMsgLevel = $event">
-        <el-radio id="gitterMsgLevelError" label="error" border class="gitter-error">
+    <praeco-form-item label="gitter_msg_level" prop="gitterMsgLevel" required>
+      <el-radio-group v-model="gitterMsgLevel" :disabled="viewOnly">
+        <el-radio label="error" border class="gitter-error">
           Error
         </el-radio>
-        <el-radio id="gitterMsgLevelInfo" label="info" border class="gitter-info">
+        <el-radio label="info" border class="gitter-info">
           Info
         </el-radio>
       </el-radio-group>
     </praeco-form-item>
 
-    <praeco-form-item label="Proxy" prop="gitterProxy">
-      <el-input id="gitterProxy" :value="gitterProxy" :disabled="viewOnly" @input="gitterProxy = $event" />
+    <praeco-form-item label="gitter_proxy" prop="gitterProxy">
+      <el-input v-model="gitterProxy" :disabled="viewOnly" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Gitter.
         Set this option using hostname:port if you need to use a proxy.
@@ -30,45 +30,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['viewOnly'],
+<script setup>
+import { useConfigAlertGitter } from '@/composables/config/alert/useConfigAlertGitter';
 
-  computed: {
-    gitterWebhookUrl: {
-      get() {
-        return this.$store.state.config.alert.gitterWebhookUrl;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_GITTER_WEBHOOK_URL', value);
-      }
-    },
+defineProps({
+  viewOnly: Boolean
+});
 
-    gitterMsgLevel: {
-      get() {
-        return this.$store.state.config.alert.gitterMsgLevel;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_GITTER_MSG_LEVEL', value);
-      }
-    },
-
-    gitterProxy: {
-      get() {
-        return this.$store.state.config.alert.gitterProxy;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GITTER_PROXY',
-          value
-        );
-      }
-    }
-  },
-
-  methods: {
-  }
-};
+const {
+  gitterWebhookUrl,
+  gitterMsgLevel,
+  gitterProxy
+} = useConfigAlertGitter();
 </script>
 
 <style lang="scss" scoped>

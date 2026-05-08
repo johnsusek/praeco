@@ -18,28 +18,29 @@ export default {
   data() {
     return {
       currentVersion: packageData.version,
-      latestRelease: {}
+      latestRelease: null
     };
   },
 
   computed: {
     updateAvailable() {
-      if (!this.latestRelease.tag_name) return false;
-      return semver.lt(this.currentVersion, this.latestRelease.tag_name);
+      const tag = this.latestRelease?.tag_name;
+      if (!tag) return false;
+      return semver.lt(this.currentVersion, tag);
     }
   },
 
   async mounted() {
     if (import.meta.env.DEV && sessionStorage.getItem('latestRelease')) {
-      this.latestRelease = JSON.parse(sessionStorage.getItem('latestRelease'));
+      this.latestRelease = JSON.parse(sessionStorage.getItem('latestRelease')) || {};
     } else {
       try {
         let res = await axios.get('/api-app/releases');
-        if (res && res.data) {
-          this.latestRelease = res.data[0];
-          sessionStorage.setItem('latestRelease', JSON.stringify(this.latestRelease));
-        }
-      } catch (error) {}
+        this.latestRelease = res?.data?.[0] || {};
+        sessionStorage.setItem('latestRelease', JSON.stringify(this.latestRelease));
+      } catch (error) {
+        this.latestRelease = {};
+      }
     }
   }
 };

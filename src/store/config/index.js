@@ -231,25 +231,10 @@ export default {
           tmphttpPostUrl.push(config.http_post_url);
           config.http_post_url = tmphttpPostUrl;
         }
-
-        if (config.http_post_url) {
-          commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
-        }
-
-        if (config.http_post_ignore_ssl_errors) {
-          commit('alert/UPDATE_HTTP_POST_IGNORE_SSL_ERRORS', config.http_post_ignore_ssl_errors);
-        }
-
-        if (config.http_post_ca_certs) {
-          commit('alert/UPDATE_HTTP_POST_CA_CERTS', config.http_post_ca_certs);
-        }
-
-        if (config.http_post_timeout) {
-          commit('alert/UPDATE_HTTP_POST_TIMEOUT', config.http_post_timeout);
-        } else {
-          commit('alert/UPDATE_HTTP_POST_TIMEOUT', 10);
-        }
-
+        commit('alert/UPDATE_HTTP_POST_URL', config.http_post_url);
+        commit('alert/UPDATE_HTTP_POST_IGNORE_SSL_ERRORS', config.http_post_ignore_ssl_errors);
+        commit('alert/UPDATE_HTTP_POST_CA_CERTS', config.http_post_ca_cert);
+        commit('alert/UPDATE_HTTP_POST_TIMEOUT', config.http_post_timeout);
         commit('alert/UPDATE_HTTP_POST_PROXY', config.http_post_proxy);
 
         /* HTTP POST 2 */
@@ -258,25 +243,10 @@ export default {
           tmphttpPost2Url.push(config.http_post2_url);
           config.http_post2_url = tmphttpPost2Url;
         }
-
-        if (config.http_post2_url) {
-          commit('alert/UPDATE_HTTP_POST2_URL', config.http_post2_url);
-        }
-
-        if (config.http_post2_ignore_ssl_errors) {
-          commit('alert/UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS', config.http_post2_ignore_ssl_errors);
-        }
-
-        if (config.http_post2_ca_certs) {
-          commit('alert/UPDATE_HTTP_POST2_CA_CERTS', config.http_post2_ca_certs);
-        }
-
-        if (config.http_post2_timeout) {
-          commit('alert/UPDATE_HTTP_POST2_TIMEOUT', config.http_post2_timeout);
-        } else {
-          commit('alert/UPDATE_HTTP_POST2_TIMEOUT', 10);
-        }
-
+        commit('alert/UPDATE_HTTP_POST2_URL', config.http_post2_url);
+        commit('alert/UPDATE_HTTP_POST2_IGNORE_SSL_ERRORS', config.http_post2_ignore_ssl_errors);
+        commit('alert/UPDATE_HTTP_POST2_CA_CERTS', config.http_post2_ca_certs);
+        commit('alert/UPDATE_HTTP_POST2_TIMEOUT', config.http_post2_timeout);
         commit('alert/UPDATE_HTTP_POST2_PROXY', config.http_post2_proxy);
 
         /* IRIS */
@@ -1181,19 +1151,9 @@ export default {
         commit('alert/UPDATE_SMSEAGLE_TOKEN', config.smseagle_token);
         commit('alert/UPDATE_SMSEAGLE_MESSAGE_TYPE', config.smseagle_message_type);
         commit('alert/UPDATE_SMSEAGLE_TEXT', config.smseagle_text);
-
-        if (config.smseagle_to) {
-          commit('alert/UPDATE_SMSEAGLE_TO', config.smseagle_to);
-        }
-
-        if (config.smseagle_contacts) {
-          commit('alert/UPDATE_SMSEAGLE_CONTACTS', config.smseagle_contacts);
-        }
-
-        if (config.smseagle_groups) {
-          commit('alert/UPDATE_SMSEAGLE_GROUPS', config.smseagle_groups);
-        }
-
+        commit('alert/UPDATE_SMSEAGLE_TO', config.smseagle_to);
+        commit('alert/UPDATE_SMSEAGLE_CONTACTS', config.smseagle_contacts);
+        commit('alert/UPDATE_SMSEAGLE_GROUPS', config.smseagle_groups);
         commit('alert/UPDATE_SMSEAGLE_DURATION', config.smseagle_duration);
         commit('alert/UPDATE_SMSEAGLE_VOICE_ID', config.smseagle_voice_id);
 

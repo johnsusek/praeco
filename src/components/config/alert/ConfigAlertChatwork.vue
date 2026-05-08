@@ -1,109 +1,50 @@
 <template>
   <div>
-    <praeco-form-item label="Api Key" prop="chatworkApikey" required>
-      <el-input id="chatworkApikey" :value="chatworkApikey" :disabled="viewOnly" @input="chatworkApikey = $event" />
+    <praeco-form-item label="chatwork_apikey" prop="chatworkApikey" required>
+      <el-input v-model="chatworkApikey" :disabled="viewOnly" />
       <label>ChatWork API KEY.</label>
     </praeco-form-item>
 
-    <praeco-form-item label="Room Id" prop="chatworkRoomId" required>
-      <el-input id="chatworkRoomId" :value="chatworkRoomId" :disabled="viewOnly" @input="chatworkRoomId = $event" />
+    <praeco-form-item label="chatwork_room_id" prop="chatworkRoomId" required>
+      <el-input v-model="chatworkRoomId" :disabled="viewOnly" />
       <label>
         The ID of the room you are talking to in Chatwork.
         How to find the room ID is the part of the number after "rid" at the end of the URL of the browser.
       </label>
     </praeco-form-item>
 
-    <praeco-form-item label="Proxy" prop="chatworkProxy">
-      <el-input id="chatworkProxy" :value="chatworkProxy" :disabled="viewOnly" @input="chatworkProxy = $event" />
+    <praeco-form-item label="chatwork_proxy" prop="chatworkProxy">
+      <el-input v-model="chatworkProxy" :disabled="viewOnly" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to chatwork.
         Set this option using hostname:port if you need to use a proxy.
       </label>
     </praeco-form-item>
 
-    <praeco-form-item label="Proxy Login" prop="chatworkProxyLogin">
-      <el-input id="chatworkProxyLogin" :value="chatworkProxyLogin" :disabled="viewOnly" @input="chatworkProxyLogin = $event" />
+    <praeco-form-item label="chatwork_proxy_login" prop="chatworkProxyLogin">
+      <el-input v-model="chatworkProxyLogin" :disabled="viewOnly" />
       <label>The chatwork proxy auth username.</label>
     </praeco-form-item>
 
-    <praeco-form-item label="Proxy Password" prop="chatworkProxyPass">
-      <el-input id="chatworkProxyPass" :value="chatworkProxyPass" :disabled="viewOnly" @input="chatworkProxyPass = $event" />
+    <praeco-form-item label="chatwork_proxy_pass:" prop="chatworkProxyPass">
+      <el-input v-model="chatworkProxyPass" :disabled="viewOnly" />
       <label>The chatwork proxy auth password.</label>
     </praeco-form-item>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useConfigAlertChatwork } from '@/composables/config/alert/useConfigAlertChatwork';
 
-export default {
-  props: ['viewOnly'],
+defineProps({
+  viewOnly: Boolean
+});
 
-  computed: {
-    chatworkApikey: {
-      get() {
-        return this.$store.state.config.alert.chatworkApikey;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_CHATWORK_API_KEY',
-          value
-        );
-      }
-    },
-    chatworkRoomId: {
-      get() {
-        return this.$store.state.config.alert.chatworkRoomId;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_CHATWORK_ROOM_ID',
-          value
-        );
-      }
-    },
-
-    chatworkProxy: {
-      get() {
-        return this.$store.state.config.alert.chatworkProxy;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_CHATWORK_PROXY',
-          value
-        );
-      }
-    },
-
-    chatworkProxyLogin: {
-      get() {
-        return this.$store.state.config.alert.chatworkProxyLogin;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_CHATWORK_PROXY_LOGIN',
-          value
-        );
-      }
-    },
-
-    chatworkProxyPass: {
-      get() {
-        return this.$store.state.config.alert.chatworkProxyPass;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_CHATWORK_PROXY_PASS',
-          value
-        );
-      }
-    }
-  },
-
-  methods: {
-  }
-};
+const {
+  chatworkApikey,
+  chatworkRoomId,
+  chatworkProxy,
+  chatworkProxyLogin,
+  chatworkProxyPass
+} = useConfigAlertChatwork();
 </script>
-
-<style lang="scss" scoped>
-
-</style>

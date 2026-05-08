@@ -1,16 +1,16 @@
 <template>
   <div>
-    <praeco-form-item label="Bot Id" prop="workWechatBotId" required>
-      <el-input id="workWechatBotId" :value="workWechatBotId" :disabled="viewOnly" @input="workWechatBotId = $event" />
+    <praeco-form-item label="work_wechat_bot_id" prop="workWechatBotId" required>
+      <el-input v-model="workWechatBotId" :disabled="viewOnly" />
       <label>WorkWechat bot id.</label>
     </praeco-form-item>
 
-    <praeco-form-item label="Msg Type" prop="workWechatMsgtype" required>
-      <el-radio-group :value="workWechatMsgtype" :disabled="viewOnly" @input="workWechatMsgtype = $event">
-        <el-radio id="workWechatMsgtypeText" label="text" border>
+    <praeco-form-item label="work_wechat_msgtype" prop="workWechatMsgtype" required>
+      <el-radio-group v-model="workWechatMsgtype" :disabled="viewOnly">
+        <el-radio label="text" border>
           text
         </el-radio>
-        <el-radio id="workWechatMsgtypeMarkdown" label="markdown" border>
+        <el-radio label="markdown" border>
           markdown
         </el-radio>
       </el-radio-group>
@@ -18,41 +18,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { useConfigAlertWorkWeChat } from '@/composables/config/alert/useConfigAlertWorkWeChat';
 
-export default {
-  props: ['viewOnly'],
+defineProps({
+  viewOnly: Boolean
+});
 
-  computed: {
-    workWechatBotId: {
-      get() {
-        return this.$store.state.config.alert.workWechatBotId;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_WORK_WECHAT_BOT_ID',
-          value
-        );
-      }
-    },
-    workWechatMsgtype: {
-      get() {
-        return this.$store.state.config.alert.workWechatMsgtype;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_WORK_WECHAT_MSGTYPE',
-          value
-        );
-      }
-    },
-  },
-
-  methods: {
-  }
-};
+const {
+  workWechatBotId,
+  workWechatMsgtype
+} = useConfigAlertWorkWeChat();
 </script>
-
-<style lang="scss" scoped>
-
-</style>

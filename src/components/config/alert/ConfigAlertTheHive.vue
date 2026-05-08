@@ -1,27 +1,27 @@
 <template>
   <div>
     <praeco-form-item label="Hive Alert Config Title" prop="hiveAlertConfigTitle">
-      <el-input id="hiveAlertConfigTitle" :value="hiveAlertConfigTitle" :disabled="viewOnly" @input="hiveAlertConfigTitle = $event" />
+      <el-input v-model="hiveAlertConfigTitle" :disabled="viewOnly" />
       <label>Alert's description.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Type" prop="hiveAlertConfigType">
-      <el-input id="hiveAlertConfigType" :value="hiveAlertConfigType" :disabled="viewOnly" @input="hiveAlertConfigType = $event" />
+      <el-input v-model="hiveAlertConfigType" :disabled="viewOnly" />
       <label>Alert's type.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Source" prop="hiveAlertConfigSource">
-      <el-input id="hiveAlertConfigSource" :value="hiveAlertConfigSource" :disabled="viewOnly" @input="hiveAlertConfigSource = $event" />
+      <el-input v-model="hiveAlertConfigSource" :disabled="viewOnly" />
       <label>Alert's source.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Description" prop="hiveAlertConfigDescription">
-      <el-input id="hiveAlertConfigDescription" :value="hiveAlertConfigDescription" :disabled="viewOnly" @input="hiveAlertConfigDescription = $event" />
+      <el-input v-model="hiveAlertConfigDescription" :disabled="viewOnly" />
       <label>Alert's description.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Severity" prop="hiveAlertConfigSeverity">
-      <el-input-number id="hiveAlertConfigSeverity" :value="hiveAlertConfigSeverity" :min="1" :max="4" :disabled="viewOnly" @input="hiveAlertConfigSeverity = $event" />
+      <el-input-number v-model="hiveAlertConfigSeverity" :min="1" :max="4" :disabled="viewOnly" />
       <label>Alert's severity: 1, 2, 3, 4 for LOW, MEDIUM, HIGH, CRTICAL.</label>
     </praeco-form-item>
 
@@ -77,22 +77,22 @@
     </el-popover>
 
     <praeco-form-item label="Hive Alert Config Tlp" prop="hiveAlertConfigTlp">
-      <el-input-number id="hiveAlertConfigTlp" :value="hiveAlertConfigTlp" :min="0" :max="3" :disabled="viewOnly" @input="hiveAlertConfigTlp = $event" />
+      <el-input-number v-model="hiveAlertConfigTlp" :min="0" :max="3" :disabled="viewOnly" />
       <label>Alert's TLP: 0, 1, 2, 3 for WHITE, GREEN, AMBER, RED.</label>
     </praeco-form-item>
 
     <praeco-form-item label="Hive Alert Config Status" prop="hiveAlertConfigStatus">
-      <el-radio-group :value="hiveAlertConfigStatus" :disabled="viewOnly" @input="hiveAlertConfigStatus = $event">
-        <el-radio id="hiveAlertConfigStatusWaiting" label="Waiting" border>
+      <el-radio-group v-model="hiveAlertConfigStatus" :disabled="viewOnly">
+        <el-radio label="Waiting" border>
           Waiting
         </el-radio>
-        <el-radio id="hiveAlertConfigStatusInProgress" label="InProgress" border>
+        <el-radio label="InProgress" border>
           InProgress
         </el-radio>
-        <el-radio id="hiveAlertConfigStatusCancel" label="Cancel" border>
+        <el-radio label="Cancel" border>
           Cancel
         </el-radio>
-        <el-radio id="hiveAlertConfigStatusCompleted" label="Completed" border>
+        <el-radio label="Completed" border>
           Completed
         </el-radio>
       </el-radio-group>
@@ -101,10 +101,8 @@
 
     <el-form-item label="Hive Alert Config Follow" prop="hiveAlertConfigFollow">
       <el-switch
-        id="hiveAlertConfigFollow"
-        :value="hiveAlertConfigFollow"
-        :disabled="viewOnly"
-        @change="changeHiveAlertConfigFollow" />
+        v-model="hiveAlertConfigFollow"
+        :disabled="viewOnly" />
     </el-form-item>
   </div>
 </template>
@@ -205,10 +203,6 @@ export default {
   },
 
   methods: {
-    changeHiveAlertConfigFollow(val) {
-      this.hiveAlertConfigFollow = val;
-    },
-
     async validate() {
       try {
         if (this.$refs.hiveAlertConfigTags) {
@@ -262,6 +256,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

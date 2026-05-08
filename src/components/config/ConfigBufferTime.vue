@@ -3,9 +3,8 @@
     <el-col :span="19">
       <el-form-item label="buffer_time">
         <el-switch
-          :value="useBufferTime"
-          :disabled="viewOnly"
-          @change="changeUseBufferTime" />
+          v-model="useBufferTime"
+          :disabled="viewOnly" />
         <label>buffer_time Setting.</label>
       </el-form-item>
     </el-col>
@@ -60,10 +59,6 @@ export default {
   },
 
   methods: {
-    changeUseBufferTime(value) {
-      this.useBufferTime = value;
-    },
-
     updateBufferTime(value) {
       this.bufferTimeLocal = {};
       /*eslint-disable */

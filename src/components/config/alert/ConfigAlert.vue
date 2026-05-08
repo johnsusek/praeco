@@ -97,127 +97,127 @@
       prop="alert"
       required>
       <el-checkbox-group v-model="alert" :disabled="viewOnly" @change="$emit('validate')">
-        <el-checkbox id="destinationSlack" label="slack" border>
+        <el-checkbox label="slack" border>
           Slack
         </el-checkbox>
-        <el-checkbox id="destinationEmail" label="email" border>
+        <el-checkbox label="email" border>
           Email
         </el-checkbox>
-        <el-checkbox id="destinationPost" label="post" border>
+        <el-checkbox label="post" border>
           HTTP POST
         </el-checkbox>
-        <el-checkbox id="destinationPost2" label="post2" border>
+        <el-checkbox label="post2" border>
           HTTP POST 2
         </el-checkbox>
-        <el-checkbox id="destinationTelegram" label="telegram" border>
+        <el-checkbox label="telegram" border>
           Telegram
         </el-checkbox>
-        <el-checkbox id="destinationJira" label="jira" border>
+        <el-checkbox label="jira" border>
           Jira
         </el-checkbox>
-        <el-checkbox id="destinationGoogleChats" label="googlechat" border>
+        <el-checkbox label="googlechat" border>
           Google Chat
         </el-checkbox>
-        <el-checkbox id="destinationMattermost" label="mattermost" border>
+        <el-checkbox label="mattermost" border>
           Mattermost
         </el-checkbox>
-        <el-checkbox id="destinationCommand" label="command" border>
+        <el-checkbox label="command" border>
           Command
         </el-checkbox>
-        <el-checkbox id="destinationGitter" label="gitter" border>
+        <el-checkbox label="gitter" border>
           Gitter
         </el-checkbox>
-        <el-checkbox id="destinationSns" label="sns" border>
+        <el-checkbox label="sns" border>
           AWS SNS (Amazon Simple Notification Service)
         </el-checkbox>
-        <el-checkbox id="destinationSes" label="ses" border>
+        <el-checkbox label="ses" border>
           AWS SES (Amazon Simple Email Service)
         </el-checkbox>
-        <el-checkbox id="destinationZabbix" label="zabbix" border>
+        <el-checkbox label="zabbix" border>
           Zabbix
         </el-checkbox>
-        <el-checkbox id="destinationTwilio" label="twilio" border>
+        <el-checkbox label="twilio" border>
           Twilio
         </el-checkbox>
-        <el-checkbox id="destinationPagerTree" label="pagertree" border>
+        <el-checkbox label="pagertree" border>
           PagerTree
         </el-checkbox>
-        <el-checkbox id="destinationExotel" label="exotel" border>
+        <el-checkbox label="exotel" border>
           Exotel
         </el-checkbox>
-        <el-checkbox id="destinationStomp" label="stomp" border>
+        <el-checkbox label="stomp" border>
           Stomp
         </el-checkbox>
-        <el-checkbox id="destinationVictorOps" label="victorops" border>
+        <el-checkbox label="victorops" border>
           Splunk On-Call (Formerly VictorOps)
         </el-checkbox>
-        <el-checkbox id="destinationServiceNow" label="servicenow" border>
+        <el-checkbox label="servicenow" border>
           ServiceNow
         </el-checkbox>
-        <el-checkbox id="destinationChatwork" label="chatwork" border>
+        <el-checkbox label="chatwork" border>
           Chatwork
         </el-checkbox>
-        <el-checkbox id="destinationDiscord" label="discord" border>
+        <el-checkbox label="discord" border>
           Discord
         </el-checkbox>
-        <el-checkbox id="destinationHivealerter" label="hivealerter" border>
+        <el-checkbox label="hivealerter" border>
           TheHive
         </el-checkbox>
-        <el-checkbox id="destinationAlerta" label="alerta" border>
+        <el-checkbox label="alerta" border>
           Alerta
         </el-checkbox>
-        <el-checkbox id="destinationDatadog" label="datadog" border>
+        <el-checkbox label="datadog" border>
           Datadog
         </el-checkbox>
-        <el-checkbox id="destinationRocketChat" label="rocketchat" border>
+        <el-checkbox label="rocketchat" border>
           Rocket.Chat
         </el-checkbox>
-        <el-checkbox id="destinationPagerDuty" label="pagerduty" border>
+        <el-checkbox label="pagerduty" border>
           PagerDuty
         </el-checkbox>
-        <el-checkbox id="destinationTencentSms" label="tencent_sms" border>
+        <el-checkbox label="tencent_sms" border>
           TencentSMS
         </el-checkbox>
-        <el-checkbox id="destinationAlertmanager" label="alertmanager" border>
+        <el-checkbox label="alertmanager" border>
           Alertmanager
         </el-checkbox>
-        <el-checkbox id="destinationDingtalk" label="dingtalk" border>
+        <el-checkbox label="dingtalk" border>
           Dingtalk
         </el-checkbox>
-        <el-checkbox id="destinationOpsgenie" label="opsgenie" border>
+        <el-checkbox label="opsgenie" border>
           Opsgenie
         </el-checkbox>
-        <el-checkbox id="destinationGelf" label="gelf" border>
+        <el-checkbox label="gelf" border>
           Gelf
         </el-checkbox>
-        <el-checkbox id="destinationLark" label="lark" border>
+        <el-checkbox label="lark" border>
           Lark
         </el-checkbox>
-        <el-checkbox id="destinationIris" label="iris" border>
+        <el-checkbox label="iris" border>
           IRIS
         </el-checkbox>
-        <el-checkbox id="destinationWorkWeChat" label="workwechat" border>
+        <el-checkbox label="workwechat" border>
           WorkWeChat
         </el-checkbox>
-        <el-checkbox id="destinationMatrixHookshot" label="matrixhookshot" border>
+        <el-checkbox label="matrixhookshot" border>
           Matrix Hookshot
         </el-checkbox>
-        <el-checkbox id="destinationMsPowerAutomate" label="ms_power_automate" border>
+        <el-checkbox label="ms_power_automate" border>
           MS PowerAutomate
         </el-checkbox>
-        <el-checkbox id="destinationWebex" label="webex_webhook" border>
+        <el-checkbox label="webex_webhook" border>
           Webex
         </el-checkbox>
-        <el-checkbox id="destinationYzj" label="yzj" border>
+        <el-checkbox label="yzj" border>
           YZJ
         </el-checkbox>
-        <el-checkbox id="destinationFlashduty" label="flashduty" border>
+        <el-checkbox label="flashduty" border>
           Flashduty
         </el-checkbox>
-        <el-checkbox id="destinationline" label="line" border>
+        <el-checkbox label="line" border>
           LINE Message API
         </el-checkbox>
-        <el-checkbox id="destinationsmseagle" label="smseagle" border>
+        <el-checkbox label="smseagle" border>
           SMSEagle
         </el-checkbox>
       </el-checkbox-group>

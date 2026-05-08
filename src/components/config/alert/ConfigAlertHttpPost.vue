@@ -52,22 +52,18 @@
 
     <el-form-item label="CA Certs" prop="httpPostCaCerts">
       <el-switch
-        id="httpPostCaCerts"
-        :value="httpPostCaCerts"
-        :disabled="viewOnly"
-        @change="changeHttpPostCaCerts" />
+        v-model="httpPostCaCerts"
+        :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="Ignore SSL Errors" prop="httpPostIgnoreSslErrors">
       <el-switch
-        id="httpPostIgnoreSslErrors"
-        :value="httpPostIgnoreSslErrors"
-        :disabled="viewOnly"
-        @change="changeHttpPostIgnoreSslErrors" />
+        v-model="httpPostIgnoreSslErrors"
+        :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="Timeout" prop="httpPostTimeout">
-      <el-input-number id="httpPostTimeout" :value="httpPostTimeout" :disabled="viewOnly" @input="httpPostTimeout = $event" />
+      <el-input-number v-model="httpPostTimeout" :disabled="viewOnly" />
       <label>
         The timeout value, in seconds, for making the post.
         The default is 10.
@@ -76,7 +72,7 @@
     </el-form-item>
 
     <el-form-item label="Proxy" prop="httpPostProxy">
-      <el-input id="httpPostProxy" :value="httpPostProxy" :disabled="viewOnly" @input="httpPostProxy = $event" />
+      <el-input v-model="httpPostProxy" :disabled="viewOnly" />
       <label>URL of proxy, if required.</label>
     </el-form-item>
   </div>
@@ -203,18 +199,7 @@ export default {
       this.$nextTick(() => {
         this.validate();
       });
-    },
-
-    changeHttpPostIgnoreSslErrors(val) {
-      this.httpPostIgnoreSslErrors = val;
-    },
-
-    changeHttpPostCaCerts(val) {
-      this.httpPostCaCerts = val;
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

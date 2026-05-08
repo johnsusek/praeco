@@ -1,7 +1,7 @@
 <template>
   <div>
-    <praeco-form-item label="WebhookURL" prop="discordWebhookUrl">
-      <el-input id="discordWebhookUrl" :value="discordWebhookUrl" :disabled="viewOnly" @input="discordWebhookUrl = $event" />
+    <praeco-form-item label="discord_webhook_url" prop="discordWebhookUrl">
+      <el-input v-model="discordWebhookUrl" :disabled="viewOnly" />
       <label>The webhook URL.</label>
     </praeco-form-item>
 
@@ -25,151 +25,63 @@
         :disabled="viewOnly" />
     </div>
 
-    <praeco-form-item label="Discord Embed Footer" prop="discordEmbedFooter">
-      <el-input id="discordEmbedFooter" :value="discordEmbedFooter" :disabled="viewOnly" @input="discordEmbedFooter = $event" />
+    <praeco-form-item label="discord_embed_footer" prop="discordEmbedFooter">
+      <el-input v-model="discordEmbedFooter" :disabled="viewOnly" />
       <label>embed footer.</label>
     </praeco-form-item>
 
-    <praeco-form-item label="Embed IconUrl" prop="discordEmbedIconUrl">
-      <el-input id="discordEmbedIconUrl" :value="discordEmbedIconUrl" :disabled="viewOnly" @input="discordEmbedIconUrl = $event" />
+    <praeco-form-item label="discord_embed_icon_url" prop="discordEmbedIconUrl">
+      <el-input v-model="discordEmbedIconUrl" :disabled="viewOnly" />
       <label>
         You can provide icon_url to use custom image.
         Provide absolute address of the pciture.(exampmle : http://domain/picure.png)
       </label>
     </praeco-form-item>
 
-    <praeco-form-item label="Proxy" prop="discordProxy">
-      <el-input id="discordProxy" :value="discordProxy" :disabled="viewOnly" @input="discordProxy = $event" />
+    <praeco-form-item label="discord_proxy" prop="discordProxy">
+      <el-input v-model="discordProxy" :disabled="viewOnly" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Discord.
         Set this option using hostname:port if you need to use a proxy.
       </label>
     </praeco-form-item>
 
-    <praeco-form-item label="Proxy Login" prop="discordProxyLogin">
-      <el-input id="discordProxyLogin" :value="discordProxyLogin" :disabled="viewOnly" @input="discordProxyLogin = $event" />
+    <praeco-form-item label="discord_proxy_login" prop="discordProxyLogin">
+      <el-input v-model="discordProxyLogin" :disabled="viewOnly" />
       <label>The Discord proxy auth username.</label>
     </praeco-form-item>
 
-    <praeco-form-item label="Proxy Password" prop="discordProxyPassword">
-      <el-input id="discordProxyPassword" :value="discordProxyPassword" :disabled="viewOnly" @input="discordProxyPassword = $event" />
+    <praeco-form-item label="discord_proxy_password" prop="discordProxyPassword">
+      <el-input v-model="discordProxyPassword" :disabled="viewOnly" />
       <label>The Discord proxy auth password.</label>
     </praeco-form-item>
   </div>
 </template>
 
-<script>
+<script setup>
 import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
 import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
 
-let emojiIndex = new EmojiIndex(emojiData);
+import { useConfigAlertDiscord } from '@/composables/config/alert/useConfigAlertDiscord';
 
-export default {
-  components: {
-    Emoji,
-    Picker
-  },
+// props
+defineProps({
+  viewOnly: Boolean
+});
 
-  props: ['viewOnly'],
+const {
+  discordWebhookUrl,
+  discordEmojiTitle,
+  addDiscordEmoji,
+  discordEmbedFooter,
+  discordEmbedIconUrl,
+  discordProxy,
+  discordProxyLogin,
+  discordProxyPassword
+} = useConfigAlertDiscord();
 
-  data() {
-    return {
-      emojiIndex,
-    };
-  },
-  computed: {
-    discordWebhookUrl: {
-      get() {
-        return this.$store.state.config.alert.discordWebhookUrl;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_DISCORD_WEBHOOK_URL',
-          value
-        );
-      }
-    },
-
-    discordEmojiTitle: {
-      get() {
-        return this.$store.state.config.alert.discordEmojiTitle;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_DISCORD_EMOJI_TITLE',
-          value
-        );
-      }
-    },
-
-    discordEmbedFooter: {
-      get() {
-        return this.$store.state.config.alert.discordEmbedFooter;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_DISCORD_EMBED_FOOTER',
-          value
-        );
-      }
-    },
-
-    discordEmbedIconUrl: {
-      get() {
-        return this.$store.state.config.alert.discordEmbedIconUrl;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_DISCORD_EMBED_ICON_URL',
-          value
-        );
-      }
-    },
-
-    discordProxy: {
-      get() {
-        return this.$store.state.config.alert.discordProxy;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_DISCORD_PROXY',
-          value
-        );
-      }
-    },
-
-    discordProxyLogin: {
-      get() {
-        return this.$store.state.config.alert.discordProxyLogin;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_DISCORD_PROXY_LOGIN',
-          value
-        );
-      }
-    },
-
-    discordProxyPassword: {
-      get() {
-        return this.$store.state.config.alert.discordProxyPassword;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_DISCORD_PROXY_PASSWORD',
-          value
-        );
-      }
-    }
-  },
-
-  methods: {
-    addDiscordEmoji(value) {
-      this.discordEmojiTitle = value.colons;
-    }
-  }
-};
+const emojiIndex = new EmojiIndex(emojiData);
 </script>
 
 <style lang="scss" scoped>

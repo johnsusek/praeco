@@ -53,8 +53,7 @@
 
     <el-form-item label="Pipe Match Json" prop="pipeMatchJson">
       <el-switch
-        id="pipeMatchJson"
-        :value="pipeMatchJson"
+        v-model="pipeMatchJson"
         :disabled="viewOnly"
         @change="changePipeMatchJson" />
       <label>
@@ -65,8 +64,7 @@
 
     <el-form-item label="Pipe Alert Text" prop="pipeAlertText">
       <el-switch
-        id="pipeAlertText"
-        :value="pipeAlertText"
+        v-model="pipeAlertText"
         :disabled="viewOnly"
         @change="changePipeAlertText" />
       <label>
@@ -78,8 +76,7 @@
 
     <el-form-item label="fail_on_non_zero_exit" prop="failOnNonZeroExit">
       <el-switch
-        id="failOnNonZeroExit"
-        :value="failOnNonZeroExit"
+        v-model="failOnNonZeroExit"
         :disabled="viewOnly"
         @change="changeFailOnNonZeroExit" />
       <label>
@@ -218,7 +215,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>

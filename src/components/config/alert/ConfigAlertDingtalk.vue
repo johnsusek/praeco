@@ -2,23 +2,25 @@
   <div>
     <!-- dingtalk_msgtype -->
 
-    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" label="text" border @change="changeDingtalk">
-      Text
-    </el-radio>
-    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" label="markdown" border @change="changeDingtalk">
-      Markdown
-    </el-radio>
-    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" label="single_action_card" border @change="changeDingtalk">
-      Single Action Card
-    </el-radio>
-    <el-radio id="groupDingtalk" v-model="groupDingtalk" :disabled="viewOnly" label="action_card" border @change="changeDingtalk">
-      Action Card
-    </el-radio>
+    <el-radio-group v-model="dingtalkMsgtype" :disabled="viewOnly">
+      <el-radio label="text" border>
+        Text
+      </el-radio>
+      <el-radio label="markdown" border>
+        Markdown
+      </el-radio>
+      <el-radio label="single_action_card" border>
+        Single Action Card
+      </el-radio>
+      <el-radio label="action_card" border>
+        Action Card
+      </el-radio>
+    </el-radio-group>
 
     <!-- dingtalk_access_token -->
 
     <praeco-form-item label="Access Token" prop="dingtalkAccessToken">
-      <el-input id="dingtalkAccessToken" :value="dingtalkAccessToken" :disabled="viewOnly" @input="dingtalkAccessToken = $event" />
+      <el-input v-model="dingtalkAccessToken" :disabled="viewOnly" />
       <label>
         Dingtalk access token.
       </label>
@@ -28,7 +30,7 @@
       <!-- dingtalk_single_title -->
 
       <praeco-form-item label="Single Title" prop="dingtalkSingleTitle" required>
-        <el-input id="dingtalkSingleTitle" :value="dingtalkSingleTitle" :disabled="viewOnly" @input="dingtalkSingleTitle = $event" />
+        <el-input v-model="dingtalkSingleTitle" :disabled="viewOnly" />
         <label>
           The title of a single button.
         </label>
@@ -37,7 +39,7 @@
       <!-- dingtalk_single_url -->
 
       <praeco-form-item label="Single URL" prop="dingtalkSingleUrl">
-        <el-input id="dingtalkSingleUrl" :value="dingtalkSingleUrl" :disabled="viewOnly" @input="dingtalkSingleUrl = $event" />
+        <el-input v-model="dingtalkSingleUrl" :disabled="viewOnly" />
         <label>
           Jump link for a single button.
         </label>
@@ -47,11 +49,11 @@
     <div v-if="groupDingtalk === 'action_card'">
       <!-- dingtalk_btn_orientation -->
       <praeco-form-item label="Msg Type" prop="dingtalkBtnOrientation" required>
-        <el-radio-group :value="dingtalkBtnOrientation" :disabled="viewOnly" @input="dingtalkBtnOrientation = $event">
-          <el-radio id="dingtalkBtnOrientation0" label="0">
+        <el-radio-group v-model="dingtalkBtnOrientation" :disabled="viewOnly">
+          <el-radio label="0">
             Buttons are arranged vertically
           </el-radio><br>
-          <el-radio id="dingtalkBtnOrientation1" label="1">
+          <el-radio label="1">
             Buttons are arranged horizontally
           </el-radio>
         </el-radio-group>
@@ -59,91 +61,26 @@
     </div>
 
     <praeco-form-item label="dingtalk_sign" prop="dingtalkSign">
-      <el-input id="dingtalkSign" :value="dingtalkSign" :disabled="viewOnly" @input="dingtalkSign = $event" />
+      <el-input v-model="dingtalkSign" :disabled="viewOnly" />
       <label>DingTalk HMAC secret, used for message authentication.</label>
     </praeco-form-item>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useConfigAlertDingtalk } from '@/composables/config/alert/useConfigAlertDingtalk';
 
-export default {
-  props: ['viewOnly'],
+defineProps({
+  viewOnly: Boolean
+});
 
-  data() {
-    let groupDingtalkValue = this.$store.state.config.alert.dingtalkMsgtype;
-    if (typeof this.$store.state.config.alert.dingtalkMsgtype === 'undefined' || this.$store.state.config.alert.dingtalkMsgtype === '') {
-      groupDingtalkValue = 'text';
-    }
-    return {
-      groupDingtalk: groupDingtalkValue,
-    };
-  },
-
-  computed: {
-    dingtalkAccessToken: {
-      get() {
-        return this.$store.state.config.alert.dingtalkAccessToken;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DINGTALK_ACCESS_TOKEN', value);
-      }
-    },
-
-    dingtalkMsgtype: {
-      get() {
-        return this.$store.state.config.alert.dingtalkMsgtype;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DINGTALK_MSGTYPE', value);
-      }
-    },
-
-    dingtalkSingleTitle: {
-      get() {
-        return this.$store.state.config.alert.dingtalkSingleTitle;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DINGTALK_SINGLE_TITLE', value);
-      }
-    },
-
-    dingtalkSingleUrl: {
-      get() {
-        return this.$store.state.config.alert.dingtalkSingleUrl;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DINGTALK_SINGLE_URL', value);
-      }
-    },
-
-    dingtalkBtnOrientation: {
-      get() {
-        return this.$store.state.config.alert.dingtalkBtnOrientation;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DINGTALK_BTN_ORIENTATION', value);
-      }
-    },
-
-    dingtalkSign: {
-      get() {
-        return this.$store.state.config.alert.dingtalkSign;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DINGTALK_SIGN', value);
-      }
-    }
-  },
-
-  methods: {
-    changeDingtalk(val) {
-      this.dingtalkMsgtype = val;
-    }
-  }
-};
+const {
+  groupDingtalk,
+  dingtalkAccessToken,
+  dingtalkMsgtype,
+  dingtalkSingleTitle,
+  dingtalkSingleUrl,
+  dingtalkBtnOrientation,
+  dingtalkSign
+} = useConfigAlertDingtalk();
 </script>
-
-<style lang="scss" scoped>
-
-</style>

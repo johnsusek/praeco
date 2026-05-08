@@ -51,12 +51,12 @@
     </el-popover>
 
     <el-form-item label="Post as" prop="matrixhookshotUsername">
-      <el-input id="matrixhookshotUsername" :value="matrixhookshotUsername" :disabled="viewOnly" @input="matrixhookshotUsername = $event" />
+      <el-input v-model="matrixhookshotUsername" :disabled="viewOnly" />
       <label>Optional username to prepend to the text body.</label>
     </el-form-item>
 
     <el-form-item label="Timeout" prop="matrixhookshotTimeout">
-      <el-input-number id="matrixhookshotTimeout" :value="matrixhookshotTimeout" :disabled="viewOnly" @input="matrixhookshotTimeout = $event" />
+      <el-input-number v-model="matrixhookshotTimeout" :disabled="viewOnly" />
       <label>
         You can specify a timeout value, in seconds, for making communicating with Hookshot.
         The default is 10. If a timeout occurs, the alert will be retried next time ElastAlert 2 cycles.
@@ -64,12 +64,12 @@
     </el-form-item>
 
     <el-form-item label="text" prop="matrixhookshotText">
-      <el-input id="matrixhookshotText" :value="matrixhookshotText" :disabled="viewOnly" @input="matrixhookshotText = $event" />
+      <el-input v-model="matrixhookshotText" :disabled="viewOnly" />
       <label>Override the default alert text with custom text formatting.</label>
     </el-form-item>
 
     <el-form-item label="Proxy" prop="matrixhookshotProxy">
-      <el-input :value="matrixhookshotProxy" :disabled="viewOnly" @input="matrixhookshotProxy = $event" />
+      <el-input v-model="matrixhookshotProxy" :disabled="viewOnly" />
       <label>
         By default ElastAlert 2 will not use a network proxy to send notifications to Hookshot.
         Set this option using ``hostname:port`` if you need to use a proxy. only supports https.
@@ -78,18 +78,14 @@
 
     <el-form-item label="Ignore SSL Errors" prop="matrixhookshotIgnoreSslErrors">
       <el-switch
-        id="matrixhookshotIgnoreSslErrors"
-        :value="matrixhookshotIgnoreSslErrors"
-        :disabled="viewOnly"
-        @change="changeMatrixhookshotIgnoreSslErrors" />
+        v-model="matrixhookshotIgnoreSslErrors"
+        :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="CA Certs" prop="matrixhookshotCaCerts">
       <el-switch
-        id="matrixhookshotCaCerts"
-        :value="matrixhookshotCaCerts"
-        :disabled="viewOnly"
-        @change="changeMatrixhookshotCaCerts" />
+        v-model="matrixhookshotCaCerts"
+        :disabled="viewOnly" />
     </el-form-item>
   </div>
 </template>
@@ -236,18 +232,7 @@ export default {
       this.$nextTick(() => {
         this.validate();
       });
-    },
-
-    changeMatrixhookshotIgnoreSslErrors(val) {
-      this.matrixhookshotIgnoreSslErrors = val;
-    },
-
-    changeMatrixhookshotCaCerts(val) {
-      this.matrixhookshotCaCerts = val;
     }
   }
 };
 </script>
-
-  <style lang="scss" scoped>
-  </style>

@@ -1,47 +1,26 @@
 <template>
   <div>
-    <el-form-item label="API KEY" prop="datadogApiKey" required>
-      <el-input id="datadogApiKey" :value="datadogApiKey" :disabled="viewOnly" @input="datadogApiKey = $event" />
+    <praeco-form-item label="datadog_api_key" prop="datadogApiKey" required>
+      <el-input v-model="datadogApiKey" :disabled="viewOnly" />
       <label>Datadog API key.</label>
-    </el-form-item>
+    </praeco-form-item>
 
-    <el-form-item label="APP KEY" prop="datadogAppKey" required>
-      <el-input id="datadogAppKey" :value="datadogAppKey" :disabled="viewOnly" @input="datadogAppKey = $event" />
+    <praeco-form-item label="datadog_app_key" prop="datadogAppKey" required>
+      <el-input v-model="datadogAppKey" :disabled="viewOnly" />
       <label>Datadog application key.</label>
-    </el-form-item>
+    </praeco-form-item>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useConfigAlertDatadog } from '@/composables/config/alert/useConfigAlertDatadog';
 
-export default {
-  props: ['viewOnly'],
+defineProps({
+  viewOnly: Boolean
+});
 
-  computed: {
-    datadogApiKey: {
-      get() {
-        return this.$store.state.config.alert.datadogApiKey;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DATADOG_API_KEY', value);
-      }
-    },
-
-    datadogAppKey: {
-      get() {
-        return this.$store.state.config.alert.datadogAppKey;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_DATADOG_APP_KEY', value);
-      }
-    }
-  },
-
-  methods: {
-  }
-};
+const {
+  datadogApiKey,
+  datadogAppKey
+} = useConfigAlertDatadog();
 </script>
-
-<style lang="scss" scoped>
-
-</style>

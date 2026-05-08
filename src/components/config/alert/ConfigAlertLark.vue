@@ -1,28 +1,18 @@
 <template>
   <div>
-    <praeco-form-item label="Bot Id" prop="larkBotId" required>
-      <el-input id="larkBotId" :value="larkBotId" :disabled="viewOnly" @input="larkBotId = $event" />
+    <praeco-form-item label="lark_bot_id" prop="larkBotId" required>
+      <el-input v-model="larkBotId" :disabled="viewOnly" />
       <label>Lark bot id.</label>
     </praeco-form-item>
   </div>
 </template>
 
-<script>
-export default {
-  props: ['viewOnly'],
+<script setup>
+import { useConfigAlertLark } from '@/composables/config/alert/useConfigAlertLark';
 
-  computed: {
-    larkBotId: {
-      get() {
-        return this.$store.state.config.alert.larkBotId;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_LARK_BOT_ID', value);
-      }
-    }
-  }
-};
+defineProps({
+  viewOnly: Boolean
+});
+
+const { larkBotId } = useConfigAlertLark();
 </script>
-
-  <style lang="scss" scoped>
-  </style>

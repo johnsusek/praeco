@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-form-item label="API URL" prop="alertaApiUrl">
-      <el-input id="alertaApiUrl" :value="alertaApiUrl" :disabled="viewOnly" @input="alertaApiUrl = $event" />
+      <el-input v-model="alertaApiUrl" :disabled="viewOnly" />
       <label>API server URL.</label>
     </el-form-item>
 
     <el-form-item label="API Key" prop="alertaApiKey">
-      <el-input id="alertaApiKey" :value="alertaApiKey" :disabled="viewOnly" @input="alertaApiKey = $event" />
+      <el-input v-model="alertaApiKey" :disabled="viewOnly" />
       <label>
         This is the api key for alerta server, sent in an Authorization HTTP header.
         If not defined, no Authorization header is sent.
@@ -28,12 +28,12 @@
     </el-form-item>
 
     <el-form-item label="Resource" prop="alertaResource">
-      <el-input id="alertaResource" :value="alertaResource" :disabled="viewOnly" @input="alertaResource = $event" />
+      <el-input v-model="alertaResource" :disabled="viewOnly" />
       <label>If true and query_key is present, this will override alerta_resource field with the query_key value (Can be useful if query_key is a hostname).</label>
     </el-form-item>
 
     <el-form-item label="Text" prop="alertaText">
-      <el-input id="alertaText" :value="alertaText" :disabled="viewOnly" @input="alertaText = $event" />
+      <el-input v-model="alertaText" :disabled="viewOnly" />
       <label>
         This is the api key for alerta server, sent in an Authorization HTTP header.
         If not defined, no Authorization header is sent.
@@ -41,12 +41,12 @@
     </el-form-item>
 
     <el-form-item label="Event" prop="alertaEvent">
-      <el-input id="alertaEvent" :value="alertaEvent" :disabled="viewOnly" @input="alertaEvent = $event" />
+      <el-input v-model="alertaEvent" :disabled="viewOnly" />
       <label>Defaults to “elastalert”.</label>
     </el-form-item>
 
     <el-form-item label="Group" prop="alertaGroup">
-      <el-input id="alertaGroup" :value="alertaGroup" :disabled="viewOnly" @input="alertaGroup = $event" />
+      <el-input v-model="alertaGroup" :disabled="viewOnly" />
       <label>Defaults to “”.</label>
     </el-form-item>
 
@@ -102,12 +102,12 @@
     </el-popover>
 
     <el-form-item label="Environment" prop="alertaEnvironment">
-      <el-input id="alertaEnvironment" :value="alertaEnvironment" :disabled="viewOnly" @input="alertaEnvironment = $event" />
+      <el-input v-model="alertaEnvironment" :disabled="viewOnly" />
       <label>Defaults to “Production”.</label>
     </el-form-item>
 
     <el-form-item label="Timeout" prop="alertaTimeout">
-      <el-input-number id="alertaTimeout" :value="alertaTimeout" :disabled="viewOnly" @input="alertaTimeout = $event" />
+      <el-input-number v-model="alertaTimeout" :disabled="viewOnly" />
       <label>
         Defaults 84600 (1 Day).
       </label>
@@ -115,40 +115,34 @@
 
     <el-form-item label="Use Match Timestamp" prop="alertaUseMatchTimestamp">
       <el-switch
-        id="alertaUseMatchTimestamp"
-        :value="alertaUseMatchTimestamp"
-        :disabled="viewOnly"
-        @change="changeAlertaUseMatchTimestamp" />
+        v-model="alertaUseMatchTimestamp"
+        :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="Use Qk As Resource" prop="alertaUseQkAsResource">
       <el-switch
-        id="alertaUseQkAsResource"
-        :value="alertaUseQkAsResource"
-        :disabled="viewOnly"
-        @change="changeAlertaUseQkAsResource" />
+        v-model="alertaUseQkAsResource"
+        :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="Api Skip Ssl" prop="alertaApiSkipSsl">
       <el-switch
-        id="alertaApiSkipSsl"
-        :value="alertaApiSkipSsl"
-        :disabled="viewOnly"
-        @change="changeAlertaApiSkipSsl" />
+        v-model="alertaApiSkipSsl"
+        :disabled="viewOnly" />
     </el-form-item>
 
     <el-form-item label="Origin" prop="alertaOrigin">
-      <el-input id="alertaOrigin" :value="alertaOrigin" :disabled="viewOnly" @input="alertaOrigin = $event" />
+      <el-input v-model="alertaOrigin" :disabled="viewOnly" />
       <label>Defaults to “elastalert”.</label>
     </el-form-item>
 
     <el-form-item label="Value" prop="alertaValue">
-      <el-input id="alertaValue" :value="alertaValue" :disabled="viewOnly" @input="alertaValue = $event" />
+      <el-input v-model="alertaValue" :disabled="viewOnly" />
       <label>Defaults to “”.</label>
     </el-form-item>
 
     <el-form-item label="Type" prop="alertaType">
-      <el-input id="alertaType" :value="alertaType" :disabled="viewOnly" @input="alertaType = $event" />
+      <el-input v-model="alertaType" :disabled="viewOnly" />
       <label>Defaults to “elastalert”.</label>
     </el-form-item>
 
@@ -832,23 +826,7 @@ export default {
       this.$nextTick(() => {
         this.validate();
       });
-    },
-
-    changeAlertaUseMatchTimestamp(val) {
-      this.alertaUseMatchTimestamp = val;
-    },
-
-    changeAlertaUseQkAsResource(val) {
-      this.alertaUseQkAsResource = val;
-    },
-
-    changeAlertaApiSkipSsl(val) {
-      this.alertaApiSkipSsl = val;
-    },
+    }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -1,50 +1,24 @@
 <template>
   <div>
     <praeco-form-item label="line_channel_access_token" prop="lineChannelAccessToken" required>
-      <el-input id="lineChannelAccessToken" :value="lineChannelAccessToken" :disabled="viewOnly" @input="lineChannelAccessToken = $event" />
+      <el-input v-model="lineChannelAccessToken" :disabled="viewOnly" />
     </praeco-form-item>
 
     <praeco-form-item label="line_to" prop="lineTo" required>
-      <el-input id="lineTo" :value="lineTo" :disabled="viewOnly" @input="lineTo = $event" />
+      <el-input v-model="lineTo" :disabled="viewOnly" />
     </praeco-form-item>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useConfigAlertLineMessageApi } from '@/composables/config/alert/useConfigAlertLineMessageApi';
 
-export default {
-  props: ['viewOnly'],
+defineProps({
+  viewOnly: Boolean
+});
 
-  computed: {
-    lineChannelAccessToken: {
-      get() {
-        return this.$store.state.config.alert.lineChannelAccessToken;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_LINE_CHANNEL_ACCESS_TOKEN',
-          value
-        );
-      }
-    },
-    lineTo: {
-      get() {
-        return this.$store.state.config.alert.lineTo;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_LINE_TO',
-          value
-        );
-      }
-    }
-  },
-
-  methods: {
-  }
-};
+const {
+  lineChannelAccessToken,
+  lineTo
+} = useConfigAlertLineMessageApi();
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -3,10 +3,8 @@
     <el-col :span="24">
       <el-form-item label="scan entire timeframe">
         <el-switch
-          id="scanEntireTimeframe"
-          :value="scanEntireTimeframe"
-          :disabled="viewOnly"
-          @change="changeScanEntireTimeframe" />
+          v-model="scanEntireTimeframe"
+          :disabled="viewOnly" />
         <label>
           If true, when ElastAlert 2 starts, it will always start querying at the current time minus the timeframe.
           timeframe must exist in the rule.
@@ -16,29 +14,14 @@
   </el-row>
 </template>
 
-<script>
-export default {
-  props: ['viewOnly'],
+<script setup>
+import { useConfigScanEntireTimeframe } from '@/composables/config/useConfigScanEntireTimeframe';
 
-  computed: {
-    scanEntireTimeframe: {
-      get() {
-        return this.$store.state.config.alert.scanEntireTimeframe;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_SCAN_ENTIRE_TIMEFRAME', value);
-      }
-    }
-  },
+defineProps({
+  viewOnly: Boolean
+});
 
-  mounted() {
-    this.scanEntireTimeframe = this.$store.state.config.alert.scanEntireTimeframe;
-  },
-
-  methods: {
-    changeScanEntireTimeframe(val) {
-      this.scanEntireTimeframe = val;
-    }
-  }
-};
+const {
+  scanEntireTimeframe
+} = useConfigScanEntireTimeframe();
 </script>

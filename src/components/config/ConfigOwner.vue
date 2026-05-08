@@ -3,9 +3,8 @@
     <el-col :span="useOwner ? 6 : 19">
       <el-form-item label="Owner">
         <el-switch
-          :value="useOwner"
-          :disabled="viewOnly"
-          @change="changeOwner" />
+          v-model="useOwner"
+          :disabled="viewOnly" />
         <label>
           This value will be used to identify the stakeholder of the alert.
           Optionally, this field can be included in any alert type. (Optional, string)
@@ -15,50 +14,21 @@
 
     <el-col v-if="useOwner" :span="6">
       <el-form-item label="Owner" prop="configOwner" required>
-        <el-input id="configOwner" :value="configOwner" :disabled="viewOnly" @input="configOwner = $event" />
+        <el-input v-model="configOwner" :disabled="viewOnly" />
       </el-form-item>
     </el-col>
   </el-row>
 </template>
 
-<script>
-export default {
-  props: ['viewOnly'],
+<script setup>
+import { useConfigOwner } from '@/composables/config/useConfigOwner';
 
-  data() {
-    return {};
-  },
+defineProps({
+  viewOnly: Boolean
+});
 
-  computed: {
-    useOwner: {
-      get() {
-        return this.$store.state.config.alert.useOwner;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_USE_OWNER', value);
-      }
-    },
-
-    configOwner: {
-      get() {
-        return this.$store.state.config.alert.configOwner;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_OWNER', value);
-      }
-    },
-  },
-
-  mounted() {
-    if (this.configOwner) {
-      this.useOwner = true;
-    }
-  },
-
-  methods: {
-    changeOwner(val) {
-      this.useOwner = val;
-    },
-  }
-};
+const {
+  useOwner,
+  configOwner
+} = useConfigOwner();
 </script>

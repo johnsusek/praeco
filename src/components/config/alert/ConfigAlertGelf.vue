@@ -1,167 +1,73 @@
 <template>
   <div>
-    <praeco-form-item label="Type" prop="gelfType" required>
-      <el-radio-group :value="gelfType" :disabled="viewOnly" @input="gelfType = $event">
-        <el-radio id="gelfTypeHttp" label="http" border>
+    <praeco-form-item label="gelf_type" prop="gelfType" required>
+      <el-radio-group v-model="gelfType" :disabled="viewOnly">
+        <el-radio label="http" border>
           http
         </el-radio>
-        <el-radio id="gelfTypeTcp" label="tcp" border>
+        <el-radio label="tcp" border>
           tcp
         </el-radio>
       </el-radio-group>
     </praeco-form-item>
 
     <div v-if="gelfType === 'http'">
-      <praeco-form-item label="EndPoint" prop="gelfEndpoint">
-        <el-input id="gelfEndpoint" :value="gelfEndpoint" :disabled="viewOnly" @input="gelfEndpoint = $event" />
+      <praeco-form-item label="gelf_endpoint" prop="gelfEndpoint">
+        <el-input v-model="gelfEndpoint" :disabled="viewOnly" />
         <label>Link to GELF HTTP Input as an example: ‘http://example.com/gelf'</label>
       </praeco-form-item>
 
-      <praeco-form-item label="Ignore SSL Errors" prop="gelfHttpIgnoreSslErrors">
+      <praeco-form-item label="gelf_http_ignore_ssl_errors" prop="gelfHttpIgnoreSslErrors">
         <el-switch
-          id="gelfHttpIgnoreSslErrors"
-          :value="gelfHttpIgnoreSslErrors"
-          :disabled="viewOnly"
-          @change="changeGelfHttpIgnoreSslErrors" />
+          v-model="gelfHttpIgnoreSslErrors"
+          :disabled="viewOnly" />
       </praeco-form-item>
     </div>
 
     <div v-if="gelfType === 'tcp'">
-      <praeco-form-item label="Host" prop="gelfHost" required>
-        <el-input id="gelfHost" :value="gelfHost" :disabled="viewOnly" @input="gelfHost = $event" />
+      <praeco-form-item label="gelf_host" prop="gelfHost" required>
+        <el-input v-model="gelfHost" :disabled="viewOnly" />
         <label>Graylog server address where Input launched.</label>
       </praeco-form-item>
 
-      <praeco-form-item label="Port" prop="gelfPort" required>
-        <el-input-number id="gelfPort" :value="gelfPort" :disabled="viewOnly" @input="gelfPort = $event" />
+      <praeco-form-item label="gelf_port" prop="gelfPort" required>
+        <el-input-number v-model="gelfPort" :disabled="viewOnly" />
         <label>Port, specified for Input.</label>
       </praeco-form-item>
     </div>
 
-    <praeco-form-item label="LogLevel" prop="gelfLogLevel">
-      <el-input-number id="gelfLogLevel" :value="gelfLogLevel" :disabled="viewOnly" :min="0" :max="7" @input="gelfLogLevel = $event" />
+    <praeco-form-item label="gelf_log_level" prop="gelfLogLevel">
+      <el-input-number v-model="gelfLogLevel" :disabled="viewOnly" :min="0" :max="7" />
       <label>Standard syslog severity levels. </label>
     </praeco-form-item>
 
-    <praeco-form-item label="CaCert" prop="gelfCaCert">
-      <el-input id="gelfCaCert" :value="gelfCaCert" :disabled="viewOnly" @input="gelfCaCert = $event" />
+    <praeco-form-item label="gelf_ca_cert" prop="gelfCaCert">
+      <el-input v-model="gelfCaCert" :disabled="viewOnly" />
       <label>Path to custom CA certificate.</label>
     </praeco-form-item>
 
-    <praeco-form-item label="TimeOut" prop="gelfTimeout">
-      <el-input-number id="gelfTimeout" :value="gelfTimeout" :disabled="viewOnly" @input="gelfTimeout = $event" />
+    <praeco-form-item label="gelf_timeout" prop="gelfTimeout">
+      <el-input-number v-model="gelfTimeout" :disabled="viewOnly" />
       <label>Custom timeout.</label>
     </praeco-form-item>
   </div>
 </template>
 
-<script>
-export default {
-  props: ['viewOnly'],
-  computed: {
-    gelfType: {
-      get() {
-        return this.$store.state.config.alert.gelfType;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GELF_TYPE',
-          value
-        );
-      }
-    },
+<script setup>
+import { useConfigAlertGelf } from '@/composables/config/alert/useConfigAlertGelf';
 
-    gelfEndpoint: {
-      get() {
-        return this.$store.state.config.alert.gelfEndpoint;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GELF_ENDPOINT',
-          value
-        );
-      }
-    },
+defineProps({
+  viewOnly: Boolean
+});
 
-    gelfHttpIgnoreSslErrors: {
-      get() {
-        return this.$store.state.config.alert.gelfHttpIgnoreSslErrors;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GELF_HTTP_IGNORE_SSL_ERRORS',
-          value
-        );
-      }
-    },
-
-    gelfHost: {
-      get() {
-        return this.$store.state.config.alert.gelfHost;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GELF_HOST',
-          value
-        );
-      }
-    },
-
-    gelfPort: {
-      get() {
-        return this.$store.state.config.alert.gelfPort;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GELF_PORT',
-          value
-        );
-      }
-    },
-
-    gelfLogLevel: {
-      get() {
-        return this.$store.state.config.alert.gelfLogLevel;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GELF_LOG_LEVEL',
-          value
-        );
-      }
-    },
-
-    gelfCaCert: {
-      get() {
-        return this.$store.state.config.alert.gelfCaCert;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GELF_CA_CERT',
-          value
-        );
-      }
-    },
-
-    gelfTimeout: {
-      get() {
-        return this.$store.state.config.alert.gelfTimeout;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_GELF_TIMEOUT',
-          value
-        );
-      }
-    },
-  },
-  methods: {
-    changeGelfHttpIgnoreSslErrors(val) {
-      this.gelfHttpIgnoreSslErrors = val;
-    },
-  }
-};
+const {
+  gelfType,
+  gelfEndpoint,
+  gelfHttpIgnoreSslErrors,
+  gelfHost,
+  gelfPort,
+  gelfLogLevel,
+  gelfCaCert,
+  gelfTimeout
+}= useConfigAlertGelf();
 </script>
-
-<style lang="scss" scoped>
-</style>

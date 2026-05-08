@@ -3,10 +3,8 @@
     <el-col :span="enableLimitExcecution ? 6 : 24">
       <el-form-item label="Limit Excecution">
         <el-switch
-          id="enableLimitExcecution"
-          :value="enableLimitExcecution"
-          :disabled="viewOnly"
-          @change="changeLimitExcecution" />
+          v-model="enableLimitExcecution"
+          :disabled="viewOnly" />
         <label>Limit Excecution Setting.</label>
       </el-form-item>
     </el-col>
@@ -55,17 +53,6 @@ export default {
   mounted() {
     if (this.limitExcecution) {
       this.enableLimitExcecution = true;
-    }
-  },
-
-  methods: {
-    changeLimitExcecution(val) {
-      if (val) {
-        this.enableLimitExcecution = true;
-      } else {
-        this.enableLimitExcecution = false;
-        this.limitExcecution = '';
-      }
     }
   }
 };

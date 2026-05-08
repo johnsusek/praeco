@@ -1,16 +1,16 @@
 <template>
   <div>
-    <el-form-item label="Webhook id" prop="webexWebhookId" required>
-      <el-input :value="webexWebhookId" :disabled="viewOnly" @input="webexWebhookId = $event" />
+    <el-form-item label="webex_webhook_id" prop="webexWebhookId" required>
+      <el-input v-model="webexWebhookId" :disabled="viewOnly" />
       <label>Webex webhook ID.</label>
     </el-form-item>
 
-    <el-form-item label="Message color" prop="webexWebhookMsgtype" required>
-      <el-radio-group :value="webexWebhookMsgtype" :disabled="viewOnly" @input="webexWebhookMsgtype = $event">
-        <el-radio id="webexWebhookMsgtypeText" label="text" border>
+    <el-form-item label="webex_webhook_msgtype" prop="webexWebhookMsgtype" required>
+      <el-radio-group v-model="webexWebhookMsgtype" :disabled="viewOnly">
+        <el-radio label="text" border>
           Text
         </el-radio>
-        <el-radio id="webexWebhookMsgtypeMarkDown" label="markdown" border>
+        <el-radio label="markdown" border>
           MarkDown
         </el-radio>
       </el-radio-group>
@@ -18,41 +18,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  components: {
-  },
+<script setup>
+import { useConfigAlertWebex } from '@/composables/config/alert/useConfigAlertWebex';
 
-  props: ['viewOnly'],
-  emits: ['validate'],
+defineProps({
+  viewOnly: Boolean
+});
 
-  data() {
-    return {
-    };
-  },
-  computed: {
-    webexWebhookId: {
-      get() {
-        return this.$store.state.config.alert.webexWebhookId;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_WEBEX_WEBHOOK_ID', value);
-      }
-    },
-    webexWebhookMsgtype: {
-      get() {
-        return this.$store.state.config.alert.webexWebhookMsgtype;
-      },
-      set(value) {
-        this.$store.commit('config/alert/UPDATE_WEBEX_WEBHOOK_MSGTYPE', value);
-      }
-    }
-  },
-
-  methods: {
-  }
-};
+const {
+  webexWebhookId,
+  webexWebhookMsgtype
+} = useConfigAlertWebex();
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -31,8 +31,8 @@ function initialState() {
     kibanaDiscoverVersion: '',
     kibanaDiscoverIndexPatternId: '',
     kibanaDiscoverColumns: [],
-    kibanaDiscoverFromTimedelta: { minutes: 10 },
-    kibanaDiscoverToTimedelta: { minutes: 10 },
+    kibanaDiscoverFromTimedelta: null,
+    kibanaDiscoverToTimedelta: null,
 
     /* limitExcecution */
     limitExcecution: '',
@@ -513,35 +513,35 @@ export default {
     },
 
     UPDATE_AGGREGATION_SCHEDULE(state, schedule) {
-      state.aggregationSchedule = schedule;
+      state.aggregationSchedule = schedule ?? '';
     },
 
     UPDATE_AGGREGATION_KEY(state, key) {
-      state.aggregationKey = key;
+      state.aggregationKey = key ?? '';
     },
 
     UPDATE_SUMMARY_TABLE_FIELDS(state, fields) {
-      state.summaryTableFields = fields;
+      state.summaryTableFields = fields ?? [];
     },
 
     UPDATE_REALERT(state, realert) {
-      state.realert = realert;
+      state.realert = realert ?? null;
     },
 
     UPDATE_BODY(state, body) {
-      state.body = body;
+      state.body = body ?? '';
     },
 
     UPDATE_BODY_TYPE(state, bodyType) {
-      state.bodyType = bodyType;
+      state.bodyType = bodyType ?? 'alert_text_only';
     },
 
     UPDATE_SUBJECT(state, subject) {
-      state.subject = subject;
+      state.subject = subject ?? '';
     },
 
     UPDATE_ALERT_SUBJECT_ARGS(state, alertSubjectArgs) {
-      state.alertSubjectArgs = alertSubjectArgs;
+      state.alertSubjectArgs = alertSubjectArgs ?? [];
     },
 
     ADD_ALERT_SUBJECT_ARGS_ENTRY(state) {
@@ -562,7 +562,7 @@ export default {
     },
 
     UPDATE_ALERT_TEXT_ARGS(state, alertTextArgs) {
-      state.alertTextArgs = alertTextArgs;
+      state.alertTextArgs = alertTextArgs ?? [];
     },
 
     ADD_ALERT_TEXT_ARGS_ENTRY(state) {
@@ -588,49 +588,49 @@ export default {
 
     /* buffer_time */
     USE_BUFFER_TIME(state, useBufferTime) {
-      state.useBufferTime = useBufferTime;
+      state.useBufferTime = useBufferTime ?? false;
     },
 
     UPDATE_BUFFER_TIME(state, bufferTimeLocal) {
-      state.bufferTimeLocal = bufferTimeLocal;
+      state.bufferTimeLocal = bufferTimeLocal ?? { minutes: 1 };
     },
 
     /* Description */
     UPDATE_USE_DESCRIPTION(state, useDescription) {
-      state.useDescription = useDescription;
+      state.useDescription = useDescription ?? false;
     },
 
     UPDATE_DESCRIPTION(state, configDescription) {
-      state.configDescription = configDescription;
+      state.configDescription = configDescription ?? '';
     },
 
     /* Kibana Discover */
     UPDATE_GENERATE_KIBANA_DISCOVER_URL(state, generateKibanaDiscoverUrl) {
-      state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl;
+      state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl ?? false;
     },
 
     UPDATE_KIBANA_DISCOVER_APP_URL(state, kibanaDiscoverAppUrl) {
-      state.kibanaDiscoverAppUrl = kibanaDiscoverAppUrl;
+      state.kibanaDiscoverAppUrl = kibanaDiscoverAppUrl ?? 'http://localhost:5601/app/discover#';
     },
 
     UPDATE_KIBANA_DISCOVER_VERSION(state, kibanaDiscoverVersion) {
-      state.kibanaDiscoverVersion = kibanaDiscoverVersion;
+      state.kibanaDiscoverVersion = kibanaDiscoverVersion ?? '';
     },
 
     UPDATE_KIBANA_DISCOVER_INDEX_PATTERN_ID(state, kibanaDiscoverIndexPatternId) {
-      state.kibanaDiscoverIndexPatternId = kibanaDiscoverIndexPatternId;
+      state.kibanaDiscoverIndexPatternId = kibanaDiscoverIndexPatternId ?? '';
     },
 
     UPDATE_KIBANA_DISCOVER_FROM_TIMEDELTA(state, kibanaDiscoverFromTimedelta) {
-      state.kibanaDiscoverFromTimedelta = kibanaDiscoverFromTimedelta;
+      state.kibanaDiscoverFromTimedelta = kibanaDiscoverFromTimedelta ?? { minutes: 10 };
     },
 
     UPDATE_KIBANA_DISCOVER_TO_TIMEDELTA(state, kibanaDiscoverToTimedelta) {
-      state.kibanaDiscoverToTimedelta = kibanaDiscoverToTimedelta;
+      state.kibanaDiscoverToTimedelta = kibanaDiscoverToTimedelta ?? { minutes: 10 };
     },
 
     UPDATE_KIBANA_DISCOVER_COLUMNS(state, kibanaDiscoverColumns) {
-      state.kibanaDiscoverColumns = kibanaDiscoverColumns;
+      state.kibanaDiscoverColumns = kibanaDiscoverColumns ?? [];
     },
 
     ADD_KIBANA_DISCOVER_COLUMNS_ENTRY(state) {
@@ -652,77 +652,77 @@ export default {
 
     /* limitExcecution */
     UPDATE_LIMIT_EXCECUTION(state, limitExcecution) {
-      state.limitExcecution = limitExcecution;
+      state.limitExcecution = limitExcecution ?? '';
     },
 
     /* Owner */
     UPDATE_USE_OWNER(state, useOwner) {
-      state.useOwner = useOwner;
+      state.useOwner = useOwner ?? false;
     },
 
     UPDATE_OWNER(state, configOwner) {
-      state.configOwner = configOwner;
+      state.configOwner = configOwner ?? '';
     },
 
     /* Priority */
     UPDATE_USE_PRIORITY(state, usePriority) {
-      state.usePriority = usePriority;
+      state.usePriority = usePriority ?? false;
     },
 
     UPDATE_PRIORITY(state, configPriority) {
-      state.configPriority = configPriority;
+      state.configPriority = configPriority ?? '';
     },
 
     /* scan_entire_timeframe */
     UPDATE_SCAN_ENTIRE_TIMEFRAME(state, scanEntireTimeframe) {
-      state.scanEntireTimeframe = scanEntireTimeframe;
+      state.scanEntireTimeframe = scanEntireTimeframe ?? false;
     },
 
     /* time_window_change */
     UPDATE_USE_TIME_WINDOW(state, useTimeWindow) {
-      state.useTimeWindow = useTimeWindow;
+      state.useTimeWindow = useTimeWindow ?? false;
     },
     UPDATE_TIME_WINDOW_START_TIME(state, timeWindowStartTime) {
-      state.timeWindowStartTime = timeWindowStartTime;
+      state.timeWindowStartTime = timeWindowStartTime ?? '';
     },
     UPDATE_TIME_WINDOW_END_TIME(state, timeWindowEndTime) {
-      state.timeWindowEndTime = timeWindowEndTime;
+      state.timeWindowEndTime = timeWindowEndTime ?? '';
     },
     UPDATE_TIME_WINDOW_DROP_IF(state, timeWindowDropIf) {
-      state.timeWindowDropIf = timeWindowDropIf;
+      state.timeWindowDropIf = timeWindowDropIf ?? '';
     },
 
     /* Alerta */
     UPDATE_ALERTA_API_URL(state, alertaApiUrl) {
-      state.alertaApiUrl = alertaApiUrl;
+      state.alertaApiUrl = alertaApiUrl ?? '';
     },
 
     UPDATE_ALERTA_API_KEY(state, alertaApiKey) {
-      state.alertaApiKey = alertaApiKey;
+      state.alertaApiKey = alertaApiKey ?? '';
     },
 
     UPDATE_ALERTA_SEVERITY(state, alertaSeverity) {
-      state.alertaSeverity = alertaSeverity;
+      state.alertaSeverity = alertaSeverity ?? 'warning';
     },
 
     UPDATE_ALERTA_RESOURCE(state, alertaResource) {
-      state.alertaResource = alertaResource;
+      state.alertaResource = alertaResource ?? '';
     },
 
     UPDATE_ALERTA_TEXT(state, alertaText) {
-      state.alertaText = alertaText;
+      state.alertaText = alertaText ?? '';
     },
 
     UPDATE_ALERTA_EVENT(state, alertaEvent) {
-      state.alertaEvent = alertaEvent;
+      state.alertaEvent = alertaEvent ?? '';
     },
 
     UPDATE_ALERTA_GROUP(state, alertaGroup) {
-      state.alertaGroup = alertaGroup;
+      state.alertaGroup = alertaGroup ?? '';
     },
 
     UPDATE_ALERTA_TAGS(state, alertaTags) {
-      state.alertaTags = alertaTags;
+      state.alertaTags = alertaTags ?? [];
     },
 
     ADD_ALERTA_TAGS_ENTRY(state) {
@@ -743,39 +743,39 @@ export default {
     },
 
     UPDATE_ALERTA_ENVIRONMENT(state, alertaEnvironment) {
-      state.alertaEnvironment = alertaEnvironment;
+      state.alertaEnvironment = alertaEnvironment ?? '';
     },
 
     UPDATE_ALERTA_TIMEOUT(state, alertaTimeout) {
-      state.alertaTimeout = alertaTimeout;
+      state.alertaTimeout = alertaTimeout ?? null;
     },
 
     UPDATE_ALERTA_USE_MATCH_TIMESTAMP(state, alertaUseMatchTimestamp) {
-      state.alertaUseMatchTimestamp = alertaUseMatchTimestamp;
+      state.alertaUseMatchTimestamp = alertaUseMatchTimestamp ?? false;
     },
 
     UPDATE_ALERTA_USE_QK_AS_RESOURCE(state, alertaUseQkAsResource) {
-      state.alertaUseQkAsResource = alertaUseQkAsResource;
+      state.alertaUseQkAsResource = alertaUseQkAsResource ?? false;
     },
 
     UPDATE_ALERTA_API_SKIP_SSL(state, alertaApiSkipSsl) {
-      state.alertaApiSkipSsl = alertaApiSkipSsl;
+      state.alertaApiSkipSsl = alertaApiSkipSsl ?? false;
     },
 
     UPDATE_ALERTA_ORIGIN(state, alertaOrigin) {
-      state.alertaOrigin = alertaOrigin;
+      state.alertaOrigin = alertaOrigin ?? '';
     },
 
     UPDATE_ALERTA_VALUE(state, alertaValue) {
-      state.alertaValue = alertaValue;
+      state.alertaValue = alertaValue ?? '';
     },
 
     UPDATE_ALERTA_TYPE(state, alertaType) {
-      state.alertaType = alertaType;
+      state.alertaType = alertaType ?? '';
     },
 
     UPDATE_ALERTA_SERVICE(state, alertaService) {
-      state.alertaService = alertaService;
+      state.alertaService = alertaService ?? [];
     },
 
     ADD_ALERTA_SERVICE_ENTRY(state) {
@@ -796,7 +796,7 @@ export default {
     },
 
     UPDATE_ALERTA_CORRELATE(state, alertaCorrelate) {
-      state.alertaCorrelate = alertaCorrelate;
+      state.alertaCorrelate = alertaCorrelate ?? [];
     },
 
     ADD_ALERTA_CORRELATE_ENTRY(state) {
@@ -817,7 +817,7 @@ export default {
     },
 
     UPDATE_ALERTA_ATTRIBUTES_KEYS(state, alertaAttributesKeys) {
-      state.alertaAttributesKeys = alertaAttributesKeys;
+      state.alertaAttributesKeys = alertaAttributesKeys ?? [];
     },
 
     ADD_ALERTA_ATTRIBUTES_KEYS_ENTRY(state) {
@@ -838,7 +838,7 @@ export default {
     },
 
     UPDATE_ALERTA_ATTRIBUTES_VALUES(state, alertaAttributesValues) {
-      state.alertaAttributesValues = alertaAttributesValues;
+      state.alertaAttributesValues = alertaAttributesValues ?? [];
     },
 
     ADD_ALERTA_ATTRIBUTES_VALUES_ENTRY(state) {
@@ -860,127 +860,127 @@ export default {
 
     /* Alertmanager */
     UPDATE_ALERTMANAGER_ALERT_SUBJECT_LABELNAME(state, alertmanagerAlertSubjectLabelname) {
-      state.alertmanagerAlertSubjectLabelname = alertmanagerAlertSubjectLabelname;
+      state.alertmanagerAlertSubjectLabelname = alertmanagerAlertSubjectLabelname ?? '';
     },
 
     UPDATE_ALERTMANAGER_ALERT_TEXT_LABELNAME(state, alertmanagerAlertTextLabelname) {
-      state.alertmanagerAlertTextLabelname = alertmanagerAlertTextLabelname;
+      state.alertmanagerAlertTextLabelname = alertmanagerAlertTextLabelname ?? '';
     },
 
     UPDATE_ALERTMANAGER_PROXY(state, alertmanagerProxy) {
-      state.alertmanagerProxy = alertmanagerProxy;
+      state.alertmanagerProxy = alertmanagerProxy ?? '';
     },
 
     UPDATE_ALERTMANAGER_BASIC_AUTH_LOGIN(state, alertmanagerBasicAuthLogin) {
-      state.alertmanagerBasicAuthLogin = alertmanagerBasicAuthLogin;
+      state.alertmanagerBasicAuthLogin = alertmanagerBasicAuthLogin ?? '';
     },
 
     UPDATE_ALERTMANAGER_BASIC_AUTH_PASSWORD(state, alertmanagerBasicAuthPassword) {
-      state.alertmanagerBasicAuthPassword = alertmanagerBasicAuthPassword;
+      state.alertmanagerBasicAuthPassword = alertmanagerBasicAuthPassword ?? '';
     },
 
     UPDATE_ALERTMANAGER_CA_CERTS(state, alertmanagerCaCerts) {
-      state.alertmanagerCaCerts = alertmanagerCaCerts;
+      state.alertmanagerCaCerts = alertmanagerCaCerts ?? false;
     },
 
     UPDATE_ALERTMANAGER_IGNORE_SSL_ERRORS(state, alertmanagerIgnoreSslErrors) {
-      state.alertmanagerIgnoreSslErrors = alertmanagerIgnoreSslErrors;
+      state.alertmanagerIgnoreSslErrors = alertmanagerIgnoreSslErrors ?? false;
     },
 
     UPDATE_ALERTMANAGER_TIMEOUT(state, alertmanagerTimeout) {
-      state.alertmanagerTimeout = alertmanagerTimeout;
+      state.alertmanagerTimeout = alertmanagerTimeout ?? null;
     },
 
     /* Amazon SNS */
     UPDATE_SNS_TOPIC_ARN(state, snsTopicArn) {
-      state.snsTopicArn = snsTopicArn;
+      state.snsTopicArn = snsTopicArn ?? '';
     },
 
     UPDATE_SNS_AWS_ACCESS_KEY_ID(state, snsAwsAccessKeyId) {
-      state.snsAwsAccessKeyId = snsAwsAccessKeyId;
+      state.snsAwsAccessKeyId = snsAwsAccessKeyId ?? '';
     },
 
     UPDATE_SNS_AWS_SECRET_ACCESS_KEY(state, snsAwsSecretAccessKey) {
-      state.snsAwsSecretAccessKey = snsAwsSecretAccessKey;
+      state.snsAwsSecretAccessKey = snsAwsSecretAccessKey ?? '';
     },
 
     UPDATE_SNS_AWS_REGION(state, snsAwsRegion) {
-      state.snsAwsRegion = snsAwsRegion;
+      state.snsAwsRegion = snsAwsRegion ?? '';
     },
 
     UPDATE_SNS_AWS_PROFILE(state, snsAwsProfile) {
-      state.snsAwsProfile = snsAwsProfile;
+      state.snsAwsProfile = snsAwsProfile ?? '';
     },
 
     /* Amazon SES */
     UPDATE_SES_FROM_ADDR(state, sesFromAddr) {
-      state.sesFromAddr = sesFromAddr;
+      state.sesFromAddr = sesFromAddr ?? '';
     },
 
     UPDATE_SES_EMAIL_REPLY_TO(state, sesEmailReplyTo) {
-      state.sesEmailReplyTo = sesEmailReplyTo;
+      state.sesEmailReplyTo = sesEmailReplyTo ?? '';
     },
 
     UPDATE_SES_EMAIL(state, sesEmail) {
-      state.sesEmail = sesEmail;
+      state.sesEmail = sesEmail ?? '';
     },
 
     UPDATE_SES_CC(state, sesCc) {
-      state.sesCc = sesCc;
+      state.sesCc = sesCc ?? '';
     },
 
     UPDATE_SES_BCC(state, sesBcc) {
-      state.sesBcc = sesBcc;
+      state.sesBcc = sesBcc ?? '';
     },
 
     UPDATE_SES_EMAIL_FROM_FIELD(state, sesEmailFromField) {
-      state.sesEmailFromField = sesEmailFromField;
+      state.sesEmailFromField = sesEmailFromField ?? '';
     },
 
     UPDATE_SES_EMAIL_ADD_DOMAIN(state, sesEmailAddDomain) {
-      state.sesEmailAddDomain = sesEmailAddDomain;
+      state.sesEmailAddDomain = sesEmailAddDomain ?? '';
     },
 
     UPDATE_SES_AWS_ACCESS_KEY_ID(state, sesAwsAccessKeyId) {
-      state.sesAwsAccessKeyId = sesAwsAccessKeyId;
+      state.sesAwsAccessKeyId = sesAwsAccessKeyId ?? '';
     },
 
     UPDATE_SES_AWS_SECRET_ACCESS_KEY(state, sesAwsSecretAccessKey) {
-      state.sesAwsSecretAccessKey = sesAwsSecretAccessKey;
+      state.sesAwsSecretAccessKey = sesAwsSecretAccessKey ?? '';
     },
 
     UPDATE_SES_AWS_REGION(state, sesAwsRegion) {
-      state.sesAwsRegion = sesAwsRegion;
+      state.sesAwsRegion = sesAwsRegion ?? '';
     },
 
     UPDATE_SES_AWS_PROFILE(state, sesAwsProfile) {
-      state.sesAwsProfile = sesAwsProfile;
+      state.sesAwsProfile = sesAwsProfile ?? '';
     },
 
     /* Chatwork */
     UPDATE_CHATWORK_API_KEY(state, chatworkApikey) {
-      state.chatworkApikey = chatworkApikey;
+      state.chatworkApikey = chatworkApikey ?? '';
     },
 
     UPDATE_CHATWORK_ROOM_ID(state, chatworkRoomId) {
-      state.chatworkRoomId = chatworkRoomId;
+      state.chatworkRoomId = chatworkRoomId ?? '';
     },
 
     UPDATE_CHATWORK_PROXY(state, chatworkProxy) {
-      state.chatworkProxy = chatworkProxy;
+      state.chatworkProxy = chatworkProxy ?? '';
     },
 
     UPDATE_CHATWORK_PROXY_LOGIN(state, chatworkProxyLogin) {
-      state.chatworkProxyLogin = chatworkProxyLogin;
+      state.chatworkProxyLogin = chatworkProxyLogin ?? '';
     },
 
     UPDATE_CHATWORK_PROXY_PASS(state, chatworkProxyPass) {
-      state.chatworkProxyPass = chatworkProxyPass;
+      state.chatworkProxyPass = chatworkProxyPass ?? '';
     },
 
     /* Command */
     UPDATE_COMMAND(state, command) {
-      state.command = command;
+      state.command = command ?? [];
     },
 
     ADD_COMMAND_ENTRY(state) {
@@ -1001,152 +1001,152 @@ export default {
     },
 
     UPDATE_PIPE_MATCH_JSON(state, pipeMatchJson) {
-      state.pipeMatchJson = pipeMatchJson;
+      state.pipeMatchJson = pipeMatchJson ?? false;
     },
 
     UPDATE_PIPE_ALERT_TEXT(state, pipeAlertText) {
-      state.pipeAlertText = pipeAlertText;
+      state.pipeAlertText = pipeAlertText ?? false;
     },
 
     UPDATE_FAIL_ON_NON_ZERO_EXIT(state, failOnNonZeroExit) {
-      state.failOnNonZeroExit = failOnNonZeroExit;
+      state.failOnNonZeroExit = failOnNonZeroExit ?? false;
     },
 
     /* Datadog */
     UPDATE_DATADOG_API_KEY(state, datadogApiKey) {
-      state.datadogApiKey = datadogApiKey;
+      state.datadogApiKey = datadogApiKey ?? '';
     },
 
     UPDATE_DATADOG_APP_KEY(state, datadogAppKey) {
-      state.datadogAppKey = datadogAppKey;
+      state.datadogAppKey = datadogAppKey ?? '';
     },
 
     /* Dingtalk */
     UPDATE_DINGTALK_ACCESS_TOKEN(state, dingtalkAccessToken) {
-      state.dingtalkAccessToken = dingtalkAccessToken;
+      state.dingtalkAccessToken = dingtalkAccessToken ?? '';
     },
 
     UPDATE_DINGTALK_MSGTYPE(state, dingtalkMsgtype) {
-      state.dingtalkMsgtype = dingtalkMsgtype;
+      state.dingtalkMsgtype = dingtalkMsgtype ?? '';
     },
 
     UPDATE_DINGTALK_SINGLE_TITLE(state, dingtalkSingleTitle) {
-      state.dingtalkSingleTitle = dingtalkSingleTitle;
+      state.dingtalkSingleTitle = dingtalkSingleTitle ?? '';
     },
 
     UPDATE_DINGTALK_SINGLE_URL(state, dingtalkSingleUrl) {
-      state.dingtalkSingleUrl = dingtalkSingleUrl;
+      state.dingtalkSingleUrl = dingtalkSingleUrl ?? '';
     },
 
     UPDATE_DINGTALK_BTN_ORIENTATION(state, dingtalkBtnOrientation) {
-      state.dingtalkBtnOrientation = dingtalkBtnOrientation;
+      state.dingtalkBtnOrientation = dingtalkBtnOrientation ?? '';
     },
 
     UPDATE_DINGTALK_SIGN(state, dingtalkSign) {
-      state.dingtalkSign = dingtalkSign;
+      state.dingtalkSign = dingtalkSign ?? '';
     },
 
     /* Discord */
     UPDATE_DISCORD_WEBHOOK_URL(state, discordWebhookUrl) {
-      state.discordWebhookUrl = discordWebhookUrl;
+      state.discordWebhookUrl = discordWebhookUrl ?? '';
     },
 
     UPDATE_DISCORD_EMOJI_TITLE(state, discordEmojiTitle) {
-      state.discordEmojiTitle = discordEmojiTitle;
+      state.discordEmojiTitle = discordEmojiTitle ?? '';
     },
 
     UPDATE_DISCORD_EMBED_FOOTER(state, discordEmbedFooter) {
-      state.discordEmbedFooter = discordEmbedFooter;
+      state.discordEmbedFooter = discordEmbedFooter ?? '';
     },
 
     UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
-      state.discordEmbedIconUrl = discordEmbedIconUrl;
+      state.discordEmbedIconUrl = discordEmbedIconUrl ?? '';
     },
 
     UPDATE_DISCORD_PROXY(state, discordProxy) {
-      state.discordProxy = discordProxy;
+      state.discordProxy = discordProxy ?? '';
     },
 
     UPDATE_DISCORD_PROXY_LOGIN(state, discordProxyLogin) {
-      state.discordProxyLogin = discordProxyLogin;
+      state.discordProxyLogin = discordProxyLogin ?? '';
     },
 
     UPDATE_DISCORD_PROXY_PASSWORD(state, discordProxyPassword) {
-      state.discordProxyPassword = discordProxyPassword;
+      state.discordProxyPassword = discordProxyPassword ?? '';
     },
 
     /* Exotel */
     UPDATE_EXOTEL_ACCOUNT_SID(state, exotelAccountSid) {
-      state.exotelAccountSid = exotelAccountSid;
+      state.exotelAccountSid = exotelAccountSid ?? '';
     },
 
     UPDATE_EXOTEL_AUTH_TOKEN(state, exotelAuthToken) {
-      state.exotelAuthToken = exotelAuthToken;
+      state.exotelAuthToken = exotelAuthToken ?? '';
     },
 
     UPDATE_EXOTEL_TO_NUMBER(state, exotelToNumber) {
-      state.exotelToNumber = exotelToNumber;
+      state.exotelToNumber = exotelToNumber ?? '';
     },
 
     UPDATE_EXOTEL_FROM_NUMBER(state, exotelFromNumber) {
-      state.exotelFromNumber = exotelFromNumber;
+      state.exotelFromNumber = exotelFromNumber ?? '';
     },
 
     UPDATE_EXOTEL_MESSAGE_BODY(state, exotelMessageBody) {
-      state.exotelMessageBody = exotelMessageBody;
+      state.exotelMessageBody = exotelMessageBody ?? '';
     },
 
     /* EMail */
     UPDATE_FROM_ADDR(state, fromAddr) {
-      state.fromAddr = fromAddr;
+      state.fromAddr = fromAddr ?? '';
     },
 
     UPDATE_REPLY_TO(state, replyTo) {
-      state.replyTo = replyTo;
+      state.replyTo = replyTo ?? '';
     },
 
     UPDATE_EMAIL(state, email) {
-      state.email = email;
+      state.email = email ?? '';
     },
 
     UPDATE_CC(state, cc) {
-      state.cc = cc;
+      state.cc = cc ?? '';
     },
 
     UPDATE_BCC(state, bcc) {
-      state.bcc = bcc;
+      state.bcc = bcc ?? '';
     },
 
     UPDATE_SMTP_SSL(state, smtpSsl) {
-      state.smtpSsl = smtpSsl;
+      state.smtpSsl = smtpSsl ?? false;
     },
 
     UPDATE_SMTP_HOST(state, smtpHost) {
-      state.smtpHost = smtpHost;
+      state.smtpHost = smtpHost ?? '';
     },
 
     UPDATE_SMTP_PORT(state, smtpPort) {
-      state.smtpPort = smtpPort;
+      state.smtpPort = smtpPort ?? null;
     },
 
     UPDATE_SMTP_AUTH_FILE(state, smtpAuthFile) {
-      state.smtpAuthFile = smtpAuthFile;
+      state.smtpAuthFile = smtpAuthFile ?? '';
     },
 
     UPDATE_SMTP_KEY_FILE(state, smtpKeyFile) {
-      state.smtpKeyFile = smtpKeyFile;
+      state.smtpKeyFile = smtpKeyFile ?? '';
     },
 
     UPDATE_SMTP_CERT_FILE(state, smtpCertFile) {
-      state.smtpCertFile = smtpCertFile;
+      state.smtpCertFile = smtpCertFile ?? '';
     },
 
     UPDATE_EMAIL_FROM_FIELD(state, emailFromField) {
-      state.emailFromField = emailFromField;
+      state.emailFromField = emailFromField ?? '';
     },
 
     UPDATE_EMAIL_ADD_DOMAIN(state, emailAddDomain) {
-      state.emailAddDomain = emailAddDomain;
+      state.emailAddDomain = emailAddDomain ?? '';
     },
 
     /* Flashduty */
@@ -2171,90 +2171,120 @@ export default {
 
     /* SMSEagle */
     UPDATE_SMSEAGLE_URL(state, smseagleUrl) {
-      state.smseagleUrl = smseagleUrl;
+      state.smseagleUrl = smseagleUrl ?? '';
     },
 
     UPDATE_SMSEAGLE_TOKEN(state, smseagleToken) {
-      state.smseagleToken = smseagleToken;
+      state.smseagleToken = smseagleToken ?? '';
     },
 
     UPDATE_SMSEAGLE_MESSAGE_TYPE(state, smseagleMessageType) {
-      state.smseagleMessageType = smseagleMessageType;
+      state.smseagleMessageType = smseagleMessageType ?? '';
     },
 
     UPDATE_SMSEAGLE_TEXT(state, smseagleText) {
-      state.smseagleText = smseagleText;
+      state.smseagleText = smseagleText ?? '';
     },
 
     UPDATE_SMSEAGLE_TO(state, smseagleTo) {
-      state.smseagleTo = smseagleTo;
+      state.smseagleTo = Array.isArray(smseagleTo)
+        ? smseagleTo
+        : [];
     },
 
     ADD_SMSEAGLE_TO_ENTRY(state) {
-      state.smseagleTo.push('');
+      const current = Array.isArray(state.smseagleTo)
+        ? state.smseagleTo
+        : [];
+
+      state.smseagleTo = [...current, ''];
     },
 
     ADD_SMSEAGLE_TO_ENTRY_VALUE(state, value) {
       state.smseagleTo.push(value);
     },
 
-    REMOVE_SMSEAGLE_TO_ENTRY(state, entry) {
-      state.smseagleTo = state.smseagleTo.filter(b => b !== entry);
+    REMOVE_SMSEAGLE_TO_ENTRY(state, index) {
+      const arr = Array.isArray(state.smseagleTo)
+        ? [...state.smseagleTo]
+        : [];
+
+      arr.splice(index, 1);
+      state.smseagleTo = arr;
     },
 
     UPDATE_SMSEAGLE_TO_ENTRY(state, { entry, index }) {
-      if (!state.smseagleTo) return;
-      state.smseagleTo[index] = entry;
+      state.smseagleTo.splice(index, 1, entry);
     },
 
     UPDATE_SMSEAGLE_CONTACTS(state, smseagleContacts) {
-      state.smseagleContacts = smseagleContacts;
+      state.smseagleContacts = Array.isArray(smseagleContacts)
+        ? smseagleContacts
+        : [];
     },
 
     ADD_SMSEAGLE_CONTACTS_ENTRY(state) {
-      state.smseagleContacts.push('');
+      const current = Array.isArray(state.smseagleContacts)
+        ? state.smseagleContacts
+        : [];
+
+      state.smseagleContacts = [...current, null];
     },
 
     ADD_SMSEAGLE_CONTACTS_ENTRY_VALUE(state, value) {
       state.smseagleContacts.push(value);
     },
 
-    REMOVE_SMSEAGLE_CONTACTS_ENTRY(state, entry) {
-      state.smseagleContacts = state.smseagleContacts.filter(b => b !== entry);
+    REMOVE_SMSEAGLE_CONTACTS_ENTRY(state, index) {
+      const arr = Array.isArray(state.smseagleContacts)
+        ? [...state.smssmseagleContactseagleTo]
+        : [];
+
+      arr.splice(index, 1);
+      state.smseagleTo = arr;
     },
 
     UPDATE_SMSEAGLE_CONTACTS_ENTRY(state, { entry, index }) {
-      if (!state.smseagleContacts) return;
-      state.smseagleContacts[index] = entry;
+      state.smseagleContacts.splice(index, 1, entry);
     },
 
     UPDATE_SMSEAGLE_GROUPS(state, smseagleGroups) {
-      state.smseagleGroups = smseagleGroups;
+      state.smseagleGroups = Array.isArray(smseagleGroups)
+        ? smseagleGroups
+        : [];
     },
 
     ADD_SMSEAGLE_GROUPS_ENTRY(state) {
-      state.smseagleGroups.push('');
+      const current = Array.isArray(state.smseagleGroups)
+        ? state.smseagleGroups
+        : [];
+
+      state.smseagleGroups = [...current, null];
     },
 
     ADD_SMSEAGLE_GROUPS_ENTRY_VALUE(state, value) {
       state.smseagleGroups.push(value);
     },
 
-    REMOVE_SMSEAGLE_GROUPS_ENTRY(state, entry) {
-      state.smseagleGroups = state.smseagleGroups.filter(b => b !== entry);
+    REMOVE_SMSEAGLE_GROUPS_ENTRY(state, index) {
+      const arr = Array.isArray(state.smseagleGroups)
+        ? [...state.smseagleGroups]
+        : [];
+
+      arr.splice(index, 1);
+      state.smseagleGroups = arr;
     },
 
     UPDATE_SMSEAGLE_GROUPS_ENTRY(state, { entry, index }) {
-      if (!state.smseagleGroups) return;
-      state.smseagleGroups[index] = entry;
+      state.smseagleGroups.splice(index, 1, entry);
     },
 
     UPDATE_SMSEAGLE_DURATION(state, smseagleDuration) {
-      state.smseagleDuration = smseagleDuration;
+      state.smseagleDuration = smseagleDuration ?? '';
     },
 
     UPDATE_SMSEAGLE_VOICE_ID(state, smseagleVoiceId) {
-      state.smseagleVoiceId = smseagleVoiceId;
+      state.smseagleVoiceId = smseagleVoiceId ?? '';
     },
 
     /* Stomp */

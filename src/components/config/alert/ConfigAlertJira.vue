@@ -1,68 +1,30 @@
 <template>
   <div>
-    <praeco-form-item label="Project" prop="jiraProject" required>
-      <el-input id="jiraProject" :value="jiraProject" :disabled="viewOnly" @input="jiraProject = $event" />
+    <praeco-form-item label="jira_project" prop="jiraProject" required>
+      <el-input v-model="jiraProject" :disabled="viewOnly" />
       <label>Jira project</label>
     </praeco-form-item>
-    <praeco-form-item label="Issue type" prop="jiraIssueType" required>
-      <el-input id="jiraIssueType" :value="jiraIssueType" :disabled="viewOnly" @input="jiraIssueType = $event" />
+    <praeco-form-item label="jira_issuetype" prop="jiraIssueType" required>
+      <el-input v-model="jiraIssueType" :disabled="viewOnly" />
       <label>Jira issue type (Bug, Integration Bug, etc...)</label>
     </praeco-form-item>
-    <praeco-form-item label="Components" prop="jiraComponents">
-      <el-input id="jiraComponents" :value="jiraComponents" :disabled="viewOnly" @input="jiraComponents = $event" />
+    <praeco-form-item label="jira_components" prop="jiraComponents">
+      <el-input v-model="jiraComponents" :disabled="viewOnly" />
       <label>Jira issue components</label>
     </praeco-form-item>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useConfigAlertJira } from '@/composables/config/alert/useConfigAlertJira';
 
-export default {
-  props: ['viewOnly'],
+defineProps({
+  viewOnly: Boolean
+});
 
-  computed: {
-    jiraIssueType: {
-      get() {
-        return this.$store.state.config.alert.jiraIssueType;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_JIRA_ISSUE_TYPE',
-          value
-        );
-      }
-    },
-
-    jiraProject: {
-      get() {
-        return this.$store.state.config.alert.jiraProject;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_JIRA_PROJECT',
-          value
-        );
-      }
-    },
-
-    jiraComponents: {
-      get() {
-        return this.$store.state.config.alert.jiraComponents;
-      },
-      set(value) {
-        this.$store.commit(
-          'config/alert/UPDATE_JIRA_COMPONENTS',
-          value
-        );
-      }
-    }
-  },
-
-  methods: {
-  }
-};
+const {
+  jiraIssueType,
+  jiraProject,
+  jiraComponents
+} = useConfigAlertJira();
 </script>
-
-<style lang="scss" scoped>
-
-</style>

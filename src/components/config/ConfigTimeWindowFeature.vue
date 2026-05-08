@@ -3,9 +3,8 @@
     <el-col :span="useTimeWindow ? 6 : 19">
       <el-form-item label="Use Time Window">
         <el-switch
-          :value="useTimeWindow"
-          :disabled="viewOnly"
-          @change="changeTimeWindow" />
+          v-model="useTimeWindow"
+          :disabled="viewOnly" />
         <label>
           Use time window in order to send alerts only at specific time range.
         </label>
@@ -105,17 +104,6 @@ export default {
     if (this.timeWindowStartTime && this.timeWindowEndTime && this.timeWindowDropIf) {
       this.useTimeWindow = true;
     }
-  },
-
-  methods: {
-    // time_window_change
-    changeTimeWindow(val) {
-      if (val) {
-        this.useTimeWindow = true;
-      } else {
-        this.useTimeWindow = false;
-      }
-    },
   }
 };
 </script>
