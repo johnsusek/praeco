@@ -29,7 +29,7 @@
     "@vue-js-cron/light": "^1.1.0",
     "@vueuse/core": "^11.3.0",
     "@vueuse/shared": "^11.3.0",
-    "axios": "1.15.2",
+    "axios": "1.16.0",
     "browser-bunyan": "1.8.0",
     "canvas": "^3.2.2",
     "change-case": "5.4.4",
