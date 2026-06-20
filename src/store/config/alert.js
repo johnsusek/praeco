@@ -93,6 +93,13 @@ function initialState() {
     snsAwsRegion: '',
     snsAwsProfile: '',
 
+    /* Amazon SQS */
+    sqsQueueUrl: '',
+    sqsAwsAccessKeyId: '',
+    sqsAwsSecretAccessKey: '',
+    sqsAwsRegion: '',
+    sqsAwsProfile: '',
+
     /* Amazon SES */
     sesFromAddr: '',
     sesEmailReplyTo: '',
@@ -911,6 +918,27 @@ export default {
 
     UPDATE_SNS_AWS_PROFILE(state, snsAwsProfile) {
       state.snsAwsProfile = snsAwsProfile ?? '';
+    },
+
+    /* Amazon SQS */
+    UPDATE_SQS_QUEUE_URL(state, sqsQueueUrl) {
+      state.sqsQueueUrl = sqsQueueUrl ?? '';
+    },
+
+    UPDATE_SQS_AWS_ACCESS_KEY_ID(state, sqsAwsAccessKeyId) {
+      state.sqsAwsAccessKeyId = sqsAwsAccessKeyId ?? '';
+    },
+
+    UPDATE_SQS_AWS_SECRET_ACCESS_KEY(state, sqsAwsSecretAccessKey) {
+      state.sqsAwsSecretAccessKey = sqsAwsSecretAccessKey ?? '';
+    },
+
+    UPDATE_SQS_AWS_REGION(state, sqsAwsRegion) {
+      state.sqsAwsRegion = sqsAwsRegion ?? '';
+    },
+
+    UPDATE_SQS_AWS_PROFILE(state, sqsAwsProfile) {
+      state.sqsAwsProfile = sqsAwsProfile ?? '';
     },
 
     /* Amazon SES */

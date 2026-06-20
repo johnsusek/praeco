@@ -543,6 +543,13 @@ export default {
         commit('alert/UPDATE_SNS_AWS_REGION', config.sns_aws_region);
         commit('alert/UPDATE_SNS_AWS_PROFILE', config.sns_aws_profile);
 
+        /* Amazon SQS */
+        commit('alert/UPDATE_SQS_QUEUE_URL', config.sqs_queue_url);
+        commit('alert/UPDATE_SQS_AWS_ACCESS_KEY_ID', config.sqs_aws_access_key_id);
+        commit('alert/UPDATE_SQS_AWS_SECRET_ACCESS_KEY', config.sqs_aws_secret_access_key);
+        commit('alert/UPDATE_SQS_AWS_REGION', config.sqs_aws_region);
+        commit('alert/UPDATE_SQS_AWS_PROFILE', config.sqs_aws_profile);
+
         /* Amazon SES */
         commit('alert/UPDATE_SES_AWS_ACCESS_KEY_ID', config.ses_aws_access_key_id);
         commit('alert/UPDATE_SES_AWS_SECRET_ACCESS_KEY', config.ses_aws_secret_access_key);
@@ -2432,6 +2439,32 @@ export default {
       return config;
     },
 
+    sqs(state) {
+      let config = {};
+
+      if (state.alert.sqsQueueUrl) {
+        config.sqs_queue_url = state.alert.sqsQueueUrl;
+      }
+
+      if (state.alert.sqsAwsProfile) {
+        config.sqs_aws_profile = state.alert.sqsAwsProfile;
+      } else {
+        if (state.alert.sqsAwsAccessKeyId) {
+          config.sqs_aws_access_key_id = state.alert.sqsAwsAccessKeyId;
+        }
+
+        if (state.alert.sqsAwsSecretAccessKey) {
+          config.sqs_aws_secret_access_key = state.alert.sqsAwsSecretAccessKey;
+        }
+
+        if (state.alert.sqsAwsRegion) {
+          config.sqs_aws_region = state.alert.sqsAwsRegion;
+        }
+      }
+
+      return config;
+    },
+
     workwechat(state) {
       let config = {};
 
@@ -3564,6 +3597,10 @@ export default {
         config = { ...config, ...getters.sns };
       }
 
+      if (state.alert.alert.includes('sqs')) {
+        config = { ...config, ...getters.sqs };
+      }
+
       if (state.alert.alert.includes('stomp')) {
         config = { ...config, ...getters.stomp };
       }
@@ -3620,6 +3657,7 @@ export default {
         || state.alert.alert.includes('slack')
         || state.alert.alert.includes('smseagle')
         || state.alert.alert.includes('sns')
+        || state.alert.alert.includes('sqs')
         || state.alert.alert.includes('stomp')
         || state.alert.alert.includes('telegram')
         || state.alert.alert.includes('tencent_sms')
