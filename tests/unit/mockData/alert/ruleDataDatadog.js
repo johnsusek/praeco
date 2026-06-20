@@ -6,6 +6,7 @@ alert_subject_args: []
 alert_text: this is a test body
 alert_text_args: []
 alert_text_type: alert_text_only
+datadog_api_url: https://api.datadoghq.com/api/
 datadog_api_key: xxxxxx1
 datadog_app_key: xxxxxx2
 doc_type: syslog

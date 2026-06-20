@@ -137,6 +137,7 @@ function initialState() {
     dingtalkSign: '',
 
     /* Datadog */
+    datadogApiUrl: '',
     datadogApiKey: '',
     datadogAppKey: '',
 
@@ -1013,6 +1014,10 @@ export default {
     },
 
     /* Datadog */
+    UPDATE_DATADOG_API_URL(state, datadogApiUrl) {
+      state.datadogApiUrl = datadogApiUrl ?? '';
+    },
+
     UPDATE_DATADOG_API_KEY(state, datadogApiKey) {
       state.datadogApiKey = datadogApiKey ?? '';
     },
