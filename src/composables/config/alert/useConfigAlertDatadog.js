@@ -6,6 +6,12 @@ export function useConfigAlertDatadog() {
   // store
   const store = useStore();
 
+  // ===== datadogApiUrl =====
+  const datadogApiUrl = computed({
+    get: () => store.state.config.alert.datadogApiUrl,
+    set: (v) => store.commit('config/alert/UPDATE_DATADOG_API_URL', v)
+  });
+
   // ===== datadogApiKey =====
   const datadogApiKey = computed({
     get: () => store.state.config.alert.datadogApiKey,
@@ -20,6 +26,7 @@ export function useConfigAlertDatadog() {
 
   // ===== return =====
   return {
+    datadogApiUrl,
     datadogApiKey,
     datadogAppKey
   };

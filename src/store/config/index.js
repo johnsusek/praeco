@@ -1030,6 +1030,7 @@ export default {
         }
 
         /* Datadog */
+        commit('alert/UPDATE_DATADOG_API_URL', config.datadog_api_url);
         commit('alert/UPDATE_DATADOG_API_KEY', config.datadog_api_key);
         commit('alert/UPDATE_DATADOG_APP_KEY', config.datadog_app_key);
 
@@ -3258,6 +3259,10 @@ export default {
 
     datadog(state) {
       let config = {};
+
+      if (state.alert.datadogApiUrl) {
+        config.datadog_api_url = state.alert.datadogApiUrl;
+      }
 
       if (state.alert.datadogApiKey) {
         config.datadog_api_key = state.alert.datadogApiKey;
