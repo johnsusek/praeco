@@ -130,6 +130,9 @@
         <el-checkbox label="sns" border>
           AWS SNS (Amazon Simple Notification Service)
         </el-checkbox>
+        <el-checkbox label="sqs" border>
+          AWS SQS (Amazon Simple Queue Service)
+        </el-checkbox>
         <el-checkbox label="ses" border>
           AWS SES (Amazon Simple Email Service)
         </el-checkbox>
@@ -251,6 +254,7 @@
           || alert.includes('slack')
           || alert.includes('smseagle')
           || alert.includes('sns')
+          || alert.includes('sqs')
           || alert.includes('stomp')
           || alert.includes('tencent_sms')
           || alert.includes('victorops')
@@ -355,6 +359,14 @@
           <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SNS
         </template>
         <ConfigAlertAmazonSns ref="sns" :view-only="viewOnly" />
+      </el-tab-pane>
+
+      <!-- Amazon SQS -->
+      <el-tab-pane v-if="alert.includes('sqs')" :key="'sqs'" name="sqs">
+        <template #label>
+          <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SQS
+        </template>
+        <ConfigAlertAwsSqs ref="sqs" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- Amazon SES -->
@@ -608,6 +620,7 @@ import ConfigAlertAlerta from './ConfigAlertAlerta.vue';
 import ConfigAlertAlertmanager from './ConfigAlertAlertmanager.vue';
 import ConfigAlertAmazonSes from './ConfigAlertAmazonSes.vue';
 import ConfigAlertAmazonSns from './ConfigAlertAmazonSns.vue';
+import ConfigAlertAwsSqs from './ConfigAlertAwsSqs.vue';
 import ConfigAlertChatwork from './ConfigAlertChatwork.vue';
 import ConfigAlertCommand from './ConfigAlertCommand.vue';
 import ConfigAlertDingtalk from './ConfigAlertDingtalk.vue';
@@ -733,6 +746,7 @@ export default {
     ConfigAlertAlertmanager,
     ConfigAlertAmazonSes,
     ConfigAlertAmazonSns,
+    ConfigAlertAwsSqs,
     ConfigAlertChatwork,
     ConfigAlertCommand,
     ConfigAlertDingtalk,
