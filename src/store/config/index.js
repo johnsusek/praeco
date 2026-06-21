@@ -449,6 +449,7 @@ export default {
         }
 
         commit('alert/UPDATE_DISCORD_EMBED_FOOTER', config.discord_embed_footer);
+        commit('alert/UPDATE_DISCORD_EMBED_COLOR', config.discord_embed_color);
         commit('alert/UPDATE_DISCORD_EMBED_ICON_URL', config.discord_embed_icon_url);
         commit('alert/UPDATE_DISCORD_PROXY', config.discord_proxy);
         commit('alert/UPDATE_DISCORD_PROXY_LOGIN', config.discord_proxy_login);
@@ -2305,6 +2306,14 @@ export default {
 
       if (state.alert.discordEmbedFooter) {
         config.discord_embed_footer = state.alert.discordEmbedFooter;
+      }
+
+      if (
+        Number.isInteger(state.alert.discordEmbedColor)
+        && state.alert.discordEmbedColor >= 0
+        && state.alert.discordEmbedColor <= 16777215
+      ) {
+        config.discord_embed_color = state.alert.discordEmbedColor;
       }
 
       if (state.alert.discordEmbedIconUrl) {

@@ -30,6 +30,21 @@
       <label>embed footer.</label>
     </praeco-form-item>
 
+    <praeco-form-item label="discord_embed_color" prop="discordEmbedColor">
+      <el-color-picker
+        v-model="discordEmbedColorHex"
+        :disabled="viewOnly"
+        color-format="hex" />
+      <el-input-number
+        v-model="discordEmbedColor"
+        :disabled="viewOnly"
+        :min="0"
+        :max="discordEmbedColorMax" />
+      <label>
+        Use the picker or enter the decimal RGB integer directly (0 to {{ discordEmbedColorMax }}).
+      </label>
+    </praeco-form-item>
+
     <praeco-form-item label="discord_embed_icon_url" prop="discordEmbedIconUrl">
       <el-input v-model="discordEmbedIconUrl" :disabled="viewOnly" />
       <label>
@@ -63,7 +78,10 @@ import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
 import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
 
-import { useConfigAlertDiscord } from '@/composables/config/alert/useConfigAlertDiscord';
+import {
+  DISCORD_EMBED_COLOR_MAX,
+  useConfigAlertDiscord
+} from '@/composables/config/alert/useConfigAlertDiscord';
 
 // props
 defineProps({
@@ -75,12 +93,15 @@ const {
   discordEmojiTitle,
   addDiscordEmoji,
   discordEmbedFooter,
+  discordEmbedColor,
+  discordEmbedColorHex,
   discordEmbedIconUrl,
   discordProxy,
   discordProxyLogin,
   discordProxyPassword
 } = useConfigAlertDiscord();
 
+const discordEmbedColorMax = DISCORD_EMBED_COLOR_MAX;
 const emojiIndex = new EmojiIndex(emojiData);
 </script>
 

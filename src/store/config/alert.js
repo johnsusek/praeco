@@ -130,6 +130,7 @@ function initialState() {
     discordWebhookUrl: '',
     discordEmojiTitle: '',
     discordEmbedFooter: '',
+    discordEmbedColor: null,
     discordEmbedIconUrl: '',
     discordProxy: '',
     discordProxyLogin: '',
@@ -1104,6 +1105,16 @@ export default {
     UPDATE_DISCORD_EMBED_FOOTER(state, discordEmbedFooter) {
       state.discordEmbedFooter = discordEmbedFooter ?? '';
     },
+
+    UPDATE_DISCORD_EMBED_COLOR(state, discordEmbedColor) {
+      if (discordEmbedColor === '' || discordEmbedColor === undefined || discordEmbedColor === null) {
+        state.discordEmbedColor = null;
+        return;
+      }
+
+      const parsed = typeof discordEmbedColor === 'string' ? Number(discordEmbedColor) : discordEmbedColor;
+      state.discordEmbedColor = Number.isFinite(parsed) ? parsed : null;
+    }
 
     UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
       state.discordEmbedIconUrl = discordEmbedIconUrl ?? '';
