@@ -10,6 +10,15 @@
     </el-col>
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
+      <el-form-item label="shorten_kibana_discover_url">
+        <el-switch
+          v-model="shortenKibanaDiscoverUrl"
+          :disabled="viewOnly" />
+        <label>Shorten the generated Kibana Discover URL.</label>
+      </el-form-item>
+    </el-col>
+
+    <el-col v-if="generateKibanaDiscoverUrl" :span="6">
       <el-form-item label="generate_kibana_discover_url" prop="kibanaDiscoverAppUrl" required>
         <el-input
           v-model="kibanaDiscoverAppUrl"
@@ -156,6 +165,15 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', value);
+      }
+    },
+
+    shortenKibanaDiscoverUrl: {
+      get() {
+        return this.$store.state.config.alert.shortenKibanaDiscoverUrl;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SHORTEN_KIBANA_DISCOVER_URL', value);
       }
     },
 

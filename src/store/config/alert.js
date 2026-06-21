@@ -27,6 +27,7 @@ function initialState() {
 
     /* Kibana Discover */
     generateKibanaDiscoverUrl: false,
+    shortenKibanaDiscoverUrl: false,
     kibanaDiscoverAppUrl: '',
     kibanaDiscoverVersion: '',
     kibanaDiscoverIndexPatternId: '',
@@ -631,6 +632,10 @@ export default {
       state.generateKibanaDiscoverUrl = generateKibanaDiscoverUrl ?? false;
     },
 
+    UPDATE_SHORTEN_KIBANA_DISCOVER_URL(state, shortenKibanaDiscoverUrl) {
+      state.shortenKibanaDiscoverUrl = shortenKibanaDiscoverUrl ?? false;
+    },
+
     UPDATE_KIBANA_DISCOVER_APP_URL(state, kibanaDiscoverAppUrl) {
       state.kibanaDiscoverAppUrl = kibanaDiscoverAppUrl ?? 'http://localhost:5601/app/discover#';
     },
@@ -1114,7 +1119,7 @@ export default {
 
       const parsed = typeof discordEmbedColor === 'string' ? Number(discordEmbedColor) : discordEmbedColor;
       state.discordEmbedColor = Number.isFinite(parsed) ? parsed : null;
-    }
+    },
 
     UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
       state.discordEmbedIconUrl = discordEmbedIconUrl ?? '';
