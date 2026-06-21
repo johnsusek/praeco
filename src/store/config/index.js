@@ -199,6 +199,7 @@ export default {
 
         /* Kibana Discover */
         commit('alert/UPDATE_GENERATE_KIBANA_DISCOVER_URL', config.generate_kibana_discover_url);
+        commit('alert/UPDATE_SHORTEN_KIBANA_DISCOVER_URL', config.shorten_kibana_discover_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_APP_URL', config.kibana_discover_app_url);
         commit('alert/UPDATE_KIBANA_DISCOVER_VERSION', config.kibana_discover_version);
         commit('alert/UPDATE_KIBANA_DISCOVER_INDEX_PATTERN_ID', config.kibana_discover_index_pattern_id);
@@ -1844,6 +1845,7 @@ export default {
 
       if (state.alert.generateKibanaDiscoverUrl) {
         config.generate_kibana_discover_url = state.alert.generateKibanaDiscoverUrl;
+        config.shorten_kibana_discover_url = state.alert.shortenKibanaDiscoverUrl;
 
         if (state.alert.kibanaDiscoverAppUrl) {
           config.kibana_discover_app_url = state.alert.kibanaDiscoverAppUrl;
