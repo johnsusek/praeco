@@ -14,7 +14,7 @@
         <el-switch
           v-model="shortenKibanaDiscoverUrl"
           :disabled="viewOnly" />
-        <label>Shorten the generated Kibana Discover URL.</label>
+        <label>Shorten the generated Kibana discover URL.</label>
       </el-form-item>
     </el-col>
 

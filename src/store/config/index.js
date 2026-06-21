@@ -1845,10 +1845,7 @@ export default {
 
       if (state.alert.generateKibanaDiscoverUrl) {
         config.generate_kibana_discover_url = state.alert.generateKibanaDiscoverUrl;
-
-        if (state.alert.shortenKibanaDiscoverUrl) {
-          config.shorten_kibana_discover_url = state.alert.shortenKibanaDiscoverUrl;
-        }
+        config.shorten_kibana_discover_url = state.alert.shortenKibanaDiscoverUrl;
 
         if (state.alert.kibanaDiscoverAppUrl) {
           config.kibana_discover_app_url = state.alert.kibanaDiscoverAppUrl;
