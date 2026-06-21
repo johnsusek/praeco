@@ -5,7 +5,7 @@
       <label>The index to use for creating the new alert records.</label>
     </praeco-form-item>
 
-    <praeco-form-item label="indexer_connection.es_host" prop="indexerConnectionEsHost" required>
+    <praeco-form-item label="indexer_connection.es_host" prop="indexerConnectionEsHost">
       <el-input v-model="indexerConnectionEsHost" :disabled="viewOnly" />
       <label>Elasticsearch/OpenSearch host address.</label>
     </praeco-form-item>
