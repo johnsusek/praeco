@@ -95,6 +95,7 @@ import ConfigTimeWindowFeature from '@/components/config/ConfigTimeWindowFeature
 import ConfigOwner from '@/components/config/ConfigOwner.vue';
 import ConfigPriority from '@/components/config/ConfigPriority.vue';
 import ConfigBufferTime from '@/components/config/ConfigBufferTime.vue';
+import ConfigQueryDelay from '@/components/config/ConfigQueryDelay.vue';
 import ConfigDescription from '@/components/config/ConfigDescription.vue';
 import ConfigSettings from '@/components/config/ConfigSettings.vue';
 import ConfigCondition from '@/components/config/ConfigCondition.vue';
@@ -200,6 +201,7 @@ Vue.component('ConfigTimeWindowFeature', ConfigTimeWindowFeature);
 Vue.component('ConfigOwner', ConfigOwner);
 Vue.component('ConfigPriority', ConfigPriority);
 Vue.component('ConfigBufferTime', ConfigBufferTime);
+Vue.component('ConfigQueryDelay', ConfigQueryDelay);
 Vue.component('ConfigDescription', ConfigDescription);
 Vue.component('ConfigCondition', ConfigCondition);
 Vue.component('ConfigDisableRulesOnError', ConfigDisableRulesOnError);

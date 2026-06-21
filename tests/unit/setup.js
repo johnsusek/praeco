@@ -11,10 +11,12 @@ import {
 import '@/contrib.js';
 import '@/registration.js';
 import ConfigDisableRulesOnError from '@/components/config/ConfigDisableRulesOnError.vue';
+import ConfigQueryDelay from '@/components/config/ConfigQueryDelay.vue';
 import store from '@/store';
 import router from '@/router';
 
 Vue.component('ConfigDisableRulesOnError', ConfigDisableRulesOnError);
+Vue.component('ConfigQueryDelay', ConfigQueryDelay);
 
 // Vitest expects global expect, but we can still use chai's expect for compatibility
 import { expect } from 'chai';

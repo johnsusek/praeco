@@ -42,6 +42,13 @@
       </el-col>
     </el-row>
 
+    <!-- query_delay -->
+    <el-row class="m-s-sm">
+      <el-col :span="19">
+        <ConfigQueryDelay ref="queryDelayLocal" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
     <!-- time_window_change -->
     <el-row class="m-s-sm">
       <el-col :span="19">
