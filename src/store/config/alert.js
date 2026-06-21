@@ -1107,8 +1107,14 @@ export default {
     },
 
     UPDATE_DISCORD_EMBED_COLOR(state, discordEmbedColor) {
-      state.discordEmbedColor = discordEmbedColor ?? null;
-    },
+      if (discordEmbedColor === '' || discordEmbedColor === undefined || discordEmbedColor === null) {
+        state.discordEmbedColor = null;
+        return;
+      }
+
+      const parsed = typeof discordEmbedColor === 'string' ? Number(discordEmbedColor) : discordEmbedColor;
+      state.discordEmbedColor = Number.isFinite(parsed) ? parsed : null;
+    }
 
     UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {
       state.discordEmbedIconUrl = discordEmbedIconUrl ?? '';
