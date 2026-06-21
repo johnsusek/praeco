@@ -48,6 +48,7 @@ function initialState() {
 
     /* scanEntireTimeframe */
     scanEntireTimeframe: false,
+    disableRulesOnError: null,
 
     /* time_window_change */
     useTimeWindow: false,
@@ -704,6 +705,10 @@ export default {
     /* scan_entire_timeframe */
     UPDATE_SCAN_ENTIRE_TIMEFRAME(state, scanEntireTimeframe) {
       state.scanEntireTimeframe = scanEntireTimeframe ?? false;
+    },
+
+    UPDATE_DISABLE_RULES_ON_ERROR(state, disableRulesOnError) {
+      state.disableRulesOnError = disableRulesOnError ?? null;
     },
 
     /* time_window_change */

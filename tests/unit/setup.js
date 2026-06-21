@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import axios from 'axios';
 import ElementUI from 'element-ui';
 import Vuex from 'vuex';
@@ -9,8 +10,11 @@ import {
 } from '@vue/test-utils';
 import '@/contrib.js';
 import '@/registration.js';
+import ConfigDisableRulesOnError from '@/components/config/ConfigDisableRulesOnError.vue';
 import store from '@/store';
 import router from '@/router';
+
+Vue.component('ConfigDisableRulesOnError', ConfigDisableRulesOnError);
 
 // Vitest expects global expect, but we can still use chai's expect for compatibility
 import { expect } from 'chai';

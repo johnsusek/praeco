@@ -70,6 +70,13 @@
       </el-col>
     </el-row>
 
+    <!-- DisableRulesOnError -->
+    <el-row class="m-s-sm">
+      <el-col :span="24">
+        <ConfigDisableRulesOnError ref="disableRulesOnError" :view-only="viewOnly" />
+      </el-col>
+    </el-row>
+
     <!-- Owner -->
     <el-row class="m-s-sm">
       <el-col :span="24">
