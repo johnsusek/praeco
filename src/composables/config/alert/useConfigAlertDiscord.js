@@ -31,6 +31,13 @@ export function useConfigAlertDiscord() {
       store.commit('config/alert/UPDATE_DISCORD_EMBED_FOOTER', value)
   });
 
+  // ===== discordEmbedColor =====
+  const discordEmbedColor = computed({
+    get: () => store.state.config.alert.discordEmbedColor,
+    set: (value) =>
+      store.commit('config/alert/UPDATE_DISCORD_EMBED_COLOR', value)
+  });
+
   // ===== discordEmbedIconUrl =====
   const discordEmbedIconUrl = computed({
     get: () => store.state.config.alert.discordEmbedIconUrl,
@@ -65,6 +72,7 @@ export function useConfigAlertDiscord() {
     discordEmojiTitle,
     addDiscordEmoji,
     discordEmbedFooter,
+    discordEmbedColor,
     discordEmbedIconUrl,
     discordProxy,
     discordProxyLogin,

@@ -130,6 +130,7 @@ function initialState() {
     discordWebhookUrl: '',
     discordEmojiTitle: '',
     discordEmbedFooter: '',
+    discordEmbedColor: null,
     discordEmbedIconUrl: '',
     discordProxy: '',
     discordProxyLogin: '',
@@ -1103,6 +1104,10 @@ export default {
 
     UPDATE_DISCORD_EMBED_FOOTER(state, discordEmbedFooter) {
       state.discordEmbedFooter = discordEmbedFooter ?? '';
+    },
+
+    UPDATE_DISCORD_EMBED_COLOR(state, discordEmbedColor) {
+      state.discordEmbedColor = discordEmbedColor ?? null;
     },
 
     UPDATE_DISCORD_EMBED_ICON_URL(state, discordEmbedIconUrl) {

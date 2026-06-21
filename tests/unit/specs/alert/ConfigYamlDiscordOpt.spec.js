@@ -16,6 +16,7 @@ alert:
 alert_subject: "this is a test subject"
 alert_text: "this is a test body"
 alert_text_type: "alert_text_only"
+discord_embed_color: 3447003
 discord_embed_footer: "footer"
 discord_embed_icon_url: "http://testserver/xxx/test.png"
 discord_emoji_title: ":postal_horn:"
