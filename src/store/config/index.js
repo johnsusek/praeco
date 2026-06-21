@@ -2815,11 +2815,13 @@ export default {
     queryDelay(state) {
       let config = {};
 
-      if (state.alert.useQueryDelay) {
-        config.query_delay = state.alert.queryDelayLocal;
+      const queryDelay = state.alert.queryDelayLocal;
+      if (state.alert.useQueryDelay && queryDelay != null && Object.keys(queryDelay).length) {
+        config.query_delay = queryDelay;
       }
 
       return config;
+    }
     },
 
     // Description
