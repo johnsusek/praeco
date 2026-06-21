@@ -117,6 +117,7 @@ function toggleAlertmanagerResolveTime(enabled) {
 }
 
 function updateAlertmanagerResolveTime(value) {
-  alertmanagerResolveTime.value = { [Object.keys(value)[0]]: Object.values(value)[0] };
+  const [[unit, amount]] = Object.entries(value);
+  alertmanagerResolveTime.value = { [unit]: amount };
 }
 </script>
