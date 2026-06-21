@@ -216,6 +216,7 @@ export default {
 
         /* scan_entire_timeframe */
         commit('alert/UPDATE_SCAN_ENTIRE_TIMEFRAME', config.scan_entire_timeframe);
+        commit('alert/UPDATE_DISABLE_RULES_ON_ERROR', config.disable_rules_on_error);
 
         /* Description */
         commit('alert/UPDATE_DESCRIPTION', config.description);
@@ -2826,6 +2827,16 @@ export default {
       return config;
     },
 
+    disableRulesOnError(state) {
+      let config = {};
+
+      if (state.alert.disableRulesOnError) {
+        config.disable_rules_on_error = state.alert.disableRulesOnError;
+      }
+
+      return config;
+    },
+
     // Priority
     priority(state) {
       let config = {};
@@ -3815,6 +3826,8 @@ export default {
       config = { ...config, ...getters.priority };
 
       config = { ...config, ...getters.owner };
+
+      config = { ...config, ...getters.disableRulesOnError };
 
       config = { ...config, ...getters.scanEntireTimeframe };
 
