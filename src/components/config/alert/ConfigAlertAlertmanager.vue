@@ -83,8 +83,8 @@
           v-else
           :unit="Object.keys(alertmanagerResolveTime)[0]"
           :amount="Object.values(alertmanagerResolveTime)[0]"
-          @input="updateAlertmanagerResolveTime" />
-      </span>
+          @input="updateAlertmanagerResolveTime"
+          @update:value="updateAlertmanagerResolveTime" />
       <label>
         The time after which a resolved alert is no longer sent to Alertmanager.
         If not set, the default Alertmanager behavior applies.
