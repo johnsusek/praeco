@@ -2308,7 +2308,11 @@ export default {
         config.discord_embed_footer = state.alert.discordEmbedFooter;
       }
 
-      if (typeof state.alert.discordEmbedColor === 'number') {
+      if (
+        Number.isInteger(state.alert.discordEmbedColor)
+        && state.alert.discordEmbedColor >= 0
+        && state.alert.discordEmbedColor <= 16777215
+      ) {
         config.discord_embed_color = state.alert.discordEmbedColor;
       }
 
