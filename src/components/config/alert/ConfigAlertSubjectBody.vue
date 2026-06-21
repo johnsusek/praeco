@@ -95,8 +95,10 @@
               </span>
             </template>
             <div :contenteditable="!viewOnly" />
-            <label v-if="!viewOnly && bodyType !== 'alert_text_jinja'">Insert fields by typing '%' followed by the field name</label>
-            <label v-if="!viewOnly && bodyType === 'alert_text_jinja'">Enter a Jinja2 template, e.g. <span v-pre>{{ field_name }}</span></label>
+            <label v-if="!viewOnly">
+              <template v-if="bodyType !== 'alert_text_jinja'">Insert fields by typing '%' followed by the field name</template>
+              <template v-else>Enter a Jinja2 template, e.g. <span v-pre>{{ field_name }}</span></template>
+            </label>
           </at>
         </el-form-item>
 
