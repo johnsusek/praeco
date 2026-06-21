@@ -2831,7 +2831,7 @@ export default {
     disableRulesOnError(state) {
       let config = {};
 
-      if (state.alert.disableRulesOnError) {
+      if (state.alert.disableRulesOnError != null) {
         config.disable_rules_on_error = state.alert.disableRulesOnError;
       }
 

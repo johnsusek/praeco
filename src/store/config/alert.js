@@ -48,7 +48,7 @@ function initialState() {
 
     /* scanEntireTimeframe */
     scanEntireTimeframe: false,
-    disableRulesOnError: false,
+    disableRulesOnError: null,
 
     /* time_window_change */
     useTimeWindow: false,
@@ -708,7 +708,7 @@ export default {
     },
 
     UPDATE_DISABLE_RULES_ON_ERROR(state, disableRulesOnError) {
-      state.disableRulesOnError = disableRulesOnError ?? false;
+      state.disableRulesOnError = disableRulesOnError ?? null;
     },
 
     /* time_window_change */
