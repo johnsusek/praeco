@@ -14,17 +14,11 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useStore } from '@/composables/useStore';
+import { useConfigDisableRulesOnError } from '@/composables/config/useConfigDisableRulesOnError';
 
 defineProps({
   viewOnly: Boolean
 });
 
-const store = useStore();
-
-const disableRulesOnError = computed({
-  get: () => store.state.config.alert.disableRulesOnError,
-  set: (value) => store.commit('config/alert/UPDATE_DISABLE_RULES_ON_ERROR', value)
-});
+const { disableRulesOnError } = useConfigDisableRulesOnError();
 </script>
