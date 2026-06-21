@@ -85,7 +85,7 @@
           prop="body">
           <at
             v-model="body"
-            :members="fields"
+            :members="bodyType === 'alert_text_jinja' ? [] : fields"
             :allow-spaces="false"
             at="%"
             @paste.native="pastePlainText">
@@ -95,12 +95,15 @@
               </span>
             </template>
             <div :contenteditable="!viewOnly" />
-            <label v-if="!viewOnly">Insert fields by typing '%' followed by the field name</label>
+            <label v-if="!viewOnly">
+              <template v-if="bodyType !== 'alert_text_jinja'">Insert fields by typing '%' followed by the field name</template>
+              <template v-else>Enter a Jinja2 template, e.g. <span v-pre>{{ field_name }}</span></template>
+            </label>
           </at>
         </el-form-item>
 
         <el-popover
-          v-if="bodyType !== 'aggregation_summary_only'"
+          v-if="bodyType !== 'aggregation_summary_only' && bodyType !== 'alert_text_jinja'"
           v-model="popAlertTextArgsVisible"
           :class="{ 'is-invalid': !popAlertTextArgsValid }">
           <template #reference>
@@ -161,6 +164,7 @@
               <el-option
                 value="default"
                 label="Body text &amp; trigger details &amp; top counts &amp; field values" />
+              <el-option value="alert_text_jinja" label="Jinja2 template" />
               <el-option
                 v-if="summaryTableFields.length"
                 value="aggregation_summary_only"
