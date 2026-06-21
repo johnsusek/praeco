@@ -575,6 +575,10 @@ export default {
 
         commit('alert/UPDATE_ALERTMANAGER_TIMEOUT', config.alertmanager_timeout);
 
+        if (config.alertmanager_resolve_time) {
+          commit('alert/UPDATE_ALERTMANAGER_RESOLVE_TIME', config.alertmanager_resolve_time);
+        }
+
         /* Amazon SNS */
         commit('alert/UPDATE_SNS_TOPIC_ARN', config.sns_topic_arn);
         commit('alert/UPDATE_SNS_AWS_ACCESS_KEY_ID', config.sns_aws_access_key_id);
@@ -3349,6 +3353,10 @@ export default {
 
       if (state.alert.alertmanagerTimeout) {
         config.alertmanager_timeout = state.alert.alertmanagerTimeout;
+      }
+
+      if (state.alert.alertmanagerResolveTime) {
+        config.alertmanager_resolve_time = state.alert.alertmanagerResolveTime;
       }
 
       return config;

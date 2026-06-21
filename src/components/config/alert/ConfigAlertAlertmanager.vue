@@ -69,6 +69,27 @@
       <el-input v-model="alertmanagerBasicAuthPassword" :disabled="viewOnly" />
       <label>The Alertmanager proxy auth password.</label>
     </praeco-form-item>
+
+    <!-- alertmanager_resolve_time -->
+
+    <praeco-form-item label="Resolve Time" prop="alertmanagerResolveTime">
+      <el-switch
+        :value="alertmanagerResolveTime !== null"
+        :disabled="viewOnly"
+        @change="toggleAlertmanagerResolveTime" />
+      <span v-if="alertmanagerResolveTime !== null">
+        <ElastalertTimeView v-if="viewOnly" :time="alertmanagerResolveTime" />
+        <ElastalertTimePicker
+          v-else
+          :unit="Object.keys(alertmanagerResolveTime)[0]"
+          :amount="Object.values(alertmanagerResolveTime)[0]"
+          @input="updateAlertmanagerResolveTime" />
+      </span>
+      <label>
+        The time after which a resolved alert is no longer sent to Alertmanager.
+        If not set, the default Alertmanager behavior applies.
+      </label>
+    </praeco-form-item>
   </div>
 </template>
 
@@ -85,8 +106,17 @@ const {
   alertmanagerCaCerts,
   alertmanagerIgnoreSslErrors,
   alertmanagerTimeout,
+  alertmanagerResolveTime,
   alertmanagerProxy,
   alertmanagerBasicAuthLogin,
   alertmanagerBasicAuthPassword
 } = useConfigAlertAlertmanager();
+
+function toggleAlertmanagerResolveTime(enabled) {
+  alertmanagerResolveTime.value = enabled ? { minutes: 10 } : null;
+}
+
+function updateAlertmanagerResolveTime(value) {
+  alertmanagerResolveTime.value = { [Object.keys(value)[0]]: Object.values(value)[0] };
+}
 </script>
