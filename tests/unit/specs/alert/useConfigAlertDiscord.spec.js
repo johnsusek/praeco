@@ -14,8 +14,16 @@ describe('useConfigAlertDiscord helpers', () => {
     expect(discordEmbedColorToHex(16777216)).to.equal(null);
   });
 
+  it('converts the maximum Discord decimal color to hex for the picker', () => {
+    expect(discordEmbedColorToHex(16777215)).to.equal('#ffffff');
+  });
+
   it('converts a picker hex value back to a Discord decimal color', () => {
     expect(hexToDiscordEmbedColor('#3498DB')).to.equal(3447003);
+  });
+
+  it('converts a picker hex value without a hash prefix back to a Discord decimal color', () => {
+    expect(hexToDiscordEmbedColor('3498DB')).to.equal(3447003);
   });
 
   it('returns null for an invalid picker hex value', () => {
