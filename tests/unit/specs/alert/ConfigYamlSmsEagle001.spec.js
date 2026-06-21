@@ -54,7 +54,7 @@ use_strftime_index: false
     return expect(yaml).to.equal(expected);
   });
 
-  it('keeps shorten_kibana_discover_url when disabled', async () => {
+  it('serializes shorten_kibana_discover_url as false when disabled', async () => {
     mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
     store.commit('config/alert/UPDATE_SHORTEN_KIBANA_DISCOVER_URL', false);
