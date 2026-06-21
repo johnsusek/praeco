@@ -10,7 +10,7 @@
       <label>Elasticsearch/OpenSearch host address.</label>
     </praeco-form-item>
 
-    <praeco-form-item label="indexer_connection.es_port" prop="indexerConnectionEsPort" required>
+    <praeco-form-item label="indexer_connection.es_port" prop="indexerConnectionEsPort">
       <el-input-number v-model="indexerConnectionEsPort" :disabled="viewOnly" />
       <label>Elasticsearch/OpenSearch port number.</label>
     </praeco-form-item>
