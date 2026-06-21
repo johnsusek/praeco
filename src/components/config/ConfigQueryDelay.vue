@@ -39,12 +39,18 @@ export default {
       },
       set(value) {
         this.$store.commit('config/alert/USE_QUERY_DELAY', value);
+
+        // Ensure enabling the feature also initializes a value in Vuex
+        // so config output never includes `query_delay: null`.
+        if (value && this.$store.state.config.alert.queryDelayLocal == null) {
+          this.$store.commit('config/alert/UPDATE_QUERY_DELAY', { minutes: 1 });
+        }
       }
     },
 
     queryDelayLocal: {
       get() {
-        return this.$store.state.config.alert.queryDelayLocal || { minutes: 1 };
+        return this.$store.state.config.alert.queryDelayLocal;
       },
       set(value) {
         this.$store.commit('config/alert/UPDATE_QUERY_DELAY', value);
