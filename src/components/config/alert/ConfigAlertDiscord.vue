@@ -35,9 +35,13 @@
         v-model="discordEmbedColorHex"
         :disabled="viewOnly"
         color-format="hex" />
-      <el-input-number v-model="discordEmbedColor" :disabled="viewOnly" :min="0" :max="16777215" />
+      <el-input-number
+        v-model="discordEmbedColor"
+        :disabled="viewOnly"
+        :min="0"
+        :max="DISCORD_EMBED_COLOR_MAX" />
       <label>
-        Use the picker or enter the decimal RGB integer directly (0 to 16777215).
+        Use the picker or enter the decimal RGB integer directly (0 to {{ DISCORD_EMBED_COLOR_MAX }}).
       </label>
     </praeco-form-item>
 
@@ -74,7 +78,10 @@ import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import emojiData from 'emoji-mart-vue-fast/data/all.json';
 import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast';
 
-import { useConfigAlertDiscord } from '@/composables/config/alert/useConfigAlertDiscord';
+import {
+  DISCORD_EMBED_COLOR_MAX,
+  useConfigAlertDiscord
+} from '@/composables/config/alert/useConfigAlertDiscord';
 
 // props
 defineProps({

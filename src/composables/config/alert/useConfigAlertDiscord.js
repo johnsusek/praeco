@@ -8,7 +8,7 @@ export function discordEmbedColorToHex(value) {
     return null;
   }
 
-  return `#${value.toString(16).padStart(6, '0')}`;
+  return `#${value.toString(16).padStart(6, '0').toLowerCase()}`;
 }
 
 export function hexToDiscordEmbedColor(value) {
