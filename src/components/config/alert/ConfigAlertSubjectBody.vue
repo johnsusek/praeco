@@ -95,7 +95,8 @@
               </span>
             </template>
             <div :contenteditable="!viewOnly" />
-            <label v-if="!viewOnly">Insert fields by typing '%' followed by the field name</label>
+            <label v-if="!viewOnly && bodyType !== 'alert_text_jinja'">Insert fields by typing '%' followed by the field name</label>
+            <label v-if="!viewOnly && bodyType === 'alert_text_jinja'">Enter a Jinja2 template, e.g. {{ '{{' }} field_name {{ '}}' }}</label>
           </at>
         </el-form-item>
 
@@ -161,6 +162,7 @@
               <el-option
                 value="default"
                 label="Body text &amp; trigger details &amp; top counts &amp; field values" />
+              <el-option value="alert_text_jinja" label="Jinja2 template" />
               <el-option
                 v-if="summaryTableFields.length"
                 value="aggregation_summary_only"
