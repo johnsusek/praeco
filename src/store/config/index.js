@@ -189,6 +189,18 @@ export default {
         if (config.summary_table_fields) {
           commit('alert/UPDATE_SUMMARY_TABLE_FIELDS', config.summary_table_fields);
         }
+        if (config.summary_table_type) {
+          commit('alert/UPDATE_SUMMARY_TABLE_TYPE', config.summary_table_type);
+        }
+        if (config.summary_prefix) {
+          commit('alert/UPDATE_SUMMARY_PREFIX', config.summary_prefix);
+        }
+        if (config.summary_suffix) {
+          commit('alert/UPDATE_SUMMARY_SUFFIX', config.summary_suffix);
+        }
+        if (config.summary_table_max_rows !== undefined) {
+          commit('alert/UPDATE_SUMMARY_TABLE_MAX_ROWS', config.summary_table_max_rows);
+        }
 
         commit('alert/UPDATE_AGGREGATION_KEY', config.aggregation_key);
 
@@ -1834,6 +1846,22 @@ export default {
         config.summary_table_fields = state.alert.summaryTableFields;
       }
 
+      if (state.alert.summaryTableType) {
+        config.summary_table_type = state.alert.summaryTableType;
+      }
+
+      if (state.alert.summaryPrefix) {
+        config.summary_prefix = state.alert.summaryPrefix;
+      }
+
+      if (state.alert.summarySuffix) {
+        config.summary_suffix = state.alert.summarySuffix;
+      }
+
+      if (state.alert.summaryTableMaxRows !== null && state.alert.summaryTableMaxRows !== '') {
+        config.summary_table_max_rows = state.alert.summaryTableMaxRows;
+      }
+
       if (state.alert.aggregationKey) {
         config.aggregation_key = state.alert.aggregationKey;
       }
@@ -2821,7 +2849,6 @@ export default {
       }
 
       return config;
-    }
     },
 
     // Description
