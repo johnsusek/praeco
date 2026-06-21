@@ -39,9 +39,9 @@
         v-model="discordEmbedColor"
         :disabled="viewOnly"
         :min="0"
-        :max="DISCORD_EMBED_COLOR_MAX" />
+        :max="discordEmbedColorMax" />
       <label>
-        Use the picker or enter the decimal RGB integer directly (0 to {{ DISCORD_EMBED_COLOR_MAX }}).
+        Use the picker or enter the decimal RGB integer directly (0 to {{ discordEmbedColorMax }}).
       </label>
     </praeco-form-item>
 
@@ -101,6 +101,7 @@ const {
   discordProxyPassword
 } = useConfigAlertDiscord();
 
+const discordEmbedColorMax = DISCORD_EMBED_COLOR_MAX;
 const emojiIndex = new EmojiIndex(emojiData);
 </script>
 
