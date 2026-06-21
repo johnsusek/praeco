@@ -1,41 +1,10 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import 'localstorage-polyfill';
 import { expect } from 'chai';
 import store from '@/store';
+import { mockAxios } from '../../setup';
+import { ruleYaml } from '../../mockData/alert/ruleDataDisableRulesOnError.js';
 
 describe('DisableRulesOnError YAML parsing', () => {
   it('renders the correct yaml', async () => {
-    let mockAxios = new MockAdapter(axios);
-    let ruleYaml = `__praeco_query_builder: '{"query":{"logicalOperator":"all","children":[]}}'
-alert:
-  - alerta
-alert_subject: this is a test subject
-alert_subject_args: []
-alert_text: this is a test body
-alert_text_args: []
-alert_text_type: alert_text_only
-disable_rules_on_error: true
-doc_type: syslog
-filter:
-  - query:
-      query_string:
-        query: '@timestamp:*'
-import: BaseRule.config
-index: hannibal-*
-is_enabled: false
-name: test123
-num_events: 10000
-realert:
-  minutes: 5
-timeframe:
-  minutes: 5
-timestamp_field: '@timestamp'
-timestamp_type: iso
-type: frequency
-use_count_query: true
-use_strftime_index: false
-`;
 
     mockAxios.onGet('/api/rules/test123').reply(200, { yaml: ruleYaml });
     await store.dispatch('config/load', { type: 'rules', path: 'test123' });
@@ -79,7 +48,6 @@ use_count_query: true
 use_strftime_index: false
 `;
 
-    mockAxios.restore();
-    expect(yaml).to.equal(expected);
+    return expect(yaml).to.equal(expected);
   });
 });
