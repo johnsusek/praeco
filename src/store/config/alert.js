@@ -239,6 +239,19 @@ function initialState() {
     irisAlertSourceLink: '',
     irisAlertSeverityId: 0,
 
+    /* Indexer */
+    indexerAlertsName: '',
+    indexerConnectionEsHost: '',
+    indexerConnectionEsPort: 9200,
+    indexerConnectionEsUsername: '',
+    indexerConnectionEsPassword: '',
+    indexerConnectionUseSsl: false,
+    indexerConnectionVerifyCerts: false,
+    indexerConnectionSslShowWarn: false,
+    indexerConfig: '',
+    indexerAlertConfigKeys: [],
+    indexerAlertConfigValues: [],
+
     /* Jira */
     jiraProject: '',
     jiraIssueType: '',
@@ -1447,6 +1460,59 @@ export default {
 
     UPDATE_IRIS_ALERT_SEVERITY_ID(state, irisAlertSeverityId) {
       state.irisAlertSeverityId = irisAlertSeverityId;
+    },
+
+    /* Indexer */
+    UPDATE_INDEXER_ALERTS_NAME(state, indexerAlertsName) {
+      state.indexerAlertsName = indexerAlertsName;
+    },
+
+    UPDATE_INDEXER_CONNECTION_ES_HOST(state, indexerConnectionEsHost) {
+      state.indexerConnectionEsHost = indexerConnectionEsHost;
+    },
+
+    UPDATE_INDEXER_CONNECTION_ES_PORT(state, indexerConnectionEsPort) {
+      state.indexerConnectionEsPort = indexerConnectionEsPort;
+    },
+
+    UPDATE_INDEXER_CONNECTION_ES_USERNAME(state, indexerConnectionEsUsername) {
+      state.indexerConnectionEsUsername = indexerConnectionEsUsername;
+    },
+
+    UPDATE_INDEXER_CONNECTION_ES_PASSWORD(state, indexerConnectionEsPassword) {
+      state.indexerConnectionEsPassword = indexerConnectionEsPassword;
+    },
+
+    UPDATE_INDEXER_CONNECTION_USE_SSL(state, indexerConnectionUseSsl) {
+      state.indexerConnectionUseSsl = indexerConnectionUseSsl;
+    },
+
+    UPDATE_INDEXER_CONNECTION_VERIFY_CERTS(state, indexerConnectionVerifyCerts) {
+      state.indexerConnectionVerifyCerts = indexerConnectionVerifyCerts;
+    },
+
+    UPDATE_INDEXER_CONNECTION_SSL_SHOW_WARN(state, indexerConnectionSslShowWarn) {
+      state.indexerConnectionSslShowWarn = indexerConnectionSslShowWarn;
+    },
+
+    UPDATE_INDEXER_CONFIG(state, indexerConfig) {
+      state.indexerConfig = indexerConfig;
+    },
+
+    UPDATE_INDEXER_ALERT_CONFIG_KEYS(state, indexerAlertConfigKeys) {
+      state.indexerAlertConfigKeys = indexerAlertConfigKeys;
+    },
+
+    UPDATE_INDEXER_ALERT_CONFIG_VALUES(state, indexerAlertConfigValues) {
+      state.indexerAlertConfigValues = indexerAlertConfigValues;
+    },
+
+    ADD_INDEXER_ALERT_CONFIG_KEY_ENTRY(state) {
+      state.indexerAlertConfigKeys = [...state.indexerAlertConfigKeys, ''];
+    },
+
+    ADD_INDEXER_ALERT_CONFIG_VALUE_ENTRY(state) {
+      state.indexerAlertConfigValues = [...state.indexerAlertConfigValues, ''];
     },
 
     /* Jira */
