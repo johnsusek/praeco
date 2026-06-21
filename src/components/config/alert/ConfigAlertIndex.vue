@@ -1,6 +1,6 @@
 <template>
   <div>
-    <praeco-form-item label="indexer_alerts_name" prop="indexerAlertsName" required>
+    <praeco-form-item label="indexer_connection.indexer_alerts_name" prop="indexerAlertsName">
       <el-input v-model="indexerAlertsName" :disabled="viewOnly" />
       <label>The index to use for creating the new alert records.</label>
     </praeco-form-item>
