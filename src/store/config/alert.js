@@ -10,6 +10,10 @@ function initialState() {
     aggregationSchedule: '',
     aggregationKey: '',
     summaryTableFields: [],
+    summaryTableType: '',
+    summaryPrefix: '',
+    summarySuffix: '',
+    summaryTableMaxRows: null,
 
     subject: '',
     body: '',
@@ -551,6 +555,22 @@ export default {
 
     UPDATE_SUMMARY_TABLE_FIELDS(state, fields) {
       state.summaryTableFields = fields ?? [];
+    },
+
+    UPDATE_SUMMARY_TABLE_TYPE(state, type) {
+      state.summaryTableType = type ?? '';
+    },
+
+    UPDATE_SUMMARY_PREFIX(state, summaryPrefix) {
+      state.summaryPrefix = summaryPrefix ?? '';
+    },
+
+    UPDATE_SUMMARY_SUFFIX(state, summarySuffix) {
+      state.summarySuffix = summarySuffix ?? '';
+    },
+
+    UPDATE_SUMMARY_TABLE_MAX_ROWS(state, maxRows) {
+      state.summaryTableMaxRows = maxRows ?? null;
     },
 
     UPDATE_REALERT(state, realert) {

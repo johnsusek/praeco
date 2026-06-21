@@ -27,8 +27,18 @@
 
     <el-col v-show="enableAgg" :span="6">
       <el-form-item
-        v-if="!viewOnly || (summaryTableFields && summaryTableFields.length)"
+        v-if="!viewOnly || hasSummaryConfig"
         label="Summary table">
+        <el-select
+          v-model="summaryTableType"
+          :disabled="viewOnly"
+          placeholder="Select type">
+          <el-option label="ascii" value="ascii" />
+          <el-option label="html" value="html" />
+          <el-option label="markdown" value="markdown" />
+        </el-select>
+        <label>Choose summary table format (ascii, html, or markdown).</label>
+
         <el-select
           v-model="summaryTableFields"
           :disabled="viewOnly"
@@ -43,6 +53,23 @@
             :value="field" />
         </el-select>
         <label>Include a summary table of these fields in alert.</label>
+
+        <el-input
+          v-model="summaryPrefix"
+          :disabled="viewOnly"
+          placeholder="Summary prefix" />
+
+        <el-input
+          v-model="summarySuffix"
+          :disabled="viewOnly"
+          placeholder="Summary suffix" />
+
+        <el-input-number
+          v-model="summaryTableMaxRows"
+          :disabled="viewOnly"
+          :min="1"
+          controls-position="right" />
+        <label>Limit number of summary table rows.</label>
       </el-form-item>
     </el-col>
 
@@ -112,6 +139,42 @@ export default {
       },
     },
 
+    summaryTableType: {
+      get() {
+        return this.$store.state.config.alert.summaryTableType;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SUMMARY_TABLE_TYPE', value);
+      },
+    },
+
+    summaryPrefix: {
+      get() {
+        return this.$store.state.config.alert.summaryPrefix;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SUMMARY_PREFIX', value);
+      },
+    },
+
+    summarySuffix: {
+      get() {
+        return this.$store.state.config.alert.summarySuffix;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SUMMARY_SUFFIX', value);
+      },
+    },
+
+    summaryTableMaxRows: {
+      get() {
+        return this.$store.state.config.alert.summaryTableMaxRows;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_SUMMARY_TABLE_MAX_ROWS', value);
+      },
+    },
+
     aggregationKey: {
       get() {
         return this.$store.state.config.alert.aggregationKey;
@@ -123,6 +186,11 @@ export default {
 
     formattedAggSchedule() {
       return prettycron.toString(this.aggregationSchedule);
+    },
+
+    hasSummaryConfig() {
+      return (this.summaryTableFields && this.summaryTableFields.length) || this.summaryTableType
+        || this.summaryPrefix || this.summarySuffix || this.summaryTableMaxRows;
     },
   },
 
@@ -153,9 +221,16 @@ export default {
         this.aggregationSchedule = '';
         this.aggregationKey = '';
         this.summaryTableFields = [];
+        this.summaryTableType = '';
+        this.summaryPrefix = '';
+        this.summarySuffix = '';
+        this.summaryTableMaxRows = null;
         this.realert = { minutes: 5 };
       } else {
         this.aggregationSchedule = '0 * * * *';
+        if (!this.summaryTableType) {
+          this.summaryTableType = 'ascii';
+        }
         this.realert = { minutes: 0 };
       }
     },
