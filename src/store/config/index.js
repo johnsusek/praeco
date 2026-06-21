@@ -1764,8 +1764,8 @@ export default {
         connectionConfig.es_host = state.alert.indexerConnectionEsHost;
       }
 
-      if (state.alert.indexerConnectionEsPort) {
-        connectionConfig.es_port = state.alert.indexerConnectionEsPort;
+      if (state.alert.indexerConnectionEsHost) {
+        connectionConfig.es_port = state.alert.indexerConnectionEsPort || 9200;
       }
 
       if (state.alert.indexerConnectionEsUsername) {
