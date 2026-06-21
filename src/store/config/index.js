@@ -1799,6 +1799,7 @@ export default {
       if (state.alert.indexerAlertConfigKeys && state.alert.indexerAlertConfigKeys.length) {
         let alertConfig = {};
         state.alert.indexerAlertConfigKeys.forEach((key, i) => {
+          if (!key || state.alert.indexerAlertConfigValues?.[i] === undefined) return;
           alertConfig[key] = state.alert.indexerAlertConfigValues[i];
         });
         config.indexer_alert_config = alertConfig;
