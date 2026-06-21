@@ -117,7 +117,15 @@ function toggleAlertmanagerResolveTime(enabled) {
 }
 
 function updateAlertmanagerResolveTime(value) {
-  const [[unit, amount]] = Object.entries(value);
-  alertmanagerResolveTime.value = { [unit]: amount };
+  if (!value) return;
+
+  // Supports both { minutes: 10 } and { unit: 'minutes', amount: 10 }
+  if (Object.prototype.hasOwnProperty.call(value, 'unit') && Object.prototype.hasOwnProperty.call(value, 'amount')) {
+    alertmanagerResolveTime.value = { [value.unit]: value.amount };
+    return;
+  }
+
+  const [unit, amount] = Object.entries(value)[0] || [];
+  if (unit) alertmanagerResolveTime.value = { [unit]: amount };
 }
 </script>
