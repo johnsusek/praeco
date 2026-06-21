@@ -36,9 +36,15 @@ export function useConfigAlertAlertmanager() {
     set: (v) => store.commit('config/alert/UPDATE_ALERTMANAGER_TIMEOUT', v)
   });
 
+  // ===== alertmanagerResolveTime =====
+  const alertmanagerResolveTime = computed({
+    get: () => store.state.config.alert.alertmanagerResolveTime,
+    set: (v) => store.commit('config/alert/UPDATE_ALERTMANAGER_RESOLVE_TIME', v)
+  });
+
   // ===== alertmanagerProxy =====
   const alertmanagerProxy = computed({
-    get: () => store.state.config.alert.alertmanagerProxyalertmanagerProxy,
+    get: () => store.state.config.alert.alertmanagerProxy,
     set: (v) => store.commit('config/alert/UPDATE_ALERTMANAGER_PROXY', v)
   });
 
@@ -61,6 +67,7 @@ export function useConfigAlertAlertmanager() {
     alertmanagerCaCerts,
     alertmanagerIgnoreSslErrors,
     alertmanagerTimeout,
+    alertmanagerResolveTime,
     alertmanagerProxy,
     alertmanagerBasicAuthLogin,
     alertmanagerBasicAuthPassword

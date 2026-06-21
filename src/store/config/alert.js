@@ -86,6 +86,7 @@ function initialState() {
     alertmanagerCaCerts: false,
     alertmanagerIgnoreSslErrors: false,
     alertmanagerTimeout: 10,
+    alertmanagerResolveTime: null,
 
     /* Amazon SNS */
     snsTopicArn: '',
@@ -916,6 +917,10 @@ export default {
 
     UPDATE_ALERTMANAGER_TIMEOUT(state, alertmanagerTimeout) {
       state.alertmanagerTimeout = alertmanagerTimeout ?? null;
+    },
+
+    UPDATE_ALERTMANAGER_RESOLVE_TIME(state, alertmanagerResolveTime) {
+      state.alertmanagerResolveTime = alertmanagerResolveTime ?? null;
     },
 
     /* Amazon SNS */
