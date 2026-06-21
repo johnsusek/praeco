@@ -21,6 +21,10 @@ function initialState() {
     useBufferTime: false,
     bufferTimeLocal: { minutes: 1 },
 
+    /* query_delay */
+    useQueryDelay: false,
+    queryDelayLocal: null,
+
     /* Description */
     useDescription: false,
     configDescription: '',
@@ -618,6 +622,15 @@ export default {
 
     UPDATE_BUFFER_TIME(state, bufferTimeLocal) {
       state.bufferTimeLocal = bufferTimeLocal ?? { minutes: 1 };
+    },
+
+    /* query_delay */
+    USE_QUERY_DELAY(state, useQueryDelay) {
+      state.useQueryDelay = useQueryDelay ?? false;
+    },
+
+    UPDATE_QUERY_DELAY(state, queryDelayLocal) {
+      state.queryDelayLocal = queryDelayLocal ?? null;
     },
 
     /* Description */

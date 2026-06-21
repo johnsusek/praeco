@@ -214,6 +214,12 @@ export default {
         /* buffer_time */
         commit('alert/UPDATE_BUFFER_TIME', config.buffer_time);
 
+        /* query_delay */
+        if (config.query_delay) {
+          commit('alert/USE_QUERY_DELAY', true);
+        }
+        commit('alert/UPDATE_QUERY_DELAY', config.query_delay);
+
         /* scan_entire_timeframe */
         commit('alert/UPDATE_SCAN_ENTIRE_TIMEFRAME', config.scan_entire_timeframe);
         commit('alert/UPDATE_DISABLE_RULES_ON_ERROR', config.disable_rules_on_error);
@@ -2805,6 +2811,17 @@ export default {
       return config;
     },
 
+    // query_delay
+    queryDelay(state) {
+      let config = {};
+
+      if (state.alert.useQueryDelay) {
+        config.query_delay = state.alert.queryDelayLocal;
+      }
+
+      return config;
+    },
+
     // Description
     description(state) {
       let config = {};
@@ -3823,6 +3840,8 @@ export default {
       config = { ...config, ...getters.description };
 
       config = { ...config, ...getters.bufferTime };
+
+      config = { ...config, ...getters.queryDelay };
 
       config = { ...config, ...getters.priority };
 
