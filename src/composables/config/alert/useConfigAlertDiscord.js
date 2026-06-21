@@ -1,6 +1,24 @@
 import { computed } from 'vue';
 import { useStore } from '@/composables/useStore';
 
+export const DISCORD_EMBED_COLOR_MAX = 16777215;
+
+export function discordEmbedColorToHex(value) {
+  if (!Number.isInteger(value) || value < 0 || value > DISCORD_EMBED_COLOR_MAX) {
+    return null;
+  }
+
+  return `#${value.toString(16).padStart(6, '0')}`;
+}
+
+export function hexToDiscordEmbedColor(value) {
+  if (typeof value !== 'string' || !/^#?[0-9a-f]{6}$/i.test(value)) {
+    return null;
+  }
+
+  return parseInt(value.replace('#', ''), 16);
+}
+
 export function useConfigAlertDiscord() {
 
   // store
@@ -38,6 +56,12 @@ export function useConfigAlertDiscord() {
       store.commit('config/alert/UPDATE_DISCORD_EMBED_COLOR', value)
   });
 
+  const discordEmbedColorHex = computed({
+    get: () => discordEmbedColorToHex(store.state.config.alert.discordEmbedColor),
+    set: (value) =>
+      store.commit('config/alert/UPDATE_DISCORD_EMBED_COLOR', hexToDiscordEmbedColor(value))
+  });
+
   // ===== discordEmbedIconUrl =====
   const discordEmbedIconUrl = computed({
     get: () => store.state.config.alert.discordEmbedIconUrl,
@@ -73,6 +97,7 @@ export function useConfigAlertDiscord() {
     addDiscordEmoji,
     discordEmbedFooter,
     discordEmbedColor,
+    discordEmbedColorHex,
     discordEmbedIconUrl,
     discordProxy,
     discordProxyLogin,

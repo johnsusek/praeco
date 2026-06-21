@@ -31,9 +31,13 @@
     </praeco-form-item>
 
     <praeco-form-item label="discord_embed_color" prop="discordEmbedColor">
+      <el-color-picker
+        v-model="discordEmbedColorHex"
+        :disabled="viewOnly"
+        color-format="hex" />
       <el-input-number v-model="discordEmbedColor" :disabled="viewOnly" :min="0" :max="16777215" />
       <label>
-        Discord embed color as a decimal RGB integer from 0 to 16777215.
+        Use the picker or enter the decimal RGB integer directly (0 to 16777215).
       </label>
     </praeco-form-item>
 
@@ -83,6 +87,7 @@ const {
   addDiscordEmoji,
   discordEmbedFooter,
   discordEmbedColor,
+  discordEmbedColorHex,
   discordEmbedIconUrl,
   discordProxy,
   discordProxyLogin,
