@@ -44,7 +44,7 @@ export function useConfigAlertAlertmanager() {
 
   // ===== alertmanagerProxy =====
   const alertmanagerProxy = computed({
-    get: () => store.state.config.alert.alertmanagerProxyalertmanagerProxy,
+    get: () => store.state.config.alert.alertmanagerProxy,
     set: (v) => store.commit('config/alert/UPDATE_ALERTMANAGER_PROXY', v)
   });
 
