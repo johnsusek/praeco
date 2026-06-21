@@ -48,6 +48,6 @@ use_count_query: true
 use_strftime_index: false
 `;
 
-    return expect(yaml).to.equal(expected);
+    expect(yaml).to.equal(expected);
   });
 });
