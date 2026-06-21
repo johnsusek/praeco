@@ -2827,6 +2827,7 @@ export default {
       return config;
     },
 
+    // disable_rules_on_error
     disableRulesOnError(state) {
       let config = {};
 
