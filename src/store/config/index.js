@@ -301,6 +301,43 @@ export default {
           commit('alert/UPDATE_IRIS_ALERT_SEVERITY_ID', 1);
         }
 
+        /* Indexer */
+        if (config.indexer_connection) {
+          if (config.indexer_connection.indexer_alerts_name) {
+            commit('alert/UPDATE_INDEXER_ALERTS_NAME', config.indexer_connection.indexer_alerts_name);
+          }
+          if (config.indexer_connection.es_host) {
+            commit('alert/UPDATE_INDEXER_CONNECTION_ES_HOST', config.indexer_connection.es_host);
+          }
+          if (config.indexer_connection.es_port) {
+            commit('alert/UPDATE_INDEXER_CONNECTION_ES_PORT', config.indexer_connection.es_port);
+          }
+          if (config.indexer_connection.es_username) {
+            commit('alert/UPDATE_INDEXER_CONNECTION_ES_USERNAME', config.indexer_connection.es_username);
+          }
+          if (config.indexer_connection.es_password) {
+            commit('alert/UPDATE_INDEXER_CONNECTION_ES_PASSWORD', config.indexer_connection.es_password);
+          }
+          if (config.indexer_connection.use_ssl) {
+            commit('alert/UPDATE_INDEXER_CONNECTION_USE_SSL', config.indexer_connection.use_ssl);
+          }
+          if (config.indexer_connection.verify_certs) {
+            commit('alert/UPDATE_INDEXER_CONNECTION_VERIFY_CERTS', config.indexer_connection.verify_certs);
+          }
+          if (config.indexer_connection.ssl_show_warn) {
+            commit('alert/UPDATE_INDEXER_CONNECTION_SSL_SHOW_WARN', config.indexer_connection.ssl_show_warn);
+          }
+        }
+
+        if (config.indexer_config) {
+          commit('alert/UPDATE_INDEXER_CONFIG', config.indexer_config);
+        }
+
+        if (config.indexer_alert_config) {
+          commit('alert/UPDATE_INDEXER_ALERT_CONFIG_KEYS', Object.keys(config.indexer_alert_config));
+          commit('alert/UPDATE_INDEXER_ALERT_CONFIG_VALUES', Object.values(config.indexer_alert_config));
+        }
+
         /* EMail */
         commit('alert/UPDATE_FROM_ADDR', config.from_addr);
         commit('alert/UPDATE_REPLY_TO', config.email_reply_to);
@@ -1710,6 +1747,62 @@ export default {
 
       if (state.alert.irisAlertSeverityId) {
         config.iris_alert_severity_id = state.alert.irisAlertSeverityId;
+      }
+
+      return config;
+    },
+
+    indexer(state) {
+      let config = {};
+      let connectionConfig = {};
+
+      if (state.alert.indexerAlertsName) {
+        connectionConfig.indexer_alerts_name = state.alert.indexerAlertsName;
+      }
+
+      if (state.alert.indexerConnectionEsHost) {
+        connectionConfig.es_host = state.alert.indexerConnectionEsHost;
+      }
+
+      if (state.alert.indexerConnectionEsHost) {
+        connectionConfig.es_port = state.alert.indexerConnectionEsPort || 9200;
+      }
+
+      if (state.alert.indexerConnectionEsUsername) {
+        connectionConfig.es_username = state.alert.indexerConnectionEsUsername;
+      }
+
+      if (state.alert.indexerConnectionEsPassword) {
+        connectionConfig.es_password = state.alert.indexerConnectionEsPassword;
+      }
+
+      if (state.alert.indexerConnectionUseSsl) {
+        connectionConfig.use_ssl = state.alert.indexerConnectionUseSsl;
+      }
+
+      if (state.alert.indexerConnectionVerifyCerts) {
+        connectionConfig.verify_certs = state.alert.indexerConnectionVerifyCerts;
+      }
+
+      if (state.alert.indexerConnectionSslShowWarn) {
+        connectionConfig.ssl_show_warn = state.alert.indexerConnectionSslShowWarn;
+      }
+
+      if (Object.keys(connectionConfig).length) {
+        config.indexer_connection = connectionConfig;
+      }
+
+      if (state.alert.indexerConfig) {
+        config.indexer_config = state.alert.indexerConfig;
+      }
+
+      if (state.alert.indexerAlertConfigKeys && state.alert.indexerAlertConfigKeys.length) {
+        let alertConfig = {};
+        state.alert.indexerAlertConfigKeys.forEach((key, i) => {
+          if (!key || state.alert.indexerAlertConfigValues?.[i] === undefined) return;
+          alertConfig[key] = state.alert.indexerAlertConfigValues[i];
+        });
+        config.indexer_alert_config = alertConfig;
       }
 
       return config;
@@ -3571,6 +3664,10 @@ export default {
 
       if (state.alert.alert.includes('iris')) {
         config = { ...config, ...getters.iris };
+      }
+
+      if (state.alert.alert.includes('indexer')) {
+        config = { ...config, ...getters.indexer };
       }
 
       if (state.alert.alert.includes('rocketchat')) {

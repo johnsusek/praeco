@@ -199,6 +199,9 @@
         <el-checkbox label="iris" border>
           IRIS
         </el-checkbox>
+        <el-checkbox label="indexer" border>
+          Indexer
+        </el-checkbox>
         <el-checkbox label="workwechat" border>
           WorkWeChat
         </el-checkbox>
@@ -545,6 +548,14 @@
         <ConfigAlertIris ref="iris" :view-only="viewOnly" />
       </el-tab-pane>
 
+      <!-- Indexer -->
+      <el-tab-pane v-if="alert.includes('indexer')" :key="'indexer'" name="indexer">
+        <template #label>
+          Indexer
+        </template>
+        <ConfigAlertIndex ref="indexer" :view-only="viewOnly" />
+      </el-tab-pane>
+
       <!-- WorkWeChat -->
       <el-tab-pane v-if="alert.includes('workwechat')" :key="'workwechat'" name="workwechat">
         <template #label>
@@ -635,6 +646,7 @@ import ConfigAlertGoogleChat from './ConfigAlertGoogleChat.vue';
 import ConfigAlertHttpPost from './ConfigAlertHttpPost.vue';
 import ConfigAlertHttpPost2 from './ConfigAlertHttpPost2.vue';
 import ConfigAlertIris from './ConfigAlertIris.vue';
+import ConfigAlertIndex from './ConfigAlertIndex.vue';
 import ConfigAlertJira from './ConfigAlertJira.vue';
 import ConfigAlertLark from './ConfigAlertLark.vue';
 import ConfigAlertLineMessageApi from './ConfigAlertLineMessageApi.vue';
@@ -761,6 +773,7 @@ export default {
     ConfigAlertHttpPost,
     ConfigAlertHttpPost2,
     ConfigAlertIris,
+    ConfigAlertIndex,
     ConfigAlertJira,
     ConfigAlertLark,
     ConfigAlertLineMessageApi,
