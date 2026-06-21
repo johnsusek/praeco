@@ -27,7 +27,7 @@
 
     <el-col v-show="enableAgg" :span="6">
       <el-form-item
-        v-if="!viewOnly || (summaryTableFields && summaryTableFields.length) || summaryTableType || summaryPrefix || summarySuffix || summaryTableMaxRows"
+        v-if="!viewOnly || hasSummaryConfig"
         label="Summary table">
         <el-select
           v-model="summaryTableType"
@@ -37,7 +37,7 @@
           <el-option label="html" value="html" />
           <el-option label="markdown" value="markdown" />
         </el-select>
-        <label>Choose summary table format.</label>
+        <label>Choose summary table format (ascii, html, or markdown).</label>
 
         <el-select
           v-model="summaryTableFields"
@@ -186,6 +186,11 @@ export default {
 
     formattedAggSchedule() {
       return prettycron.toString(this.aggregationSchedule);
+    },
+
+    hasSummaryConfig() {
+      return (this.summaryTableFields && this.summaryTableFields.length) || this.summaryTableType
+        || this.summaryPrefix || this.summarySuffix || this.summaryTableMaxRows;
     },
   },
 
