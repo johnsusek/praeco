@@ -79,7 +79,7 @@ use_count_query: true
 use_strftime_index: false
 `;
 
-    expect(yaml).to.equal(expected);
     mockAxios.restore();
+    expect(yaml).to.equal(expected);
   });
 });
