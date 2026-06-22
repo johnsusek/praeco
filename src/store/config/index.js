@@ -3885,7 +3885,21 @@ export default {
       } else if (state.match.type === 'metric_aggregation') {
         config = { ...config, ...getters.metricagg };
       } else if (state.match.type === 'spike_aggregation') {
-        config = { ...config, ...getters.metricagg, ...getters.spike };
+        let spikeAgg = {};
+
+        if (state.match.metricAggKey) {
+          spikeAgg.metric_agg_key = state.match.metricAggKey;
+        }
+
+        if (state.match.metricAggType) {
+          spikeAgg.metric_agg_type = state.match.metricAggType;
+        }
+
+        if (state.match.docType) {
+          spikeAgg.doc_type = state.match.docType;
+        }
+
+        config = { ...config, ...spikeAgg, ...getters.spike };
       } else if (state.match.type === 'spike') {
         config = { ...config, ...getters.spike };
       } else if (state.match.type === 'new_term') {
