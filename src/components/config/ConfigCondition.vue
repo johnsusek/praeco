@@ -1569,6 +1569,11 @@ export default {
     async validateMatchBucketFilter() {
       try {
         this.popMatchBucketFilterValid = await this.$refs.matchBucketFilter.validate();
+
+        const parsed = JSON.parse(this.matchBucketFilter);
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+          throw new Error('match_bucket_filter must be a JSON object');
+        }
       } catch (error) {
         this.popMatchBucketFilterValid = false;
         throw error;
