@@ -53,7 +53,7 @@ export default {
 
   getters: {
     markLine(state, getters) {
-      if (state.type === 'spike') {
+      if (state.type === 'spike' || state.type === 'spike_aggregation') {
         return getters.markLineSpike;
       } if (state.type === 'frequency') {
         return getters.markLineFrequency;
@@ -67,7 +67,7 @@ export default {
     },
 
     spikeHeight(state) {
-      if (state.type === 'spike') {
+      if (state.type === 'spike' || state.type === 'spike_aggregation') {
         return state.spikeHeight;
       }
     },
