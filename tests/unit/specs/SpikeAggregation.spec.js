@@ -17,7 +17,6 @@ filter:
 import: BaseRule.config
 index: hannibal-*
 is_enabled: false
-max_threshold: 500
 metric_agg_key: bytes
 metric_agg_type: avg
 name: spike-aggregation-test
