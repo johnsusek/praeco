@@ -1569,10 +1569,11 @@ export default {
         }
 
         // For "IS NOT EMPTY", or conditions without an "IS" dropdown, validate as true
-        if (
-          (this.spikeOrThreshold === 'any' || (!this.$refs.spikeOrThreshold && !this.$refs.spikeOrThresholdMetric))
-          && !this.$refs.minMaxThreshold
-        ) {
+        const hasNoAboveValidationRefs = !this.$refs.spikeOrThreshold
+          && !this.$refs.spikeOrThresholdMetric
+          && !this.$refs.minMaxThreshold;
+
+        if (this.spikeOrThreshold === 'any' || hasNoAboveValidationRefs) {
           this.popAboveValid = true;
         }
 
