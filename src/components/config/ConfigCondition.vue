@@ -158,7 +158,7 @@
           Field
         </el-radio>
 
-        <div v-if="groupedOver === 'all' && type === 'metric_aggregation'">
+        <div v-if="groupedOver === 'all' && ['metric_aggregation', 'spike_aggregation'].includes(type)">
           <el-form ref="overall" :model="$store.state.config.match">
             <el-form-item label="" prop="docType" required>
               <el-select
@@ -471,20 +471,7 @@
 
     <el-popover v-if="showPopAbove" v-model="popAboveVisible" :class="{ 'is-invalid': !popAboveValid }">
       <template #reference>
-        <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
-          <span>IS</span>
-          <span v-if="numEvents || maxThreshold">
-            ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}{{ thresholdSuffix }}
-          </span>
-          <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
-            &amp;
-          </span>
-          <span v-if="threshold || minThreshold">
-            BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}{{ thresholdSuffix }}
-          </span>
-        </span>
-
-        <span v-else-if="spikeOrThreshold === 'spike'" class="pop-trigger">
+        <span v-if="spikeOrThreshold === 'spike'" class="pop-trigger">
           <span>SPIKES</span>
           <span v-if="spikeType === 'up'">
             UP
@@ -500,6 +487,19 @@
 
         <span v-else-if="spikeOrThreshold === 'any'" class="pop-trigger">
           <span>IS NOT EMPTY</span>
+        </span>
+
+        <span v-else class="pop-trigger">
+          <span>IS</span>
+          <span v-if="numEvents || maxThreshold">
+            ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}{{ thresholdSuffix }}
+          </span>
+          <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
+            &amp;
+          </span>
+          <span v-if="threshold || minThreshold">
+            BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}{{ thresholdSuffix }}
+          </span>
         </span>
       </template>
 
@@ -560,6 +560,66 @@
                   v-model="spikeHeight"
                   class="el-input-wide"
                   @input="validate" />
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
+      </div>
+
+      <div v-else-if="['metric_aggregation', 'spike_aggregation'].includes(type)">
+        <el-row :gutter="10" style="width: 360px">
+          <el-col :span="8">
+            <el-select
+              id="spikeOrThresholdMetric"
+              v-model="spikeOrThreshold"
+              class="el-select-wide"
+              @input="updateSpikeOrThreshold">
+              <el-option key="is" label="Is" value="is" />
+              <el-option key="spike" label="Spikes" value="spike" />
+            </el-select>
+          </el-col>
+
+          <el-col v-if="spikeOrThreshold === 'spike'" :span="8">
+            <el-select v-model="spikeType" class="el-select-wide">
+              <el-option label="Up" value="up" />
+              <el-option label="Down" value="down" />
+              <el-option label="Both" value="both" />
+            </el-select>
+          </el-col>
+
+          <el-col :span="spikeOrThreshold === 'spike' ? 8 : 16">
+            <el-form
+              v-if="spikeOrThreshold === 'spike'"
+              ref="spikeOrThresholdMetric"
+              :model="$store.state.config.match">
+              <el-form-item prop="spikeHeight" required>
+                <el-input-number
+                  id="spikeHeightMetric"
+                  v-model="spikeHeight"
+                  class="el-input-wide"
+                  @input="validate" />
+              </el-form-item>
+            </el-form>
+
+            <el-form
+              v-else
+              ref="minMaxThreshold"
+              :rules="minMaxThresholdRules"
+              :model="$store.state.config.match"
+              label-width="60px">
+              <el-form-item label="Above" prop="maxThreshold">
+                <el-input-number
+                  id="maxThreshold"
+                  v-model="maxThreshold"
+                  :min="1"
+                  @change="validate" />
+              </el-form-item>
+              <el-form-item label="Below" prop="minThreshold">
+                <el-input-number
+                  id="minThreshold"
+                  v-model="minThreshold"
+                  :min="1"
+                  @change="validate" />
               </el-form-item>
             </el-form>
           </el-col>
@@ -802,7 +862,7 @@
         </el-form>
       </div>
 
-      <div v-if="type === 'spike'">
+      <div v-if="type === 'spike' || type === 'spike_aggregation'">
         <el-form
           :model="$store.state.config.match"
           label-position="top"
@@ -937,6 +997,7 @@ export default {
         frequency: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#frequency',
         flatline: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#flatline',
         spike: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#spike',
+        spike_aggregation: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#spike-aggregation',
         new_term: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#new-term',
         metric_aggregation: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#metric-aggregation',
         cardinality: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#cardinality',
@@ -1381,9 +1442,14 @@ export default {
       } else if (this.type === 'spike') {
         this.metricAggType = 'count';
         this.spikeOrThreshold = 'spike';
+      } else if (this.type === 'spike_aggregation') {
+        this.spikeOrThreshold = 'spike';
       } else if (this.type === 'new_term') {
         this.metricAggType = 'new term';
+      } else if (this.type === 'metric_aggregation') {
+        this.spikeOrThreshold = 'is';
       } else if (this.type === 'cardinality') {
+        this.spikeOrThreshold = 'is';
         this.metricAggType = 'cardinality';
         if (this.maxCardinality) {
           this.cardinalityAboveOrBelow = 'above';
@@ -1391,6 +1457,7 @@ export default {
           this.cardinalityAboveOrBelow = 'below';
         }
       } else if (this.type === 'percentage_match') {
+        this.spikeOrThreshold = 'is';
         this.metricAggType = 'percentage match';
       }
 
@@ -1398,7 +1465,7 @@ export default {
       if (
         this.queryKey.length
         && ['metric_aggregation', 'frequency', 'flatline', 'any',
-          'change', 'spike', 'cardinality', 'percentage_match'].includes(this.type)
+          'change', 'spike', 'spike_aggregation', 'cardinality', 'percentage_match'].includes(this.type)
       ) {
         this.groupedOver = 'field';
       }
@@ -1481,6 +1548,16 @@ export default {
           }
         }
 
+        if (this.$refs.spikeOrThresholdMetric) {
+          try {
+            await this.$refs.spikeOrThresholdMetric.validate();
+            this.popAboveValid = true;
+          } catch (error) {
+            this.popAboveValid = false;
+            throw error;
+          }
+        }
+
         if (this.$refs.minMaxThreshold) {
           try {
             await this.$refs.minMaxThreshold.validate();
@@ -1492,7 +1569,10 @@ export default {
         }
 
         // For "IS NOT EMPTY", or conditions without an "IS" dropdown, validate as true
-        if ((this.spikeOrThreshold === 'any' || !this.$refs.spikeOrThreshold) && !this.$refs.minMaxThreshold) {
+        if (
+          (this.spikeOrThreshold === 'any' || (!this.$refs.spikeOrThreshold && !this.$refs.spikeOrThresholdMetric))
+          && !this.$refs.minMaxThreshold
+        ) {
           this.popAboveValid = true;
         }
 
@@ -1728,10 +1808,12 @@ export default {
 
     updateSpikeOrThreshold(val) {
       if (val === 'spike') {
-        this.type = 'spike';
+        this.type = this.metricAggType === 'count' ? 'spike' : 'spike_aggregation';
       } else if (val === 'any') {
         this.type = 'any';
         this.popAboveVisible = false;
+      } else if (this.metricAggType !== 'count') {
+        this.type = 'metric_aggregation';
       } else if (this.aboveOrBelow === 'above') {
         this.type = 'frequency';
       } else {
@@ -1781,6 +1863,8 @@ export default {
       if (val === 'count') {
         if (this.spikeOrThreshold === 'any') {
           this.type = 'any';
+        } else if (this.spikeOrThreshold === 'spike') {
+          this.type = 'spike';
         } else if (this.aboveOrBelow === 'above') {
           this.type = 'frequency';
         } else {
@@ -1802,7 +1886,7 @@ export default {
       } else if (val === 'percentage match') {
         this.type = 'percentage_match';
       } else {
-        this.type = 'metric_aggregation';
+        this.type = this.spikeOrThreshold === 'spike' ? 'spike_aggregation' : 'metric_aggregation';
       }
 
       this.useTimeframe = true;

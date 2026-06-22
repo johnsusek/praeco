@@ -3884,6 +3884,8 @@ export default {
         config = { ...config, ...getters.flatline };
       } else if (state.match.type === 'metric_aggregation') {
         config = { ...config, ...getters.metricagg };
+      } else if (state.match.type === 'spike_aggregation') {
+        config = { ...config, ...getters.metricagg, ...getters.spike };
       } else if (state.match.type === 'spike') {
         config = { ...config, ...getters.spike };
       } else if (state.match.type === 'new_term') {
