@@ -1644,7 +1644,7 @@ export default {
         try {
           config.match_bucket_filter = JSON.parse(state.match.matchBucketFilter);
         } catch (e) {
-          console.error('Invalid JSON for match_bucket_filter:', state.match.matchBucketFilter, e);
+          // Invalid JSON should be prevented by UI validation.
         }
       }
 
