@@ -1444,6 +1444,7 @@ export default {
         this.spikeOrThreshold = 'spike';
       } else if (this.type === 'spike_aggregation') {
         this.spikeOrThreshold = 'spike';
+        this.useTimeframe = true;
       } else if (this.type === 'new_term') {
         this.metricAggType = 'new term';
       } else if (this.type === 'metric_aggregation') {
