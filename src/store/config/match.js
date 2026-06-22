@@ -38,7 +38,9 @@ function initialState() {
     termsWindowSize: { days: 30 },
     windowStepSize: { days: 1 },
     alertOnMissingField: false,
-    useKeywordPostfix: true
+    useKeywordPostfix: true,
+
+    matchBucketFilter: ''
   };
 }
 
@@ -485,6 +487,14 @@ export default {
 
     UPDATE_USE_KEYWORD_POSTFIX(state, value) {
       state.useKeywordPostfix = value;
+    },
+
+    //
+    // Percentage Match
+    //
+
+    UPDATE_MATCH_BUCKET_FILTER(state, matchBucketFilter) {
+      state.matchBucketFilter = matchBucketFilter;
     }
   }
 };

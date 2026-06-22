@@ -39,6 +39,9 @@
           <el-menu-item index="cardinality">
             cardinality
           </el-menu-item>
+          <el-menu-item index="percentage match">
+            percentage match
+          </el-menu-item>
         </el-menu>
       </div>
     </el-popover>
@@ -71,6 +74,31 @@
               :label="field"
               :value="field" />
           </el-select>
+        </el-form-item>
+      </el-form>
+    </el-popover>
+
+    <el-popover
+      v-if="metricAggType === 'percentage match'"
+      v-model="popMatchBucketFilterVisible"
+      :class="{ 'is-invalid': !popMatchBucketFilterValid }">
+      <template #reference>
+        <span class="pop-trigger">
+          <span>MATCH FILTER </span>
+          <span v-if="matchBucketFilter">{{ matchBucketFilter }}</span>
+          <span v-else>(required)</span>
+        </span>
+      </template>
+      <el-form ref="matchBucketFilter" :model="$store.state.config.match">
+        <el-form-item prop="matchBucketFilter" required>
+          <el-input
+            v-model="matchBucketFilter"
+            type="textarea"
+            :rows="3"
+            placeholder='{"term": {"field_name": "value"}}'
+            style="width: 300px"
+            @input="validate" />
+          <label>Elasticsearch filter defining the match bucket (JSON).</label>
         </el-form-item>
       </el-form>
     </el-popover>
@@ -446,13 +474,13 @@
         <span v-if="spikeOrThreshold === 'is' || metricAggType !== 'count'" class="pop-trigger">
           <span>IS</span>
           <span v-if="numEvents || maxThreshold">
-            ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}
+            ABOVE {{ metricAggType === 'count' ? numEvents : maxThreshold }}{{ thresholdSuffix }}
           </span>
           <span v-if="(numEvents && threshold) || (maxThreshold && minThreshold)">
             &amp;
           </span>
           <span v-if="threshold || minThreshold">
-            BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}
+            BELOW {{ metricAggType === 'count' ? threshold : minThreshold }}{{ thresholdSuffix }}
           </span>
         </span>
 
@@ -545,10 +573,20 @@
           :model="$store.state.config.match"
           label-width="60px">
           <el-form-item label="Above" prop="maxThreshold">
-            <el-input-number id="maxThreshold" v-model="maxThreshold" :min="1" @change="validate" />
+            <el-input-number
+              id="maxThreshold"
+              v-model="maxThreshold"
+              :min="1"
+              :max="metricAggType === 'percentage match' ? 100 : undefined"
+              @change="validate" />
           </el-form-item>
           <el-form-item label="Below" prop="minThreshold">
-            <el-input-number id="minThreshold" v-model="minThreshold" :min="1" @change="validate" />
+            <el-input-number
+              id="minThreshold"
+              v-model="minThreshold"
+              :min="1"
+              :max="metricAggType === 'percentage match' ? 100 : undefined"
+              @change="validate" />
           </el-form-item>
         </el-form>
       </div>
@@ -556,7 +594,7 @@
 
     <span v-show="showTime">
       <el-popover
-        v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max'"
+        v-show="metricAggType === 'count' || metricAggType === 'field changes' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max' || metricAggType === 'percentage match'"
         popper-class="popover-time">
         <template #reference>
           <span class="pop-trigger">
@@ -565,7 +603,7 @@
                 WITHIN
                 <span v-if="!useTimeframe">ANY TIMEFRAME</span>
               </span>
-              <span v-if="metricAggType === 'count' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max'">FOR </span>
+              <span v-if="metricAggType === 'count' || metricAggType === 'cardinality' || metricAggType === 'avg' || metricAggType === 'sum' || metricAggType === 'min' || metricAggType === 'max' || metricAggType === 'percentage match'">FOR </span>
               <span v-if="useTimeframe">THE LAST</span>
             </span>
             <ElastalertTimeView
@@ -863,11 +901,13 @@ export default {
       groupedOver: 'all',
       popAboveVisible: false,
       popCardinalityThresholdsVisible: false,
+      popMatchBucketFilterVisible: false,
       cardinalityAboveOrBelow: 'above',
       aboveOrBelow: 'above',
       spikeOrThreshold: 'any',
       popCardinalityValid: true,
       popCardinalityThresholdsValid: true,
+      popMatchBucketFilterValid: true,
       popOfValid: true,
       popOverValid: true,
       popCompareValid: true,
@@ -899,7 +939,8 @@ export default {
         spike: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#spike',
         new_term: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#new-term',
         metric_aggregation: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#metric-aggregation',
-        cardinality: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#cardinality'
+        cardinality: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#cardinality',
+        percentage_match: 'https://elastalert2.readthedocs.io/en/latest/ruletypes.html#percentage-match'
       };
 
       return helpLinks[this.type];
@@ -922,7 +963,11 @@ export default {
     },
 
     showForTheLast() {
-      return this.metricAggType !== 'count' && this.metricAggType !== 'field changes' && this.metricAggType !== 'cardinality' && this.metricAggType !== 'avg' && this.metricAggType !== 'sum' && this.metricAggType !== 'min' && this.metricAggType !== 'max';
+      return this.metricAggType !== 'count' && this.metricAggType !== 'field changes' && this.metricAggType !== 'cardinality' && this.metricAggType !== 'avg' && this.metricAggType !== 'sum' && this.metricAggType !== 'min' && this.metricAggType !== 'max' && this.metricAggType !== 'percentage match';
+    },
+
+    thresholdSuffix() {
+      return this.metricAggType === 'percentage match' ? '%' : '';
     },
 
     useTimeframe: {
@@ -1086,6 +1131,7 @@ export default {
     showPopOf() {
       return (
         this.metricAggType !== 'count' && this.metricAggType !== 'new term' && this.metricAggType !== 'cardinality'
+        && this.metricAggType !== 'percentage match'
         && !['field changes', 'field in list', 'field not in list'].includes(this.metricAggType)
       );
     },
@@ -1119,7 +1165,7 @@ export default {
     showTime() {
       return (
         !['field in list', 'field not in list', 'new term'].includes(this.metricAggType)
-        && (this.spikeOrThreshold !== 'any' || this.metricAggType === 'cardinality')
+        && (this.spikeOrThreshold !== 'any' || this.metricAggType === 'cardinality' || this.metricAggType === 'percentage match')
       );
     },
 
@@ -1203,6 +1249,15 @@ export default {
       },
       set(value) {
         this.$store.commit('config/match/UPDATE_MIN_CARDINALITY', value);
+      }
+    },
+
+    matchBucketFilter: {
+      get() {
+        return this.$store.state.config.match.matchBucketFilter;
+      },
+      set(value) {
+        this.$store.commit('config/match/UPDATE_MATCH_BUCKET_FILTER', value);
       }
     },
 
@@ -1335,18 +1390,20 @@ export default {
         } else if (this.minCardinality) {
           this.cardinalityAboveOrBelow = 'below';
         }
+      } else if (this.type === 'percentage_match') {
+        this.metricAggType = 'percentage match';
       }
 
       // if rule supports and has a queryKey, set groupedOver to field
       if (
         this.queryKey.length
         && ['metric_aggregation', 'frequency', 'flatline', 'any',
-          'change', 'spike', 'flatline', 'cardinality'].includes(this.type)
+          'change', 'spike', 'cardinality', 'percentage_match'].includes(this.type)
       ) {
         this.groupedOver = 'field';
       }
 
-      if (this.metricAggType === 'count' || this.metricAggType === 'cardinality') {
+      if (this.metricAggType === 'count' || this.metricAggType === 'cardinality' || this.metricAggType === 'percentage match') {
         this.useTimeframe = true;
       }
 
@@ -1404,6 +1461,10 @@ export default {
 
         if (this.$refs.whitelist) {
           await this.validateWhitelist();
+        }
+
+        if (this.$refs.matchBucketFilter) {
+          await this.validateMatchBucketFilter();
         }
 
         if (this.$refs.freqFlatlineOptions) {
@@ -1501,6 +1562,20 @@ export default {
         this.popWhitelistValid = await this.$refs.whitelist.validate();
       } catch (error) {
         this.popWhitelistValid = false;
+        throw error;
+      }
+    },
+
+    async validateMatchBucketFilter() {
+      try {
+        this.popMatchBucketFilterValid = await this.$refs.matchBucketFilter.validate();
+
+        const parsed = JSON.parse(this.matchBucketFilter);
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+          throw new Error('match_bucket_filter must be a JSON object');
+        }
+      } catch (error) {
+        this.popMatchBucketFilterValid = false;
         throw error;
       }
     },
@@ -1724,6 +1799,8 @@ export default {
         this.compareKey = [];
       } else if (val === 'cardinality') {
         this.type = 'cardinality';
+      } else if (val === 'percentage match') {
+        this.type = 'percentage_match';
       } else {
         this.type = 'metric_aggregation';
       }

@@ -175,12 +175,16 @@ export default {
 
         commit('match/UPDATE_METRIC_AGG_KEY', config.metric_agg_key);
         commit('match/UPDATE_METRIC_AGG_TYPE', config.metric_agg_type);
-        commit('match/UPDATE_MAX_THRESHOLD', config.max_threshold);
-        commit('match/UPDATE_MIN_THRESHOLD', config.min_threshold);
+        commit('match/UPDATE_MAX_THRESHOLD', config.max_threshold || config.max_percentage);
+        commit('match/UPDATE_MIN_THRESHOLD', config.min_threshold || config.min_percentage);
 
         commit('match/UPDATE_MIN_CARDINALITY', config.min_cardinality);
         commit('match/UPDATE_MAX_CARDINALITY', config.max_cardinality);
         commit('match/UPDATE_CARDINALITY_FIELD', config.cardinality_field);
+
+        if (config.match_bucket_filter) {
+          commit('match/UPDATE_MATCH_BUCKET_FILTER', JSON.stringify(config.match_bucket_filter));
+        }
 
         if (config.aggregation && config.aggregation.schedule) {
           commit('alert/UPDATE_AGGREGATION_SCHEDULE', config.aggregation.schedule);
@@ -1628,6 +1632,32 @@ export default {
 
       if (state.match.minCardinality) {
         config.min_cardinality = state.match.minCardinality;
+      }
+
+      return config;
+    },
+
+    percentagematch(state) {
+      let config = {};
+
+      if (state.match.matchBucketFilter) {
+        try {
+          config.match_bucket_filter = JSON.parse(state.match.matchBucketFilter);
+        } catch (e) {
+          // Invalid JSON should be prevented by UI validation.
+        }
+      }
+
+      if (state.match.maxThreshold) {
+        config.max_percentage = state.match.maxThreshold;
+      }
+
+      if (state.match.minThreshold) {
+        config.min_percentage = state.match.minThreshold;
+      }
+
+      if (state.match.timeframe && Object.keys(state.match.timeframe).length) {
+        config.timeframe = state.match.timeframe;
       }
 
       return config;
@@ -3860,6 +3890,8 @@ export default {
         config = { ...config, ...getters.newterm };
       } else if (state.match.type === 'cardinality') {
         config = { ...config, ...getters.cardinality };
+      } else if (state.match.type === 'percentage_match') {
+        config = { ...config, ...getters.percentagematch };
       }
 
       config = { ...config, ...getters.kibanaDiscover };
