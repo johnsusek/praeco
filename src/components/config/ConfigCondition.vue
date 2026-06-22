@@ -1569,11 +1569,11 @@ export default {
         }
 
         // For "IS NOT EMPTY", or conditions without an "IS" dropdown, validate as true
-        const hasNoAboveValidationRefs = !this.$refs.spikeOrThreshold
+        const hasNoThresholdValidationRefs = !this.$refs.spikeOrThreshold
           && !this.$refs.spikeOrThresholdMetric
           && !this.$refs.minMaxThreshold;
 
-        if (this.spikeOrThreshold === 'any' || hasNoAboveValidationRefs) {
+        if (this.spikeOrThreshold === 'any' || hasNoThresholdValidationRefs) {
           this.popAboveValid = true;
         }
 
@@ -1807,9 +1807,13 @@ export default {
       });
     },
 
+    spikeRuleType() {
+      return this.metricAggType === 'count' ? 'spike' : 'spike_aggregation';
+    },
+
     updateSpikeOrThreshold(val) {
       if (val === 'spike') {
-        this.type = this.metricAggType === 'count' ? 'spike' : 'spike_aggregation';
+        this.type = this.spikeRuleType();
       } else if (val === 'any') {
         this.type = 'any';
         this.popAboveVisible = false;
@@ -1887,7 +1891,7 @@ export default {
       } else if (val === 'percentage match') {
         this.type = 'percentage_match';
       } else {
-        this.type = this.spikeOrThreshold === 'spike' ? 'spike_aggregation' : 'metric_aggregation';
+        this.type = this.spikeOrThreshold === 'spike' ? this.spikeRuleType() : 'metric_aggregation';
       }
 
       this.useTimeframe = true;
