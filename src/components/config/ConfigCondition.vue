@@ -1569,11 +1569,7 @@ export default {
         }
 
         // For "IS NOT EMPTY", or conditions without an "IS" dropdown, validate as true
-        const hasNoThresholdValidationRefs = !this.$refs.spikeOrThreshold
-          && !this.$refs.spikeOrThresholdMetric
-          && !this.$refs.minMaxThreshold;
-
-        if (this.spikeOrThreshold === 'any' || hasNoThresholdValidationRefs) {
+        if (this.spikeOrThreshold === 'any' || !this.hasThresholdValidationRefs()) {
           this.popAboveValid = true;
         }
 
@@ -1807,7 +1803,15 @@ export default {
       });
     },
 
+    hasThresholdValidationRefs() {
+      return !!(this.$refs.spikeOrThreshold || this.$refs.spikeOrThresholdMetric || this.$refs.minMaxThreshold);
+    },
+
     spikeRuleType() {
+      if (!this.metricAggType) {
+        return 'spike_aggregation';
+      }
+
       return this.metricAggType === 'count' ? 'spike' : 'spike_aggregation';
     },
 
