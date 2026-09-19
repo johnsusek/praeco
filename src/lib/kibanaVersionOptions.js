@@ -125,5 +125,11 @@ export const kibanaVersionOptions = [
   }, {
     code: '9.3',
     name: '9.3'
+  }, {
+    code: '9.4',
+    name: '9.4'
+  }, {
+    code: '9.5',
+    name: '9.5'
   }
 ];
