@@ -1,5 +1,5 @@
 import axios from 'axios';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { htmlToConfigFormat } from '@/lib/alertText';
 // TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import { logger } from '@/lib/logger.js';

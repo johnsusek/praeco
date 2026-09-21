@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import cloneDeep from 'lodash.clonedeep';
 // TODO: error  Dependency cycle via @/store:5  import/no-cycle
 import { logger } from '@/lib/logger.js';
