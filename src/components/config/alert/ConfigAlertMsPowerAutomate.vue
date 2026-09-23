@@ -303,16 +303,16 @@ export default {
           value
         );
       }
-    }
-  },
-
-  msPowerAutomateWebhookUrlFromField: {
-    get() {
-      return this.$store.state.config.alert.msPowerAutomateWebhookUrlFromField;
     },
-    set(value) {
-      this.$store.commit('config/alert/UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL_FROM_FIELD', value);
-    }
+
+    msPowerAutomateWebhookUrlFromField: {
+      get() {
+        return this.$store.state.config.alert.msPowerAutomateWebhookUrlFromField;
+      },
+      set(value) {
+        this.$store.commit('config/alert/UPDATE_MS_POWER_AUTOMATE_WEBHOOK_URL_FROM_FIELD', value);
+      }
+    },
   },
 
   methods: {
