@@ -187,10 +187,6 @@ export default {
       this.alertmanagerIgnoreSslErrors = val;
     },
 
-    changeAlertmanagerAttachKibanaDiscoverUrl(val) {
-      this.alertmanagerAttachKibanaDiscoverUrl = val;
-    },
-
     changeAlertmanagerCaCerts(val) {
       this.alertmanagerCaCerts = val;
     }
