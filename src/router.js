@@ -63,7 +63,7 @@ const router = createRouter({
       meta: { type: 'rule' }
     },
     {
-      path: '/rule/edit/:path?',
+      path: '/rule/edit/:path(.*)',
       props: route => ({
         ...route.params,
         ...route.query,
@@ -75,7 +75,7 @@ const router = createRouter({
       meta: { type: 'rule' }
     },
     {
-      path: '/rules/:id',
+      path: '/rules/:id(.*)',
       name: 'ruleview',
       props: route => ({ ...route.params, ...route.query }),
       component: RuleView
@@ -105,7 +105,7 @@ const router = createRouter({
       meta: { type: 'template' }
     },
     {
-      path: '/templates/:id',
+      path: '/templates/:id(.*)',
       name: 'templateview',
       props: route => ({ ...route.params, ...route.query }),
       component: TemplateView
