@@ -1,6 +1,6 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import store from '@/store';
-import { mockAxios } from '../../setup';
+import { mockAxios } from '../../testUtils';
 import { ruleYaml } from '../../mockData/alert/ruleDataGelf002.js';
 
 describe('Gelf 002 YAML parsing', () => {

@@ -1,6 +1,6 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import store from '@/store';
-import { mockAxios } from '../../setup';
+import { mockAxios } from '../../testUtils';
 import { ruleYaml } from '../../mockData/alert/ruleDataMattermost002.js';
 
 describe('Mattermost 002 YAML parsing', () => {

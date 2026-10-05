@@ -1,6 +1,6 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import store from '@/store';
-import { mockAxios } from '../../setup';
+import { mockAxios } from '../../testUtils';
 import { ruleYaml } from '../../mockData/alert/ruleDataSmsEagle004.js';
 
 describe('SmsEagle 004 YAML parsing', () => {

@@ -1,6 +1,6 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import store from '@/store';
-import { mockAxios } from '../../setup';
+import { mockAxios } from '../../testUtils';
 import { ruleYaml } from '../../mockData/alert/ruleDataGoogleChat002.js';
 
 describe('GoogleChat 002 YAML parsing', () => {

@@ -1,6 +1,6 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import store from '@/store';
-import { mockAxios } from '../../setup';
+import { mockAxios } from '../../testUtils';
 import { ruleYaml } from '../../mockData/alert/ruleDataOpsgenie004.js';
 
 describe('Opsgenie 004 YAML parsing', () => {
