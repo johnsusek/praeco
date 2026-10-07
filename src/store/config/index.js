@@ -3711,6 +3711,6 @@ export default {
       return conf;
     },
 
-    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest), { quotingType: '"', forceQuotes: true })
+    yaml: (state, getters) => forTest => yaml.dump(getters.config(forTest), { quoteStyle: 'double', forceQuotes: true })
   }
 };
