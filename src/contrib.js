@@ -4,7 +4,7 @@ import Prism from 'vue-prism-component';
 import Treeselect from '@zanmato/vue3-treeselect';
 import ElementPlus from 'element-plus';
 import 'prismjs';
-import locale from 'element-plus/lib/locale/lang/en';
+import locale from 'element-plus/es/locale/lang/en';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBell,

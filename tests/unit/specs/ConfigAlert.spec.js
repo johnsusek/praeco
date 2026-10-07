@@ -1,5 +1,5 @@
 import { nextTick } from 'vue';
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import store from '@/store';
 import ConfigAlert from '@/components/config/alert/ConfigAlert.vue';
 import { mountComponent, mockAxios } from '../setup';

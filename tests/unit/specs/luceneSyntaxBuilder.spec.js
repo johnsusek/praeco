@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import { luceneSyntaxFromQueryBuilder } from '@/lib/luceneSyntaxBuilder.js';
 
 let emptyTree = {

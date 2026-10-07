@@ -1,54 +1,48 @@
-import axios from 'axios';
-import ElementPlus from 'element-plus';
-import Vuex from 'vuex';
-import MockAdapter from 'axios-mock-adapter';
-import VueRouter from 'vue-router';
 import 'localstorage-polyfill';
-import {
-  config, mount, shallowMount, createLocalVue
-} from '@vue/test-utils';
+
+import ElementPlus from 'element-plus';
+import { mount, shallowMount } from '@vue/test-utils';
+import { expect } from 'vitest';
+
 import '@/contrib.js';
 import '@/registration.js';
+
 import store from '@/store';
 import router from '@/router';
 
-// Vitest expects global expect, but we can still use chai's expect for compatibility
-import { expect } from 'chai';
 global.expect = expect;
 
-config.stubs.transition = false;
-
-export const mockAxios = new MockAdapter(axios);
-
 export function mountComponent(comp, opts = {}) {
-  let localVue = createLocalVue();
-  localVue.use(VueRouter);
-  localVue.use(ElementPlus);
-  localVue.use(Vuex);
-
   return mount(comp, {
     attachTo: false,
-    sync: false,
-    localVue,
-    router,
-    store,
-    propsData: opts.propsData
+    global: {
+      plugins: [
+        router,
+        store,
+        ElementPlus
+      ],
+      stubs: {
+        transition: false
+      }
+    },
+    props: opts.propsData
   });
 }
 
 export function shallowMountComponent(comp, opts = {}) {
-  let localVue = createLocalVue();
-  localVue.use(VueRouter);
-  localVue.use(ElementPlus);
-  localVue.use(Vuex);
-
   return shallowMount(comp, {
     attachTo: false,
-    sync: false,
-    localVue,
-    router,
-    store,
-    propsData: opts.propsData
+    global: {
+      plugins: [
+        router,
+        store,
+        ElementPlus
+      ],
+      stubs: {
+        transition: false
+      }
+    },
+    props: opts.propsData
   });
 }
 
@@ -59,6 +53,7 @@ class MutationObserver {
 
   observe(element) {
     this.element = element;
+
     return this.interval = setInterval(() => {
       const html = this.element.innerHTML;
 

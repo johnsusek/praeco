@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
 import ui from '@/store/ui';
