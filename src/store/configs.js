@@ -235,7 +235,7 @@ export default {
     async createConfigFinal({ commit, state }, { type, path, conf }) {
       try {
         let res = await axios.post(`/api/${type}/${path}`, {
-          yaml: yaml.dump(conf, { quotingType: '"', forceQuotes: true })
+          yaml: yaml.dump(conf, { quoteStyle: 'double', forceQuotes: true })
         });
 
         if (!res.data.created) {
@@ -308,7 +308,7 @@ export default {
 
       try {
         let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
-          yaml: yaml.dump(conf, { quotingType: '"', forceQuotes: true })
+          yaml: yaml.dump(conf, { quoteStyle: 'double', forceQuotes: true })
         });
 
         if (res.data.created) {
@@ -331,7 +331,7 @@ export default {
 
       try {
         let res = await axios.post(`/api/rules/${conf.__praeco_full_path}`, {
-          yaml: yaml.dump(conf, { quotingType: '"', forceQuotes: true })
+          yaml: yaml.dump(conf, { quoteStyle: 'double', forceQuotes: true })
         });
 
         if (res.data.created) {
