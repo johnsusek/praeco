@@ -351,3 +351,12 @@ h1 .el-tag {
   position: relative;
   white-space: nowrap;
 }
+
+///
+/// element-plus
+/// el-inpt-number layout
+///
+.el-input__inner[type=number] {
+  width: 50px;
+  text-align: center;
+}
