@@ -17,7 +17,7 @@ WORKDIR /tmp/nginx/praeco
 COPY package.json .
 
 FROM base AS dependencies
-RUN npm install --legacy-peer-deps --loglevel error
+RUN npm install --loglevel error
 
 FROM base AS release
 COPY --from=dependencies /tmp/nginx/praeco/node_modules ./node_modules
