@@ -530,6 +530,7 @@
                 <el-input-number
                   id="spikeHeight"
                   v-model="spikeHeight"
+                  :min="1"
                   class="el-input-wide"
                   @input="validate" />
               </el-form-item>
