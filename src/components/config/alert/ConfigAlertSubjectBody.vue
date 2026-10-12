@@ -14,7 +14,7 @@
           required>
           <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <at
-            v-model="subject"
+            v-model:value="subject"
             :members="fields"
             :allow-spaces="false"
             at="%"
@@ -89,7 +89,7 @@
           prop="body">
           <!-- native modifier has been removed, please confirm whether the function has been affected  -->
           <at
-            v-model="body"
+            v-model:value="body"
             :members="fields"
             :allow-spaces="false"
             at="%"
