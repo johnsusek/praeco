@@ -38,7 +38,7 @@ mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
 echo "slack_webhook_url: ''"  | sudo tee -a rules/BaseRule.config >/dev/null
 export PRAECO_ELASTICSEARCH=<your elasticsearch ip>
-docker-compose up
+docker compose up
 ```
 
 * Don't use 127.0.0.1 for PRAECO_ELASTICSEARCH. See first item under the Troubleshooting section.
@@ -49,15 +49,15 @@ Praeco should now be available on http://127.0.0.1:8080
 
 ## Upgrading
 
-If you use docker-compose.yml published on github as it is, it will be the current latest version instead of a specific version. If you want to specify a specific version, edit it yourself and then run `docker-compose up --force-recreate --build`.
+If you use docker-compose.yml published on github as it is, it will be the current latest version instead of a specific version. If you want to specify a specific version, edit it yourself and then run `docker compose up --force-recreate --build`.
 
 ```
-docker-compose down 
+docker compose down
 docker rmi praecoapp/praeco:latest
 docker rmi praecoapp/elastalert-server:latest
 docker pull praecoapp/praeco:latest
 docker pull praecoapp/elastalert-server:latest
-docker-compose up --force-recreate --build
+docker compose up --force-recreate --build
 ```
 
 You may need to update your config files when a new version comes out. Please see [UPGRADING.md](https://github.com/johnsusek/praeco/blob/master/UPGRADING.md) for version-specific instructions.
@@ -286,13 +286,13 @@ Edit `config/elastalert.yaml` and `config/api.config.json` and change the writeb
 
 #### How do I run this on Windows?
 
-First, install docker and docker-compose.
+First, install Docker Desktop (Compose v2 is included).
 
 Then, using powershell, run these commands:
 
 ```
 $Env:PRAECO_ELASTICSEARCH="1.2.3.4"
-docker-compose.exe up
+docker compose up
 ```
 
 Replace 1.2.3.4 with your Elasticsearch IP.
@@ -318,7 +318,7 @@ elasticsearch -E network.host=_site_
 export PRAECO_ELASTICSEARCH=192.168.1.145
 mkdir -p rules rule_templates
 chmod -R 777 rules rule_templates
-docker-compose up
+docker compose up
 ```
 
 Replace 192.168.1.145 with the IP address your ES binds to (look for bound_addresses in the elasticsearch launch log).
@@ -463,7 +463,7 @@ Please see the development section below if you're interested in running these s
 
 ## Manual/Dev installation
 
-NOTE: If you're just interested in developing Praeco UI features locally (and not changing ElastAlert 2 or the api), you can skip right to Praeco setup and just run the internal ElastAlert Server with `docker-compose up elastalert-server` .
+NOTE: If you're just interested in developing Praeco UI features locally (and not changing ElastAlert 2 or the api), you can skip right to Praeco setup and just run the internal ElastAlert Server with `docker compose up elastalert-server` .
 
 ---
 
