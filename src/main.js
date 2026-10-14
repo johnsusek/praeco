@@ -255,7 +255,13 @@ function startApp(config) {
 // In prod it is linked into the docker container
 axios.get(import.meta.env.BASE_URL + 'praeco.config.json')
   .then(res => {
-    startApp(res.data);
+    if (res.data && typeof res.data === 'object') {
+      startApp(res.data);
+    } else {
+      // A SPA fallback answers with the index page and a 200, so a missing
+      // file never reaches the catch below.
+      alert('praeco.config.json missing');
+    }
   })
   .catch(() => {
     alert('praeco.config.json missing');
