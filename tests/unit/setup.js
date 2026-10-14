@@ -1,5 +1,4 @@
 import ElementPlus from 'element-plus';
-import ElementPlus from 'element-plus';
 import { mount, shallowMount } from '@vue/test-utils';
 import { expect } from 'vitest';
 

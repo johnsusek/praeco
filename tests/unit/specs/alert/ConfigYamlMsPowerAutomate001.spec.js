@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
 import store from '@/store';
-import { mockAxios } from '../../setup.js';
+import { mockAxios } from '../../testUtils';
 import { ruleYaml } from '../../mockData/alert/ruleDataMsPowerAutomate001.js';
 
 describe('MsPowerAutomate 001 YAML parsing', () => {

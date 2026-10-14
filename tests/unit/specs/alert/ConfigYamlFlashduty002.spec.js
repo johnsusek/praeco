@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
 import store from '@/store';
-import { mockAxios } from '../../setup.js';
+import { mockAxios } from '../../testUtils';
 import { ruleYaml } from '../../mockData/alert/ruleDataFlashduty002.js';
 
 describe('Flashduty 002 YAML parsing', () => {

@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
 import store from '@/store';
-import { mockAxios } from '../../setup.js';
+import { mockAxios } from '../../testUtils';
 import { ruleYaml } from '../../mockData/alert/ruleDataIris002.js';
 
 describe('Iris 002 YAML parsing', () => {
