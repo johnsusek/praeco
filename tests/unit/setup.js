@@ -12,8 +12,7 @@ import '@/registration.js';
 import store from '@/store';
 import router from '@/router';
 
-// Vitest expects global expect, but we can still use chai's expect for compatibility
-import { expect } from 'chai';
+import { expect } from 'vitest';
 global.expect = expect;
 
 config.stubs.transition = false;

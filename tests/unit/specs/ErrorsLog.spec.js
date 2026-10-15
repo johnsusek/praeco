@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import Errors from '@/views/Errors.vue';
 import mockErrorLog from '../mockData/errorsLog.json';
 import { mountComponent, mockAxios } from '../setup';

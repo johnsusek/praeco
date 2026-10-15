@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import { kibanaVersionOptions } from '@/lib/kibanaVersionOptions.js';
 
 describe('kibanaVersionOptions', () => {

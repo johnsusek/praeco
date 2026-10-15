@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import { htmlToConfigFormat, configFormatToHtml } from '@/lib/alertText.js';
 
 /* eslint-disable */

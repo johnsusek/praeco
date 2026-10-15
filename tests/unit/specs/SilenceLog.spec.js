@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import Silences from '@/views/Silences.vue';
 import mockSilenceLog from '../mockData/silenceLog.json';
 import { mountComponent, mockAxios } from '../setup';

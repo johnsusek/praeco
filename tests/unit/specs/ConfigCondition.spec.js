@@ -1,5 +1,5 @@
 import { nextTick } from 'vue';
-import { expect } from 'chai';
+import { expect } from 'vitest';
 
 import store from '@/store';
 import ConfigCondition from '@/components/config/ConfigCondition.vue';

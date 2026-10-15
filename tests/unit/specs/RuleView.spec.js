@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import RuleView from '@/views/RuleView.vue';
 import { shallowMountComponent, mockAxios } from '../setup';
 import { ruleYaml } from '../mockData/ruleData.js';

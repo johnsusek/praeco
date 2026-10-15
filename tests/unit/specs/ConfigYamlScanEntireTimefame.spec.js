@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect } from 'vitest';
 import store from '@/store';
 import { mockAxios } from '../setup';
 import { ruleYaml } from '../mockData/ruleDataScanEntireTimefame.js';
