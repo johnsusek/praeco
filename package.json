@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@browser-bunyan/server-stream": "1.8.0",
-    "vue3-treeselect": "github:nsano-rururu/vue3-treeselect#vue3",
     "@element-plus/icons-vue": "^2.3.2",
     "@eslint/compat": "^2.1.1",
     "@eslint/eslintrc": "^3.3.7",
@@ -61,6 +60,7 @@
     "vue-prism-component": "2.0.0",
     "vue-query-builder": "github:nsano-rururu/vue-query-builder#v0.6.1vue3",
     "vue-router": "^5.4.0",
+    "vue3-treeselect": "github:nsano-rururu/vue3-treeselect#vue3",
     "vuex": "^4.1.0",
     "zrender": "6.1.0"
   },
@@ -72,7 +72,6 @@
     "axios-mock-adapter": "2.1.0",
     "baseline-browser-mapping": "^2.11.28",
     "c8": "^12.0.0",
-    "chai": "6.3.0",
     "cypress": "^16.1.1",
     "eslint": "^9.39.5",
     "eslint-plugin-cypress": "^6.1.0",
