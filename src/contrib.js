@@ -1,7 +1,8 @@
 import { createApp } from 'vue';
 import VueJsonPretty from 'vue-json-pretty';
 import Prism from 'vue-prism-component';
-import Treeselect from '@zanmato/vue3-treeselect';
+// import Treeselect from '@zanmato/vue3-treeselect';
+import Treeselect from 'vue3-treeselect';
 import ElementPlus from 'element-plus';
 import 'prismjs';
 import locale from 'element-plus/es/locale/lang/en';
@@ -28,7 +29,8 @@ import 'element-plus/dist/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-yaml.min.js';
-import '@zanmato/vue3-treeselect/dist/vue3-treeselect.min.css';
+// import '@zanmato/vue3-treeselect/dist/vue3-treeselect.min.css';
+import 'vue3-treeselect/dist/vue3-treeselect.css';
 
 import ECharts from 'vue-echarts';
 

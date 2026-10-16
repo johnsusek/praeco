@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@browser-bunyan/server-stream": "1.8.0",
+    "vue3-treeselect": "github:nsano-rururu/vue3-treeselect#vue3",
     "@element-plus/icons-vue": "^2.3.2",
     "@eslint/compat": "^2.1.1",
     "@eslint/eslintrc": "^3.3.7",
@@ -30,7 +31,6 @@
     "@vue-js-cron/light": "^5.2.2",
     "@vueuse/core": "^15.0.0",
     "@vueuse/shared": "^15.0.0",
-    "@zanmato/vue3-treeselect": "^0.4.4",
     "axios": "1.20.0",
     "browser-bunyan": "1.8.0",
     "canvas": "^3.2.3",

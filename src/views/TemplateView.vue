@@ -72,9 +72,9 @@
       <el-dialog
         v-model="moveVisible"
         title="Move"
-        width="40%"
+        width="50%"
         @close="moveVisible = false">
-        <div>
+        <div class="move-dialog-body">
           <FolderTree v-model="moveDest" type="templates" />
         </div>
         <template #footer>
@@ -182,7 +182,7 @@ export default {
     },
 
     showMoveDialog() {
-      this.moveDest = '';
+      this.moveDest = null;
       this.moveVisible = true;
     },
 
@@ -280,5 +280,10 @@ export default {
 <style scoped>
 .el-row {
   margin-bottom: 20px;
+}
+
+.move-dialog-body {
+  height: 200px;
+  overflow-y: auto;
 }
 </style>
