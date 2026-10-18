@@ -1,6 +1,6 @@
 <template>
   <span>
-    <el-popover v-model="testPopoverVisible" placement="top" width="310">
+    <el-popover v-model="testPopoverVisible" placement="top" width="350">
       <template #reference>
         <span>
           <el-button v-if="!testRunLoading" type="primary" plain size="default">
