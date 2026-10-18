@@ -51,7 +51,7 @@
       <label>Defaults to “”.</label>
     </el-form-item>
 
-    <el-popover v-model="popAlertaTagsVisible" :class="{ 'is-invalid': !popAlertaTagsValid }">
+    <el-popover v-model="popAlertaTagsVisible" :class="{ 'is-invalid': !popAlertaTagsValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaTags.length" :content="alertaTags.join(', ')" placement="top">
@@ -155,7 +155,7 @@
       <label>Defaults to “elastalert”.</label>
     </el-form-item>
 
-    <el-popover v-model="popalertaServiceVisible" :class="{ 'is-invalid': !popalertaServiceValid }">
+    <el-popover v-model="popalertaServiceVisible" :class="{ 'is-invalid': !popalertaServiceValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaService.length" :content="alertaService.join(', ')" placement="top">
@@ -208,7 +208,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popalertaCorrelateVisible" :class="{ 'is-invalid': !popalertaCorrelateValid }">
+    <el-popover v-model="popalertaCorrelateVisible" :class="{ 'is-invalid': !popalertaCorrelateValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaCorrelate.length" :content="alertaCorrelate.join(', ')" placement="top">
@@ -261,7 +261,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popalertaAttributesKeysVisible" :class="{ 'is-invalid': !popalertaAttributesKeysValid }">
+    <el-popover v-model="popalertaAttributesKeysVisible" :class="{ 'is-invalid': !popalertaAttributesKeysValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaAttributesKeys.length" :content="alertaAttributesKeys.join(', ')" placement="top">
@@ -314,7 +314,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popalertaAttributesValuesVisible" :class="{ 'is-invalid': !popalertaAttributesValuesValid }">
+    <el-popover v-model="popalertaAttributesValuesVisible" :class="{ 'is-invalid': !popalertaAttributesValuesValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="alertaAttributesValues.length" :content="alertaAttributesValues.join(', ')" placement="top">

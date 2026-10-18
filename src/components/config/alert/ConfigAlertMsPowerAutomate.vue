@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popMsPowerAutomatesWebhookUrlVisible" :class="{ 'is-invalid': !popMsPowerAutomateWebhookUrlValid }">
+    <el-popover v-model="popMsPowerAutomatesWebhookUrlVisible" :class="{ 'is-invalid': !popMsPowerAutomateWebhookUrlValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="msPowerAutomateWebhookUrl.length" :content="msPowerAutomateWebhookUrl.join(', ')" placement="top">

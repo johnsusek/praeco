@@ -29,7 +29,7 @@
           </at>
         </el-form-item>
 
-        <el-popover v-model="popAlertSubjectArgsVisible" :class="{ 'is-invalid': !popAlertSubjectArgsValid }">
+        <el-popover v-model="popAlertSubjectArgsVisible" :class="{ 'is-invalid': !popAlertSubjectArgsValid }" :width="350">
           <template #reference>
             <span class="pop-trigger">
               <el-tooltip v-if="alertSubjectArgs.length" :content="alertSubjectArgs.join(', ')" placement="top">
@@ -107,7 +107,8 @@
         <el-popover
           v-if="bodyType !== 'aggregation_summary_only'"
           v-model="popAlertTextArgsVisible"
-          :class="{ 'is-invalid': !popAlertTextArgsValid }">
+          :class="{ 'is-invalid': !popAlertTextArgsValid }"
+          :width="350">
           <template #reference>
             <span class="pop-trigger">
               <el-tooltip v-if="alertTextArgs.length" :content="alertTextArgs.join(', ')" placement="top">

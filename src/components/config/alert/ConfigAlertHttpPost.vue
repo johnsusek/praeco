@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popHttpPostUrlVisible" :class="{ 'is-invalid': !popHttpPostUrlValid }">
+    <el-popover v-model="popHttpPostUrlVisible" :class="{ 'is-invalid': !popHttpPostUrlValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="httpPostUrl.length" :content="httpPostUrl.join(', ')" placement="top">

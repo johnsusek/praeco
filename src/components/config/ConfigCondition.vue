@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popWhenVisible">
+    <el-popover v-model="popWhenVisible" :width="200">
       <template #reference>
         <span class="pop-trigger pop-when">
           <span>WHEN </span>
@@ -106,7 +106,7 @@
     </span>
 
     <span v-if="showPopOver">
-      <el-popover v-model:visible="popOverVisible" :teleported="false" :class="{ 'is-invalid': !popOverValid }">
+      <el-popover v-model:visible="popOverVisible" :teleported="false" :class="{ 'is-invalid': !popOverValid }" :width="300">
         <template #reference>
           <span class="pop-trigger">
             <span>

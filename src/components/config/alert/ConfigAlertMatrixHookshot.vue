@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popMatrixhookshotWebhookUrlVisible" :class="{ 'is-invalid': !popMatrixhookshotWebhookUrlValid }">
+    <el-popover v-model="popMatrixhookshotWebhookUrlVisible" :class="{ 'is-invalid': !popMatrixhookshotWebhookUrlValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="matrixhookshotWebhookUrl.length" :content="matrixhookshotWebhookUrl.join(', ')" placement="top">

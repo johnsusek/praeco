@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popRocketChatWebhookUrlVisible" :class="{ 'is-invalid': !popRocketChatWebhookUrlValid }">
+    <el-popover v-model="popRocketChatWebhookUrlVisible" :class="{ 'is-invalid': !popRocketChatWebhookUrlValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="rocketChatWebhookUrl.length" :content="rocketChatWebhookUrl.join(', ')" placement="top">
@@ -52,7 +52,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popRocketChatChannelOverrideVisible" :class="{ 'is-invalid': !popRocketChatChannelOverrideValid }">
+    <el-popover v-model="popRocketChatChannelOverrideVisible" :class="{ 'is-invalid': !popRocketChatChannelOverrideValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="rocketChatChannelOverride.length" :content="rocketChatChannelOverride.join(', ')" placement="top">

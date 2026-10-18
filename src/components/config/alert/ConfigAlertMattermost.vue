@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popMattermostWebhookUrlVisible" :class="{ 'is-invalid': !popMattermostWebhookUrlValid }">
+    <el-popover v-model="popMattermostWebhookUrlVisible" :class="{ 'is-invalid': !popMattermostWebhookUrlValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="mattermostWebhookUrl.length" :content="mattermostWebhookUrl.join(', ')" placement="top">
@@ -52,7 +52,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popMattermostChannelOverrideVisible" :class="{ 'is-invalid': !popMattermostChannelOverrideValid }">
+    <el-popover v-model="popMattermostChannelOverrideVisible" :class="{ 'is-invalid': !popMattermostChannelOverrideValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="mattermostChannelOverride.length" :content="mattermostChannelOverride.join(', ')" placement="top">

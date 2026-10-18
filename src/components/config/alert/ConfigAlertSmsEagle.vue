@@ -29,7 +29,7 @@
       <el-input id="smseagleText" v-model="smseagleText" :disabled="viewOnly" @update:model-value="smseagleText = $event" />
     </el-form-item>
 
-    <el-popover v-model="popSmseagleToVisible" :class="{ 'is-invalid': !popSmseagleToValid }">
+    <el-popover v-model="popSmseagleToVisible" :class="{ 'is-invalid': !popSmseagleToValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="smseagleTo.length" :content="smseagleTo.join(', ')" placement="top">
@@ -81,7 +81,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popSmseagleContactsVisible" :class="{ 'is-invalid': !popSmseagleContactsValid }">
+    <el-popover v-model="popSmseagleContactsVisible" :class="{ 'is-invalid': !popSmseagleContactsValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="smseagleContacts.length" :content="smseagleContacts.join(', ')" placement="top">
@@ -133,7 +133,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popSmseagleGroupsVisible" :class="{ 'is-invalid': !popSmseagleGroupsValid }">
+    <el-popover v-model="popSmseagleGroupsVisible" :class="{ 'is-invalid': !popSmseagleGroupsValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="smseagleGroups.length" :content="smseagleGroups.join(', ')" placement="top">

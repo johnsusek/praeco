@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popCommandVisible" :class="{ 'is-invalid': !popCommandValid }">
+    <el-popover v-model="popCommandVisible" :class="{ 'is-invalid': !popCommandValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="command.length" :content="command.join(', ')" placement="top">

@@ -25,7 +25,7 @@
       <label>Alert's severity: 1, 2, 3, 4 for LOW, MEDIUM, HIGH, CRTICAL.</label>
     </praeco-form-item>
 
-    <el-popover v-model="popHiveAlertConfigTagsVisible" :class="{ 'is-invalid': !popHiveAlertConfigTagsValid }">
+    <el-popover v-model="popHiveAlertConfigTagsVisible" :class="{ 'is-invalid': !popHiveAlertConfigTagsValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="hiveAlertConfigTags.length" :content="hiveAlertConfigTags.join(', ')" placement="top">

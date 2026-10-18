@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-model="popslackWebhookUrlVisible" :class="{ 'is-invalid': !popslackWebhookUrlValid }">
+    <el-popover v-model="popslackWebhookUrlVisible" :class="{ 'is-invalid': !popslackWebhookUrlValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="slackWebhookUrl.length" :content="slackWebhookUrl.join(', ')" placement="top">
@@ -52,7 +52,7 @@
       </div>
     </el-popover>
 
-    <el-popover v-model="popslackChannelOverrideVisible" :class="{ 'is-invalid': !popslackChannelOverrideValid }">
+    <el-popover v-model="popslackChannelOverrideVisible" :class="{ 'is-invalid': !popslackChannelOverrideValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="slackChannelOverride.length" :content="slackChannelOverride.join(', ')" placement="top">
