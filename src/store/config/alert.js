@@ -139,6 +139,7 @@ function initialState() {
     /* Datadog */
     datadogApiKey: '',
     datadogAppKey: '',
+    datadogApiUrl: '',
 
     /* Email */
     fromAddr: '',
@@ -1019,6 +1020,10 @@ export default {
 
     UPDATE_DATADOG_APP_KEY(state, datadogAppKey) {
       state.datadogAppKey = datadogAppKey;
+    },
+
+    UPDATE_DATADOG_API_URL(state, datadogApiUrl) {
+      state.datadogApiUrl = datadogApiUrl;
     },
 
     /* Dingtalk */

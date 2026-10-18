@@ -1062,6 +1062,7 @@ export default {
         /* Datadog */
         commit('alert/UPDATE_DATADOG_API_KEY', config.datadog_api_key);
         commit('alert/UPDATE_DATADOG_APP_KEY', config.datadog_app_key);
+        commit('alert/UPDATE_DATADOG_API_URL', config.datadog_api_url);
 
         /* Dingtalk */
         commit('alert/UPDATE_DINGTALK_ACCESS_TOKEN', config.dingtalk_access_token);
@@ -3305,6 +3306,10 @@ export default {
 
       if (state.alert.datadogAppKey) {
         config.datadog_app_key = state.alert.datadogAppKey;
+      }
+
+      if (state.alert.datadogApiUrl) {
+        config.datadog_api_url = state.alert.datadogApiUrl;
       }
 
       return config;

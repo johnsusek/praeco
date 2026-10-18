@@ -901,6 +901,12 @@ export default {
             trigger: ['change', 'blur']
           }
         ],
+        datadogApiUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
       }
     };
   },
