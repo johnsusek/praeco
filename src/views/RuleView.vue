@@ -74,7 +74,8 @@
         <el-popover
           v-if="isEnabled"
           v-model="silencePopoverVisible"
-          :disabled="!!silenceNotice">
+          :disabled="!!silenceNotice"
+          :width="350">
           <template #reference>
             <span>
               <el-button :disabled="!!silenceNotice" plain type="warning">
@@ -88,36 +89,36 @@
               </el-button>
             </span>
           </template>
-          <div>
-            <el-row justify="space-around">
-              <el-col :span="24" align="center">
-                <el-button @click="handleSilence('minutes', 5)">
-                  5 minutes
-                </el-button>
-                <el-button @click="handleSilence('hour', 1)">
-                  1 hour
-                </el-button>
-                <el-button @click="handleSilence('day', 1)">
-                  1 day
-                </el-button>
-              </el-col>
-            </el-row>
+          <div class="silence-popover">
+            <div class="silence-presets">
+              <el-button @click="handleSilence('minutes', 5)">
+                5 minutes
+              </el-button>
+              <el-button @click="handleSilence('hour', 1)">
+                1 hour
+              </el-button>
+              <el-button @click="handleSilence('day', 1)">
+                1 day
+              </el-button>
+            </div>
             <hr>
-            <ElastalertTimePicker
-              v-if="silenceTime"
-              :unit="Object.keys(silenceTime)[0]"
-              :amount="Object.values(silenceTime)[0]"
-              @update:model-value="updateSilenceTime" />
-            <el-button
-              class="m-w-sm"
-              @click="
-                handleSilence(
-                  Object.keys(silenceTime)[0],
-                  Object.values(silenceTime)[0],
-                )
-              ">
-              Silence
-            </el-button>
+            <div class="silence-custom">
+              <ElastalertTimePicker
+                v-if="silenceTime"
+                :unit="Object.keys(silenceTime)[0]"
+                :amount="Object.values(silenceTime)[0]"
+                @update:model-value="updateSilenceTime" />
+              <el-button
+                class="m-w-sm"
+                @click="
+                  handleSilence(
+                    Object.keys(silenceTime)[0],
+                    Object.values(silenceTime)[0],
+                  )
+                ">
+                Silence
+              </el-button>
+            </div>
           </div>
         </el-popover>
 
@@ -659,5 +660,28 @@ export default {
 .move-dialog-body {
   height: 200px;
   overflow-y: auto;
+}
+.silence-popover {
+  width: 100%;
+}
+
+.silence-presets {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 16px;
+}
+
+.silence-presets .el-button + .el-button {
+  margin-left: 0;
+}
+
+.silence-custom {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
 }
 </style>
