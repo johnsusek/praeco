@@ -643,7 +643,8 @@
         ref="optionsPop"
         v-model="popOptionsVisible"
         :class="{ 'is-invalid': !popOptionsValid }"
-        popper-class="popover-options">
+        popper-class="popover-options"
+        :width="600">
         <template #reference>
           <span class="pop-trigger">
             <span>WITH OPTIONS</span>
@@ -1804,8 +1805,9 @@ export default {
 }
 
 .el-popover.popover-options {
+  box-sizing: border-box;
   padding-top: 5px;
-  max-width: 600px;
+  max-width: calc(100vw - 32px);
 }
 
 .popover-time {
