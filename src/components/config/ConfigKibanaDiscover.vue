@@ -51,7 +51,7 @@
     </el-col>
 
     <el-col v-if="generateKibanaDiscoverUrl" :span="6">
-      <el-popover v-model="popKibanaDiscoverColumnsVisible" :class="{ 'is-invalid': !popKibanaDiscoverColumnsValid }">
+      <el-popover v-model="popKibanaDiscoverColumnsVisible" :class="{ 'is-invalid': !popKibanaDiscoverColumnsValid }" :width="300">
         <template #reference>
           <span class="pop-trigger">
             <el-tooltip v-if="kibanaDiscoverColumns.length" :content="kibanaDiscoverColumns.join(', ')" placement="top">

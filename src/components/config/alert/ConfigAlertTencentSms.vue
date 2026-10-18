@@ -18,7 +18,7 @@
       <label>SMS application ID, which is the SdkAppId generated after an application is added in the SMS console.</label>
     </praeco-form-item>
 
-    <el-popover v-model="popTencentSmsToNumberVisible" :class="{ 'is-invalid': !popTencentSmsToNumberValid }">
+    <el-popover v-model="popTencentSmsToNumberVisible" :class="{ 'is-invalid': !popTencentSmsToNumberValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="tencentSmsToNumber.length" :content="tencentSmsToNumber.join(', ')" placement="top">
@@ -95,7 +95,7 @@
     </praeco-form-item>
 
     <!-- tencentSmsTemplateParm -->
-    <el-popover v-model="popTencentSmsTemplateParmVisible" :class="{ 'is-invalid': !popTencentSmsTemplateParmValid }">
+    <el-popover v-model="popTencentSmsTemplateParmVisible" :class="{ 'is-invalid': !popTencentSmsTemplateParmValid }" :width="350">
       <template #reference>
         <span class="pop-trigger">
           <el-tooltip v-if="tencentSmsTemplateParm.length" :content="tencentSmsTemplateParm.join(', ')" placement="top">
