@@ -8,6 +8,7 @@ alert_text_args: []
 alert_text_type: alert_text_only
 datadog_api_key: xxxxxx1
 datadog_app_key: xxxxxx2
+datadog_api_url: https://api.datadoghq.com/api/
 doc_type: syslog
 filter:
   - query:
