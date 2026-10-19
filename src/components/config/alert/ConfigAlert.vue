@@ -134,6 +134,9 @@
         <el-checkbox id="destinationSes" value="ses" border>
           AWS SES (Amazon Simple Email Service)
         </el-checkbox>
+        <el-checkbox id="destinationSqs" value="sqs" border>
+          AWS SQS (Amazon Simple Queue Service)
+        </el-checkbox>
         <el-checkbox id="destinationZabbix" value="zabbix" border>
           Zabbix
         </el-checkbox>
@@ -253,6 +256,7 @@
           || alert.includes('slack')
           || alert.includes('smseagle')
           || alert.includes('sns')
+          || alert.includes('sqs')
           || alert.includes('stomp')
           || alert.includes('tencent_sms')
           || alert.includes('victorops')
@@ -365,6 +369,14 @@
           <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SES
         </template>
         <ConfigAlertAmazonSes ref="ses" :view-only="viewOnly" />
+      </el-tab-pane>
+
+      <!-- Amazon SQS -->
+      <el-tab-pane v-if="alert.includes('sqs')" name="sqs">
+        <template #label>
+          <Icon :icon="['fab', 'aws']" size="1x" /> Amazon SQS
+        </template>
+        <ConfigAlertAmazonSqs ref="sqs" :view-only="viewOnly" />
       </el-tab-pane>
 
       <!-- Zabbix -->
@@ -610,6 +622,7 @@ import ConfigAlertAlerta from './ConfigAlertAlerta.vue';
 import ConfigAlertAlertmanager from './ConfigAlertAlertmanager.vue';
 import ConfigAlertAmazonSes from './ConfigAlertAmazonSes.vue';
 import ConfigAlertAmazonSns from './ConfigAlertAmazonSns.vue';
+import ConfigAlertAmazonSqs from './ConfigAlertAmazonSqs.vue';
 import ConfigAlertChatwork from './ConfigAlertChatwork.vue';
 import ConfigAlertCommand from './ConfigAlertCommand.vue';
 import ConfigAlertDingtalk from './ConfigAlertDingtalk.vue';
@@ -735,6 +748,7 @@ export default {
     ConfigAlertAlertmanager,
     ConfigAlertAmazonSes,
     ConfigAlertAmazonSns,
+    ConfigAlertAmazonSqs,
     ConfigAlertChatwork,
     ConfigAlertCommand,
     ConfigAlertDingtalk,
@@ -902,6 +916,12 @@ export default {
           }
         ],
         datadogApiUrl: [
+          {
+            validator: validateUrl,
+            trigger: ['change', 'blur']
+          }
+        ],
+        sqsQueueUrl: [
           {
             validator: validateUrl,
             trigger: ['change', 'blur']

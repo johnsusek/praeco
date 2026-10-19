@@ -90,6 +90,7 @@ npx vitest run tests/unit/specs/alert/ConfigYamlYzj002.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlWorkWeChat002.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlZabbix.spec.js &&
 npx vitest run tests/unit/specs/alert/ConfigYamlZabbixSenderHostPort.spec.js &&
+npx vitest run tests/unit/specs/alert/ConfigYamlAwsSqs.spec.js &&
 npx vitest run tests/unit/specs/ConfigYamlScanEntireTimefame.spec.js &&
 npx vitest run tests/unit/specs/luceneSyntaxBuilder.spec.js &&
 npx vitest run tests/unit/specs/store/storePersistence.spec.js &&
