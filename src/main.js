@@ -60,6 +60,7 @@ import ConfigAlertAlerta from '@/components/config/alert/ConfigAlertAlerta.vue';
 import ConfigAlertAlertmanager from '@/components/config/alert/ConfigAlertAlertmanager.vue';
 import ConfigAlertAmazonSes from '@/components/config/alert/ConfigAlertAmazonSes.vue';
 import ConfigAlertAmazonSns from '@/components/config/alert/ConfigAlertAmazonSns.vue';
+import ConfigAlertAmazonSqs from '@/components/config/alert/ConfigAlertAmazonSqs.vue';
 import ConfigAlertChatwork from '@/components/config/alert/ConfigAlertChatwork.vue';
 import ConfigAlertCommand from '@/components/config/alert/ConfigAlertCommand.vue';
 import ConfigAlertDatadog from '@/components/config/alert/ConfigAlertDatadog.vue';
@@ -191,6 +192,7 @@ function startApp(config) {
   app.component('ConfigAlertAlertmanager', ConfigAlertAlertmanager);
   app.component('ConfigAlertAmazonSes', ConfigAlertAmazonSes);
   app.component('ConfigAlertAmazonSns', ConfigAlertAmazonSns);
+  app.component('ConfigAlertAmazonSqs', ConfigAlertAmazonSqs);
   app.component('ConfigAlertChatwork', ConfigAlertChatwork);
   app.component('ConfigAlertCommand', ConfigAlertCommand);
   app.component('ConfigAlertDatadog', ConfigAlertDatadog);
