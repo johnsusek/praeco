@@ -92,10 +92,10 @@
                 <el-button @click="handleSilence('minutes', 5)">
                   5 minutes
                 </el-button>
-                <el-button @click="handleSilence('hour', 1)">
+                <el-button @click="handleSilence('hours', 1)">
                   1 hour
                 </el-button>
-                <el-button @click="handleSilence('day', 1)">
+                <el-button @click="handleSilence('days', 1)">
                   1 day
                 </el-button>
               </el-col>
