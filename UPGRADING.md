@@ -7,6 +7,17 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 2.0.0
+
+**New options**
+
+- AWS SQS
+
+**add settings**
+
+- datadog
+  - datadog_api_url
+
 ## -> 1.8.23
 
 **New options**

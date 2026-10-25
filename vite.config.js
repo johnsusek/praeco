@@ -95,12 +95,8 @@ export default defineConfig(({ mode }) => {
             return 'utils'
           }
 
-          // Editor
-          if (
-            id.includes('prismjs') ||
-            id.includes('vue-prism-component')
-          ) {
-            return 'editor'
+          if (id.includes('/prismjs/components/prism-yaml.min.js')) {
+            return 'prism-yaml'
           }
 
           // FontAwesome

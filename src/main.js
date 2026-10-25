@@ -35,7 +35,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import 'element-plus/dist/index.css';
 import 'normalize.css';
 import 'prismjs/themes/prism.css';
-import 'prismjs/components/prism-yaml.min.js';
+import PrismCore from 'prismjs';
+globalThis.Prism = PrismCore;
 import 'vue3-treeselect/dist/vue3-treeselect.css';
 
 import ECharts from 'vue-echarts';
@@ -255,16 +256,16 @@ function startApp(config) {
 // First get the config from the server
 // In development this will be in /public and served by webpack
 // In prod it is linked into the docker container
-axios.get(import.meta.env.BASE_URL + 'praeco.config.json')
-  .then(res => {
-    if (res.data && typeof res.data === 'object') {
-      startApp(res.data);
-    } else {
-      // A SPA fallback answers with the index page and a 200, so a missing
-      // file never reaches the catch below.
+import('prismjs/components/prism-yaml.min.js').then(() =>
+  axios.get(import.meta.env.BASE_URL + 'praeco.config.json')
+    .then(res => {
+      if (res.data && typeof res.data === 'object') {
+        startApp(res.data);
+      } else {
+        alert('praeco.config.json missing');
+      }
+    })
+    .catch(() => {
       alert('praeco.config.json missing');
-    }
-  })
-  .catch(() => {
-    alert('praeco.config.json missing');
-  });
+    })
+);
