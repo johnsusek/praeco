@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> Praeco is looking for a new maintainer. Email praeco@johnsolo.net if you are interested.
+
 # Praeco
 
 ![GitHub release](https://img.shields.io/github/release/johnsusek/praeco.svg)
