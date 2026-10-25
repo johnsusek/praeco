@@ -7,7 +7,7 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/praecoapp/praeco.svg)
 ![GitHub stars](https://img.shields.io/github/stars/johnsusek/praeco.svg?style=social&label=Stars)
 
-|branch|version|library|
+|branch|version|Framework|
 | :---: | :---: | :--- | 
 |master|2.x.x|vue 3.5, vuex 4.1, vue-router 5.4, element-plus|
 |1.8.x | 1.8.x | vue 2.7, vuex 3.6, vue-router 3,6, element-ui|
