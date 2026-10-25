@@ -7,6 +7,11 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/praecoapp/praeco.svg)
 ![GitHub stars](https://img.shields.io/github/stars/johnsusek/praeco.svg?style=social&label=Stars)
 
+|branch|version|library|
+| :---: | :---: | :--- | 
+|master|2.x.x|vue 3.5, vuex 4.1, vue-router 5.4, element-plus|
+|1.8.x | 1.8.x | vue 2.7, vuex 3.6, vue-router 3,6, element-ui|
+
 <img align="left" src="https://user-images.githubusercontent.com/611996/52907999-50fca900-3232-11e9-8aee-40f7dc37ec65.jpg">
 
 **Praeco** is an alerting tool for Elasticsearch – a GUI for [ElastAlert 2](https://github.com/jertel/elastalert2), using the [ElastAlert API](https://github.com/johnsusek/elastalert-server).
