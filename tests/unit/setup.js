@@ -1,6 +1,8 @@
 import ElementPlus from 'element-plus';
 import { mount, shallowMount } from '@vue/test-utils';
 import { expect } from 'vitest';
+import { mockAxios } from './testUtils';
+export { mockAxios };
 
 import '@/contrib.js';
 import '@/registration.js';
@@ -20,7 +22,10 @@ export function mountComponent(comp, opts = {}) {
         ElementPlus
       ],
       stubs: {
-        transition: false
+        transition: false,
+        'el-tag': {
+          template: '<span><slot /></span>'
+        }
       }
     },
     props: opts.propsData
@@ -37,7 +42,10 @@ export function shallowMountComponent(comp, opts = {}) {
         ElementPlus
       ],
       stubs: {
-        transition: false
+        transition: false,
+        'el-tag': {
+          template: '<span><slot /></span>'
+        }
       }
     },
     props: opts.propsData
