@@ -432,8 +432,8 @@ For example:
     container_name: elastalert
     image: praecoapp/elastalert-server:latest
     ports:
-      - 3030:3030
-      - 3333:3333
+      - 127.0.0.1:3030:3030
+      - 127.0.0.1:3333:3333
     restart: always
     volumes:
       - ./elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml
@@ -701,8 +701,8 @@ For example:
     container_name: elastalert
     image: praecoapp/elastalert-server:latest
     ports:
-      - 3030:3030
-      - 3333:3333
+      - 127.0.0.1:3030:3030
+      - 127.0.0.1:3333:3333
     restart: always
     volumes:
       - ./elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml
