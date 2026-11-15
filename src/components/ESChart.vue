@@ -88,7 +88,7 @@ import dayjs_timezone from 'dayjs/plugin/timezone';
 import dayjs_utc from 'dayjs/plugin/utc';
 
 import debounce from 'debounce';
-import { use } from 'echarts/core';
+import { format, use } from 'echarts/core';
 import {
   BarChart,
   LineChart
@@ -678,15 +678,15 @@ export default {
         let tip = `${momentDate.format('M/D/YYYY h:mm:ssa')}<br>`;
 
         if (this.aggAvg) {
-          tip += `Average of ${this.aggAvg}: ${options.data.value}`;
+          tip += `Average of ${format.encodeHTML(this.aggAvg)}: ${options.data.value}`;
         } else if (this.aggSum) {
-          tip += `Sum of ${this.aggSum}: ${options.data.value}`;
+          tip += `Sum of ${format.encodeHTML(this.aggSum)}: ${options.data.value}`;
         } else if (this.aggMin) {
-          tip += `Min of ${this.aggMin}: ${options.data.value}`;
+          tip += `Min of ${format.encodeHTML(this.aggMin)}: ${options.data.value}`;
         } else if (this.aggMax) {
-          tip += `Max of ${this.aggMax}: ${options.data.value}`;
+          tip += `Max of ${format.encodeHTML(this.aggMax)}: ${options.data.value}`;
         } else if (this.aggCardinality) {
-          tip += `Cardinality of ${this.aggCardinality}: ${options.data.value}`;
+          tip += `Cardinality of ${format.encodeHTML(this.aggCardinality)}: ${options.data.value}`;
         } else {
           tip += `${options.data.value} results`;
         }

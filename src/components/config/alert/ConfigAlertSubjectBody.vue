@@ -318,7 +318,7 @@ export default {
 
       const node = document.createElement('div');
       node.style.whiteSpace = 'pre';
-      node.innerHTML = text;
+      node.textContent = text;
       range.insertNode(node);
 
       // Move the cursor to the end of the inserted string
