@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as yaml from 'js-yaml';
-import { htmlToConfigFormat } from '@/lib/alertText';
+import { escapeHtml, htmlToConfigFormat } from '@/lib/alertText';
 // TODO: error  Dependency cycle via @/lib/logger.js:7  import/no-cycle
 import { logger } from '@/lib/logger.js';
 import settings from './settings';
@@ -1283,8 +1283,9 @@ export default {
           commit('alert/UPDATE_BODY_TYPE', 'default');
         }
 
-        commit('alert/UPDATE_BODY', config.alert_text);
-        commit('alert/UPDATE_SUBJECT', config.alert_subject);
+        // The editor state holds HTML; rule text is plain text and must show literally
+        commit('alert/UPDATE_BODY', escapeHtml(config.alert_text || ''));
+        commit('alert/UPDATE_SUBJECT', escapeHtml(config.alert_subject || ''));
 
         if (config.alert_subject_args) {
           commit('alert/UPDATE_ALERT_SUBJECT_ARGS', config.alert_subject_args);

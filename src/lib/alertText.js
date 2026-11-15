@@ -1,12 +1,20 @@
 import format from 'string-format';
 
+export function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export function htmlToConfigFormat(text) {
-  let el = document.createElement('html');
-  el.innerHTML = text;
+  let doc = new DOMParser().parseFromString(text, 'text/html');
 
   let alertText = '';
   let alertArgs = [];
-  let nodes = el.querySelector('body').childNodes;
+  let nodes = doc.body.childNodes;
 
   nodes.forEach(node => {
     if (node.nodeType === 3) {
@@ -58,12 +66,12 @@ export function configFormatToHtml(text, args) {
   if (!args) args = [];
 
   // found a newline, place next line into a div...
-  text = text.replace(/\n/g, '<br>');
+  text = escapeHtml(text).replace(/\n/g, '<br>');
 
-  let formattedArgs = args.map(
-    a =>
-      `<span data-at-embedded="" contenteditable="false"> <span class="el-tag el-tag--info el-tag--mini" data-term="${a}">${a}<!----></span> </span>`
-  );
+  let formattedArgs = args.map(arg => {
+    let term = escapeHtml(arg);
+    return `<span data-at-embedded="" contenteditable="false"> <span class="el-tag el-tag--info el-tag--mini" data-term="${term}">${term}<!----></span> </span>`;
+  });
 
   return format(text, ...formattedArgs);
 }
