@@ -52,6 +52,12 @@ docker compose up
 
 Praeco should now be available on http://127.0.0.1:8080
 
+## Security
+
+* Praeco has no login. Run it on an internal network only; anyone who can reach it can read and change rules, including their alerter secrets.
+* nginx rejects cross-origin browser requests to the API, and `docker-compose.yml` binds the elastalert-server ports to localhost. Both files are mounted from your own checkout, so existing installs must pull `nginx_config/default.conf` and `docker-compose.yml` to get these protections.
+* Behind another reverse proxy, pass the original `Host` or set `X-Forwarded-Host`, or the UI's API calls will be rejected with 403.
+
 
 
 

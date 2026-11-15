@@ -5,8 +5,8 @@ services:
     image: 'praecoapp/elastalert-server'
     restart: unless-stopped
     ports:
-      - 3030:3030
-      - 3333:3333
+      - 127.0.0.1:3030:3030
+      - 127.0.0.1:3333:3333
     volumes:
       - ./config/elastalert.yaml:/opt/elastalert/config.yaml
       - ./config/api.config.json:/opt/elastalert-server/config/config.json
