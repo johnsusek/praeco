@@ -7,6 +7,14 @@
 
 Some version upgrades require further configuration. Version specific upgrade instructions are below.
 
+## -> 2.0.1
+
+**nginx and docker-compose**
+
+- Pull `nginx_config/default.conf` and `docker-compose.yml`. Both are mounted from your checkout, so the new image alone does not update them.
+- Behind another reverse proxy, pass the original `Host` or set `X-Forwarded-Host`, or API calls are rejected with 403.
+- Update `default.conf` before or together with elastalert-server `20261115`. That server rejects websocket handshakes whose Origin does not match the forwarded host, so rule Test fails with an old `default.conf`.
+
 ## -> 2.0.0
 
 **New options**
