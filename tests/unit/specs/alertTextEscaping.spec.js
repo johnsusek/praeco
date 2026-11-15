@@ -3,7 +3,7 @@ import * as yaml from 'js-yaml';
 import store from '@/store';
 import { htmlToConfigFormat, configFormatToHtml } from '@/lib/alertText.js';
 import ConfigAlertSubjectBody from '@/components/config/alert/ConfigAlertSubjectBody.vue';
-import { mockAxios } from '../testUtils';
+import { mockAxios } from '../setup';
 
 let payload = '<img src=x onerror="alert(1)"><script>alert(2)</script>';
 
